@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 240">
+  <defs>
+    <!-- T5: feBlend screen -->
+    <filter id="blend-screen" x="0" y="0" width="100%" height="100%">
+      <feFlood flood-color="#7C3AED" flood-opacity="0.7" result="purple"/>
+      <feFlood flood-color="#22D3EE" flood-opacity="0.7" result="cyan"/>
+      <feOffset in="purple" dx="0" dy="0" result="purple-pos"/>
+      <feOffset in="cyan" dx="12" dy="0" result="cyan-pos"/>
+      <feBlend in="purple-pos" in2="cyan-pos" mode="screen" result="blended"/>
+      <feComposite in="blended" in2="SourceGraphic" operator="over"/>
+    </filter>
+
+    <!-- T6: feBlend multiply -->
+    <filter id="blend-multiply" x="0" y="0" width="100%" height="100%">
+      <feFlood flood-color="#A78BFA" flood-opacity="0.8" result="a"/>
+      <feFlood flood-color="#F472B6" flood-opacity="0.8" result="b"/>
+      <feOffset in="a" dx="0" dy="0" result="a-pos"/>
+      <feOffset in="b" dx="12" dy="0" result="b-pos"/>
+      <feBlend in="a-pos" in2="b-pos" mode="multiply" result="blended"/>
+      <feComposite in="blended" in2="SourceGraphic" operator="over"/>
+    </filter>
+
+    <!-- T7: feGaussianBlur glow -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- T8: feColorMatrix -->
+    <filter id="color-shift">
+      <feColorMatrix type="matrix"
+        values="1 0 0 0 0
+                0 0.8 0.2 0 0
+                0 0.2 0.8 0 0
+                0 0 0 1 0"/>
+    </filter>
+
+    <!-- T12: radialGradient -->
+    <radialGradient id="nebula-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F0E6FF" stop-opacity="0.95"/>
+      <stop offset="40%" stop-color="#7DD3FC" stop-opacity="0.6"/>
+      <stop offset="70%" stop-color="#A78BFA" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    /* T3: CSS @keyframes opacity */
+    @keyframes css-fade {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    .css-fade-test {
+      animation: css-fade 2s ease-in-out infinite;
+    }
+
+    /* T4: CSS @keyframes stroke-dashoffset */
+    @keyframes dash-draw {
+      from { stroke-dashoffset: 80; }
+      to { stroke-dashoffset: 0; }
+    }
+    .dash-test {
+      stroke-dasharray: 80;
+      stroke-dashoffset: 80;
+      animation: dash-draw 3s ease-out forwards;
+    }
+
+    /* T10: CSS custom properties */
+    :root {
+      --test-color: #22D3EE;
+      --test-opacity: 0.8;
+    }
+    .var-test {
+      fill: var(--test-color);
+      opacity: var(--test-opacity);
+    }
+
+    /* Labels */
+    .label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 8px;
+      fill: #94A3B8;
+    }
+    .title {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      fill: #E2E8F0;
+      font-weight: 600;
+    }
+  </style>
+
+  <!-- Background: transparent (T9) -->
+
+  <!-- Title -->
+  <text x="420" y="20" text-anchor="middle" class="title">Cosmio Rendering POC — 12 Tests</text>
+
+  <!-- Row 1: Animation Tests -->
+
+  <!-- T1: SMIL animate (opacity) -->
+  <g transform="translate(70, 70)">
+    <circle cx="0" cy="0" r="15" fill="#7C3AED">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="0" y="30" text-anchor="middle" class="label">T1: SMIL animate</text>
+  </g>
+
+  <!-- T2: SMIL animateTransform (rotation + scale) -->
+  <g transform="translate(210, 70)">
+    <rect x="-10" y="-10" width="20" height="20" fill="#22D3EE" rx="3">
+      <animateTransform attributeName="transform" type="rotate" values="0;360" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <circle cx="20" cy="-15" r="6" fill="#F472B6">
+      <animateTransform attributeName="transform" type="scale" values="1;1.4;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="0" y="30" text-anchor="middle" class="label">T2: SMIL transform</text>
+  </g>
+
+  <!-- T3: CSS @keyframes opacity -->
+  <g transform="translate(350, 70)">
+    <circle cx="0" cy="0" r="15" fill="#FBBF24" class="css-fade-test"/>
+    <text x="0" y="30" text-anchor="middle" class="label">T3: CSS keyframes</text>
+  </g>
+
+  <!-- T4: CSS stroke-dashoffset -->
+  <g transform="translate(490, 70)">
+    <path d="M-30,0 Q0,-25 30,0" fill="none" stroke="#22D3EE" stroke-width="2" class="dash-test"/>
+    <text x="0" y="30" text-anchor="middle" class="label">T4: CSS dashoffset</text>
+  </g>
+
+  <!-- T11: System font stack -->
+  <g transform="translate(630, 70)">
+    <text x="0" y="-5" text-anchor="middle" class="title">1,247</text>
+    <text x="0" y="8" text-anchor="middle" class="label">contributions</text>
+    <text x="0" y="30" text-anchor="middle" class="label">T11: System fonts</text>
+  </g>
+
+  <!-- T10: CSS custom properties -->
+  <g transform="translate(770, 70)">
+    <circle cx="0" cy="0" r="15" class="var-test"/>
+    <text x="0" y="30" text-anchor="middle" class="label">T10: CSS var()</text>
+  </g>
+
+  <!-- Row 2: Filter & Gradient Tests -->
+
+  <!-- T5: feBlend screen -->
+  <g transform="translate(70, 160)">
+    <rect x="-25" y="-18" width="50" height="36" rx="4" fill="none" filter="url(#blend-screen)"/>
+    <rect x="-20" y="-14" width="20" height="28" rx="2" fill="#7C3AED" opacity="0.7"/>
+    <rect x="-8" y="-14" width="20" height="28" rx="2" fill="#22D3EE" opacity="0.7"/>
+    <text x="0" y="30" text-anchor="middle" class="label">T5: feBlend screen</text>
+  </g>
+
+  <!-- T6: feBlend multiply -->
+  <g transform="translate(210, 160)">
+    <rect x="-25" y="-18" width="50" height="36" rx="4" fill="none" filter="url(#blend-multiply)"/>
+    <rect x="-20" y="-14" width="20" height="28" rx="2" fill="#A78BFA" opacity="0.8"/>
+    <rect x="-8" y="-14" width="20" height="28" rx="2" fill="#F472B6" opacity="0.8"/>
+    <text x="0" y="30" text-anchor="middle" class="label">T6: feBlend multiply</text>
+  </g>
+
+  <!-- T7: feGaussianBlur glow -->
+  <g transform="translate(350, 160)">
+    <circle cx="0" cy="0" r="12" fill="#22D3EE" filter="url(#glow)"/>
+    <text x="0" y="30" text-anchor="middle" class="label">T7: Blur glow</text>
+  </g>
+
+  <!-- T8: feColorMatrix -->
+  <g transform="translate(490, 160)">
+    <circle cx="0" cy="0" r="12" fill="#FBBF24" filter="url(#color-shift)"/>
+    <text x="0" y="30" text-anchor="middle" class="label">T8: ColorMatrix</text>
+  </g>
+
+  <!-- T9: Transparent background (this entire SVG has no bg fill) -->
+  <g transform="translate(630, 160)">
+    <rect x="-20" y="-15" width="40" height="30" rx="4" fill="none" stroke="#64748B" stroke-width="0.5" stroke-dasharray="3 2"/>
+    <text x="0" y="3" text-anchor="middle" class="label" style="fill:#94A3B8">no fill</text>
+    <text x="0" y="30" text-anchor="middle" class="label">T9: Transparent BG</text>
+  </g>
+
+  <!-- T12: radialGradient -->
+  <g transform="translate(770, 160)">
+    <circle cx="0" cy="0" r="20" fill="url(#nebula-grad)"/>
+    <text x="0" y="30" text-anchor="middle" class="label">T12: radialGradient</text>
+  </g>
+</svg>
