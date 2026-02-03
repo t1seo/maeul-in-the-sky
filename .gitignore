@@ -1,0 +1,23 @@
+node_modules/
+dist/
+*.tgz
+
+# Output SVGs (generated, not tracked)
+cosmio-*.svg
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Test coverage
+coverage/
+
+# Playwright
+.playwright-mcp/

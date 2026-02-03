@@ -1,0 +1,71 @@
+{
+  "name": "cosmio",
+  "version": "0.1.0",
+  "description": "Transform GitHub contribution data into space-themed animated SVGs",
+  "type": "module",
+  "bin": {
+    "cosmio": "./dist/index.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "action.yml"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src/ tests/",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "github",
+    "contribution",
+    "svg",
+    "animation",
+    "space",
+    "nebula",
+    "constellation",
+    "profile",
+    "readme"
+  ],
+  "author": "t1seo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/t1seo/cosmio.git"
+  },
+  "homepage": "https://github.com/t1seo/cosmio",
+  "bugs": {
+    "url": "https://github.com/t1seo/cosmio/issues"
+  },
+  "dependencies": {
+    "commander": "^14.0.3",
+    "simplex-noise": "^4.0.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^25.2.0",
+    "eslint": "^9.39.2",
+    "prettier": "^3.8.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.54.0",
+    "vitest": "^4.0.18"
+  }
+}
