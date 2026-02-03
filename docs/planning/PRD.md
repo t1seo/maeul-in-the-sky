@@ -3,7 +3,7 @@
 ## Cosmio — GitHub Contribution Visualization Tool
 
 > **Last Updated:** 2026-02-03
-> **Version:** 1.0
+> **Version:** 1.1
 
 ---
 
@@ -172,16 +172,70 @@ jobs:
 
 | Requirement | Specification |
 |-------------|--------------|
-| Format | SVG 1.1 with inline CSS animations |
+| Format | SVG 1.1 with inline animations |
 | Background | Transparent (no fill on root `<svg>`) |
 | Dimensions | `840 × 240px` (viewBox), scalable |
-| Animation | CSS `@keyframes` + SMIL `<animate>` only |
+| Animation | **SMIL-first strategy** (see Animation Strategy below) |
 | File Size | Target < 100KB per SVG |
 | Browser Support | Chrome, Firefox, Safari, Edge (latest 2 versions) |
 | GitHub Rendering | Must render correctly in GitHub `<img>` tag |
 | No External Dependencies | No external fonts, images, or scripts |
+| Blending | SVG `<feBlend>` filter primitives (not CSS `mix-blend-mode`) |
 
-### 5.4 Data Requirements
+### 5.4 Animation Strategy
+
+GitHub renders SVGs via `<img>` tags, which blocks JavaScript and external resources. Animation support is limited:
+
+| Method | GitHub `<img>` Support | Use Case |
+|--------|----------------------|----------|
+| **SMIL `<animate>`** | ✅ Reliable | Primary method — opacity, transform, attribute animation |
+| **SMIL `<animateTransform>`** | ✅ Reliable | Rotation, scaling, translation |
+| **CSS `@keyframes` in `<style>`** | ⚠️ Partial | Secondary method — simple property animations only |
+| **CSS `mix-blend-mode`** | ⚠️ Unverified | Avoid — use SVG `<feBlend>` filter instead |
+| **JavaScript** | ❌ Blocked | Never use |
+
+**SMIL-First Rule**: Default to SMIL for all animations. Only use CSS `@keyframes` when SMIL cannot express the desired effect (e.g., `stroke-dashoffset` animation). All animation approaches must be validated against GitHub rendering during Phase 0 POC.
+
+### 5.5 SVG Blending Strategy
+
+GitHub's sanitizer behavior with CSS `mix-blend-mode` is unverified. To avoid risk, use **SVG-native `<feBlend>` filter primitives** for all blending effects:
+
+```xml
+<!-- Use this (SVG-native, reliable) -->
+<filter id="blend-screen">
+  <feImage href="#layer-a" result="a"/>
+  <feImage href="#layer-b" result="b"/>
+  <feBlend in="a" in2="b" mode="screen"/>
+</filter>
+
+<!-- NOT this (CSS, may be stripped by GitHub) -->
+<style>.layer { mix-blend-mode: screen; }</style>
+```
+
+| Blend Effect | SVG Filter Approach |
+|-------------|-------------------|
+| Nebula glow overlap (dark) | `<feBlend mode="screen">` |
+| Nebula glow overlap (light) | `<feBlend mode="multiply">` |
+| Star glow | `<feGaussianBlur>` + `<feMerge>` (no blending needed) |
+| Trail glow | `<feGaussianBlur>` + `<feComposite>` |
+
+### 5.6 Phase 0 POC: GitHub Rendering Validation
+
+Before building the full engine, create a minimal proof-of-concept SVG that tests all rendering assumptions on an actual GitHub profile README:
+
+| Test | What to Verify |
+|------|---------------|
+| SMIL `<animate>` | Opacity and transform animations play in `<img>` |
+| SMIL `<animateTransform>` | Rotation and scale animations play in `<img>` |
+| CSS `@keyframes` | Basic keyframe animations survive GitHub sanitizer |
+| `<feBlend mode="screen">` | SVG-native blending renders correctly |
+| `<feGaussianBlur>` | Glow filters render on both dark and light backgrounds |
+| Transparent background | SVG renders correctly on `#0d1117` and `#ffffff` |
+| `<style>` block | Internal CSS styles are preserved |
+
+**Exit criteria**: POC SVG renders correctly on GitHub profile README with all tested features working. Document which methods work and which don't. Update animation and blending strategy accordingly.
+
+### 5.7 Data Requirements
 
 | Field | Source | Type |
 |-------|--------|------|
@@ -193,7 +247,7 @@ jobs:
 | Current Streak | Computed | Integer (days) |
 | Most Active Day | Computed | Weekday name |
 
-### 5.5 Non-Functional Requirements
+### 5.8 Non-Functional Requirements
 
 | Category | Requirement |
 |----------|-------------|
@@ -201,7 +255,7 @@ jobs:
 | **Reliability** | Graceful handling of GitHub API rate limits (with retry) |
 | **Accessibility** | WCAG AA contrast ratios for all text elements |
 | **Security** | No user data stored; token used only for API calls |
-| **Compatibility** | Node.js 18+ |
+| **Compatibility** | Node.js 20+ |
 | **Package Size** | npm package < 2MB (no heavy dependencies) |
 
 ---
@@ -266,7 +320,7 @@ cosmio/
 | Category | Technology | Rationale |
 |----------|-----------|-----------|
 | **Language** | TypeScript 5.x | Type safety for SVG generation |
-| **Runtime** | Node.js 18+ | GitHub Action compatibility |
+| **Runtime** | Node.js 20+ | GitHub Action compatibility (node24 runner) |
 | **CLI Framework** | commander.js | Lightweight, standard CLI parsing |
 | **HTTP Client** | undici / fetch | Built-in Node.js fetch (no axios needed) |
 | **Noise Generation** | simplex-noise | Lightweight, zero-dependency noise |
@@ -374,6 +428,7 @@ No other external services required. This is a fully self-contained tool.
 
 | Task | Description |
 |------|-------------|
+| **GitHub rendering POC** | Build minimal SVG testing SMIL, CSS animations, `<feBlend>`, blur filters on actual GitHub README. Document results. **(Gate: must pass before proceeding)** |
 | Project scaffolding | package.json, tsconfig, vitest, tsup, ESLint |
 | GitHub GraphQL client | Fetch `contributionsCollection` with error handling + retry |
 | Contribution data parser | Parse API response into `ContributionData` type |
@@ -390,7 +445,7 @@ No other external services required. This is a fully self-contained tool.
 |------|-------------|
 | Color palette module | Dark/light palette with all contribution level colors |
 | Simplex noise integration | Noise-based nebula boundary distortion |
-| Nebula body renderer | Radial gradient circles with screen/multiply blending |
+| Nebula body renderer | Radial gradient circles with `<feBlend>` screen/multiply blending |
 | Star particles | Background star field generation |
 | Nebula filaments | Gas tendril path generation |
 | Glow filters | SVG filter definitions for nebula + star glow |
@@ -446,7 +501,7 @@ npx cosmio --user <username> --theme nebula
 | Entry point | `dist/index.js` |
 | Binary | `cosmio` (via `bin` field) |
 | Module format | ESM + CJS dual publish |
-| Minimum Node | 18 |
+| Minimum Node | 20 |
 
 ### 11.2 GitHub Action
 
@@ -454,7 +509,7 @@ npx cosmio --user <username> --theme nebula
 |------|--------|
 | Action name | `Cosmio — Space Contribution Visualizer` |
 | Marketplace category | Utilities |
-| Runs on | `node20` |
+| Runs on | `node24` |
 | Inputs | `github_token`, `theme`, `title`, `output_dir`, `year` |
 | Outputs | `dark_svg_path`, `light_svg_path` |
 
@@ -470,4 +525,5 @@ npx cosmio --user <username> --theme nebula
 
 | Version | Date | Changes | Author |
 |---------|------|---------|--------|
+| 1.1 | 2026-02-03 | Fix CRT-01 (node20→node24), CRT-02 (SMIL-first animation strategy), CRT-03 (feBlend over mix-blend-mode). Add Phase 0 POC gate. | — |
 | 1.0 | 2026-02-03 | Initial PRD creation | — |

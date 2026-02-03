@@ -82,7 +82,9 @@ Transforms 52w × 7d data into nebula forms.
 1. Generate **radial gradient circles** centered on each contribution cell
 2. Distort circle boundaries irregularly using simplex noise
 3. Blend gradients of adjacent cells naturally
-4. Use `mix-blend-mode: screen` (dark) / `multiply` (light) for light overlap
+4. Use SVG `<feBlend mode="screen">` (dark) / `<feBlend mode="multiply">` (light) for overlap
+
+> **Note**: Use SVG-native `<feBlend>` filter primitives instead of CSS `mix-blend-mode` to ensure reliable rendering in GitHub's `<img>` tag context. See PRD Section 5.5 for details.
 
 ```
 Cell size: 10px × 10px (base grid)
@@ -306,9 +308,22 @@ frequency = 0.05 (lower = smoother forms)
 
 ### Blending Strategy
 
-- Dark: overlay each cell's glow with `screen` blending → bright areas naturally add up
-- Light: use `multiply` blending → dark areas naturally stack
+- Dark: overlay each cell's glow with `<feBlend mode="screen">` → bright areas naturally add up
+- Light: use `<feBlend mode="multiply">` → dark areas naturally stack
 - Adjust spacing so adjacent cell glows overlap by 40%+
+- Use SVG filter primitives (not CSS `mix-blend-mode`) for GitHub `<img>` compatibility
+
+```xml
+<!-- Nebula blend filter (dark mode) -->
+<filter id="nebula-blend">
+  <feBlend in="SourceGraphic" in2="BackgroundImage" mode="screen"/>
+</filter>
+
+<!-- Nebula blend filter (light mode) -->
+<filter id="nebula-blend-light">
+  <feBlend in="SourceGraphic" in2="BackgroundImage" mode="multiply"/>
+</filter>
+```
 
 ### Performance Optimization
 
