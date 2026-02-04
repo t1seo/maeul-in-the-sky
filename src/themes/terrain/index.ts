@@ -85,8 +85,8 @@ function renderMode(
   const cells100 = enrichGridCells100(cells, data);
 
   // Compute isometric layout
-  const originX = 436;
-  const originY = 20;
+  const originX = 405;
+  const originY = 16;
 
   // Get isometric cells for effects and assets
   const isoCells = getIsoCells(cells100, palette, originX, originY);

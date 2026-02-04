@@ -90,6 +90,6 @@ npx tsx scripts/generate-cases.ts      # Generate case study SVGs (examples/case
 ## Important Constants
 
 - SVG viewport: 840 x 240
-- `THW = 7` (tile half-width), `THH = 4` (tile half-height)
+- `THW = 8` (tile half-width), `THH = 3.5` (tile half-height)
 - Grid: 52 weeks x 7 days
 - Animation budget: 50 max (water 15, sparkle 10, clouds 2, windmills 4, flags 4)

@@ -6,9 +6,9 @@ import { getSeasonZone } from './seasons.js';
 // ── Isometric Constants ──────────────────────────────────────
 
 /** Half-width of one isometric tile (x-axis) */
-const THW = 7;
+const THW = 8;
 /** Half-height of one isometric tile (y-axis) */
-const THH = 3;
+const THH = 3.5;
 
 // ── Isometric Projection ─────────────────────────────────────
 
