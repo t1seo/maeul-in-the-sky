@@ -1,4 +1,4 @@
-# Cosmio Design System
+# Maeul Design System
 
 > Common design system for a tool that transforms GitHub contribution data into space-themed animated SVGs
 
@@ -24,9 +24,9 @@
 ```html
 <!-- Usage in GitHub README -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="cosmio-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="cosmio-light.svg">
-  <img alt="Cosmio" src="cosmio-dark.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="maeul-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="maeul-light.svg">
+  <img alt="Maeul" src="maeul-dark.svg">
 </picture>
 ```
 
@@ -184,15 +184,15 @@ Common statistics displayed across all themes:
 ## 8. File Naming Convention
 
 ```
-cosmio-{theme}-{mode}.svg
+maeul-{theme}-{mode}.svg
 
 Examples:
-cosmio-nebula-dark.svg
-cosmio-nebula-light.svg
-cosmio-constellation-dark.svg
-cosmio-constellation-light.svg
-cosmio-voyage-dark.svg
-cosmio-voyage-light.svg
-cosmio-defense-dark.svg
-cosmio-defense-light.svg
+maeul-nebula-dark.svg
+maeul-nebula-light.svg
+maeul-constellation-dark.svg
+maeul-constellation-light.svg
+maeul-voyage-dark.svg
+maeul-voyage-light.svg
+maeul-defense-dark.svg
+maeul-defense-light.svg
 ```

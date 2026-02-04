@@ -1,4 +1,4 @@
-name: Generate Terraviz Demo
+name: Generate Maeul Demo
 on:
   schedule:
     - cron: '0 0 * * *'
@@ -14,4 +14,4 @@ jobs:
           theme: terrain
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'chore: update terraviz SVG'
+          commit_message: 'chore: update maeul SVG'

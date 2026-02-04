@@ -59,7 +59,7 @@ function generateRealisticData(username: string): ContributionData {
 }
 
 // Generate SVGs for all themes
-const data = generateRealisticData('terraviz-user');
+const data = generateRealisticData('maeul-user');
 const outDir = join(import.meta.dirname, '..', 'examples');
 mkdirSync(outDir, { recursive: true });
 
@@ -70,13 +70,13 @@ console.log(`Stats: ${data.stats.total} contributions, ${data.stats.longestStrea
 for (const themeName of themes) {
   const theme = getTheme(themeName)!;
   const output = theme.render(data, {
-    title: `@terraviz-user`,
+    title: `@maeul-user`,
     width: 840,
     height: 240,
   });
 
-  const darkPath = join(outDir, `terraviz-${themeName}-dark.svg`);
-  const lightPath = join(outDir, `terraviz-${themeName}-light.svg`);
+  const darkPath = join(outDir, `maeul-${themeName}-dark.svg`);
+  const lightPath = join(outDir, `maeul-${themeName}-light.svg`);
 
   writeFileSync(darkPath, output.dark, 'utf-8');
   writeFileSync(lightPath, output.light, 'utf-8');

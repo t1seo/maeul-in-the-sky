@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Terraviz CLI — Transform GitHub contributions into animated terrain SVGs
+ * Maeul CLI — Transform GitHub contributions into animated terrain SVGs
  */
 
 import { Command } from 'commander';
@@ -19,7 +19,7 @@ import './themes/terrain/index.js';
 const program = new Command();
 
 program
-  .name('terraviz')
+  .name('maeul')
   .description('Transform GitHub contributions into animated terrain SVGs')
   .version('0.1.0')
   .requiredOption('-u, --user <username>', 'GitHub username')
@@ -66,8 +66,8 @@ program
       });
 
       // Write output files
-      const darkPath = join(options.output, `terraviz-${options.theme}-dark.svg`);
-      const lightPath = join(options.output, `terraviz-${options.theme}-light.svg`);
+      const darkPath = join(options.output, `maeul-${options.theme}-dark.svg`);
+      const lightPath = join(options.output, `maeul-${options.theme}-light.svg`);
 
       await writeFile(darkPath, output.dark, 'utf-8');
       await writeFile(lightPath, output.light, 'utf-8');

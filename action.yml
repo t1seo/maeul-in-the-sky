@@ -1,4 +1,4 @@
-name: 'Terraviz - Contribution Terrain Visualizer'
+name: 'Maeul - Contribution Terrain Visualizer'
 description: 'Generate animated terrain SVGs from GitHub contributions'
 branding:
   icon: 'map'

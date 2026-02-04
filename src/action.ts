@@ -1,5 +1,5 @@
 /**
- * Terraviz GitHub Action entry point
+ * Maeul GitHub Action entry point
  *
  * Reads action inputs, fetches contribution data, renders themed SVGs,
  * and writes them to the specified output directory.
@@ -66,8 +66,8 @@ async function run(): Promise<void> {
     });
 
     // Write output files
-    const darkPath = join(outputDir, 'terraviz-dark.svg');
-    const lightPath = join(outputDir, 'terraviz-light.svg');
+    const darkPath = join(outputDir, 'maeul-dark.svg');
+    const lightPath = join(outputDir, 'maeul-light.svg');
 
     await writeFile(darkPath, output.dark, 'utf-8');
     await writeFile(lightPath, output.light, 'utf-8');

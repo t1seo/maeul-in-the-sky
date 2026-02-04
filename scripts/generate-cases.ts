@@ -159,7 +159,7 @@ for (const c of cases) {
 const html = `<!DOCTYPE html>
 <html>
 <head>
-  <title>Terraviz — Case Studies</title>
+  <title>Maeul — Case Studies</title>
   <style>
     body { margin: 20px 40px; font-family: system-ui; background: #1a1a2e; color: #e0e0e0; }
     h1 { color: #fff; margin-bottom: 8px; }
@@ -173,7 +173,7 @@ const html = `<!DOCTYPE html>
   </style>
 </head>
 <body>
-  <h1>Terraviz — Terrain Theme Case Studies</h1>
+  <h1>Maeul — Terrain Theme Case Studies</h1>
   <p>7 different contribution patterns showing how the terrain adapts</p>
   ${htmlParts.join('\n')}
 </body>

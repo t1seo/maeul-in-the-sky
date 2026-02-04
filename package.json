@@ -1,10 +1,10 @@
 {
-  "name": "terraviz",
+  "name": "maeul",
   "version": "0.1.0",
   "description": "Transform GitHub contributions into animated terrain SVGs",
   "type": "module",
   "bin": {
-    "terraviz": "./dist/index.js"
+    "maeul": "./dist/index.js"
   },
   "main": "./dist/lib.cjs",
   "module": "./dist/lib.js",
@@ -48,11 +48,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/t1seo/terraviz.git"
+    "url": "https://github.com/t1seo/maeul.git"
   },
-  "homepage": "https://github.com/t1seo/terraviz",
+  "homepage": "https://github.com/t1seo/maeul",
   "bugs": {
-    "url": "https://github.com/t1seo/terraviz/issues"
+    "url": "https://github.com/t1seo/maeul/issues"
   },
   "dependencies": {
     "@actions/core": "^3.0.0",
