@@ -21,8 +21,6 @@
 
 </div>
 
----
-
 ## What is Maeul in the Sky?
 
 Maeul in the Sky (천공의 마을) turns your GitHub contribution history into an animated isometric terrain SVG. *Maeul* (마을) is Korean for "village" — your contribution graph becomes a living village floating in the sky. Each day's contribution level becomes a terrain block — from deep water (no activity) to towering city buildings (peak activity). The terrain transitions through four seasons with 48 unique seasonal assets, biome generation (rivers, ponds, forests), and ambient animations.
@@ -46,8 +44,6 @@ Maeul in the Sky (천공의 마을) turns your GitHub contribution history into 
 | ![](.github/assets/preview-sparse.svg) | ![](.github/assets/preview-max.svg) |
 
 </details>
-
----
 
 ## Quick Start
 
@@ -98,8 +94,6 @@ Then add this to your profile README:
 | `year` | Target year | Current year |
 | `hemisphere` | Seasonal mapping (`north` or `south`) | `north` |
 
----
-
 ## How Does the Terrain Work?
 
 Each square on your GitHub contribution graph becomes a terrain block. The more you contribute on a given day, the more developed that block becomes.
@@ -121,8 +115,6 @@ Each square on your GitHub contribution graph becomes a terrain block. The more 
 - **Commit more on a given day** → That day's land upgrades from grass to forest to buildings
 
 A consistent contributor who codes daily will have a lush island full of villages. A burst contributor who codes intensely a few days a week will have scattered but tall cities rising from the sea.
-
----
 
 ## License
 
