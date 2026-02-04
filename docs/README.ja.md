@@ -72,7 +72,7 @@ jobs:
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./maeul-in-the-sky-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./maeul-in-the-sky-light.svg">
-  <img alt="GitHubコントリビューション地形" src="./maeul-in-the-sky-dark.svg" width="840">
+  <img alt="GitHubコントリビューション地形" src="./maeul-in-the-sky-dark.svg" width="100%">
 </picture>
 ```
 
