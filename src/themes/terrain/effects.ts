@@ -210,7 +210,7 @@ export function renderCelestials(seed: number, palette: TerrainPalette100, isDar
     }
 
     // Crescent moon
-    const mx = 680 + rng() * 80;
+    const mx = 750 + rng() * 60;
     const my = 18 + rng() * 15;
     const mr = 8;
     parts.push(
@@ -225,7 +225,7 @@ export function renderCelestials(seed: number, palette: TerrainPalette100, isDar
     );
   } else {
     // Sun: circle with radiating lines
-    const sx = 720 + rng() * 60;
+    const sx = 770 + rng() * 50;
     const sy = 20 + rng() * 12;
     const sr = 7;
 
@@ -276,7 +276,7 @@ export function renderClouds(seed: number, palette: TerrainPalette100): string {
   const clouds: string[] = [];
 
   for (let i = 0; i < NUM_CLOUDS; i++) {
-    const baseCx = 120 + rng() * 550;
+    const baseCx = 250 + rng() * 500;
     const baseCy = 20 + rng() * 60;
     const scale = 0.8 + rng() * 0.5; // size variation
     const dur = (35 + rng() * 20).toFixed(0);

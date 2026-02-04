@@ -4,10 +4,12 @@
  * Divides the 52-week contribution grid into 8 seasonal zones so the
  * terrain visually transitions through winter -> spring -> summer -> autumn.
  *
- * Zone layout (Northern Hemisphere):
- *   Week:  0--6  7--12  13--19  20--25  26--32  33--38  39--45  46--51
- *   Zone:    0     1      2       3       4       5       6       7
- *   Season: WIN  W->Sp   SPR   Sp->Su   SUM   Su->Au   AUT   Au->W
+ * Zone layout (Northern Hemisphere, visual right-to-left):
+ *   Week:  51-46  45-40  39-33  32-26  25-19  18-13  12-6   5-0
+ *   Zone:    0      1      2      3      4      5      6     7
+ *   Season: WIN   W->Sp   SPR  Sp->Su   SUM  Su->Au   AUT  Au->W
+ *
+ * Rightmost (week 51) = Winter, leftmost (week 0) = Autumn→Winter.
  *
  * Southern Hemisphere: shift week by +26 (mod 52) before zone lookup.
  * Summer (zone 4) = base palette (no tinting).
@@ -74,6 +76,7 @@ export function getSeasonZone(week: number, hemisphere: Hemisphere = 'north'): S
   if (hemisphere === 'south') {
     w = (week + 26) % 52;
   }
+  w = 51 - w; // Reverse: rightmost weeks (51) = winter
   w = clamp(w, 0, 51);
 
   for (const bound of ZONE_BOUNDS) {
@@ -110,6 +113,7 @@ export function getTransitionBlend(week: number, hemisphere: Hemisphere = 'north
   if (hemisphere === 'south') {
     w = (week + 26) % 52;
   }
+  w = 51 - w; // Reverse: match getSeasonZone direction
   w = clamp(w, 0, 51);
 
   const zone = getSeasonZone(week, hemisphere);

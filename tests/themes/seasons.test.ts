@@ -11,48 +11,49 @@ import {
 import type { SeasonZone, SeasonalTint } from '../../src/themes/terrain/seasons.js';
 
 describe('getSeasonZone', () => {
-  it('maps week 0 to zone 0 (winter)', () => {
-    expect(getSeasonZone(0)).toBe(0);
+  // Reversed mapping: right (week 51) = winter, left (week 0) = autumn→winter
+  it('maps week 51 to zone 0 (winter, rightmost)', () => {
+    expect(getSeasonZone(51)).toBe(0);
   });
 
-  it('maps week 3 to zone 0 (winter)', () => {
-    expect(getSeasonZone(3)).toBe(0);
+  it('maps week 48 to zone 0 (winter)', () => {
+    expect(getSeasonZone(48)).toBe(0);
   });
 
-  it('maps week 6 to zone 0 (winter)', () => {
-    expect(getSeasonZone(6)).toBe(0);
+  it('maps week 45 to zone 0 (winter)', () => {
+    expect(getSeasonZone(45)).toBe(0);
   });
 
-  it('maps week 7 to zone 1 (winter->spring)', () => {
-    expect(getSeasonZone(7)).toBe(1);
+  it('maps week 44 to zone 1 (winter->spring)', () => {
+    expect(getSeasonZone(44)).toBe(1);
   });
 
-  it('maps week 15 to zone 2 (spring)', () => {
-    expect(getSeasonZone(15)).toBe(2);
+  it('maps week 36 to zone 2 (spring)', () => {
+    expect(getSeasonZone(36)).toBe(2);
   });
 
-  it('maps week 22 to zone 3 (spring->summer)', () => {
-    expect(getSeasonZone(22)).toBe(3);
+  it('maps week 29 to zone 3 (spring->summer)', () => {
+    expect(getSeasonZone(29)).toBe(3);
   });
 
-  it('maps week 30 to zone 4 (summer)', () => {
-    expect(getSeasonZone(30)).toBe(4);
+  it('maps week 21 to zone 4 (summer)', () => {
+    expect(getSeasonZone(21)).toBe(4);
   });
 
-  it('maps week 35 to zone 5 (summer->autumn)', () => {
-    expect(getSeasonZone(35)).toBe(5);
+  it('maps week 16 to zone 5 (summer->autumn)', () => {
+    expect(getSeasonZone(16)).toBe(5);
   });
 
-  it('maps week 42 to zone 6 (autumn)', () => {
-    expect(getSeasonZone(42)).toBe(6);
+  it('maps week 9 to zone 6 (autumn)', () => {
+    expect(getSeasonZone(9)).toBe(6);
   });
 
-  it('maps week 48 to zone 7 (autumn->winter)', () => {
-    expect(getSeasonZone(48)).toBe(7);
+  it('maps week 3 to zone 7 (autumn->winter)', () => {
+    expect(getSeasonZone(3)).toBe(7);
   });
 
-  it('maps week 51 to zone 7', () => {
-    expect(getSeasonZone(51)).toBe(7);
+  it('maps week 0 to zone 7 (autumn->winter, leftmost)', () => {
+    expect(getSeasonZone(0)).toBe(7);
   });
 
   it('covers all 52 weeks without gaps', () => {
@@ -68,17 +69,12 @@ describe('getSeasonZone', () => {
 });
 
 describe('hemisphere flip (south)', () => {
-  it('week 0 (Jan) in south = summer (zone 4)', () => {
-    expect(getSeasonZone(0, 'south')).toBe(4);
+  it('week 51 (rightmost) in south = summer (zone 4)', () => {
+    expect(getSeasonZone(51, 'south')).toBe(4);
   });
 
-  it('week 26 in south = winter (zone 0)', () => {
-    expect(getSeasonZone(26, 'south')).toBe(0);
-  });
-
-  it('week 13 in south = summer->autumn transition (zone 5)', () => {
-    // south: (13 + 26) % 52 = 39 -> zone 6 (autumn)
-    expect(getSeasonZone(13, 'south')).toBe(6);
+  it('week 25 in south = winter (zone 0)', () => {
+    expect(getSeasonZone(25, 'south')).toBe(0);
   });
 
   it('shifts by exactly 26 weeks', () => {
@@ -94,21 +90,21 @@ describe('hemisphere flip (south)', () => {
 
 describe('getTransitionBlend', () => {
   it('peak winter zone returns t=0 with from=to=winter', () => {
-    const blend = getTransitionBlend(3);
+    const blend = getTransitionBlend(48);
     expect(blend.from).toBe('winter');
     expect(blend.to).toBe('winter');
     expect(blend.t).toBe(0);
   });
 
-  it('transition zone 1 (week 7) returns from=winter, to=spring', () => {
-    const blend = getTransitionBlend(7);
+  it('transition zone 1 (week 44) returns from=winter, to=spring', () => {
+    const blend = getTransitionBlend(44);
     expect(blend.from).toBe('winter');
     expect(blend.to).toBe('spring');
     expect(blend.t).toBeCloseTo(0, 1);
   });
 
   it('transition zone 1 mid-point has t near 0.5', () => {
-    const blend = getTransitionBlend(10); // week 10 in zone 1 (7-12)
+    const blend = getTransitionBlend(41); // effective week 10 in zone 1 (7-12)
     expect(blend.from).toBe('winter');
     expect(blend.to).toBe('spring');
     expect(blend.t).toBeGreaterThan(0.3);
@@ -116,7 +112,7 @@ describe('getTransitionBlend', () => {
   });
 
   it('summer peak zone returns t=0 with from=to=summer', () => {
-    const blend = getTransitionBlend(30);
+    const blend = getTransitionBlend(21);
     expect(blend.from).toBe('summer');
     expect(blend.to).toBe('summer');
     expect(blend.t).toBe(0);
@@ -125,7 +121,7 @@ describe('getTransitionBlend', () => {
 
 describe('getSeasonalTint', () => {
   it('summer tint has no color shift', () => {
-    const tint = getSeasonalTint(30);
+    const tint = getSeasonalTint(21); // week 21 = summer (zone 4)
     expect(tint.colorShift).toBe(0);
     expect(tint.warmth).toBe(0);
     expect(tint.snowCoverage).toBe(0);
@@ -134,29 +130,29 @@ describe('getSeasonalTint', () => {
   });
 
   it('winter tint has snow coverage and desaturation', () => {
-    const tint = getSeasonalTint(3);
+    const tint = getSeasonalTint(48); // week 48 = winter (zone 0)
     expect(tint.snowCoverage).toBeGreaterThan(0.3);
     expect(tint.saturation).toBeLessThan(0.7);
     expect(tint.greenMul).toBeLessThan(0.7);
   });
 
   it('spring tint has green boost and saturation increase', () => {
-    const tint = getSeasonalTint(15);
+    const tint = getSeasonalTint(36); // week 36 = spring (zone 2)
     expect(tint.greenMul).toBeGreaterThan(1);
     expect(tint.saturation).toBeGreaterThan(1);
     expect(tint.snowCoverage).toBe(0);
   });
 
   it('autumn tint has warmth and reduced green', () => {
-    const tint = getSeasonalTint(42);
+    const tint = getSeasonalTint(9); // week 9 = autumn (zone 6)
     expect(tint.warmth).toBeGreaterThan(15);
     expect(tint.greenMul).toBeLessThan(0.75);
   });
 
   it('transition zones produce interpolated tints', () => {
-    const winterTint = getSeasonalTint(3);
-    const springTint = getSeasonalTint(15);
-    const transitionTint = getSeasonalTint(10); // W->Sp
+    const winterTint = getSeasonalTint(48);
+    const springTint = getSeasonalTint(36);
+    const transitionTint = getSeasonalTint(41); // W->Sp transition
 
     // Transition snow should be between winter and spring
     expect(transitionTint.snowCoverage).toBeLessThan(winterTint.snowCoverage);
@@ -196,7 +192,7 @@ describe('lerpTint', () => {
 
 describe('applyTint', () => {
   it('summer tint (identity) preserves colors', () => {
-    const summerTint = getSeasonalTint(30);
+    const summerTint = getSeasonalTint(21);
     const [r, g, b] = applyTint(100, 150, 80, summerTint);
     expect(r).toBe(100);
     expect(g).toBe(150);
@@ -204,7 +200,7 @@ describe('applyTint', () => {
   });
 
   it('winter tint shifts toward white/blue', () => {
-    const winterTint = getSeasonalTint(3);
+    const winterTint = getSeasonalTint(48);
     const [r, g, b] = applyTint(60, 140, 50, winterTint);
     // Should be lighter (closer to white) due to snow coverage
     expect(r).toBeGreaterThan(60);
@@ -213,7 +209,7 @@ describe('applyTint', () => {
   });
 
   it('autumn tint increases warmth (more red, less blue)', () => {
-    const autumnTint = getSeasonalTint(42);
+    const autumnTint = getSeasonalTint(9);
     const [r, , b] = applyTint(100, 100, 100, autumnTint);
     // Warmth adds red and subtracts blue
     expect(r).toBeGreaterThan(100);
@@ -234,48 +230,48 @@ describe('applyTint', () => {
 
 describe('applyTintToHex', () => {
   it('returns valid hex color', () => {
-    const result = applyTintToHex('#4a8828', getSeasonalTint(3));
+    const result = applyTintToHex('#4a8828', getSeasonalTint(48));
     expect(result).toMatch(/^#[0-9a-f]{6}$/);
   });
 
   it('summer tint preserves hex color', () => {
-    expect(applyTintToHex('#4a8828', getSeasonalTint(30))).toBe('#4a8828');
+    expect(applyTintToHex('#4a8828', getSeasonalTint(21))).toBe('#4a8828');
   });
 });
 
 describe('getSeasonalPoolOverrides', () => {
   it('winter adds snow assets and removes flowers', () => {
-    const { add, remove } = getSeasonalPoolOverrides(3, 'north', 50);
+    const { add, remove } = getSeasonalPoolOverrides(48, 'north', 50);
     expect(add.some(a => a.includes('snow') || a.includes('Snow'))).toBe(true);
     expect(remove.has('flower')).toBe(true);
     expect(remove.has('butterfly')).toBe(true);
   });
 
   it('spring adds cherry blossoms and removes snow', () => {
-    const { add, remove } = getSeasonalPoolOverrides(15, 'north', 50);
+    const { add, remove } = getSeasonalPoolOverrides(36, 'north', 50);
     expect(add).toContain('cherryBlossom');
     expect(remove.has('snowman')).toBe(true);
   });
 
   it('autumn adds maple trees and removes spring assets', () => {
-    const { add, remove } = getSeasonalPoolOverrides(42, 'north', 50);
+    const { add, remove } = getSeasonalPoolOverrides(9, 'north', 50);
     expect(add).toContain('autumnMaple');
     expect(remove.has('cherryBlossom')).toBe(true);
   });
 
   it('summer is mostly base (minimal changes)', () => {
-    const { add, remove } = getSeasonalPoolOverrides(30, 'north', 50);
+    const { add, remove } = getSeasonalPoolOverrides(21, 'north', 50);
     // Summer should remove winter/autumn assets
     expect(remove.has('snowman')).toBe(true);
     expect(remove.has('autumnMaple')).toBe(true);
   });
 
   it('settlement level gets appropriate seasonal assets', () => {
-    const winterSettlement = getSeasonalPoolOverrides(3, 'north', 80);
+    const winterSettlement = getSeasonalPoolOverrides(48, 'north', 80);
     expect(winterSettlement.add).toContain('igloo');
     expect(winterSettlement.add).toContain('sled');
 
-    const springSettlement = getSeasonalPoolOverrides(15, 'north', 80);
+    const springSettlement = getSeasonalPoolOverrides(36, 'north', 80);
     expect(springSettlement.add).toContain('gardenBed');
   });
 });
