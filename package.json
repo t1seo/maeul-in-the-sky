@@ -1,6 +1,6 @@
 {
   "name": "maeul",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Transform GitHub contributions into animated terrain SVGs",
   "type": "module",
   "bin": {

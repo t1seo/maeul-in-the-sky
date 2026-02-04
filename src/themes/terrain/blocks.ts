@@ -1,7 +1,6 @@
 import type { GridCell100 } from '../shared.js';
 import type { TerrainPalette100, ElevationColors } from './palette.js';
 import type { BiomeContext } from './biomes.js';
-import type { Hemisphere } from './seasons.js';
 import { getSeasonZone } from './seasons.js';
 
 // ── Isometric Constants ──────────────────────────────────────
@@ -287,7 +286,7 @@ export function renderSeasonalTerrainBlocks(
   weekPalettes: TerrainPalette100[],
   originX: number,
   originY: number,
-  hemisphere: Hemisphere,
+  seasonRotation: number,
   biomeMap?: Map<string, BiomeContext>,
 ): string {
   // Build isometric cells using a reference palette (week 26 = summer)
@@ -300,7 +299,7 @@ export function renderSeasonalTerrainBlocks(
     // Get the per-week palette for this cell
     const weekIdx = Math.min(cell.week, weekPalettes.length - 1);
     const weekPalette = weekPalettes[weekIdx];
-    const zone = getSeasonZone(cell.week, hemisphere);
+    const zone = getSeasonZone(cell.week, seasonRotation);
 
     // Recompute colors using the week-specific palette
     const colors = weekPalette.getElevation(cell.level100);

@@ -3,7 +3,6 @@ import type { TerrainPalette100 } from './palette.js';
 import { THW, THH } from './blocks.js';
 import { seededRandom } from '../../utils/math.js';
 import type { BiomeContext } from './biomes.js';
-import type { Hemisphere, SeasonZone } from './seasons.js';
 import { getSeasonZone } from './seasons.js';
 
 // ── Animation Budget ─────────────────────────────────────────
@@ -449,7 +448,7 @@ export function renderWaterRipples(
 export function renderSnowParticles(
   isoCells: IsoCell[],
   seed: number,
-  hemisphere: Hemisphere = 'north',
+  seasonRotation: number = 0,
 ): string {
   const rng = seededRandom(seed + 9991);
   const particles: string[] = [];
@@ -458,7 +457,7 @@ export function renderSnowParticles(
 
   // Collect cells in winter zones (0, 1, 7)
   const winterCells = isoCells.filter(c => {
-    const zone = getSeasonZone(c.week, hemisphere);
+    const zone = getSeasonZone(c.week, seasonRotation);
     return zone === 0 || zone === 1 || zone === 7;
   });
 
@@ -467,7 +466,7 @@ export function renderSnowParticles(
   const selected = selectEvenly(winterCells, maxParticles);
   for (const cell of selected) {
     if (count >= maxParticles) break;
-    const zone = getSeasonZone(cell.week, hemisphere);
+    const zone = getSeasonZone(cell.week, seasonRotation);
     // More particles in peak winter (zone 0), fewer in transitions
     const density = zone === 0 ? 0.8 : 0.4;
     if (rng() > density) continue;
@@ -496,7 +495,7 @@ export function renderFallingPetals(
   isoCells: IsoCell[],
   seed: number,
   palette: TerrainPalette100,
-  hemisphere: Hemisphere = 'north',
+  seasonRotation: number = 0,
 ): string {
   const rng = seededRandom(seed + 7771);
   const petals: string[] = [];
@@ -507,7 +506,7 @@ export function renderFallingPetals(
 
   // Collect cells in spring zones (1, 2, 3)
   const springCells = isoCells.filter(c => {
-    const zone = getSeasonZone(c.week, hemisphere);
+    const zone = getSeasonZone(c.week, seasonRotation);
     return zone === 2 || zone === 1 || zone === 3;
   });
 
@@ -516,7 +515,7 @@ export function renderFallingPetals(
   const selected = selectEvenly(springCells, maxPetals);
   for (const cell of selected) {
     if (count >= maxPetals) break;
-    const zone = getSeasonZone(cell.week, hemisphere);
+    const zone = getSeasonZone(cell.week, seasonRotation);
     const density = zone === 2 ? 0.7 : 0.35;
     if (rng() > density) continue;
 
@@ -547,7 +546,7 @@ export function renderFallingLeaves(
   isoCells: IsoCell[],
   seed: number,
   palette: TerrainPalette100,
-  hemisphere: Hemisphere = 'north',
+  seasonRotation: number = 0,
 ): string {
   const rng = seededRandom(seed + 5551);
   const leaves: string[] = [];
@@ -564,7 +563,7 @@ export function renderFallingLeaves(
 
   // Collect cells in autumn zones (5, 6, 7)
   const autumnCells = isoCells.filter(c => {
-    const zone = getSeasonZone(c.week, hemisphere);
+    const zone = getSeasonZone(c.week, seasonRotation);
     return zone === 6 || zone === 5 || zone === 7;
   });
 
@@ -573,7 +572,7 @@ export function renderFallingLeaves(
   const selected = selectEvenly(autumnCells, maxLeaves);
   for (const cell of selected) {
     if (count >= maxLeaves) break;
-    const zone = getSeasonZone(cell.week, hemisphere);
+    const zone = getSeasonZone(cell.week, seasonRotation);
     const density = zone === 6 ? 0.7 : 0.35;
     if (rng() > density) continue;
 

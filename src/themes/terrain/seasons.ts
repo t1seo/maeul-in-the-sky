@@ -4,14 +4,17 @@
  * Divides the 52-week contribution grid into 8 seasonal zones so the
  * terrain visually transitions through winter -> spring -> summer -> autumn.
  *
- * Zone layout (Northern Hemisphere, visual right-to-left):
- *   Week:  51-46  45-40  39-33  32-26  25-19  18-13  12-6   5-0
+ * Zone layout (by rotated week index):
+ *   Weeks:  0-6    7-12   13-19  20-25  26-32  33-38  39-45  46-51
  *   Zone:    0      1      2      3      4      5      6     7
  *   Season: WIN   W->Sp   SPR  Sp->Su   SUM  Su->Au   AUT  Au->W
  *
- * Rightmost (week 51) = Winter, leftmost (week 0) = Autumn→Winter.
+ * A **rotation** offset aligns grid weeks to calendar months:
+ *   rotatedWeek = (week + rotation) % 52
+ * where `rotation` is computed from the oldest week's actual date
+ * relative to December 1 (start of winter in ZONE_BOUNDS).
  *
- * Southern Hemisphere: shift week by +26 (mod 52) before zone lookup.
+ * Southern Hemisphere: +26 added to rotation (6-month shift).
  * Summer (zone 4) = base palette (no tinting).
  */
 
@@ -65,18 +68,43 @@ const ZONE_BOUNDS: ZoneBound[] = [
   { zone: 7, start: 46, end: 51 },  // Autumn -> Winter
 ];
 
+// ── Rotation Computation ────────────────────────────────────
+
+/**
+ * Compute the season rotation offset from the oldest week's date.
+ *
+ * The rotation maps grid week 0 (oldest data) to the correct ZONE_BOUNDS
+ * position so that calendar months align with seasons.
+ *
+ * ZONE_BOUNDS start at week 0 = Winter (December).
+ * The rotation is the number of weeks between December 1 and the
+ * oldest week's date — so week 0 in the data lands on the right zone.
+ *
+ * Southern hemisphere adds +26 (6-month shift).
+ */
+export function computeSeasonRotation(
+  oldestWeekDate: Date,
+  hemisphere: Hemisphere = 'north',
+): number {
+  const year = oldestWeekDate.getFullYear();
+  const dec1 = new Date(year, 11, 1); // December 1 of that year
+  const refDate = oldestWeekDate < dec1
+    ? new Date(year - 1, 11, 1) // use previous year's Dec 1
+    : dec1;
+  const diffMs = oldestWeekDate.getTime() - refDate.getTime();
+  let rotation = Math.round(diffMs / (7 * 86_400_000));
+  if (hemisphere === 'south') rotation = (rotation + 26) % 52;
+  return ((rotation % 52) + 52) % 52;
+}
+
 // ── Zone Lookup ──────────────────────────────────────────────
 
 /**
- * Get the season zone for a given week, accounting for hemisphere.
- * Southern hemisphere shifts by +26 weeks (6 months).
+ * Get the season zone for a given week using the pre-computed rotation.
+ * `rotation` is obtained from `computeSeasonRotation()`.
  */
-export function getSeasonZone(week: number, hemisphere: Hemisphere = 'north'): SeasonZone {
-  let w = week;
-  if (hemisphere === 'south') {
-    w = (week + 26) % 52;
-  }
-  w = 51 - w; // Reverse: rightmost weeks (51) = winter
+export function getSeasonZone(week: number, rotation: number = 0): SeasonZone {
+  let w = (week + rotation) % 52;
   w = clamp(w, 0, 51);
 
   for (const bound of ZONE_BOUNDS) {
@@ -104,19 +132,15 @@ export function getZonePeakSeason(zone: SeasonZone): PeakSeason {
  * Get the blend factor within a transition zone (0 = start season, 1 = end season).
  * For peak zones, returns 0 (fully that season).
  */
-export function getTransitionBlend(week: number, hemisphere: Hemisphere = 'north'): {
+export function getTransitionBlend(week: number, rotation: number = 0): {
   from: PeakSeason;
   to: PeakSeason;
   t: number;
 } {
-  let w = week;
-  if (hemisphere === 'south') {
-    w = (week + 26) % 52;
-  }
-  w = 51 - w; // Reverse: match getSeasonZone direction
+  let w = (week + rotation) % 52;
   w = clamp(w, 0, 51);
 
-  const zone = getSeasonZone(week, hemisphere);
+  const zone = getSeasonZone(week, rotation);
 
   switch (zone) {
     case 0: return { from: 'winter', to: 'winter', t: 0 };
@@ -188,8 +212,8 @@ const SEASON_TINTS: Record<PeakSeason, SeasonalTint> = {
  * Get the seasonal tint for a given week.
  * Transition zones interpolate between neighboring peak tints.
  */
-export function getSeasonalTint(week: number, hemisphere: Hemisphere = 'north'): SeasonalTint {
-  const { from, to, t } = getTransitionBlend(week, hemisphere);
+export function getSeasonalTint(week: number, rotation: number = 0): SeasonalTint {
+  const { from, to, t } = getTransitionBlend(week, rotation);
   const a = SEASON_TINTS[from];
   const b = SEASON_TINTS[to];
   return lerpTint(a, b, t);
@@ -382,10 +406,10 @@ const SEASON_ADD: Record<PeakSeason, SeasonalAdditions> = {
  */
 export function getSeasonalPoolOverrides(
   week: number,
-  hemisphere: Hemisphere = 'north',
+  rotation: number = 0,
   level: number = 50,
 ): { add: string[]; remove: Set<string> } {
-  const { from, to, t } = getTransitionBlend(week, hemisphere);
+  const { from, to, t } = getTransitionBlend(week, rotation);
 
   // For peak seasons (t === 0 and from === to), use the season directly
   if (from === to) {

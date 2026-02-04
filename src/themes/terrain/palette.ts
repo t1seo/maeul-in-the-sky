@@ -1,6 +1,6 @@
 import type { ColorMode } from '../../core/types.js';
 import { lerp, clamp } from '../../utils/math.js';
-import type { Hemisphere, SeasonalTint } from './seasons.js';
+import type { SeasonalTint } from './seasons.js';
 import { getSeasonalTint, applyTintToHex, applyTintToRgb } from './seasons.js';
 
 /** RGB color tuple */
@@ -900,10 +900,10 @@ function tintAssetColors(assets: AssetColors, tint: SeasonalTint): AssetColors {
 export function getSeasonalPalette100(
   mode: ColorMode,
   week: number,
-  hemisphere: Hemisphere = 'north',
+  rotation: number = 0,
 ): TerrainPalette100 {
   const base = getTerrainPalette100(mode);
-  const tint = getSeasonalTint(week, hemisphere);
+  const tint = getSeasonalTint(week, rotation);
 
   // Summer has no tinting — return base palette
   if (tint.colorShift === 0 && tint.warmth === 0 && tint.snowCoverage === 0

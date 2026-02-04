@@ -2,7 +2,6 @@ import type { IsoCell } from './blocks.js';
 import type { TerrainPalette100, AssetColors } from './palette.js';
 import type { BiomeContext } from './biomes.js';
 import { seededRandom } from '../../utils/math.js';
-import type { Hemisphere } from './seasons.js';
 import { getSeasonalPoolOverrides } from './seasons.js';
 
 // ── Asset Type Definitions (38 total) ───────────────────────
@@ -185,7 +184,7 @@ export function selectAssets(
   seed: number,
   variantSeed?: number,
   biomeMap?: Map<string, BiomeContext>,
-  hemisphere?: Hemisphere,
+  seasonRotation?: number,
 ): PlacedAsset[] {
   const rng = seededRandom(seed);
   const variantRng = seededRandom(variantSeed ?? seed);
@@ -203,9 +202,9 @@ export function selectAssets(
     const biomeCtx = biomeMap?.get(`${cell.week},${cell.day}`);
     if (biomeCtx) pool = blendWithBiome(pool, biomeCtx, cell.level100);
 
-    // Apply seasonal overrides if hemisphere is provided
-    if (hemisphere) {
-      const { add, remove } = getSeasonalPoolOverrides(cell.week, hemisphere, cell.level100);
+    // Apply seasonal overrides if rotation is provided
+    if (seasonRotation != null) {
+      const { add, remove } = getSeasonalPoolOverrides(cell.week, seasonRotation, cell.level100);
       pool = {
         types: [...pool.types.filter(t => !remove.has(t)), ...add] as AssetType[],
         chance: pool.chance,
@@ -3414,9 +3413,9 @@ export function renderSeasonalTerrainAssets(
   weekPalettes: TerrainPalette100[],
   variantSeed?: number,
   biomeMap?: Map<string, BiomeContext>,
-  hemisphere?: Hemisphere,
+  seasonRotation?: number,
 ): string {
-  const placed = selectAssets(isoCells, seed, variantSeed, biomeMap, hemisphere);
+  const placed = selectAssets(isoCells, seed, variantSeed, biomeMap, seasonRotation);
 
   const svgParts = placed.map(a => {
     // Use per-week palette for this cell's week

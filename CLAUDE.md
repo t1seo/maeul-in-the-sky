@@ -33,8 +33,9 @@ src/
 - **100-level system**: Contribution counts map to levels 0-99 for fine-grained terrain
 - **Isometric projection**: `isoX = originX + (week - day) * THW`, `isoY = originY + (week + day) * THH`
 - **originX = 436**: Right-aligned terrain (rightmost edge at ~x=800)
-- **Season zones**: 8 zones (0-7), reversed so week 51 (rightmost) = winter. `w = 51 - w` before zone lookup
-- **Hemisphere**: Southern hemisphere shifts by +26 weeks before zone lookup
+- **Season zones**: 8 zones (0-7) aligned to calendar months via rotation. `w = (week + rotation) % 52` before zone lookup
+- **Season rotation**: `computeSeasonRotation(oldestDate, hemisphere)` computes weeks from Dec 1 to the oldest data week
+- **Hemisphere**: Southern hemisphere adds +26 to rotation (6-month shift)
 - **Seeded RNG**: All procedural generation uses `seededRandom(seed)` for deterministic output
 - **Biome map**: `Map<"week,day", BiomeContext>` — rivers follow noise-based paths, ponds form at low points
 

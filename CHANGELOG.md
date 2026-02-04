@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-02-05
+
+### Changed
+
+- **Calendar-aligned rolling seasons** — seasons now match actual calendar months instead of using a fixed week-51 = winter mapping. A rotation offset is computed from the oldest contribution week's date relative to December 1, so the terrain always shows the correct season regardless of when data starts.
+- **Season API signature** — all season functions (`getSeasonZone`, `getTransitionBlend`, `getSeasonalTint`, `getSeasonalPoolOverrides`) now accept a numeric `rotation` parameter instead of `hemisphere` string. Hemisphere is folded into the rotation via `computeSeasonRotation()`.
+- **Preview GIFs** — regenerated at 2x resolution (1680×480) with calendar-aligned seasons.
+
 ## [1.0.0] - 2026-02-04
 
 ### Added
@@ -20,11 +28,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dark & Light mode** — generates both variants with theme-aware palettes
 - **Hemisphere support** — northern and southern hemisphere seasonal mapping
 - **Right-aligned terrain** — grid positioned like GitHub's 3D contribution view
-- **Reversed season direction** — rightmost (most recent) weeks display current season
+- **Season direction** — rightmost (most recent) weeks display current season
 - **GitHub Action** — drop-in workflow with configurable inputs (theme, year, hemisphere, title)
 - **CLI** — `maeul -u <username>` with full option support
 - **Stats bar** — total contributions, current streak, longest streak, most active day
 - **Water system** — two-tone water overlays, ripple lines, river shimmer animations
 - **Contribution statistics** — streak calculation, day-of-week analysis
 
+[1.0.1]: https://github.com/t1seo/github-profile-maeul/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/t1seo/github-profile-maeul/releases/tag/v1.0.0

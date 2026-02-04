@@ -18,6 +18,7 @@ import { renderTerrainAssets, renderSeasonalTerrainAssets, renderAssetCSS } from
 import { generateBiomeMap } from './biomes.js';
 import { hash } from '../../utils/math.js';
 import type { Hemisphere } from './seasons.js';
+import { computeSeasonRotation } from './seasons.js';
 import type { TerrainPalette100 } from './palette.js';
 
 // ── Theme Definition ─────────────────────────────────────────
@@ -60,13 +61,15 @@ function renderMode(
   mode: ColorMode,
 ): string {
   const hemisphere: Hemisphere = options.hemisphere || 'north';
+  const oldestDate = new Date(data.weeks[0]?.days[0]?.date || new Date());
+  const seasonRotation = computeSeasonRotation(oldestDate, hemisphere);
   const seed = hash(data.username + mode);
   const variantSeed = hash(data.username + String(data.year));
 
   // Build per-week seasonal palette array (52 weeks)
   const weekPalettes: TerrainPalette100[] = [];
   for (let w = 0; w < 52; w++) {
-    weekPalettes.push(getSeasonalPalette100(mode, w, hemisphere));
+    weekPalettes.push(getSeasonalPalette100(mode, w, seasonRotation));
   }
 
   // Use mid-year (summer) palette as reference for shared utilities
@@ -102,21 +105,21 @@ function renderMode(
 
   // Use seasonal terrain blocks with per-week palettes
   const blocks = renderSeasonalTerrainBlocks(
-    cells100, weekPalettes, originX, originY, hemisphere, biomeMap,
+    cells100, weekPalettes, originX, originY, seasonRotation, biomeMap,
   );
 
   const waterOverlays = renderWaterOverlays(isoCells, palette, biomeMap);
   const waterRipples = renderWaterRipples(isoCells, palette, biomeMap);
 
-  // Use seasonal terrain assets with per-week palettes and hemisphere
+  // Use seasonal terrain assets with per-week palettes
   const assets = renderSeasonalTerrainAssets(
-    isoCells, seed, weekPalettes, variantSeed, biomeMap, hemisphere,
+    isoCells, seed, weekPalettes, variantSeed, biomeMap, seasonRotation,
   );
 
   // Seasonal particle effects
-  const snowParticles = renderSnowParticles(isoCells, seed, hemisphere);
-  const fallingPetals = renderFallingPetals(isoCells, seed, palette, hemisphere);
-  const fallingLeaves = renderFallingLeaves(isoCells, seed, palette, hemisphere);
+  const snowParticles = renderSnowParticles(isoCells, seed, seasonRotation);
+  const fallingPetals = renderFallingPetals(isoCells, seed, palette, seasonRotation);
+  const fallingLeaves = renderFallingLeaves(isoCells, seed, palette, seasonRotation);
 
   const overlays = renderAnimatedOverlays(isoCells, palette);
 
