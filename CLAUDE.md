@@ -2,11 +2,17 @@
 
 Animated isometric terrain SVG generator for GitHub contribution graphs.
 
+- **Package**: `maeul-in-the-sky`
+- **CLI**: `maeul-sky`
+- **SVG output**: `maeul-in-the-sky-dark.svg`, `maeul-in-the-sky-light.svg`
+
 ## Architecture
 
 ```
 src/
-├── api/client.ts          # GitHub GraphQL API client with retry
+├── api/
+│   ├── client.ts          # GitHub GraphQL API client with retry
+│   └── queries.ts         # GraphQL query strings
 ├── core/
 │   ├── types.ts           # Shared type definitions
 │   └── stats.ts           # Contribution statistics (streaks, totals)
@@ -25,7 +31,8 @@ src/
 │   ├── math.ts            # seededRandom, lerp, clamp
 │   ├── color.ts           # Color manipulation
 │   └── noise.ts           # Simplex noise wrapper
-└── index.ts               # CLI entry (commander.js)
+├── index.ts               # CLI entry (commander.js)
+└── action.ts              # GitHub Action entry point
 ```
 
 ## Key Concepts
@@ -47,6 +54,14 @@ npm run dev          # Watch mode
 npm test             # Run vitest
 npm run lint         # ESLint
 npm run typecheck    # TypeScript --noEmit
+```
+
+## Scripts
+
+```bash
+npx tsx scripts/generate-preview.ts    # Generate README preview SVGs (.github/assets/)
+npx tsx scripts/generate-examples.ts   # Generate example SVGs (examples/)
+npx tsx scripts/generate-cases.ts      # Generate case study SVGs (examples/cases/)
 ```
 
 ## Testing
