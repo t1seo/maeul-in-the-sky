@@ -1,5 +1,5 @@
 /**
- * Maeul GitHub Action entry point
+ * Maeul in the Sky GitHub Action entry point
  *
  * Reads action inputs, fetches contribution data, renders themed SVGs,
  * and writes them to the specified output directory.
@@ -70,8 +70,8 @@ async function run(): Promise<void> {
     });
 
     // Write output files
-    const darkPath = join(outputDir, `maeul-${themeName}-dark.svg`);
-    const lightPath = join(outputDir, `maeul-${themeName}-light.svg`);
+    const darkPath = join(outputDir, `maeul-in-the-sky-dark.svg`);
+    const lightPath = join(outputDir, `maeul-in-the-sky-light.svg`);
 
     await writeFile(darkPath, output.dark, 'utf-8');
     await writeFile(lightPath, output.light, 'utf-8');

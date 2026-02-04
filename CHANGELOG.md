@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Right-aligned terrain** — grid positioned like GitHub's 3D contribution view
 - **Season direction** — rightmost (most recent) weeks display current season
 - **GitHub Action** — drop-in workflow with configurable inputs (theme, year, hemisphere, title)
-- **CLI** — `maeul -u <username>` with full option support
+- **CLI** — `maeul-sky -u <username>` with full option support
 - **Stats bar** — total contributions, current streak, longest streak, most active day
 - **Water system** — two-tone water overlays, ripple lines, river shimmer animations
 - **Contribution statistics** — streak calculation, day-of-week analysis

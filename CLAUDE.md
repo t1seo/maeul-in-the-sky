@@ -1,4 +1,4 @@
-# Maeul
+# Maeul in the Sky
 
 Animated isometric terrain SVG generator for GitHub contribution graphs.
 

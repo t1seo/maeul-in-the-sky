@@ -1,6 +1,6 @@
 <div align="center">
 
-# Maeul (마을)
+# Maeul in the Sky (천공의 마을)
 
 **GitHub 기여 그래프를 애니메이션 아이소메트릭 지형으로 변환합니다**
 
@@ -12,9 +12,9 @@
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="../.github/assets/preview-dark.gif">
-  <source media="(prefers-color-scheme: light)" srcset="../.github/assets/preview-light.gif">
-  <img alt="Maeul 지형 미리보기" src="../.github/assets/preview-dark.gif" width="840">
+  <source media="(prefers-color-scheme: dark)" srcset="../.github/assets/preview-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="../.github/assets/preview-light.svg">
+  <img alt="Maeul in the Sky 지형 미리보기" src="../.github/assets/preview-dark.svg" width="840">
 </picture>
 
 *기여 그래프가 살아 있는 마을이 됩니다 — 계절 변화, 흐르는 강, 움직이는 구름과 함께.*
@@ -23,9 +23,9 @@
 
 ---
 
-## Maeul이란?
+## Maeul in the Sky란?
 
-Maeul(마을)은 GitHub 기여 히스토리를 애니메이션 아이소메트릭 지형 SVG로 변환합니다. 각 날의 기여 수준이 지형 블록이 됩니다 — 활동이 없으면 깊은 물, 최대 활동이면 높은 도시 건물. 4계절 순환과 48개의 계절 에셋, 바이옴 생성(강, 연못, 숲), 앰비언트 애니메이션을 포함합니다.
+Maeul in the Sky(천공의 마을)는 GitHub 기여 히스토리를 애니메이션 아이소메트릭 지형 SVG로 변환합니다. *Maeul*(마을)은 한국어로 "village"를 뜻합니다 — 기여 그래프가 하늘 위에 떠 있는 살아 있는 마을이 됩니다. 각 날의 기여 수준이 지형 블록이 됩니다 — 활동이 없으면 깊은 물, 최대 활동이면 높은 도시 건물. 4계절 순환과 48개의 계절 에셋, 바이옴 생성(강, 연못, 숲), 앰비언트 애니메이션을 포함합니다.
 
 ### 주요 기능
 
@@ -45,10 +45,10 @@ Maeul(마을)은 GitHub 기여 히스토리를 애니메이션 아이소메트�
 
 ### GitHub Action (권장)
 
-`.github/workflows/maeul.yml`에 워크플로를 추가하세요:
+`.github/workflows/maeul-sky.yml`에 워크플로를 추가하세요:
 
 ```yaml
-name: Generate Maeul Terrain
+name: Generate Maeul in the Sky Terrain
 on:
   schedule:
     - cron: '0 0 * * *'  # 매일
@@ -66,16 +66,16 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'chore: update maeul terrain'
+          commit_message: 'chore: update maeul-in-the-sky terrain'
 ```
 
 그 다음 프로필 README에 추가:
 
 ```markdown
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./maeul-terrain-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./maeul-terrain-light.svg">
-  <img alt="GitHub 기여 지형" src="./maeul-terrain-dark.svg" width="840">
+  <source media="(prefers-color-scheme: dark)" srcset="./maeul-in-the-sky-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./maeul-in-the-sky-light.svg">
+  <img alt="GitHub 기여 지형" src="./maeul-in-the-sky-dark.svg" width="840">
 </picture>
 ```
 
@@ -96,14 +96,14 @@ jobs:
 
 ```bash
 # 설치
-npm install -g maeul
+npm install -g maeul-in-the-sky
 
 # 지형 SVG 생성
 export GITHUB_TOKEN=ghp_your_token_here
-maeul -u your-username
+maeul-sky -u your-username
 
 # 옵션 예시
-maeul -u octocat --year 2025 --hemisphere south -o ./output
+maeul-sky -u octocat --year 2025 --hemisphere south -o ./output
 ```
 
 ### CLI 옵션

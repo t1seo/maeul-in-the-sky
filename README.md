@@ -1,6 +1,6 @@
 <div align="center">
 
-# Maeul
+# Maeul in the Sky
 
 **Transform your GitHub contributions into an animated isometric terrain**
 
@@ -12,9 +12,9 @@
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/preview-dark.gif">
-  <source media="(prefers-color-scheme: light)" srcset=".github/assets/preview-light.gif">
-  <img alt="Maeul terrain preview" src=".github/assets/preview-dark.gif" width="840">
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/preview-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset=".github/assets/preview-light.svg">
+  <img alt="Maeul in the Sky terrain preview" src=".github/assets/preview-dark.svg" width="840">
 </picture>
 
 *Your contribution graph as a living village — with seasonal weather, flowing rivers, and animated clouds.*
@@ -23,9 +23,9 @@
 
 ---
 
-## What is Maeul?
+## What is Maeul in the Sky?
 
-Maeul (마을, Korean for "village") turns your GitHub contribution history into an animated isometric terrain SVG. Each day's contribution level becomes a terrain block — from deep water (no activity) to towering city buildings (peak activity). The terrain transitions through four seasons with 48 unique seasonal assets, biome generation (rivers, ponds, forests), and ambient animations.
+Maeul in the Sky (천공의 마을) turns your GitHub contribution history into an animated isometric terrain SVG. *Maeul* (마을) is Korean for "village" — your contribution graph becomes a living village floating in the sky. Each day's contribution level becomes a terrain block — from deep water (no activity) to towering city buildings (peak activity). The terrain transitions through four seasons with 48 unique seasonal assets, biome generation (rivers, ponds, forests), and ambient animations.
 
 ### Highlights
 
@@ -44,7 +44,7 @@ Maeul (마을, Korean for "village") turns your GitHub contribution history into
 
 | Sparse (Archipelago) | Maximum Density (Civilization) |
 |:---:|:---:|
-| ![](.github/assets/preview-sparse.gif) | ![](.github/assets/preview-max.gif) |
+| ![](.github/assets/preview-sparse.svg) | ![](.github/assets/preview-max.svg) |
 
 </details>
 
@@ -54,10 +54,10 @@ Maeul (마을, Korean for "village") turns your GitHub contribution history into
 
 ### GitHub Action (recommended)
 
-Add this workflow to `.github/workflows/maeul.yml`:
+Add this workflow to `.github/workflows/maeul-sky.yml`:
 
 ```yaml
-name: Generate Maeul Terrain
+name: Generate Maeul in the Sky Terrain
 on:
   schedule:
     - cron: '0 0 * * *'  # daily
@@ -75,16 +75,16 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'chore: update maeul terrain'
+          commit_message: 'chore: update maeul-in-the-sky terrain'
 ```
 
 Then add this to your profile README:
 
 ```markdown
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./maeul-terrain-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./maeul-terrain-light.svg">
-  <img alt="GitHub contribution terrain" src="./maeul-terrain-dark.svg" width="840">
+  <source media="(prefers-color-scheme: dark)" srcset="./maeul-in-the-sky-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./maeul-in-the-sky-light.svg">
+  <img alt="GitHub contribution terrain" src="./maeul-in-the-sky-dark.svg" width="840">
 </picture>
 ```
 
@@ -105,14 +105,14 @@ Then add this to your profile README:
 
 ```bash
 # Install
-npm install -g maeul
+npm install -g maeul-in-the-sky
 
 # Generate terrain SVGs
 export GITHUB_TOKEN=ghp_your_token_here
-maeul -u your-username
+maeul-sky -u your-username
 
 # Options
-maeul -u octocat --year 2025 --hemisphere south -o ./output
+maeul-sky -u octocat --year 2025 --hemisphere south -o ./output
 ```
 
 ### CLI Options

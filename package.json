@@ -1,10 +1,10 @@
 {
-  "name": "maeul",
+  "name": "maeul-in-the-sky",
   "version": "1.0.1",
   "description": "Transform GitHub contributions into animated terrain SVGs",
   "type": "module",
   "bin": {
-    "maeul": "./dist/index.js"
+    "maeul-sky": "./dist/index.js"
   },
   "main": "./dist/lib.cjs",
   "module": "./dist/lib.js",
