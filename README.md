@@ -37,7 +37,6 @@ Maeul in the Sky (천공의 마을) turns your GitHub contribution history into 
 - **Dark & Light mode** — Generates both variants; auto-switches via `<picture>` tag
 - **Hemisphere support** — Northern or Southern hemisphere seasonal mapping
 - **GitHub Action** — Drop into any workflow for automated daily updates
-- **CLI** — Generate locally with a single command
 
 <details>
 <summary><strong>More previews</strong></summary>
@@ -101,53 +100,27 @@ Then add this to your profile README:
 
 ---
 
-## CLI Usage
+## How Does the Terrain Work?
 
-```bash
-# Install
-npm install -g maeul-in-the-sky
+Each square on your GitHub contribution graph becomes a terrain block. The more you contribute on a given day, the more developed that block becomes.
 
-# Generate terrain SVGs
-export GITHUB_TOKEN=ghp_your_token_here
-maeul-sky -u your-username
+| Your activity | Terrain | What you'll see |
+|:---:|:---:|:---|
+| No commits | 🌊 Water | Ocean tiles — the empty sea |
+| A few commits | 🏖️ Sand & Grass | Flat land begins to form |
+| Regular commits | 🌲 Forest | Trees and vegetation grow |
+| Above average | 🌾 Farmland | Fields, barns, windmills |
+| Very active day | 🏘️ Village | Houses and small buildings |
+| Peak activity | 🏙️ City | Tall buildings and towers |
 
-# Options
-maeul-sky -u octocat --year 2025 --hemisphere south -o ./output
-```
+> **It's relative to you, not absolute.** If you usually commit 2-3 times a day, then a 3-commit day already reaches village or city level. Someone who commits 20 times a day would need ~20 to reach the same level. The terrain reflects *your* personal rhythm.
 
-### CLI Options
+**Two things shape your terrain:**
 
-```
--u, --user <username>       GitHub username (required)
--t, --theme <name>          Theme name (default: terrain)
-    --title <text>          Custom title text
--o, --output <dir>          Output directory (default: ./)
--y, --year <number>         Year to visualize
-    --token <token>         GitHub PAT (or set GITHUB_TOKEN env)
-    --hemisphere <value>    north or south (default: north)
-```
+- **Commit every day** → Less ocean, more land appears across the map
+- **Commit more on a given day** → That day's land upgrades from grass to forest to buildings
 
----
-
-## Development
-
-```bash
-git clone https://github.com/t1seo/github-profile-maeul.git
-cd github-profile-maeul
-npm install
-npm run build
-npm test
-```
-
-### Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run build` | Build with tsup |
-| `npm run dev` | Watch mode |
-| `npm test` | Run vitest |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | TypeScript check |
+A consistent contributor who codes daily will have a lush island full of villages. A burst contributor who codes intensely a few days a week will have scattered but tall cities rising from the sea.
 
 ---
 

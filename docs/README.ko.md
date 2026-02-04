@@ -37,7 +37,6 @@ Maeul in the Sky(천공의 마을)는 GitHub 기여 히스토리를 애니메이
 - **다크 & 라이트 모드** — 두 가지 변형을 생성하고 `<picture>` 태그로 자동 전환
 - **반구 지원** — 북반구 또는 남반구 계절 매핑
 - **GitHub Action** — 워크플로에 추가하면 매일 자동 업데이트
-- **CLI** — 명령어 하나로 로컬 생성
 
 ---
 
@@ -92,53 +91,27 @@ jobs:
 
 ---
 
-## CLI 사용법
+## 지형은 어떻게 만들어지나요?
 
-```bash
-# 설치
-npm install -g maeul-in-the-sky
+GitHub 기여 그래프의 각 칸이 하나의 지형 블록이 됩니다. 그날 커밋을 많이 할수록 더 발전된 지형이 생깁니다.
 
-# 지형 SVG 생성
-export GITHUB_TOKEN=ghp_your_token_here
-maeul-sky -u your-username
+| 활동량 | 지형 | 설명 |
+|:---:|:---:|:---|
+| 커밋 없음 | 🌊 바다 | 바다 타일 — 빈 바다 |
+| 소량 커밋 | 🏖️ 모래 & 풀밭 | 평평한 땅이 나타남 |
+| 보통 커밋 | 🌲 숲 | 나무와 초목이 자라남 |
+| 평균 이상 | 🌾 농장 | 밭, 헛간, 풍차 |
+| 활발한 날 | 🏘️ 마을 | 집과 작은 건물 |
+| 최고 활동 | 🏙️ 도시 | 높은 건물과 타워 |
 
-# 옵션 예시
-maeul-sky -u octocat --year 2025 --hemisphere south -o ./output
-```
+> **절대적인 수치가 아니라 본인 기준 상대값입니다.** 평소 하루에 2~3번 커밋하는 사람이라면 3번 커밋만으로도 마을이나 도시 레벨에 도달합니다. 하루 20번 커밋하는 사람은 ~20번 정도 커밋해야 같은 레벨이 됩니다. 지형은 *나만의 리듬*을 반영합니다.
 
-### CLI 옵션
+**지형을 결정하는 두 가지:**
 
-```
--u, --user <username>       GitHub 사용자명 (필수)
--t, --theme <name>          테마 이름 (기본: terrain)
-    --title <text>          커스텀 타이틀 텍스트
--o, --output <dir>          출력 디렉토리 (기본: ./)
--y, --year <number>         시각화할 연도
-    --token <token>         GitHub PAT (또는 GITHUB_TOKEN 환경변수 설정)
-    --hemisphere <value>    north 또는 south (기본: north)
-```
+- **매일 커밋하기** → 바다가 줄어들고 지도 전체에 땅이 나타남
+- **하루에 많이 커밋하기** → 그날의 땅이 풀밭에서 숲, 건물로 업그레이드
 
----
-
-## 개발
-
-```bash
-git clone https://github.com/t1seo/github-profile-maeul.git
-cd github-profile-maeul
-npm install
-npm run build
-npm test
-```
-
-### 스크립트
-
-| 명령어 | 설명 |
-|--------|------|
-| `npm run build` | tsup으로 빌드 |
-| `npm run dev` | 워치 모드 |
-| `npm test` | vitest 실행 |
-| `npm run lint` | ESLint 검사 |
-| `npm run typecheck` | TypeScript 타입 체크 |
+매일 꾸준히 코딩하는 사람은 마을이 가득한 울창한 섬이 만들어집니다. 며칠에 몰아서 집중적으로 코딩하는 사람은 바다 위로 우뚝 솟은 도시들이 듬성듬성 나타납니다.
 
 ---
 
