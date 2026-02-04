@@ -22,6 +22,10 @@ inputs:
   year:
     description: 'Target year to visualize'
     required: false
+  hemisphere:
+    description: 'Hemisphere for seasonal terrain (north or south)'
+    required: false
+    default: 'north'
 outputs:
   dark_svg_path:
     description: 'Path to the generated dark mode SVG'

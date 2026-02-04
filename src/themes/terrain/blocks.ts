@@ -1,6 +1,8 @@
 import type { GridCell100 } from '../shared.js';
 import type { TerrainPalette100, ElevationColors } from './palette.js';
 import type { BiomeContext } from './biomes.js';
+import type { Hemisphere } from './seasons.js';
+import { getSeasonZone } from './seasons.js';
 
 // ── Isometric Constants ──────────────────────────────────────
 
@@ -272,6 +274,65 @@ export function getIsoCells(
   originY: number,
 ): IsoCell[] {
   return toIsoCells(cells, palette, originX, originY);
+}
+
+/**
+ * Render seasonal terrain blocks.
+ * Uses per-week palettes for seasonal coloring.
+ * Winter zones get frozen water (ice surface instead of blue).
+ * All zones get seasonal tinting via their per-week palette.
+ */
+export function renderSeasonalTerrainBlocks(
+  cells: GridCell100[],
+  weekPalettes: TerrainPalette100[],
+  originX: number,
+  originY: number,
+  hemisphere: Hemisphere,
+  biomeMap?: Map<string, BiomeContext>,
+): string {
+  // Build isometric cells using a reference palette (week 26 = summer)
+  // The actual colors will be overridden per-week
+  const refPalette = weekPalettes[26] || weekPalettes[0];
+  const isoCells = toIsoCells(cells, refPalette, originX, originY);
+  const isDark = refPalette.text.primary.startsWith('#e');
+
+  const blocks = isoCells.map(cell => {
+    // Get the per-week palette for this cell
+    const weekIdx = Math.min(cell.week, weekPalettes.length - 1);
+    const weekPalette = weekPalettes[weekIdx];
+    const zone = getSeasonZone(cell.week, hemisphere);
+
+    // Recompute colors using the week-specific palette
+    const colors = weekPalette.getElevation(cell.level100);
+    const height = weekPalette.getHeight(cell.level100);
+    const tintedCell = { ...cell, colors, height };
+
+    // Determine if this is a water cell
+    const biome = biomeMap?.get(`${cell.week},${cell.day}`);
+    const isNaturalWater = cell.level100 >= 9 && cell.level100 <= 22;
+    const isBiomeWater = biome && (biome.isRiver || biome.isPond);
+
+    if (isBiomeWater || isNaturalWater) {
+      // Winter zones (0) and near-winter transitions (7, 1) get frozen water
+      const isWinterish = zone === 0 || zone === 7 || zone === 1;
+      if (isWinterish && isNaturalWater) {
+        // Frozen: use ice-like colors from the tinted palette
+        const iceColors: ElevationColors = {
+          top: weekPalette.assets.ice || colors.top,
+          left: weekPalette.assets.frozenWater || colors.left,
+          right: weekPalette.assets.frozenWater || colors.right,
+        };
+        return renderBlock({ ...tintedCell, colors: iceColors }, false);
+      }
+      // Non-winter water: blend with water as normal
+      const blended = blendWithWater(colors, isDark, cell.level100, !!biome?.isRiver);
+      return renderBlock({ ...tintedCell, colors: blended }, true);
+    }
+
+    return renderBlock(tintedCell);
+  });
+
+  return `<g class="terrain-blocks">${blocks.join('')}</g>`;
 }
 
 export { THW, THH };

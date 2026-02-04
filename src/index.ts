@@ -28,7 +28,9 @@ program
   .option('-o, --output <dir>', 'Output directory', './')
   .option('-y, --year <number>', 'Year to visualize', String(new Date().getFullYear()))
   .option('--token <token>', 'GitHub personal access token (or use GITHUB_TOKEN env)')
+  .option('--hemisphere <hemisphere>', 'Hemisphere for seasonal terrain (north or south)', 'north')
   .action(async (opts) => {
+    const hemisphere = opts.hemisphere === 'south' ? 'south' as const : 'north' as const;
     const options: CliOptions = {
       user: opts.user,
       theme: opts.theme,
@@ -36,6 +38,7 @@ program
       output: opts.output,
       year: parseInt(opts.year, 10),
       token: opts.token || process.env.GITHUB_TOKEN,
+      hemisphere,
     };
 
     // Validate theme exists
@@ -63,6 +66,7 @@ program
         title: options.title,
         width: 840,
         height: 240,
+        hemisphere: options.hemisphere,
       });
 
       // Write output files

@@ -52,6 +52,8 @@ export interface ThemeOptions {
   width: number;
   /** SVG viewBox height (default: 240) */
   height: number;
+  /** Hemisphere for seasonal terrain (default: 'north') */
+  hemisphere?: 'north' | 'south';
 }
 
 /** Rendered SVG output for both color modes */
@@ -126,6 +128,8 @@ export interface CliOptions {
   year: number;
   /** GitHub personal access token */
   token?: string;
+  /** Hemisphere for seasonal terrain (default: 'north') */
+  hemisphere?: 'north' | 'south';
 }
 
 // ── SVG Builder ────────────────────────────────────────────────

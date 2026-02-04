@@ -1,5 +1,7 @@
 import type { ColorMode } from '../../core/types.js';
 import { lerp, clamp } from '../../utils/math.js';
+import type { Hemisphere, SeasonalTint } from './seasons.js';
+import { getSeasonalTint, applyTintToHex, applyTintToRgb } from './seasons.js';
 
 /** RGB color tuple */
 type RGB = [number, number, number];
@@ -162,6 +164,86 @@ export interface AssetColors {
   puddle: string;
   campfire: string;
   campfireFlame: string;
+  // ── Seasonal Asset Colors ────────────────────────────
+  // Winter
+  snowCap: string;
+  snowGround: string;
+  ice: string;
+  icicle: string;
+  frozenWater: string;
+  igloo: string;
+  sledWood: string;
+  sledRunner: string;
+  scarfRed: string;
+  snowmanCoal: string;
+  snowmanCarrot: string;
+  winterBirdRed: string;
+  winterBirdBrown: string;
+  firewoodLog: string;
+  bareBranch: string;
+  frostWhite: string;
+  // Spring
+  cherryPetalPink: string;
+  cherryPetalWhite: string;
+  cherryTrunk: string;
+  cherryBranch: string;
+  tulipRed: string;
+  tulipYellow: string;
+  tulipPurple: string;
+  tulipStem: string;
+  sproutGreen: string;
+  nestBrown: string;
+  eggBlue: string;
+  eggWhite: string;
+  crocusPurple: string;
+  crocusYellow: string;
+  lambWool: string;
+  birdhouseWood: string;
+  gardenSoil: string;
+  // Summer
+  parasolRed: string;
+  parasolBlue: string;
+  parasolYellow: string;
+  parasolStripe: string;
+  beachTowelA: string;
+  beachTowelB: string;
+  sandcastleWall: string;
+  surfboardBody: string;
+  surfboardStripe: string;
+  iceCreamCart: string;
+  iceCreamUmbrella: string;
+  hammockFabric: string;
+  sunflowerPetal: string;
+  sunflowerCenter: string;
+  watermelonRind: string;
+  watermelonFlesh: string;
+  watermelonSeed: string;
+  lemonadeStand: string;
+  sprinklerMetal: string;
+  poolWater: string;
+  poolEdge: string;
+  // Autumn
+  mapleRed: string;
+  mapleCrimson: string;
+  mapleOrange: string;
+  oakGold: string;
+  oakBrown: string;
+  birchYellow: string;
+  ginkgoYellow: string;
+  fallenLeafRed: string;
+  fallenLeafOrange: string;
+  fallenLeafGold: string;
+  fallenLeafBrown: string;
+  acornBody: string;
+  acornCap: string;
+  cornStalkColor: string;
+  cornEar: string;
+  harvestApple: string;
+  harvestGrape: string;
+  hotDrinkMug: string;
+  hotDrinkSteam: string;
+  wreathGreen: string;
+  wreathBerry: string;
 }
 
 /** A color anchor point for interpolation */
@@ -445,6 +527,85 @@ const DARK_ASSETS: AssetColors = {
   puddle: '#5a88b8',
   campfire: '#6a5030',
   campfireFlame: '#ff6622',
+  // Seasonal: Winter
+  snowCap: '#e8eef5',
+  snowGround: '#d8e2ee',
+  ice: '#a0c0e0',
+  icicle: '#b0d4f0',
+  frozenWater: '#6090b8',
+  igloo: '#dce8f2',
+  sledWood: '#8a5a30',
+  sledRunner: '#607080',
+  scarfRed: '#cc3030',
+  snowmanCoal: '#2a2a2a',
+  snowmanCarrot: '#e07020',
+  winterBirdRed: '#cc3030',
+  winterBirdBrown: '#8a6040',
+  firewoodLog: '#6a4020',
+  bareBranch: '#6a5a4a',
+  frostWhite: '#e0e8f0',
+  // Seasonal: Spring
+  cherryPetalPink: '#f5a0b8',
+  cherryPetalWhite: '#f8e0e8',
+  cherryTrunk: '#6a4030',
+  cherryBranch: '#7a5040',
+  tulipRed: '#e04050',
+  tulipYellow: '#f0d040',
+  tulipPurple: '#9050c0',
+  tulipStem: '#5a9a40',
+  sproutGreen: '#80d050',
+  nestBrown: '#7a5530',
+  eggBlue: '#a8d8e8',
+  eggWhite: '#f0ece0',
+  crocusPurple: '#8040b0',
+  crocusYellow: '#e8c830',
+  lambWool: '#f0ece5',
+  birdhouseWood: '#a07040',
+  gardenSoil: '#5a4030',
+  // Seasonal: Summer
+  parasolRed: '#e04040',
+  parasolBlue: '#4080d0',
+  parasolYellow: '#e8c820',
+  parasolStripe: '#ffffff',
+  beachTowelA: '#e05050',
+  beachTowelB: '#4090d0',
+  sandcastleWall: '#d8c090',
+  surfboardBody: '#e0e0e0',
+  surfboardStripe: '#e04040',
+  iceCreamCart: '#f0e8d0',
+  iceCreamUmbrella: '#e04040',
+  hammockFabric: '#d09050',
+  sunflowerPetal: '#f0c820',
+  sunflowerCenter: '#5a3a20',
+  watermelonRind: '#40a040',
+  watermelonFlesh: '#e04040',
+  watermelonSeed: '#2a2a2a',
+  lemonadeStand: '#f0d880',
+  sprinklerMetal: '#8090a0',
+  poolWater: '#60b8e0',
+  poolEdge: '#c0c8d0',
+  // Seasonal: Autumn
+  mapleRed: '#c83020',
+  mapleCrimson: '#a02020',
+  mapleOrange: '#d07020',
+  oakGold: '#c8a030',
+  oakBrown: '#8a6030',
+  birchYellow: '#d8c040',
+  ginkgoYellow: '#d8c830',
+  fallenLeafRed: '#c04030',
+  fallenLeafOrange: '#d08030',
+  fallenLeafGold: '#d0a030',
+  fallenLeafBrown: '#8a5a30',
+  acornBody: '#8a6030',
+  acornCap: '#5a3820',
+  cornStalkColor: '#c8a860',
+  cornEar: '#d8c060',
+  harvestApple: '#c83030',
+  harvestGrape: '#6030a0',
+  hotDrinkMug: '#c8a060',
+  hotDrinkSteam: '#d0d8e0',
+  wreathGreen: '#507038',
+  wreathBerry: '#c03030',
 };
 
 const LIGHT_ASSETS: AssetColors = {
@@ -589,6 +750,85 @@ const LIGHT_ASSETS: AssetColors = {
   puddle: '#6a98c8',
   campfire: '#7a6038',
   campfireFlame: '#ff7733',
+  // Seasonal: Winter
+  snowCap: '#f0f4f8',
+  snowGround: '#e4ecf4',
+  ice: '#b0d0e8',
+  icicle: '#c0e0f8',
+  frozenWater: '#70a0c8',
+  igloo: '#e8f0f8',
+  sledWood: '#9a6a38',
+  sledRunner: '#708090',
+  scarfRed: '#dd4040',
+  snowmanCoal: '#333333',
+  snowmanCarrot: '#f08030',
+  winterBirdRed: '#dd4040',
+  winterBirdBrown: '#9a7050',
+  firewoodLog: '#7a5030',
+  bareBranch: '#7a6a5a',
+  frostWhite: '#eef4f8',
+  // Seasonal: Spring
+  cherryPetalPink: '#f8b0c8',
+  cherryPetalWhite: '#fce8f0',
+  cherryTrunk: '#7a5040',
+  cherryBranch: '#8a6050',
+  tulipRed: '#f05060',
+  tulipYellow: '#f8e050',
+  tulipPurple: '#a060d0',
+  tulipStem: '#6aaa50',
+  sproutGreen: '#90e060',
+  nestBrown: '#8a6540',
+  eggBlue: '#b8e8f0',
+  eggWhite: '#f8f4e8',
+  crocusPurple: '#9050c0',
+  crocusYellow: '#f0d838',
+  lambWool: '#f8f4ed',
+  birdhouseWood: '#b08050',
+  gardenSoil: '#6a5040',
+  // Seasonal: Summer
+  parasolRed: '#f05050',
+  parasolBlue: '#5090e0',
+  parasolYellow: '#f0d030',
+  parasolStripe: '#ffffff',
+  beachTowelA: '#f06060',
+  beachTowelB: '#50a0e0',
+  sandcastleWall: '#e8d0a0',
+  surfboardBody: '#f0f0f0',
+  surfboardStripe: '#f05050',
+  iceCreamCart: '#f8f0e0',
+  iceCreamUmbrella: '#f05050',
+  hammockFabric: '#e0a060',
+  sunflowerPetal: '#f8d030',
+  sunflowerCenter: '#6a4a30',
+  watermelonRind: '#50b050',
+  watermelonFlesh: '#f05050',
+  watermelonSeed: '#333333',
+  lemonadeStand: '#f8e890',
+  sprinklerMetal: '#90a0b0',
+  poolWater: '#70c8f0',
+  poolEdge: '#d0d8e0',
+  // Seasonal: Autumn
+  mapleRed: '#d84030',
+  mapleCrimson: '#b03030',
+  mapleOrange: '#e08030',
+  oakGold: '#d8b040',
+  oakBrown: '#9a7040',
+  birchYellow: '#e8d050',
+  ginkgoYellow: '#e8d840',
+  fallenLeafRed: '#d05040',
+  fallenLeafOrange: '#e09040',
+  fallenLeafGold: '#e0b040',
+  fallenLeafBrown: '#9a6a40',
+  acornBody: '#9a7040',
+  acornCap: '#6a4830',
+  cornStalkColor: '#d8b870',
+  cornEar: '#e8d070',
+  harvestApple: '#d84040',
+  harvestGrape: '#7040b0',
+  hotDrinkMug: '#d8b070',
+  hotDrinkSteam: '#e0e8f0',
+  wreathGreen: '#608048',
+  wreathBerry: '#d04040',
 };
 
 // ── Palette Factory ──────────────────────────────────────────
@@ -625,6 +865,119 @@ export function getTerrainPalette100(mode: ColorMode): TerrainPalette100 {
       : { fill: 'rgba(190,205,220,0.35)', stroke: 'rgba(160,175,195,0.30)', opacity: 0.85 },
     assets: mode === 'dark' ? DARK_ASSETS : LIGHT_ASSETS,
   };
+}
+
+// ── Seasonal Palette ─────────────────────────────────────────
+
+/**
+ * Apply a seasonal tint to all asset colors.
+ * Returns a new AssetColors object with tinted hex/rgb values.
+ * Colors that are not standard hex or rgb() are passed through unchanged.
+ */
+function tintAssetColors(assets: AssetColors, tint: SeasonalTint): AssetColors {
+  const result: Record<string, string> = {};
+  for (const [key, value] of Object.entries(assets)) {
+    if (typeof value === 'string') {
+      if (value.startsWith('#') && value.length === 7) {
+        result[key] = applyTintToHex(value, tint);
+      } else if (value.startsWith('rgb')) {
+        result[key] = applyTintToRgb(value, tint);
+      } else {
+        result[key] = value;
+      }
+    }
+  }
+  return result as unknown as AssetColors;
+}
+
+/**
+ * Get a seasonal terrain palette for a specific week.
+ * Wraps getTerrainPalette100 and applies seasonal tinting to
+ * all elevation colors and asset colors.
+ *
+ * Summer (zone 4) returns the base palette unchanged.
+ */
+export function getSeasonalPalette100(
+  mode: ColorMode,
+  week: number,
+  hemisphere: Hemisphere = 'north',
+): TerrainPalette100 {
+  const base = getTerrainPalette100(mode);
+  const tint = getSeasonalTint(week, hemisphere);
+
+  // Summer has no tinting — return base palette
+  if (tint.colorShift === 0 && tint.warmth === 0 && tint.snowCoverage === 0
+      && tint.greenMul === 1 && tint.saturation === 1) {
+    return base;
+  }
+
+  const colorAnchors = mode === 'dark' ? DARK_COLOR_ANCHORS : LIGHT_COLOR_ANCHORS;
+  const heightAnchors = mode === 'dark' ? DARK_HEIGHT_ANCHORS : LIGHT_HEIGHT_ANCHORS;
+
+  const getElevation = (level: number): ElevationColors => {
+    const rgb = interpolateRGB(colorAnchors, level);
+    const tinted = [
+      clamp(Math.round(applyTintValues(rgb[0], rgb[1], rgb[2], tint)[0]), 0, 255),
+      clamp(Math.round(applyTintValues(rgb[0], rgb[1], rgb[2], tint)[1]), 0, 255),
+      clamp(Math.round(applyTintValues(rgb[0], rgb[1], rgb[2], tint)[2]), 0, 255),
+    ] as [number, number, number];
+    return makeElevation(tinted);
+  };
+
+  const getHeight = (level: number): number => {
+    return interpolateHeight(heightAnchors, level);
+  };
+
+  const sampleLevels = [0, 5, 12, 25, 40, 55, 70, 82, 92, 99];
+  const elevations = sampleLevels.map(l => getElevation(l));
+  const heights = sampleLevels.map(l => getHeight(l));
+
+  return {
+    getElevation,
+    getHeight,
+    elevations,
+    heights,
+    text: base.text,
+    bg: base.bg,
+    cloud: base.cloud,
+    assets: tintAssetColors(base.assets, tint),
+  };
+}
+
+/** Internal helper — applies tint to raw RGB without hex conversion */
+function applyTintValues(r: number, g: number, b: number, tint: SeasonalTint): [number, number, number] {
+  // 1. Saturation
+  const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+  let nr = gray + (r - gray) * tint.saturation;
+  let ng = gray + (g - gray) * tint.saturation;
+  let nb = gray + (b - gray) * tint.saturation;
+
+  // 2. Green multiplier
+  ng *= tint.greenMul;
+
+  // 3. Warmth
+  nr += tint.warmth;
+  nb -= tint.warmth;
+
+  // 4. Color shift
+  if (tint.colorShift > 0) {
+    nr = lerp(nr, tint.colorTarget[0], tint.colorShift);
+    ng = lerp(ng, tint.colorTarget[1], tint.colorShift);
+    nb = lerp(nb, tint.colorTarget[2], tint.colorShift);
+  }
+
+  // 5. Snow coverage
+  if (tint.snowCoverage > 0) {
+    nr = lerp(nr, 240, tint.snowCoverage);
+    ng = lerp(ng, 244, tint.snowCoverage);
+    nb = lerp(nb, 250, tint.snowCoverage);
+  }
+
+  return [
+    clamp(Math.round(nr), 0, 255),
+    clamp(Math.round(ng), 0, 255),
+    clamp(Math.round(nb), 0, 255),
+  ];
 }
 
 // ── Legacy API ────────────────────────────────────────────────
