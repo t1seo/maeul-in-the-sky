@@ -5,10 +5,19 @@ import { clamp } from '../utils/math.js';
 /** 10-level intensity (0 = none, 9 = maximum) */
 export type Level10 = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
+/** 100-level intensity (0 = none, 1–99 = min to max) */
+export type Level100 = number;
+
 /** A positioned contribution cell with 10-level intensity */
 export interface GridCell10 extends GridCell {
   /** Fine-grained intensity level (0–9) */
   level10: Level10;
+}
+
+/** A positioned contribution cell with 100-level intensity */
+export interface GridCell100 extends GridCell {
+  /** Fine-grained intensity level (0–99) */
+  level100: Level100;
 }
 
 /** System font stack confirmed working in SVG renderers */
@@ -152,6 +161,39 @@ export function enrichGridCells(cells: GridCell[], data: ContributionData): Grid
   return cells.map(cell => ({
     ...cell,
     level10: computeLevel10(cell.count, maxCount),
+  }));
+}
+
+/**
+ * Compute a fine-grained 100-level intensity from raw contribution count.
+ * Level 0 = no contributions. Levels 1–99 use a log curve to spread
+ * low values across more levels, matching how most developers have many
+ * low-count days and few high-count days.
+ */
+export function computeLevel100(count: number, maxCount: number): Level100 {
+  if (count === 0) return 0;
+  if (maxCount <= 0) return 1;
+  const ratio = clamp(count / maxCount, 0, 1);
+  const curved = Math.log(1 + ratio * 99) / Math.log(100);
+  return clamp(Math.round(curved * 98) + 1, 1, 99);
+}
+
+/**
+ * Enrich grid cells with 100-level intensity based on raw contribution counts.
+ */
+export function enrichGridCells100(
+  cells: GridCell[],
+  data: ContributionData,
+): GridCell100[] {
+  let maxCount = 0;
+  for (const week of data.weeks) {
+    for (const day of week.days) {
+      if (day.count > maxCount) maxCount = day.count;
+    }
+  }
+  return cells.map(cell => ({
+    ...cell,
+    level100: computeLevel100(cell.count, maxCount),
   }));
 }
 

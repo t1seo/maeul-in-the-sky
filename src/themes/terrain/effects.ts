@@ -1,29 +1,28 @@
 import type { IsoCell } from './blocks.js';
-import type { TerrainPalette } from './palette.js';
+import type { TerrainPalette100 } from './palette.js';
 import { THW, THH } from './blocks.js';
 import { seededRandom } from '../../utils/math.js';
 
 // ── Animation Budget ─────────────────────────────────────────
 // Total: 50 max
-//   Water shimmer: up to 15
-//   Snow sparkle:  up to 10
-//   Clouds:        3
-// Total animated:  ~28
+//   Water shimmer:    up to 15
+//   Town sparkle:     up to 10
+//   Clouds:           4 (SMIL animateTransform)
+//   Windmill:         4 (SMIL animateTransform)
+//   Flag wave:        4 (CSS @keyframes)
+// Total animated:     ~42/50
 
 const MAX_WATER = 15;
-const MAX_SNOW = 10;
-const NUM_CLOUDS = 3;
+const MAX_SPARKLE = 10;
+const NUM_CLOUDS = 4;
 
 // ── CSS Animations ───────────────────────────────────────────
 
-/**
- * Generate CSS @keyframes for terrain animations.
- */
 export function renderTerrainCSS(isoCells: IsoCell[]): string {
   const blocks: string[] = [];
 
-  const hasWater = isoCells.some(c => c.level10 <= 1);
-  const hasSnow = isoCells.some(c => c.level10 === 9);
+  const hasWater = isoCells.some(c => c.level100 <= 5);
+  const hasTown = isoCells.some(c => c.level100 >= 90);
 
   if (hasWater) {
     blocks.push(
@@ -34,8 +33,7 @@ export function renderTerrainCSS(isoCells: IsoCell[]): string {
       + ` }`,
     );
 
-    // Generate staggered water classes
-    const waterCells = isoCells.filter(c => c.level10 <= 1);
+    const waterCells = isoCells.filter(c => c.level100 <= 5);
     const selected = selectEvenly(waterCells, MAX_WATER);
     for (let i = 0; i < selected.length; i++) {
       const dur = (3 + (i % 3) * 0.8).toFixed(1);
@@ -46,48 +44,52 @@ export function renderTerrainCSS(isoCells: IsoCell[]): string {
     }
   }
 
-  if (hasSnow) {
+  if (hasTown) {
     blocks.push(
-      `@keyframes snow-sparkle {`
+      `@keyframes town-sparkle {`
       + ` 0% { opacity: 1; }`
-      + ` 40% { opacity: 0.6; }`
+      + ` 40% { opacity: 0.5; }`
       + ` 100% { opacity: 1; }`
       + ` }`,
     );
 
-    const snowCells = isoCells.filter(c => c.level10 === 9);
-    const selected = selectEvenly(snowCells, MAX_SNOW);
+    const townCells = isoCells.filter(c => c.level100 >= 90);
+    const selected = selectEvenly(townCells, MAX_SPARKLE);
     for (let i = 0; i < selected.length; i++) {
       const dur = (2 + (i % 4) * 0.5).toFixed(1);
       const delay = ((i * 0.9) % 3.5).toFixed(1);
       blocks.push(
-        `.snow-${i} { animation: snow-sparkle ${dur}s ease-in-out ${delay}s infinite; }`,
+        `.sparkle-${i} { animation: town-sparkle ${dur}s ease-in-out ${delay}s infinite; }`,
       );
     }
   }
+
+  // Windmill rotation (SMIL handles this, but flag wave needs CSS)
+  blocks.push(
+    `@keyframes flag-wave {`
+    + ` 0% { transform: scaleX(1); }`
+    + ` 50% { transform: scaleX(0.7); }`
+    + ` 100% { transform: scaleX(1); }`
+    + ` }`,
+  );
 
   return blocks.join('\n');
 }
 
 // ── Animated Overlays ────────────────────────────────────────
 
-/**
- * Render animated overlay elements for water shimmer and snow sparkle.
- * These are separate from the blocks because we need CSS class references.
- */
 export function renderAnimatedOverlays(
   isoCells: IsoCell[],
-  palette: TerrainPalette,
+  palette: TerrainPalette100,
 ): string {
   const overlays: string[] = [];
 
-  // Water shimmer overlays (level 0-1)
-  const waterCells = isoCells.filter(c => c.level10 <= 1);
+  // Water shimmer overlays (level 0-5)
+  const waterCells = isoCells.filter(c => c.level100 <= 5);
   const selectedWater = selectEvenly(waterCells, MAX_WATER);
   for (let i = 0; i < selectedWater.length; i++) {
     const cell = selectedWater[i];
     const { isoX: cx, isoY: cy } = cell;
-    // Small highlight diamond on the water surface
     const points = [
       `${cx},${cy - THH + 1}`,
       `${cx + THW - 2},${cy}`,
@@ -99,45 +101,64 @@ export function renderAnimatedOverlays(
     );
   }
 
-  // Snow sparkle overlays (level 9)
-  const snowCells = isoCells.filter(c => c.level10 === 9);
-  const selectedSnow = selectEvenly(snowCells, MAX_SNOW);
-  for (let i = 0; i < selectedSnow.length; i++) {
-    const cell = selectedSnow[i];
-    const { isoX: cx, isoY: cy } = cell;
-    // Small bright dot on the snow peak
+  // Town sparkle overlays (level 90+)
+  const townCells = isoCells.filter(c => c.level100 >= 90);
+  const selectedTown = selectEvenly(townCells, MAX_SPARKLE);
+  for (let i = 0; i < selectedTown.length; i++) {
+    const cell = selectedTown[i];
+    const { isoX: cx, isoY: cy, height: h } = cell;
     overlays.push(
-      `<circle cx="${cx}" cy="${cy - 1}" r="1.5" fill="#ffffff" opacity="0.8" class="snow-${i}"/>`,
+      `<circle cx="${cx}" cy="${cy - h - 1}" r="1" fill="#ffe080" opacity="0.7" class="sparkle-${i}"/>`,
     );
   }
 
   return `<g class="terrain-overlays">${overlays.join('')}</g>`;
 }
 
-// ── Clouds ───────────────────────────────────────────────────
+// ── Composite Clouds ─────────────────────────────────────────
 
 /**
- * Render drifting cloud shapes across the terrain.
- * Uses SMIL <animate> for horizontal translation.
+ * Render drifting composite clouds with multiple overlapping ellipses.
+ * Each cloud = 3-5 circles, Y-squashed ×0.5 for isometric perspective.
+ * Uses SMIL animateTransform for drift animation.
  */
-export function renderClouds(seed: number, palette: TerrainPalette): string {
+export function renderClouds(seed: number, palette: TerrainPalette100): string {
   const rng = seededRandom(seed);
   const clouds: string[] = [];
 
   for (let i = 0; i < NUM_CLOUDS; i++) {
-    const cx = 100 + rng() * 600;
-    const cy = 30 + rng() * 80;
-    const w = 30 + rng() * 40;
-    const h = 6 + rng() * 6;
-    const dur = (25 + rng() * 20).toFixed(0);
+    const baseCx = 60 + rng() * 650;
+    const baseCy = 25 + rng() * 85;
+    const baseW = 25 + rng() * 35;
+    const numCircles = 3 + Math.floor(rng() * 3); // 3-5 circles
+    const dur = (30 + rng() * 25).toFixed(0);
+    const driftX = 80 + rng() * 60;
 
-    // Cloud as an ellipse
-    const cloud =
-      `<ellipse cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" rx="${(w / 2).toFixed(1)}" ry="${(h / 2).toFixed(1)}" fill="${palette.cloud}">`
-      + `<animate attributeName="cx" values="${cx.toFixed(1)};${(cx + 120).toFixed(1)};${cx.toFixed(1)}" dur="${dur}s" repeatCount="indefinite"/>`
-      + `</ellipse>`;
+    const ellipses: string[] = [];
+    for (let j = 0; j < numCircles; j++) {
+      // Offset each circle from center
+      const ox = (rng() - 0.5) * baseW * 0.8;
+      const oy = (rng() - 0.5) * 6;
+      const rx = (baseW * 0.3 + rng() * baseW * 0.3);
+      const ry = rx * 0.45; // Y-squash for isometric
 
-    clouds.push(cloud);
+      ellipses.push(
+        `<ellipse cx="${(baseCx + ox).toFixed(1)}" cy="${(baseCy + oy).toFixed(1)}"`
+        + ` rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}"`
+        + ` fill="${palette.cloud.fill}" stroke="${palette.cloud.stroke}" stroke-width="0.5"`
+        + ` opacity="${palette.cloud.opacity}"/>`,
+      );
+    }
+
+    // Wrap in a group with SMIL translation
+    clouds.push(
+      `<g>`
+      + ellipses.join('')
+      + `<animateTransform attributeName="transform" type="translate"`
+      + ` values="0,0;${driftX.toFixed(0)},0;0,0"`
+      + ` dur="${dur}s" repeatCount="indefinite"/>`
+      + `</g>`,
+    );
   }
 
   return `<g class="terrain-clouds">${clouds.join('')}</g>`;
