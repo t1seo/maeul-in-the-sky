@@ -85,6 +85,28 @@ jobs:
 | `year` | 대상 연도 | 현재 연도 |
 | `hemisphere` | 계절 매핑 (`north` 또는 `south`) | `north` |
 
+### 커스텀 예시
+
+```yaml
+# 남반구 (호주, 브라질 등)
+- uses: t1seo/maeul-in-the-sky@v1
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    hemisphere: south
+
+# 커스텀 타이틀
+- uses: t1seo/maeul-in-the-sky@v1
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    title: "My Coding Journey"
+
+# 특정 연도
+- uses: t1seo/maeul-in-the-sky@v1
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    year: 2025
+```
+
 ## 지형은 어떻게 만들어지나요?
 
 GitHub 기여 그래프의 각 칸이 하나의 지형 블록이 됩니다. 그날 커밋을 많이 할수록 더 발전된 지형이 생깁니다.

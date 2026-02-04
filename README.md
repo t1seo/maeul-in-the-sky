@@ -94,6 +94,28 @@ Then add this to your profile README:
 | `year` | Target year | Current year |
 | `hemisphere` | Seasonal mapping (`north` or `south`) | `north` |
 
+### Customization Examples
+
+```yaml
+# Southern hemisphere (Australia, Brazil, etc.)
+- uses: t1seo/maeul-in-the-sky@v1
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    hemisphere: south
+
+# Custom title
+- uses: t1seo/maeul-in-the-sky@v1
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    title: "My Coding Journey"
+
+# Specific year
+- uses: t1seo/maeul-in-the-sky@v1
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    year: 2025
+```
+
 ## How Does the Terrain Work?
 
 Each square on your GitHub contribution graph becomes a terrain block. The more you contribute on a given day, the more developed that block becomes.
