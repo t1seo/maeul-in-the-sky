@@ -59,7 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: t1seo/github-profile-maeul@v1
+      - uses: t1seo/maeul-in-the-sky@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
