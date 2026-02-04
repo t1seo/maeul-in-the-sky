@@ -94,6 +94,74 @@ export interface AssetColors {
   gardenTree: string;
   ricePaddy: string;
   ricePaddyWater: string;
+  // New asset colors for 118-type expansion
+  jellyfish: string;
+  coral: string;
+  turtle: string;
+  buoy: string;
+  lighthouse: string;
+  crab: string;
+  driftwood: string;
+  sandcastle: string;
+  tidePools: string;
+  heron: string;
+  shellfish: string;
+  cattail: string;
+  frog: string;
+  lily: string;
+  rabbit: string;
+  fox: string;
+  butterfly: string;
+  butterflyWing: string;
+  beehive: string;
+  wildflower: string;
+  tallGrass: string;
+  birchBark: string;
+  haybale: string;
+  owl: string;
+  squirrel: string;
+  moss: string;
+  fern: string;
+  deadTree: string;
+  log: string;
+  berryBush: string;
+  berry: string;
+  spiderWeb: string;
+  silo: string;
+  pig: string;
+  trough: string;
+  haystack: string;
+  orchard: string;
+  orchardFruit: string;
+  beeFarm: string;
+  pumpkin: string;
+  tavern: string;
+  tavernSign: string;
+  bakery: string;
+  stable: string;
+  gardenFence: string;
+  laundry: string;
+  doghouse: string;
+  shrine: string;
+  wagon: string;
+  cathedral: string;
+  cathedralWindow: string;
+  library: string;
+  clocktower: string;
+  clockFace: string;
+  statue: string;
+  parkBench: string;
+  warehouse: string;
+  gatehouse: string;
+  manor: string;
+  manorGarden: string;
+  signpost: string;
+  lantern: string;
+  lanternGlow: string;
+  woodpile: string;
+  puddle: string;
+  campfire: string;
+  campfireFlame: string;
 }
 
 /** A color anchor point for interpolation */
@@ -309,6 +377,74 @@ const DARK_ASSETS: AssetColors = {
   gardenTree: '#4a9a3a',
   ricePaddy: '#8aaa48',
   ricePaddyWater: '#4a88b0',
+  // New 118-type expansion colors
+  jellyfish: '#9a70c0',
+  coral: '#d06858',
+  turtle: '#5a8848',
+  buoy: '#cc4444',
+  lighthouse: '#d8d0b8',
+  crab: '#c06030',
+  driftwood: '#8a7050',
+  sandcastle: '#d8c890',
+  tidePools: '#5a90b0',
+  heron: '#a0a8b0',
+  shellfish: '#c0a880',
+  cattail: '#6a8838',
+  frog: '#4a8830',
+  lily: '#e088a0',
+  rabbit: '#b0a090',
+  fox: '#c06a28',
+  butterfly: '#d070a0',
+  butterflyWing: '#e0a040',
+  beehive: '#c0a040',
+  wildflower: '#d060d0',
+  tallGrass: '#5a9838',
+  birchBark: '#e0d8c8',
+  haybale: '#c0a848',
+  owl: '#8a7050',
+  squirrel: '#a06030',
+  moss: '#4a7a30',
+  fern: '#3a8828',
+  deadTree: '#6a5a40',
+  log: '#7a5a30',
+  berryBush: '#3a7828',
+  berry: '#cc3030',
+  spiderWeb: 'rgba(200,200,200,0.5)',
+  silo: '#a0a0a0',
+  pig: '#e0a8a0',
+  trough: '#7a6a50',
+  haystack: '#c8a838',
+  orchard: '#4a8828',
+  orchardFruit: '#cc4430',
+  beeFarm: '#c8b060',
+  pumpkin: '#d07020',
+  tavern: '#a08860',
+  tavernSign: '#8a6830',
+  bakery: '#c8a878',
+  stable: '#8a7050',
+  gardenFence: '#e0d8c0',
+  laundry: '#e0d8e8',
+  doghouse: '#8a6030',
+  shrine: '#a0a0a8',
+  wagon: '#8a6840',
+  cathedral: '#c0b8a8',
+  cathedralWindow: '#4080c0',
+  library: '#b0a088',
+  clocktower: '#a0a0a0',
+  clockFace: '#e8e0c8',
+  statue: '#909098',
+  parkBench: '#6a5a40',
+  warehouse: '#8a8078',
+  gatehouse: '#a09888',
+  manor: '#c8b898',
+  manorGarden: '#4a8838',
+  signpost: '#7a6040',
+  lantern: '#6a5a40',
+  lanternGlow: '#ffc840',
+  woodpile: '#7a5a30',
+  puddle: '#5a88b8',
+  campfire: '#6a5030',
+  campfireFlame: '#ff6622',
 };
 
 const LIGHT_ASSETS: AssetColors = {
@@ -385,6 +521,74 @@ const LIGHT_ASSETS: AssetColors = {
   gardenTree: '#55aa45',
   ricePaddy: '#9aba58',
   ricePaddyWater: '#5a98c0',
+  // New 118-type expansion colors
+  jellyfish: '#b080d8',
+  coral: '#e07868',
+  turtle: '#6a9858',
+  buoy: '#dd5555',
+  lighthouse: '#f0e8d8',
+  crab: '#d07040',
+  driftwood: '#9a8060',
+  sandcastle: '#e8d8a0',
+  tidePools: '#6aa0c0',
+  heron: '#b0b8c0',
+  shellfish: '#d0b890',
+  cattail: '#7a9848',
+  frog: '#5a9838',
+  lily: '#f098b0',
+  rabbit: '#c0b0a0',
+  fox: '#d07a38',
+  butterfly: '#e080b0',
+  butterflyWing: '#f0b050',
+  beehive: '#d0b050',
+  wildflower: '#e070e0',
+  tallGrass: '#6aa848',
+  birchBark: '#f0e8d8',
+  haybale: '#d0b858',
+  owl: '#9a8060',
+  squirrel: '#b07040',
+  moss: '#5a8a38',
+  fern: '#4a9838',
+  deadTree: '#7a6a50',
+  log: '#8a6a40',
+  berryBush: '#4a8838',
+  berry: '#dd4040',
+  spiderWeb: 'rgba(180,180,180,0.45)',
+  silo: '#b0b0b0',
+  pig: '#f0b8b0',
+  trough: '#8a7a60',
+  haystack: '#d8b848',
+  orchard: '#55a038',
+  orchardFruit: '#dd5540',
+  beeFarm: '#d8c070',
+  pumpkin: '#e08030',
+  tavern: '#b09870',
+  tavernSign: '#9a7838',
+  bakery: '#d8b888',
+  stable: '#9a8060',
+  gardenFence: '#f0e8d0',
+  laundry: '#f0e8f0',
+  doghouse: '#9a7040',
+  shrine: '#b0b0b8',
+  wagon: '#9a7850',
+  cathedral: '#d0c8b8',
+  cathedralWindow: '#5090d0',
+  library: '#c0b098',
+  clocktower: '#b0b0b0',
+  clockFace: '#f8f0d8',
+  statue: '#a0a0a8',
+  parkBench: '#7a6a50',
+  warehouse: '#9a9088',
+  gatehouse: '#b0a898',
+  manor: '#d8c8a8',
+  manorGarden: '#55a048',
+  signpost: '#8a7050',
+  lantern: '#7a6a50',
+  lanternGlow: '#ffd850',
+  woodpile: '#8a6a40',
+  puddle: '#6a98c8',
+  campfire: '#7a6038',
+  campfireFlame: '#ff7733',
 };
 
 // ── Palette Factory ──────────────────────────────────────────

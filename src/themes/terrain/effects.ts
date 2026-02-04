@@ -11,7 +11,8 @@ import type { BiomeContext } from './biomes.js';
 //   Clouds:           4 (SMIL animateTransform)
 //   Windmill:         4 (SMIL animateTransform)
 //   Flag wave:        4 (CSS @keyframes)
-// Total animated:     ~42/50
+//   (waterfalls removed — freed ~4 SMIL slots)
+// Total animated:     ~38/50  →  12 slots available for new assets
 
 const MAX_WATER = 15;
 const MAX_SPARKLE = 10;
@@ -101,6 +102,30 @@ export function renderTerrainCSS(isoCells: IsoCell[], biomeMap?: Map<string, Bio
     + ` 50% { transform: scaleX(0.7); }`
     + ` 100% { transform: scaleX(1); }`
     + ` }`,
+  );
+
+  // Gentle sway for tallGrass, cattail
+  blocks.push(
+    `@keyframes sway-gentle {`
+    + ` 0% { transform: rotate(-2deg); }`
+    + ` 50% { transform: rotate(2deg); }`
+    + ` 100% { transform: rotate(-2deg); }`
+    + ` }`,
+  );
+  blocks.push(
+    `.sway-gentle { animation: sway-gentle 3s ease-in-out infinite; transform-origin: bottom center; }`,
+  );
+
+  // Slow sway for laundry
+  blocks.push(
+    `@keyframes sway-slow {`
+    + ` 0% { transform: rotate(-1deg); }`
+    + ` 50% { transform: rotate(1deg); }`
+    + ` 100% { transform: rotate(-1deg); }`
+    + ` }`,
+  );
+  blocks.push(
+    `.sway-slow { animation: sway-slow 4s ease-in-out infinite; transform-origin: bottom center; }`,
   );
 
   return blocks.join('\n');
@@ -319,20 +344,35 @@ export function renderWaterOverlays(
       ? palette.assets.pondOverlay
       : palette.assets.riverOverlay;
 
-    // Diamond overlay on top face (slightly inset)
-    const points = [
+    // 6b: Two-tone water overlay — outer edge darker, inner area lighter
+    // Outer diamond (slightly inset from block edge)
+    const outerPoints = [
       `${cx},${cy - THH + 0.5}`,
       `${cx + THW - 1},${cy}`,
       `${cx},${cy + THH - 0.5}`,
       `${cx - THW + 1},${cy}`,
     ].join(' ');
 
+    // Inner diamond (further inset — lighter water surface)
+    const innerInset = 2.2;
+    const innerPoints = [
+      `${cx},${cy - THH + innerInset}`,
+      `${cx + THW - innerInset * 1.2},${cy}`,
+      `${cx},${cy + THH - innerInset}`,
+      `${cx - THW + innerInset * 1.2},${cy}`,
+    ].join(' ');
+
     const shimmerClass = cell.level100 > 22 && shimmerIdx < 8
       ? ` class="river-shimmer-${shimmerIdx++}"`
       : '';
 
+    // Outer: darker edge
     overlays.push(
-      `<polygon points="${points}" fill="${color}"${shimmerClass}/>`,
+      `<polygon points="${outerPoints}" fill="${color}"${shimmerClass}/>`,
+    );
+    // Inner: lighter surface (reduced opacity for lighter feel)
+    overlays.push(
+      `<polygon points="${innerPoints}" fill="${palette.assets.waterLight}" opacity="0.18"/>`,
     );
   }
 
@@ -341,147 +381,13 @@ export function renderWaterOverlays(
     : '';
 }
 
-// ── Waterfalls (Laputa-style) ────────────────────────────────
-
-/**
- * Render waterfalls cascading off the side faces of edge river cells.
- * Water flows outward and downward from the isometric cliff edge,
- * using curved bezier paths for organic shape, with spray particles
- * and mist at the bottom.
- *
- * Max 2 waterfalls. Animation budget: ~4 SMIL animates.
- */
-export function renderWaterfalls(
-  isoCells: IsoCell[],
-  palette: TerrainPalette100,
-  biomeMap: Map<string, BiomeContext>,
-): string {
-  // Find edge river cells
-  const edgeRiverCells = isoCells.filter(cell => {
-    const biome = biomeMap.get(`${cell.week},${cell.day}`);
-    if (!biome || !biome.isRiver) return false;
-    return cell.week === 0 || cell.week === 51 || cell.day === 0 || cell.day === 6;
-  });
-
-  if (edgeRiverCells.length === 0) return '';
-
-  // Pick up to 2 waterfalls
-  const selected = edgeRiverCells.slice(0, 2);
-  const parts: string[] = [];
-  const wc = palette.assets.waterLight;  // lighter water
-  const wd = palette.assets.water;       // darker water
-  let animIdx = 0;
-
-  for (const cell of selected) {
-    const { isoX: cx, isoY: cy, height: h } = cell;
-
-    // Determine which edge this cell is on → outward direction
-    // Left edge (week=0): water flows to the left face
-    // Right edge (week=51): water flows to the right face
-    // Top edge (day=0): water flows up-left
-    // Bottom edge (day=6): water flows down-right
-    const isLeft = cell.week === 0;
-    const isRight = cell.week === 51;
-    const isTop = cell.day === 0;
-    const isBottom = cell.day === 6;
-
-    // Anchor: bottom of the side face where water starts
-    // For left/top edges: water starts at the left face corner
-    // For right/bottom edges: water starts at the right face corner
-    let startX: number, startY: number;
-    let outDx: number, outDy: number; // outward direction for curves
-
-    if (isLeft || isTop) {
-      startX = cx - THW;
-      startY = cy + h;
-      outDx = -1;
-      outDy = 0.3;
-    } else {
-      startX = cx + THW;
-      startY = cy + h;
-      outDx = 1;
-      outDy = 0.3;
-    }
-
-    const fallLen = 14 + h * 0.8;
-    const elements: string[] = [];
-
-    // Main water body: wide curved path (filled, not stroked)
-    const bodyW = 3;
-    elements.push(
-      `<path d="M${startX - bodyW * 0.5},${startY}`
-      + ` C${startX + outDx * 4 - bodyW * 0.7},${startY + fallLen * 0.3}`
-      + ` ${startX + outDx * 6 - bodyW * 0.3},${startY + fallLen * 0.7}`
-      + ` ${startX + outDx * 5},${startY + fallLen}`
-      + ` L${startX + outDx * 5 + bodyW},${startY + fallLen}`
-      + ` C${startX + outDx * 6 + bodyW * 0.3},${startY + fallLen * 0.7}`
-      + ` ${startX + outDx * 4 + bodyW * 0.7},${startY + fallLen * 0.3}`
-      + ` ${startX + bodyW * 0.5},${startY} Z"`
-      + ` fill="${wd}" opacity="0.45"/>`,
-    );
-
-    // Flowing highlight streaks (thinner bezier curves inside the body)
-    for (let s = 0; s < 3; s++) {
-      const sOff = (s - 1) * 1.0;
-      const sw = 0.5 + s * 0.15;
-      const sOpacity = 0.5 - s * 0.1;
-      const sx = startX + sOff;
-
-      const pathD = `M${sx},${startY}`
-        + ` Q${sx + outDx * 4},${startY + fallLen * 0.4}`
-        + ` ${sx + outDx * 5 + sOff * 0.3},${startY + fallLen}`;
-
-      if (animIdx < 4) {
-        // Animated: dash-offset creates flowing effect
-        elements.push(
-          `<path d="${pathD}" stroke="${wc}" fill="none" stroke-width="${sw}" `
-          + `opacity="${sOpacity}" stroke-linecap="round" stroke-dasharray="3 4">`
-          + `<animate attributeName="stroke-dashoffset" values="0;-7" dur="${1.5 + s * 0.4}s" repeatCount="indefinite"/>`
-          + `</path>`,
-        );
-        animIdx++;
-      } else {
-        elements.push(
-          `<path d="${pathD}" stroke="${wc}" fill="none" stroke-width="${sw}" `
-          + `opacity="${sOpacity}" stroke-linecap="round"/>`,
-        );
-      }
-    }
-
-    // Spray particles at the bottom (3-4 small dots)
-    const sprayBaseX = startX + outDx * 5;
-    const sprayBaseY = startY + fallLen;
-    elements.push(
-      `<circle cx="${sprayBaseX - 2}" cy="${sprayBaseY + 1}" r="0.6" fill="${wc}" opacity="0.3"/>`,
-    );
-    elements.push(
-      `<circle cx="${sprayBaseX + 2.5}" cy="${sprayBaseY + 2}" r="0.5" fill="${wc}" opacity="0.25"/>`,
-    );
-    elements.push(
-      `<circle cx="${sprayBaseX}" cy="${sprayBaseY + 3}" r="0.7" fill="${wc}" opacity="0.2"/>`,
-    );
-
-    // Mist cloud at bottom
-    const mistSvg = animIdx < 4
-      ? `<ellipse cx="${sprayBaseX}" cy="${sprayBaseY + 3}" rx="5" ry="2" fill="${wd}" opacity="0.2">`
-        + `<animate attributeName="opacity" values="0.15;0.3;0.15" dur="3s" repeatCount="indefinite"/>`
-        + `</ellipse>`
-      : `<ellipse cx="${sprayBaseX}" cy="${sprayBaseY + 3}" rx="5" ry="2" fill="${wd}" opacity="0.2"/>`;
-    elements.push(mistSvg);
-
-    parts.push(`<g class="waterfall">${elements.join('')}</g>`);
-  }
-
-  return parts.length > 0
-    ? `<g class="waterfalls">${parts.join('')}</g>`
-    : '';
-}
 
 // ── Water Ripple Lines ──────────────────────────────────────
 
 /**
  * Render static wavy SVG paths on the top face of water cells.
- * 2 ripple lines per water cell for subtle surface texture.
+ * 6c: 3 ripple lines per cell, varied curve amplitude,
+ * isometric diamond orientation, staggered positions, thinner strokes.
  */
 export function renderWaterRipples(
   isoCells: IsoCell[],
@@ -490,22 +396,39 @@ export function renderWaterRipples(
 ): string {
   const ripples: string[] = [];
   const color = palette.assets.waterLight;
+  const rng = seededRandom(isoCells.length * 7 + 31);
 
   for (const cell of isoCells) {
     const biome = biomeMap.get(`${cell.week},${cell.day}`);
     if (!biome || (!biome.isRiver && !biome.isPond)) continue;
 
     const { isoX: cx, isoY: cy } = cell;
-    // Two wavy paths across the top face (isometric diamond)
-    // Ripple 1: slight wave across upper half
+    // Stagger horizontal offset per cell using seeded RNG
+    const jitterX = (rng() - 0.5) * 2;
+    const jitterY = (rng() - 0.5) * 0.8;
+
+    // Ripple 1: upper-left to center-right, following isometric diamond
+    const amp1 = 0.3 + rng() * 0.15;
     ripples.push(
-      `<path d="M${cx - THW * 0.5},${cy - THH * 0.1} Q${cx - THW * 0.1},${cy - THH * 0.4} ${cx + THW * 0.4},${cy - THH * 0.15}" `
-      + `stroke="${color}" fill="none" stroke-width="0.3" opacity="0.3"/>`,
+      `<path d="M${cx - THW * 0.55 + jitterX},${cy - THH * 0.05 + jitterY} `
+      + `Q${cx - THW * 0.1},${cy - THH * amp1} ${cx + THW * 0.4},${cy - THH * 0.12}" `
+      + `stroke="${color}" fill="none" stroke-width="0.25" opacity="0.28"/>`,
     );
-    // Ripple 2: slight wave across lower half
+
+    // Ripple 2: center, varied amplitude, isometric angle
+    const amp2 = 0.15 + rng() * 0.2;
     ripples.push(
-      `<path d="M${cx - THW * 0.3},${cy + THH * 0.2} Q${cx + THW * 0.1},${cy - THH * 0.1} ${cx + THW * 0.5},${cy + THH * 0.1}" `
-      + `stroke="${color}" fill="none" stroke-width="0.25" opacity="0.25"/>`,
+      `<path d="M${cx - THW * 0.35 + jitterX * 0.5},${cy + THH * 0.15 + jitterY} `
+      + `Q${cx + THW * 0.05},${cy - THH * amp2} ${cx + THW * 0.45},${cy + THH * 0.05}" `
+      + `stroke="${color}" fill="none" stroke-width="0.2" opacity="0.22"/>`,
+    );
+
+    // Ripple 3: lower region, gentler curve
+    const amp3 = 0.1 + rng() * 0.12;
+    ripples.push(
+      `<path d="M${cx - THW * 0.2 + jitterX * 0.3},${cy + THH * 0.35 + jitterY} `
+      + `Q${cx + THW * 0.15},${cy + THH * amp3} ${cx + THW * 0.35},${cy + THH * 0.28}" `
+      + `stroke="${color}" fill="none" stroke-width="0.2" opacity="0.18"/>`,
     );
   }
 

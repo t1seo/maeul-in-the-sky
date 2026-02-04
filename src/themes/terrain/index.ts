@@ -13,7 +13,7 @@ import { registerTheme } from '../registry.js';
 import { contributionGrid, enrichGridCells100, renderTitle, renderStatsBar } from '../shared.js';
 import { getTerrainPalette100 } from './palette.js';
 import { renderTerrainBlocks, getIsoCells } from './blocks.js';
-import { renderTerrainCSS, renderAnimatedOverlays, renderClouds, renderWaterOverlays, renderWaterRipples, renderWaterfalls, renderCelestials } from './effects.js';
+import { renderTerrainCSS, renderAnimatedOverlays, renderClouds, renderWaterOverlays, renderWaterRipples, renderCelestials } from './effects.js';
 import { renderTerrainAssets, renderAssetCSS } from './assets.js';
 import { generateBiomeMap } from './biomes.js';
 import { hash } from '../../utils/math.js';
@@ -47,8 +47,7 @@ const terrainTheme: Theme = {
  * 5. Water overlays (river/pond shimmer on blocks)
  * 6. Water ripples (static wavy lines on water surfaces)
  * 7. Assets (trees, buildings, animals, ocean life)
- * 8. Waterfalls (curved paths off island edges)
- * 9. Animated overlays (water shimmer, town sparkle)
+ * 8. Animated overlays (water shimmer, town sparkle)
  * 10. Title (top-left)
  * 11. Stats bar (bottom)
  */
@@ -59,6 +58,7 @@ function renderMode(
 ): string {
   const palette = getTerrainPalette100(mode);
   const seed = hash(data.username + mode);
+  const variantSeed = hash(data.username + String(data.year));
 
   // Build grid cells with 100-level intensity
   const cells = contributionGrid(data, {
@@ -90,8 +90,7 @@ function renderMode(
   const blocks = renderTerrainBlocks(cells100, palette, originX, originY, biomeMap);
   const waterOverlays = renderWaterOverlays(isoCells, palette, biomeMap);
   const waterRipples = renderWaterRipples(isoCells, palette, biomeMap);
-  const assets = renderTerrainAssets(isoCells, seed, palette, biomeMap);
-  const waterfalls = renderWaterfalls(isoCells, palette, biomeMap);
+  const assets = renderTerrainAssets(isoCells, seed, palette, variantSeed, biomeMap);
   const overlays = renderAnimatedOverlays(isoCells, palette);
 
   // Build ThemePalette bridge for shared utilities
@@ -120,7 +119,6 @@ function renderMode(
     waterOverlays,
     waterRipples,
     assets,
-    waterfalls,
     overlays,
     title,
     statsBar,

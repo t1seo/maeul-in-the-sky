@@ -6,24 +6,32 @@ import { seededRandom } from '../../utils/math.js';
 // ── Asset Type Definitions (38 total) ───────────────────────
 
 type AssetType =
-  // Water (0–5)
+  // Water (9–22)
   | 'whale' | 'fish' | 'fishSchool' | 'boat' | 'seagull' | 'dock' | 'waves'
-  // Shore (6–15)
+  | 'kelp' | 'coral' | 'jellyfish' | 'turtle' | 'buoy' | 'sailboat' | 'lighthouse' | 'crab'
+  // Shore/Wetland (23–30)
   | 'rock' | 'boulder' | 'flower' | 'bush'
-  // Grassland (16–30)
+  | 'driftwood' | 'sandcastle' | 'tidePools' | 'heron' | 'shellfish' | 'cattail' | 'frog' | 'lily'
+  // Grassland (31–42)
   | 'pine' | 'deciduous' | 'mushroom' | 'stump' | 'deer'
-  // Forest (31–60)
+  | 'rabbit' | 'fox' | 'butterfly' | 'beehive' | 'wildflowerPatch' | 'tallGrass' | 'birch' | 'haybale'
+  // Forest (43–65)
   | 'willow' | 'palm' | 'bird'
-  // Farm (61–80)
+  | 'owl' | 'squirrel' | 'moss' | 'fern' | 'deadTree' | 'log' | 'berryBush' | 'spider'
+  // Farm (66–78)
   | 'wheat' | 'fence' | 'scarecrow' | 'barn' | 'sheep' | 'cow' | 'chicken' | 'horse' | 'ricePaddy'
-  // Village (81–90)
+  | 'silo' | 'pigpen' | 'trough' | 'haystack' | 'orchard' | 'beeFarm' | 'pumpkin'
+  // Village (79–90)
   | 'tent' | 'hut' | 'house' | 'houseB' | 'church' | 'windmill' | 'well'
-  // Town (91–99)
+  | 'tavern' | 'bakery' | 'stable' | 'garden' | 'laundry' | 'doghouse' | 'shrine' | 'wagon'
+  // Town/City (91–99)
   | 'market' | 'inn' | 'blacksmith' | 'castle' | 'tower' | 'bridge'
+  | 'cathedral' | 'library' | 'clocktower' | 'statue' | 'park' | 'warehouse' | 'gatehouse' | 'manor'
   // Biome blend
   | 'reeds' | 'fountain' | 'canal' | 'watermill' | 'gardenTree' | 'pondLily'
   // Cross-level decorations
-  | 'cart' | 'barrel' | 'torch' | 'flag' | 'cobblePath' | 'smoke';
+  | 'cart' | 'barrel' | 'torch' | 'flag' | 'cobblePath' | 'smoke'
+  | 'signpost' | 'lantern' | 'woodpile' | 'puddle' | 'campfire';
 
 interface PlacedAsset {
   cell: IsoCell;
@@ -32,6 +40,7 @@ interface PlacedAsset {
   cy: number;
   ox: number;
   oy: number;
+  variant: number;  // 0, 1, or 2 — selected by variantSeed
 }
 
 // ── Level100 → Asset Pool ───────────────────────────────────
@@ -43,31 +52,31 @@ interface AssetPool {
 
 function getLevelPool100(level: number): AssetPool {
   // Desert (0–8): barren, rocks, occasional cactus-like features
-  if (level <= 4)  return { types: ['rock', 'boulder', 'stump'], chance: 0.06 };
-  if (level <= 8)  return { types: ['rock', 'boulder', 'bush', 'stump'], chance: 0.10 };
+  if (level <= 4)  return { types: ['rock', 'boulder', 'stump', 'deadTree', 'puddle'], chance: 0.06 };
+  if (level <= 8)  return { types: ['rock', 'boulder', 'bush', 'stump', 'deadTree', 'signpost'], chance: 0.10 };
   // Water / Oasis (9–22): aquatic life
-  if (level <= 14) return { types: ['whale', 'fish', 'fishSchool', 'boat', 'seagull', 'dock', 'waves'], chance: 0.16 };
-  if (level <= 22) return { types: ['fish', 'fishSchool', 'boat', 'seagull', 'waves', 'dock'], chance: 0.18 };
+  if (level <= 14) return { types: ['whale', 'fish', 'fishSchool', 'boat', 'seagull', 'dock', 'waves', 'kelp', 'coral', 'jellyfish', 'turtle', 'crab', 'buoy'], chance: 0.16 };
+  if (level <= 22) return { types: ['fish', 'fishSchool', 'boat', 'seagull', 'waves', 'dock', 'kelp', 'coral', 'turtle', 'sailboat', 'lighthouse', 'crab', 'buoy'], chance: 0.18 };
   // Shore / Wetland (23–30): transition to green
-  if (level <= 27) return { types: ['rock', 'boulder', 'flower', 'bush', 'bird'], chance: 0.16 };
-  if (level <= 30) return { types: ['bush', 'flower', 'rock', 'fence'], chance: 0.18 };
+  if (level <= 27) return { types: ['rock', 'boulder', 'flower', 'bush', 'bird', 'driftwood', 'sandcastle', 'tidePools', 'heron', 'shellfish', 'cattail', 'frog', 'lily'], chance: 0.16 };
+  if (level <= 30) return { types: ['bush', 'flower', 'rock', 'fence', 'driftwood', 'tidePools', 'heron', 'cattail', 'frog', 'lily', 'puddle'], chance: 0.18 };
   // Grassland (31–42): open plains
-  if (level <= 36) return { types: ['bush', 'flower', 'mushroom', 'deer', 'bird'], chance: 0.22 };
-  if (level <= 42) return { types: ['pine', 'deciduous', 'bush', 'mushroom', 'flower', 'deer'], chance: 0.25 };
+  if (level <= 36) return { types: ['bush', 'flower', 'mushroom', 'deer', 'bird', 'rabbit', 'fox', 'butterfly', 'wildflowerPatch', 'tallGrass', 'signpost', 'puddle'], chance: 0.22 };
+  if (level <= 42) return { types: ['pine', 'deciduous', 'bush', 'mushroom', 'flower', 'deer', 'rabbit', 'fox', 'butterfly', 'beehive', 'birch', 'haybale', 'tallGrass', 'lantern'], chance: 0.25 };
   // Forest (43–65): dense green
-  if (level <= 52) return { types: ['pine', 'pine', 'deciduous', 'willow', 'bird', 'bush'], chance: 0.30 };
-  if (level <= 58) return { types: ['pine', 'deciduous', 'willow', 'palm', 'bird', 'pine', 'stump'], chance: 0.32 };
-  if (level <= 65) return { types: ['deciduous', 'willow', 'pine', 'palm', 'bird', 'mushroom'], chance: 0.28 };
+  if (level <= 52) return { types: ['pine', 'pine', 'deciduous', 'willow', 'bird', 'bush', 'owl', 'squirrel', 'moss', 'fern', 'berryBush', 'log', 'woodpile'], chance: 0.30 };
+  if (level <= 58) return { types: ['pine', 'deciduous', 'willow', 'palm', 'bird', 'pine', 'stump', 'owl', 'moss', 'fern', 'deadTree', 'log', 'spider', 'campfire'], chance: 0.32 };
+  if (level <= 65) return { types: ['deciduous', 'willow', 'pine', 'palm', 'bird', 'mushroom', 'squirrel', 'berryBush', 'fern', 'moss', 'log', 'woodpile'], chance: 0.28 };
   // Farm (66–78): livestock + crops
-  if (level <= 70) return { types: ['wheat', 'fence', 'sheep', 'chicken', 'bush', 'ricePaddy'], chance: 0.30 };
-  if (level <= 75) return { types: ['wheat', 'fence', 'scarecrow', 'cow', 'sheep', 'chicken', 'horse', 'ricePaddy'], chance: 0.35 };
-  if (level <= 78) return { types: ['barn', 'sheep', 'cow', 'horse', 'wheat', 'fence', 'chicken', 'cart', 'ricePaddy'], chance: 0.38 };
+  if (level <= 70) return { types: ['wheat', 'fence', 'sheep', 'chicken', 'bush', 'ricePaddy', 'pumpkin', 'orchard', 'trough', 'haystack', 'signpost'], chance: 0.30 };
+  if (level <= 75) return { types: ['wheat', 'fence', 'scarecrow', 'cow', 'sheep', 'chicken', 'horse', 'ricePaddy', 'silo', 'pigpen', 'trough', 'orchard', 'beeFarm', 'pumpkin'], chance: 0.35 };
+  if (level <= 78) return { types: ['barn', 'sheep', 'cow', 'horse', 'wheat', 'fence', 'chicken', 'cart', 'ricePaddy', 'silo', 'pigpen', 'haystack', 'orchard', 'beeFarm', 'haybale'], chance: 0.38 };
   // Village (79–90): buildings emerge
-  if (level <= 84) return { types: ['tent', 'hut', 'house', 'well', 'fence', 'sheep', 'barrel'], chance: 0.38 };
-  if (level <= 90) return { types: ['house', 'houseB', 'church', 'windmill', 'well', 'barrel', 'torch'], chance: 0.42 };
+  if (level <= 84) return { types: ['tent', 'hut', 'house', 'well', 'fence', 'sheep', 'barrel', 'tavern', 'bakery', 'stable', 'garden', 'doghouse', 'shrine', 'lantern', 'woodpile'], chance: 0.38 };
+  if (level <= 90) return { types: ['house', 'houseB', 'church', 'windmill', 'well', 'barrel', 'torch', 'tavern', 'bakery', 'stable', 'garden', 'laundry', 'wagon', 'shrine', 'lantern', 'signpost'], chance: 0.42 };
   // Town / City (91–99): dense civilization with nature
-  if (level <= 95) return { types: ['house', 'houseB', 'market', 'inn', 'windmill', 'flag', 'cobblePath', 'torch', 'gardenTree', 'flower', 'bush'], chance: 0.48 };
-  return { types: ['castle', 'tower', 'church', 'market', 'inn', 'blacksmith', 'bridge', 'flag', 'cobblePath', 'gardenTree', 'flower', 'fountain'], chance: 0.55 };
+  if (level <= 95) return { types: ['house', 'houseB', 'market', 'inn', 'windmill', 'flag', 'cobblePath', 'torch', 'gardenTree', 'flower', 'bush', 'cathedral', 'library', 'clocktower', 'statue', 'park', 'warehouse', 'lantern'], chance: 0.48 };
+  return { types: ['castle', 'tower', 'church', 'market', 'inn', 'blacksmith', 'bridge', 'flag', 'cobblePath', 'gardenTree', 'flower', 'fountain', 'cathedral', 'library', 'clocktower', 'statue', 'park', 'gatehouse', 'manor', 'warehouse', 'lantern'], chance: 0.55 };
 }
 
 // ── Biome-Aware Blending ─────────────────────────────────────
@@ -79,19 +88,19 @@ function blendWithBiome(pool: AssetPool, ctx: BiomeContext, level: number): Asse
   if (ctx.isRiver) {
     // River cells get water assets adapted to surrounding level
     if (level >= 91)      types.push('bridge', 'canal');
-    else if (level >= 66) types.push('watermill', 'canal', 'reeds');
-    else if (level >= 31) types.push('reeds', 'reeds', 'willow');
-    else                  types.push('reeds', 'pondLily');
+    else if (level >= 66) types.push('watermill', 'canal', 'reeds', 'heron');
+    else if (level >= 31) types.push('reeds', 'reeds', 'willow', 'frog', 'heron', 'cattail');
+    else                  types.push('reeds', 'pondLily', 'lily', 'frog');
     chance = Math.max(chance, 0.35);
   } else if (ctx.isPond) {
     // Pond cells get pond-specific decorations
-    if (level >= 79) types.push('fountain', 'pondLily', 'reeds');
-    else             types.push('pondLily', 'pondLily', 'reeds');
+    if (level >= 79) types.push('fountain', 'pondLily', 'reeds', 'lily');
+    else             types.push('pondLily', 'pondLily', 'reeds', 'lily', 'frog', 'cattail');
     chance = Math.max(chance, 0.30);
   } else if (ctx.nearWater) {
     // Adjacent to water: edge vegetation
     if (level >= 79) types.push('fountain', 'gardenTree');
-    else             types.push('willow', 'reeds', 'bush');
+    else             types.push('willow', 'reeds', 'bush', 'driftwood', 'heron');
     chance += 0.05;
   }
 
@@ -101,17 +110,17 @@ function blendWithBiome(pool: AssetPool, ctx: BiomeContext, level: number): Asse
     for (let i = 0; i < treesToAdd; i++) {
       if (level >= 91)      types.push('gardenTree', 'flower');
       else if (level >= 79) types.push('gardenTree');
-      else if (level >= 43) types.push('pine', 'deciduous');
-      else                  types.push('pine');
+      else if (level >= 43) types.push('pine', 'deciduous', 'owl', 'squirrel', 'moss', 'fern');
+      else                  types.push('pine', 'birch');
     }
     chance += ctx.forestDensity * 0.08;
   }
 
   // Unconditional high-level greenery: towns and cities always get some nature
   if (level >= 96) {
-    types.push('gardenTree', 'fountain');
+    types.push('gardenTree', 'fountain', 'park');
   } else if (level >= 91) {
-    types.push('gardenTree');
+    types.push('gardenTree', 'lantern');
   }
 
   return { types, chance: Math.min(chance, 0.65) };
@@ -137,16 +146,33 @@ function computeRichness(cell: IsoCell, cellMap: Map<string, IsoCell>): number {
   return neighborSum / (count * 99);
 }
 
+// ── Animation Budget ────────────────────────────────────────
+
+/** Asset types that use SMIL animation elements (animate, animateTransform, animateMotion) */
+const SMIL_ANIMATED_TYPES = new Set<AssetType>([
+  'seagull', 'waves', 'bird', 'windmill', 'smoke', 'fountain',
+  'watermill', 'jellyfish', 'turtle', 'butterfly', 'bakery',
+  'clocktower', 'campfire',
+]);
+
+/** Asset types that use CSS animation classes (sway-gentle, sway-slow) */
+const CSS_ANIMATED_TYPES = new Set<AssetType>([
+  'cattail', 'tallGrass', 'laundry',
+]);
+
 // ── Asset Selection ─────────────────────────────────────────
 
 export function selectAssets(
   isoCells: IsoCell[],
   seed: number,
+  variantSeed?: number,
   biomeMap?: Map<string, BiomeContext>,
 ): PlacedAsset[] {
   const rng = seededRandom(seed);
+  const variantRng = seededRandom(variantSeed ?? seed);
   const assets: PlacedAsset[] = [];
   const smokeBudget = { remaining: 5 };
+  const animBudget = { smil: 12, css: 10 };
 
   const cellMap = new Map<string, IsoCell>();
   for (const cell of isoCells) {
@@ -173,8 +199,19 @@ export function selectAssets(
 
       const ox = (rng() - 0.5) * 3;
       const oy = (rng() - 0.5) * 1.5;
+      let variant = Math.floor(variantRng() * 3);
 
-      assets.push({ cell, type, cx: cell.isoX, cy: cell.isoY, ox, oy });
+      // Enforce animation budget: swap animated types to static fallback when exhausted
+      if (SMIL_ANIMATED_TYPES.has(type)) {
+        if (animBudget.smil > 0) animBudget.smil--;
+        else type = 'barrel';  // swap to static asset
+      }
+      if (CSS_ANIMATED_TYPES.has(type)) {
+        if (animBudget.css > 0) animBudget.css--;
+        else variant = 0;  // v=0 is always the static default
+      }
+
+      assets.push({ cell, type, cx: cell.isoX, cy: cell.isoY, ox, oy, variant });
 
       // High richness areas can get a second asset
       if (richness > 0.5 && cell.level100 >= 30 && rng() < 0.3) {
@@ -182,10 +219,23 @@ export function selectAssets(
         if (type2 === 'smoke' && smokeBudget.remaining <= 0) type2 = 'torch';
         else if (type2 === 'smoke') smokeBudget.remaining--;
 
+        // Animation budget for second asset
+        if (SMIL_ANIMATED_TYPES.has(type2)) {
+          if (animBudget.smil > 0) animBudget.smil--;
+          else type2 = 'barrel';
+        }
+
+        let variant2 = Math.floor(variantRng() * 3);
+        if (CSS_ANIMATED_TYPES.has(type2)) {
+          if (animBudget.css > 0) animBudget.css--;
+          else variant2 = 0;
+        }
+
         assets.push({
           cell, type: type2,
           cx: cell.isoX, cy: cell.isoY,
           ox: (rng() - 0.5) * 4, oy: (rng() - 0.5) * 2,
+          variant: variant2,
         });
       }
     }
@@ -198,7 +248,29 @@ export function selectAssets(
 
 // Water assets
 
-function svgWhale(x: number, y: number, c: AssetColors): string {
+function svgWhale(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Diving variant — tail up, no spout
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-0.5" rx="3" ry="1.5" fill="${c.whale}" transform="rotate(-15)"/>`
+      + `<ellipse cx="0" cy="0" rx="2" ry="0.8" fill="${c.whaleBelly}" opacity="0.5"/>`
+      + `<path d="M2.5,-1.5 Q4,-3 5,-3.5 M2.5,-1.5 Q4,-2 5,-1" stroke="${c.whale}" fill="none" stroke-width="0.8"/>`
+      + `<ellipse cx="5" cy="-3.5" rx="1" ry="0.4" fill="${c.whale}"/>`
+      + `<ellipse cx="5" cy="-1" rx="1" ry="0.4" fill="${c.whale}"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Baby whale variant — smaller, rounder
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-0.8" rx="2.2" ry="1.3" fill="${c.whale}"/>`
+      + `<ellipse cx="0" cy="-0.3" rx="1.5" ry="0.6" fill="${c.whaleBelly}" opacity="0.5"/>`
+      + `<path d="M2,-0.8 Q3,-0.8 3.5,-1.8 M2,-0.8 Q3,-0.8 3.5,0.2" stroke="${c.whale}" fill="none" stroke-width="0.7"/>`
+      + `<ellipse cx="3.5" cy="-1.8" rx="0.8" ry="0.3" fill="${c.whale}"/>`
+      + `<ellipse cx="3.5" cy="0.2" rx="0.8" ry="0.3" fill="${c.whale}"/>`
+      + `<circle cx="-1.2" cy="-1" r="0.3" fill="#fff"/>`
+      + `<circle cx="-1.2" cy="-1" r="0.15" fill="#222"/>`
+      + `</g>`;
+  }
   // Redesigned: rounder body, HORIZONTAL tail fluke, water spout
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-1.2" rx="3.5" ry="2" fill="${c.whale}"/>`
@@ -217,7 +289,26 @@ function svgWhale(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgFish(x: number, y: number, c: AssetColors): string {
+function svgFish(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Pair variant — two fish
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="-1" cy="-0.5" rx="1.3" ry="0.5" fill="${c.fish}"/>`
+      + `<polygon points="0.3,-0.5 1,-1.3 1,0.3" fill="${c.fish}"/>`
+      + `<ellipse cx="1" cy="-1.5" rx="1.1" ry="0.4" fill="${c.fish}" opacity="0.8"/>`
+      + `<polygon points="2.1,-1.5 2.6,-2.1 2.6,-0.9" fill="${c.fish}" opacity="0.8"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Striped large variant
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1" rx="2.2" ry="0.9" fill="${c.fish}"/>`
+      + `<polygon points="2.2,-1 3.2,-2.2 3.2,0.2" fill="${c.fish}"/>`
+      + `<line x1="-0.5" y1="-0.3" x2="-0.5" y2="-1.7" stroke="${c.whaleBelly}" stroke-width="0.3" opacity="0.4"/>`
+      + `<line x1="0.5" y1="-0.3" x2="0.5" y2="-1.7" stroke="${c.whaleBelly}" stroke-width="0.3" opacity="0.4"/>`
+      + `<circle cx="-1.3" cy="-1.1" r="0.3" fill="#fff"/>`
+      + `</g>`;
+  }
   // Redesigned: slender body, VERTICAL tail fin
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-0.8" rx="1.8" ry="0.7" fill="${c.fish}"/>`
@@ -227,7 +318,7 @@ function svgFish(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgFishSchool(x: number, y: number, c: AssetColors): string {
+function svgFishSchool(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="-1" cy="-0.5" rx="1" ry="0.4" fill="${c.fish}" opacity="0.8"/>`
     + `<ellipse cx="1" cy="-1.2" rx="0.8" ry="0.35" fill="${c.fish}" opacity="0.7"/>`
@@ -235,7 +326,24 @@ function svgFishSchool(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgBoat(x: number, y: number, c: AssetColors): string {
+function svgBoat(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Sailboat variant
+    return `<g transform="translate(${x},${y})">`
+      + `<polygon points="-3,0 -2,-1.5 3,-1.5 3.5,0" fill="${c.boat}"/>`
+      + `<line x1="0" y1="-1.5" x2="0" y2="-6" stroke="${c.trunk}" stroke-width="0.4"/>`
+      + `<polygon points="0,-5.5 0,-2 2.5,-2.5" fill="${c.sail}" opacity="0.9"/>`
+      + `<polygon points="0,-5 0,-2.5 -2,-3" fill="${c.sail}" opacity="0.7"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Fishing boat variant (no sail, fishing rod)
+    return `<g transform="translate(${x},${y})">`
+      + `<polygon points="-2.5,0 -1.5,-1 2.5,-1 3,0" fill="${c.boat}"/>`
+      + `<line x1="2" y1="-1" x2="3.5" y2="-3" stroke="${c.trunk}" stroke-width="0.3"/>`
+      + `<line x1="3.5" y1="-3" x2="4" y2="-1.5" stroke="${c.waterLight}" stroke-width="0.2" opacity="0.6"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<polygon points="-3,0 -2,-1.5 3,-1.5 3.5,0" fill="${c.boat}"/>`
     + `<line x1="0" y1="-1.5" x2="0" y2="-6" stroke="${c.trunk}" stroke-width="0.4"/>`
@@ -243,14 +351,35 @@ function svgBoat(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgSeagull(x: number, y: number, c: AssetColors): string {
+function svgSeagull(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Sitting variant — perched on water
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1" rx="1.2" ry="0.7" fill="${c.seagull}"/>`
+      + `<circle cx="-0.8" cy="-1.5" r="0.4" fill="${c.seagull}"/>`
+      + `<polygon points="-1.2,-1.4 -1.7,-1.3 -1.2,-1.2" fill="${c.wheat}"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Pair variant — two flying
+    return `<g transform="translate(${x},${y})">`
+      + `<g>`
+      + `<path d="M-1.5,-3 Q-0.5,-4.5 0.5,-3" stroke="${c.seagull}" fill="none" stroke-width="0.5"/>`
+      + `<path d="M1,-4.5 Q2,-5.5 3,-4.5" stroke="${c.seagull}" fill="none" stroke-width="0.4" opacity="0.7"/>`
+      + `<animateMotion path="M0,0 C2,-1 3,0 2,1 C1,2 -1,1 -2,0 C-3,-1 -1,-2 0,0" dur="10s" repeatCount="indefinite"/>`
+      + `</g>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
+    + `<g>`
     + `<path d="M-2,-3 Q-1,-4.5 0,-3 Q1,-4.5 2,-3" stroke="${c.seagull}" fill="none" stroke-width="0.6"/>`
     + `<circle cx="0" cy="-3" r="0.4" fill="${c.seagull}"/>`
+    + `<animateMotion path="M0,0 C2,-1 3,0 2,1 C1,2 -1,1 -2,0 C-3,-1 -1,-2 0,0" dur="10s" repeatCount="indefinite"/>`
+    + `</g>`
     + `</g>`;
 }
 
-function svgDock(x: number, y: number, c: AssetColors): string {
+function svgDock(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<rect x="-3" y="-0.5" width="6" height="1" fill="${c.dock}" rx="0.2"/>`
     + `<line x1="-2" y1="0.5" x2="-2" y2="1.5" stroke="${c.dock}" stroke-width="0.5"/>`
@@ -258,26 +387,57 @@ function svgDock(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgWaves(x: number, y: number, c: AssetColors): string {
+function svgWaves(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
-    + `<path d="M-3,-0.5 Q-1.5,-1.5 0,-0.5 Q1.5,0.5 3,-0.5" stroke="${c.waterLight}" fill="none" stroke-width="0.4" opacity="0.5"/>`
+    + `<path d="M-3,-0.5 Q-1.5,-1.5 0,-0.5 Q1.5,0.5 3,-0.5" stroke="${c.waterLight}" fill="none" stroke-width="0.4" opacity="0.5">`
+    + `<animate attributeName="d" values="M-3,-0.5 Q-1.5,-1.5 0,-0.5 Q1.5,0.5 3,-0.5;M-3,-0.3 Q-1.5,-1.2 0,-0.8 Q1.5,0.2 3,-0.3;M-3,-0.5 Q-1.5,-1.5 0,-0.5 Q1.5,0.5 3,-0.5" dur="4s" repeatCount="indefinite"/>`
+    + `</path>`
     + `</g>`;
 }
 
 // Shore assets
 
-function svgRock(x: number, y: number, c: AssetColors): string {
+function svgRock(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Rounded variant
+    return `<ellipse cx="${x}" cy="${y - 1}" rx="1.8" ry="1.2" fill="${c.rock}"/>`;
+  }
+  if (v === 2) {
+    // Flat/stacked variant
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-0.4" rx="2.2" ry="0.6" fill="${c.rock}"/>`
+      + `<ellipse cx="0.3" cy="-1" rx="1.5" ry="0.5" fill="${c.boulder}"/>`
+      + `</g>`;
+  }
   return `<polygon points="${x - 1.5},${y} ${x - 1},${y - 2} ${x + 0.5},${y - 2.3} ${x + 1.5},${y - 1} ${x + 1},${y}" fill="${c.rock}"/>`;
 }
 
-function svgBoulder(x: number, y: number, c: AssetColors): string {
+function svgBoulder(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-1.5" rx="2.5" ry="1.8" fill="${c.boulder}"/>`
     + `<ellipse cx="-0.5" cy="-2" rx="1.5" ry="1" fill="${c.rock}" opacity="0.5"/>`
     + `</g>`;
 }
 
-function svgFlower(x: number, y: number, c: AssetColors): string {
+function svgFlower(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Yellow flower variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0" y2="-2.5" stroke="${c.pine}" stroke-width="0.3"/>`
+      + `<circle cx="0" cy="-3" r="1" fill="${c.flowerCenter}"/>`
+      + `<circle cx="0" cy="-3" r="0.4" fill="${c.flower}"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Purple cluster variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="-0.8" y1="0" x2="-0.8" y2="-2" stroke="${c.pine}" stroke-width="0.25"/>`
+      + `<line x1="0.8" y1="0" x2="0.8" y2="-2.2" stroke="${c.pine}" stroke-width="0.25"/>`
+      + `<circle cx="-0.8" cy="-2.5" r="0.7" fill="${c.wildflower}"/>`
+      + `<circle cx="0.8" cy="-2.7" r="0.7" fill="${c.wildflower}"/>`
+      + `<circle cx="0" cy="-2.3" r="0.5" fill="${c.wildflower}" opacity="0.8"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<line x1="0" y1="0" x2="0" y2="-2.5" stroke="${c.pine}" stroke-width="0.3"/>`
     + `<circle cx="0" cy="-3" r="1" fill="${c.flower}"/>`
@@ -285,13 +445,42 @@ function svgFlower(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgBush(x: number, y: number, c: AssetColors): string {
+function svgBush(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Wide/flat variant
+    return `<ellipse cx="${x}" cy="${y - 1}" rx="3" ry="1" fill="${c.bush}"/>`;
+  }
+  if (v === 2) {
+    // Flowering variant
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1.5" rx="2" ry="1.5" fill="${c.bush}"/>`
+      + `<circle cx="-0.8" cy="-2" r="0.3" fill="${c.flower}"/>`
+      + `<circle cx="0.5" cy="-2.3" r="0.3" fill="${c.flower}"/>`
+      + `<circle cx="0.8" cy="-1.5" r="0.25" fill="${c.flower}"/>`
+      + `</g>`;
+  }
   return `<ellipse cx="${x}" cy="${y - 1.5}" rx="2" ry="1.5" fill="${c.bush}"/>`;
 }
 
 // Grassland assets
 
-function svgPine(x: number, y: number, c: AssetColors): string {
+function svgPine(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Short/bushy variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0" y2="-1.5" stroke="${c.trunk}" stroke-width="0.7"/>`
+      + `<polygon points="0,-5 -3,-1.5 3,-1.5" fill="${c.pine}"/>`
+      + `<polygon points="0,-6.5 -2.2,-3 2.2,-3" fill="${c.pine}" opacity="0.85"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Wind-bent variant
+    return `<g transform="translate(${x},${y})">`
+      + `<path d="M0,0 Q0.5,-2 1,-3" stroke="${c.trunk}" fill="none" stroke-width="0.6"/>`
+      + `<polygon points="1,-8 -1.5,-3 3.5,-3" fill="${c.pine}"/>`
+      + `<polygon points="1.2,-9.5 -0.5,-5.5 2.8,-5.5" fill="${c.pine}" opacity="0.85"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<line x1="0" y1="0" x2="0" y2="-2" stroke="${c.trunk}" stroke-width="0.6"/>`
     + `<polygon points="0,-8 -2.5,-2 2.5,-2" fill="${c.pine}"/>`
@@ -299,7 +488,26 @@ function svgPine(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgDeciduous(x: number, y: number, c: AssetColors): string {
+function svgDeciduous(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Oval tall variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0" y2="-4" stroke="${c.trunk}" stroke-width="0.6"/>`
+      + `<ellipse cx="0" cy="-7" rx="2" ry="3.5" fill="${c.leaf}"/>`
+      + `<ellipse cx="-0.5" cy="-6.5" rx="1.3" ry="2.5" fill="${c.bush}" opacity="0.7"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Multi-branch spread variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0" y2="-2.5" stroke="${c.trunk}" stroke-width="0.7"/>`
+      + `<line x1="0" y1="-2.5" x2="-2" y2="-4" stroke="${c.trunk}" stroke-width="0.4"/>`
+      + `<line x1="0" y1="-2.5" x2="2" y2="-4" stroke="${c.trunk}" stroke-width="0.4"/>`
+      + `<circle cx="-2" cy="-5" r="2" fill="${c.leaf}"/>`
+      + `<circle cx="2" cy="-5" r="2" fill="${c.leaf}"/>`
+      + `<circle cx="0" cy="-5.5" r="1.8" fill="${c.bush}" opacity="0.7"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<line x1="0" y1="0" x2="0" y2="-3" stroke="${c.trunk}" stroke-width="0.6"/>`
     + `<circle cx="0" cy="-5.5" r="2.8" fill="${c.leaf}"/>`
@@ -307,7 +515,23 @@ function svgDeciduous(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgMushroom(x: number, y: number, c: AssetColors): string {
+function svgMushroom(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Brown cluster variant
+    return `<g transform="translate(${x},${y})">`
+      + `<rect x="-1.2" y="-1.5" width="0.6" height="1.5" fill="${c.mushroom}"/>`
+      + `<ellipse cx="-0.9" cy="-1.7" rx="1" ry="0.7" fill="${c.trunk}"/>`
+      + `<rect x="0.5" y="-1.8" width="0.5" height="1.8" fill="${c.mushroom}"/>`
+      + `<ellipse cx="0.75" cy="-2" rx="0.8" ry="0.6" fill="${c.trunk}"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Tall/thin variant
+    return `<g transform="translate(${x},${y})">`
+      + `<rect x="-0.3" y="-3" width="0.6" height="3" fill="${c.mushroom}"/>`
+      + `<ellipse cx="0" cy="-3.2" rx="1" ry="0.6" fill="${c.mushroomCap}"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<rect x="-0.4" y="-2" width="0.8" height="2" fill="${c.mushroom}"/>`
     + `<ellipse cx="0" cy="-2.2" rx="1.5" ry="1" fill="${c.mushroomCap}"/>`
@@ -315,7 +539,26 @@ function svgMushroom(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgStump(x: number, y: number, c: AssetColors): string {
+function svgStump(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // With mushrooms variant
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1.5" rx="1.5" ry="0.8" fill="${c.stump}"/>`
+      + `<rect x="-1.5" y="-1.5" width="3" height="1.5" fill="${c.trunk}"/>`
+      + `<ellipse cx="0" cy="-1.5" rx="1.5" ry="0.6" fill="${c.stump}" opacity="0.7"/>`
+      + `<circle cx="1.2" cy="-1.2" r="0.4" fill="${c.mushroom}"/>`
+      + `<circle cx="1.5" cy="-0.8" r="0.3" fill="${c.mushroom}" opacity="0.8"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Mossy variant
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1.5" rx="1.5" ry="0.8" fill="${c.stump}"/>`
+      + `<rect x="-1.5" y="-1.5" width="3" height="1.5" fill="${c.trunk}"/>`
+      + `<ellipse cx="0" cy="-1.5" rx="1.5" ry="0.6" fill="${c.moss}" opacity="0.6"/>`
+      + `<ellipse cx="-0.5" cy="-1" rx="0.8" ry="0.3" fill="${c.moss}" opacity="0.4"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-1.5" rx="1.5" ry="0.8" fill="${c.stump}"/>`
     + `<rect x="-1.5" y="-1.5" width="3" height="1.5" fill="${c.trunk}"/>`
@@ -323,7 +566,29 @@ function svgStump(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgDeer(x: number, y: number, c: AssetColors): string {
+function svgDeer(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Grazing variant — head down
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-2" rx="2.2" ry="1.2" fill="${c.deer}"/>`
+      + `<circle cx="-2.2" cy="-1.8" r="0.6" fill="${c.deer}"/>`
+      + `<line x1="-2.5" y1="-2.4" x2="-2.8" y2="-3.2" stroke="${c.trunk}" stroke-width="0.25"/>`
+      + `<line x1="-1.9" y1="-2.4" x2="-1.5" y2="-3.2" stroke="${c.trunk}" stroke-width="0.25"/>`
+      + `<line x1="-1" y1="-0.8" x2="-1" y2="0" stroke="${c.deer}" stroke-width="0.4"/>`
+      + `<line x1="1" y1="-0.8" x2="1" y2="0" stroke="${c.deer}" stroke-width="0.4"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Walking variant — legs spread
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-2" rx="2.2" ry="1.2" fill="${c.deer}"/>`
+      + `<circle cx="-2" cy="-3" r="0.7" fill="${c.deer}"/>`
+      + `<line x1="-2.3" y1="-3.7" x2="-3" y2="-4.8" stroke="${c.trunk}" stroke-width="0.3"/>`
+      + `<line x1="-1.7" y1="-3.7" x2="-1" y2="-4.8" stroke="${c.trunk}" stroke-width="0.3"/>`
+      + `<line x1="-1.2" y1="-0.8" x2="-1.8" y2="0.3" stroke="${c.deer}" stroke-width="0.4"/>`
+      + `<line x1="0.8" y1="-0.8" x2="1.5" y2="0.3" stroke="${c.deer}" stroke-width="0.4"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-2" rx="2.2" ry="1.2" fill="${c.deer}"/>`
     + `<circle cx="-2" cy="-3" r="0.7" fill="${c.deer}"/>`
@@ -340,21 +605,57 @@ function svgDeer(x: number, y: number, c: AssetColors): string {
 
 // Forest assets
 
-function svgWillow(x: number, y: number, c: AssetColors): string {
+function svgWillow(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Short wide variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0" y2="-3" stroke="${c.trunk}" stroke-width="0.9"/>`
+      + `<circle cx="0" cy="-4" r="2.5" fill="${c.willow}"/>`
+      + `<path d="M-2.5,-3 Q-4,-1 -4,0" stroke="${c.willow}" fill="none" stroke-width="0.6" opacity="0.7"/>`
+      + `<path d="M2.5,-3 Q4,-1 4,0" stroke="${c.willow}" fill="none" stroke-width="0.6" opacity="0.7"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Gnarled trunk variant
+    return `<g transform="translate(${x},${y})">`
+      + `<path d="M0,0 Q-1,-2.5 0.5,-5" stroke="${c.trunk}" fill="none" stroke-width="1"/>`
+      + `<circle cx="0.5" cy="-6" r="1.8" fill="${c.willow}"/>`
+      + `<path d="M-1,-5 Q-2.5,-3 -3,-1" stroke="${c.willow}" fill="none" stroke-width="0.5" opacity="0.7"/>`
+      + `<path d="M2,-5 Q2.5,-3 2,-1" stroke="${c.willow}" fill="none" stroke-width="0.5" opacity="0.7"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<line x1="0" y1="0" x2="0" y2="-5" stroke="${c.trunk}" stroke-width="0.8"/>`
     + `<circle cx="0" cy="-6" r="2" fill="${c.willow}"/>`
-    // Drooping branches
     + `<path d="M-2,-5 Q-3,-3 -3,-1" stroke="${c.willow}" fill="none" stroke-width="0.6" opacity="0.7"/>`
     + `<path d="M2,-5 Q3,-3 3,-1" stroke="${c.willow}" fill="none" stroke-width="0.6" opacity="0.7"/>`
     + `<path d="M-1,-5.5 Q-2,-3.5 -2.5,-2" stroke="${c.willow}" fill="none" stroke-width="0.4" opacity="0.5"/>`
     + `</g>`;
 }
 
-function svgPalm(x: number, y: number, c: AssetColors): string {
+function svgPalm(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Curved trunk variant
+    return `<g transform="translate(${x},${y})">`
+      + `<path d="M0,0 Q-2,-4 -1,-8" stroke="${c.trunk}" fill="none" stroke-width="0.7"/>`
+      + `<path d="M-1,-8 Q2,-9 3,-7" stroke="${c.palm}" fill="none" stroke-width="0.8"/>`
+      + `<path d="M-1,-8 Q-3,-9 -4,-7" stroke="${c.palm}" fill="none" stroke-width="0.8"/>`
+      + `<path d="M-1,-8 Q1,-10 2,-9" stroke="${c.palm}" fill="none" stroke-width="0.6"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Pair variant
+    return `<g transform="translate(${x},${y})">`
+      + `<path d="M-1.5,0 Q-2,-3 -1,-6" stroke="${c.trunk}" fill="none" stroke-width="0.6"/>`
+      + `<path d="M-1,-6 Q1,-7 2,-5.5" stroke="${c.palm}" fill="none" stroke-width="0.7"/>`
+      + `<path d="M-1,-6 Q-3,-7 -3.5,-5.5" stroke="${c.palm}" fill="none" stroke-width="0.7"/>`
+      + `<path d="M1.5,0 Q1,-3 2,-7" stroke="${c.trunk}" fill="none" stroke-width="0.6"/>`
+      + `<path d="M2,-7 Q4,-8 4.5,-6.5" stroke="${c.palm}" fill="none" stroke-width="0.7"/>`
+      + `<path d="M2,-7 Q0,-8 -0.5,-6.5" stroke="${c.palm}" fill="none" stroke-width="0.7"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<path d="M0,0 Q-0.5,-4 0.5,-8" stroke="${c.trunk}" fill="none" stroke-width="0.7"/>`
-    // Fan leaves
     + `<path d="M0.5,-8 Q3,-9 4,-7" stroke="${c.palm}" fill="none" stroke-width="0.8"/>`
     + `<path d="M0.5,-8 Q-2,-9 -3,-7" stroke="${c.palm}" fill="none" stroke-width="0.8"/>`
     + `<path d="M0.5,-8 Q2,-10 3,-9" stroke="${c.palm}" fill="none" stroke-width="0.6"/>`
@@ -362,15 +663,57 @@ function svgPalm(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgBird(x: number, y: number, c: AssetColors): string {
+function svgBird(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Perched variant — sitting on invisible branch
+    return `<g transform="translate(${x},${y})">`
+      + `<circle cx="0" cy="-4" r="0.6" fill="${c.bird}"/>`
+      + `<ellipse cx="0" cy="-3.5" rx="0.5" ry="0.8" fill="${c.bird}"/>`
+      + `<polygon points="-0.6,-4 -1,-3.9 -0.6,-3.8" fill="${c.wheat}"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Pair variant — two V-shapes
+    return `<g transform="translate(${x},${y})">`
+      + `<g>`
+      + `<path d="M-1.5,-4 Q0,-5.5 1.5,-4" stroke="${c.bird}" fill="none" stroke-width="0.5"/>`
+      + `<path d="M0,-5.5 Q1.5,-7 3,-5.5" stroke="${c.bird}" fill="none" stroke-width="0.4" opacity="0.7"/>`
+      + `<animateTransform attributeName="transform" type="translate" values="0,0;4,-1;0,0" dur="12s" repeatCount="indefinite"/>`
+      + `</g>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
+    + `<g>`
     + `<path d="M-1.5,-4 Q0,-5.5 1.5,-4" stroke="${c.bird}" fill="none" stroke-width="0.5"/>`
+    + `<animateTransform attributeName="transform" type="translate" values="0,0;4,-1;0,0" dur="12s" repeatCount="indefinite"/>`
+    + `</g>`
     + `</g>`;
 }
 
 // Farm assets
 
-function svgWheat(x: number, y: number, c: AssetColors): string {
+function svgWheat(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Ripe golden variant — denser, drooping heads
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="-1.5" y1="0" x2="-1.5" y2="-4" stroke="${c.wheat}" stroke-width="0.35"/>`
+      + `<line x1="0" y1="0" x2="0" y2="-4.5" stroke="${c.wheat}" stroke-width="0.35"/>`
+      + `<line x1="1.5" y1="0" x2="1.5" y2="-3.8" stroke="${c.wheat}" stroke-width="0.35"/>`
+      + `<line x1="-0.7" y1="0" x2="-0.7" y2="-4.2" stroke="${c.wheat}" stroke-width="0.25" opacity="0.7"/>`
+      + `<ellipse cx="-1.5" cy="-4.3" rx="0.4" ry="0.7" fill="${c.wheat}"/>`
+      + `<ellipse cx="0" cy="-4.8" rx="0.4" ry="0.7" fill="${c.wheat}"/>`
+      + `<ellipse cx="1.5" cy="-4.1" rx="0.4" ry="0.7" fill="${c.wheat}"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Harvested stubble variant — short cut stalks
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="-2" y1="0" x2="-2" y2="-1.2" stroke="${c.wheat}" stroke-width="0.3" opacity="0.6"/>`
+      + `<line x1="-0.5" y1="0" x2="-0.5" y2="-1" stroke="${c.wheat}" stroke-width="0.3" opacity="0.6"/>`
+      + `<line x1="1" y1="0" x2="1" y2="-1.3" stroke="${c.wheat}" stroke-width="0.3" opacity="0.6"/>`
+      + `<line x1="2.5" y1="0" x2="2.5" y2="-0.8" stroke="${c.wheat}" stroke-width="0.3" opacity="0.5"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<line x1="-1.5" y1="0" x2="-1.5" y2="-4" stroke="${c.wheat}" stroke-width="0.3"/>`
     + `<line x1="0" y1="0" x2="0" y2="-4.5" stroke="${c.wheat}" stroke-width="0.3"/>`
@@ -381,7 +724,34 @@ function svgWheat(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgFence(x: number, y: number, c: AssetColors): string {
+function svgFence(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // L-corner variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="-3" y1="-1.5" x2="0" y2="-1.5" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="-3" y1="-2.5" x2="0" y2="-2.5" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="-3" y1="0" x2="-3" y2="-3" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="0" y1="0" x2="0" y2="-3" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="0" y1="-1.5" x2="0" y2="-1.5" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="0" y1="-1.5" x2="0" y2="0" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="0" y1="-2.5" x2="3" y2="-2.5" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="0" y1="-1.5" x2="3" y2="-1.5" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="3" y1="0" x2="3" y2="-3" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Gate variant — gap in middle
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="-3" y1="-1.5" x2="-0.5" y2="-1.5" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="0.5" y1="-1.5" x2="3" y2="-1.5" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="-3" y1="-2.5" x2="-0.5" y2="-2.5" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="0.5" y1="-2.5" x2="3" y2="-2.5" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="-3" y1="0" x2="-3" y2="-3" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="-0.5" y1="0" x2="-0.5" y2="-3.3" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="0.5" y1="0" x2="0.5" y2="-3.3" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `<line x1="3" y1="0" x2="3" y2="-3" stroke="${c.fence}" stroke-width="0.4"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<line x1="-3" y1="-1.5" x2="3" y2="-1.5" stroke="${c.fence}" stroke-width="0.4"/>`
     + `<line x1="-3" y1="-2.5" x2="3" y2="-2.5" stroke="${c.fence}" stroke-width="0.4"/>`
@@ -391,7 +761,27 @@ function svgFence(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgScarecrow(x: number, y: number, c: AssetColors): string {
+function svgScarecrow(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // With crow variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0" y2="-6" stroke="${c.scarecrow}" stroke-width="0.5"/>`
+      + `<line x1="-2.5" y1="-4" x2="2.5" y2="-4" stroke="${c.scarecrow}" stroke-width="0.4"/>`
+      + `<circle cx="0" cy="-7" r="1" fill="${c.scarecrowHat}"/>`
+      + `<rect x="-1.5" y="-8.2" width="3" height="0.8" fill="${c.scarecrowHat}" rx="0.2"/>`
+      + `<path d="M2,-4.5 Q2.5,-5.5 3,-4.5" stroke="${c.bird}" fill="${c.bird}" stroke-width="0.3"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Tattered variant — tilted, ragged
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0.3" y2="-5.5" stroke="${c.scarecrow}" stroke-width="0.5"/>`
+      + `<line x1="-2" y1="-3.5" x2="2.5" y2="-4.2" stroke="${c.scarecrow}" stroke-width="0.4"/>`
+      + `<circle cx="0.3" cy="-6.5" r="0.9" fill="${c.scarecrowHat}"/>`
+      + `<rect x="-1" y="-7.6" width="2.8" height="0.7" fill="${c.scarecrowHat}" rx="0.2" transform="rotate(-8 0.3 -7)"/>`
+      + `<path d="M-2,-3.5 L-2.5,-2.5" stroke="${c.scarecrow}" stroke-width="0.3" opacity="0.5"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<line x1="0" y1="0" x2="0" y2="-6" stroke="${c.scarecrow}" stroke-width="0.5"/>`
     + `<line x1="-2.5" y1="-4" x2="2.5" y2="-4" stroke="${c.scarecrow}" stroke-width="0.4"/>`
@@ -400,7 +790,23 @@ function svgScarecrow(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgBarn(x: number, y: number, c: AssetColors): string {
+function svgBarn(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Large red barn variant
+    return `<g transform="translate(${x},${y})">`
+      + `<polygon points="-4,0 0,2 4,0 4,-4.5 0,-2.5 -4,-4.5" fill="${c.roofA}" opacity="0.9"/>`
+      + `<polygon points="-4,0 0,2 0,-2.5 -4,-4.5" fill="${c.wallShade}"/>`
+      + `<polygon points="0,-7.5 -4.5,-4 0,-2.2 4.5,-4" fill="${c.roofA}"/>`
+      + `<rect x="-0.5" y="-1.5" width="1" height="1.5" fill="${c.trunk}" opacity="0.5"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Small shed variant
+    return `<g transform="translate(${x},${y})">`
+      + `<rect x="-2" y="-2.5" width="4" height="2.5" fill="${c.wallShade}"/>`
+      + `<polygon points="-2.5,-2.5 0,-4 2.5,-2.5" fill="${c.roofB}"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<polygon points="-3,0 0,1.5 3,0 3,-3.5 0,-2 -3,-3.5" fill="${c.roofA}" opacity="0.8"/>`
     + `<polygon points="-3,0 0,1.5 0,-2 -3,-3.5" fill="${c.wallShade}"/>`
@@ -408,7 +814,27 @@ function svgBarn(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgSheep(x: number, y: number, c: AssetColors): string {
+function svgSheep(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Lying down variant
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-0.8" rx="2" ry="1" fill="${c.sheep}"/>`
+      + `<circle cx="-1.8" cy="-1.2" r="0.7" fill="${c.sheepHead}"/>`
+      + `<circle cx="-1.8" cy="-1.4" r="0.12" fill="#fff"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Grazing (head down) variant
+    return `<g transform="translate(${x},${y})">`
+      + `<circle cx="0" cy="-2" r="1.6" fill="${c.sheep}"/>`
+      + `<circle cx="-1.2" cy="-2.2" r="1.3" fill="${c.sheep}"/>`
+      + `<circle cx="1.2" cy="-2.2" r="1.3" fill="${c.sheep}"/>`
+      + `<circle cx="-2" cy="-1.5" r="0.7" fill="${c.sheepHead}"/>`
+      + `<ellipse cx="-2.5" cy="-1.2" rx="0.5" ry="0.3" fill="${c.sheepHead}"/>`
+      + `<line x1="-1" y1="-0.8" x2="-1" y2="0.3" stroke="${c.sheepHead}" stroke-width="0.35"/>`
+      + `<line x1="1" y1="-0.8" x2="1" y2="0.3" stroke="${c.sheepHead}" stroke-width="0.35"/>`
+      + `</g>`;
+  }
   // Fluffy multi-bump wool body with detailed head and 4 legs
   return `<g transform="translate(${x},${y})">`
     // Wool body: 5 overlapping circles for fluffy texture
@@ -433,7 +859,30 @@ function svgSheep(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgCow(x: number, y: number, c: AssetColors): string {
+function svgCow(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Right-facing variant
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1.8" rx="2.5" ry="1.5" fill="${c.cow}"/>`
+      + `<ellipse cx="-0.8" cy="-2.2" rx="0.8" ry="0.6" fill="${c.cowSpot}"/>`
+      + `<ellipse cx="0.5" cy="-1.3" rx="0.6" ry="0.5" fill="${c.cowSpot}"/>`
+      + `<circle cx="2.2" cy="-2.5" r="0.9" fill="${c.cow}"/>`
+      + `<circle cx="2.2" cy="-2.3" r="0.4" fill="${c.cowSpot}" opacity="0.5"/>`
+      + `<line x1="2.8" y1="-3.3" x2="3.2" y2="-3.8" stroke="${c.fence}" stroke-width="0.3"/>`
+      + `<line x1="1.8" y1="-3.3" x2="1.4" y2="-3.8" stroke="${c.fence}" stroke-width="0.3"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Grazing variant — head down
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1.8" rx="2.5" ry="1.5" fill="${c.cow}"/>`
+      + `<ellipse cx="0.8" cy="-2.2" rx="0.8" ry="0.6" fill="${c.cowSpot}"/>`
+      + `<ellipse cx="-0.5" cy="-1.3" rx="0.6" ry="0.5" fill="${c.cowSpot}"/>`
+      + `<circle cx="-2.3" cy="-1.5" r="0.8" fill="${c.cow}"/>`
+      + `<line x1="-2.8" y1="-2.2" x2="-3.1" y2="-2.6" stroke="${c.fence}" stroke-width="0.25"/>`
+      + `<line x1="-1.9" y1="-2.2" x2="-1.6" y2="-2.6" stroke="${c.fence}" stroke-width="0.25"/>`
+      + `</g>`;
+  }
   // Redesigned: distinctive spots, proper head shape
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-1.8" rx="2.5" ry="1.5" fill="${c.cow}"/>`
@@ -449,7 +898,29 @@ function svgCow(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgChicken(x: number, y: number, c: AssetColors): string {
+function svgChicken(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Standing upright variant
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1.2" rx="1" ry="1" fill="${c.chicken}"/>`
+      + `<circle cx="0" cy="-2.2" r="0.5" fill="${c.chicken}"/>`
+      + `<path d="M0,-2.7 Q0.2,-3.1 0.4,-2.7 Q0.6,-3 0.7,-2.6" fill="${c.flag}" stroke="none"/>`
+      + `<polygon points="-0.5,-2.1 -0.9,-2 -0.5,-1.9" fill="${c.wheat}"/>`
+      + `<line x1="-0.3" y1="-0.2" x2="-0.5" y2="0.3" stroke="${c.wheat}" stroke-width="0.25"/>`
+      + `<line x1="0.3" y1="-0.2" x2="0.5" y2="0.3" stroke="${c.wheat}" stroke-width="0.25"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // With chicks variant
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1" rx="1.2" ry="0.9" fill="${c.chicken}"/>`
+      + `<circle cx="-1" cy="-1.6" r="0.6" fill="${c.chicken}"/>`
+      + `<path d="M-1,-2.2 Q-0.8,-2.8 -0.6,-2.2" fill="${c.flag}" stroke="none"/>`
+      + `<polygon points="-1.5,-1.5 -2,-1.3 -1.5,-1.2" fill="${c.wheat}"/>`
+      + `<circle cx="2" cy="-0.3" r="0.3" fill="${c.wheat}"/>`
+      + `<circle cx="2.8" cy="-0.4" r="0.25" fill="${c.wheat}"/>`
+      + `</g>`;
+  }
   // Redesigned: red comb is key identifier
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-1" rx="1.2" ry="0.9" fill="${c.chicken}"/>`
@@ -461,7 +932,29 @@ function svgChicken(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgHorse(x: number, y: number, c: AssetColors): string {
+function svgHorse(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Walking variant — legs apart
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-2.2" rx="2.5" ry="1.3" fill="${c.horse}"/>`
+      + `<path d="M-2,-2.5 Q-2.5,-4 -2,-5" stroke="${c.horse}" fill="${c.horse}" stroke-width="1"/>`
+      + `<ellipse cx="-1.8" cy="-5.2" rx="1" ry="0.5" fill="${c.horse}"/>`
+      + `<line x1="-1.2" y1="-1" x2="-1.8" y2="0.3" stroke="${c.horse}" stroke-width="0.4"/>`
+      + `<line x1="0.8" y1="-1" x2="1.5" y2="0.3" stroke="${c.horse}" stroke-width="0.4"/>`
+      + `<path d="M2.5,-2.5 Q3.5,-3 3,-1.5" stroke="${c.horse}" fill="none" stroke-width="0.4"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Rearing variant — front legs up
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-2.5" rx="2.3" ry="1.3" fill="${c.horse}" transform="rotate(-15)"/>`
+      + `<path d="M-1.5,-3.5 Q-2,-5 -1.5,-6.5" stroke="${c.horse}" fill="${c.horse}" stroke-width="1"/>`
+      + `<ellipse cx="-1.3" cy="-6.8" rx="0.9" ry="0.45" fill="${c.horse}"/>`
+      + `<line x1="-0.5" y1="-1.5" x2="-0.8" y2="-0.2" stroke="${c.horse}" stroke-width="0.4"/>`
+      + `<line x1="1.5" y1="-1.5" x2="1.5" y2="0" stroke="${c.horse}" stroke-width="0.4"/>`
+      + `<path d="M2,-3 Q3,-3.5 2.5,-2" stroke="${c.horse}" fill="none" stroke-width="0.4"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-2.2" rx="2.5" ry="1.3" fill="${c.horse}"/>`
     // Neck + head
@@ -475,7 +968,7 @@ function svgHorse(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgRicePaddy(x: number, y: number, c: AssetColors): string {
+function svgRicePaddy(x: number, y: number, c: AssetColors, v: number): string {
   // Isometric parallelogram terrace with water fill and rice plant stubs
   return `<g transform="translate(${x},${y})">`
     // Terrace edge (outer parallelogram)
@@ -496,7 +989,7 @@ function svgRicePaddy(x: number, y: number, c: AssetColors): string {
 
 // Village assets
 
-function svgTent(x: number, y: number, c: AssetColors): string {
+function svgTent(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<polygon points="0,-6 -3.5,0 3.5,0" fill="${c.tent}"/>`
     + `<polygon points="0,-6 -1.5,0 1.5,0" fill="${c.tentStripe}" opacity="0.6"/>`
@@ -504,15 +997,34 @@ function svgTent(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgHut(x: number, y: number, c: AssetColors): string {
+function svgHut(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Round hut variant
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1.5" rx="2" ry="1.5" fill="${c.hut}"/>`
+      + `<polygon points="-2.2,-1.5 0,-5 2.2,-1.5" fill="${c.roofB}"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // With porch variant
+    return `<g transform="translate(${x},${y})">`
+      + `<rect x="-2" y="-3" width="4" height="3" fill="${c.hut}"/>`
+      + `<polygon points="-2.5,-3 0,-5.5 2.5,-3" fill="${c.roofB}"/>`
+      + `<rect x="2.5" y="-1.5" width="2" height="1.5" fill="${c.hut}" opacity="0.6"/>`
+      + `<line x1="2.5" y1="-1.5" x2="4.5" y2="-1.5" stroke="${c.roofB}" stroke-width="0.3"/>`
+      + `<line x1="4.5" y1="-1.5" x2="4.5" y2="0" stroke="${c.trunk}" stroke-width="0.3"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<rect x="-2" y="-3" width="4" height="3" fill="${c.hut}"/>`
     + `<polygon points="-2.5,-3 0,-5.5 2.5,-3" fill="${c.roofB}"/>`
     + `</g>`;
 }
 
-function svgHouse(x: number, y: number, c: AssetColors, roofColor?: string): string {
-  const roof = roofColor || c.roofA;
+function svgHouse(x: number, y: number, c: AssetColors, v: number, roofColor?: string): string {
+  // v=1: blue roof, v=2: green roof+garden
+  const roofOptions = [roofColor || c.roofA, '#4477aa', '#448844'];
+  const roof = roofOptions[v] || roofOptions[0];
   return `<g transform="translate(${x},${y})">`
     + `<polygon points="-2.5,0 0,1.2 2.5,0 2.5,-3 0,-1.8 -2.5,-3" fill="${c.wall}"/>`
     + `<polygon points="-2.5,0 0,1.2 0,-1.8 -2.5,-3" fill="${c.wallShade}"/>`
@@ -521,11 +1033,30 @@ function svgHouse(x: number, y: number, c: AssetColors, roofColor?: string): str
     + `</g>`;
 }
 
-function svgHouseB(x: number, y: number, c: AssetColors): string {
-  return svgHouse(x, y, c, c.roofB);
+function svgHouseB(x: number, y: number, c: AssetColors, v: number): string {
+  return svgHouse(x, y, c, v, c.roofB);
 }
 
-function svgChurch(x: number, y: number, c: AssetColors): string {
+function svgChurch(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Bell tower variant — wider tower with bell
+    return `<g transform="translate(${x},${y})">`
+      + `<polygon points="-2,0 0,1 2,0 2,-5 0,-4 -2,-5" fill="${c.church}"/>`
+      + `<polygon points="-2,0 0,1 0,-4 -2,-5" fill="${c.wallShade}"/>`
+      + `<rect x="-1" y="-8.5" width="2" height="3.5" fill="${c.church}"/>`
+      + `<polygon points="-1.3,-8.5 0,-10.5 1.3,-8.5" fill="${c.roofA}"/>`
+      + `<circle cx="0" cy="-7" r="0.4" fill="${c.blacksmith}" opacity="0.5"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Small chapel variant — compact, no tower
+    return `<g transform="translate(${x},${y})">`
+      + `<rect x="-1.5" y="-3" width="3" height="3" fill="${c.church}"/>`
+      + `<polygon points="-2,-3 0,-5 2,-3" fill="${c.roofA}"/>`
+      + `<line x1="0" y1="-5.5" x2="0" y2="-5" stroke="${c.wall}" stroke-width="0.4"/>`
+      + `<line x1="-0.5" y1="-5.2" x2="0.5" y2="-5.2" stroke="${c.wall}" stroke-width="0.4"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<polygon points="-2,0 0,1 2,0 2,-5 0,-4 -2,-5" fill="${c.church}"/>`
     + `<polygon points="-2,0 0,1 0,-4 -2,-5" fill="${c.wallShade}"/>`
@@ -535,7 +1066,7 @@ function svgChurch(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgWindmill(x: number, y: number, c: AssetColors): string {
+function svgWindmill(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<polygon points="-1.5,0 1.5,0 1,-7 -1,-7" fill="${c.windmill}"/>`
     // Animated blades via SMIL
@@ -548,7 +1079,7 @@ function svgWindmill(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgWell(x: number, y: number, c: AssetColors): string {
+function svgWell(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-0.5" rx="2" ry="1" fill="${c.well}" stroke="${c.fence}" stroke-width="0.3"/>`
     + `<line x1="-1.5" y1="-0.5" x2="-1.5" y2="-4" stroke="${c.trunk}" stroke-width="0.4"/>`
@@ -559,7 +1090,28 @@ function svgWell(x: number, y: number, c: AssetColors): string {
 
 // Town assets
 
-function svgMarket(x: number, y: number, c: AssetColors): string {
+function svgMarket(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // With cart variant
+    return `<g transform="translate(${x},${y})">`
+      + `<rect x="-3" y="-3" width="6" height="3" fill="${c.market}"/>`
+      + `<polygon points="-3.5,-3 0,-5 3.5,-3" fill="${c.marketAwning}"/>`
+      + `<rect x="-2" y="-1.5" width="1" height="0.8" fill="${c.barrel}" rx="0.2"/>`
+      + `<rect x="4" y="-1.5" width="2.5" height="1.2" fill="${c.cart}"/>`
+      + `<circle cx="4.5" cy="0" r="0.5" fill="${c.trunk}"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Open stall variant — no back wall, posts only
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="-3" y1="0" x2="-3" y2="-4" stroke="${c.trunk}" stroke-width="0.5"/>`
+      + `<line x1="3" y1="0" x2="3" y2="-4" stroke="${c.trunk}" stroke-width="0.5"/>`
+      + `<polygon points="-3.5,-4 0,-5.5 3.5,-4" fill="${c.marketAwning}"/>`
+      + `<rect x="-2.5" y="-1" width="5" height="0.8" fill="${c.trunk}" opacity="0.4"/>`
+      + `<rect x="-2" y="-1.5" width="1" height="0.8" fill="${c.barrel}" rx="0.2"/>`
+      + `<rect x="0.5" y="-1.5" width="1" height="0.8" fill="${c.wheat}" rx="0.2"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<rect x="-3" y="-3" width="6" height="3" fill="${c.market}"/>`
     + `<polygon points="-3.5,-3 0,-5 3.5,-3" fill="${c.marketAwning}"/>`
@@ -569,7 +1121,29 @@ function svgMarket(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgInn(x: number, y: number, c: AssetColors): string {
+function svgInn(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // With dormer variant
+    return `<g transform="translate(${x},${y})">`
+      + `<polygon points="-3,0 0,1.5 3,0 3,-4 0,-2.5 -3,-4" fill="${c.inn}"/>`
+      + `<polygon points="-3,0 0,1.5 0,-2.5 -3,-4" fill="${c.wallShade}"/>`
+      + `<polygon points="0,-7 -3.5,-3.8 0,-2.2 3.5,-3.8" fill="${c.roofB}"/>`
+      + `<rect x="-1" y="-5.5" width="1.5" height="1.5" fill="${c.wall}"/>`
+      + `<polygon points="-1,-5.5 -0.25,-6.5 0.5,-5.5" fill="${c.roofB}"/>`
+      + `<rect x="3" y="-5" width="2" height="1.5" fill="${c.innSign}" rx="0.3"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Outdoor seating variant
+    return `<g transform="translate(${x},${y})">`
+      + `<polygon points="-3,0 0,1.5 3,0 3,-4 0,-2.5 -3,-4" fill="${c.inn}"/>`
+      + `<polygon points="-3,0 0,1.5 0,-2.5 -3,-4" fill="${c.wallShade}"/>`
+      + `<polygon points="0,-7 -3.5,-3.8 0,-2.2 3.5,-3.8" fill="${c.roofB}"/>`
+      + `<rect x="3" y="-5" width="2" height="1.5" fill="${c.innSign}" rx="0.3"/>`
+      + `<rect x="3.5" y="-1.5" width="2" height="0.5" fill="${c.trunk}" opacity="0.6"/>`
+      + `<rect x="4" y="-1" width="0.5" height="1" fill="${c.trunk}" opacity="0.5"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<polygon points="-3,0 0,1.5 3,0 3,-4 0,-2.5 -3,-4" fill="${c.inn}"/>`
     + `<polygon points="-3,0 0,1.5 0,-2.5 -3,-4" fill="${c.wallShade}"/>`
@@ -579,7 +1153,7 @@ function svgInn(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgBlacksmith(x: number, y: number, c: AssetColors): string {
+function svgBlacksmith(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<rect x="-2.5" y="-3" width="5" height="3" fill="${c.blacksmith}"/>`
     + `<polygon points="-3,-3 0,-5 3,-3" fill="${c.roofA}"/>`
@@ -590,7 +1164,7 @@ function svgBlacksmith(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgCastle(x: number, y: number, c: AssetColors): string {
+function svgCastle(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     // Main body
     + `<rect x="-3" y="-6" width="6" height="6" fill="${c.castle}"/>`
@@ -606,7 +1180,7 @@ function svgCastle(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgTower(x: number, y: number, c: AssetColors): string {
+function svgTower(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<rect x="-1.5" y="-8" width="3" height="8" fill="${c.tower}"/>`
     + `<polygon points="-2,-8 0,-11 2,-8" fill="${c.castleRoof}"/>`
@@ -615,7 +1189,7 @@ function svgTower(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgBridge(x: number, y: number, c: AssetColors): string {
+function svgBridge(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<path d="M-4,0 Q0,-2 4,0" fill="${c.bridge}" stroke="${c.trunk}" stroke-width="0.4"/>`
     + `<line x1="-3" y1="-0.8" x2="-3" y2="-2.5" stroke="${c.trunk}" stroke-width="0.4"/>`
@@ -626,7 +1200,7 @@ function svgBridge(x: number, y: number, c: AssetColors): string {
 
 // Cross-level decoration assets
 
-function svgCart(x: number, y: number, c: AssetColors): string {
+function svgCart(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<rect x="-2" y="-2" width="3.5" height="2" fill="${c.cart}"/>`
     + `<circle cx="-1.5" cy="0" r="0.8" fill="${c.trunk}" stroke="${c.fence}" stroke-width="0.2"/>`
@@ -635,7 +1209,7 @@ function svgCart(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgBarrel(x: number, y: number, c: AssetColors): string {
+function svgBarrel(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-0.3" rx="1.2" ry="0.5" fill="${c.barrel}"/>`
     + `<rect x="-1.2" y="-2.5" width="2.4" height="2.2" fill="${c.barrel}" rx="0.3"/>`
@@ -643,7 +1217,24 @@ function svgBarrel(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgTorch(x: number, y: number, c: AssetColors): string {
+function svgTorch(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Ground stake variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0.5" x2="0" y2="-3" stroke="${c.torch}" stroke-width="0.4"/>`
+      + `<ellipse cx="0" cy="-3.5" rx="0.6" ry="0.8" fill="${c.torchFlame}" opacity="0.8"/>`
+      + `<ellipse cx="0" cy="-3.7" rx="0.3" ry="0.5" fill="#ffdd44" opacity="0.9"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Streetlamp variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0" y2="-5" stroke="${c.torch}" stroke-width="0.4"/>`
+      + `<path d="M0,-5 Q1,-5.5 1,-5" stroke="${c.torch}" fill="none" stroke-width="0.3"/>`
+      + `<rect x="0.5" y="-6" width="1" height="0.8" fill="${c.lantern}"/>`
+      + `<rect x="0.65" y="-5.8" width="0.7" height="0.4" fill="${c.lanternGlow}" opacity="0.8"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<line x1="0" y1="0" x2="0" y2="-4" stroke="${c.torch}" stroke-width="0.5"/>`
     + `<ellipse cx="0" cy="-4.5" rx="0.8" ry="1" fill="${c.torchFlame}" opacity="0.8"/>`
@@ -651,14 +1242,48 @@ function svgTorch(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgFlag(x: number, y: number, c: AssetColors): string {
+function svgFlag(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Blue pennant variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0" y2="-8" stroke="${c.trunk}" stroke-width="0.4"/>`
+      + `<polygon points="0,-8 2.5,-6.5 0,-5" fill="#4477bb"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Banner variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0" y2="-8" stroke="${c.trunk}" stroke-width="0.4"/>`
+      + `<line x1="0" y1="-8" x2="2.5" y2="-8" stroke="${c.trunk}" stroke-width="0.3"/>`
+      + `<rect x="0" y="-8" width="2.5" height="3" fill="${c.flag}" opacity="0.9"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<line x1="0" y1="0" x2="0" y2="-8" stroke="${c.trunk}" stroke-width="0.4"/>`
     + `<polygon points="0,-8 3.5,-7 0,-5.5" fill="${c.flag}"/>`
     + `</g>`;
 }
 
-function svgCobblePath(x: number, y: number, c: AssetColors): string {
+function svgCobblePath(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Lined variant — neat row
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="-2" cy="-0.3" rx="0.8" ry="0.35" fill="${c.cobble}" opacity="0.6"/>`
+      + `<ellipse cx="-0.5" cy="-0.3" rx="0.7" ry="0.3" fill="${c.cobble}" opacity="0.55"/>`
+      + `<ellipse cx="1" cy="-0.3" rx="0.8" ry="0.35" fill="${c.cobble}" opacity="0.5"/>`
+      + `<ellipse cx="2.5" cy="-0.3" rx="0.7" ry="0.3" fill="${c.cobble}" opacity="0.5"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Crossroads variant — X pattern
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-0.3" rx="0.8" ry="0.35" fill="${c.cobble}" opacity="0.6"/>`
+      + `<ellipse cx="-1.5" cy="-0.8" rx="0.7" ry="0.3" fill="${c.cobble}" opacity="0.5"/>`
+      + `<ellipse cx="1.5" cy="-0.8" rx="0.7" ry="0.3" fill="${c.cobble}" opacity="0.5"/>`
+      + `<ellipse cx="-1.5" cy="0.2" rx="0.7" ry="0.3" fill="${c.cobble}" opacity="0.5"/>`
+      + `<ellipse cx="1.5" cy="0.2" rx="0.7" ry="0.3" fill="${c.cobble}" opacity="0.5"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="-1" cy="-0.3" rx="1" ry="0.4" fill="${c.cobble}" opacity="0.6"/>`
     + `<ellipse cx="1" cy="0" rx="0.8" ry="0.35" fill="${c.cobble}" opacity="0.5"/>`
@@ -666,7 +1291,7 @@ function svgCobblePath(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgSmoke(x: number, y: number, c: AssetColors): string {
+function svgSmoke(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<circle cx="0" cy="-5" r="1" fill="${c.smoke}">`
     + `<animate attributeName="cy" values="-5;-8;-5" dur="4s" repeatCount="indefinite"/>`
@@ -681,7 +1306,7 @@ function svgSmoke(x: number, y: number, c: AssetColors): string {
 
 // Biome blend assets
 
-function svgReeds(x: number, y: number, c: AssetColors): string {
+function svgReeds(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<line x1="-1" y1="0" x2="-1.3" y2="-4" stroke="${c.reeds}" stroke-width="0.4"/>`
     + `<line x1="0" y1="0" x2="0.2" y2="-4.5" stroke="${c.reeds}" stroke-width="0.4"/>`
@@ -691,7 +1316,7 @@ function svgReeds(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgFountain(x: number, y: number, c: AssetColors): string {
+function svgFountain(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-0.5" rx="2.5" ry="1" fill="${c.fountain}" stroke="${c.boulder}" stroke-width="0.3"/>`
     + `<ellipse cx="0" cy="-0.3" rx="2" ry="0.7" fill="${c.fountainWater}" opacity="0.6"/>`
@@ -704,14 +1329,14 @@ function svgFountain(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgCanal(x: number, y: number, c: AssetColors): string {
+function svgCanal(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<rect x="-3" y="-1" width="6" height="1" fill="${c.canal}"/>`
     + `<rect x="-2.5" y="-0.7" width="5" height="0.5" fill="${c.fountainWater}" opacity="0.5"/>`
     + `</g>`;
 }
 
-function svgWatermill(x: number, y: number, c: AssetColors): string {
+function svgWatermill(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<rect x="-2" y="-4" width="4" height="4" fill="${c.wall}"/>`
     + `<polygon points="-2.5,-4 0,-6 2.5,-4" fill="${c.roofB}"/>`
@@ -724,7 +1349,25 @@ function svgWatermill(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgGardenTree(x: number, y: number, c: AssetColors): string {
+function svgGardenTree(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Cone topiary variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0" y2="-2.5" stroke="${c.trunk}" stroke-width="0.5"/>`
+      + `<polygon points="0,-7 -1.5,-2.5 1.5,-2.5" fill="${c.gardenTree}"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Flowering pink variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="0" y1="0" x2="0" y2="-2.5" stroke="${c.trunk}" stroke-width="0.5"/>`
+      + `<circle cx="0" cy="-4" r="2" fill="${c.gardenTree}"/>`
+      + `<circle cx="-0.8" cy="-4.5" r="0.4" fill="${c.flower}" opacity="0.8"/>`
+      + `<circle cx="0.5" cy="-3.5" r="0.35" fill="${c.flower}" opacity="0.7"/>`
+      + `<circle cx="0.8" cy="-4.8" r="0.3" fill="${c.flower}" opacity="0.6"/>`
+      + `<circle cx="-0.3" cy="-3.2" r="0.3" fill="${c.flower}" opacity="0.7"/>`
+      + `</g>`;
+  }
   return `<g transform="translate(${x},${y})">`
     + `<line x1="0" y1="0" x2="0" y2="-2.5" stroke="${c.trunk}" stroke-width="0.5"/>`
     + `<circle cx="0" cy="-4" r="2" fill="${c.gardenTree}"/>`
@@ -732,16 +1375,672 @@ function svgGardenTree(x: number, y: number, c: AssetColors): string {
     + `</g>`;
 }
 
-function svgPondLily(x: number, y: number, c: AssetColors): string {
+function svgPondLily(x: number, y: number, c: AssetColors, v: number): string {
   return `<g transform="translate(${x},${y})">`
     + `<ellipse cx="0" cy="-0.3" rx="1.5" ry="0.6" fill="${c.pine}" opacity="0.7"/>`
     + `<circle cx="0.3" cy="-0.5" r="0.4" fill="${c.flower}"/>`
     + `</g>`;
 }
 
+// ── New Water Assets ────────────────────────────────────────
+
+function svgKelp(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<path d="M0,0 Q-1,-2 0,-4 Q1,-6 0,-7" stroke="${c.fern}" fill="none" stroke-width="0.6" opacity="0.7"/>`
+    + `<path d="M1,0 Q2,-1.5 1,-3.5 Q0,-5 1,-6" stroke="${c.fern}" fill="none" stroke-width="0.5" opacity="0.6"/>`
+    + `</g>`;
+}
+
+function svgCoral(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<path d="M0,0 Q-1,-2 -2,-3 M0,0 Q0,-2.5 -0.5,-4 M0,0 Q1,-2 2,-3" stroke="${c.coral}" fill="none" stroke-width="0.8"/>`
+    + `<circle cx="-2" cy="-3" r="0.5" fill="${c.coral}"/>`
+    + `<circle cx="-0.5" cy="-4" r="0.5" fill="${c.coral}"/>`
+    + `<circle cx="2" cy="-3" r="0.5" fill="${c.coral}"/>`
+    + `</g>`;
+}
+
+function svgJellyfish(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-2" rx="2" ry="1.5" fill="${c.jellyfish}" opacity="0.7">`
+    + `<animate attributeName="cy" values="-2;-3;-2" dur="3s" repeatCount="indefinite"/>`
+    + `</ellipse>`
+    + `<path d="M-1.5,-0.5 Q-1.2,-1.5 -0.8,0" stroke="${c.jellyfish}" fill="none" stroke-width="0.3" opacity="0.5"/>`
+    + `<path d="M-0.3,-0.5 Q0,-1.5 0.3,0" stroke="${c.jellyfish}" fill="none" stroke-width="0.3" opacity="0.5"/>`
+    + `<path d="M0.8,-0.5 Q1.2,-1.5 1.5,0" stroke="${c.jellyfish}" fill="none" stroke-width="0.3" opacity="0.5"/>`
+    + `</g>`;
+}
+
+function svgTurtle(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<g>`
+    + `<ellipse cx="0" cy="-1" rx="2" ry="1.2" fill="${c.turtle}"/>`
+    + `<ellipse cx="0" cy="-1.3" rx="1.5" ry="0.8" fill="${c.moss}" opacity="0.5"/>`
+    + `<circle cx="-2" cy="-1.2" r="0.5" fill="${c.turtle}"/>`
+    + `<circle cx="-2.3" cy="-1.3" r="0.12" fill="#222"/>`
+    + `<animateTransform attributeName="transform" type="translate" values="0,0;3,0;0,0" dur="8s" repeatCount="indefinite"/>`
+    + `</g>`
+    + `</g>`;
+}
+
+function svgBuoy(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-0.3" rx="1.2" ry="0.5" fill="${c.waterLight}" opacity="0.3"/>`
+    + `<rect x="-0.6" y="-2.5" width="1.2" height="2.2" fill="${c.buoy}" rx="0.3"/>`
+    + `<rect x="-0.6" y="-1.8" width="1.2" height="0.5" fill="#fff"/>`
+    + `<line x1="0" y1="-2.5" x2="0" y2="-3.5" stroke="${c.buoy}" stroke-width="0.3"/>`
+    + `</g>`;
+}
+
+function svgSailboat(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<polygon points="-3.5,0 -2.5,-1.5 3.5,-1.5 4,0" fill="${c.boat}"/>`
+    + `<line x1="0" y1="-1.5" x2="0" y2="-7" stroke="${c.trunk}" stroke-width="0.4"/>`
+    + `<polygon points="0,-6.5 0,-2 3,-2.5" fill="${c.sail}" opacity="0.9"/>`
+    + `<polygon points="0,-6 0,-2.5 -2,-3" fill="${c.sail}" opacity="0.7"/>`
+    + `</g>`;
+}
+
+function svgLighthouse(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<polygon points="-1.5,0 1.5,0 1,-8 -1,-8" fill="${c.lighthouse}"/>`
+    + `<rect x="-1.5" y="-1" width="3" height="1" fill="${c.rock}"/>`
+    + `<rect x="-0.8" y="-9" width="1.6" height="1.2" fill="${c.lighthouse}" stroke="${c.rock}" stroke-width="0.2"/>`
+    + `<polygon points="-1,-9 0,-10.5 1,-9" fill="${c.buoy}"/>`
+    + `<circle cx="0" cy="-8.4" r="0.4" fill="${c.lanternGlow}" opacity="0.8"/>`
+    + `</g>`;
+}
+
+function svgCrab(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-0.8" rx="1.5" ry="1" fill="${c.crab}"/>`
+    + `<path d="M-1.5,-0.8 L-2.5,-1.8 L-2.8,-1.2" stroke="${c.crab}" fill="none" stroke-width="0.4"/>`
+    + `<path d="M1.5,-0.8 L2.5,-1.8 L2.8,-1.2" stroke="${c.crab}" fill="none" stroke-width="0.4"/>`
+    + `<circle cx="-0.5" cy="-1.2" r="0.15" fill="#222"/>`
+    + `<circle cx="0.5" cy="-1.2" r="0.15" fill="#222"/>`
+    + `</g>`;
+}
+
+// ── New Shore/Wetland Assets ────────────────────────────────
+
+function svgDriftwood(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<path d="M-3,-0.3 Q-1,-1 1,-0.5 Q2.5,-0.2 3.5,0" stroke="${c.driftwood}" fill="none" stroke-width="0.8" stroke-linecap="round"/>`
+    + `<path d="M1,-0.5 Q1.5,-1.5 2,-1.8" stroke="${c.driftwood}" fill="none" stroke-width="0.5"/>`
+    + `</g>`;
+}
+
+function svgSandcastle(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-2" y="-2" width="4" height="2" fill="${c.sandcastle}"/>`
+    + `<rect x="-1" y="-3.5" width="2" height="1.8" fill="${c.sandcastle}"/>`
+    + `<rect x="-0.3" y="-4.5" width="0.6" height="1.2" fill="${c.sandcastle}"/>`
+    + `<line x1="0" y1="-4.5" x2="0.8" y2="-4.5" stroke="${c.buoy}" stroke-width="0.2"/>`
+    + `</g>`;
+}
+
+function svgTidePools(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="-1" cy="-0.3" rx="1.5" ry="0.6" fill="${c.tidePools}" opacity="0.5"/>`
+    + `<ellipse cx="1.2" cy="-0.5" rx="1" ry="0.4" fill="${c.tidePools}" opacity="0.4"/>`
+    + `<circle cx="-1.5" cy="-0.5" r="0.25" fill="${c.rock}"/>`
+    + `<circle cx="0.8" cy="-0.3" r="0.2" fill="${c.rock}"/>`
+    + `</g>`;
+}
+
+function svgHeron(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<line x1="0" y1="0" x2="0" y2="-3" stroke="${c.heron}" stroke-width="0.3"/>`
+    + `<line x1="0.5" y1="0" x2="0.5" y2="-3" stroke="${c.heron}" stroke-width="0.3"/>`
+    + `<ellipse cx="0.3" cy="-4" rx="1" ry="1.5" fill="${c.heron}"/>`
+    + `<circle cx="-0.2" cy="-5.5" r="0.6" fill="${c.heron}"/>`
+    + `<line x1="-0.8" y1="-5.4" x2="-1.8" y2="-5.2" stroke="${c.wheat}" stroke-width="0.3"/>`
+    + `</g>`;
+}
+
+function svgShellfish(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="-1" cy="-0.3" rx="0.8" ry="0.5" fill="${c.shellfish}"/>`
+    + `<ellipse cx="0.5" cy="-0.2" rx="0.6" ry="0.4" fill="${c.shellfish}" opacity="0.8"/>`
+    + `<ellipse cx="1.5" cy="-0.5" rx="0.7" ry="0.45" fill="${c.shellfish}" opacity="0.7"/>`
+    + `</g>`;
+}
+
+function svgCattail(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})" class="sway-gentle">`
+    + `<line x1="-0.5" y1="0" x2="-0.7" y2="-4.5" stroke="${c.cattail}" stroke-width="0.3"/>`
+    + `<line x1="0.5" y1="0" x2="0.3" y2="-5" stroke="${c.cattail}" stroke-width="0.3"/>`
+    + `<ellipse cx="-0.7" cy="-5" rx="0.3" ry="0.9" fill="${c.trunk}"/>`
+    + `<ellipse cx="0.3" cy="-5.5" rx="0.3" ry="0.9" fill="${c.trunk}"/>`
+    + `</g>`;
+}
+
+function svgFrog(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-0.5" rx="1" ry="0.7" fill="${c.frog}"/>`
+    + `<circle cx="-0.5" cy="-1.1" r="0.3" fill="${c.frog}"/>`
+    + `<circle cx="0.5" cy="-1.1" r="0.3" fill="${c.frog}"/>`
+    + `<circle cx="-0.5" cy="-1.2" r="0.12" fill="#222"/>`
+    + `<circle cx="0.5" cy="-1.2" r="0.12" fill="#222"/>`
+    + `</g>`;
+}
+
+function svgLily(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-0.2" rx="1.8" ry="0.7" fill="${c.pine}" opacity="0.6"/>`
+    + `<path d="M0,-0.4 Q-0.3,-1.2 0,-1 Q0.3,-1.2 0,-0.4" fill="${c.lily}" opacity="0.9"/>`
+    + `<circle cx="0" cy="-0.7" r="0.2" fill="${c.flowerCenter}"/>`
+    + `</g>`;
+}
+
+// ── New Grassland Assets ────────────────────────────────────
+
+function svgRabbit(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Hopping variant — legs extended
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1" rx="1" ry="0.7" fill="${c.rabbit}"/>`
+      + `<circle cx="-0.8" cy="-1.6" r="0.45" fill="${c.rabbit}"/>`
+      + `<ellipse cx="-1" cy="-2.3" rx="0.18" ry="0.5" fill="${c.rabbit}"/>`
+      + `<ellipse cx="-0.6" cy="-2.3" rx="0.18" ry="0.5" fill="${c.rabbit}"/>`
+      + `<circle cx="-1" cy="-1.7" r="0.1" fill="#222"/>`
+      + `<line x1="0.8" y1="-0.5" x2="1.5" y2="0.2" stroke="${c.rabbit}" stroke-width="0.3"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Pair variant — two rabbits
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="-0.5" cy="-0.8" rx="1" ry="0.7" fill="${c.rabbit}"/>`
+      + `<circle cx="-1.3" cy="-1.4" r="0.4" fill="${c.rabbit}"/>`
+      + `<ellipse cx="-1.5" cy="-2" rx="0.15" ry="0.45" fill="${c.rabbit}"/>`
+      + `<ellipse cx="-1.1" cy="-2" rx="0.15" ry="0.45" fill="${c.rabbit}"/>`
+      + `<ellipse cx="1.5" cy="-0.6" rx="0.8" ry="0.5" fill="${c.rabbit}" opacity="0.8"/>`
+      + `<circle cx="0.9" cy="-1" r="0.3" fill="${c.rabbit}" opacity="0.8"/>`
+      + `</g>`;
+  }
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-0.8" rx="1.2" ry="0.8" fill="${c.rabbit}"/>`
+    + `<circle cx="-0.8" cy="-1.5" r="0.5" fill="${c.rabbit}"/>`
+    + `<ellipse cx="-1.1" cy="-2.3" rx="0.2" ry="0.6" fill="${c.rabbit}"/>`
+    + `<ellipse cx="-0.6" cy="-2.3" rx="0.2" ry="0.6" fill="${c.rabbit}"/>`
+    + `<circle cx="-1" cy="-1.6" r="0.1" fill="#222"/>`
+    + `</g>`;
+}
+
+function svgFox(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Curled up variant — sleeping
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-0.8" rx="1.5" ry="0.8" fill="${c.fox}"/>`
+      + `<circle cx="-1" cy="-1.2" r="0.5" fill="${c.fox}"/>`
+      + `<polygon points="-1.3,-1.7 -1.5,-2.1 -1,-1.8" fill="${c.fox}"/>`
+      + `<polygon points="-0.7,-1.7 -0.5,-2.1 -1,-1.8" fill="${c.fox}"/>`
+      + `<path d="M1.5,-0.5 Q1.2,-0.2 0.5,-0.5" stroke="${c.fox}" fill="none" stroke-width="0.5"/>`
+      + `<circle cx="0.5" cy="-0.5" r="0.25" fill="#fff" opacity="0.8"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Trotting variant — legs moving
+    return `<g transform="translate(${x},${y})">`
+      + `<ellipse cx="0" cy="-1.5" rx="1.8" ry="0.9" fill="${c.fox}"/>`
+      + `<circle cx="-1.5" cy="-2.3" r="0.55" fill="${c.fox}"/>`
+      + `<polygon points="-1.8,-2.8 -2,-3.3 -1.5,-2.9" fill="${c.fox}"/>`
+      + `<polygon points="-1.2,-2.8 -1,-3.3 -1.5,-2.9" fill="${c.fox}"/>`
+      + `<circle cx="-1.7" cy="-2.4" r="0.1" fill="#222"/>`
+      + `<line x1="-0.8" y1="-0.6" x2="-1.3" y2="0.3" stroke="${c.fox}" stroke-width="0.3"/>`
+      + `<line x1="0.8" y1="-0.6" x2="1.3" y2="0.3" stroke="${c.fox}" stroke-width="0.3"/>`
+      + `<path d="M1.8,-1.3 Q2.5,-1.5 3,-1" stroke="${c.fox}" fill="none" stroke-width="0.5"/>`
+      + `</g>`;
+  }
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-1.2" rx="1.8" ry="1" fill="${c.fox}"/>`
+    + `<circle cx="-1.5" cy="-2" r="0.6" fill="${c.fox}"/>`
+    + `<polygon points="-1.8,-2.6 -2,-3.2 -1.5,-2.7" fill="${c.fox}"/>`
+    + `<polygon points="-1.2,-2.6 -1,-3.2 -1.5,-2.7" fill="${c.fox}"/>`
+    + `<circle cx="-1.7" cy="-2.1" r="0.1" fill="#222"/>`
+    + `<path d="M1.8,-1 Q2.5,-0.8 3,-1.5" stroke="${c.fox}" fill="none" stroke-width="0.6"/>`
+    + `<circle cx="3" cy="-1.5" r="0.3" fill="#fff" opacity="0.8"/>`
+    + `</g>`;
+}
+
+function svgButterfly(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<g>`
+    + `<ellipse cx="-1" cy="-3.5" rx="1" ry="0.7" fill="${c.butterfly}" opacity="0.8"/>`
+    + `<ellipse cx="1" cy="-3.5" rx="1" ry="0.7" fill="${c.butterflyWing}" opacity="0.8"/>`
+    + `<ellipse cx="-0.6" cy="-2.8" rx="0.6" ry="0.4" fill="${c.butterflyWing}" opacity="0.7"/>`
+    + `<ellipse cx="0.6" cy="-2.8" rx="0.6" ry="0.4" fill="${c.butterfly}" opacity="0.7"/>`
+    + `<line x1="0" y1="-2.5" x2="0" y2="-4" stroke="${c.bird}" stroke-width="0.2"/>`
+    + `<animateTransform attributeName="transform" type="translate" values="0,0;2,-1;-1,0.5;0,0" dur="6s" repeatCount="indefinite"/>`
+    + `</g>`
+    + `</g>`;
+}
+
+function svgBeehive(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<line x1="0" y1="-5" x2="0" y2="-7" stroke="${c.trunk}" stroke-width="0.5"/>`
+    + `<path d="M-1,-5 Q1,-4.5 1,-5" stroke="${c.trunk}" fill="none" stroke-width="0.3"/>`
+    + `<ellipse cx="0" cy="-3.5" rx="1.2" ry="1.8" fill="${c.beehive}"/>`
+    + `<line x1="-1.2" y1="-3.5" x2="1.2" y2="-3.5" stroke="${c.trunk}" stroke-width="0.2" opacity="0.4"/>`
+    + `<line x1="-1" y1="-2.5" x2="1" y2="-2.5" stroke="${c.trunk}" stroke-width="0.2" opacity="0.4"/>`
+    + `<circle cx="0" cy="-1.8" r="0.25" fill="${c.trunk}"/>`
+    + `</g>`;
+}
+
+function svgWildflowerPatch(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<circle cx="-1.5" cy="-1.5" r="0.5" fill="${c.flower}"/>`
+    + `<circle cx="0" cy="-1.8" r="0.6" fill="${c.wildflower}"/>`
+    + `<circle cx="1.2" cy="-1.3" r="0.5" fill="${c.butterflyWing}"/>`
+    + `<circle cx="-0.5" cy="-1" r="0.4" fill="${c.flower}" opacity="0.8"/>`
+    + `<circle cx="0.8" cy="-2" r="0.35" fill="${c.wildflower}" opacity="0.7"/>`
+    + `<line x1="-1.5" y1="-1" x2="-1.5" y2="0" stroke="${c.pine}" stroke-width="0.2"/>`
+    + `<line x1="0" y1="-1.2" x2="0" y2="0" stroke="${c.pine}" stroke-width="0.2"/>`
+    + `<line x1="1.2" y1="-0.8" x2="1.2" y2="0" stroke="${c.pine}" stroke-width="0.2"/>`
+    + `</g>`;
+}
+
+function svgTallGrass(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})" class="sway-gentle">`
+    + `<line x1="-1" y1="0" x2="-1.3" y2="-3.5" stroke="${c.tallGrass}" stroke-width="0.4"/>`
+    + `<line x1="0" y1="0" x2="0.2" y2="-4" stroke="${c.tallGrass}" stroke-width="0.4"/>`
+    + `<line x1="1" y1="0" x2="0.8" y2="-3.2" stroke="${c.tallGrass}" stroke-width="0.4"/>`
+    + `<line x1="-0.5" y1="0" x2="-0.8" y2="-3.8" stroke="${c.tallGrass}" stroke-width="0.3" opacity="0.7"/>`
+    + `</g>`;
+}
+
+function svgBirch(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    // Cluster of 3 variant
+    return `<g transform="translate(${x},${y})">`
+      + `<line x1="-2" y1="0" x2="-2" y2="-5.5" stroke="${c.birchBark}" stroke-width="0.5"/>`
+      + `<circle cx="-2" cy="-6.5" r="1.5" fill="${c.leaf}" opacity="0.7"/>`
+      + `<line x1="0" y1="0" x2="0" y2="-7" stroke="${c.birchBark}" stroke-width="0.6"/>`
+      + `<circle cx="0" cy="-8" r="1.8" fill="${c.leaf}" opacity="0.8"/>`
+      + `<line x1="2" y1="0" x2="2" y2="-5" stroke="${c.birchBark}" stroke-width="0.5"/>`
+      + `<circle cx="2" cy="-6" r="1.3" fill="${c.leaf}" opacity="0.6"/>`
+      + `</g>`;
+  }
+  if (v === 2) {
+    // Leaning variant
+    return `<g transform="translate(${x},${y})">`
+      + `<path d="M0,0 Q-1,-3.5 -0.5,-7" stroke="${c.birchBark}" fill="none" stroke-width="0.7"/>`
+      + `<line x1="-0.7" y1="-2" x2="-0.3" y2="-2" stroke="${c.trunk}" stroke-width="0.2" opacity="0.5"/>`
+      + `<line x1="-0.5" y1="-4.5" x2="-0.1" y2="-4.5" stroke="${c.trunk}" stroke-width="0.2" opacity="0.5"/>`
+      + `<circle cx="-0.5" cy="-8.5" r="2" fill="${c.leaf}" opacity="0.8"/>`
+      + `<circle cx="-1.5" cy="-8" r="1.3" fill="${c.leaf}" opacity="0.6"/>`
+      + `</g>`;
+  }
+  return `<g transform="translate(${x},${y})">`
+    + `<line x1="0" y1="0" x2="0" y2="-7" stroke="${c.birchBark}" stroke-width="0.7"/>`
+    + `<line x1="-0.2" y1="-2" x2="0.2" y2="-2" stroke="${c.trunk}" stroke-width="0.2" opacity="0.5"/>`
+    + `<line x1="-0.2" y1="-4" x2="0.2" y2="-4" stroke="${c.trunk}" stroke-width="0.2" opacity="0.5"/>`
+    + `<circle cx="0" cy="-8.5" r="2.2" fill="${c.leaf}" opacity="0.8"/>`
+    + `<circle cx="-1" cy="-8" r="1.5" fill="${c.leaf}" opacity="0.6"/>`
+    + `</g>`;
+}
+
+function svgHaybale(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-1" rx="2" ry="1" fill="${c.haybale}"/>`
+    + `<rect x="-2" y="-1" width="4" height="1" fill="${c.haybale}"/>`
+    + `<ellipse cx="0" cy="0" rx="2" ry="0.6" fill="${c.haybale}" opacity="0.7"/>`
+    + `<line x1="-1.5" y1="-0.5" x2="1.5" y2="-0.5" stroke="${c.wheat}" stroke-width="0.2" opacity="0.4"/>`
+    + `</g>`;
+}
+
+// ── New Forest Assets ───────────────────────────────────────
+
+function svgOwl(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-2" rx="1.2" ry="1.5" fill="${c.owl}"/>`
+    + `<circle cx="-0.4" cy="-2.5" r="0.5" fill="#fff"/>`
+    + `<circle cx="0.4" cy="-2.5" r="0.5" fill="#fff"/>`
+    + `<circle cx="-0.4" cy="-2.5" r="0.2" fill="#222"/>`
+    + `<circle cx="0.4" cy="-2.5" r="0.2" fill="#222"/>`
+    + `<polygon points="0,-2.1 -0.2,-1.8 0.2,-1.8" fill="${c.wheat}"/>`
+    + `</g>`;
+}
+
+function svgSquirrel(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-0.8" rx="0.8" ry="0.6" fill="${c.squirrel}"/>`
+    + `<circle cx="-0.6" cy="-1.3" r="0.4" fill="${c.squirrel}"/>`
+    + `<circle cx="-0.7" cy="-1.4" r="0.1" fill="#222"/>`
+    + `<path d="M0.8,-0.8 Q1.5,-1.5 1.2,-2.2" stroke="${c.squirrel}" fill="none" stroke-width="0.5"/>`
+    + `</g>`;
+}
+
+function svgMoss(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="-1" cy="-0.2" rx="1.5" ry="0.5" fill="${c.moss}" opacity="0.7"/>`
+    + `<ellipse cx="1" cy="-0.3" rx="1.2" ry="0.4" fill="${c.moss}" opacity="0.6"/>`
+    + `<ellipse cx="0" cy="-0.1" rx="0.8" ry="0.3" fill="${c.moss}" opacity="0.5"/>`
+    + `</g>`;
+}
+
+function svgFern(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<path d="M0,0 Q-2,-2 -3,-3.5" stroke="${c.fern}" fill="none" stroke-width="0.4"/>`
+    + `<path d="M0,0 Q0,-2.5 0,-4" stroke="${c.fern}" fill="none" stroke-width="0.4"/>`
+    + `<path d="M0,0 Q2,-2 3,-3.5" stroke="${c.fern}" fill="none" stroke-width="0.4"/>`
+    + `<circle cx="-1" cy="-1.5" r="0.3" fill="${c.fern}" opacity="0.6"/>`
+    + `<circle cx="1" cy="-1.5" r="0.3" fill="${c.fern}" opacity="0.6"/>`
+    + `<circle cx="0" cy="-2.5" r="0.3" fill="${c.fern}" opacity="0.5"/>`
+    + `</g>`;
+}
+
+function svgDeadTree(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<line x1="0" y1="0" x2="0" y2="-6" stroke="${c.deadTree}" stroke-width="0.8"/>`
+    + `<line x1="0" y1="-4" x2="-2" y2="-5.5" stroke="${c.deadTree}" stroke-width="0.4"/>`
+    + `<line x1="0" y1="-3" x2="1.5" y2="-4.5" stroke="${c.deadTree}" stroke-width="0.4"/>`
+    + `<line x1="0" y1="-5" x2="-1" y2="-6.5" stroke="${c.deadTree}" stroke-width="0.3"/>`
+    + `</g>`;
+}
+
+function svgLog(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-3" y="-1" width="6" height="1" fill="${c.log}" rx="0.5"/>`
+    + `<ellipse cx="-3" cy="-0.5" rx="0.5" ry="0.5" fill="${c.trunk}"/>`
+    + `<ellipse cx="3" cy="-0.5" rx="0.5" ry="0.5" fill="${c.trunk}"/>`
+    + `</g>`;
+}
+
+function svgBerryBush(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-1.5" rx="2.2" ry="1.5" fill="${c.berryBush}"/>`
+    + `<circle cx="-0.8" cy="-1.8" r="0.3" fill="${c.berry}"/>`
+    + `<circle cx="0.5" cy="-2" r="0.3" fill="${c.berry}"/>`
+    + `<circle cx="0" cy="-1.2" r="0.25" fill="${c.berry}"/>`
+    + `<circle cx="1.2" cy="-1.5" r="0.25" fill="${c.berry}"/>`
+    + `</g>`;
+}
+
+function svgSpider(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<line x1="-2.5" y1="-4" x2="2.5" y2="-1" stroke="${c.spiderWeb}" fill="none" stroke-width="0.15"/>`
+    + `<line x1="-2.5" y1="-1" x2="2.5" y2="-4" stroke="${c.spiderWeb}" fill="none" stroke-width="0.15"/>`
+    + `<line x1="0" y1="-5" x2="0" y2="0" stroke="${c.spiderWeb}" fill="none" stroke-width="0.15"/>`
+    + `<path d="M-1.5,-1.5 Q0,-2 1.5,-1.5" stroke="${c.spiderWeb}" fill="none" stroke-width="0.12"/>`
+    + `<path d="M-1,-3 Q0,-3.5 1,-3" stroke="${c.spiderWeb}" fill="none" stroke-width="0.12"/>`
+    + `<circle cx="0" cy="-2.5" r="0.4" fill="${c.bird}"/>`
+    + `</g>`;
+}
+
+// ── New Farm Assets ─────────────────────────────────────────
+
+function svgSilo(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-1.2" y="-7" width="2.4" height="7" fill="${c.silo}"/>`
+    + `<ellipse cx="0" cy="-7" rx="1.2" ry="0.5" fill="${c.silo}" opacity="0.8"/>`
+    + `<polygon points="-1.2,-7 0,-8.5 1.2,-7" fill="${c.roofA}"/>`
+    + `</g>`;
+}
+
+function svgPigpen(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-2.5" y="-1" width="5" height="1" fill="${c.fence}" opacity="0.5"/>`
+    + `<ellipse cx="0" cy="-1" rx="1.2" ry="0.8" fill="${c.pig}"/>`
+    + `<circle cx="-1" cy="-1.3" r="0.4" fill="${c.pig}"/>`
+    + `<ellipse cx="-1.3" cy="-1.2" rx="0.25" ry="0.15" fill="#eaa"/>`
+    + `</g>`;
+}
+
+function svgTrough(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-2" y="-1" width="4" height="0.8" fill="${c.trough}"/>`
+    + `<line x1="-1.5" y1="-0.2" x2="-1.5" y2="0.5" stroke="${c.trunk}" stroke-width="0.3"/>`
+    + `<line x1="1.5" y1="-0.2" x2="1.5" y2="0.5" stroke="${c.trunk}" stroke-width="0.3"/>`
+    + `<rect x="-1.8" y="-0.8" width="3.6" height="0.5" fill="${c.tidePools}" opacity="0.4"/>`
+    + `</g>`;
+}
+
+function svgHaystack(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<polygon points="-2,0 2,0 1.5,-3 -1.5,-3" fill="${c.haystack}"/>`
+    + `<polygon points="-1.5,-3 0,-4.5 1.5,-3" fill="${c.haystack}"/>`
+    + `</g>`;
+}
+
+function svgOrchard(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<line x1="0" y1="0" x2="0" y2="-3" stroke="${c.trunk}" stroke-width="0.6"/>`
+    + `<circle cx="0" cy="-5" r="2.5" fill="${c.orchard}"/>`
+    + `<circle cx="-1" cy="-4.5" r="0.35" fill="${c.orchardFruit}"/>`
+    + `<circle cx="0.8" cy="-5.2" r="0.35" fill="${c.orchardFruit}"/>`
+    + `<circle cx="0" cy="-3.8" r="0.3" fill="${c.orchardFruit}"/>`
+    + `</g>`;
+}
+
+function svgBeeFarm(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-1.5" y="-2.5" width="3" height="2.5" fill="${c.beeFarm}"/>`
+    + `<rect x="-1.5" y="-2.5" width="3" height="0.8" fill="${c.beeFarm}" stroke="${c.trunk}" stroke-width="0.2"/>`
+    + `<rect x="-1.5" y="-1.7" width="3" height="0.8" fill="${c.beeFarm}" stroke="${c.trunk}" stroke-width="0.2"/>`
+    + `<polygon points="-1.5,-2.5 0,-3.5 1.5,-2.5" fill="${c.roofB}"/>`
+    + `</g>`;
+}
+
+function svgPumpkin(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-0.8" rx="1.5" ry="1" fill="${c.pumpkin}"/>`
+    + `<ellipse cx="-0.5" cy="-0.8" rx="0.8" ry="1" fill="${c.pumpkin}" opacity="0.6"/>`
+    + `<ellipse cx="0.5" cy="-0.8" rx="0.8" ry="1" fill="${c.pumpkin}" opacity="0.6"/>`
+    + `<line x1="0" y1="-1.8" x2="0.3" y2="-2.3" stroke="${c.pine}" stroke-width="0.3"/>`
+    + `</g>`;
+}
+
+// ── New Village Assets ──────────────────────────────────────
+
+function svgTavern(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<polygon points="-2.5,0 0,1.2 2.5,0 2.5,-3.5 0,-2.3 -2.5,-3.5" fill="${c.tavern}"/>`
+    + `<polygon points="-2.5,0 0,1.2 0,-2.3 -2.5,-3.5" fill="${c.wallShade}"/>`
+    + `<polygon points="0,-6 -3,-3.3 0,-2 3,-3.3" fill="${c.roofB}"/>`
+    + `<rect x="3" y="-5" width="1.5" height="1.2" fill="${c.tavernSign}" rx="0.2"/>`
+    + `<circle cx="3.75" cy="-4.4" r="0.3" fill="${c.wheat}"/>`
+    + `</g>`;
+}
+
+function svgBakery(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-2.5" y="-3.5" width="5" height="3.5" fill="${c.bakery}"/>`
+    + `<polygon points="-3,-3.5 0,-5.5 3,-3.5" fill="${c.roofA}"/>`
+    + `<rect x="1.5" y="-6.5" width="0.8" height="1.5" fill="${c.chimney}"/>`
+    + `<circle cx="1.9" cy="-7.5" r="0.6" fill="${c.smoke}">`
+    + `<animate attributeName="cy" values="-7.5;-9.5;-7.5" dur="3s" repeatCount="indefinite"/>`
+    + `<animate attributeName="opacity" values="0.4;0.1;0.4" dur="3s" repeatCount="indefinite"/>`
+    + `</circle>`
+    + `</g>`;
+}
+
+function svgStable(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-3" y="-3" width="6" height="3" fill="${c.stable}"/>`
+    + `<polygon points="-3.5,-3 0,-5 3.5,-3" fill="${c.roofB}"/>`
+    + `<rect x="-1" y="-2" width="2" height="2" fill="${c.trunk}" opacity="0.6"/>`
+    + `</g>`;
+}
+
+function svgGarden(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-3" y="-0.3" width="6" height="0.3" fill="${c.gardenFence}" opacity="0.5"/>`
+    + `<line x1="-3" y1="-0.3" x2="-3" y2="-1.5" stroke="${c.gardenFence}" stroke-width="0.3"/>`
+    + `<line x1="3" y1="-0.3" x2="3" y2="-1.5" stroke="${c.gardenFence}" stroke-width="0.3"/>`
+    + `<line x1="-3" y1="-1" x2="3" y2="-1" stroke="${c.gardenFence}" stroke-width="0.2"/>`
+    + `<circle cx="-1.5" cy="-0.8" r="0.4" fill="${c.flower}"/>`
+    + `<circle cx="0" cy="-0.6" r="0.35" fill="${c.wildflower}"/>`
+    + `<circle cx="1.5" cy="-0.7" r="0.4" fill="${c.butterflyWing}"/>`
+    + `</g>`;
+}
+
+function svgLaundry(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})" class="sway-slow">`
+    + `<line x1="-3" y1="0" x2="-3" y2="-4" stroke="${c.trunk}" stroke-width="0.4"/>`
+    + `<line x1="3" y1="0" x2="3" y2="-4" stroke="${c.trunk}" stroke-width="0.4"/>`
+    + `<line x1="-3" y1="-3.5" x2="3" y2="-3.5" stroke="${c.trunk}" stroke-width="0.2"/>`
+    + `<rect x="-2" y="-3.5" width="1.5" height="2" fill="${c.laundry}" rx="0.1"/>`
+    + `<rect x="0" y="-3.5" width="1.2" height="1.8" fill="${c.sail}" rx="0.1"/>`
+    + `</g>`;
+}
+
+function svgDoghouse(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-1.5" y="-2" width="3" height="2" fill="${c.doghouse}"/>`
+    + `<polygon points="-1.8,-2 0,-3.2 1.8,-2" fill="${c.roofA}"/>`
+    + `<ellipse cx="0" cy="-0.5" rx="0.5" ry="0.6" fill="${c.trunk}" opacity="0.6"/>`
+    + `<ellipse cx="2.5" cy="-0.5" rx="0.7" ry="0.5" fill="${c.deer}"/>`
+    + `</g>`;
+}
+
+function svgShrine(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-0.8" y="-3" width="1.6" height="3" fill="${c.shrine}"/>`
+    + `<polygon points="-1.2,-3 0,-4.2 1.2,-3" fill="${c.shrine}"/>`
+    + `<rect x="-0.3" y="-2.5" width="0.6" height="0.6" fill="${c.fountain}" rx="0.1"/>`
+    + `</g>`;
+}
+
+function svgWagon(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-3" y="-3" width="5" height="2.5" fill="${c.wagon}"/>`
+    + `<path d="M-3,-3 Q-1.5,-5 2,-3" stroke="${c.wagon}" fill="${c.sail}" opacity="0.5" stroke-width="0.3"/>`
+    + `<circle cx="-2" cy="0" r="0.8" fill="${c.trunk}" stroke="${c.fence}" stroke-width="0.2"/>`
+    + `<circle cx="1.5" cy="0" r="0.8" fill="${c.trunk}" stroke="${c.fence}" stroke-width="0.2"/>`
+    + `</g>`;
+}
+
+// ── New Town/City Assets ────────────────────────────────────
+
+function svgCathedral(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<polygon points="-3,0 0,1.5 3,0 3,-6 0,-4.5 -3,-6" fill="${c.cathedral}"/>`
+    + `<polygon points="-3,0 0,1.5 0,-4.5 -3,-6" fill="${c.wallShade}"/>`
+    + `<polygon points="0,-10 -3.5,-5.5 0,-4 3.5,-5.5" fill="${c.roofA}"/>`
+    + `<circle cx="0" cy="-7" r="1" fill="${c.cathedralWindow}" opacity="0.7"/>`
+    + `<line x1="0" y1="-12" x2="0" y2="-10" stroke="${c.wall}" stroke-width="0.5"/>`
+    + `<line x1="-0.8" y1="-11" x2="0.8" y2="-11" stroke="${c.wall}" stroke-width="0.4"/>`
+    + `</g>`;
+}
+
+function svgLibrary(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-2.5" y="-4" width="5" height="4" fill="${c.library}"/>`
+    + `<polygon points="-3,-4 0,-6 3,-4" fill="${c.roofB}"/>`
+    + `<rect x="-1.5" y="-3.5" width="1" height="1.5" fill="${c.blacksmith}" rx="0.2"/>`
+    + `<rect x="0.5" y="-3.5" width="1" height="1.5" fill="${c.blacksmith}" rx="0.2"/>`
+    + `</g>`;
+}
+
+function svgClocktower(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-1.5" y="-10" width="3" height="10" fill="${c.clocktower}"/>`
+    + `<polygon points="-2,-10 0,-12.5 2,-10" fill="${c.castleRoof}"/>`
+    + `<circle cx="0" cy="-8" r="1.2" fill="${c.clockFace}"/>`
+    + `<g>`
+    + `<line x1="0" y1="-8" x2="0" y2="-9" stroke="${c.bird}" stroke-width="0.3"/>`
+    + `<animateTransform attributeName="transform" type="rotate" values="-15 0 -8;15 0 -8;-15 0 -8" dur="4s" repeatCount="indefinite"/>`
+    + `</g>`
+    + `<line x1="0" y1="-8" x2="0.6" y2="-7.5" stroke="${c.bird}" stroke-width="0.2"/>`
+    + `</g>`;
+}
+
+function svgStatue(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-1" y="-1.5" width="2" height="1.5" fill="${c.rock}"/>`
+    + `<rect x="-0.6" y="-4" width="1.2" height="2.5" fill="${c.statue}"/>`
+    + `<circle cx="0" cy="-4.5" r="0.6" fill="${c.statue}"/>`
+    + `</g>`;
+}
+
+function svgPark(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<line x1="2" y1="0" x2="2" y2="-3" stroke="${c.trunk}" stroke-width="0.5"/>`
+    + `<circle cx="2" cy="-4.5" r="2" fill="${c.gardenTree}"/>`
+    + `<rect x="-3" y="-1" width="3" height="0.5" fill="${c.parkBench}"/>`
+    + `<line x1="-3" y1="-1" x2="-3" y2="0" stroke="${c.parkBench}" stroke-width="0.3"/>`
+    + `<line x1="0" y1="-1" x2="0" y2="0" stroke="${c.parkBench}" stroke-width="0.3"/>`
+    + `</g>`;
+}
+
+function svgWarehouse(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-3.5" y="-3.5" width="7" height="3.5" fill="${c.warehouse}"/>`
+    + `<polygon points="-4,-3.5 0,-5.5 4,-3.5" fill="${c.roofA}" opacity="0.8"/>`
+    + `<rect x="-1" y="-2" width="2" height="2" fill="${c.blacksmith}" opacity="0.5"/>`
+    + `</g>`;
+}
+
+function svgGatehouse(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-2" y="-6" width="4" height="6" fill="${c.gatehouse}"/>`
+    + `<rect x="-1" y="-4" width="2" height="4" fill="${c.blacksmith}" rx="1" ry="0"/>`
+    + `<rect x="-3" y="-7" width="2" height="1.5" fill="${c.tower}"/>`
+    + `<rect x="1" y="-7" width="2" height="1.5" fill="${c.tower}"/>`
+    + `</g>`;
+}
+
+function svgManor(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<polygon points="-3.5,0 0,1.8 3.5,0 3.5,-4.5 0,-2.7 -3.5,-4.5" fill="${c.manor}"/>`
+    + `<polygon points="-3.5,0 0,1.8 0,-2.7 -3.5,-4.5" fill="${c.wallShade}"/>`
+    + `<polygon points="0,-7.5 -4,-4.2 0,-2.5 4,-4.2" fill="${c.roofA}"/>`
+    + `<rect x="1.5" y="-7.5" width="1" height="1.5" fill="${c.chimney}"/>`
+    + `<rect x="-3.5" y="-0.5" width="1" height="0.5" fill="${c.manorGarden}"/>`
+    + `</g>`;
+}
+
+// ── New Cross-level Assets ──────────────────────────────────
+
+function svgSignpost(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<line x1="0" y1="0" x2="0" y2="-5" stroke="${c.signpost}" stroke-width="0.5"/>`
+    + `<rect x="0" y="-5" width="2.5" height="0.8" fill="${c.signpost}" rx="0.1"/>`
+    + `<rect x="-2.5" y="-4" width="2.5" height="0.8" fill="${c.signpost}" rx="0.1"/>`
+    + `</g>`;
+}
+
+function svgLantern(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<line x1="0" y1="0" x2="0" y2="-4" stroke="${c.lantern}" stroke-width="0.4"/>`
+    + `<rect x="-0.5" y="-5" width="1" height="1" fill="${c.lantern}"/>`
+    + `<rect x="-0.3" y="-4.8" width="0.6" height="0.6" fill="${c.lanternGlow}" opacity="0.8"/>`
+    + `<circle cx="0" cy="-4.5" r="1" fill="${c.lanternGlow}" opacity="0.15"/>`
+    + `</g>`;
+}
+
+function svgWoodpile(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<rect x="-2" y="-1.5" width="4" height="1.5" fill="${c.woodpile}"/>`
+    + `<rect x="-1.8" y="-2.5" width="3.6" height="1" fill="${c.woodpile}"/>`
+    + `<ellipse cx="-2" cy="-0.75" rx="0.4" ry="0.75" fill="${c.trunk}"/>`
+    + `<ellipse cx="2" cy="-0.75" rx="0.4" ry="0.75" fill="${c.trunk}"/>`
+    + `</g>`;
+}
+
+function svgPuddle(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-0.2" rx="2" ry="0.7" fill="${c.puddle}" opacity="0.4"/>`
+    + `<ellipse cx="0.3" cy="-0.3" rx="1.2" ry="0.4" fill="${c.puddle}" opacity="0.25"/>`
+    + `</g>`;
+}
+
+function svgCampfire(x: number, y: number, c: AssetColors, v: number): string {
+  return `<g transform="translate(${x},${y})">`
+    + `<ellipse cx="0" cy="-0.2" rx="1.5" ry="0.5" fill="${c.rock}" opacity="0.5"/>`
+    + `<line x1="-1" y1="-0.3" x2="0" y2="-0.8" stroke="${c.campfire}" stroke-width="0.4"/>`
+    + `<line x1="1" y1="-0.3" x2="0" y2="-0.8" stroke="${c.campfire}" stroke-width="0.4"/>`
+    + `<ellipse cx="0" cy="-1.8" rx="0.8" ry="1.2" fill="${c.campfireFlame}" opacity="0.8">`
+    + `<animate attributeName="opacity" values="0.8;0.5;0.8" dur="1.5s" repeatCount="indefinite"/>`
+    + `</ellipse>`
+    + `<ellipse cx="0" cy="-2" rx="0.4" ry="0.7" fill="${c.lanternGlow}" opacity="0.9"/>`
+    + `</g>`;
+}
+
 // ── Render Dispatcher ───────────────────────────────────────
 
-const RENDERERS: Record<AssetType, (x: number, y: number, c: AssetColors) => string> = {
+const RENDERERS: Record<AssetType, (x: number, y: number, c: AssetColors, v: number) => string> = {
   // Water
   whale: svgWhale,
   fish: svgFish,
@@ -750,21 +2049,53 @@ const RENDERERS: Record<AssetType, (x: number, y: number, c: AssetColors) => str
   seagull: svgSeagull,
   dock: svgDock,
   waves: svgWaves,
-  // Shore
+  kelp: svgKelp,
+  coral: svgCoral,
+  jellyfish: svgJellyfish,
+  turtle: svgTurtle,
+  buoy: svgBuoy,
+  sailboat: svgSailboat,
+  lighthouse: svgLighthouse,
+  crab: svgCrab,
+  // Shore/Wetland
   rock: svgRock,
   boulder: svgBoulder,
   flower: svgFlower,
   bush: svgBush,
+  driftwood: svgDriftwood,
+  sandcastle: svgSandcastle,
+  tidePools: svgTidePools,
+  heron: svgHeron,
+  shellfish: svgShellfish,
+  cattail: svgCattail,
+  frog: svgFrog,
+  lily: svgLily,
   // Grassland
   pine: svgPine,
   deciduous: svgDeciduous,
   mushroom: svgMushroom,
   stump: svgStump,
   deer: svgDeer,
+  rabbit: svgRabbit,
+  fox: svgFox,
+  butterfly: svgButterfly,
+  beehive: svgBeehive,
+  wildflowerPatch: svgWildflowerPatch,
+  tallGrass: svgTallGrass,
+  birch: svgBirch,
+  haybale: svgHaybale,
   // Forest
   willow: svgWillow,
   palm: svgPalm,
   bird: svgBird,
+  owl: svgOwl,
+  squirrel: svgSquirrel,
+  moss: svgMoss,
+  fern: svgFern,
+  deadTree: svgDeadTree,
+  log: svgLog,
+  berryBush: svgBerryBush,
+  spider: svgSpider,
   // Farm
   wheat: svgWheat,
   fence: svgFence,
@@ -775,6 +2106,13 @@ const RENDERERS: Record<AssetType, (x: number, y: number, c: AssetColors) => str
   chicken: svgChicken,
   horse: svgHorse,
   ricePaddy: svgRicePaddy,
+  silo: svgSilo,
+  pigpen: svgPigpen,
+  trough: svgTrough,
+  haystack: svgHaystack,
+  orchard: svgOrchard,
+  beeFarm: svgBeeFarm,
+  pumpkin: svgPumpkin,
   // Village
   tent: svgTent,
   hut: svgHut,
@@ -783,13 +2121,29 @@ const RENDERERS: Record<AssetType, (x: number, y: number, c: AssetColors) => str
   church: svgChurch,
   windmill: svgWindmill,
   well: svgWell,
-  // Town
+  tavern: svgTavern,
+  bakery: svgBakery,
+  stable: svgStable,
+  garden: svgGarden,
+  laundry: svgLaundry,
+  doghouse: svgDoghouse,
+  shrine: svgShrine,
+  wagon: svgWagon,
+  // Town/City
   market: svgMarket,
   inn: svgInn,
   blacksmith: svgBlacksmith,
   castle: svgCastle,
   tower: svgTower,
   bridge: svgBridge,
+  cathedral: svgCathedral,
+  library: svgLibrary,
+  clocktower: svgClocktower,
+  statue: svgStatue,
+  park: svgPark,
+  warehouse: svgWarehouse,
+  gatehouse: svgGatehouse,
+  manor: svgManor,
   // Biome blend
   reeds: svgReeds,
   fountain: svgFountain,
@@ -804,6 +2158,11 @@ const RENDERERS: Record<AssetType, (x: number, y: number, c: AssetColors) => str
   flag: svgFlag,
   cobblePath: svgCobblePath,
   smoke: svgSmoke,
+  signpost: svgSignpost,
+  lantern: svgLantern,
+  woodpile: svgWoodpile,
+  puddle: svgPuddle,
+  campfire: svgCampfire,
 };
 
 // ── Public API ──────────────────────────────────────────────
@@ -812,14 +2171,15 @@ export function renderTerrainAssets(
   isoCells: IsoCell[],
   seed: number,
   palette: TerrainPalette100,
+  variantSeed?: number,
   biomeMap?: Map<string, BiomeContext>,
 ): string {
-  const placed = selectAssets(isoCells, seed, biomeMap);
+  const placed = selectAssets(isoCells, seed, variantSeed, biomeMap);
   const c = palette.assets;
 
   const svgParts = placed.map(a => {
     const renderer = RENDERERS[a.type];
-    return renderer(a.cx + a.ox, a.cy + a.oy, c);
+    return renderer(a.cx + a.ox, a.cy + a.oy, c, a.variant);
   });
 
   return `<g class="terrain-assets">${svgParts.join('')}</g>`;

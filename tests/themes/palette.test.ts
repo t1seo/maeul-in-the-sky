@@ -5,17 +5,18 @@ describe('TerrainPalette100', () => {
   const dark = getTerrainPalette100('dark');
   const light = getTerrainPalette100('light');
 
-  it('returns flat height for ocean levels', () => {
+  it('returns flat height for desert and water levels', () => {
     expect(dark.getHeight(0)).toBe(0);
     expect(dark.getHeight(5)).toBe(0);
+    expect(dark.getHeight(15)).toBe(0);
   });
 
   it('returns increasing heights for land levels', () => {
-    const h20 = dark.getHeight(20);
+    const h30 = dark.getHeight(30);
     const h50 = dark.getHeight(50);
     const h90 = dark.getHeight(90);
-    expect(h20).toBeGreaterThan(0);
-    expect(h50).toBeGreaterThan(h20);
+    expect(h30).toBeGreaterThan(0);
+    expect(h50).toBeGreaterThan(h30);
     expect(h90).toBeGreaterThan(h50);
   });
 
