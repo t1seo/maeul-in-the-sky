@@ -159,22 +159,41 @@ async function makeGraphQLRequest(
 }
 
 /**
- * Fetch GitHub contribution data for a specific user and year
+ * Fetch GitHub contribution data for a specific user.
+ *
+ * When `year` is provided, fetches the full calendar year (Jan 1 – Dec 31).
+ * When `year` is omitted, fetches a rolling 52-week window ending today,
+ * matching GitHub's own profile contribution graph.
  *
  * @param username - GitHub username
- * @param year - Year to fetch contributions for
+ * @param year - Optional year to fetch. Omit for rolling 52 weeks.
  * @param token - Optional GitHub personal access token (required for private profiles)
  * @returns Promise resolving to ContributionData
  * @throws Error if user not found, rate limited, or network failure
  */
 export async function fetchContributions(
   username: string,
-  year: number,
+  year?: number,
   token?: string
 ): Promise<ContributionData> {
-  // Calculate date range for the year
-  const from = `${year}-01-01T00:00:00Z`;
-  const to = `${year}-12-31T23:59:59Z`;
+  let from: string;
+  let to: string;
+  let effectiveYear: number;
+
+  if (year != null) {
+    // Fixed calendar year
+    from = `${year}-01-01T00:00:00Z`;
+    to = `${year}-12-31T23:59:59Z`;
+    effectiveYear = year;
+  } else {
+    // Rolling 52-week window ending today
+    const now = new Date();
+    const oneYearAgo = new Date(now);
+    oneYearAgo.setFullYear(now.getFullYear() - 1);
+    from = oneYearAgo.toISOString();
+    to = now.toISOString();
+    effectiveYear = now.getFullYear();
+  }
 
   // Make the GraphQL request
   const response = await makeGraphQLRequest(
@@ -210,7 +229,7 @@ export async function fetchContributions(
       currentStreak: 0,
       mostActiveDay: '',
     },
-    year,
+    year: effectiveYear,
     username,
   };
 }

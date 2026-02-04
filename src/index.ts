@@ -26,7 +26,7 @@ program
   .option('-t, --theme <name>', 'Theme name', getDefaultTheme())
   .option('--title <text>', 'Custom title text')
   .option('-o, --output <dir>', 'Output directory', './')
-  .option('-y, --year <number>', 'Year to visualize', String(new Date().getFullYear()))
+  .option('-y, --year <number>', 'Year to visualize (omit for rolling 52 weeks)')
   .option('--token <token>', 'GitHub personal access token (or use GITHUB_TOKEN env)')
   .option('--hemisphere <hemisphere>', 'Hemisphere for seasonal terrain (north or south)', 'north')
   .action(async (opts) => {
@@ -36,7 +36,7 @@ program
       theme: opts.theme,
       title: opts.title || `@${opts.user}`,
       output: opts.output,
-      year: parseInt(opts.year, 10),
+      year: opts.year ? parseInt(opts.year, 10) : undefined,
       token: opts.token || process.env.GITHUB_TOKEN,
       hemisphere,
     };
@@ -50,7 +50,8 @@ program
     }
 
     try {
-      console.log(`Fetching contributions for @${options.user} (${options.year})...`);
+      const yearLabel = options.year ?? 'last 52 weeks';
+      console.log(`Fetching contributions for @${options.user} (${yearLabel})...`);
 
       // Fetch contribution data
       const data = await fetchContributions(options.user, options.year, options.token);

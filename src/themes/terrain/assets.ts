@@ -215,6 +215,8 @@ export function selectAssets(
     const richness = computeRichness(cell, cellMap);
     const finalChance = pool.chance + richness * 0.20;
 
+    if (pool.types.length === 0) continue; // skip if seasonal filtering emptied the pool
+
     if (rng() < finalChance) {
       let type = pool.types[Math.floor(rng() * pool.types.length)];
 

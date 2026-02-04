@@ -124,8 +124,8 @@ export interface CliOptions {
   title: string;
   /** Output directory (default: "./") */
   output: string;
-  /** Year to visualize (default: current year) */
-  year: number;
+  /** Year to visualize (omit for rolling 52 weeks) */
+  year?: number;
   /** GitHub personal access token */
   token?: string;
   /** Hemisphere for seasonal terrain (default: 'north') */

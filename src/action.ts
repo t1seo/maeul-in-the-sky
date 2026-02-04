@@ -33,9 +33,9 @@ async function run(): Promise<void> {
       throw new Error('GITHUB_ACTOR environment variable is not set');
     }
 
-    // Determine year
-    const year = yearInput ? parseInt(yearInput, 10) : new Date().getFullYear();
-    if (isNaN(year)) {
+    // Determine year (omit for rolling 52 weeks)
+    const year = yearInput ? parseInt(yearInput, 10) : undefined;
+    if (yearInput && (year == null || isNaN(year))) {
       throw new Error(`Invalid year: "${yearInput}"`);
     }
 
@@ -49,7 +49,8 @@ async function run(): Promise<void> {
 
     const displayTitle = title || `@${username}`;
 
-    core.info(`Fetching contributions for @${username} (${year})...`);
+    const yearLabel = year ?? 'last 52 weeks';
+    core.info(`Fetching contributions for @${username} (${yearLabel})...`);
 
     // Fetch contribution data
     const data = await fetchContributions(username, year, token || undefined);
@@ -69,8 +70,8 @@ async function run(): Promise<void> {
     });
 
     // Write output files
-    const darkPath = join(outputDir, 'maeul-dark.svg');
-    const lightPath = join(outputDir, 'maeul-light.svg');
+    const darkPath = join(outputDir, `maeul-${themeName}-dark.svg`);
+    const lightPath = join(outputDir, `maeul-${themeName}-light.svg`);
 
     await writeFile(darkPath, output.dark, 'utf-8');
     await writeFile(lightPath, output.light, 'utf-8');
