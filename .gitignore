@@ -21,3 +21,9 @@ coverage/
 
 # Playwright
 .playwright-mcp/
+
+# Internal docs & artifacts
+docs/
+examples/
+poc/
+.claude/
