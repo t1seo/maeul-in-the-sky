@@ -58,14 +58,14 @@ interface ZoneBound {
 }
 
 const ZONE_BOUNDS: ZoneBound[] = [
-  { zone: 0, start: 0,  end: 6 },   // Winter
-  { zone: 1, start: 7,  end: 12 },  // Winter -> Spring
-  { zone: 2, start: 13, end: 19 },  // Spring
-  { zone: 3, start: 20, end: 25 },  // Spring -> Summer
-  { zone: 4, start: 26, end: 32 },  // Summer (base)
-  { zone: 5, start: 33, end: 38 },  // Summer -> Autumn
-  { zone: 6, start: 39, end: 45 },  // Autumn
-  { zone: 7, start: 46, end: 51 },  // Autumn -> Winter
+  { zone: 0, start: 0,  end: 4 },   // Winter peak
+  { zone: 1, start: 5,  end: 13 },  // Winter -> Spring (longer transition)
+  { zone: 2, start: 14, end: 18 },  // Spring peak
+  { zone: 3, start: 19, end: 27 },  // Spring -> Summer (longer transition)
+  { zone: 4, start: 28, end: 32 },  // Summer peak
+  { zone: 5, start: 33, end: 40 },  // Summer -> Autumn (longer transition)
+  { zone: 6, start: 41, end: 45 },  // Autumn peak
+  { zone: 7, start: 46, end: 51 },  // Autumn -> Winter (longer transition)
 ];
 
 // ── Rotation Computation ────────────────────────────────────
@@ -199,12 +199,12 @@ const SEASON_TINTS: Record<PeakSeason, SeasonalTint> = {
     saturation: 1.0,
   },
   autumn: {
-    colorShift: 0.10,
-    colorTarget: [210, 140, 60],   // warm amber
-    greenMul: 0.70,
-    warmth: 20,
+    colorShift: 0.12,
+    colorTarget: [210, 170, 60],   // golden-yellow with hint of orange
+    greenMul: 0.65,                // some green remains (late summer trees)
+    warmth: 15,                    // moderate warmth (yellow-orange, not red)
     snowCoverage: 0,
-    saturation: 1.05,
+    saturation: 1.12,              // vivid but natural
   },
 };
 
@@ -380,13 +380,13 @@ interface SeasonalAdditions {
 const SEASON_ADD: Record<PeakSeason, SeasonalAdditions> = {
   winter: {
     nature: ['snowPine', 'snowDeciduous', 'snowCoveredRock', 'bareBush', 'winterBird', 'snowdrift'],
-    settlement: ['snowman', 'igloo', 'sled', 'firewood', 'icicle', 'snowdrift'],
+    settlement: ['snowman', 'igloo', 'sled', 'firewood', 'icicle', 'snowdrift', 'houseWinter', 'houseBWinter', 'barnWinter', 'churchWinter', 'christmasTree', 'winterLantern', 'frozenFountain'],
     general: ['snowdrift', 'snowCoveredRock', 'bareBush', 'icicle'],
   },
   spring: {
-    nature: ['cherryBlossom', 'cherryBlossomSmall', 'tulip', 'tulipField', 'sprout', 'crocus', 'lamb'],
-    settlement: ['cherryBlossom', 'tulipField', 'nest', 'birdhouse', 'gardenBed', 'rainPuddle', 'cherryPetals'],
-    general: ['sprout', 'crocus', 'cherryPetals', 'rainPuddle'],
+    nature: ['cherryBlossom', 'cherryBlossomSmall', 'cherryBlossomFull', 'cherryBlossomBranch', 'peachBlossom', 'tulip', 'tulipField', 'sprout', 'crocus', 'lamb', 'robinBird'],
+    settlement: ['cherryBlossom', 'cherryBlossomFull', 'tulipField', 'nest', 'birdhouse', 'gardenBed', 'rainPuddle', 'cherryPetals', 'flowerBed', 'wateringCan', 'umbrella', 'butterflyGarden'],
+    general: ['sprout', 'crocus', 'cherryPetals', 'rainPuddle', 'seedling'],
   },
   summer: {
     nature: ['sunflower', 'fireflies', 'watermelon'],
@@ -394,9 +394,9 @@ const SEASON_ADD: Record<PeakSeason, SeasonalAdditions> = {
     general: ['sunflower', 'watermelon'],
   },
   autumn: {
-    nature: ['autumnMaple', 'autumnOak', 'autumnBirch', 'autumnGinkgo', 'fallenLeaves', 'leafSwirl', 'acorn'],
-    settlement: ['cornStalk', 'scarecrowAutumn', 'harvestBasket', 'hotDrink', 'autumnWreath', 'fallenLeaves'],
-    general: ['fallenLeaves', 'leafSwirl', 'acorn'],
+    nature: ['autumnMaple', 'autumnMaple', 'autumnOak', 'autumnOak', 'autumnBirch', 'autumnGinkgo', 'fallenLeaves', 'fallenLeaves', 'fallenLeaves', 'leafSwirl', 'leafSwirl', 'acorn', 'pumpkinPatch'],
+    settlement: ['cornStalk', 'scarecrowAutumn', 'harvestBasket', 'hotDrink', 'autumnWreath', 'fallenLeaves', 'fallenLeaves', 'hayMaze', 'appleBasket', 'rake', 'autumnMaple'],
+    general: ['fallenLeaves', 'fallenLeaves', 'leafSwirl', 'leafSwirl', 'acorn', 'pumpkinPatch'],
   },
 };
 

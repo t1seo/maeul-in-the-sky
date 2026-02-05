@@ -244,6 +244,39 @@ export interface AssetColors {
   hotDrinkSteam: string;
   wreathGreen: string;
   wreathBerry: string;
+  // ── Extended Seasonal Colors ─────────────────────────────
+  // Autumn extended
+  autumnGold: string;
+  autumnBronze: string;
+  autumnBurgundy: string;
+  autumnRust: string;
+  autumnOlive: string;
+  // Spring extended
+  blossomPink: string;
+  blossomWhite: string;
+  peachPink: string;
+  // Winter extended
+  icicleBlue: string;
+  christmasRed: string;
+  christmasGold: string;
+  christmasGreen: string;
+  // ── Fruit Tree Colors ────────────────────────────────────
+  appleRed: string;
+  oliveGreen: string;
+  oliveFruit: string;
+  lemonYellow: string;
+  orangeFruit: string;
+  pearGreen: string;
+  peachFruit: string;
+  // ── Additional Livestock Colors ──────────────────────────
+  donkey: string;
+  goat: string;
+  goatHorn: string;
+  // ── Enhanced Asset Detail Colors ────────────────────────
+  shadow: string;
+  bushDark: string;
+  leafLight: string;
+  flowerAlt: string;
 }
 
 /** A color anchor point for interpolation */
@@ -606,6 +639,38 @@ const DARK_ASSETS: AssetColors = {
   hotDrinkSteam: '#d0d8e0',
   wreathGreen: '#507038',
   wreathBerry: '#c03030',
+  // Extended Seasonal: Autumn
+  autumnGold: '#d4a84b',
+  autumnBronze: '#b07830',
+  autumnBurgundy: '#8b2040',
+  autumnRust: '#c05530',
+  autumnOlive: '#8b8b40',
+  // Extended Seasonal: Spring
+  blossomPink: '#ffb6c1',
+  blossomWhite: '#fff0f5',
+  peachPink: '#ffd5cc',
+  // Extended Seasonal: Winter
+  icicleBlue: '#d0e8f8',
+  christmasRed: '#c41e3a',
+  christmasGold: '#ffd700',
+  christmasGreen: '#228b22',
+  // Fruit Trees
+  appleRed: '#c41e3a',
+  oliveGreen: '#808060',
+  oliveFruit: '#4a4a30',
+  lemonYellow: '#fff44f',
+  orangeFruit: '#ff8c00',
+  pearGreen: '#d1e231',
+  peachFruit: '#ffcba4',
+  // Additional Livestock
+  donkey: '#808080',
+  goat: '#e8e0d0',
+  goatHorn: '#b0a090',
+  // Enhanced asset detail colors
+  shadow: '#1a1a2e',
+  bushDark: '#2d5a3d',
+  leafLight: '#6db86d',
+  flowerAlt: '#e8a0c0',
 };
 
 const LIGHT_ASSETS: AssetColors = {
@@ -829,6 +894,38 @@ const LIGHT_ASSETS: AssetColors = {
   hotDrinkSteam: '#e0e8f0',
   wreathGreen: '#608048',
   wreathBerry: '#d04040',
+  // Extended Seasonal: Autumn
+  autumnGold: '#e0b85c',
+  autumnBronze: '#c08840',
+  autumnBurgundy: '#9b3050',
+  autumnRust: '#d06540',
+  autumnOlive: '#9b9b50',
+  // Extended Seasonal: Spring
+  blossomPink: '#ffc6d1',
+  blossomWhite: '#fff8fb',
+  peachPink: '#ffe5dc',
+  // Extended Seasonal: Winter
+  icicleBlue: '#e0f0ff',
+  christmasRed: '#d42e4a',
+  christmasGold: '#ffe720',
+  christmasGreen: '#32a032',
+  // Fruit Trees
+  appleRed: '#d42e4a',
+  oliveGreen: '#909070',
+  oliveFruit: '#5a5a40',
+  lemonYellow: '#ffff5f',
+  orangeFruit: '#ff9c10',
+  pearGreen: '#e1f241',
+  peachFruit: '#ffdbb4',
+  // Additional Livestock
+  donkey: '#909090',
+  goat: '#f0e8e0',
+  goatHorn: '#c0b0a0',
+  // Enhanced asset detail colors
+  shadow: '#4a4a5e',
+  bushDark: '#3d6a4d',
+  leafLight: '#8dd88d',
+  flowerAlt: '#f8b0d0',
 };
 
 // ── Palette Factory ──────────────────────────────────────────

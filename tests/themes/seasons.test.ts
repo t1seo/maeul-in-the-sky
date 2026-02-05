@@ -148,15 +148,15 @@ describe('getTransitionBlend', () => {
     expect(blend.t).toBe(0);
   });
 
-  it('transition zone 1 (rotation=0, week 7) returns from=winter, to=spring', () => {
-    const blend = getTransitionBlend(7, 0);
+  it('transition zone 1 (rotation=0, week 5) returns from=winter, to=spring', () => {
+    const blend = getTransitionBlend(5, 0);
     expect(blend.from).toBe('winter');
     expect(blend.to).toBe('spring');
     expect(blend.t).toBeCloseTo(0, 1);
   });
 
   it('transition zone 1 mid-point has t near 0.5', () => {
-    const blend = getTransitionBlend(10, 0); // week 10 in zone 1 (7-12)
+    const blend = getTransitionBlend(9, 0); // week 9 in zone 1 (5-13)
     expect(blend.from).toBe('winter');
     expect(blend.to).toBe('spring');
     expect(blend.t).toBeGreaterThan(0.3);
@@ -199,8 +199,8 @@ describe('getSeasonalTint', () => {
 
   it('autumn tint (rotation=0, week 42) has warmth and reduced green', () => {
     const tint = getSeasonalTint(42, 0);
-    expect(tint.warmth).toBeGreaterThan(15);
-    expect(tint.greenMul).toBeLessThan(0.75);
+    expect(tint.warmth).toBeGreaterThan(10);
+    expect(tint.greenMul).toBeLessThan(0.80);
   });
 
   it('transition zones produce interpolated tints', () => {
