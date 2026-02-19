@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-02-19
+
+### Added
+
+- **Density parameter** (`density`, 1-10, default 5) — controls when buildings appear in the terrain. Higher values make buildings show up at lower activity levels, useful when commit patterns are uneven or sparse.
+
+### Fixed
+
+- **Security audit** — upgraded eslint to v10 and added npm override for minimatch ReDoS vulnerability (high severity)
+
 ## [1.2.0] - 2026-02-05
 
 ### Added
@@ -67,6 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Water system** — two-tone water overlays, ripple lines, river shimmer animations
 - **Contribution statistics** — streak calculation, day-of-week analysis
 
+[1.3.0]: https://github.com/t1seo/maeul-in-the-sky/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/t1seo/maeul-in-the-sky/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/t1seo/maeul-in-the-sky/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/t1seo/maeul-in-the-sky/compare/v1.0.0...v1.0.1
