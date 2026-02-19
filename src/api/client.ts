@@ -148,9 +148,9 @@ async function makeGraphQLRequest(
       // If last attempt, throw the error
       if (isLastAttempt) {
         if (error instanceof Error) {
-          throw new Error(`Network failure: ${error.message}`);
+          throw new Error(`Network failure: ${error.message}`, { cause: error });
         }
-        throw new Error(`Network failure: ${String(error)}`);
+        throw new Error(`Network failure: ${String(error)}`, { cause: error });
       }
 
       // Wait before retrying
