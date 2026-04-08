@@ -30,3 +30,5 @@ docs/*
 examples/
 poc/
 .claude/
+.serena/
+.remember/
