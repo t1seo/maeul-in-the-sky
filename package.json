@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@actions/core": "^3.0.0",
-    "commander": "^14.0.3",
+    "commander": "^15.0.0",
     "simplex-noise": "^4.0.3"
   },
   "lint-staged": {
