@@ -7,8 +7,14 @@ import type {
   ThemePalette,
   PaletteColor,
 } from '../../core/types.js';
-import { svgRoot, svgStyle } from '../../core/svg.js';
-import { contributionGrid, enrichGridCells100, renderTitle, renderStatsBar } from '../shared.js';
+import { formatNumber, svgRoot, svgStyle } from '../../core/svg.js';
+import {
+  contributionGrid,
+  enrichGridCells100,
+  renderTitle,
+  renderSubtitle,
+  renderStatsBar,
+} from '../shared.js';
 import { getSeasonalPalette100 } from './palette.js';
 import { renderSeasonalTerrainBlocks, getIsoCells } from './blocks.js';
 import {
@@ -48,6 +54,12 @@ const terrainTheme: Theme = {
     };
   },
 };
+
+const REDUCED_MOTION_CSS = `
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  animate, animateMotion, animateTransform { display: none; }
+}`;
 
 // ── Mode Renderer ────────────────────────────────────────────
 
@@ -117,7 +129,7 @@ function renderMode(data: ContributionData, options: ThemeOptions, mode: ColorMo
   const terrainCSS = renderTerrainCSS(isoCells, biomeMap);
   const assetCSS = renderAssetCSS();
   const epicCSS = renderEpicCSS();
-  const css = terrainCSS + '\n' + assetCSS + '\n' + epicCSS;
+  const css = terrainCSS + '\n' + assetCSS + '\n' + epicCSS + '\n' + REDUCED_MOTION_CSS;
 
   const isDark = mode === 'dark';
   const celestials = renderCelestials(seed, palette, isDark);
@@ -173,6 +185,7 @@ function renderMode(data: ContributionData, options: ThemeOptions, mode: ColorMo
   };
 
   const title = renderTitle(options.title, themePalette);
+  const subtitle = renderSubtitle(data.stats, epicPlaced.length, themePalette);
   const statsBar = renderStatsBar(data.stats, themePalette);
 
   // Epic glow gradient definitions
@@ -194,10 +207,34 @@ function renderMode(data: ContributionData, options: ThemeOptions, mode: ColorMo
     fallingLeaves,
     overlays,
     title,
+    subtitle,
     statsBar,
   ].join('\n');
 
-  return svgRoot({ width: options.width, height: options.height }, content);
+  const tierCounts = epicPlaced.reduce<Record<string, number>>((counts, epic) => {
+    counts[epic.tier] = (counts[epic.tier] ?? 0) + 1;
+    return counts;
+  }, {});
+  const wonderDescription = Object.entries(tierCounts)
+    .map(([tier, count]) => `${count} ${tier}`)
+    .join(', ');
+  const dateDescription =
+    data.stats.fromDate && data.stats.toDate
+      ? `from ${data.stats.fromDate} to ${data.stats.toDate}`
+      : 'for the available contribution range';
+  const description = [
+    `Isometric contribution terrain for @${data.username} ${dateDescription}.`,
+    `${formatNumber(data.stats.total)} contributions across ${formatNumber(data.stats.activeDays)} active days.`,
+    data.stats.busiestMonth ? `Busiest month: ${data.stats.busiestMonth}.` : '',
+    wonderDescription ? `Wonders discovered: ${wonderDescription}.` : 'No rare wonders discovered.',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  return svgRoot({ width: options.width, height: options.height }, content, {
+    title: options.title,
+    description,
+  });
 }
 
 export { terrainTheme };

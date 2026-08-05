@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Village presets** — Nature, Balanced, and Civilization provide understandable building-density choices across the Action, CLI, and JavaScript API
+- **Repository-owner targeting** — the Action accepts an explicit `username` and otherwise uses the repository owner, including scheduled runs
+- **Terrain insight bar** — generated SVGs now show their covered dates, active days, busiest month, and discovered Wonder count
+- **Accessible SVG output** — generated Terrain includes an accessible name and description plus reduced-motion behavior
+- **Interactive preset demo** — a responsive GitHub Pages demo compares all presets in dark and light modes using real renderer output
+- **Community health files** — contribution, security, support, conduct, issue, pull-request, and showcase guidance
 - **npm package published** — `maeul-in-the-sky` is now available on [npm](https://www.npmjs.com/package/maeul-in-the-sky)
 - **npm badges** — version and download count badges added to all READMEs (EN, KO, JA, ZH)
 - **CD workflow** — automatic npm publish via GitHub Actions on tag push (`v*`)
@@ -18,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Project documentation** — added a task-based quick start, accurate rolling-range defaults, CLI and API examples, privacy notes, troubleshooting, presets, and Epic Wonders across all supported languages
+- **Package metadata** — now describes the village experience and includes Action and profile README discovery terms
 - **CLI and Action adapters** — both now delegate shared behavior to the Terrain Generation module
 - **Theme registration** — built-in Terrain registration is explicit and no longer depends on import side effects
 - **Quality scope** — scripts are covered by lint, formatting, and TypeScript checks

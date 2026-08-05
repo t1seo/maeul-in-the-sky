@@ -28,6 +28,14 @@ export interface ContributionStats {
   currentStreak: number;
   /** Most active day of the week (e.g., "Wednesday") */
   mostActiveDay: string;
+  /** Number of days with at least one contribution */
+  activeDays: number;
+  /** Most active calendar month in YYYY-MM format, or empty when inactive */
+  busiestMonth: string;
+  /** First available contribution date in YYYY-MM-DD format */
+  fromDate: string;
+  /** Last available contribution date in YYYY-MM-DD format */
+  toDate: string;
 }
 
 /** Complete contribution data for a requested calendar range */

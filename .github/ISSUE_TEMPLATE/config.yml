@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Usage and troubleshooting
+    url: https://github.com/t1seo/maeul-in-the-sky/blob/main/SUPPORT.md
+    about: Check setup guidance before opening an issue.
+  - name: Private security report
+    url: https://github.com/t1seo/maeul-in-the-sky/security/advisories/new
+    about: Report vulnerabilities without disclosing them publicly.

@@ -3,6 +3,8 @@ import {
   fetchContributions,
   computeStats,
   generateTerrain,
+  isVillagePreset,
+  VILLAGE_PRESETS,
   getTheme,
   listThemes,
   registerTheme,
@@ -21,6 +23,11 @@ describe('lib exports', () => {
 
   it('generateTerrain is a function', () => {
     expect(typeof generateTerrain).toBe('function');
+  });
+
+  it('exports the village preset catalog', () => {
+    expect(isVillagePreset('nature')).toBe(true);
+    expect(VILLAGE_PRESETS.civilization.density).toBe(9);
   });
 
   it('getTheme is a function', () => {
@@ -91,9 +98,17 @@ describe('computeStats via lib', () => {
     expect(stats).toHaveProperty('longestStreak');
     expect(stats).toHaveProperty('currentStreak');
     expect(stats).toHaveProperty('mostActiveDay');
+    expect(stats).toHaveProperty('activeDays');
+    expect(stats).toHaveProperty('busiestMonth');
+    expect(stats).toHaveProperty('fromDate');
+    expect(stats).toHaveProperty('toDate');
     expect(typeof stats.total).toBe('number');
     expect(typeof stats.longestStreak).toBe('number');
     expect(typeof stats.currentStreak).toBe('number');
     expect(typeof stats.mostActiveDay).toBe('string');
+    expect(typeof stats.activeDays).toBe('number');
+    expect(typeof stats.busiestMonth).toBe('string');
+    expect(typeof stats.fromDate).toBe('string');
+    expect(typeof stats.toDate).toBe('string');
   });
 });

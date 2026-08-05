@@ -75,7 +75,16 @@ describe('getTheme', () => {
     const output = result?.render(
       {
         weeks: [],
-        stats: { total: 0, longestStreak: 0, currentStreak: 0, mostActiveDay: 'Monday' },
+        stats: {
+          total: 0,
+          longestStreak: 0,
+          currentStreak: 0,
+          mostActiveDay: 'Monday',
+          activeDays: 0,
+          busiestMonth: '',
+          fromDate: '',
+          toDate: '',
+        },
         year: 2024,
         username: 'test',
       },

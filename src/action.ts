@@ -7,14 +7,19 @@
 
 import * as core from '@actions/core';
 
+import { resolveActionUsername } from './action-context.js';
 import { generateTerrain } from './generate.js';
 
 async function run(): Promise<void> {
   try {
     // Read inputs
-    const username = process.env.GITHUB_ACTOR;
+    const username = resolveActionUsername(
+      core.getInput('username'),
+      process.env.GITHUB_REPOSITORY_OWNER,
+      process.env.GITHUB_ACTOR,
+    );
     if (!username) {
-      throw new Error('GITHUB_ACTOR environment variable is not set');
+      throw new Error('GitHub username could not be resolved from the input or repository');
     }
 
     const result = await generateTerrain({
@@ -25,6 +30,7 @@ async function run(): Promise<void> {
       outputDir: core.getInput('output_dir'),
       year: core.getInput('year'),
       hemisphere: core.getInput('hemisphere'),
+      preset: core.getInput('preset'),
       density: core.getInput('density'),
       onProgress: (message) => core.info(message),
     });

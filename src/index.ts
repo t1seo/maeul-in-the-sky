@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Maeul in the Sky CLI — Transform GitHub contributions into animated terrain SVGs
+ * Maeul in the Sky CLI — Build a village from a GitHub Contribution Calendar
  */
 
 import { Command } from 'commander';
@@ -13,7 +13,7 @@ const program = new Command();
 
 program
   .name('maeul-sky')
-  .description('Transform GitHub contributions into animated terrain SVGs')
+  .description('Build an animated isometric village from a GitHub Contribution Calendar')
   .version(packageJson.version)
   .requiredOption('-u, --user <username>', 'GitHub username')
   .option('-t, --theme <name>', 'Theme name')
@@ -22,7 +22,8 @@ program
   .option('-y, --year <number>', 'Year to visualize (omit for rolling 52 weeks)')
   .option('--token <token>', 'GitHub personal access token (or use GITHUB_TOKEN env)')
   .option('--hemisphere <hemisphere>', 'Hemisphere for seasonal terrain (north or south)', 'north')
-  .option('--density <number>', 'Building density 1-10 (higher = buildings at lower activity)', '5')
+  .option('--preset <name>', 'Village preset: nature, balanced, or civilization', 'balanced')
+  .option('--density <number>', 'Advanced building density override (1-10)')
   .action(async (opts) => {
     try {
       const result = await generateTerrain({
@@ -33,6 +34,7 @@ program
         year: opts.year,
         token: opts.token || process.env.GITHUB_TOKEN,
         hemisphere: opts.hemisphere,
+        preset: opts.preset,
         density: opts.density,
         onProgress: (message) => console.log(message),
       });

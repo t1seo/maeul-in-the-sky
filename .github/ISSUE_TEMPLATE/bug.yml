@@ -1,0 +1,56 @@
+name: Bug report
+description: Report a reproducible problem with the Action, CLI, API, or generated Terrain
+title: '[Bug]: '
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report a problem. Remove tokens and private data from all logs.
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options:
+        - GitHub Action
+        - CLI
+        - JavaScript API
+        - Generated SVG
+        - Demo or documentation
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Action tag, npm version, or commit SHA
+      placeholder: v1 or 1.4.0
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the result and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Provide the smallest workflow, command, or code sample that reproduces the problem.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste relevant output with secrets and private data removed.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and removed secrets from this report.
+          required: true

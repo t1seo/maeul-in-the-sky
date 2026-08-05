@@ -19,6 +19,10 @@ describe('computeStats', () => {
       expect(stats.longestStreak).toBe(0);
       expect(stats.currentStreak).toBe(0);
       expect(stats.mostActiveDay).toBe('Monday');
+      expect(stats.activeDays).toBe(0);
+      expect(stats.busiestMonth).toBe('');
+      expect(stats.fromDate).toBe('');
+      expect(stats.toDate).toBe('');
     });
 
     it('should return zeros for all-zero contribution data', () => {
@@ -28,6 +32,32 @@ describe('computeStats', () => {
       expect(stats.total).toBe(0);
       expect(stats.longestStreak).toBe(0);
       expect(stats.currentStreak).toBe(0);
+    });
+  });
+
+  describe('range and activity summary', () => {
+    it('counts active days and reports the covered date range', () => {
+      const stats = computeStats(mockContributionData.weeks);
+
+      expect(stats.activeDays).toBe(15);
+      expect(stats.fromDate).toBe('2025-01-05');
+      expect(stats.toDate).toBe('2025-02-01');
+    });
+
+    it('selects the month with the highest contribution total', () => {
+      const stats = computeStats([
+        {
+          firstDay: '2025-01-26',
+          days: [
+            { date: '2025-01-31', count: 3, level: 2 },
+            { date: '2025-02-01', count: 2, level: 1 },
+            { date: '2025-02-02', count: 4, level: 2 },
+          ],
+        },
+      ]);
+
+      expect(stats.activeDays).toBe(3);
+      expect(stats.busiestMonth).toBe('2025-02');
     });
   });
 

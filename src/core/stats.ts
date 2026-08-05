@@ -17,6 +17,10 @@ export function computeStats(weeks: ContributionWeek[]): ContributionStats {
       longestStreak: 0,
       currentStreak: 0,
       mostActiveDay: 'Monday', // Default for empty data
+      activeDays: 0,
+      busiestMonth: '',
+      fromDate: '',
+      toDate: '',
     };
   }
 
@@ -28,11 +32,33 @@ export function computeStats(weeks: ContributionWeek[]): ContributionStats {
       longestStreak: 0,
       currentStreak: 0,
       mostActiveDay: 'Monday',
+      activeDays: 0,
+      busiestMonth: '',
+      fromDate: '',
+      toDate: '',
     };
   }
 
   // 1. Compute total contributions
   const total = allDays.reduce((sum, day) => sum + day.count, 0);
+  const activeDays = allDays.filter((day) => day.count > 0).length;
+
+  const monthTotals = new Map<string, number>();
+  for (const day of allDays) {
+    if (day.count > 0) {
+      const month = day.date.slice(0, 7);
+      monthTotals.set(month, (monthTotals.get(month) ?? 0) + day.count);
+    }
+  }
+
+  let busiestMonth = '';
+  let busiestMonthTotal = 0;
+  for (const [month, monthTotal] of monthTotals) {
+    if (monthTotal > busiestMonthTotal) {
+      busiestMonth = month;
+      busiestMonthTotal = monthTotal;
+    }
+  }
 
   // 2. Compute longest streak
   let longestStreak = 0;
@@ -94,5 +120,9 @@ export function computeStats(weeks: ContributionWeek[]): ContributionStats {
     longestStreak,
     currentStreak,
     mostActiveDay,
+    activeDays,
+    busiestMonth,
+    fromDate: allDays[0].date,
+    toDate: allDays[allDays.length - 1].date,
   };
 }

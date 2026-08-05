@@ -57,6 +57,10 @@ describe('fetchContributions', () => {
     expect(result.stats.total).toBe(1234);
     expect(result.stats.longestStreak).toBeGreaterThan(0);
     expect(result.stats.mostActiveDay).not.toBe('');
+    expect(result.stats.activeDays).toBeGreaterThan(0);
+    expect(result.stats.busiestMonth).toMatch(/^\d{4}-\d{2}$/);
+    expect(result.stats.fromDate).toBe('2024-12-29');
+    expect(result.stats.toDate).toBe('2025-12-27');
     expect(result.weeks).toHaveLength(52);
     expect(result.weeks[0].days).toHaveLength(7);
   });
@@ -179,6 +183,10 @@ describe('fetchContributions', () => {
     expect(result.stats).toHaveProperty('longestStreak');
     expect(result.stats).toHaveProperty('currentStreak');
     expect(result.stats).toHaveProperty('mostActiveDay');
+    expect(result.stats).toHaveProperty('activeDays');
+    expect(result.stats).toHaveProperty('busiestMonth');
+    expect(result.stats).toHaveProperty('fromDate');
+    expect(result.stats).toHaveProperty('toDate');
 
     // Week shape
     const week = result.weeks[0];

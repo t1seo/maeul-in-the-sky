@@ -69,9 +69,16 @@ export const mockContributionData: ContributionData = {
       ],
     },
   ],
-  // Stats are recomputed by computeStats() inside theme.render().
-  // The placeholder values here match the expected computed output.
-  stats: { total: 42, longestStreak: 7, currentStreak: 3, mostActiveDay: 'Wednesday' },
+  stats: {
+    total: 42,
+    longestStreak: 7,
+    currentStreak: 3,
+    mostActiveDay: 'Wednesday',
+    activeDays: 15,
+    busiestMonth: '2025-01',
+    fromDate: '2025-01-05',
+    toDate: '2025-02-01',
+  },
   year: 2025,
   username: 'testuser',
 };

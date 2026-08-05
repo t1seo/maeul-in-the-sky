@@ -48,8 +48,12 @@ function computeStats(weeks) {
       total: 0,
       longestStreak: 0,
       currentStreak: 0,
-      mostActiveDay: "Monday"
+      mostActiveDay: "Monday",
       // Default for empty data
+      activeDays: 0,
+      busiestMonth: "",
+      fromDate: "",
+      toDate: ""
     };
   }
   const allDays = normalizeContributionWeeks(weeks).flatMap((week) => week.days);
@@ -58,10 +62,30 @@ function computeStats(weeks) {
       total: 0,
       longestStreak: 0,
       currentStreak: 0,
-      mostActiveDay: "Monday"
+      mostActiveDay: "Monday",
+      activeDays: 0,
+      busiestMonth: "",
+      fromDate: "",
+      toDate: ""
     };
   }
   const total = allDays.reduce((sum, day) => sum + day.count, 0);
+  const activeDays = allDays.filter((day) => day.count > 0).length;
+  const monthTotals = /* @__PURE__ */ new Map();
+  for (const day of allDays) {
+    if (day.count > 0) {
+      const month = day.date.slice(0, 7);
+      monthTotals.set(month, (monthTotals.get(month) ?? 0) + day.count);
+    }
+  }
+  let busiestMonth = "";
+  let busiestMonthTotal = 0;
+  for (const [month, monthTotal] of monthTotals) {
+    if (monthTotal > busiestMonthTotal) {
+      busiestMonth = month;
+      busiestMonthTotal = monthTotal;
+    }
+  }
   let longestStreak = 0;
   let currentStreakCount = 0;
   let previousTimestamp;
@@ -104,7 +128,11 @@ function computeStats(weeks) {
     total,
     longestStreak,
     currentStreak,
-    mostActiveDay
+    mostActiveDay,
+    activeDays,
+    busiestMonth,
+    fromDate: allDays[0].date,
+    toDate: allDays[allDays.length - 1].date
   };
 }
 
@@ -252,6 +280,29 @@ async function fetchContributions(username, year, token) {
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 
+// src/core/presets.ts
+var VILLAGE_PRESETS = {
+  nature: {
+    displayName: "Nature",
+    description: "Fewer buildings, with more forests and open terrain",
+    density: 2
+  },
+  balanced: {
+    displayName: "Balanced",
+    description: "A mix of nature, farms, villages, and cities",
+    density: 5
+  },
+  civilization: {
+    displayName: "Civilization",
+    description: "More buildings across everyday contribution levels",
+    density: 9
+  }
+};
+var DEFAULT_VILLAGE_PRESET = "balanced";
+function isVillagePreset(value) {
+  return value in VILLAGE_PRESETS;
+}
+
 // src/core/svg.ts
 function svgElement(tag, attrs, children) {
   const attrString = Object.entries(attrs).map(([key, value]) => `${key}="${value}"`).join(" ");
@@ -260,19 +311,29 @@ function svgElement(tag, attrs, children) {
   }
   return `<${tag} ${attrString}/>`;
 }
-function svgRoot(attrs, content) {
+function svgRoot(attrs, content, accessibility) {
   const mergedAttrs = {
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 840 240",
     ...attrs
   };
-  return svgElement("svg", mergedAttrs, content);
+  if (!accessibility) {
+    return svgElement("svg", mergedAttrs, content);
+  }
+  mergedAttrs.role = "img";
+  mergedAttrs["aria-labelledby"] = "maeul-svg-title maeul-svg-description";
+  mergedAttrs.focusable = "false";
+  const accessibleContent = `<title id="maeul-svg-title">${escapeXml(accessibility.title)}</title><desc id="maeul-svg-description">${escapeXml(accessibility.description)}</desc>` + content;
+  return svgElement("svg", mergedAttrs, accessibleContent);
 }
 function svgStyle(css) {
   return `<style><![CDATA[${css}]]></style>`;
 }
 function formatNumber(n) {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+function escapeXml(str) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 }
 
 // src/utils/math.ts
@@ -309,18 +370,53 @@ function renderTitle(title, palette) {
     ` font-size="14"`,
     ` fill="${palette.text.primary}"`,
     ` font-weight="600"`,
-    `>${escapeXml(title)}</text>`
+    `>${escapeXml2(title)}</text>`
   ].join("");
+}
+var MONTH_NAMES = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];
+function formatIsoDate(date) {
+  const [year, month, day] = date.split("-");
+  return `${MONTH_NAMES[Number(month) - 1]} ${Number(day)}, ${year}`;
+}
+function formatMonth(month) {
+  const [year, monthNumber] = month.split("-");
+  return `${MONTH_NAMES[Number(monthNumber) - 1]} ${year}`;
+}
+function renderSubtitle(stats, wonderCount, palette) {
+  const details = [];
+  if (stats.fromDate && stats.toDate) {
+    details.push(`${formatIsoDate(stats.fromDate)} to ${formatIsoDate(stats.toDate)}`);
+  }
+  if (wonderCount > 0) {
+    details.push(`${wonderCount} ${wonderCount === 1 ? "wonder" : "wonders"} discovered`);
+  }
+  if (details.length === 0) return "";
+  return `<text x="24" y="32" font-family="${FONT_FAMILY}" font-size="9" fill="${palette.text.secondary}">${escapeXml2(details.join(" \xB7 "))}</text>`;
 }
 function renderStatsBar(stats, palette) {
   const items = [
     `${formatNumber(stats.total)} contributions`,
+    `${formatNumber(stats.activeDays)} active days`,
     `${formatNumber(stats.currentStreak)}d current streak`,
     `${formatNumber(stats.longestStreak)}d longest streak`,
+    `Busiest: ${stats.busiestMonth ? formatMonth(stats.busiestMonth) : "None"}`,
     `Most active: ${stats.mostActiveDay}`
   ];
   const segments = items.map(
-    (text, i) => `<text x="${24 + i * 200}" y="233" font-family="${FONT_FAMILY}" font-size="11" fill="${palette.text.secondary}">${escapeXml(text)}</text>`
+    (text, i) => `<text x="${24 + i * 136}" y="233" font-family="${FONT_FAMILY}" font-size="10" fill="${palette.text.secondary}">${escapeXml2(text)}</text>`
   ).join("");
   return `<g class="stats-bar">${segments}</g>`;
 }
@@ -364,7 +460,7 @@ function enrichGridCells100(cells, data) {
     level100: computeLevel100(cell.count, effectiveMax)
   }));
 }
-function escapeXml(str) {
+function escapeXml2(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 }
 
@@ -4484,6 +4580,11 @@ var terrainTheme = {
     };
   }
 };
+var REDUCED_MOTION_CSS = `
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+  animate, animateMotion, animateTransform { display: none; }
+}`;
 function renderMode(data, options, mode) {
   const hemisphere = options.hemisphere || "north";
   const density = options.density ?? 5;
@@ -4518,7 +4619,7 @@ function renderMode(data, options, mode) {
   const terrainCSS = renderTerrainCSS(isoCells, biomeMap);
   const assetCSS = renderAssetCSS();
   const epicCSS = renderEpicCSS();
-  const css = terrainCSS + "\n" + assetCSS + "\n" + epicCSS;
+  const css = terrainCSS + "\n" + assetCSS + "\n" + epicCSS + "\n" + REDUCED_MOTION_CSS;
   const isDark = mode === "dark";
   const celestials = renderCelestials(seed, palette, isDark);
   const clouds = renderClouds(seed, palette);
@@ -4558,6 +4659,7 @@ function renderMode(data, options, mode) {
     background: palette.bg
   };
   const title = renderTitle(options.title, themePalette);
+  const subtitle = renderSubtitle(data.stats, epicPlaced.length, themePalette);
   const statsBar = renderStatsBar(data.stats, themePalette);
   const epicDefs = epicPlaced.length > 0 ? `<defs>${renderEpicGlowDefs(mode)}</defs>` : "";
   const content = [
@@ -4575,9 +4677,25 @@ function renderMode(data, options, mode) {
     fallingLeaves,
     overlays,
     title,
+    subtitle,
     statsBar
   ].join("\n");
-  return svgRoot({ width: options.width, height: options.height }, content);
+  const tierCounts = epicPlaced.reduce((counts, epic) => {
+    counts[epic.tier] = (counts[epic.tier] ?? 0) + 1;
+    return counts;
+  }, {});
+  const wonderDescription = Object.entries(tierCounts).map(([tier, count]) => `${count} ${tier}`).join(", ");
+  const dateDescription = data.stats.fromDate && data.stats.toDate ? `from ${data.stats.fromDate} to ${data.stats.toDate}` : "for the available contribution range";
+  const description = [
+    `Isometric contribution terrain for @${data.username} ${dateDescription}.`,
+    `${formatNumber(data.stats.total)} contributions across ${formatNumber(data.stats.activeDays)} active days.`,
+    data.stats.busiestMonth ? `Busiest month: ${data.stats.busiestMonth}.` : "",
+    wonderDescription ? `Wonders discovered: ${wonderDescription}.` : "No rare wonders discovered."
+  ].filter(Boolean).join(" ");
+  return svgRoot({ width: options.width, height: options.height }, content, {
+    title: options.title,
+    description
+  });
 }
 
 // src/themes/registry.ts
@@ -4612,11 +4730,23 @@ function parseYear(value) {
   return year;
 }
 function parseDensity(value) {
-  const density = parseOptionalInteger(value, "density") ?? 5;
+  const density = parseOptionalInteger(value, "density");
+  if (density === void 0) {
+    throw new Error("Density must be resolved from a preset before validation");
+  }
   if (density < 1 || density > 10) {
     throw new Error(`Invalid density: "${value}". Expected an integer from 1 to 10`);
   }
   return density;
+}
+function parsePreset(value) {
+  const preset = value?.trim() || DEFAULT_VILLAGE_PRESET;
+  if (!isVillagePreset(preset)) {
+    throw new Error(
+      `Invalid preset: "${value}". Available presets: ${Object.keys(VILLAGE_PRESETS).join(", ")}`
+    );
+  }
+  return preset;
 }
 function parseHemisphere(value) {
   if (value === void 0 || value === "") return "north";
@@ -4640,7 +4770,10 @@ function createTerrainGenerator(dependencies) {
     }
     const year = parseYear(request.year);
     const hemisphere = parseHemisphere(request.hemisphere);
-    const density = parseDensity(request.density);
+    const presetName = parsePreset(request.preset);
+    const density = parseDensity(
+      request.density === void 0 || request.density === "" ? VILLAGE_PRESETS[presetName].density : request.density
+    );
     const title = request.title || `@${username}`;
     const outputDir = request.outputDir?.trim() || "./";
     const yearLabel = year ?? "last 52 weeks";
@@ -4663,7 +4796,9 @@ function createTerrainGenerator(dependencies) {
       darkPath,
       lightPath,
       themeName: theme.name,
-      themeDisplayName: theme.displayName
+      themeDisplayName: theme.displayName,
+      presetName,
+      density
     };
   };
 }
@@ -4680,10 +4815,13 @@ var generateTerrain = createTerrainGenerator({
   }
 });
 export {
+  DEFAULT_VILLAGE_PRESET,
+  VILLAGE_PRESETS,
   computeStats,
   fetchContributions,
   generateTerrain,
   getTheme,
+  isVillagePreset,
   listThemes,
   registerTheme
 };

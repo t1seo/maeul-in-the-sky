@@ -1,56 +1,64 @@
 <div align="center">
 
-# Maeul in the Sky (天空の村)
+# Maeul in the Sky · 天空の村
 
-**GitHubコントリビューショングラフをアニメーション付きアイソメトリック地形に変換**
+**GitHub のコントリビューションから、生きたアイソメトリックの村を作ります。**
 
 [![npm version](https://img.shields.io/npm/v/maeul-in-the-sky?color=cb3837&logo=npm)](https://www.npmjs.com/package/maeul-in-the-sky)
-[![npm downloads](https://img.shields.io/npm/dt/maeul-in-the-sky?color=cb3837&logo=npm)](https://www.npmjs.com/package/maeul-in-the-sky)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Node.js](https://img.shields.io/badge/Node.js-%3E%3D20-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
-[![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-ready-2088FF?logo=githubactions&logoColor=white)](https://github.com/features/actions)
-[![English](https://img.shields.io/badge/lang-English-blue)](../README.md)
-[![한국어](https://img.shields.io/badge/lang-%ED%95%9C%EA%B5%AD%EC%96%B4-blue)](./README.ko.md)
-[![中文](https://img.shields.io/badge/lang-%E4%B8%AD%E6%96%87-blue)](./README.zh.md)
+[![CI](https://github.com/t1seo/maeul-in-the-sky/actions/workflows/ci.yml/badge.svg)](https://github.com/t1seo/maeul-in-the-sky/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
 
-<br/>
+[English](../README.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [中文](README.zh.md)
+
+<br />
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="../.github/assets/preview-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="../.github/assets/preview-light.svg">
-  <img alt="Maeul in the Sky 地形プレビュー" src="../.github/assets/preview-dark.svg" width="840">
+  <img alt="GitHub Contribution Calendar から作られたアイソメトリックの村" src="../.github/assets/preview-dark.svg" width="840">
 </picture>
 
-*コントリビューショングラフが生きた村になります — 季節の変化、流れる川、動く雲とともに。*
+[**プリセットデモ**](https://t1seo.github.io/maeul-in-the-sky/) · [クイックスタート](#クイックスタート) · [npm](https://www.npmjs.com/package/maeul-in-the-sky) · [ショーケース](../SHOWCASE.md)
 
 </div>
 
-## Maeul in the Skyとは？
+Maeul（마을）は韓国語で「村」という意味です。Contribution Calendar の一日一日が空に浮かぶ Terrain の一部になり、静かな日は水や草地に、活発な日は森、農場、村、都市、珍しい Wonder に変わります。
 
-Maeul in the Sky（天空の村）は、GitHubのコントリビューション履歴をアニメーション付きアイソメトリック地形SVGに変換します。*Maeul*（마을）は韓国語で「村」を意味します — コントリビューショングラフが空に浮かぶ生きた村になります。各日のコントリビューションレベルが地形ブロックになります — 活動なしは深い水、最大活動は高層ビル。4つの季節サイクルと48のシーズンアセット、バイオーム生成（川、池、森）、アンビエントアニメーションを含みます。
+出力は独立した 2 つの SVG です。プロフィール README で GitHub のカラーモードに合わせて切り替わり、クライアント側の JavaScript は必要ありません。
 
-### 主な機能
+## 村に含まれるもの
 
-- **アイソメトリック3D地形** — 100段階の高度システムがコントリビューションデータにマッピング
-- **4つの季節サイクル** — 冬、春、夏、秋がスムーズに遷移し48のシーズンアセットを含む
-- **バイオーム生成** — シードノイズによる手続き的な川、池、森クラスター生成
-- **118種の地形アセット** — 木、建物、風車、雪だるま、桜など
-- **アニメーションSVG** — 雲が流れ、水が輝き、旗がはためく — 純粋なSVG、JavaScriptなし
-- **ダーク＆ライトモード** — 2つのバリアントを生成し`<picture>`タグで自動切替
-- **半球サポート** — 北半球または南半球の季節マッピング
-- **GitHub Action** — ワークフローに追加するだけで毎日自動更新
+- 100 段階の標高を持つ決定論的なアイソメトリック Terrain
+- カレンダーに沿った四季と 48 種類の季節アセット
+- 自動生成される川、池、森、天候、環境アニメーション
+- 木や農場から塔や動物まで、118 種類の Terrain アセット
+- Rare、Epic、Legendary の 30 種類の Epic Wonders
+- アクセシブルなタイトルと説明、視差効果を減らす設定に対応したダーク・ライト SVG
+- 北半球と南半球の季節配置
+- 対象期間、活動日数、ストリーク、最も活発な月、発見した Wonder 数
+
+## 村のプリセット
+
+プリセットは表示されるアセットを変えます。コントリビューション数、標高、色は変えません。
+
+| Nature | Balanced | Civilization |
+|:---:|:---:|:---:|
+| [![Nature プリセット](demo/assets/preset-nature-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=nature&mode=dark) | [![Balanced プリセット](demo/assets/preset-balanced-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=balanced&mode=dark) | [![Civilization プリセット](demo/assets/preset-civilization-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=civilization&mode=dark) |
+| 森と開けた土地を多く | 自然、農場、町のバランス | 普段の活動日にも建物を多く |
+| `preset: nature` | `preset: balanced` | `preset: civilization` |
 
 ## クイックスタート
 
-### GitHub Action（推奨）
+### 1. Action を追加
 
-`.github/workflows/maeul-sky.yml`にワークフローを追加：
+GitHub プロフィールで使う場合は、ユーザー名と同じ名前のリポジトリに `.github/workflows/maeul-sky.yml` を追加します。
 
 ```yaml
-name: Generate Maeul in the Sky Terrain
+name: Update Maeul in the Sky
+
 on:
   schedule:
-    - cron: '0 0 * * *'  # 毎日
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 permissions:
@@ -60,111 +68,150 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: t1seo/maeul-in-the-sky@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          preset: balanced
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: 'chore: update maeul-in-the-sky terrain'
+          commit_message: 'chore: update Maeul in the Sky'
 ```
 
-プロフィールREADMEに追加：
+GitHub ユーザー名の既定値はリポジトリ所有者です。別のユーザーの Terrain を作る場合だけ `username` を指定してください。
 
-```markdown
+### 2. 一度実行
+
+**Actions → Update Maeul in the Sky → Run workflow** を開きます。最初の実行で次のファイルが作られます。
+
+- `maeul-in-the-sky-dark.svg`
+- `maeul-in-the-sky-light.svg`
+
+コミットが拒否された場合は、**Settings → Actions → General → Workflow permissions** で読み取り・書き込み権限を許可してください。
+
+### 3. README に追加
+
+```html
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./maeul-in-the-sky-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./maeul-in-the-sky-light.svg">
-  <img alt="GitHubコントリビューション地形" src="./maeul-in-the-sky-dark.svg" width="100%">
+  <img alt="自分の GitHub コントリビューション村" src="./maeul-in-the-sky-dark.svg" width="100%">
 </picture>
 ```
 
-### Action入力値
+## Action の入力
 
-| 入力 | 説明 | デフォルト |
-|------|------|------------|
-| `github_token` | API接続用GitHubトークン | `${{ github.token }}` |
-| `theme` | テーマ名 | `terrain` |
-| `title` | カスタムタイトルテキスト | GitHubユーザー名 |
-| `output_dir` | 出力ディレクトリ | `./` |
-| `year` | 対象年 | 現在の年 |
-| `hemisphere` | 季節マッピング（`north`または`south`） | `north` |
-| `density` | 建物密度 1-10（高いほど低い活動でも建物が出現） | `5` |
+| 入力 | 説明 | 既定値 |
+|---|---|---|
+| `username` | Contribution Calendar を取得する GitHub ユーザー | リポジトリ所有者 |
+| `github_token` | GitHub GraphQL API トークン | `${{ github.token }}` |
+| `theme` | Theme レンダラー | `terrain` |
+| `title` | SVG のタイトル | `@username` |
+| `output_dir` | 2 つの SVG を保存するディレクトリ | `./` |
+| `year` | 暦年。省略すると直近 52 週間 | 直近 52 週間 |
+| `hemisphere` | 季節配置: `north` または `south` | `north` |
+| `preset` | `nature`、`balanced`、`civilization` | `balanced` |
+| `density` | 1 から 10 の高度な建物密度上書き | プリセット値 |
 
-### カスタマイズ例
+出力 `dark_svg_path` と `light_svg_path` には生成されたファイルパスが入ります。
 
 ```yaml
-# 南半球（オーストラリア、ブラジルなど）
 - uses: t1seo/maeul-in-the-sky@v1
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
+    username: octocat
+    preset: nature
     hemisphere: south
-
-# カスタムタイトル
-- uses: t1seo/maeul-in-the-sky@v1
-  with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    title: "My Coding Journey"
-
-# 特定の年
-- uses: t1seo/maeul-in-the-sky@v1
-  with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    year: 2025
-
-# 適度な活動でも建物が出現するように
-- uses: t1seo/maeul-in-the-sky@v1
-  with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    density: 8
+    title: 'Octocat’s coding village'
 ```
 
-## 地形はどのように作られますか？
+3 つのプリセットより細かく調整したい場合だけ `density` を使います。値を高くすると活動量が低いセルにも建物が現れ、低くすると自然が多く残ります。
 
-GitHubコントリビューショングラフの各マスが1つの地形ブロックになります。その日のコミットが多いほど、より発展した地形が生まれます。
+## Terrain Generation の仕組み
 
-| 活動量 | 地形 | 説明 |
-|:---:|:---:|:---|
-| コミットなし | 🌊 海 | 海タイル — 空の海 |
-| 少量コミット | 🏖️ 砂＆草原 | 平らな土地が現れる |
-| 通常コミット | 🌲 森 | 木と植物が育つ |
-| 平均以上 | 🌾 農場 | 畑、納屋、風車 |
-| 活発な日 | 🏘️ 村 | 家と小さな建物 |
-| 最高活動 | 🏙️ 都市 | 高い建物とタワー |
+コントリビューション強度は、そのユーザー自身の活動範囲で相対的に正規化されます。人数によって件数が違っても、それぞれの忙しい日は都市になり得ます。
 
-> **絶対値ではなく、自分基準の相対値です。** 普段1日2〜3回コミットする人なら、3回のコミットだけで村や都市レベルに到達します。1日20回コミットする人は約20回必要です。地形は*あなた自身のリズム*を反映します。
+| 活動パターン | Terrain の結果 |
+|---|---|
+| 活動なし | 水と空き地 |
+| 少ない活動 | 岸、草地、小さな植物 |
+| 継続的な活動 | 森と農場 |
+| 高い活動 | 村と町 |
+| 最大の活動 | 都市、塔、Wonder 候補 |
 
-**地形を決める2つの要素：**
+継続すると島が広がり、一日の強度が各セルを発展させます。ユーザー名、Contribution Calendar、年、半球、密度が同じなら配置も同じです。
 
-- **毎日コミットする** → 海が減り、マップ全体に陸地が現れる
-- **1日に多くコミットする** → その日の土地が草原から森、建物にアップグレード
+### Epic Wonders
 
-毎日コーディングする人は村が並ぶ緑豊かな島になります。数日に集中的にコーディングする人は海から高くそびえる都市が点在します。
+活発な Terrain では 30 種類の特別なランドマークを発見できます。
 
-### `density`とは？
+- **Rare 14 種類:** 富士山、巨大セコイア、コロッセオ、サンゴ礁など
+- **Epic 10 種類:** オーロラ、タージ・マハル、氷河峰、生物発光の池など
+- **Legendary 6 種類:** 浮島、ドラゴンの巣、世界樹、古代ポータルなど
 
-地形レベルは**自分の活動に対する相対値**で計算されます — 最も活発だった日がピークとなり、他の日はそれに比例してスケーリングされます。そのため建物（村、都市）は最も活発な日にのみ出現し、「普通の」日は森や農場にとどまる傾向があります。
+Wonder の選択には、そのセルの活動量、周辺セルの豊かさ、全体の統計が使われます。読みやすさを保つため、間隔を空けて最大 3 つまで配置されます。
 
-特にコミットパターンが不均一な場合にこの現象が顕著です。例えば、最も忙しい日に10コミットしたが普段は1-2コミットの場合、普段の日は森レベル（~30-45/99）程度にしかなりません — 建物はレベル79から出現します。`density`設定はこの基準を下げて、日常のコミットでも村が出現するようにします。
+## CLI
 
-> **「文明ブースト」と考えてください。** 地形の高さや色は変わりません — 各ブロックに表示されるアセット（木 vs 家 vs タワー）のみが変わります。
+Node.js 20 以降と GitHub トークンが必要です。
 
-**推奨設定：**
+```bash
+GITHUB_TOKEN="$(gh auth token)" npx --yes maeul-in-the-sky \
+  --user octocat \
+  --preset civilization \
+  --output ./terrain
+```
 
-| コミットパターン | 推奨 `density` | 理由 |
-|:---|:---:|:---|
-| 毎日コンスタントに同量コミット | `5`（デフォルト） | ほとんどの日がピークに近く、建物が自然に出現 |
-| 毎日コミットするが時々爆発的な日がある | `6`–`7` | 爆発的な日が基準を押し上げる — 普段の日にも建物が見えるように |
-| 週2-3日、同量コミット | `7`–`8` | 活動日のレベルは高いがまばら — ブーストで村の範囲に到達 |
-| 散発的にまとめてコミット | `8`–`9` | ピークと平均の差が大きい — 高いブーストで差を埋める |
-| 始めたばかりやごくたまにコミット | `9`–`10` | 少ない活動でもやりがいを感じられるよう建物を最大化 |
+全オプションは `npx --yes maeul-in-the-sky --help` で確認できます。`--year` を省略すると直近 52 週間を使います。
 
-`density`を`1`–`4`に設定すると逆の効果があります — 建物の出現基準が上がり、より多くの自然が見られます。地形が都市的すぎると感じたら、この設定を使ってください。
+## JavaScript API
 
-> **なぜこの設定があるのか：** Maeul in the Skyはコントリビューショングラフを楽しくすることが目標です。森から繁栄する村へ成長する地形を見ると、毎日コーディングしたいモチベーションが湧きます — `density`はコミットパターンが完璧に均一でなくても、その感覚を誰もが体験できるようにします。
+```bash
+npm install maeul-in-the-sky
+```
+
+```js
+import { generateTerrain } from 'maeul-in-the-sky';
+
+const result = await generateTerrain({
+  username: 'octocat',
+  token: process.env.GITHUB_TOKEN,
+  preset: 'balanced',
+  outputDir: './terrain',
+});
+
+console.log(result.darkPath, result.lightPath);
+```
+
+`fetchContributions`、`computeStats`、Theme レジストリ、プリセット一覧も公開しています。ESM と CommonJS の両方に TypeScript 宣言が含まれます。
+
+## データとアクセシビリティ
+
+- 毎回 GitHub GraphQL API からコントリビューションデータを直接取得します。
+- 分析、ユーザーデータベース、テレメトリー送信はありません。
+- SVG には集計値と日付だけが入り、リポジトリ名や個別の詳細は入りません。
+- 見えるデータの範囲はトークン権限に従います。必要最小限の権限を使ってください。
+- SVG は `<title>`、`<desc>`、`role="img"` を含み、モーションを減らす設定では静止表示になります。
+
+## トラブルシューティング
+
+- **SVG をコミットできない:** `contents: write` と Workflow permissions の読み取り・書き込み許可を確認してください。
+- **別のアカウントが表示される:** `username` を設定してください。定期実行でもリポジトリ所有者が既定値です。
+- **期間が今年 1 月からではない:** 正常です。`year` を省略すると GitHub プロフィールと同じ直近 52 週間を使います。
+- **アニメーションしない:** OS のモーションを減らす設定や Markdown ホストの制限が考えられます。Terrain は静止画でも完全に表示されます。
+- **非公開コントリビューションがない:** 指定したトークンから見えるデータだけを含められます。
+
+その他は[サポート](../SUPPORT.md)を確認するか、[Issue を作成](https://github.com/t1seo/maeul-in-the-sky/issues/new/choose)してください。
+
+## コミュニティ
+
+- [ショーケース](../SHOWCASE.md)にプロフィールを共有
+- [コントリビューションガイド](../CONTRIBUTING.md)
+- [セキュリティポリシー](../SECURITY.md)
+- [行動規範](../CODE_OF_CONDUCT.md)
 
 ## ライセンス
 
-[MIT](../LICENSE) &copy; [t1seo](https://github.com/t1seo)
+[MIT](../LICENSE) © [t1seo](https://github.com/t1seo)

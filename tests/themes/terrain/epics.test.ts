@@ -49,7 +49,15 @@ function createIsoCells(level100: number): IsoCell[] {
   return cells;
 }
 
+const sharedStats = {
+  activeDays: 100,
+  busiestMonth: '2025-01',
+  fromDate: '2025-01-01',
+  toDate: '2025-12-31',
+};
+
 const highStats: ContributionStats = {
+  ...sharedStats,
   total: 2000,
   longestStreak: 60,
   currentStreak: 30,
@@ -57,6 +65,7 @@ const highStats: ContributionStats = {
 };
 
 const lowStats: ContributionStats = {
+  ...sharedStats,
   total: 50,
   longestStreak: 3,
   currentStreak: 0,
@@ -64,6 +73,7 @@ const lowStats: ContributionStats = {
 };
 
 const rareStats: ContributionStats = {
+  ...sharedStats,
   total: 200,
   longestStreak: 7,
   currentStreak: 2,
@@ -71,6 +81,7 @@ const rareStats: ContributionStats = {
 };
 
 const epicStats: ContributionStats = {
+  ...sharedStats,
   total: 500,
   longestStreak: 14,
   currentStreak: 5,

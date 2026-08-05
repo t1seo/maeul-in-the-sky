@@ -27,6 +27,8 @@ docs/*
 !docs/README.ko.md
 !docs/README.ja.md
 !docs/README.zh.md
+!docs/demo/
+!docs/demo/**
 examples/
 poc/
 .claude/

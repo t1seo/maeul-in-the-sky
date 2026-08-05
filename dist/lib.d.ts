@@ -24,6 +24,14 @@ interface ContributionStats {
   currentStreak: number;
   /** Most active day of the week (e.g., "Wednesday") */
   mostActiveDay: string;
+  /** Number of days with at least one contribution */
+  activeDays: number;
+  /** Most active calendar month in YYYY-MM format, or empty when inactive */
+  busiestMonth: string;
+  /** First available contribution date in YYYY-MM-DD format */
+  fromDate: string;
+  /** Last available contribution date in YYYY-MM-DD format */
+  toDate: string;
 }
 /** Complete contribution data for a requested calendar range */
 interface ContributionData {
@@ -67,6 +75,8 @@ interface Theme {
   /** Render contribution data into dark and light SVGs */
   render(data: ContributionData, options: ThemeOptions): ThemeOutput;
 }
+/** GitHub color mode */
+type ColorMode = 'dark' | 'light';
 
 /**
  * GitHub GraphQL API client for fetching contribution data
@@ -99,6 +109,27 @@ declare function fetchContributions(
  */
 declare function computeStats(weeks: ContributionWeek[]): ContributionStats;
 
+declare const VILLAGE_PRESETS: {
+  readonly nature: {
+    readonly displayName: 'Nature';
+    readonly description: 'Fewer buildings, with more forests and open terrain';
+    readonly density: 2;
+  };
+  readonly balanced: {
+    readonly displayName: 'Balanced';
+    readonly description: 'A mix of nature, farms, villages, and cities';
+    readonly density: 5;
+  };
+  readonly civilization: {
+    readonly displayName: 'Civilization';
+    readonly description: 'More buildings across everyday contribution levels';
+    readonly density: 9;
+  };
+};
+type VillagePreset = keyof typeof VILLAGE_PRESETS;
+declare const DEFAULT_VILLAGE_PRESET: VillagePreset;
+declare function isVillagePreset(value: string): value is VillagePreset;
+
 interface TerrainGenerationRequest {
   username: string;
   token?: string;
@@ -107,6 +138,7 @@ interface TerrainGenerationRequest {
   outputDir?: string;
   year?: string | number;
   hemisphere?: string;
+  preset?: string;
   density?: string | number;
   onProgress?: (message: string) => void;
 }
@@ -115,6 +147,8 @@ interface TerrainGenerationResult {
   lightPath: string;
   themeName: string;
   themeDisplayName: string;
+  presetName: VillagePreset;
+  density: number;
 }
 declare const generateTerrain: (
   request: TerrainGenerationRequest,
@@ -138,16 +172,24 @@ declare function getTheme(name: string): Theme | undefined;
 declare function listThemes(): string[];
 
 export {
+  type ColorMode,
   type ContributionData,
+  type ContributionDay,
+  type ContributionStats,
+  type ContributionWeek,
+  DEFAULT_VILLAGE_PRESET,
   type TerrainGenerationRequest,
   type TerrainGenerationResult,
   type Theme,
   type ThemeOptions,
   type ThemeOutput,
+  VILLAGE_PRESETS,
+  type VillagePreset,
   computeStats,
   fetchContributions,
   generateTerrain,
   getTheme,
+  isVillagePreset,
   listThemes,
   registerTheme,
 };

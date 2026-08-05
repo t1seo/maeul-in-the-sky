@@ -1,0 +1,29 @@
+name: Feature request
+description: Propose a focused improvement to Terrain Generation or project usability
+title: '[Feature]: '
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is difficult or missing today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Explain the behavior or result you would like to see.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe any workaround or different design you considered.
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples or references
+      description: Add sketches, screenshots, or links when they clarify the request.

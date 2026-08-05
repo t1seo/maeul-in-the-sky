@@ -37,7 +37,16 @@ function createFullRangeData(): ContributionData {
   }
   return {
     weeks,
-    stats: { total: 0, longestStreak: 0, currentStreak: 0, mostActiveDay: '' },
+    stats: {
+      total: 0,
+      longestStreak: 0,
+      currentStreak: 0,
+      mostActiveDay: '',
+      activeDays: 0,
+      busiestMonth: '',
+      fromDate: '2025-01-01',
+      toDate: '2025-01-01',
+    },
     year: 2025,
     username: 'testuser',
   };

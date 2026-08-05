@@ -1,9 +1,13 @@
-name: 'Maeul in the Sky - Contribution Terrain Visualizer'
-description: 'Generate animated terrain SVGs from GitHub contributions'
+name: 'Maeul in the Sky - Contribution Village Generator'
+description: 'Build an animated isometric village from a GitHub Contribution Calendar'
 branding:
   icon: 'map'
   color: 'green'
 inputs:
+  username:
+    description: 'GitHub user whose Contribution Calendar is used (defaults to repository owner)'
+    required: false
+    default: '${{ github.repository_owner }}'
   github_token:
     description: 'GitHub token for API access'
     required: false
@@ -26,10 +30,13 @@ inputs:
     description: 'Hemisphere for seasonal terrain (north or south)'
     required: false
     default: 'north'
-  density:
-    description: 'Building density 1-10 (higher = buildings appear at lower activity levels)'
+  preset:
+    description: 'Village preset (nature, balanced, or civilization)'
     required: false
-    default: '5'
+    default: 'balanced'
+  density:
+    description: 'Advanced building density override from 1-10'
+    required: false
 outputs:
   dark_svg_path:
     description: 'Path to the generated dark mode SVG'

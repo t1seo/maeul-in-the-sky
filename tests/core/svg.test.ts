@@ -76,6 +76,19 @@ describe('svgRoot', () => {
     expect(result).toContain('width="800"');
     expect(result).toContain('height="200"');
   });
+
+  it('should expose an accessible image name and description', () => {
+    const result = svgRoot({ width: '800' }, '<rect/>', {
+      title: 'A & B',
+      description: 'Terrain <preview>',
+    });
+
+    expect(result).toContain('role="img"');
+    expect(result).toContain('aria-labelledby="maeul-svg-title maeul-svg-description"');
+    expect(result).toContain('focusable="false"');
+    expect(result).toContain('<title id="maeul-svg-title">A &amp; B</title>');
+    expect(result).toContain('<desc id="maeul-svg-description">Terrain &lt;preview&gt;</desc>');
+  });
 });
 
 // ── svgDefs ────────────────────────────────────────────────────────

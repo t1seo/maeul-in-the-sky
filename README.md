@@ -2,61 +2,64 @@
 
 # Maeul in the Sky
 
-**Transform your GitHub contributions into an animated isometric terrain**
+**Build a living isometric village from your GitHub contributions.**
 
 [![npm version](https://img.shields.io/npm/v/maeul-in-the-sky?color=cb3837&logo=npm)](https://www.npmjs.com/package/maeul-in-the-sky)
 [![npm downloads](https://img.shields.io/npm/dt/maeul-in-the-sky?color=cb3837&logo=npm)](https://www.npmjs.com/package/maeul-in-the-sky)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Node.js](https://img.shields.io/badge/Node.js-%3E%3D20-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
-[![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-ready-2088FF?logo=githubactions&logoColor=white)](https://github.com/features/actions)
-[![한국어](https://img.shields.io/badge/lang-%ED%95%9C%EA%B5%AD%EC%96%B4-blue)](./docs/README.ko.md)
-[![日本語](https://img.shields.io/badge/lang-%E6%97%A5%E6%9C%AC%E8%AA%9E-blue)](./docs/README.ja.md)
-[![中文](https://img.shields.io/badge/lang-%E4%B8%AD%E6%96%87-blue)](./docs/README.zh.md)
+[![CI](https://github.com/t1seo/maeul-in-the-sky/actions/workflows/ci.yml/badge.svg)](https://github.com/t1seo/maeul-in-the-sky/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-<br/>
+[English](README.md) · [한국어](docs/README.ko.md) · [日本語](docs/README.ja.md) · [中文](docs/README.zh.md)
+
+<br />
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/assets/preview-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset=".github/assets/preview-light.svg">
-  <img alt="Maeul in the Sky terrain preview" src=".github/assets/preview-dark.svg" width="840">
+  <img alt="An animated isometric village built from a GitHub Contribution Calendar" src=".github/assets/preview-dark.svg" width="840">
 </picture>
 
-*Your contribution graph as a living village — with seasonal weather, flowing rivers, and animated clouds.*
+[**Try the preset demo**](https://t1seo.github.io/maeul-in-the-sky/) · [Quick start](#quick-start) · [npm](https://www.npmjs.com/package/maeul-in-the-sky) · [Showcase](SHOWCASE.md)
 
 </div>
 
-## What is Maeul in the Sky?
+Maeul (마을) means “village” in Korean. Each day in your Contribution Calendar becomes part of a floating Terrain: quiet days form water and open land, while active days grow forests, farms, villages, cities, and rare wonders.
 
-Maeul in the Sky (천공의 마을) turns your GitHub contribution history into an animated isometric terrain SVG. *Maeul* (마을) is Korean for "village" — your contribution graph becomes a living village floating in the sky. Each day's contribution level becomes a terrain block — from deep water (no activity) to towering city buildings (peak activity). The terrain transitions through four seasons with 48 unique seasonal assets, biome generation (rivers, ponds, forests), and ambient animations.
+The output is a pair of standalone SVG files. They work in profile READMEs, switch with GitHub’s color mode, and require no client-side JavaScript.
 
-### Highlights
+## What your village includes
 
-- **Isometric 3D terrain** — 100-level elevation system mapped to your contribution data
-- **4-season cycle** — Winter, Spring, Summer, Autumn with smooth transitions and 48 seasonal assets
-- **Biome generation** — Procedural rivers, ponds, and forest clusters via seeded noise
-- **118 terrain asset types** — Trees, buildings, windmills, snowmen, cherry blossoms, and more
-- **Animated SVG** — Clouds drift, water shimmers, flags wave — pure SVG, no JavaScript
-- **Dark & Light mode** — Generates both variants; auto-switches via `<picture>` tag
-- **Hemisphere support** — Northern or Southern hemisphere seasonal mapping
-- **GitHub Action** — Drop into any workflow for automated daily updates
+- Deterministic isometric Terrain with 100 elevation levels
+- Four calendar-aligned seasons and 48 seasonal assets
+- Procedural rivers, ponds, forests, weather, and ambient animation
+- 118 terrain asset types, from trees and farms to towers and animals
+- 30 discoverable Epic Wonders across Rare, Epic, and Legendary tiers
+- Dark and light SVGs with accessible titles, descriptions, and reduced-motion support
+- Northern and Southern Hemisphere season mapping
+- Visible contribution range, active days, streaks, busiest month, and Wonder count
 
-### More Previews
+## Choose a village preset
 
-| Sparse (Archipelago) | Maximum Density (Civilization) |
-|:---:|:---:|
-| ![](.github/assets/preview-sparse.svg) | ![](.github/assets/preview-max.svg) |
+Presets change which assets appear. They do not change your contribution counts, elevation, or colors.
 
-## Quick Start
+| Nature | Balanced | Civilization |
+|:---:|:---:|:---:|
+| [![Nature preset](docs/demo/assets/preset-nature-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=nature&mode=dark) | [![Balanced preset](docs/demo/assets/preset-balanced-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=balanced&mode=dark) | [![Civilization preset](docs/demo/assets/preset-civilization-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=civilization&mode=dark) |
+| More forests and open land | Nature, farms, and towns | More buildings on everyday active days |
+| `preset: nature` | `preset: balanced` | `preset: civilization` |
 
-### GitHub Action (recommended)
+## Quick start
 
-Add this workflow to `.github/workflows/maeul-sky.yml`:
+### 1. Add the Action
+
+For a GitHub profile, use the repository whose name matches your username. Add `.github/workflows/maeul-sky.yml`:
 
 ```yaml
-name: Generate Maeul in the Sky Terrain
+name: Update Maeul in the Sky
+
 on:
   schedule:
-    - cron: '0 0 * * *'  # daily
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 permissions:
@@ -66,111 +69,166 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: t1seo/maeul-in-the-sky@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          preset: balanced
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: 'chore: update maeul-in-the-sky terrain'
+          commit_message: 'chore: update Maeul in the Sky'
 ```
 
-Then add this to your profile README:
+The repository owner is used as the GitHub username. Set `username` explicitly when the Terrain should represent someone else.
 
-```markdown
+### 2. Run it once
+
+Open **Actions → Update Maeul in the Sky → Run workflow**. The first run creates:
+
+- `maeul-in-the-sky-dark.svg`
+- `maeul-in-the-sky-light.svg`
+
+If the commit step is denied, open **Settings → Actions → General → Workflow permissions** and allow read and write permissions.
+
+### 3. Add it to your README
+
+```html
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./maeul-in-the-sky-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./maeul-in-the-sky-light.svg">
-  <img alt="GitHub contribution terrain" src="./maeul-in-the-sky-dark.svg" width="100%">
+  <img alt="My GitHub contribution village" src="./maeul-in-the-sky-dark.svg" width="100%">
 </picture>
 ```
 
-### Action Inputs
+## Action reference
 
 | Input | Description | Default |
-|-------|-------------|---------|
-| `github_token` | GitHub token for API access | `${{ github.token }}` |
-| `theme` | Theme name | `terrain` |
-| `title` | Custom title text | GitHub username |
-| `output_dir` | Output directory | `./` |
-| `year` | Target year | Current year |
-| `hemisphere` | Seasonal mapping (`north` or `south`) | `north` |
-| `density` | Building density 1-10 (higher = buildings at lower activity) | `5` |
+|---|---|---|
+| `username` | GitHub user whose Contribution Calendar is used | Repository owner |
+| `github_token` | Token used for the GitHub GraphQL API | `${{ github.token }}` |
+| `theme` | Theme renderer | `terrain` |
+| `title` | SVG title | `@username` |
+| `output_dir` | Directory for both SVG files | `./` |
+| `year` | Calendar year; omit for the rolling last 52 weeks | Rolling 52 weeks |
+| `hemisphere` | Seasonal mapping: `north` or `south` | `north` |
+| `preset` | `nature`, `balanced`, or `civilization` | `balanced` |
+| `density` | Advanced building-density override from 1 to 10 | Preset value |
 
-### Customization Examples
+Outputs: `dark_svg_path` and `light_svg_path` contain the generated file paths.
+
+### Common customizations
 
 ```yaml
-# Southern hemisphere (Australia, Brazil, etc.)
 - uses: t1seo/maeul-in-the-sky@v1
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
+    username: octocat
+    preset: nature
     hemisphere: south
-
-# Custom title
-- uses: t1seo/maeul-in-the-sky@v1
-  with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    title: "My Coding Journey"
-
-# Specific year
-- uses: t1seo/maeul-in-the-sky@v1
-  with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    year: 2025
-
-# More buildings even with moderate activity
-- uses: t1seo/maeul-in-the-sky@v1
-  with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    density: 8
+    title: 'Octocat’s coding village'
 ```
 
-## How Does the Terrain Work?
+Use `density` only when you want finer control than the three presets. A higher value places buildings on lower-activity cells; a lower value leaves more nature. The allowed range is 1 to 10.
 
-Each square on your GitHub contribution graph becomes a terrain block. The more you contribute on a given day, the more developed that block becomes.
+## How Terrain Generation works
 
-| Your activity | Terrain | What you'll see |
-|:---:|:---:|:---|
-| No commits | 🌊 Water | Ocean tiles — the empty sea |
-| A few commits | 🏖️ Sand & Grass | Flat land begins to form |
-| Regular commits | 🌲 Forest | Trees and vegetation grow |
-| Above average | 🌾 Farmland | Fields, barns, windmills |
-| Very active day | 🏘️ Village | Houses and small buildings |
-| Peak activity | 🏙️ City | Tall buildings and towers |
+Contribution intensity is normalized against your own activity. A busy day for you can become a city even if another person has a different number of contributions.
 
-> **It's relative to you, not absolute.** If you usually commit 2-3 times a day, then a 3-commit day already reaches village or city level. Someone who commits 20 times a day would need ~20 to reach the same level. The terrain reflects *your* personal rhythm.
+| Contribution pattern | Terrain result |
+|---|---|
+| No activity | Water and open space |
+| Light activity | Shore, grass, and small vegetation |
+| Regular activity | Forests and farms |
+| High activity | Villages and towns |
+| Peak activity | Cities, towers, and Wonder candidates |
 
-**Two things shape your terrain:**
+Consistency expands the island. Intensity develops individual cells. The same username, Contribution Calendar, year, hemisphere, and density always produce the same placement.
 
-- **Commit every day** → Less ocean, more land appears across the map
-- **Commit more on a given day** → That day's land upgrades from grass to forest to buildings
+### Epic Wonders
 
-A consistent contributor who codes daily will have a lush island full of villages. A burst contributor who codes intensely a few days a week will have scattered but tall cities rising from the sea.
+High-activity Terrain can reveal one of 30 special landmarks:
 
-### What does `density` do?
+- **Rare (14):** Mount Fuji, Giant Sequoia, Colosseum, Coral Reef, and more
+- **Epic (10):** Aurora, Taj Mahal, Glacier Peak, Bioluminescent Pool, and more
+- **Legendary (6):** Floating Island, Dragon Nest, World Tree, Ancient Portal, and more
 
-Your terrain levels are calculated **relative to your own activity** — your busiest days become the peak, and everything else scales accordingly. This means buildings (villages, towns, cities) appear on your most active days, but "average" days tend to stay in the forest or farm range.
+Wonder selection considers the cell’s activity, the richness of nearby cells, and overall contribution statistics. Up to three Wonders are placed with spacing rules so they remain meaningful and readable.
 
-This is especially noticeable if your commit pattern is uneven. For example, if your busiest day has 10 commits but you usually do 1-2, those normal days only reach the forest level (~30-45 out of 99) — buildings start at level 79. The `density` setting shifts this threshold lower so your everyday commits can produce villages too.
+## CLI
 
-> **Think of it as a "civilization boost."** It doesn't change your terrain's elevation or colors — only which assets (trees vs. houses vs. towers) appear on each block.
+Node.js 20 or newer is required. GitHub’s GraphQL API requires a token for normal CLI use.
 
-**Recommended settings:**
+```bash
+GITHUB_TOKEN="$(gh auth token)" npx --yes maeul-in-the-sky \
+  --user octocat \
+  --preset civilization \
+  --output ./terrain
+```
 
-| Your commit pattern | Recommended `density` | Why |
-|:---|:---:|:---|
-| Consistent daily commits | `5` (default) | Most days are already near your peak, so buildings appear naturally |
-| Daily commits, but occasional burst days | `6`–`7` | Burst days push the baseline up — this helps normal days show buildings too |
-| A few days per week, similar volume each day | `7`–`8` | Active days are high-level but sparse; boost helps them reach village range |
-| Sporadic bursts with long gaps | `8`–`9` | Big gap between peak and average days; a higher boost bridges it |
-| Just getting started or very occasional | `9`–`10` | Maximizes buildings so even light activity feels rewarding |
+Run `npx --yes maeul-in-the-sky --help` for every option. Omit `--year` for a rolling 52-week range.
 
-Setting `density` to `1`–`4` does the opposite — it raises the bar, making buildings rarer. Use this if your terrain feels too urban and you want more nature.
+## JavaScript API
 
-> **Why this exists:** Maeul in the Sky is about making your contribution graph delightful. Seeing your terrain grow from forests into a thriving village can motivate you to keep coding every day — and `density` makes sure that feeling is accessible to everyone, not just those with perfectly even commit patterns.
+```bash
+npm install maeul-in-the-sky
+```
+
+```js
+import { generateTerrain } from 'maeul-in-the-sky';
+
+const result = await generateTerrain({
+  username: 'octocat',
+  token: process.env.GITHUB_TOKEN,
+  preset: 'balanced',
+  outputDir: './terrain',
+});
+
+console.log(result.darkPath, result.lightPath);
+```
+
+The package also exports `fetchContributions`, `computeStats`, the theme registry, and the preset catalog. Both ESM and CommonJS builds include TypeScript declarations.
+
+## Data and accessibility
+
+- Contribution data is requested directly from GitHub’s GraphQL API during each run.
+- Maeul in the Sky has no analytics, account database, or telemetry endpoint.
+- The generated SVG contains aggregate counts and dates, not repository names or contribution details.
+- Data visibility follows the supplied token. Use the minimum token permissions appropriate for your repository.
+- SVGs include `<title>`, `<desc>`, `role="img"`, and a static presentation when reduced motion is requested.
+
+## Troubleshooting
+
+### The Action cannot commit the SVG files
+
+Confirm that the workflow has `contents: write` and that repository Workflow permissions allow read and write access. Protected branches may require a separate pull-request strategy.
+
+### The wrong account is shown
+
+Set the `username` input. Scheduled workflows now default to the repository owner rather than the actor who last edited or triggered the workflow.
+
+### The date range is not the current calendar year
+
+That is expected when `year` is omitted. The default matches GitHub’s rolling 52-week profile view. Set `year: 2025`, for example, to render one calendar year.
+
+### The SVG does not animate
+
+The operating system’s reduced-motion preference intentionally disables animation. Some Markdown hosts also restrict SVG animation; the Terrain remains fully visible as a static image.
+
+### Private contributions are missing
+
+The generated result can only include contributions visible to the supplied token. Do not broaden token permissions unless you understand and accept that access.
+
+For other problems, check [Support](SUPPORT.md) or [open an issue](https://github.com/t1seo/maeul-in-the-sky/issues/new/choose).
+
+## Community
+
+- Share a profile in the [Showcase](SHOWCASE.md)
+- Read the [contribution guide](CONTRIBUTING.md)
+- Report vulnerabilities through the [security policy](SECURITY.md)
+- Follow the [code of conduct](CODE_OF_CONDUCT.md)
 
 ## License
 
-[MIT](LICENSE) &copy; [t1seo](https://github.com/t1seo)
+[MIT](LICENSE) © [t1seo](https://github.com/t1seo)

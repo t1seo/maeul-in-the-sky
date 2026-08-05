@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   renderTitle,
+  renderSubtitle,
   renderStatsBar,
   contributionGrid,
   computeLevel10,
@@ -60,6 +61,31 @@ describe('renderTitle', () => {
   });
 });
 
+describe('renderSubtitle', () => {
+  const stats = {
+    total: 100,
+    longestStreak: 12,
+    currentStreak: 3,
+    mostActiveDay: 'Tuesday',
+    activeDays: 25,
+    busiestMonth: '2025-04',
+    fromDate: '2025-01-01',
+    toDate: '2025-12-31',
+  };
+
+  it('shows the contribution range and discovered wonder count', () => {
+    const result = renderSubtitle(stats, 2, palette);
+
+    expect(result).toContain('Jan 1, 2025 to Dec 31, 2025');
+    expect(result).toContain('2 wonders discovered');
+  });
+
+  it('returns no subtitle when neither detail is available', () => {
+    const result = renderSubtitle({ ...stats, fromDate: '', toDate: '' }, 0, palette);
+    expect(result).toBe('');
+  });
+});
+
 // ── renderStatsBar ───────────────────────────────────────────
 
 describe('renderStatsBar', () => {
@@ -68,6 +94,10 @@ describe('renderStatsBar', () => {
     longestStreak: 42,
     currentStreak: 7,
     mostActiveDay: 'Wednesday',
+    activeDays: 182,
+    busiestMonth: '2025-04',
+    fromDate: '2025-01-01',
+    toDate: '2025-12-31',
   };
 
   it('wraps output in a g.stats-bar element', () => {
@@ -75,10 +105,10 @@ describe('renderStatsBar', () => {
     expect(result).toMatch(/^<g class="stats-bar">.*<\/g>$/);
   });
 
-  it('contains 4 stat items as text elements', () => {
+  it('contains 6 stat items as text elements', () => {
     const result = renderStatsBar(stats, palette);
     const textCount = (result.match(/<text /g) || []).length;
-    expect(textCount).toBe(4);
+    expect(textCount).toBe(6);
   });
 
   it('formats numbers with comma separators', () => {
@@ -90,6 +120,8 @@ describe('renderStatsBar', () => {
     const result = renderStatsBar(stats, palette);
     expect(result).toContain('7d current streak');
     expect(result).toContain('42d longest streak');
+    expect(result).toContain('182 active days');
+    expect(result).toContain('Busiest: Apr 2025');
     expect(result).toContain('Most active: Wednesday');
   });
 
@@ -98,12 +130,11 @@ describe('renderStatsBar', () => {
     expect(result).toContain(`fill="${palette.text.secondary}"`);
   });
 
-  it('spaces stat items 200px apart horizontally', () => {
+  it('spaces stat items across the card', () => {
     const result = renderStatsBar(stats, palette);
     expect(result).toContain('x="24"');
-    expect(result).toContain('x="224"');
-    expect(result).toContain('x="424"');
-    expect(result).toContain('x="624"');
+    expect(result).toContain('x="160"');
+    expect(result).toContain('x="704"');
   });
 });
 
@@ -153,7 +184,16 @@ describe('contributionGrid', () => {
           days: [{ date: '2025-01-01', count: 3, level: 2 as const }],
         },
       ],
-      stats: { total: 3, longestStreak: 1, currentStreak: 1, mostActiveDay: 'Wednesday' },
+      stats: {
+        total: 3,
+        longestStreak: 1,
+        currentStreak: 1,
+        mostActiveDay: 'Wednesday',
+        activeDays: 1,
+        busiestMonth: '2025-01',
+        fromDate: '2025-01-01',
+        toDate: '2025-01-01',
+      },
       year: 2025,
       username: 'partial-week',
     };

@@ -43,6 +43,51 @@ export function renderTitle(title: string, palette: ThemePalette): string {
   ].join('');
 }
 
+const MONTH_NAMES = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+function formatIsoDate(date: string): string {
+  const [year, month, day] = date.split('-');
+  return `${MONTH_NAMES[Number(month) - 1]} ${Number(day)}, ${year}`;
+}
+
+function formatMonth(month: string): string {
+  const [year, monthNumber] = month.split('-');
+  return `${MONTH_NAMES[Number(monthNumber) - 1]} ${year}`;
+}
+
+export function renderSubtitle(
+  stats: ContributionStats,
+  wonderCount: number,
+  palette: ThemePalette,
+): string {
+  const details: string[] = [];
+  if (stats.fromDate && stats.toDate) {
+    details.push(`${formatIsoDate(stats.fromDate)} to ${formatIsoDate(stats.toDate)}`);
+  }
+  if (wonderCount > 0) {
+    details.push(`${wonderCount} ${wonderCount === 1 ? 'wonder' : 'wonders'} discovered`);
+  }
+  if (details.length === 0) return '';
+
+  return (
+    `<text x="24" y="32" font-family="${FONT_FAMILY}" font-size="9"` +
+    ` fill="${palette.text.secondary}">${escapeXml(details.join(' · '))}</text>`
+  );
+}
+
 /**
  * Render the stats bar at the bottom of the card
  * @param stats - Computed contribution statistics
@@ -52,8 +97,10 @@ export function renderTitle(title: string, palette: ThemePalette): string {
 export function renderStatsBar(stats: ContributionStats, palette: ThemePalette): string {
   const items = [
     `${formatNumber(stats.total)} contributions`,
+    `${formatNumber(stats.activeDays)} active days`,
     `${formatNumber(stats.currentStreak)}d current streak`,
     `${formatNumber(stats.longestStreak)}d longest streak`,
+    `Busiest: ${stats.busiestMonth ? formatMonth(stats.busiestMonth) : 'None'}`,
     `Most active: ${stats.mostActiveDay}`,
   ];
 
@@ -61,10 +108,10 @@ export function renderStatsBar(stats: ContributionStats, palette: ThemePalette):
     .map(
       (text, i) =>
         `<text` +
-        ` x="${24 + i * 200}"` +
+        ` x="${24 + i * 136}"` +
         ` y="233"` +
         ` font-family="${FONT_FAMILY}"` +
-        ` font-size="11"` +
+        ` font-size="10"` +
         ` fill="${palette.text.secondary}"` +
         `>${escapeXml(text)}</text>`,
     )

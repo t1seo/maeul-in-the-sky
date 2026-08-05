@@ -2,6 +2,12 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 import { fetchContributions } from './api/client.js';
+import {
+  DEFAULT_VILLAGE_PRESET,
+  isVillagePreset,
+  VILLAGE_PRESETS,
+  type VillagePreset,
+} from './core/presets.js';
 import type { Theme } from './core/types.js';
 import { getDefaultTheme, getTheme, listThemes } from './themes/registry.js';
 
@@ -13,6 +19,7 @@ export interface TerrainGenerationRequest {
   outputDir?: string;
   year?: string | number;
   hemisphere?: string;
+  preset?: string;
   density?: string | number;
   onProgress?: (message: string) => void;
 }
@@ -22,6 +29,8 @@ export interface TerrainGenerationResult {
   lightPath: string;
   themeName: string;
   themeDisplayName: string;
+  presetName: VillagePreset;
+  density: number;
 }
 
 interface TerrainGeneratorDependencies {
@@ -54,11 +63,24 @@ function parseYear(value: TerrainGenerationRequest['year']): number | undefined 
 }
 
 function parseDensity(value: TerrainGenerationRequest['density']): number {
-  const density = parseOptionalInteger(value, 'density') ?? 5;
+  const density = parseOptionalInteger(value, 'density');
+  if (density === undefined) {
+    throw new Error('Density must be resolved from a preset before validation');
+  }
   if (density < 1 || density > 10) {
     throw new Error(`Invalid density: "${value}". Expected an integer from 1 to 10`);
   }
   return density;
+}
+
+function parsePreset(value: TerrainGenerationRequest['preset']): VillagePreset {
+  const preset = value?.trim() || DEFAULT_VILLAGE_PRESET;
+  if (!isVillagePreset(preset)) {
+    throw new Error(
+      `Invalid preset: "${value}". Available presets: ${Object.keys(VILLAGE_PRESETS).join(', ')}`,
+    );
+  }
+  return preset;
 }
 
 function parseHemisphere(value: TerrainGenerationRequest['hemisphere']): 'north' | 'south' {
@@ -88,7 +110,12 @@ export function createTerrainGenerator(dependencies: TerrainGeneratorDependencie
 
     const year = parseYear(request.year);
     const hemisphere = parseHemisphere(request.hemisphere);
-    const density = parseDensity(request.density);
+    const presetName = parsePreset(request.preset);
+    const density = parseDensity(
+      request.density === undefined || request.density === ''
+        ? VILLAGE_PRESETS[presetName].density
+        : request.density,
+    );
     const title = request.title || `@${username}`;
     const outputDir = request.outputDir?.trim() || './';
     const yearLabel = year ?? 'last 52 weeks';
@@ -116,6 +143,8 @@ export function createTerrainGenerator(dependencies: TerrainGeneratorDependencie
       lightPath,
       themeName: theme.name,
       themeDisplayName: theme.displayName,
+      presetName,
+      density,
     };
   };
 }

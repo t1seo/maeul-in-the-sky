@@ -76,11 +76,13 @@ try {
 
   const actionEnvironment = { ...process.env };
   delete actionEnvironment.GITHUB_ACTOR;
+  delete actionEnvironment.GITHUB_REPOSITORY_OWNER;
+  delete actionEnvironment.INPUT_USERNAME;
   const action = runNode([join(packageRoot, 'dist', 'action.cjs')], packageRoot, actionEnvironment);
   assert.equal(action.status, 1);
   assert.match(
     `${action.stdout}\n${action.stderr}`,
-    /GITHUB_ACTOR environment variable is not set/,
+    /GitHub username could not be resolved from the input or repository/,
   );
 
   console.log(`Package smoke passed for maeul-in-the-sky@${manifest.version}`);

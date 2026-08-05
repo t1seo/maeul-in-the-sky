@@ -79,6 +79,24 @@ describe('terrainTheme.render', () => {
     expect(result.light).toContain('stats-bar');
   });
 
+  it('provides an accessible title and contribution summary', () => {
+    expect(result.dark).toContain('role="img"');
+    expect(result.dark).toContain('aria-labelledby="maeul-svg-title maeul-svg-description"');
+    expect(result.dark).toContain('<title id="maeul-svg-title">@testuser</title>');
+    expect(result.dark).toContain('contributions across');
+    expect(result.dark).toContain('active days');
+  });
+
+  it('disables CSS and SMIL animation for reduced motion', () => {
+    expect(result.dark).toContain('@media (prefers-reduced-motion: reduce)');
+    expect(result.dark).toContain('animation: none !important');
+    expect(result.dark).toContain('animate, animateMotion, animateTransform { display: none; }');
+  });
+
+  it('shows the covered contribution dates', () => {
+    expect(result.dark).toContain('Dec 29, 2024 to Dec 27, 2025');
+  });
+
   it('dark and light produce different SVGs', () => {
     expect(result.dark).not.toBe(result.light);
   });
@@ -172,6 +190,7 @@ describe('render with realistic mock data', () => {
   it('renders the complete stats supplied through its interface', () => {
     expect(result.dark).toContain(`${data.stats.currentStreak}d current streak`);
     expect(result.dark).toContain(`${data.stats.longestStreak}d longest streak`);
+    expect(result.dark).toContain(`${data.stats.activeDays} active days`);
   });
 });
 
@@ -226,7 +245,16 @@ describe('render with empty weeks array', () => {
   it('renders without errors when weeks array is empty', () => {
     const emptyWeeksData: ContributionData = {
       weeks: [],
-      stats: { total: 0, longestStreak: 0, currentStreak: 0, mostActiveDay: '' },
+      stats: {
+        total: 0,
+        longestStreak: 0,
+        currentStreak: 0,
+        mostActiveDay: '',
+        activeDays: 0,
+        busiestMonth: '',
+        fromDate: '',
+        toDate: '',
+      },
       year: 2025,
       username: 'emptyweeksuser',
     };
@@ -240,7 +268,16 @@ describe('render with empty weeks array', () => {
   it('renders with weeks that have empty days arrays', () => {
     const emptyDaysData: ContributionData = {
       weeks: [{ firstDay: '2025-01-01', days: [] }],
-      stats: { total: 0, longestStreak: 0, currentStreak: 0, mostActiveDay: '' },
+      stats: {
+        total: 0,
+        longestStreak: 0,
+        currentStreak: 0,
+        mostActiveDay: '',
+        activeDays: 0,
+        busiestMonth: '',
+        fromDate: '',
+        toDate: '',
+      },
       year: 2025,
       username: 'emptydaysuser',
     };

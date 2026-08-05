@@ -1,5 +1,10 @@
 import type { SvgAttributes } from './types.js';
 
+export interface SvgAccessibility {
+  title: string;
+  description: string;
+}
+
 /**
  * Generate an SVG element string
  * @param tag - SVG element tag name
@@ -24,13 +29,29 @@ export function svgElement(tag: string, attrs: SvgAttributes, children?: string)
  * @param content - Inner SVG content
  * @returns Complete SVG string
  */
-export function svgRoot(attrs: SvgAttributes, content: string): string {
+export function svgRoot(
+  attrs: SvgAttributes,
+  content: string,
+  accessibility?: SvgAccessibility,
+): string {
   const mergedAttrs: SvgAttributes = {
     xmlns: 'http://www.w3.org/2000/svg',
     viewBox: '0 0 840 240',
     ...attrs,
   };
-  return svgElement('svg', mergedAttrs, content);
+
+  if (!accessibility) {
+    return svgElement('svg', mergedAttrs, content);
+  }
+
+  mergedAttrs.role = 'img';
+  mergedAttrs['aria-labelledby'] = 'maeul-svg-title maeul-svg-description';
+  mergedAttrs.focusable = 'false';
+  const accessibleContent =
+    `<title id="maeul-svg-title">${escapeXml(accessibility.title)}</title>` +
+    `<desc id="maeul-svg-description">${escapeXml(accessibility.description)}</desc>` +
+    content;
+  return svgElement('svg', mergedAttrs, accessibleContent);
 }
 
 /**

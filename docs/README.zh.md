@@ -1,56 +1,64 @@
 <div align="center">
 
-# Maeul in the Sky (天空之村)
+# Maeul in the Sky · 天空之村
 
-**将你的 GitHub 贡献图转换为动画等距地形**
+**用您的 GitHub 贡献记录建造一座生动的等距村庄。**
 
 [![npm version](https://img.shields.io/npm/v/maeul-in-the-sky?color=cb3837&logo=npm)](https://www.npmjs.com/package/maeul-in-the-sky)
-[![npm downloads](https://img.shields.io/npm/dt/maeul-in-the-sky?color=cb3837&logo=npm)](https://www.npmjs.com/package/maeul-in-the-sky)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Node.js](https://img.shields.io/badge/Node.js-%3E%3D20-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
-[![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-ready-2088FF?logo=githubactions&logoColor=white)](https://github.com/features/actions)
-[![English](https://img.shields.io/badge/lang-English-blue)](../README.md)
-[![한국어](https://img.shields.io/badge/lang-%ED%95%9C%EA%B5%AD%EC%96%B4-blue)](./README.ko.md)
-[![日本語](https://img.shields.io/badge/lang-%E6%97%A5%E6%9C%AC%E8%AA%9E-blue)](./README.ja.md)
+[![CI](https://github.com/t1seo/maeul-in-the-sky/actions/workflows/ci.yml/badge.svg)](https://github.com/t1seo/maeul-in-the-sky/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
 
-<br/>
+[English](../README.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · [中文](README.zh.md)
+
+<br />
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="../.github/assets/preview-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="../.github/assets/preview-light.svg">
-  <img alt="Maeul in the Sky 地形预览" src="../.github/assets/preview-dark.svg" width="840">
+  <img alt="由 GitHub Contribution Calendar 建造的等距村庄" src="../.github/assets/preview-dark.svg" width="840">
 </picture>
 
-*你的贡献图变成一个活的村庄 — 有四季变化、流淌的河流和飘动的云朵。*
+[**体验预设演示**](https://t1seo.github.io/maeul-in-the-sky/) · [快速开始](#快速开始) · [npm](https://www.npmjs.com/package/maeul-in-the-sky) · [展示区](../SHOWCASE.md)
 
 </div>
 
-## 什么是 Maeul in the Sky？
+Maeul（마을）在韩语中意为“村庄”。Contribution Calendar 中的每一天都会成为空中 Terrain 的一部分：平静的日子形成水域和空地，活跃的日子长出森林、农场、村庄、城市和稀有 Wonder。
 
-Maeul in the Sky（天空之村）将你的 GitHub 贡献历史转换为动画等距地形 SVG。*Maeul*（마을）在韩语中意为"村庄" — 你的贡献图变成一个漂浮在天空中的活村庄。每天的贡献等级变成一个地形方块 — 没有活动是深水，最大活动是高楼大厦。包含四季循环、48 个季节资产、生态群落生成（河流、池塘、森林）和环境动画。
+输出是两个独立的 SVG 文件，可在个人资料 README 中随 GitHub 配色自动切换，不需要客户端 JavaScript。
 
-### 主要功能
+## 村庄包含的内容
 
-- **等距 3D 地形** — 100 级高度系统映射到贡献数据
-- **四季循环** — 冬、春、夏、秋平滑过渡，包含 48 个季节资产
-- **生态群落生成** — 通过种子噪声程序化生成河流、池塘、森林集群
-- **118 种地形资产** — 树木、建筑、风车、雪人、樱花等
-- **动画 SVG** — 云朵飘动、水面闪烁、旗帜飘扬 — 纯 SVG，无 JavaScript
-- **深色和浅色模式** — 生成两种变体，通过 `<picture>` 标签自动切换
-- **半球支持** — 北半球或南半球季节映射
-- **GitHub Action** — 添加到工作流即可每日自动更新
+- 使用 100 级高度的确定性等距 Terrain
+- 与日历对应的四季和 48 种季节资源
+- 程序生成的河流、池塘、森林、天气和环境动画
+- 从树木、农场到高塔、动物的 118 种 Terrain 资源
+- Rare、Epic、Legendary 三个等级的 30 种 Epic Wonders
+- 带无障碍标题、描述和减少动态效果支持的深色与浅色 SVG
+- 北半球与南半球的季节映射
+- 可见的贡献日期、活跃天数、连续贡献、最活跃月份和 Wonder 数量
+
+## 选择村庄预设
+
+预设只改变出现的资源，不会改变贡献数、高度或颜色。
+
+| Nature | Balanced | Civilization |
+|:---:|:---:|:---:|
+| [![Nature 预设](demo/assets/preset-nature-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=nature&mode=dark) | [![Balanced 预设](demo/assets/preset-balanced-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=balanced&mode=dark) | [![Civilization 预设](demo/assets/preset-civilization-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=civilization&mode=dark) |
+| 更多森林和开阔地 | 自然、农场与城镇的平衡 | 日常活跃日也出现更多建筑 |
+| `preset: nature` | `preset: balanced` | `preset: civilization` |
 
 ## 快速开始
 
-### GitHub Action（推荐）
+### 1. 添加 Action
 
-在 `.github/workflows/maeul-sky.yml` 中添加工作流：
+用于 GitHub 个人资料时，请在与用户名同名的仓库中添加 `.github/workflows/maeul-sky.yml`。
 
 ```yaml
-name: Generate Maeul in the Sky Terrain
+name: Update Maeul in the Sky
+
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 permissions:
@@ -60,111 +68,150 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: t1seo/maeul-in-the-sky@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          preset: balanced
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: 'chore: update maeul-in-the-sky terrain'
+          commit_message: 'chore: update Maeul in the Sky'
 ```
 
-然后添加到你的个人主页 README：
+默认 GitHub 用户名是仓库所有者。只有在生成其他用户的 Terrain 时才需要设置 `username`。
 
-```markdown
+### 2. 手动运行一次
+
+打开 **Actions → Update Maeul in the Sky → Run workflow**。首次运行会创建：
+
+- `maeul-in-the-sky-dark.svg`
+- `maeul-in-the-sky-light.svg`
+
+如果提交步骤被拒绝，请在 **Settings → Actions → General → Workflow permissions** 中允许读写权限。
+
+### 3. 添加到 README
+
+```html
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./maeul-in-the-sky-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./maeul-in-the-sky-light.svg">
-  <img alt="GitHub 贡献地形" src="./maeul-in-the-sky-dark.svg" width="100%">
+  <img alt="我的 GitHub 贡献村庄" src="./maeul-in-the-sky-dark.svg" width="100%">
 </picture>
 ```
 
-### Action 输入参数
+## Action 输入
 
 | 输入 | 说明 | 默认值 |
-|------|------|--------|
-| `github_token` | API 访问用 GitHub 令牌 | `${{ github.token }}` |
-| `theme` | 主题名称 | `terrain` |
-| `title` | 自定义标题文字 | GitHub 用户名 |
-| `output_dir` | 输出目录 | `./` |
-| `year` | 目标年份 | 当前年份 |
-| `hemisphere` | 季节映射（`north` 或 `south`） | `north` |
-| `density` | 建筑密度 1-10（越高，低活动量也能出现建筑） | `5` |
+|---|---|---|
+| `username` | 获取 Contribution Calendar 的 GitHub 用户 | 仓库所有者 |
+| `github_token` | GitHub GraphQL API 令牌 | `${{ github.token }}` |
+| `theme` | Theme 渲染器 | `terrain` |
+| `title` | SVG 标题 | `@username` |
+| `output_dir` | 保存两个 SVG 的目录 | `./` |
+| `year` | 日历年份；省略时使用最近 52 周 | 最近 52 周 |
+| `hemisphere` | 季节映射：`north` 或 `south` | `north` |
+| `preset` | `nature`、`balanced` 或 `civilization` | `balanced` |
+| `density` | 1 到 10 的高级建筑密度覆盖值 | 预设值 |
 
-### 自定义示例
+输出 `dark_svg_path` 和 `light_svg_path` 包含生成文件的路径。
 
 ```yaml
-# 南半球（澳大利亚、巴西等）
 - uses: t1seo/maeul-in-the-sky@v1
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
+    username: octocat
+    preset: nature
     hemisphere: south
-
-# 自定义标题
-- uses: t1seo/maeul-in-the-sky@v1
-  with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    title: "My Coding Journey"
-
-# 特定年份
-- uses: t1seo/maeul-in-the-sky@v1
-  with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    year: 2025
-
-# 中等活动量也能出现建筑
-- uses: t1seo/maeul-in-the-sky@v1
-  with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    density: 8
+    title: 'Octocat’s coding village'
 ```
 
-## 地形是如何生成的？
+只有需要比三个预设更精细的控制时才使用 `density`。较高的值会让建筑出现在活动量较低的单元，较低的值会保留更多自然景观。
 
-GitHub 贡献图的每个格子变成一个地形方块。当天提交越多，地形就越发达。
+## Terrain Generation 原理
 
-| 活动量 | 地形 | 说明 |
-|:---:|:---:|:---|
-| 无提交 | 🌊 海洋 | 海洋方块 — 空旷的海 |
-| 少量提交 | 🏖️ 沙地和草地 | 平坦的陆地出现 |
-| 正常提交 | 🌲 森林 | 树木和植被生长 |
-| 高于平均 | 🌾 农场 | 田野、谷仓、风车 |
-| 活跃日 | 🏘️ 村庄 | 房屋和小建筑 |
-| 最高活动 | 🏙️ 城市 | 高楼大厦和塔楼 |
+贡献强度会根据用户自身的活动范围进行相对归一化。即使不同用户的贡献数量不同，每个人最忙碌的日子都可能形成城市。
 
-> **不是绝对数值，而是相对于你自己的基准。** 如果你平时每天提交 2-3 次，那么 3 次提交就能达到村庄或城市级别。每天提交 20 次的人需要约 20 次才能达到同样的级别。地形反映的是*你自己的节奏*。
+| 贡献模式 | Terrain 结果 |
+|---|---|
+| 无活动 | 水域和空地 |
+| 少量活动 | 岸边、草地和小型植被 |
+| 持续活动 | 森林和农场 |
+| 高活动 | 村庄和城镇 |
+| 峰值活动 | 城市、高塔和 Wonder 候选位置 |
 
-**决定地形的两个因素：**
+持续贡献会扩大岛屿，单日强度会发展各个单元。用户名、Contribution Calendar、年份、半球和密度相同时，布局也相同。
 
-- **每天提交** → 海洋减少，整个地图上出现更多陆地
-- **单日多次提交** → 当天的土地从草地升级为森林再到建筑
+### Epic Wonders
 
-每天坚持编程的人会拥有一个绿意盎然、村庄密布的岛屿。集中在几天高强度编程的人会看到海面上矗立着零星但高耸的城市。
+高活动 Terrain 中可以发现 30 种特殊地标。
 
-### `density` 是什么？
+- **Rare 14 种：** 富士山、巨型红杉、斗兽场、珊瑚礁等
+- **Epic 10 种：** 极光、泰姬陵、冰川峰、生物发光池等
+- **Legendary 6 种：** 浮空岛、龙巢、世界树、远古传送门等
 
-地形等级是根据**你自己的活动相对值**计算的 — 最活跃的日子成为峰值，其他日子按比例缩放。因此建筑（村庄、城市）只出现在最活跃的日子，而"普通"的日子往往停留在森林或农场范围。
+Wonder 的选择会考虑当前单元的活动量、附近单元的丰富程度和整体贡献统计。为了保持清晰，最多放置三个，并保持一定间距。
 
-当提交模式不均匀时，这种现象尤为明显。例如，如果最忙的一天有 10 次提交，但平时只有 1-2 次，那么平时的日子只能达到森林等级（~30-45/99）— 而建筑从等级 79 才开始出现。`density` 设置降低了这个门槛，让日常提交也能产生村庄。
+## CLI
 
-> **把它想象成"文明加成"。** 它不会改变地形的高度或颜色 — 只改变每个方块上出现的资产（树木 vs 房屋 vs 塔楼）。
+需要 Node.js 20 或更高版本以及 GitHub 令牌。
 
-**推荐设置：**
+```bash
+GITHUB_TOKEN="$(gh auth token)" npx --yes maeul-in-the-sky \
+  --user octocat \
+  --preset civilization \
+  --output ./terrain
+```
 
-| 提交模式 | 推荐 `density` | 原因 |
-|:---|:---:|:---|
-| 每天稳定提交相似数量 | `5`（默认） | 大部分日子已接近峰值，建筑自然出现 |
-| 每天提交但偶尔有爆发日 | `6`–`7` | 爆发日推高基准线 — 帮助普通日也显示建筑 |
-| 每周提交 2-3 天，每次相似数量 | `7`–`8` | 活跃日等级高但稀疏 — 加成帮助达到村庄范围 |
-| 间歇性集中提交 | `8`–`9` | 峰值与平均值差距大 — 较高加成弥补差距 |
-| 刚开始或很少提交 | `9`–`10` | 最大化建筑，让少量活动也有成就感 |
+运行 `npx --yes maeul-in-the-sky --help` 查看全部选项。省略 `--year` 时使用最近 52 周。
 
-将 `density` 设置为 `1`–`4` 会产生相反的效果 — 提高建筑出现的门槛，让地形展示更多自然风光。如果觉得地形太城市化，可以使用这个设置。
+## JavaScript API
 
-> **为什么有这个设置：** Maeul in the Sky 的目标是让你的贡献图变得令人愉悦。看到地形从森林成长为繁荣的村庄，会激发你每天编程的动力 — `density` 确保即使提交模式不够均匀，每个人都能体验到这种感觉。
+```bash
+npm install maeul-in-the-sky
+```
+
+```js
+import { generateTerrain } from 'maeul-in-the-sky';
+
+const result = await generateTerrain({
+  username: 'octocat',
+  token: process.env.GITHUB_TOKEN,
+  preset: 'balanced',
+  outputDir: './terrain',
+});
+
+console.log(result.darkPath, result.lightPath);
+```
+
+该包还导出 `fetchContributions`、`computeStats`、Theme 注册表和预设目录。ESM 与 CommonJS 构建都包含 TypeScript 类型声明。
+
+## 数据与无障碍
+
+- 每次运行都直接从 GitHub GraphQL API 请求贡献数据。
+- 不包含分析、用户数据库或遥测端点。
+- SVG 只包含汇总数字和日期，不包含仓库名称或单次贡献详情。
+- 数据可见范围由所提供的令牌决定。请使用满足需求的最小权限。
+- SVG 包含 `<title>`、`<desc>`、`role="img"`，系统请求减少动态效果时会静态显示。
+
+## 故障排查
+
+- **无法提交 SVG：** 检查工作流是否有 `contents: write`，并确认仓库 Workflow permissions 允许读写。
+- **显示了错误的账户：** 设置 `username`。定时运行也默认使用仓库所有者。
+- **日期范围不是本年 1 月开始：** 这是正常行为。省略 `year` 时会像 GitHub 个人资料一样使用最近 52 周。
+- **SVG 没有动画：** 系统可能启用了减少动态效果，或 Markdown 平台限制 SVG 动画。Terrain 仍会完整静态显示。
+- **缺少私有贡献：** 只能包含所提供令牌可见的贡献。
+
+其他问题请查看[支持说明](../SUPPORT.md)或[提交 Issue](https://github.com/t1seo/maeul-in-the-sky/issues/new/choose)。
+
+## 社区
+
+- 在[展示区](../SHOWCASE.md)分享个人资料
+- 阅读[贡献指南](../CONTRIBUTING.md)
+- 查看[安全策略](../SECURITY.md)
+- 遵守[行为准则](../CODE_OF_CONDUCT.md)
 
 ## 许可证
 
-[MIT](../LICENSE) &copy; [t1seo](https://github.com/t1seo)
+[MIT](../LICENSE) © [t1seo](https://github.com/t1seo)
