@@ -20,6 +20,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run format:check
       - run: npx vitest run --coverage
+      - run: npm run test:artifact
 
   publish:
     name: Publish to npm

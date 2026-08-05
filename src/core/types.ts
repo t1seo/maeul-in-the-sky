@@ -10,17 +10,17 @@ export interface ContributionDay {
   level: 0 | 1 | 2 | 3 | 4;
 }
 
-/** A week of contribution data (7 days, Sunday–Saturday) */
+/** Available contribution days in one Sunday–Saturday calendar week */
 export interface ContributionWeek {
-  /** 7 days of contribution data */
+  /** Available days, sorted by date; edge weeks may be partial */
   days: ContributionDay[];
-  /** ISO date of the first day (Sunday) */
+  /** ISO date of the calendar week's Sunday */
   firstDay: string;
 }
 
 /** Computed statistics from contribution data */
 export interface ContributionStats {
-  /** Total contributions in the year */
+  /** Total contributions in the requested range */
   total: number;
   /** Longest consecutive contribution streak (days) */
   longestStreak: number;
@@ -30,13 +30,13 @@ export interface ContributionStats {
   mostActiveDay: string;
 }
 
-/** Complete contribution data for one year */
+/** Complete contribution data for a requested calendar range */
 export interface ContributionData {
-  /** 52 (or 53) weeks of contribution data */
+  /** Sunday-based calendar weeks, typically 52 or 53 */
   weeks: ContributionWeek[];
   /** Computed statistics */
   stats: ContributionStats;
-  /** The year this data represents */
+  /** Effective year used for deterministic terrain variants */
   year: number;
   /** GitHub username */
   username: string;
@@ -112,28 +112,6 @@ export interface ThemePalette {
     /** Stars or grid elements */
     subtle: string;
   };
-}
-
-// ── CLI & Configuration ────────────────────────────────────────
-
-/** CLI options parsed from command line arguments */
-export interface CliOptions {
-  /** GitHub username to visualize */
-  user: string;
-  /** Theme name (default: "terrain") */
-  theme: string;
-  /** Custom title text (default: "@<username>") */
-  title: string;
-  /** Output directory (default: "./") */
-  output: string;
-  /** Year to visualize (omit for rolling 52 weeks) */
-  year?: number;
-  /** GitHub personal access token */
-  token?: string;
-  /** Hemisphere for seasonal terrain (default: 'north') */
-  hemisphere?: 'north' | 'south';
-  /** Building density 1-10 (default: 5, higher = buildings at lower activity) */
-  density?: number;
 }
 
 // ── SVG Builder ────────────────────────────────────────────────

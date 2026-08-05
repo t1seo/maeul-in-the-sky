@@ -19,8 +19,12 @@ async function main() {
   console.log(`nonzero days: ${nonZeroCounts.length} / ${data.weeks.length * 7}`);
 
   const buckets: Record<string, number> = {
-    '0 (water)': 0, '1-30 (sand/grass)': 0, '31-60 (forest)': 0,
-    '61-78 (farm)': 0, '79-90 (village)': 0, '91-99 (city)': 0,
+    '0 (water)': 0,
+    '1-30 (sand/grass)': 0,
+    '31-60 (forest)': 0,
+    '61-78 (farm)': 0,
+    '79-90 (village)': 0,
+    '91-99 (city)': 0,
   };
   for (const w of data.weeks) {
     for (const d of w.days) {

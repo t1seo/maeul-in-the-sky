@@ -55,6 +55,8 @@ describe('fetchContributions', () => {
     expect(result.username).toBe('testuser');
     expect(result.year).toBe(2025);
     expect(result.stats.total).toBe(1234);
+    expect(result.stats.longestStreak).toBeGreaterThan(0);
+    expect(result.stats.mostActiveDay).not.toBe('');
     expect(result.weeks).toHaveLength(52);
     expect(result.weeks[0].days).toHaveLength(7);
   });

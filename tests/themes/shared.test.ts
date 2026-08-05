@@ -144,6 +144,24 @@ describe('contributionGrid', () => {
     const cells = contributionGrid(data, options);
     expect(cells.length).toBe(data.weeks.length * 7);
   });
+
+  it('positions partial-week cells by calendar weekday', () => {
+    const partialData = {
+      weeks: [
+        {
+          firstDay: '2024-12-29',
+          days: [{ date: '2025-01-01', count: 3, level: 2 as const }],
+        },
+      ],
+      stats: { total: 3, longestStreak: 1, currentStreak: 1, mostActiveDay: 'Wednesday' },
+      year: 2025,
+      username: 'partial-week',
+    };
+
+    const cells = contributionGrid(partialData, options);
+
+    expect(cells[0].y).toBe(30 + 3 * (10 + 2));
+  });
 });
 
 // ── computeLevel10 ───────────────────────────────────────────

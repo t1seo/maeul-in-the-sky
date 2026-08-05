@@ -15,6 +15,7 @@ src/
 │   └── queries.ts         # GraphQL query strings
 ├── core/
 │   ├── types.ts           # Shared type definitions
+│   ├── calendar.ts        # Canonical Sunday-based calendar normalization
 │   └── stats.ts           # Contribution statistics (streaks, totals)
 ├── themes/
 │   ├── registry.ts        # Theme registration system
@@ -32,14 +33,16 @@ src/
 │   ├── color.ts           # Color manipulation
 │   └── noise.ts           # Simplex noise wrapper
 ├── index.ts               # CLI entry (commander.js)
-└── action.ts              # GitHub Action entry point
+├── action.ts              # GitHub Action adapter
+└── generate.ts            # Deep Terrain Generation module
 ```
 
 ## Key Concepts
 
 - **100-level system**: Contribution counts map to levels 0-99 for fine-grained terrain
 - **Isometric projection**: `isoX = originX + (week - day) * THW`, `isoY = originY + (week + day) * THH`
-- **originX = 436**: Right-aligned terrain (rightmost edge at ~x=800)
+- **originX = 405**: Right-aligned terrain (rightmost edge at ~x=820 for 53 weeks)
+- **Contribution Calendar**: Sunday-based weeks with date-positioned days; edge weeks may be partial
 - **Season zones**: 8 zones (0-7) aligned to calendar months via rotation. `w = (week + rotation) % 52` before zone lookup
 - **Season rotation**: `computeSeasonRotation(oldestDate, hemisphere)` computes weeks from Dec 1 to the oldest data week
 - **Hemisphere**: Southern hemisphere adds +26 to rotation (6-month shift)
@@ -54,6 +57,7 @@ npm run dev          # Watch mode
 npm test             # Run vitest
 npm run lint         # ESLint
 npm run typecheck    # TypeScript --noEmit
+npm run test:artifact # Build, pack, install, and smoke-test every public adapter
 ```
 
 ## Scripts
@@ -78,17 +82,20 @@ npx tsx scripts/generate-cases.ts      # Generate case study SVGs (examples/case
 - TypeScript strict mode
 - ESM modules (`"type": "module"` in package.json)
 - No default exports — named exports only
-- Theme self-registration pattern (import triggers `registerTheme()`)
+- Built-in themes are registered explicitly by `themes/registry.ts`
 - No horizontal rules (`---`) in README files
 
 ## Rendering Pipeline
 
-1. Fetch contribution data via GitHub GraphQL API
-2. Build grid cells with 100-level intensity (`enrichGridCells100`)
-3. Generate seasonal palettes per week (`getSeasonalPalette100`)
-4. Convert to isometric cells (`toIsoCells`)
-5. Generate biome map (`generateBiomeMap`)
-6. Render layers back-to-front: sky → celestials → clouds → terrain blocks → assets → water → overlays → particles → stats bar
+1. Validate a Terrain Generation request
+2. Fetch and normalize its Contribution Calendar
+3. Compute complete contribution statistics
+4. Build grid cells with 100-level intensity (`enrichGridCells100`)
+5. Generate seasonal palettes for every returned week (`getSeasonalPalette100`)
+6. Convert to isometric cells (`toIsoCells`)
+7. Generate the complete biome map (`generateBiomeMap`)
+8. Render layers back-to-front: sky → celestials → clouds → terrain blocks → assets → water → overlays → particles → stats bar
+9. Create the output directory and write dark/light SVGs
 
 ## Important Constants
 

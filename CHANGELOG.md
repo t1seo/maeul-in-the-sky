@@ -12,10 +12,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **npm package published** — `maeul-in-the-sky` is now available on [npm](https://www.npmjs.com/package/maeul-in-the-sky)
 - **npm badges** — version and download count badges added to all READMEs (EN, KO, JA, ZH)
 - **CD workflow** — automatic npm publish via GitHub Actions on tag push (`v*`)
+- **Deep Terrain Generation module** — one programmatic interface now validates input, fetches contribution data, renders both modes, creates output directories, and writes SVG files
+- **Package smoke gate** — CI installs and executes the packed CLI, ESM library, CJS library, and GitHub Action artifact before release
+- **Contribution Calendar context** — canonical project language and date-based calendar normalization for partial and 53-week ranges
+
+### Changed
+
+- **CLI and Action adapters** — both now delegate shared behavior to the Terrain Generation module
+- **Theme registration** — built-in Terrain registration is explicit and no longer depends on import side effects
+- **Quality scope** — scripts are covered by lint, formatting, and TypeScript checks
+- **Dependencies** — updated the test and Action toolchains; `npm audit` now reports zero vulnerabilities
 
 ### Fixed
 
 - **npm publish warnings** — corrected bin path and repository URL format in package.json
+- **Packaged CLI startup** — removed the duplicate shebang and sourced the CLI version from package metadata
+- **Contribution weekdays and streaks** — statistics now use calendar dates and break streaks across missing dates
+- **53-week terrain** — seasonal palettes and biomes now cover every returned calendar week
+- **Package metadata** — repository, homepage, and issue links now point to `t1seo/maeul-in-the-sky`
 
 ## [1.4.0] - 2026-02-19
 

@@ -1941,7 +1941,11 @@ var require_request = __commonJS({
           } else if (typeof val[i] === "object") {
             throw new InvalidArgumentError(`invalid ${key} header`);
           } else {
-            arr.push(`${val[i]}`);
+            const str = `${val[i]}`;
+            if (!isValidHeaderValue(str)) {
+              throw new InvalidArgumentError(`invalid ${key} header`);
+            }
+            arr.push(str);
           }
         }
         val = arr;
@@ -1953,6 +1957,9 @@ var require_request = __commonJS({
         val = "";
       } else {
         val = `${val}`;
+        if (!isValidHeaderValue(val)) {
+          throw new InvalidArgumentError(`invalid ${key} header`);
+        }
       }
       if (headerName === "host") {
         if (request.host !== null) {
@@ -2064,13 +2071,21 @@ var require_dispatcher_base = __commonJS({
     var kOnDestroyed = /* @__PURE__ */ Symbol("onDestroyed");
     var kOnClosed = /* @__PURE__ */ Symbol("onClosed");
     var kInterceptedDispatch = /* @__PURE__ */ Symbol("Intercepted Dispatch");
+    var kWebSocketOptions = /* @__PURE__ */ Symbol("webSocketOptions");
     var DispatcherBase = class extends Dispatcher {
-      constructor() {
+      constructor(opts) {
         super();
         this[kDestroyed] = false;
         this[kOnDestroyed] = null;
         this[kClosed] = false;
         this[kOnClosed] = [];
+        this[kWebSocketOptions] = opts?.webSocket ?? {};
+      }
+      get webSocketOptions() {
+        return {
+          maxFragments: this[kWebSocketOptions].maxFragments ?? 131072,
+          maxPayloadSize: this[kWebSocketOptions].maxPayloadSize ?? 128 * 1024 * 1024
+        };
       }
       get destroyed() {
         return this[kDestroyed];
@@ -5694,6 +5709,7 @@ var require_client_h1 = __commonJS({
       RequestContentLengthMismatchError,
       ResponseContentLengthMismatchError,
       RequestAbortedError,
+      InvalidArgumentError,
       HeadersTimeoutError,
       HeadersOverflowError,
       SocketError,
@@ -5740,6 +5756,9 @@ var require_client_h1 = __commonJS({
     var FastBuffer = Buffer[Symbol.species];
     var addListener = util.addListener;
     var removeAllListeners = util.removeAllListeners;
+    var kIdleSocketValidation = /* @__PURE__ */ Symbol("kIdleSocketValidation");
+    var kIdleSocketValidationTimeout = /* @__PURE__ */ Symbol("kIdleSocketValidationTimeout");
+    var kSocketUsed = /* @__PURE__ */ Symbol("kSocketUsed");
     var extractBody;
     async function lazyllhttp() {
       const llhttpWasmData = process.env.JEST_WORKER_ID ? require_llhttp_wasm() : void 0;
@@ -5902,23 +5921,54 @@ var require_client_h1 = __commonJS({
             currentBufferRef = null;
           }
           const offset = llhttp.llhttp_get_error_pos(this.ptr) - currentBufferPtr;
-          if (ret === constants3.ERROR.PAUSED_UPGRADE) {
-            this.onUpgrade(data.slice(offset));
-          } else if (ret === constants3.ERROR.PAUSED) {
-            this.paused = true;
-            socket.unshift(data.slice(offset));
-          } else if (ret !== constants3.ERROR.OK) {
-            const ptr = llhttp.llhttp_get_error_reason(this.ptr);
-            let message = "";
-            if (ptr) {
-              const len = new Uint8Array(llhttp.memory.buffer, ptr).indexOf(0);
-              message = "Response does not match the HTTP/1.1 protocol (" + Buffer.from(llhttp.memory.buffer, ptr, len).toString() + ")";
+          if (ret !== constants3.ERROR.OK) {
+            const body = data.subarray(offset);
+            if (ret === constants3.ERROR.PAUSED_UPGRADE) {
+              this.onUpgrade(body);
+            } else if (ret === constants3.ERROR.PAUSED) {
+              this.paused = true;
+              socket.unshift(body);
+            } else {
+              throw this.createError(ret, body);
             }
-            throw new HTTPParserError(message, constants3.ERROR[ret], data.slice(offset));
           }
         } catch (err) {
           util.destroy(socket, err);
         }
+      }
+      finish() {
+        assert(currentParser === null);
+        assert(this.ptr != null);
+        assert(!this.paused);
+        const { llhttp } = this;
+        let ret;
+        try {
+          currentParser = this;
+          ret = llhttp.llhttp_finish(this.ptr);
+        } finally {
+          currentParser = null;
+        }
+        if (ret === constants3.ERROR.OK) {
+          return null;
+        }
+        if (ret === constants3.ERROR.PAUSED || ret === constants3.ERROR.PAUSED_UPGRADE) {
+          this.paused = true;
+          return null;
+        }
+        return this.createError(ret, EMPTY_BUF);
+      }
+      createError(ret, data) {
+        const { llhttp, contentLength, bytesRead } = this;
+        if (contentLength && bytesRead !== parseInt(contentLength, 10)) {
+          return new ResponseContentLengthMismatchError();
+        }
+        const ptr = llhttp.llhttp_get_error_reason(this.ptr);
+        let message = "";
+        if (ptr) {
+          const len = new Uint8Array(llhttp.memory.buffer, ptr).indexOf(0);
+          message = "Response does not match the HTTP/1.1 protocol (" + Buffer.from(llhttp.memory.buffer, ptr, len).toString() + ")";
+        }
+        return new HTTPParserError(message, constants3.ERROR[ret], data);
       }
       destroy() {
         assert(this.ptr != null);
@@ -5937,6 +5987,10 @@ var require_client_h1 = __commonJS({
       onMessageBegin() {
         const { socket, client } = this;
         if (socket.destroyed) {
+          return -1;
+        }
+        if (client[kRunning] === 0) {
+          util.destroy(socket, new SocketError("bad response", util.getSocketInfo(socket)));
           return -1;
         }
         const request = client[kQueue][client[kRunningIdx]];
@@ -6016,6 +6070,10 @@ var require_client_h1 = __commonJS({
       onHeadersComplete(statusCode, upgrade, shouldKeepAlive) {
         const { client, socket, headers, statusText } = this;
         if (socket.destroyed) {
+          return -1;
+        }
+        if (client[kRunning] === 0) {
+          util.destroy(socket, new SocketError("bad response", util.getSocketInfo(socket)));
           return -1;
         }
         const request = client[kQueue][client[kRunningIdx]];
@@ -6143,6 +6201,7 @@ var require_client_h1 = __commonJS({
         }
         request.onComplete(headers);
         client[kQueue][client[kRunningIdx]++] = null;
+        socket[kSocketUsed] = true;
         if (socket[kWriting]) {
           assert(client[kRunning] === 0);
           util.destroy(socket, new InformationalError("reset"));
@@ -6186,12 +6245,19 @@ var require_client_h1 = __commonJS({
       socket[kWriting] = false;
       socket[kReset] = false;
       socket[kBlocking] = false;
+      socket[kIdleSocketValidation] = 0;
+      socket[kIdleSocketValidationTimeout] = null;
+      socket[kSocketUsed] = false;
       socket[kParser] = new Parser(client, socket, llhttpInstance);
       addListener(socket, "error", function(err) {
         assert(err.code !== "ERR_TLS_CERT_ALTNAME_INVALID");
         const parser = this[kParser];
         if (err.code === "ECONNRESET" && parser.statusCode && !parser.shouldKeepAlive) {
-          parser.onMessageComplete();
+          const parserErr = parser.finish();
+          if (parserErr) {
+            this[kError] = parserErr;
+            this[kClient][kOnError](parserErr);
+          }
           return;
         }
         this[kError] = err;
@@ -6206,7 +6272,10 @@ var require_client_h1 = __commonJS({
       addListener(socket, "end", function() {
         const parser = this[kParser];
         if (parser.statusCode && !parser.shouldKeepAlive) {
-          parser.onMessageComplete();
+          const parserErr = parser.finish();
+          if (parserErr) {
+            util.destroy(this, parserErr);
+          }
           return;
         }
         util.destroy(this, new SocketError("other side closed", util.getSocketInfo(this)));
@@ -6214,9 +6283,10 @@ var require_client_h1 = __commonJS({
       addListener(socket, "close", function() {
         const client2 = this[kClient];
         const parser = this[kParser];
+        clearIdleSocketValidation(this);
         if (parser) {
           if (!this[kError] && parser.statusCode && !parser.shouldKeepAlive) {
-            parser.onMessageComplete();
+            this[kError] = parser.finish() || this[kError];
           }
           this[kParser].destroy();
           this[kParser] = null;
@@ -6265,7 +6335,7 @@ var require_client_h1 = __commonJS({
           return socket.destroyed;
         },
         busy(request) {
-          if (socket[kWriting] || socket[kReset] || socket[kBlocking]) {
+          if (socket[kWriting] || socket[kReset] || socket[kBlocking] || socket[kIdleSocketValidation] === 1) {
             return true;
           }
           if (request) {
@@ -6283,6 +6353,24 @@ var require_client_h1 = __commonJS({
         }
       };
     }
+    function clearIdleSocketValidation(socket) {
+      if (socket[kIdleSocketValidationTimeout]) {
+        clearTimeout(socket[kIdleSocketValidationTimeout]);
+        socket[kIdleSocketValidationTimeout] = null;
+      }
+      socket[kIdleSocketValidation] = 0;
+    }
+    function scheduleIdleSocketValidation(client, socket) {
+      socket[kIdleSocketValidation] = 1;
+      socket[kIdleSocketValidationTimeout] = setTimeout(() => {
+        socket[kIdleSocketValidationTimeout] = null;
+        socket[kIdleSocketValidation] = 2;
+        if (client[kSocket] === socket && !socket.destroyed) {
+          client[kResume]();
+        }
+      }, 0);
+      socket[kIdleSocketValidationTimeout].unref?.();
+    }
     function resumeH1(client) {
       const socket = client[kSocket];
       if (socket && !socket.destroyed) {
@@ -6294,6 +6382,29 @@ var require_client_h1 = __commonJS({
         } else if (socket[kNoRef] && socket.ref) {
           socket.ref();
           socket[kNoRef] = false;
+        }
+        if (client[kRunning] === 0 && client[kPending] > 0 && socket[kSocketUsed]) {
+          if (socket[kIdleSocketValidation] === 0) {
+            scheduleIdleSocketValidation(client, socket);
+            socket[kParser].readMore();
+            if (socket.destroyed) {
+              return;
+            }
+            return;
+          }
+          if (socket[kIdleSocketValidation] === 1) {
+            socket[kParser].readMore();
+            if (socket.destroyed) {
+              return;
+            }
+            return;
+          }
+        }
+        if (client[kRunning] === 0) {
+          socket[kParser].readMore();
+          if (socket.destroyed) {
+            return;
+          }
         }
         if (client[kSize] === 0) {
           if (socket[kParser].timeoutType !== TIMEOUT_KEEP_ALIVE) {
@@ -6325,8 +6436,16 @@ var require_client_h1 = __commonJS({
         }
         body = bodyStream.stream;
         contentLength = bodyStream.length;
-      } else if (util.isBlobLike(body) && request.contentType == null && body.type) {
-        headers.push("content-type", body.type);
+      } else if (util.isBlobLike(body) && request.contentType == null) {
+        const contentType = body.type;
+        if (contentType) {
+          const contentTypeValue = `${contentType}`;
+          if (!util.isValidHeaderValue(contentTypeValue)) {
+            util.errorRequest(client, request, new InvalidArgumentError("invalid content-type header"));
+            return false;
+          }
+          headers.push("content-type", contentTypeValue);
+        }
       }
       if (body && typeof body.read === "function") {
         body.read(0);
@@ -6347,6 +6466,7 @@ var require_client_h1 = __commonJS({
         process.emitWarning(new RequestContentLengthMismatchError());
       }
       const socket = client[kSocket];
+      clearIdleSocketValidation(socket);
       const abort = (err) => {
         if (request.aborted || request.completed) {
           return;
@@ -7530,9 +7650,10 @@ var require_client = __commonJS({
         autoSelectFamilyAttemptTimeout,
         // h2
         maxConcurrentStreams,
-        allowH2
+        allowH2,
+        webSocket
       } = {}) {
-        super();
+        super({ webSocket });
         if (keepAlive !== void 0) {
           throw new InvalidArgumentError("unsupported keepAlive, use pipelining=0 instead");
         }
@@ -8042,8 +8163,8 @@ var require_pool_base = __commonJS({
     var kRemoveClient = /* @__PURE__ */ Symbol("remove client");
     var kStats = /* @__PURE__ */ Symbol("stats");
     var PoolBase = class extends DispatcherBase {
-      constructor() {
-        super();
+      constructor(opts) {
+        super(opts);
         this[kQueue] = new FixedQueue();
         this[kClients] = [];
         this[kQueued] = 0;
@@ -8215,7 +8336,6 @@ var require_pool = __commonJS({
         allowH2,
         ...options
       } = {}) {
-        super();
         if (connections != null && (!Number.isFinite(connections) || connections < 0)) {
           throw new InvalidArgumentError("invalid connections");
         }
@@ -8236,6 +8356,7 @@ var require_pool = __commonJS({
             ...connect
           });
         }
+        super(options);
         this[kInterceptors] = options.interceptors?.Pool && Array.isArray(options.interceptors.Pool) ? options.interceptors.Pool : [];
         this[kConnections] = connections || null;
         this[kUrl] = util.parseOrigin(origin);
@@ -8437,7 +8558,6 @@ var require_agent = __commonJS({
     }
     var Agent = class extends DispatcherBase {
       constructor({ factory = defaultFactory, maxRedirections = 0, connect, ...options } = {}) {
-        super();
         if (typeof factory !== "function") {
           throw new InvalidArgumentError("factory must be a function.");
         }
@@ -8447,6 +8567,7 @@ var require_agent = __commonJS({
         if (!Number.isInteger(maxRedirections) || maxRedirections < 0) {
           throw new InvalidArgumentError("maxRedirections must be a positive number");
         }
+        super(options);
         if (connect && typeof connect !== "function") {
           connect = { ...connect };
         }
@@ -8890,6 +9011,24 @@ var require_retry_handler = __commonJS({
       const current = Date.now();
       return new Date(retryAfter).getTime() - current;
     }
+    function validatePartialResponseContentLength(headers, range, statusCode, retryCount) {
+      const contentLength = headers["content-length"];
+      if (contentLength == null) {
+        return null;
+      }
+      if (!Number.isFinite(range.start) || !Number.isFinite(range.end)) {
+        return null;
+      }
+      const length = Number(contentLength);
+      const expectedLength = range.end - range.start + 1;
+      if (!Number.isFinite(length) || length !== expectedLength) {
+        return new RequestRetryError("Content-Length mismatch", statusCode, {
+          headers,
+          data: { count: retryCount }
+        });
+      }
+      return null;
+    }
     var RetryHandler = class _RetryHandler {
       constructor(opts, handlers) {
         const { retryOptions, ...dispatchOpts } = opts;
@@ -9062,6 +9201,11 @@ var require_retry_handler = __commonJS({
             );
             return false;
           }
+          const contentLengthError = validatePartialResponseContentLength(headers, contentRange, statusCode, this.retryCount);
+          if (contentLengthError != null) {
+            this.abort(contentLengthError);
+            return false;
+          }
           const { start, size, end = size - 1 } = contentRange;
           assert(this.start === start, "content-range mismatch");
           assert(this.end == null || this.end === end, "content-range mismatch");
@@ -9078,6 +9222,11 @@ var require_retry_handler = __commonJS({
                 resume,
                 statusMessage
               );
+            }
+            const contentLengthError = validatePartialResponseContentLength(headers, range, statusCode, this.retryCount);
+            if (contentLengthError != null) {
+              this.abort(contentLengthError);
+              return false;
             }
             const { start, size, end = size - 1 } = range;
             assert(
@@ -15967,14 +16116,48 @@ var require_util6 = __commonJS({
       for (let i = 0; i < path.length; ++i) {
         const code = path.charCodeAt(i);
         if (code < 32 || // exclude CTLs (0-31)
-        code === 127 || // DEL
+        code > 126 || // exclude DEL and non-ascii
         code === 59) {
           throw new Error("Invalid cookie path");
         }
       }
     }
+    function isLetterOrDigit(code) {
+      return code >= 48 && code <= 57 || // 0-9
+      code >= 65 && code <= 90 || // A-Z
+      code >= 97 && code <= 122;
+    }
     function validateCookieDomain(domain) {
-      if (domain.startsWith("-") || domain.endsWith(".") || domain.endsWith("-")) {
+      if (domain === " ") {
+        return;
+      }
+      if (domain.length > 255) {
+        throw new Error("Invalid cookie domain");
+      }
+      let labelLength = 0;
+      for (let i = 0; i < domain.length; ++i) {
+        const code = domain.charCodeAt(i);
+        if (code === 46) {
+          if (labelLength === 0) {
+            throw new Error("Invalid cookie domain");
+          }
+          if (domain.charCodeAt(i - 1) === 45) {
+            throw new Error("Invalid cookie domain");
+          }
+          labelLength = 0;
+          continue;
+        }
+        if (labelLength === 0 && !isLetterOrDigit(code)) {
+          throw new Error("Invalid cookie domain");
+        }
+        if (!isLetterOrDigit(code) && code !== 45) {
+          throw new Error("Invalid cookie domain");
+        }
+        if (++labelLength > 63) {
+          throw new Error("Invalid cookie domain");
+        }
+      }
+      if (labelLength === 0 || domain.charCodeAt(domain.length - 1) === 45) {
         throw new Error("Invalid cookie domain");
       }
     }
@@ -16057,7 +16240,11 @@ var require_util6 = __commonJS({
           throw new Error("Invalid unparsed");
         }
         const [key, ...value] = part.split("=");
-        out.push(`${key.trim()}=${value.join("=")}`);
+        const trimmedKey = key.trim();
+        const joinedValue = value.join("=");
+        validateCookieName(trimmedKey);
+        validateCookieValue(joinedValue);
+        out.push(`${trimmedKey}=${joinedValue}`);
       }
       return out.join("; ");
     }
@@ -16188,18 +16375,14 @@ var require_parse = __commonJS({
       } else if (attributeNameLowercase === "httponly") {
         cookieAttributeList.httpOnly = true;
       } else if (attributeNameLowercase === "samesite") {
-        let enforcement = "Default";
         const attributeValueLowercase = attributeValue.toLowerCase();
-        if (attributeValueLowercase.includes("none")) {
-          enforcement = "None";
+        if (attributeValueLowercase === "none") {
+          cookieAttributeList.sameSite = "None";
+        } else if (attributeValueLowercase === "strict") {
+          cookieAttributeList.sameSite = "Strict";
+        } else if (attributeValueLowercase === "lax") {
+          cookieAttributeList.sameSite = "Lax";
         }
-        if (attributeValueLowercase.includes("strict")) {
-          enforcement = "Strict";
-        }
-        if (attributeValueLowercase.includes("lax")) {
-          enforcement = "Lax";
-        }
-        cookieAttributeList.sameSite = enforcement;
       } else {
         cookieAttributeList.unparsed ??= [];
         cookieAttributeList.unparsed.push(`${attributeName}=${attributeValue}`);
@@ -17135,27 +17318,26 @@ var require_permessage_deflate = __commonJS({
     var tail = Buffer.from([0, 0, 255, 255]);
     var kBuffer = /* @__PURE__ */ Symbol("kBuffer");
     var kLength = /* @__PURE__ */ Symbol("kLength");
-    var kDefaultMaxDecompressedSize = 4 * 1024 * 1024;
     var PerMessageDeflate = class {
       /** @type {import('node:zlib').InflateRaw} */
       #inflate;
       #options = {};
-      /** @type {boolean} */
-      #aborted = false;
-      /** @type {Function|null} */
-      #currentCallback = null;
+      #maxPayloadSize = 0;
       /**
        * @param {Map<string, string>} extensions
        */
-      constructor(extensions) {
+      constructor(extensions, options) {
         this.#options.serverNoContextTakeover = extensions.has("server_no_context_takeover");
         this.#options.serverMaxWindowBits = extensions.get("server_max_window_bits");
+        this.#maxPayloadSize = options.maxPayloadSize;
       }
+      /**
+       * Decompress a compressed payload.
+       * @param {Buffer} chunk Compressed data
+       * @param {boolean} fin Final fragment flag
+       * @param {Function} callback Callback function
+       */
       decompress(chunk, fin, callback) {
-        if (this.#aborted) {
-          callback(new MessageSizeExceededError());
-          return;
-        }
         if (!this.#inflate) {
           let windowBits = Z_DEFAULT_WINDOWBITS;
           if (this.#options.serverMaxWindowBits) {
@@ -17174,20 +17356,11 @@ var require_permessage_deflate = __commonJS({
           this.#inflate[kBuffer] = [];
           this.#inflate[kLength] = 0;
           this.#inflate.on("data", (data) => {
-            if (this.#aborted) {
-              return;
-            }
             this.#inflate[kLength] += data.length;
-            if (this.#inflate[kLength] > kDefaultMaxDecompressedSize) {
-              this.#aborted = true;
+            if (this.#maxPayloadSize > 0 && this.#inflate[kLength] > this.#maxPayloadSize) {
+              callback(new MessageSizeExceededError());
               this.#inflate.removeAllListeners();
-              this.#inflate.destroy();
               this.#inflate = null;
-              if (this.#currentCallback) {
-                const cb = this.#currentCallback;
-                this.#currentCallback = null;
-                cb(new MessageSizeExceededError());
-              }
               return;
             }
             this.#inflate[kBuffer].push(data);
@@ -17197,19 +17370,17 @@ var require_permessage_deflate = __commonJS({
             callback(err);
           });
         }
-        this.#currentCallback = callback;
         this.#inflate.write(chunk);
         if (fin) {
           this.#inflate.write(tail);
         }
         this.#inflate.flush(() => {
-          if (this.#aborted || !this.#inflate) {
+          if (!this.#inflate) {
             return;
           }
           const full = Buffer.concat(this.#inflate[kBuffer], this.#inflate[kLength]);
           this.#inflate[kBuffer].length = 0;
           this.#inflate[kLength] = 0;
-          this.#currentCallback = null;
           callback(null, full);
         });
       }
@@ -17241,8 +17412,14 @@ var require_receiver = __commonJS({
     var { WebsocketFrameSend } = require_frame();
     var { closeWebSocketConnection } = require_connection();
     var { PerMessageDeflate } = require_permessage_deflate();
+    var { MessageSizeExceededError } = require_errors();
+    function failWebsocketConnectionWithCode(ws, code, reason) {
+      closeWebSocketConnection(ws, code, reason, Buffer.byteLength(reason));
+      failWebsocketConnection(ws, reason);
+    }
     var ByteParser = class extends Writable {
       #buffers = [];
+      #fragmentsBytes = 0;
       #byteOffset = 0;
       #loop = false;
       #state = parserStates.INFO;
@@ -17250,16 +17427,23 @@ var require_receiver = __commonJS({
       #fragments = [];
       /** @type {Map<string, PerMessageDeflate>} */
       #extensions;
+      /** @type {number} */
+      #maxFragments;
+      /** @type {number} */
+      #maxPayloadSize;
       /**
        * @param {import('./websocket').WebSocket} ws
        * @param {Map<string, string>|null} extensions
+       * @param {{ maxFragments?: number, maxPayloadSize?: number }} [options]
        */
-      constructor(ws, extensions) {
+      constructor(ws, extensions, options = {}) {
         super();
         this.ws = ws;
         this.#extensions = extensions == null ? /* @__PURE__ */ new Map() : extensions;
+        this.#maxFragments = options.maxFragments ?? 0;
+        this.#maxPayloadSize = options.maxPayloadSize ?? 0;
         if (this.#extensions.has("permessage-deflate")) {
-          this.#extensions.set("permessage-deflate", new PerMessageDeflate(extensions));
+          this.#extensions.set("permessage-deflate", new PerMessageDeflate(extensions, options));
         }
       }
       /**
@@ -17271,6 +17455,13 @@ var require_receiver = __commonJS({
         this.#byteOffset += chunk.length;
         this.#loop = true;
         this.run(callback);
+      }
+      #validatePayloadLength() {
+        if (this.#maxPayloadSize > 0 && !isControlFrame(this.#info.opcode) && this.#info.payloadLength + this.#fragmentsBytes > this.#maxPayloadSize) {
+          failWebsocketConnectionWithCode(this.ws, 1009, "Payload size exceeds maximum allowed size");
+          return false;
+        }
+        return true;
       }
       /**
        * Runs whenever a new chunk is received.
@@ -17331,6 +17522,9 @@ var require_receiver = __commonJS({
             if (payloadLength <= 125) {
               this.#info.payloadLength = payloadLength;
               this.#state = parserStates.READ_DATA;
+              if (!this.#validatePayloadLength()) {
+                return;
+              }
             } else if (payloadLength === 126) {
               this.#state = parserStates.PAYLOADLENGTH_16;
             } else if (payloadLength === 127) {
@@ -17351,6 +17545,9 @@ var require_receiver = __commonJS({
             const buffer = this.consume(2);
             this.#info.payloadLength = buffer.readUInt16BE(0);
             this.#state = parserStates.READ_DATA;
+            if (!this.#validatePayloadLength()) {
+              return;
+            }
           } else if (this.#state === parserStates.PAYLOADLENGTH_64) {
             if (this.#byteOffset < 8) {
               return callback();
@@ -17364,6 +17561,9 @@ var require_receiver = __commonJS({
             }
             this.#info.payloadLength = lower;
             this.#state = parserStates.READ_DATA;
+            if (!this.#validatePayloadLength()) {
+              return;
+            }
           } else if (this.#state === parserStates.READ_DATA) {
             if (this.#byteOffset < this.#info.payloadLength) {
               return callback();
@@ -17374,32 +17574,46 @@ var require_receiver = __commonJS({
               this.#state = parserStates.INFO;
             } else {
               if (!this.#info.compressed) {
-                this.#fragments.push(body);
+                if (!this.writeFragments(body)) {
+                  return;
+                }
+                if (this.#maxPayloadSize > 0 && this.#fragmentsBytes > this.#maxPayloadSize) {
+                  failWebsocketConnectionWithCode(this.ws, 1009, new MessageSizeExceededError().message);
+                  return;
+                }
                 if (!this.#info.fragmented && this.#info.fin) {
-                  const fullMessage = Buffer.concat(this.#fragments);
-                  websocketMessageReceived(this.ws, this.#info.binaryType, fullMessage);
-                  this.#fragments.length = 0;
+                  websocketMessageReceived(this.ws, this.#info.binaryType, this.consumeFragments());
                 }
                 this.#state = parserStates.INFO;
               } else {
-                this.#extensions.get("permessage-deflate").decompress(body, this.#info.fin, (error2, data) => {
-                  if (error2) {
-                    failWebsocketConnection(this.ws, error2.message);
-                    return;
-                  }
-                  this.#fragments.push(data);
-                  if (!this.#info.fin) {
-                    this.#state = parserStates.INFO;
+                this.#extensions.get("permessage-deflate").decompress(
+                  body,
+                  this.#info.fin,
+                  (error2, data) => {
+                    if (error2) {
+                      const code = error2 instanceof MessageSizeExceededError ? 1009 : 1007;
+                      failWebsocketConnectionWithCode(this.ws, code, error2.message);
+                      return;
+                    }
+                    if (!this.writeFragments(data)) {
+                      return;
+                    }
+                    if (this.#maxPayloadSize > 0 && this.#fragmentsBytes > this.#maxPayloadSize) {
+                      failWebsocketConnectionWithCode(this.ws, 1009, new MessageSizeExceededError().message);
+                      return;
+                    }
+                    if (!this.#info.fin) {
+                      this.#state = parserStates.INFO;
+                      this.#loop = true;
+                      this.run(callback);
+                      return;
+                    }
+                    websocketMessageReceived(this.ws, this.#info.binaryType, this.consumeFragments());
                     this.#loop = true;
+                    this.#state = parserStates.INFO;
                     this.run(callback);
-                    return;
                   }
-                  websocketMessageReceived(this.ws, this.#info.binaryType, Buffer.concat(this.#fragments));
-                  this.#loop = true;
-                  this.#state = parserStates.INFO;
-                  this.#fragments.length = 0;
-                  this.run(callback);
-                });
+                );
                 this.#loop = false;
                 break;
               }
@@ -17441,6 +17655,26 @@ var require_receiver = __commonJS({
         }
         this.#byteOffset -= n;
         return buffer;
+      }
+      writeFragments(fragment) {
+        if (this.#maxFragments > 0 && this.#fragments.length === this.#maxFragments) {
+          failWebsocketConnectionWithCode(this.ws, 1008, "Too many message fragments");
+          return false;
+        }
+        this.#fragmentsBytes += fragment.length;
+        this.#fragments.push(fragment);
+        return true;
+      }
+      consumeFragments() {
+        const fragments = this.#fragments;
+        if (fragments.length === 1) {
+          this.#fragmentsBytes = 0;
+          return fragments.shift();
+        }
+        const output = Buffer.concat(fragments, this.#fragmentsBytes);
+        this.#fragments = [];
+        this.#fragmentsBytes = 0;
+        return output;
       }
       parseCloseBody(data) {
         assert(data.length !== 1);
@@ -17881,7 +18115,13 @@ var require_websocket = __commonJS({
        */
       #onConnectionEstablished(response, parsedExtensions) {
         this[kResponse] = response;
-        const parser = new ByteParser(this, parsedExtensions);
+        const webSocketOptions = this[kController]?.dispatcher?.webSocketOptions;
+        const maxFragments = webSocketOptions?.maxFragments;
+        const maxPayloadSize = webSocketOptions?.maxPayloadSize;
+        const parser = new ByteParser(this, parsedExtensions, {
+          maxFragments,
+          maxPayloadSize
+        });
         parser.on("drain", onParserDrain);
         parser.on("error", onParserError.bind(this));
         response.socket.ws = this;
@@ -19224,12 +19464,125 @@ function info(message) {
   process.stdout.write(message + os4.EOL);
 }
 
-// src/action.ts
+// src/generate.ts
+init_cjs_shims();
 var import_promises = require("fs/promises");
 var import_node_path = require("path");
 
 // src/api/client.ts
 init_cjs_shims();
+
+// src/core/calendar.ts
+init_cjs_shims();
+var DAY_MS = 864e5;
+var ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+function parseContributionDate(date) {
+  if (!ISO_DATE_PATTERN.test(date)) {
+    throw new Error(`Invalid contribution date: "${date}"`);
+  }
+  const timestamp = Date.parse(`${date}T00:00:00.000Z`);
+  if (!Number.isFinite(timestamp) || new Date(timestamp).toISOString().slice(0, 10) !== date) {
+    throw new Error(`Invalid contribution date: "${date}"`);
+  }
+  return timestamp;
+}
+function formatContributionDate(timestamp) {
+  return new Date(timestamp).toISOString().slice(0, 10);
+}
+function getContributionDayOfWeek(date) {
+  return new Date(parseContributionDate(date)).getUTCDay();
+}
+function normalizeContributionWeeks(weeks) {
+  const daysByDate = /* @__PURE__ */ new Map();
+  for (const week of weeks) {
+    for (const day of week.days) {
+      parseContributionDate(day.date);
+      if (daysByDate.has(day.date)) {
+        throw new Error(`Duplicate contribution date: "${day.date}"`);
+      }
+      daysByDate.set(day.date, day);
+    }
+  }
+  const sortedDays = [...daysByDate.values()].sort((a, b) => a.date.localeCompare(b.date));
+  const weeksByFirstDay = /* @__PURE__ */ new Map();
+  for (const day of sortedDays) {
+    const timestamp = parseContributionDate(day.date);
+    const firstDay = formatContributionDate(timestamp - new Date(timestamp).getUTCDay() * DAY_MS);
+    const days = weeksByFirstDay.get(firstDay) ?? [];
+    days.push(day);
+    weeksByFirstDay.set(firstDay, days);
+  }
+  return [...weeksByFirstDay.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([firstDay, days]) => ({ firstDay, days }));
+}
+
+// src/core/stats.ts
+init_cjs_shims();
+var DAY_MS2 = 864e5;
+function computeStats(weeks) {
+  if (weeks.length === 0) {
+    return {
+      total: 0,
+      longestStreak: 0,
+      currentStreak: 0,
+      mostActiveDay: "Monday"
+      // Default for empty data
+    };
+  }
+  const allDays = normalizeContributionWeeks(weeks).flatMap((week) => week.days);
+  if (allDays.length === 0) {
+    return {
+      total: 0,
+      longestStreak: 0,
+      currentStreak: 0,
+      mostActiveDay: "Monday"
+    };
+  }
+  const total = allDays.reduce((sum, day) => sum + day.count, 0);
+  let longestStreak = 0;
+  let currentStreakCount = 0;
+  let previousTimestamp;
+  for (const day of allDays) {
+    const timestamp = Date.parse(`${day.date}T00:00:00.000Z`);
+    if (day.count > 0) {
+      currentStreakCount = previousTimestamp !== void 0 && timestamp - previousTimestamp === DAY_MS2 ? currentStreakCount + 1 : 1;
+      longestStreak = Math.max(longestStreak, currentStreakCount);
+    } else {
+      currentStreakCount = 0;
+    }
+    previousTimestamp = timestamp;
+  }
+  let currentStreak = 0;
+  let laterTimestamp;
+  for (let i = allDays.length - 1; i >= 0; i--) {
+    const day = allDays[i];
+    const timestamp = Date.parse(`${day.date}T00:00:00.000Z`);
+    if (day.count <= 0 || laterTimestamp !== void 0 && laterTimestamp - timestamp !== DAY_MS2) {
+      break;
+    }
+    currentStreak++;
+    laterTimestamp = timestamp;
+  }
+  const dayTotals = [0, 0, 0, 0, 0, 0, 0];
+  for (const day of allDays) {
+    dayTotals[getContributionDayOfWeek(day.date)] += day.count;
+  }
+  let maxDayIndex = 0;
+  let maxContributions = dayTotals[0];
+  for (let i = 1; i < dayTotals.length; i++) {
+    if (dayTotals[i] > maxContributions) {
+      maxContributions = dayTotals[i];
+      maxDayIndex = i;
+    }
+  }
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const mostActiveDay = dayNames[maxDayIndex];
+  return {
+    total,
+    longestStreak,
+    currentStreak,
+    mostActiveDay
+  };
+}
 
 // src/api/queries.ts
 init_cjs_shims();
@@ -19348,7 +19701,7 @@ async function fetchContributions(username, year, token) {
   }
   const response = await makeGraphQLRequest(CONTRIBUTIONS_QUERY, { username, from, to }, token);
   const calendar = response.data.user.contributionsCollection.contributionCalendar;
-  const weeks = calendar.weeks.map((week) => {
+  const rawWeeks = calendar.weeks.map((week) => {
     const days = week.contributionDays.map((day) => ({
       date: day.date,
       count: day.contributionCount,
@@ -19356,90 +19709,24 @@ async function fetchContributions(username, year, token) {
     }));
     return {
       days,
-      firstDay: days[0].date
+      firstDay: days[0]?.date ?? ""
     };
   });
+  const weeks = normalizeContributionWeeks(rawWeeks);
+  const stats = computeStats(weeks);
   return {
     weeks,
     stats: {
-      total: calendar.totalContributions,
-      longestStreak: 0,
-      currentStreak: 0,
-      mostActiveDay: ""
+      ...stats,
+      total: calendar.totalContributions
     },
     year: effectiveYear,
     username
   };
 }
 
-// src/core/stats.ts
-init_cjs_shims();
-function computeStats(weeks) {
-  if (weeks.length === 0) {
-    return {
-      total: 0,
-      longestStreak: 0,
-      currentStreak: 0,
-      mostActiveDay: "Monday"
-      // Default for empty data
-    };
-  }
-  const allDays = weeks.flatMap((week) => week.days);
-  const total = allDays.reduce((sum, day) => sum + day.count, 0);
-  let longestStreak = 0;
-  let currentStreakCount = 0;
-  for (const day of allDays) {
-    if (day.count > 0) {
-      currentStreakCount++;
-      longestStreak = Math.max(longestStreak, currentStreakCount);
-    } else {
-      currentStreakCount = 0;
-    }
-  }
-  let currentStreak = 0;
-  for (let i = allDays.length - 1; i >= 0; i--) {
-    if (allDays[i].count > 0) {
-      currentStreak++;
-    } else {
-      break;
-    }
-  }
-  const dayTotals = [0, 0, 0, 0, 0, 0, 0];
-  for (const week of weeks) {
-    for (let dayIndex = 0; dayIndex < week.days.length; dayIndex++) {
-      dayTotals[dayIndex] += week.days[dayIndex].count;
-    }
-  }
-  let maxDayIndex = 0;
-  let maxContributions = dayTotals[0];
-  for (let i = 1; i < dayTotals.length; i++) {
-    if (dayTotals[i] > maxContributions) {
-      maxContributions = dayTotals[i];
-      maxDayIndex = i;
-    }
-  }
-  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const mostActiveDay = dayNames[maxDayIndex];
-  return {
-    total,
-    longestStreak,
-    currentStreak,
-    mostActiveDay
-  };
-}
-
 // src/themes/registry.ts
 init_cjs_shims();
-var themes = /* @__PURE__ */ new Map();
-function registerTheme(theme) {
-  themes.set(theme.name, theme);
-}
-function getTheme(name) {
-  return themes.get(name);
-}
-function listThemes() {
-  return [...themes.keys()];
-}
 
 // src/themes/terrain/index.ts
 init_cjs_shims();
@@ -19526,8 +19813,8 @@ function contributionGrid(data, options) {
   const cells = [];
   for (let week = 0; week < data.weeks.length; week++) {
     const weekData = data.weeks[week];
-    for (let day = 0; day < weekData.days.length; day++) {
-      const dayData = weekData.days[day];
+    for (const dayData of weekData.days) {
+      const day = getContributionDayOfWeek(dayData.date);
       cells.push({
         x: offsetX + week * (cellSize + gap),
         y: offsetY + day * (cellSize + gap),
@@ -23684,11 +23971,9 @@ var terrainTheme = {
   displayName: "Terrain",
   description: "Your contributions build a living world \u2014 more code, richer civilization",
   render(data, options) {
-    const stats = computeStats(data.weeks);
-    const dataWithStats = { ...data, stats };
     return {
-      dark: renderMode(dataWithStats, options, "dark"),
-      light: renderMode(dataWithStats, options, "light")
+      dark: renderMode(data, options, "dark"),
+      light: renderMode(data, options, "light")
     };
   }
 };
@@ -23699,8 +23984,9 @@ function renderMode(data, options, mode) {
   const seasonRotation = computeSeasonRotation(oldestDate, hemisphere);
   const seed = hash(data.username + mode);
   const variantSeed = hash(data.username + String(data.year));
+  const weekCount = Math.max(52, data.weeks.length);
   const weekPalettes = [];
-  for (let w = 0; w < 52; w++) {
+  for (let w = 0; w < weekCount; w++) {
     weekPalettes.push(getSeasonalPalette100(mode, w, seasonRotation));
   }
   const palette = weekPalettes[26];
@@ -23714,7 +24000,7 @@ function renderMode(data, options, mode) {
   const originX = 405;
   const originY = 6;
   const isoCells = getIsoCells(cells100, palette, originX, originY);
-  const biomeMap = generateBiomeMap(52, 7, seed + 7919);
+  const biomeMap = generateBiomeMap(weekCount, 7, seed + 7919);
   const epicSeed = hash(data.username + "epic" + String(data.year));
   const { placed: epicPlaced, epicCells } = selectEpicBuildings(
     isoCells,
@@ -23755,12 +24041,10 @@ function renderMode(data, options, mode) {
   const fallingLeaves = renderFallingLeaves(isoCells, seed, palette, seasonRotation);
   const overlays = renderAnimatedOverlays(isoCells, palette);
   const anchorLevels = [0, 20, 45, 70, 95];
-  const levelColors = anchorLevels.map(
-    (l) => ({
-      hex: palette.getElevation(l).top,
-      opacity: l === 0 ? 0.5 : 1
-    })
-  );
+  const levelColors = anchorLevels.map((l) => ({
+    hex: palette.getElevation(l).top,
+    opacity: l === 0 ? 0.5 : 1
+  }));
   const themePalette = {
     text: palette.text,
     contribution: { levels: levelColors },
@@ -23788,54 +24072,126 @@ function renderMode(data, options, mode) {
   ].join("\n");
   return svgRoot({ width: options.width, height: options.height }, content);
 }
-registerTheme(terrainTheme);
 
-// src/action.ts
-async function run() {
-  try {
-    const token = getInput("github_token");
-    const themeName = getInput("theme") || "terrain";
-    const title = getInput("title");
-    const outputDir = getInput("output_dir") || "./";
-    const yearInput = getInput("year");
-    const hemisphereInput = getInput("hemisphere") || "north";
-    const hemisphere = hemisphereInput === "south" ? "south" : "north";
-    const densityInput = getInput("density");
-    const density = densityInput ? Math.max(1, Math.min(10, parseInt(densityInput, 10) || 5)) : 5;
-    const username = process.env.GITHUB_ACTOR;
+// src/themes/registry.ts
+var themes = /* @__PURE__ */ new Map([[terrainTheme.name, terrainTheme]]);
+function getTheme(name) {
+  return themes.get(name);
+}
+function listThemes() {
+  return [...themes.keys()];
+}
+function getDefaultTheme() {
+  return terrainTheme.name;
+}
+
+// src/generate.ts
+function parseOptionalInteger(value, name) {
+  if (value === void 0 || value === "") return void 0;
+  const parsed = typeof value === "number" ? value : Number(value);
+  if (!Number.isInteger(parsed)) {
+    throw new Error(`Invalid ${name}: "${value}"`);
+  }
+  return parsed;
+}
+function parseYear(value) {
+  const year = parseOptionalInteger(value, "year");
+  if (year !== void 0 && (year < 1 || year > 9999)) {
+    throw new Error(`Invalid year: "${value}"`);
+  }
+  return year;
+}
+function parseDensity(value) {
+  const density = parseOptionalInteger(value, "density") ?? 5;
+  if (density < 1 || density > 10) {
+    throw new Error(`Invalid density: "${value}". Expected an integer from 1 to 10`);
+  }
+  return density;
+}
+function parseHemisphere(value) {
+  if (value === void 0 || value === "") return "north";
+  if (value !== "north" && value !== "south") {
+    throw new Error(`Invalid hemisphere: "${value}". Expected "north" or "south"`);
+  }
+  return value;
+}
+function createTerrainGenerator(dependencies) {
+  return async function generateTerrain2(request) {
+    const username = request.username.trim();
     if (!username) {
-      throw new Error("GITHUB_ACTOR environment variable is not set");
+      throw new Error("GitHub username is required");
     }
-    const year = yearInput ? parseInt(yearInput, 10) : void 0;
-    if (yearInput && (year == null || isNaN(year))) {
-      throw new Error(`Invalid year: "${yearInput}"`);
-    }
-    const theme = getTheme(themeName);
+    const themeName = request.theme?.trim() || dependencies.getDefaultTheme();
+    const theme = dependencies.getTheme(themeName);
     if (!theme) {
-      throw new Error(`Unknown theme "${themeName}". Available themes: ${listThemes().join(", ")}`);
+      throw new Error(
+        `Unknown theme "${themeName}". Available themes: ${dependencies.listThemes().join(", ")}`
+      );
     }
-    const displayTitle = title || `@${username}`;
+    const year = parseYear(request.year);
+    const hemisphere = parseHemisphere(request.hemisphere);
+    const density = parseDensity(request.density);
+    const title = request.title || `@${username}`;
+    const outputDir = request.outputDir?.trim() || "./";
     const yearLabel = year ?? "last 52 weeks";
-    info(`Fetching contributions for @${username} (${yearLabel})...`);
-    const data = await fetchContributions(username, year, token || void 0);
-    const stats = computeStats(data.weeks);
-    const fullData = { ...data, stats };
-    info(`Rendering with ${theme.displayName} theme...`);
-    const output = theme.render(fullData, {
-      title: displayTitle,
+    request.onProgress?.(`Fetching contributions for @${username} (${yearLabel})...`);
+    const data = await dependencies.fetchContributions(username, year, request.token || void 0);
+    request.onProgress?.(`Rendering with ${theme.displayName} theme...`);
+    const output = theme.render(data, {
+      title,
       width: 840,
       height: 240,
       hemisphere,
       density
     });
-    const darkPath = (0, import_node_path.join)(outputDir, `maeul-in-the-sky-dark.svg`);
-    const lightPath = (0, import_node_path.join)(outputDir, `maeul-in-the-sky-light.svg`);
-    await (0, import_promises.writeFile)(darkPath, output.dark, "utf-8");
-    await (0, import_promises.writeFile)(lightPath, output.light, "utf-8");
-    info(`Written: ${darkPath}`);
-    info(`Written: ${lightPath}`);
-    setOutput("dark_svg_path", darkPath);
-    setOutput("light_svg_path", lightPath);
+    await dependencies.makeDirectory(outputDir);
+    const darkPath = (0, import_node_path.join)(outputDir, "maeul-in-the-sky-dark.svg");
+    const lightPath = (0, import_node_path.join)(outputDir, "maeul-in-the-sky-light.svg");
+    await dependencies.writeFile(darkPath, output.dark);
+    await dependencies.writeFile(lightPath, output.light);
+    return {
+      darkPath,
+      lightPath,
+      themeName: theme.name,
+      themeDisplayName: theme.displayName
+    };
+  };
+}
+var generateTerrain = createTerrainGenerator({
+  fetchContributions,
+  getTheme,
+  listThemes,
+  getDefaultTheme,
+  makeDirectory: async (path) => {
+    await (0, import_promises.mkdir)(path, { recursive: true });
+  },
+  writeFile: async (path, content) => {
+    await (0, import_promises.writeFile)(path, content, "utf-8");
+  }
+});
+
+// src/action.ts
+async function run() {
+  try {
+    const username = process.env.GITHUB_ACTOR;
+    if (!username) {
+      throw new Error("GITHUB_ACTOR environment variable is not set");
+    }
+    const result = await generateTerrain({
+      username,
+      token: getInput("github_token"),
+      theme: getInput("theme"),
+      title: getInput("title"),
+      outputDir: getInput("output_dir"),
+      year: getInput("year"),
+      hemisphere: getInput("hemisphere"),
+      density: getInput("density"),
+      onProgress: (message) => info(message)
+    });
+    info(`Written: ${result.darkPath}`);
+    info(`Written: ${result.lightPath}`);
+    setOutput("dark_svg_path", result.darkPath);
+    setOutput("light_svg_path", result.lightPath);
   } catch (error2) {
     if (error2 instanceof Error) {
       setFailed(error2.message);

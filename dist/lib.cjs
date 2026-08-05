@@ -22,11 +22,122 @@ var lib_exports = {};
 __export(lib_exports, {
   computeStats: () => computeStats,
   fetchContributions: () => fetchContributions,
+  generateTerrain: () => generateTerrain,
   getTheme: () => getTheme,
   listThemes: () => listThemes,
   registerTheme: () => registerTheme
 });
 module.exports = __toCommonJS(lib_exports);
+
+// src/core/calendar.ts
+var DAY_MS = 864e5;
+var ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+function parseContributionDate(date) {
+  if (!ISO_DATE_PATTERN.test(date)) {
+    throw new Error(`Invalid contribution date: "${date}"`);
+  }
+  const timestamp = Date.parse(`${date}T00:00:00.000Z`);
+  if (!Number.isFinite(timestamp) || new Date(timestamp).toISOString().slice(0, 10) !== date) {
+    throw new Error(`Invalid contribution date: "${date}"`);
+  }
+  return timestamp;
+}
+function formatContributionDate(timestamp) {
+  return new Date(timestamp).toISOString().slice(0, 10);
+}
+function getContributionDayOfWeek(date) {
+  return new Date(parseContributionDate(date)).getUTCDay();
+}
+function normalizeContributionWeeks(weeks) {
+  const daysByDate = /* @__PURE__ */ new Map();
+  for (const week of weeks) {
+    for (const day of week.days) {
+      parseContributionDate(day.date);
+      if (daysByDate.has(day.date)) {
+        throw new Error(`Duplicate contribution date: "${day.date}"`);
+      }
+      daysByDate.set(day.date, day);
+    }
+  }
+  const sortedDays = [...daysByDate.values()].sort((a, b) => a.date.localeCompare(b.date));
+  const weeksByFirstDay = /* @__PURE__ */ new Map();
+  for (const day of sortedDays) {
+    const timestamp = parseContributionDate(day.date);
+    const firstDay = formatContributionDate(timestamp - new Date(timestamp).getUTCDay() * DAY_MS);
+    const days = weeksByFirstDay.get(firstDay) ?? [];
+    days.push(day);
+    weeksByFirstDay.set(firstDay, days);
+  }
+  return [...weeksByFirstDay.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([firstDay, days]) => ({ firstDay, days }));
+}
+
+// src/core/stats.ts
+var DAY_MS2 = 864e5;
+function computeStats(weeks) {
+  if (weeks.length === 0) {
+    return {
+      total: 0,
+      longestStreak: 0,
+      currentStreak: 0,
+      mostActiveDay: "Monday"
+      // Default for empty data
+    };
+  }
+  const allDays = normalizeContributionWeeks(weeks).flatMap((week) => week.days);
+  if (allDays.length === 0) {
+    return {
+      total: 0,
+      longestStreak: 0,
+      currentStreak: 0,
+      mostActiveDay: "Monday"
+    };
+  }
+  const total = allDays.reduce((sum, day) => sum + day.count, 0);
+  let longestStreak = 0;
+  let currentStreakCount = 0;
+  let previousTimestamp;
+  for (const day of allDays) {
+    const timestamp = Date.parse(`${day.date}T00:00:00.000Z`);
+    if (day.count > 0) {
+      currentStreakCount = previousTimestamp !== void 0 && timestamp - previousTimestamp === DAY_MS2 ? currentStreakCount + 1 : 1;
+      longestStreak = Math.max(longestStreak, currentStreakCount);
+    } else {
+      currentStreakCount = 0;
+    }
+    previousTimestamp = timestamp;
+  }
+  let currentStreak = 0;
+  let laterTimestamp;
+  for (let i = allDays.length - 1; i >= 0; i--) {
+    const day = allDays[i];
+    const timestamp = Date.parse(`${day.date}T00:00:00.000Z`);
+    if (day.count <= 0 || laterTimestamp !== void 0 && laterTimestamp - timestamp !== DAY_MS2) {
+      break;
+    }
+    currentStreak++;
+    laterTimestamp = timestamp;
+  }
+  const dayTotals = [0, 0, 0, 0, 0, 0, 0];
+  for (const day of allDays) {
+    dayTotals[getContributionDayOfWeek(day.date)] += day.count;
+  }
+  let maxDayIndex = 0;
+  let maxContributions = dayTotals[0];
+  for (let i = 1; i < dayTotals.length; i++) {
+    if (dayTotals[i] > maxContributions) {
+      maxContributions = dayTotals[i];
+      maxDayIndex = i;
+    }
+  }
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const mostActiveDay = dayNames[maxDayIndex];
+  return {
+    total,
+    longestStreak,
+    currentStreak,
+    mostActiveDay
+  };
+}
 
 // src/api/queries.ts
 var CONTRIBUTIONS_QUERY = `
@@ -144,7 +255,7 @@ async function fetchContributions(username, year, token) {
   }
   const response = await makeGraphQLRequest(CONTRIBUTIONS_QUERY, { username, from, to }, token);
   const calendar = response.data.user.contributionsCollection.contributionCalendar;
-  const weeks = calendar.weeks.map((week) => {
+  const rawWeeks = calendar.weeks.map((week) => {
     const days = week.contributionDays.map((day) => ({
       date: day.date,
       count: day.contributionCount,
@@ -152,88 +263,25 @@ async function fetchContributions(username, year, token) {
     }));
     return {
       days,
-      firstDay: days[0].date
+      firstDay: days[0]?.date ?? ""
     };
   });
+  const weeks = normalizeContributionWeeks(rawWeeks);
+  const stats = computeStats(weeks);
   return {
     weeks,
     stats: {
-      total: calendar.totalContributions,
-      longestStreak: 0,
-      currentStreak: 0,
-      mostActiveDay: ""
+      ...stats,
+      total: calendar.totalContributions
     },
     year: effectiveYear,
     username
   };
 }
 
-// src/core/stats.ts
-function computeStats(weeks) {
-  if (weeks.length === 0) {
-    return {
-      total: 0,
-      longestStreak: 0,
-      currentStreak: 0,
-      mostActiveDay: "Monday"
-      // Default for empty data
-    };
-  }
-  const allDays = weeks.flatMap((week) => week.days);
-  const total = allDays.reduce((sum, day) => sum + day.count, 0);
-  let longestStreak = 0;
-  let currentStreakCount = 0;
-  for (const day of allDays) {
-    if (day.count > 0) {
-      currentStreakCount++;
-      longestStreak = Math.max(longestStreak, currentStreakCount);
-    } else {
-      currentStreakCount = 0;
-    }
-  }
-  let currentStreak = 0;
-  for (let i = allDays.length - 1; i >= 0; i--) {
-    if (allDays[i].count > 0) {
-      currentStreak++;
-    } else {
-      break;
-    }
-  }
-  const dayTotals = [0, 0, 0, 0, 0, 0, 0];
-  for (const week of weeks) {
-    for (let dayIndex = 0; dayIndex < week.days.length; dayIndex++) {
-      dayTotals[dayIndex] += week.days[dayIndex].count;
-    }
-  }
-  let maxDayIndex = 0;
-  let maxContributions = dayTotals[0];
-  for (let i = 1; i < dayTotals.length; i++) {
-    if (dayTotals[i] > maxContributions) {
-      maxContributions = dayTotals[i];
-      maxDayIndex = i;
-    }
-  }
-  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const mostActiveDay = dayNames[maxDayIndex];
-  return {
-    total,
-    longestStreak,
-    currentStreak,
-    mostActiveDay
-  };
-}
-
-// src/themes/registry.ts
-var themes = /* @__PURE__ */ new Map();
-function registerTheme(theme) {
-  themes.set(theme.name, theme);
-}
-function getTheme(name) {
-  return themes.get(name);
-}
-function listThemes() {
-  return [...themes.keys()];
-}
+// src/generate.ts
+var import_promises = require("fs/promises");
+var import_node_path = require("path");
 
 // src/core/svg.ts
 function svgElement(tag, attrs, children) {
@@ -312,8 +360,8 @@ function contributionGrid(data, options) {
   const cells = [];
   for (let week = 0; week < data.weeks.length; week++) {
     const weekData = data.weeks[week];
-    for (let day = 0; day < weekData.days.length; day++) {
-      const dayData = weekData.days[day];
+    for (const dayData of weekData.days) {
+      const day = getContributionDayOfWeek(dayData.date);
       cells.push({
         x: offsetX + week * (cellSize + gap),
         y: offsetY + day * (cellSize + gap),
@@ -4461,11 +4509,9 @@ var terrainTheme = {
   displayName: "Terrain",
   description: "Your contributions build a living world \u2014 more code, richer civilization",
   render(data, options) {
-    const stats = computeStats(data.weeks);
-    const dataWithStats = { ...data, stats };
     return {
-      dark: renderMode(dataWithStats, options, "dark"),
-      light: renderMode(dataWithStats, options, "light")
+      dark: renderMode(data, options, "dark"),
+      light: renderMode(data, options, "light")
     };
   }
 };
@@ -4476,8 +4522,9 @@ function renderMode(data, options, mode) {
   const seasonRotation = computeSeasonRotation(oldestDate, hemisphere);
   const seed = hash(data.username + mode);
   const variantSeed = hash(data.username + String(data.year));
+  const weekCount = Math.max(52, data.weeks.length);
   const weekPalettes = [];
-  for (let w = 0; w < 52; w++) {
+  for (let w = 0; w < weekCount; w++) {
     weekPalettes.push(getSeasonalPalette100(mode, w, seasonRotation));
   }
   const palette = weekPalettes[26];
@@ -4491,7 +4538,7 @@ function renderMode(data, options, mode) {
   const originX = 405;
   const originY = 6;
   const isoCells = getIsoCells(cells100, palette, originX, originY);
-  const biomeMap = generateBiomeMap(52, 7, seed + 7919);
+  const biomeMap = generateBiomeMap(weekCount, 7, seed + 7919);
   const epicSeed = hash(data.username + "epic" + String(data.year));
   const { placed: epicPlaced, epicCells } = selectEpicBuildings(
     isoCells,
@@ -4532,12 +4579,10 @@ function renderMode(data, options, mode) {
   const fallingLeaves = renderFallingLeaves(isoCells, seed, palette, seasonRotation);
   const overlays = renderAnimatedOverlays(isoCells, palette);
   const anchorLevels = [0, 20, 45, 70, 95];
-  const levelColors = anchorLevels.map(
-    (l) => ({
-      hex: palette.getElevation(l).top,
-      opacity: l === 0 ? 0.5 : 1
-    })
-  );
+  const levelColors = anchorLevels.map((l) => ({
+    hex: palette.getElevation(l).top,
+    opacity: l === 0 ? 0.5 : 1
+  }));
   const themePalette = {
     text: palette.text,
     contribution: { levels: levelColors },
@@ -4565,11 +4610,111 @@ function renderMode(data, options, mode) {
   ].join("\n");
   return svgRoot({ width: options.width, height: options.height }, content);
 }
-registerTheme(terrainTheme);
+
+// src/themes/registry.ts
+var themes = /* @__PURE__ */ new Map([[terrainTheme.name, terrainTheme]]);
+function registerTheme(theme) {
+  themes.set(theme.name, theme);
+}
+function getTheme(name) {
+  return themes.get(name);
+}
+function listThemes() {
+  return [...themes.keys()];
+}
+function getDefaultTheme() {
+  return terrainTheme.name;
+}
+
+// src/generate.ts
+function parseOptionalInteger(value, name) {
+  if (value === void 0 || value === "") return void 0;
+  const parsed = typeof value === "number" ? value : Number(value);
+  if (!Number.isInteger(parsed)) {
+    throw new Error(`Invalid ${name}: "${value}"`);
+  }
+  return parsed;
+}
+function parseYear(value) {
+  const year = parseOptionalInteger(value, "year");
+  if (year !== void 0 && (year < 1 || year > 9999)) {
+    throw new Error(`Invalid year: "${value}"`);
+  }
+  return year;
+}
+function parseDensity(value) {
+  const density = parseOptionalInteger(value, "density") ?? 5;
+  if (density < 1 || density > 10) {
+    throw new Error(`Invalid density: "${value}". Expected an integer from 1 to 10`);
+  }
+  return density;
+}
+function parseHemisphere(value) {
+  if (value === void 0 || value === "") return "north";
+  if (value !== "north" && value !== "south") {
+    throw new Error(`Invalid hemisphere: "${value}". Expected "north" or "south"`);
+  }
+  return value;
+}
+function createTerrainGenerator(dependencies) {
+  return async function generateTerrain2(request) {
+    const username = request.username.trim();
+    if (!username) {
+      throw new Error("GitHub username is required");
+    }
+    const themeName = request.theme?.trim() || dependencies.getDefaultTheme();
+    const theme = dependencies.getTheme(themeName);
+    if (!theme) {
+      throw new Error(
+        `Unknown theme "${themeName}". Available themes: ${dependencies.listThemes().join(", ")}`
+      );
+    }
+    const year = parseYear(request.year);
+    const hemisphere = parseHemisphere(request.hemisphere);
+    const density = parseDensity(request.density);
+    const title = request.title || `@${username}`;
+    const outputDir = request.outputDir?.trim() || "./";
+    const yearLabel = year ?? "last 52 weeks";
+    request.onProgress?.(`Fetching contributions for @${username} (${yearLabel})...`);
+    const data = await dependencies.fetchContributions(username, year, request.token || void 0);
+    request.onProgress?.(`Rendering with ${theme.displayName} theme...`);
+    const output = theme.render(data, {
+      title,
+      width: 840,
+      height: 240,
+      hemisphere,
+      density
+    });
+    await dependencies.makeDirectory(outputDir);
+    const darkPath = (0, import_node_path.join)(outputDir, "maeul-in-the-sky-dark.svg");
+    const lightPath = (0, import_node_path.join)(outputDir, "maeul-in-the-sky-light.svg");
+    await dependencies.writeFile(darkPath, output.dark);
+    await dependencies.writeFile(lightPath, output.light);
+    return {
+      darkPath,
+      lightPath,
+      themeName: theme.name,
+      themeDisplayName: theme.displayName
+    };
+  };
+}
+var generateTerrain = createTerrainGenerator({
+  fetchContributions,
+  getTheme,
+  listThemes,
+  getDefaultTheme,
+  makeDirectory: async (path) => {
+    await (0, import_promises.mkdir)(path, { recursive: true });
+  },
+  writeFile: async (path, content) => {
+    await (0, import_promises.writeFile)(path, content, "utf-8");
+  }
+});
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   computeStats,
   fetchContributions,
+  generateTerrain,
   getTheme,
   listThemes,
   registerTheme

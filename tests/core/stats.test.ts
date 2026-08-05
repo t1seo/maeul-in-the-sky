@@ -156,6 +156,34 @@ describe('computeStats', () => {
       // When all days are equal the algorithm picks index 0 = Sunday
       expect(stats.mostActiveDay).toBe('Sunday');
     });
+
+    it('uses each date for partial-week weekday totals', () => {
+      const stats = computeStats([
+        {
+          firstDay: '2024-12-29',
+          days: [{ date: '2025-01-01', count: 10, level: 4 }],
+        },
+      ]);
+
+      expect(stats.mostActiveDay).toBe('Wednesday');
+    });
+  });
+
+  describe('calendar gaps', () => {
+    it('breaks streaks when adjacent entries are not consecutive dates', () => {
+      const stats = computeStats([
+        {
+          firstDay: '2024-12-29',
+          days: [
+            { date: '2025-01-01', count: 1, level: 1 },
+            { date: '2025-01-03', count: 1, level: 1 },
+          ],
+        },
+      ]);
+
+      expect(stats.longestStreak).toBe(1);
+      expect(stats.currentStreak).toBe(1);
+    });
   });
 
   // ── Determinism ───────────────────────────────────────────────

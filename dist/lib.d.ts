@@ -7,16 +7,16 @@ interface ContributionDay {
   /** GitHub's intensity level (0 = none, 4 = max) */
   level: 0 | 1 | 2 | 3 | 4;
 }
-/** A week of contribution data (7 days, Sunday–Saturday) */
+/** Available contribution days in one Sunday–Saturday calendar week */
 interface ContributionWeek {
-  /** 7 days of contribution data */
+  /** Available days, sorted by date; edge weeks may be partial */
   days: ContributionDay[];
-  /** ISO date of the first day (Sunday) */
+  /** ISO date of the calendar week's Sunday */
   firstDay: string;
 }
 /** Computed statistics from contribution data */
 interface ContributionStats {
-  /** Total contributions in the year */
+  /** Total contributions in the requested range */
   total: number;
   /** Longest consecutive contribution streak (days) */
   longestStreak: number;
@@ -25,13 +25,13 @@ interface ContributionStats {
   /** Most active day of the week (e.g., "Wednesday") */
   mostActiveDay: string;
 }
-/** Complete contribution data for one year */
+/** Complete contribution data for a requested calendar range */
 interface ContributionData {
-  /** 52 (or 53) weeks of contribution data */
+  /** Sunday-based calendar weeks, typically 52 or 53 */
   weeks: ContributionWeek[];
   /** Computed statistics */
   stats: ContributionStats;
-  /** The year this data represents */
+  /** Effective year used for deterministic terrain variants */
   year: number;
   /** GitHub username */
   username: string;
@@ -94,10 +94,31 @@ declare function fetchContributions(
 /**
  * Computes contribution statistics from weekly contribution data.
  *
- * @param weeks - Array of contribution weeks (each week has 7 days, Sunday-Saturday)
+ * @param weeks - Sunday-based contribution weeks; edge weeks may be partial
  * @returns Computed statistics including total, streaks, and most active day
  */
 declare function computeStats(weeks: ContributionWeek[]): ContributionStats;
+
+interface TerrainGenerationRequest {
+  username: string;
+  token?: string;
+  theme?: string;
+  title?: string;
+  outputDir?: string;
+  year?: string | number;
+  hemisphere?: string;
+  density?: string | number;
+  onProgress?: (message: string) => void;
+}
+interface TerrainGenerationResult {
+  darkPath: string;
+  lightPath: string;
+  themeName: string;
+  themeDisplayName: string;
+}
+declare const generateTerrain: (
+  request: TerrainGenerationRequest,
+) => Promise<TerrainGenerationResult>;
 
 /**
  * Register a theme in the global registry
@@ -118,11 +139,14 @@ declare function listThemes(): string[];
 
 export {
   type ContributionData,
+  type TerrainGenerationRequest,
+  type TerrainGenerationResult,
   type Theme,
   type ThemeOptions,
   type ThemeOutput,
   computeStats,
   fetchContributions,
+  generateTerrain,
   getTheme,
   listThemes,
   registerTheme,

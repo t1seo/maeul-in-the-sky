@@ -8,8 +8,6 @@ import type {
   PaletteColor,
 } from '../../core/types.js';
 import { svgRoot, svgStyle } from '../../core/svg.js';
-import { computeStats } from '../../core/stats.js';
-import { registerTheme } from '../registry.js';
 import { contributionGrid, enrichGridCells100, renderTitle, renderStatsBar } from '../shared.js';
 import { getSeasonalPalette100 } from './palette.js';
 import { renderSeasonalTerrainBlocks, getIsoCells } from './blocks.js';
@@ -44,11 +42,9 @@ const terrainTheme: Theme = {
   displayName: 'Terrain',
   description: 'Your contributions build a living world — more code, richer civilization',
   render(data: ContributionData, options: ThemeOptions): ThemeOutput {
-    const stats = computeStats(data.weeks);
-    const dataWithStats: ContributionData = { ...data, stats };
     return {
-      dark: renderMode(dataWithStats, options, 'dark'),
-      light: renderMode(dataWithStats, options, 'light'),
+      dark: renderMode(data, options, 'dark'),
+      light: renderMode(data, options, 'light'),
     };
   },
 };
@@ -79,9 +75,10 @@ function renderMode(data: ContributionData, options: ThemeOptions, mode: ColorMo
   const seed = hash(data.username + mode);
   const variantSeed = hash(data.username + String(data.year));
 
-  // Build per-week seasonal palette array (52 weeks)
+  const weekCount = Math.max(52, data.weeks.length);
+
   const weekPalettes: TerrainPalette100[] = [];
-  for (let w = 0; w < 52; w++) {
+  for (let w = 0; w < weekCount; w++) {
     weekPalettes.push(getSeasonalPalette100(mode, w, seasonRotation));
   }
 
@@ -105,7 +102,7 @@ function renderMode(data: ContributionData, options: ThemeOptions, mode: ColorMo
   const isoCells = getIsoCells(cells100, palette, originX, originY);
 
   // Generate biome overlay (rivers, ponds, forests) with offset seed
-  const biomeMap = generateBiomeMap(52, 7, seed + 7919);
+  const biomeMap = generateBiomeMap(weekCount, 7, seed + 7919);
 
   // Select epic buildings (before regular assets so we can exclude their cells)
   const epicSeed = hash(data.username + 'epic' + String(data.year));
@@ -164,12 +161,10 @@ function renderMode(data: ContributionData, options: ThemeOptions, mode: ColorMo
   // Build ThemePalette bridge for shared utilities
   // Sample 5 anchor levels across the 100-level range
   const anchorLevels = [0, 20, 45, 70, 95];
-  const levelColors = anchorLevels.map(
-    (l): PaletteColor => ({
-      hex: palette.getElevation(l).top,
-      opacity: l === 0 ? 0.5 : 1,
-    }),
-  ) as [PaletteColor, PaletteColor, PaletteColor, PaletteColor, PaletteColor];
+  const levelColors = anchorLevels.map((l): PaletteColor => ({
+    hex: palette.getElevation(l).top,
+    opacity: l === 0 ? 0.5 : 1,
+  })) as [PaletteColor, PaletteColor, PaletteColor, PaletteColor, PaletteColor];
 
   const themePalette: ThemePalette = {
     text: palette.text,
@@ -205,7 +200,4 @@ function renderMode(data: ContributionData, options: ThemeOptions, mode: ColorMo
   return svgRoot({ width: options.width, height: options.height }, content);
 }
 
-// ── Registration ─────────────────────────────────────────────
-
-registerTheme(terrainTheme);
 export { terrainTheme };

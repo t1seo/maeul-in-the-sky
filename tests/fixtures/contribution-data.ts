@@ -1,4 +1,5 @@
 import type { ContributionData, ContributionWeek, ContributionDay } from '../../src/core/types.js';
+import { computeStats } from '../../src/core/stats.js';
 
 // ── Seeded PRNG (Mulberry32) ────────────────────────────────────
 // Deterministic pseudo-random number generator so every call
@@ -83,11 +84,7 @@ function buildWeeks(
 // ── Mock GitHub GraphQL Response ────────────────────────────────
 
 type GitHubContributionLevel =
-  | 'NONE'
-  | 'FIRST_QUARTILE'
-  | 'SECOND_QUARTILE'
-  | 'THIRD_QUARTILE'
-  | 'FOURTH_QUARTILE';
+  'NONE' | 'FIRST_QUARTILE' | 'SECOND_QUARTILE' | 'THIRD_QUARTILE' | 'FOURTH_QUARTILE';
 
 interface MockApiResponse {
   data: {
@@ -143,7 +140,7 @@ export function createMockContributionData(
 
   return {
     weeks,
-    stats: { total: 0, longestStreak: 0, currentStreak: 0, mostActiveDay: '' },
+    stats: computeStats(weeks),
     year: 2025,
     username: 'testuser',
     ...overrides,
@@ -195,7 +192,7 @@ export function createEmptyContributionData(): ContributionData {
 
   return {
     weeks,
-    stats: { total: 0, longestStreak: 0, currentStreak: 0, mostActiveDay: '' },
+    stats: computeStats(weeks),
     year: 2025,
     username: 'emptyuser',
   };
@@ -209,7 +206,7 @@ export function createFullContributionData(): ContributionData {
 
   return {
     weeks,
-    stats: { total: 0, longestStreak: 0, currentStreak: 0, mostActiveDay: '' },
+    stats: computeStats(weeks),
     year: 2025,
     username: 'fulluser',
   };
@@ -233,7 +230,7 @@ export function createStreakTestData(streakDays: number): ContributionData {
 
   return {
     weeks,
-    stats: { total: 0, longestStreak: 0, currentStreak: 0, mostActiveDay: '' },
+    stats: computeStats(weeks),
     year: 2025,
     username: 'streakuser',
   };

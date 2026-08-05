@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   fetchContributions,
   computeStats,
+  generateTerrain,
   getTheme,
   listThemes,
   registerTheme,
@@ -16,6 +17,10 @@ describe('lib exports', () => {
 
   it('computeStats is a function', () => {
     expect(typeof computeStats).toBe('function');
+  });
+
+  it('generateTerrain is a function', () => {
+    expect(typeof generateTerrain).toBe('function');
   });
 
   it('getTheme is a function', () => {

@@ -1,7 +1,8 @@
 import type { Theme } from '../core/types.js';
+import { terrainTheme } from './terrain/index.js';
 
 /** Internal theme storage */
-const themes: Map<string, Theme> = new Map();
+const themes: Map<string, Theme> = new Map([[terrainTheme.name, terrainTheme]]);
 
 /**
  * Register a theme in the global registry
@@ -33,5 +34,5 @@ export function listThemes(): string[] {
  * @returns The default theme identifier
  */
 export function getDefaultTheme(): string {
-  return 'terrain';
+  return terrainTheme.name;
 }

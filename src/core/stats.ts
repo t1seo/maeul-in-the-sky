@@ -1,9 +1,12 @@
 import type { ContributionWeek, ContributionStats } from './types.js';
+import { getContributionDayOfWeek, normalizeContributionWeeks } from './calendar.js';
+
+const DAY_MS = 86_400_000;
 
 /**
  * Computes contribution statistics from weekly contribution data.
  *
- * @param weeks - Array of contribution weeks (each week has 7 days, Sunday-Saturday)
+ * @param weeks - Sunday-based contribution weeks; edge weeks may be partial
  * @returns Computed statistics including total, streaks, and most active day
  */
 export function computeStats(weeks: ContributionWeek[]): ContributionStats {
@@ -17,8 +20,16 @@ export function computeStats(weeks: ContributionWeek[]): ContributionStats {
     };
   }
 
-  // Flatten all days from all weeks into a single array
-  const allDays = weeks.flatMap((week) => week.days);
+  const allDays = normalizeContributionWeeks(weeks).flatMap((week) => week.days);
+
+  if (allDays.length === 0) {
+    return {
+      total: 0,
+      longestStreak: 0,
+      currentStreak: 0,
+      mostActiveDay: 'Monday',
+    };
+  }
 
   // 1. Compute total contributions
   const total = allDays.reduce((sum, day) => sum + day.count, 0);
@@ -26,34 +37,41 @@ export function computeStats(weeks: ContributionWeek[]): ContributionStats {
   // 2. Compute longest streak
   let longestStreak = 0;
   let currentStreakCount = 0;
+  let previousTimestamp: number | undefined;
 
   for (const day of allDays) {
+    const timestamp = Date.parse(`${day.date}T00:00:00.000Z`);
     if (day.count > 0) {
-      currentStreakCount++;
+      currentStreakCount =
+        previousTimestamp !== undefined && timestamp - previousTimestamp === DAY_MS
+          ? currentStreakCount + 1
+          : 1;
       longestStreak = Math.max(longestStreak, currentStreakCount);
     } else {
       currentStreakCount = 0;
     }
+    previousTimestamp = timestamp;
   }
 
   // 3. Compute current streak (counting backwards from the last day)
   let currentStreak = 0;
+  let laterTimestamp: number | undefined;
   for (let i = allDays.length - 1; i >= 0; i--) {
-    if (allDays[i].count > 0) {
-      currentStreak++;
-    } else {
-      break; // Stop at the first day with 0 contributions
+    const day = allDays[i];
+    const timestamp = Date.parse(`${day.date}T00:00:00.000Z`);
+    if (day.count <= 0 || (laterTimestamp !== undefined && laterTimestamp - timestamp !== DAY_MS)) {
+      break;
     }
+    currentStreak++;
+    laterTimestamp = timestamp;
   }
 
   // 4. Compute most active day of the week
   // Accumulate contributions by day of week (0=Sunday, 1=Monday, ..., 6=Saturday)
   const dayTotals: number[] = [0, 0, 0, 0, 0, 0, 0];
 
-  for (const week of weeks) {
-    for (let dayIndex = 0; dayIndex < week.days.length; dayIndex++) {
-      dayTotals[dayIndex] += week.days[dayIndex].count;
-    }
+  for (const day of allDays) {
+    dayTotals[getContributionDayOfWeek(day.date)] += day.count;
   }
 
   // Find the day with the maximum contributions

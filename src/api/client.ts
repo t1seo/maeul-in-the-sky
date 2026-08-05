@@ -3,6 +3,8 @@
  */
 
 import type { ContributionData, ContributionWeek, ContributionDay } from '../core/types.js';
+import { normalizeContributionWeeks } from '../core/calendar.js';
+import { computeStats } from '../core/stats.js';
 import { CONTRIBUTIONS_QUERY } from './queries.js';
 
 /** GitHub GraphQL API endpoint */
@@ -10,11 +12,7 @@ const GITHUB_API_ENDPOINT = 'https://api.github.com/graphql';
 
 /** GitHub's contribution level enum values */
 type GitHubContributionLevel =
-  | 'NONE'
-  | 'FIRST_QUARTILE'
-  | 'SECOND_QUARTILE'
-  | 'THIRD_QUARTILE'
-  | 'FOURTH_QUARTILE';
+  'NONE' | 'FIRST_QUARTILE' | 'SECOND_QUARTILE' | 'THIRD_QUARTILE' | 'FOURTH_QUARTILE';
 
 /** GraphQL API response structure */
 interface GitHubApiResponse {
@@ -208,7 +206,7 @@ export async function fetchContributions(
   const calendar = response.data!.user!.contributionsCollection.contributionCalendar;
 
   // Transform GitHub API response to ContributionWeek format
-  const weeks: ContributionWeek[] = calendar.weeks.map((week) => {
+  const rawWeeks: ContributionWeek[] = calendar.weeks.map((week) => {
     const days: ContributionDay[] = week.contributionDays.map((day) => ({
       date: day.date,
       count: day.contributionCount,
@@ -217,19 +215,18 @@ export async function fetchContributions(
 
     return {
       days,
-      firstDay: days[0].date,
+      firstDay: days[0]?.date ?? '',
     };
   });
 
-  // Return contribution data with placeholder stats
-  // Stats will be computed by the stats module
+  const weeks = normalizeContributionWeeks(rawWeeks);
+  const stats = computeStats(weeks);
+
   return {
     weeks,
     stats: {
+      ...stats,
       total: calendar.totalContributions,
-      longestStreak: 0,
-      currentStreak: 0,
-      mostActiveDay: '',
     },
     year: effectiveYear,
     username,

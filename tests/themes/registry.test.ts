@@ -36,6 +36,10 @@ describe('registerTheme', () => {
 });
 
 describe('getTheme', () => {
+  it('provides the built-in terrain theme without side-effect imports', () => {
+    expect(getTheme('terrain')?.name).toBe('terrain');
+  });
+
   it('should return a registered theme', () => {
     const theme = createMockTheme('get-test');
     registerTheme(theme);

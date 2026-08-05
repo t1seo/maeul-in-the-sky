@@ -1,7 +1,6 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig([
-  // CLI entry — includes shebang banner
   {
     entry: { index: 'src/index.ts' },
     format: ['esm'],
@@ -10,9 +9,6 @@ export default defineConfig([
     shims: true,
     splitting: false,
     sourcemap: true,
-    banner: {
-      js: '#!/usr/bin/env node',
-    },
   },
   // Library entry — no shebang, includes type declarations
   {

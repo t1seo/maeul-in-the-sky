@@ -5,7 +5,6 @@ import {
   createFullContributionData,
   createEmptyContributionData,
 } from '../../fixtures/contribution-data.js';
-import { computeStats } from '../../../src/core/stats.js';
 import type { ThemeOptions, ContributionData } from '../../../src/core/types.js';
 
 // ── Shared options ───────────────────────────────────────────
@@ -148,7 +147,6 @@ describe('render with full data (all level 4)', () => {
 
 describe('render with realistic mock data', () => {
   const data = createMockContributionData();
-  const _stats = computeStats(data.weeks);
   const result = terrainTheme.render(data, defaultOptions);
 
   it('renders valid SVGs', () => {
@@ -171,11 +169,9 @@ describe('render with realistic mock data', () => {
     expect(result.dark).toContain('@keyframes');
   });
 
-  it('recomputes stats from week data', () => {
-    // The theme internally calls computeStats, which should produce valid stats
-    // that appear in the stats bar
-    expect(result.dark).toContain('contributions');
-    expect(result.dark).toContain('streak');
+  it('renders the complete stats supplied through its interface', () => {
+    expect(result.dark).toContain(`${data.stats.currentStreak}d current streak`);
+    expect(result.dark).toContain(`${data.stats.longestStreak}d longest streak`);
   });
 });
 

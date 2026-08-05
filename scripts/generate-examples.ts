@@ -36,7 +36,7 @@ function generateRealisticData(username: string): ContributionData {
 
       // Simulate realistic patterns: weekdays more active, some bursts
       const isWeekday = d >= 1 && d <= 5;
-      const burstWeek = (w % 8 === 0 || w % 13 === 0);
+      const burstWeek = w % 8 === 0 || w % 13 === 0;
       const r = random();
 
       let count = 0;
@@ -65,7 +65,9 @@ mkdirSync(outDir, { recursive: true });
 
 const themes = listThemes();
 console.log(`Generating examples for ${themes.length} themes: ${themes.join(', ')}\n`);
-console.log(`Stats: ${data.stats.total} contributions, ${data.stats.longestStreak}d longest streak, ${data.stats.mostActiveDay}\n`);
+console.log(
+  `Stats: ${data.stats.total} contributions, ${data.stats.longestStreak}d longest streak, ${data.stats.mostActiveDay}\n`,
+);
 
 for (const themeName of themes) {
   const theme = getTheme(themeName)!;

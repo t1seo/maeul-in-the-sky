@@ -13,9 +13,7 @@ import '../src/themes/terrain/index.js';
 
 // ── Data Generators ──────────────────────────────────────────
 
-function makeWeeks(
-  gen: (w: number, d: number, rng: () => number) => number,
-): ContributionWeek[] {
+function makeWeeks(gen: (w: number, d: number, rng: () => number) => number): ContributionWeek[] {
   const weeks: ContributionWeek[] = [];
   const baseDate = new Date(2025, 0, 5);
   let seed = 42;
@@ -47,65 +45,85 @@ function makeData(name: string, weeks: ContributionWeek[]): ContributionData {
 }
 
 // Case 1: Sparse — mostly empty, few scattered contributions (archipelago)
-const sparseData = makeData('sparse-user', makeWeeks((w, d, rng) => {
-  const r = rng();
-  if (r > 0.88) return Math.floor(rng() * 3) + 1;
-  return 0;
-}));
+const sparseData = makeData(
+  'sparse-user',
+  makeWeeks((w, d, rng) => {
+    const r = rng();
+    if (r > 0.88) return Math.floor(rng() * 3) + 1;
+    return 0;
+  }),
+);
 
 // Case 2: Weekday warrior — active on weekdays, idle weekends
-const weekdayData = makeData('weekday-user', makeWeeks((w, d, rng) => {
-  const isWeekday = d >= 1 && d <= 5;
-  const r = rng();
-  if (!isWeekday) return r > 0.85 ? 1 : 0;
-  if (r > 0.25) return Math.floor(rng() * 10) + 1;
-  return 0;
-}));
+const weekdayData = makeData(
+  'weekday-user',
+  makeWeeks((w, d, rng) => {
+    const isWeekday = d >= 1 && d <= 5;
+    const r = rng();
+    if (!isWeekday) return r > 0.85 ? 1 : 0;
+    if (r > 0.25) return Math.floor(rng() * 10) + 1;
+    return 0;
+  }),
+);
 
 // Case 3: Burst mode — intense sprints with gaps
-const burstData = makeData('burst-user', makeWeeks((w, d, rng) => {
-  const inSprint = (w % 12 < 4);
-  const r = rng();
-  if (inSprint) {
-    if (d >= 1 && d <= 5) return Math.floor(rng() * 18) + 3;
-    return Math.floor(rng() * 8) + 1;
-  }
-  return r > 0.92 ? 1 : 0;
-}));
+const burstData = makeData(
+  'burst-user',
+  makeWeeks((w, d, rng) => {
+    const inSprint = w % 12 < 4;
+    const r = rng();
+    if (inSprint) {
+      if (d >= 1 && d <= 5) return Math.floor(rng() * 18) + 3;
+      return Math.floor(rng() * 8) + 1;
+    }
+    return r > 0.92 ? 1 : 0;
+  }),
+);
 
 // Case 4: Consistent — steady daily contributions
-const consistentData = makeData('consistent-user', makeWeeks((w, d, rng) => {
-  const r = rng();
-  const base = 3 + Math.floor(rng() * 5);
-  if (d >= 1 && d <= 5) return base + Math.floor(rng() * 3);
-  return Math.floor(base * 0.5);
-}));
+const consistentData = makeData(
+  'consistent-user',
+  makeWeeks((_w, d, rng) => {
+    const base = 3 + Math.floor(rng() * 5);
+    if (d >= 1 && d <= 5) return base + Math.floor(rng() * 3);
+    return Math.floor(base * 0.5);
+  }),
+);
 
 // Case 5: Gradual growth — year starts empty, builds up
-const growthData = makeData('growth-user', makeWeeks((w, d, rng) => {
-  const progress = w / 51;
-  const r = rng();
-  const threshold = 1 - progress * 0.8;
-  if (r < threshold) return 0;
-  return Math.floor(rng() * (progress * 15)) + 1;
-}));
+const growthData = makeData(
+  'growth-user',
+  makeWeeks((w, d, rng) => {
+    const progress = w / 51;
+    const r = rng();
+    const threshold = 1 - progress * 0.8;
+    if (r < threshold) return 0;
+    return Math.floor(rng() * (progress * 15)) + 1;
+  }),
+);
 
 // Case 6: Maximum — every cell near max (dense civilization)
-const maxData = makeData('max-user', makeWeeks((w, d, rng) => {
-  return Math.floor(rng() * 8) + 10;
-}));
+const maxData = makeData(
+  'max-user',
+  makeWeeks((w, d, rng) => {
+    return Math.floor(rng() * 8) + 10;
+  }),
+);
 
 // Case 7: Early year — only first ~5 weeks have contributions
-const earlyYearData = makeData('early-year-user', makeWeeks((w, d, rng) => {
-  if (w >= 5) return 0; // rest of year is empty
-  const r = rng();
-  if (d >= 1 && d <= 5) {
-    // Weekdays: moderate activity
-    return r > 0.3 ? Math.floor(rng() * 8) + 1 : 0;
-  }
-  // Weekends: sparse
-  return r > 0.75 ? Math.floor(rng() * 3) + 1 : 0;
-}));
+const earlyYearData = makeData(
+  'early-year-user',
+  makeWeeks((w, d, rng) => {
+    if (w >= 5) return 0; // rest of year is empty
+    const r = rng();
+    if (d >= 1 && d <= 5) {
+      // Weekdays: moderate activity
+      return r > 0.3 ? Math.floor(rng() * 8) + 1 : 0;
+    }
+    // Weekends: sparse
+    return r > 0.75 ? Math.floor(rng() * 3) + 1 : 0;
+  }),
+);
 
 // ── Generate ─────────────────────────────────────────────────
 
@@ -139,7 +157,9 @@ for (const c of cases) {
 
   const darkSize = (Buffer.byteLength(output.dark) / 1024).toFixed(1);
   const lightSize = (Buffer.byteLength(output.light) / 1024).toFixed(1);
-  console.log(`${c.label}: dark=${darkSize}KB, light=${lightSize}KB, ${c.data.stats.total} contributions`);
+  console.log(
+    `${c.label}: dark=${darkSize}KB, light=${lightSize}KB, ${c.data.stats.total} contributions`,
+  );
 
   htmlParts.push(`
     <div class="case">

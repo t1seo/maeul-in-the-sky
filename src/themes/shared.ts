@@ -1,5 +1,6 @@
 import type { ContributionData, ContributionStats, ThemePalette } from '../core/types.js';
 import { formatNumber } from '../core/svg.js';
+import { getContributionDayOfWeek } from '../core/calendar.js';
 import { clamp } from '../utils/math.js';
 
 /** 10-level intensity (0 = none, 9 = maximum) */
@@ -106,8 +107,8 @@ export function contributionGrid(
 
   for (let week = 0; week < data.weeks.length; week++) {
     const weekData = data.weeks[week];
-    for (let day = 0; day < weekData.days.length; day++) {
-      const dayData = weekData.days[day];
+    for (const dayData of weekData.days) {
+      const day = getContributionDayOfWeek(dayData.date);
       cells.push({
         x: offsetX + week * (cellSize + gap),
         y: offsetY + day * (cellSize + gap),
