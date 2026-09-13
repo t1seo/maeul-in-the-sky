@@ -13,7 +13,8 @@ afterEach(async () => {
   );
 });
 
-describe('catalog regeneration', () => {
+// Each integration case rasterizes six PNG sheets, including under CI coverage.
+describe('catalog regeneration', { timeout: 30_000 }, () => {
   it('C04-generate: preserves existing sheets and creates the interactive gallery', async () => {
     // Given
     const outputDirectory = await mkdtemp(join(tmpdir(), 'maeul-catalog-'));
