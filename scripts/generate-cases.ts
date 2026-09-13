@@ -5,6 +5,7 @@
 
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { optimizeGeneratedArtifact } from './optimization/artifact.js';
 import { computeStats } from '../src/core/stats.js';
 import { getTheme } from '../src/themes/registry.js';
 import type { ContributionData, ContributionDay, ContributionWeek } from '../src/core/types.js';
@@ -15,7 +16,7 @@ import '../src/themes/terrain/index.js';
 
 function makeWeeks(gen: (w: number, d: number, rng: () => number) => number): ContributionWeek[] {
   const weeks: ContributionWeek[] = [];
-  const baseDate = new Date(2025, 0, 5);
+  const baseDate = new Date(Date.UTC(2025, 0, 5));
   let seed = 42;
   function rng() {
     seed = (seed * 16807) % 2147483647;
@@ -25,15 +26,16 @@ function makeWeeks(gen: (w: number, d: number, rng: () => number) => number): Co
   for (let w = 0; w < 52; w++) {
     const days: ContributionDay[] = [];
     const weekStart = new Date(baseDate);
-    weekStart.setDate(weekStart.getDate() + w * 7);
+    weekStart.setUTCDate(weekStart.getUTCDate() + w * 7);
 
     for (let d = 0; d < 7; d++) {
       const date = new Date(weekStart);
-      date.setDate(date.getDate() + d);
+      date.setUTCDate(date.getUTCDate() + d);
       const dateStr = date.toISOString().split('T')[0];
       const count = Math.max(0, Math.round(gen(w, d, rng)));
-      const level = count === 0 ? 0 : count <= 2 ? 1 : count <= 5 ? 2 : count <= 10 ? 3 : 4;
-      days.push({ date: dateStr, count, level: level as 0 | 1 | 2 | 3 | 4 });
+      const level: ContributionDay['level'] =
+        count === 0 ? 0 : count <= 2 ? 1 : count <= 5 ? 2 : count <= 10 ? 3 : 4;
+      days.push({ date: dateStr, count, level: level });
     }
     weeks.push({ firstDay: days[0].date, days });
   }
@@ -134,29 +136,34 @@ const cases = [
   { name: 'consistent', label: 'Consistent Contributor', data: consistentData },
   { name: 'growth', label: 'Gradual Growth', data: growthData },
   { name: 'max', label: 'Maximum Density (Civilization)', data: maxData },
-  { name: 'early-year', label: 'Early Year (New Year Start)', data: earlyYearData },
+  {
+    name: 'early-year',
+    label: 'First Five Active Weeks (Remaining Days Are Known Zero)',
+    data: earlyYearData,
+  },
 ];
 
 const outDir = join(import.meta.dirname, '..', 'examples', 'cases');
 mkdirSync(outDir, { recursive: true });
 
-const theme = getTheme('terrain')!;
+const theme = getTheme('terrain');
+if (!theme) throw new Error('Terrain theme is not registered');
 const htmlParts: string[] = [];
 
 for (const c of cases) {
   const output = theme.render(c.data, {
-    title: `@${c.data.username}`,
+    title: `@${c.data.username} · Synthetic sample`,
     width: 840,
     height: 240,
   });
 
   const darkPath = join(outDir, `${c.name}-dark.svg`);
   const lightPath = join(outDir, `${c.name}-light.svg`);
-  writeFileSync(darkPath, output.dark, 'utf-8');
-  writeFileSync(lightPath, output.light, 'utf-8');
+  writeFileSync(darkPath, optimizeGeneratedArtifact(output.dark), 'utf-8');
+  writeFileSync(lightPath, optimizeGeneratedArtifact(output.light), 'utf-8');
 
-  const darkSize = (Buffer.byteLength(output.dark) / 1024).toFixed(1);
-  const lightSize = (Buffer.byteLength(output.light) / 1024).toFixed(1);
+  const darkSize = (Buffer.byteLength(optimizeGeneratedArtifact(output.dark)) / 1024).toFixed(1);
+  const lightSize = (Buffer.byteLength(optimizeGeneratedArtifact(output.light)) / 1024).toFixed(1);
   console.log(
     `${c.label}: dark=${darkSize}KB, light=${lightSize}KB, ${c.data.stats.total} contributions`,
   );
@@ -194,10 +201,12 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
   <h1>Maeul in the Sky — Terrain Theme Case Studies</h1>
-  <p>7 different contribution patterns showing how the terrain adapts</p>
+  <p>7 synthetic contribution patterns; 364 supplied days from 2025-01-05 through 2026-01-03, not a complete calendar year</p>
   ${htmlParts.join('\n')}
 </body>
 </html>`;
 
 writeFileSync(join(outDir, 'cases.html'), html, 'utf-8');
 console.log(`\nPreview: ${join(outDir, 'cases.html')}`);
+
+console.log('Source: seeded synthetic sample, 364 supplied days, 2025-01-05 to 2026-01-03.');

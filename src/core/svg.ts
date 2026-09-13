@@ -3,6 +3,7 @@ import type { SvgAttributes } from './types.js';
 export interface SvgAccessibility {
   title: string;
   description: string;
+  namespace?: string;
 }
 
 /**
@@ -14,7 +15,7 @@ export interface SvgAccessibility {
  */
 export function svgElement(tag: string, attrs: SvgAttributes, children?: string): string {
   const attrString = Object.entries(attrs)
-    .map(([key, value]) => `${key}="${value}"`)
+    .map(([key, value]) => `${key}="${escapeXml(String(value))}"`)
     .join(' ');
 
   if (children !== undefined) {
@@ -44,12 +45,13 @@ export function svgRoot(
     return svgElement('svg', mergedAttrs, content);
   }
 
+  const namespace = accessibility.namespace ?? 'maeul-svg';
   mergedAttrs.role = 'img';
-  mergedAttrs['aria-labelledby'] = 'maeul-svg-title maeul-svg-description';
+  mergedAttrs['aria-labelledby'] = `${namespace}-title ${namespace}-description`;
   mergedAttrs.focusable = 'false';
   const accessibleContent =
-    `<title id="maeul-svg-title">${escapeXml(accessibility.title)}</title>` +
-    `<desc id="maeul-svg-description">${escapeXml(accessibility.description)}</desc>` +
+    `<title id="${escapeXml(namespace)}-title">${escapeXml(accessibility.title)}</title>` +
+    `<desc id="${escapeXml(namespace)}-description">${escapeXml(accessibility.description)}</desc>` +
     content;
   return svgElement('svg', mergedAttrs, accessibleContent);
 }
@@ -153,7 +155,11 @@ export function svgGradient(
  * @returns Formatted string (e.g., "1,247")
  */
 export function formatNumber(n: number): string {
-  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const text = n.toString();
+  if (text.includes('e')) return text;
+  const [integer = '', fraction] = text.split('.');
+  const grouped = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return fraction === undefined ? grouped : `${grouped}.${fraction}`;
 }
 
 /**
@@ -168,4 +174,8 @@ export function escapeXml(str: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
+}
+
+export function svgNumber(value: number): string {
+  return String(Math.round(value * 100) / 100);
 }

@@ -81,16 +81,19 @@ describe('terrainTheme.render', () => {
 
   it('provides an accessible title and contribution summary', () => {
     expect(result.dark).toContain('role="img"');
-    expect(result.dark).toContain('aria-labelledby="maeul-svg-title maeul-svg-description"');
-    expect(result.dark).toContain('<title id="maeul-svg-title">@testuser</title>');
+    const labels = result.dark.match(/aria-labelledby="([^"]+)"/)?.[1].split(' ');
+    expect(labels).toHaveLength(2);
+    expect(result.dark).toContain(`<title id="${labels?.[0]}">@testuser</title>`);
+    expect(result.dark).toContain(`<desc id="${labels?.[1]}">`);
     expect(result.dark).toContain('contributions across');
     expect(result.dark).toContain('active days');
   });
 
   it('disables CSS and SMIL animation for reduced motion', () => {
-    expect(result.dark).toContain('@media (prefers-reduced-motion: reduce)');
+    expect(result.dark).toContain('@media (prefers-reduced-motion: no-preference)');
     expect(result.dark).toContain('animation: none !important');
-    expect(result.dark).toContain('animate, animateMotion, animateTransform { display: none; }');
+    expect(result.dark).toContain('<g data-motion-branch="static">');
+    expect(result.dark).toContain('<g data-motion-branch="active" display="none">');
   });
 
   it('shows the covered contribution dates', () => {

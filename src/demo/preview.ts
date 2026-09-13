@@ -1,0 +1,42 @@
+import { renderTerrain, snapshotToContributionData } from '../browser.js';
+import type { ResolvedRenderSettings } from '../core/render-options.js';
+import type { SnapshotV1 } from '../core/snapshot-types.js';
+import type { ColorMode, ThemeOptions } from '../core/types.js';
+import type { TerrainRenderResult } from '../core/scene-types.js';
+
+export function renderOptions(settings: ResolvedRenderSettings): ThemeOptions {
+  return {
+    ...settings,
+    width: settings.layout === 'card' ? 420 : 840,
+    height: settings.layout === 'card' ? 360 : 240,
+  };
+}
+
+export function renderSnapshot(
+  snapshot: SnapshotV1,
+  settings = snapshot.settings,
+  namespace = 'village',
+): TerrainRenderResult {
+  const presented =
+    snapshot.source.kind === 'sample' && !settings.title.endsWith(' · sample data')
+      ? { ...settings, title: `${settings.title.slice(0, 986)} · sample data` }
+      : settings;
+  return renderTerrain(snapshotToContributionData(snapshot), {
+    ...renderOptions(presented),
+    namespace,
+  });
+}
+
+export function staticSnapshotSvg(snapshot: SnapshotV1, mode: ColorMode): string {
+  return renderSnapshot(snapshot, { ...snapshot.settings, motion: 'off' })[mode];
+}
+
+export function mountSvg(target: HTMLElement, svg: string): SVGSVGElement {
+  const parsed = new DOMParser().parseFromString(svg, 'image/svg+xml');
+  const root = parsed.documentElement;
+  if (!(root instanceof SVGSVGElement))
+    throw new DOMException('Generated village is not a valid SVG');
+  const imported = document.importNode(root, true);
+  target.replaceChildren(imported);
+  return imported;
+}

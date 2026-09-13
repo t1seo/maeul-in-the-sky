@@ -1,4 +1,43 @@
+import type { MotionMode } from './render-options.js';
 import type { SmilAnimation, SmilTransformAnimation, CssAnimation } from './types.js';
+
+export interface MotionContext {
+  readonly mode: MotionMode;
+  readonly namespace: string;
+}
+
+const DEFAULT_MOTION: MotionContext = { mode: 'full', namespace: '' };
+// SVG renderers are synchronous; nested scopes restore their caller even on failure.
+let currentContext = DEFAULT_MOTION;
+
+export function currentMotionContext(): MotionContext {
+  return currentContext;
+}
+
+export function withMotionContext(context: MotionContext, render: () => string): string {
+  const previous = currentContext;
+  currentContext = context;
+  try {
+    return render();
+  } finally {
+    currentContext = previous;
+  }
+}
+
+/** Gate only a known animation fragment at its creation site, retaining its base shape. */
+export function motionMarkup(fragment: string): string {
+  return currentContext.mode === 'full' ? fragment : '';
+}
+
+/** Encode identifiers at definition and reference sites without rewriting SVG text. */
+export function motionId(localId: string): string {
+  if (!currentContext.namespace) return localId;
+  const encode = (value: string): string =>
+    Array.from(value, (character) =>
+      /^[A-Za-z0-9-]$/.test(character) ? character : `_${character.codePointAt(0)?.toString(16)}_`,
+    ).join('');
+  return `m-${encode(currentContext.namespace)}--${encode(localId)}`;
+}
 
 /**
  * Generate a SMIL `<animate>` element string.
@@ -7,6 +46,7 @@ import type { SmilAnimation, SmilTransformAnimation, CssAnimation } from './type
  * @returns `<animate>` element string
  */
 export function smilAnimate(animation: SmilAnimation): string {
+  if (currentContext.mode !== 'full') return '';
   const { attributeName, values, dur, repeatCount, begin, fill = 'freeze' } = animation;
 
   const attrs: string[] = [
@@ -31,6 +71,7 @@ export function smilAnimate(animation: SmilAnimation): string {
  * @returns `<animateTransform>` element string
  */
 export function smilAnimateTransform(animation: SmilTransformAnimation): string {
+  if (currentContext.mode !== 'full') return '';
   const { type, values, dur, repeatCount, begin } = animation;
 
   const attrs: string[] = [
@@ -55,6 +96,7 @@ export function smilAnimateTransform(animation: SmilTransformAnimation): string 
  * @returns CSS string containing @keyframes block and class rule
  */
 export function cssKeyframes(animation: CssAnimation): string {
+  if (currentContext.mode !== 'full') return '';
   const {
     name,
     keyframes,

@@ -3,13 +3,12 @@
  * Usage: npx tsx scripts/generate-preview.ts
  */
 
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { optimizeGeneratedArtifact } from './optimization/artifact.js';
 import { computeStats } from '../src/core/stats.js';
-import { getTheme } from '../src/themes/registry.js';
+import { terrainTheme as theme } from '../src/themes/terrain/index.js';
 import type { ContributionDay, ContributionWeek } from '../src/core/types.js';
-
-import '../src/themes/terrain/index.js';
 
 function makeWeeks(
   genSeed: number,
@@ -22,16 +21,16 @@ function makeWeeks(
   }
 
   const weeks: ContributionWeek[] = [];
-  const baseDate = new Date(2025, 0, 5);
+  const baseDate = new Date(Date.UTC(2025, 0, 5));
 
   for (let w = 0; w < 52; w++) {
     const days: ContributionDay[] = [];
     const weekStart = new Date(baseDate);
-    weekStart.setDate(weekStart.getDate() + w * 7);
+    weekStart.setUTCDate(weekStart.getUTCDate() + w * 7);
 
     for (let d = 0; d < 7; d++) {
       const date = new Date(weekStart);
-      date.setDate(date.getDate() + d);
+      date.setUTCDate(date.getUTCDate() + d);
       const dateStr = date.toISOString().split('T')[0];
       const count = Math.max(0, Math.round(gen(w, d, rng)));
       const level: 0 | 1 | 2 | 3 | 4 =
@@ -43,8 +42,8 @@ function makeWeeks(
   return weeks;
 }
 
-const theme = getTheme('terrain')!;
 const assetsDir = join(import.meta.dirname, '..', '.github', 'assets');
+mkdirSync(assetsDir, { recursive: true });
 
 // Main preview — weekday warrior (rich, realistic terrain)
 const mainWeeks = makeWeeks(77, (w, d, rng) => {
@@ -63,9 +62,13 @@ const mainData = {
   year: 2025,
   username: 'maeul-sky',
 };
-const mainOutput = theme.render(mainData, { title: '@maeul-sky', width: 840, height: 240 });
-writeFileSync(join(assetsDir, 'preview-dark.svg'), mainOutput.dark);
-writeFileSync(join(assetsDir, 'preview-light.svg'), mainOutput.light);
+const mainOutput = theme.render(mainData, {
+  title: '@maeul-sky · Synthetic sample',
+  width: 840,
+  height: 240,
+});
+writeFileSync(join(assetsDir, 'preview-dark.svg'), optimizeGeneratedArtifact(mainOutput.dark));
+writeFileSync(join(assetsDir, 'preview-light.svg'), optimizeGeneratedArtifact(mainOutput.light));
 console.log(`Main: ${mainData.stats.total} contributions`);
 
 // Sparse — archipelago
@@ -78,8 +81,12 @@ const sparseData = {
   year: 2025,
   username: 'sparse',
 };
-const sparseOutput = theme.render(sparseData, { title: '@sparse', width: 840, height: 240 });
-writeFileSync(join(assetsDir, 'preview-sparse.svg'), sparseOutput.dark);
+const sparseOutput = theme.render(sparseData, {
+  title: '@sparse · Synthetic sample',
+  width: 840,
+  height: 240,
+});
+writeFileSync(join(assetsDir, 'preview-sparse.svg'), optimizeGeneratedArtifact(sparseOutput.dark));
 console.log(`Sparse: ${sparseData.stats.total} contributions`);
 
 // Max — dense civilization
@@ -87,9 +94,15 @@ const maxWeeks = makeWeeks(42, (_w, _d, rng) => {
   return Math.floor(rng() * 8) + 10;
 });
 const maxData = { weeks: maxWeeks, stats: computeStats(maxWeeks), year: 2025, username: 'max' };
-const maxOutput = theme.render(maxData, { title: '@max', width: 840, height: 240 });
-writeFileSync(join(assetsDir, 'preview-max.svg'), maxOutput.dark);
-writeFileSync(join(assetsDir, 'preview-max-light.svg'), maxOutput.light);
+const maxOutput = theme.render(maxData, {
+  title: '@max · Synthetic sample',
+  width: 840,
+  height: 240,
+});
+writeFileSync(join(assetsDir, 'preview-max.svg'), optimizeGeneratedArtifact(maxOutput.dark));
+writeFileSync(join(assetsDir, 'preview-max-light.svg'), optimizeGeneratedArtifact(maxOutput.light));
 console.log(`Max: ${maxData.stats.total} contributions`);
 
 console.log('Done — all preview SVGs generated.');
+
+console.log('Source: seeded synthetic sample, 364 supplied days, 2025-01-05 to 2026-01-03.');

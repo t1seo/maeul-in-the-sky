@@ -11,12 +11,13 @@ Thank you for helping improve Maeul in the Sky. Bug fixes, new Terrain assets, a
 
 ## Local setup
 
-Node.js 20 or newer is required.
+The installed package supports Node.js 20 or newer. Use Node.js 24 for development and browser-backed checks.
 
 ```bash
 git clone https://github.com/t1seo/maeul-in-the-sky.git
 cd maeul-in-the-sky
 npm ci
+npx playwright install --with-deps chromium
 ```
 
 Run the development checks:
@@ -25,6 +26,7 @@ Run the development checks:
 npm run lint
 npm run typecheck
 npm run format:check
+npm run check:catalog
 npm test
 npm run test:artifact
 ```
@@ -33,9 +35,10 @@ Generate the local preset demo after renderer or asset changes:
 
 ```bash
 npm run generate:demo
+npm run generate:catalog
 ```
 
-Open `docs/demo/index.html` and inspect Nature, Balanced, and Civilization in both color modes. Animation changes must also be checked with reduced motion enabled.
+Serve `docs/demo` over local HTTP and inspect Nature, Balanced, and Civilization in both color modes, plus the asset catalog at `/catalog/`. Animation changes must also be checked with reduced motion enabled. The full cross-browser suite (`npm run test:browser`) additionally requires `npx playwright install --with-deps firefox webkit`.
 
 ## Project layout
 

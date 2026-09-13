@@ -11,42 +11,55 @@ Animated isometric terrain SVG generator for GitHub contribution graphs.
 ```
 src/
 ├── api/
-│   ├── client.ts          # GitHub GraphQL API client with retry
+│   ├── client.ts          # Typed GitHub GraphQL client facade
+│   ├── request.ts         # Retry, timeout, and transport policy
+│   ├── response.ts        # GraphQL response parsing
 │   └── queries.ts         # GraphQL query strings
 ├── core/
 │   ├── types.ts           # Shared type definitions
 │   ├── calendar.ts        # Canonical Sunday-based calendar normalization
-│   └── stats.ts           # Contribution statistics (streaks, totals)
+│   ├── stats.ts           # Contribution statistics (streaks, totals)
+│   ├── settings/          # Versioned settings/snapshot schemas and parsers
+│   └── archive/           # Portable multi-year comparison helpers
 ├── themes/
 │   ├── registry.ts        # Theme registration system
 │   ├── shared.ts          # Grid layout, enrichment, title/stats bar
 │   └── terrain/           # Isometric terrain theme
-│       ├── index.ts       # Main renderer (entry point)
-│       ├── blocks.ts      # Isometric block rendering (toIsoCells, renderBlock)
-│       ├── palette.ts     # 100-level color palette with elevation mapping
+│       ├── index.ts       # Portable scene/render entry point
+│       ├── scene/         # Deterministic preparation, metadata, and layouts
+│       ├── blocks.ts      # Compatibility facade for isometric block modules
+│       ├── palette.ts     # Compatibility facade for palette modules
 │       ├── seasons.ts     # 4-season system (8 zones, tinting, asset overrides)
 │       ├── biomes.ts      # Procedural biome generation (rivers, ponds, forests)
-│       ├── effects.ts     # Clouds, celestials, water overlays, particles
-│       └── assets.ts      # 118 terrain asset types (trees, buildings, etc.)
+│       ├── effects/       # Clouds, celestials, water overlays, and particles
+│       ├── assets/        # 193 ordinary catalog IDs and modular renderers
+│       └── epics/         # 30 separately counted Wonder gates/renderers
+├── demo/                  # Portable enhanced demo controllers
+├── preview/               # Loopback-only authenticated preview service
+├── output/                # SVG/snapshot files and static PNG adapter
+├── archive/               # Node multi-year archive generator
+├── browser.ts             # Browser-safe public entry
 ├── utils/
 │   ├── math.ts            # seededRandom, lerp, clamp
 │   ├── color.ts           # Color manipulation
 │   └── noise.ts           # Simplex noise wrapper
-├── index.ts               # CLI entry (commander.js)
+├── cli/                   # Commander CLI and Action adapter logic
+├── index.ts               # CLI entry
 ├── action.ts              # GitHub Action adapter
-└── generate.ts            # Deep Terrain Generation module
+├── generate/              # Input/options/output orchestration
+└── generate.ts            # Terrain Generation facade
 ```
 
 ## Key Concepts
 
 - **100-level system**: Contribution counts map to levels 0-99 for fine-grained terrain
 - **Isometric projection**: `isoX = originX + (week - day) * THW`, `isoY = originY + (week + day) * THH`
-- **originX = 405**: Right-aligned terrain (rightmost edge at ~x=820 for 53 weeks)
+- **Projection**: Prepared scenes fit their complete calendar bounds into banner/card viewports; the legacy block helper retains caller-supplied origins such as x=405
 - **Contribution Calendar**: Sunday-based weeks with date-positioned days; edge weeks may be partial
-- **Season zones**: 8 zones (0-7) aligned to calendar months via rotation. `w = (week + rotation) % 52` before zone lookup
-- **Season rotation**: `computeSeasonRotation(oldestDate, hemisphere)` computes weeks from Dec 1 to the oldest data week
+- **Season zones**: Prepared scenes derive the 8 zones (0-7) from each absolute UTC date relative to December 1, including supported years 1–9999
+- **Season rotation**: Legacy helpers retain `computeSeasonRotation(oldestDate, hemisphere)` for caller-provided week grids
 - **Hemisphere**: Southern hemisphere adds +26 to rotation (6-month shift)
-- **Seeded RNG**: All procedural generation uses `seededRandom(seed)` for deterministic output
+- **Seeded RNG**: Scene identities derive from layout version, normalized username, optional layout seed, and absolute dates/weeks; lighting mode never changes placements
 - **Biome map**: `Map<"week,day", BiomeContext>` — rivers follow noise-based paths, ponds form at low points
 
 ## Commands
@@ -64,14 +77,16 @@ npm run test:artifact # Build, pack, install, and smoke-test every public adapte
 
 ```bash
 npx tsx scripts/generate-preview.ts    # Generate README preview SVGs (.github/assets/)
+npx tsx scripts/generate-demo.ts       # Generate six demo preset SVGs (docs/demo/assets/)
 npx tsx scripts/generate-examples.ts   # Generate example SVGs (examples/)
 npx tsx scripts/generate-cases.ts      # Generate case study SVGs (examples/cases/)
+npx tsx scripts/generate-catalog.ts docs/demo/catalog # Generate registry catalog sheets
 ```
 
 ## Testing
 
 - Tests in `tests/` mirror `src/` structure
-- `vitest` with no special setup
+- Vitest runs Node tests and a real Chromium browser project, merging both into the existing coverage thresholds; install Chromium with `npx playwright install chromium`
 - Season tests use specific week numbers mapped to expected zones
 
 ## Conventions
@@ -90,16 +105,17 @@ npx tsx scripts/generate-cases.ts      # Generate case study SVGs (examples/case
 1. Validate a Terrain Generation request
 2. Fetch and normalize its Contribution Calendar
 3. Compute complete contribution statistics
-4. Build grid cells with 100-level intensity (`enrichGridCells100`)
-5. Generate seasonal palettes for every returned week (`getSeasonalPalette100`)
-6. Convert to isometric cells (`toIsoCells`)
-7. Generate the complete biome map (`generateBiomeMap`)
-8. Render layers back-to-front: sky → celestials → clouds → terrain blocks → assets → water → overlays → particles → stats bar
-9. Create the output directory and write dark/light SVGs
+4. Resolve versioned render settings and normalization
+5. Prepare one deterministic scene with isometric cells, biomes, ordinary assets, Wonders, neighborhoods, and metadata
+6. Shade the prepared scene into matching dark/light SVGs
+7. Optionally rerender with motion off for static PNG and serialize a snapshot
+8. For archive requests, reuse one fixed comparison scale for two to five annual scenes
+9. Create output directories and write the requested SVG, PNG, snapshot, and archive files
 
 ## Important Constants
 
 - SVG viewport: 840 x 240
 - `THW = 8` (tile half-width), `THH = 3.5` (tile half-height)
-- Grid: 52 weeks x 7 days
+- Grid: all supplied Sunday-based weeks and available days, including partial edge weeks
+- Catalog: 193 ordinary IDs (189 classic + 4 Korean), including 68 seasonal IDs; 30 Wonders are counted separately
 - Animation budget: 50 max (water 15, sparkle 10, clouds 2, windmills 4, flags 4)

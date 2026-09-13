@@ -27,6 +27,12 @@ function mockResponse(body: unknown, status = 200, statusText = 'OK'): Response 
   } as Response;
 }
 
+function mockRateLimitResponse(body: unknown): Response {
+  const response = mockResponse(body, 403);
+  response.headers.set('retry-after', '1');
+  return response;
+}
+
 // ── Test Suite ──────────────────────────────────────────────────
 
 describe('fetchContributions', () => {
@@ -41,6 +47,7 @@ describe('fetchContributions', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.unstubAllGlobals();
     vi.useRealTimers();
   });
 
@@ -243,8 +250,8 @@ describe('fetchContributions', () => {
 
     // Fail twice with rate limit, succeed on third attempt
     fetchMock
-      .mockResolvedValueOnce(mockResponse(rateLimitResponse, 403))
-      .mockResolvedValueOnce(mockResponse(rateLimitResponse, 403))
+      .mockResolvedValueOnce(mockRateLimitResponse(rateLimitResponse))
+      .mockResolvedValueOnce(mockRateLimitResponse(rateLimitResponse))
       .mockResolvedValueOnce(mockResponse(apiResponse));
 
     const resultPromise = fetchContributions('testuser', 2025, 'ghp_token');
@@ -264,9 +271,9 @@ describe('fetchContributions', () => {
     };
 
     fetchMock
-      .mockResolvedValueOnce(mockResponse(rateLimitResponse, 403))
-      .mockResolvedValueOnce(mockResponse(rateLimitResponse, 403))
-      .mockResolvedValueOnce(mockResponse(rateLimitResponse, 403));
+      .mockResolvedValueOnce(mockRateLimitResponse(rateLimitResponse))
+      .mockResolvedValueOnce(mockRateLimitResponse(rateLimitResponse))
+      .mockResolvedValueOnce(mockRateLimitResponse(rateLimitResponse));
 
     const resultPromise = fetchContributions('testuser', 2025, 'ghp_token');
 
@@ -281,7 +288,7 @@ describe('fetchContributions', () => {
     await settled;
 
     expect(caughtError).toBeDefined();
-    expect(caughtError!.message).toMatch(/Network failure/);
+    expect(caughtError).toMatchObject({ code: 'ratelimit', status: 403 });
     expect(fetchMock).toHaveBeenCalledTimes(3);
   });
 
@@ -341,7 +348,7 @@ describe('fetchContributions', () => {
 
   // ── Unknown contribution level (default case) ──────────────
 
-  it('should map unknown contribution levels to 0', async () => {
+  it('should reject unknown contribution levels without retrying', async () => {
     const apiResponse = {
       data: {
         user: {
@@ -366,15 +373,16 @@ describe('fetchContributions', () => {
     };
 
     fetchMock.mockResolvedValueOnce(mockResponse(apiResponse));
-    const result = await fetchContributions('testuser', 2025, 'ghp_token');
-
-    expect(result.weeks[0].days[0].level).toBe(0);
-    expect(result.weeks[0].days[0].count).toBe(3);
+    await expect(fetchContributions('testuser', 2025, 'ghp_token')).rejects.toMatchObject({
+      code: 'invalidresponse',
+      retryable: false,
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   // ── Generic GraphQL error (not NOT_FOUND, not rate limit) ──
 
-  it('should throw on generic GraphQL error after retries', async () => {
+  it('should reject generic GraphQL errors without retrying', async () => {
     const genericError = {
       errors: [{ type: 'SOME_ERROR', message: 'Something went wrong' }],
     };
@@ -394,12 +402,13 @@ describe('fetchContributions', () => {
     await settled;
 
     expect(caughtError).toBeDefined();
-    expect(caughtError!.message).toMatch(/Network failure/);
+    expect(caughtError).toMatchObject({ code: 'invalidresponse', retryable: false });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   // ── HTTP 403 without GraphQL errors ───────────────────────
 
-  it('should throw rate limit on HTTP 403 without error body', async () => {
+  it('should classify HTTP 403 without a rate-limit signal as an auth failure', async () => {
     fetchMock
       .mockResolvedValueOnce(mockResponse({ data: null }, 403, 'Forbidden'))
       .mockResolvedValueOnce(mockResponse({ data: null }, 403, 'Forbidden'))
@@ -415,7 +424,8 @@ describe('fetchContributions', () => {
     await settled;
 
     expect(caughtError).toBeDefined();
-    expect(caughtError!.message).toMatch(/Network failure/);
+    expect(caughtError).toMatchObject({ code: 'auth', status: 403, retryable: false });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   // ── Generic HTTP error (500) ──────────────────────────────
@@ -436,7 +446,8 @@ describe('fetchContributions', () => {
     await settled;
 
     expect(caughtError).toBeDefined();
-    expect(caughtError!.message).toMatch(/Network failure/);
+    expect(caughtError).toMatchObject({ code: 'http', status: 500, retryable: true });
+    expect(fetchMock).toHaveBeenCalledTimes(3);
   });
 
   // ── Non-Error thrown by fetch ─────────────────────────────
@@ -457,7 +468,9 @@ describe('fetchContributions', () => {
     await settled;
 
     expect(caughtError).toBeDefined();
-    expect(caughtError!.message).toMatch(/Network failure: string error/);
+    expect(caughtError).toMatchObject({ code: 'network', retryable: true });
+    expect(caughtError?.message).not.toContain('string error');
+    expect(fetchMock).toHaveBeenCalledTimes(3);
   });
 
   // ── Rolling window (no year parameter) ─────────────────────

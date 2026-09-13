@@ -1,0 +1,1761 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-13T07:40:05.278Z",
+  "source": {
+    "revision": "c6d60487e50347fd84b770b57618d181acd874de",
+    "historical": false,
+    "dirty": true,
+    "sourceSha256": "0e2e4c4e70d360a659775e83d34133814309f1e0f8c898446726a38619f20af1",
+    "harnessSha256": "6ad30775aaa6e986132d37ac86800fb00002591719a31d1ddec849c939d71250",
+    "changedDuringRun": false
+  },
+  "environment": {
+    "node": "v26.8.1",
+    "v8": "14.6.202.34-node.28",
+    "platform": "darwin",
+    "arch": "arm64",
+    "osRelease": "25.5.0",
+    "cpuModel": "Apple M1",
+    "logicalCpus": 8,
+    "totalMemory": 17179869184,
+    "timingKey": "b7fd5c79d12502f13f1194ebdbe69178187ddbf62363f4348918413368a4be03",
+    "timingCaveat": "Shared host; no forced GC or process isolation between fixtures. Timing only gates matching runtime/OS/hardware; matching identity cannot prove equal load. Heap peaks are observations between renders, not true allocation peaks.",
+    "dependencies": {
+      "tsx": "4.23.7",
+      "typescript": "5.9.3",
+      "simplex-noise": "4.0.3",
+      "svgo": "4.1.0",
+      "zod": "4.6.4",
+      "@resvg/resvg-js": "2.6.2"
+    }
+  },
+  "config": {
+    "warmup": 20,
+    "iterations": 100,
+    "options": {
+      "title": "@benchmark",
+      "width": 840,
+      "height": 240,
+      "density": 5,
+      "hemisphere": "north"
+    },
+    "gzipLevel": 9,
+    "timingScope": "Synchronous terrainTheme.render dark+light pair; excludes import/startup, metrics, PNG, network and disk. Fixtures run empty/mixed/full in one process.",
+    "percentileMethod": "Nearest rank: sorted[ceil(n*p)-1], p=0.5 and 0.95 (research-compatible)."
+  },
+  "fixtures": [
+    {
+      "name": "empty",
+      "dataSha256": "d32d787c63ddce555da81c8e4031caf9ff29fb876c1bc49215b27d41c168ebd6",
+      "metadata": {
+        "username": "benchmark",
+        "year": 2025,
+        "fromDate": "2024-12-29",
+        "toDate": "2025-12-27",
+        "days": 364,
+        "weeks": 52,
+        "contributions": 0,
+        "activeDays": 0
+      },
+      "samples": [
+        {
+          "milliseconds": 14.56000000000006,
+          "heapUsed": 49249776,
+          "rss": 207290368
+        },
+        {
+          "milliseconds": 15.584208999999987,
+          "heapUsed": 77884160,
+          "rss": 207749120
+        },
+        {
+          "milliseconds": 17.753084000000058,
+          "heapUsed": 73201368,
+          "rss": 208371712
+        },
+        {
+          "milliseconds": 17.14737500000001,
+          "heapUsed": 68494888,
+          "rss": 208846848
+        },
+        {
+          "milliseconds": 14.741667000000007,
+          "heapUsed": 63825128,
+          "rss": 209453056
+        },
+        {
+          "milliseconds": 14.543083000000024,
+          "heapUsed": 59226912,
+          "rss": 209993728
+        },
+        {
+          "milliseconds": 13.971915999999965,
+          "heapUsed": 55028960,
+          "rss": 210501632
+        },
+        {
+          "milliseconds": 15.180124999999862,
+          "heapUsed": 83467072,
+          "rss": 211042304
+        },
+        {
+          "milliseconds": 13.923541999999998,
+          "heapUsed": 78221672,
+          "rss": 211582976
+        },
+        {
+          "milliseconds": 14.527082999999948,
+          "heapUsed": 73238184,
+          "rss": 212156416
+        },
+        {
+          "milliseconds": 15.545250000000124,
+          "heapUsed": 68014968,
+          "rss": 212680704
+        },
+        {
+          "milliseconds": 16.09462499999995,
+          "heapUsed": 63709792,
+          "rss": 213385216
+        },
+        {
+          "milliseconds": 16.819082999999864,
+          "heapUsed": 59193608,
+          "rss": 213942272
+        },
+        {
+          "milliseconds": 13.721125000000029,
+          "heapUsed": 55314224,
+          "rss": 214466560
+        },
+        {
+          "milliseconds": 13.56916699999988,
+          "heapUsed": 83799360,
+          "rss": 214941696
+        },
+        {
+          "milliseconds": 13.41216600000007,
+          "heapUsed": 78552896,
+          "rss": 215482368
+        },
+        {
+          "milliseconds": 13.025583000000097,
+          "heapUsed": 73582784,
+          "rss": 216055808
+        },
+        {
+          "milliseconds": 15.159999999999854,
+          "heapUsed": 68741360,
+          "rss": 216563712
+        },
+        {
+          "milliseconds": 14.841250000000173,
+          "heapUsed": 64040072,
+          "rss": 217104384
+        },
+        {
+          "milliseconds": 15.842457999999851,
+          "heapUsed": 60041816,
+          "rss": 217710592
+        },
+        {
+          "milliseconds": 13.069124999999985,
+          "heapUsed": 88518384,
+          "rss": 218169344
+        },
+        {
+          "milliseconds": 13.891832999999906,
+          "heapUsed": 83294496,
+          "rss": 218726400
+        },
+        {
+          "milliseconds": 14.196374999999989,
+          "heapUsed": 78331008,
+          "rss": 219299840
+        },
+        {
+          "milliseconds": 14.213790999999901,
+          "heapUsed": 73126440,
+          "rss": 219873280
+        },
+        {
+          "milliseconds": 14.954833000000008,
+          "heapUsed": 68517152,
+          "rss": 220463104
+        },
+        {
+          "milliseconds": 15.659415999999965,
+          "heapUsed": 64387656,
+          "rss": 221003776
+        },
+        {
+          "milliseconds": 16.828500000000076,
+          "heapUsed": 92838128,
+          "rss": 221528064
+        },
+        {
+          "milliseconds": 15.840416999999889,
+          "heapUsed": 87584248,
+          "rss": 221937664
+        },
+        {
+          "milliseconds": 14.15083299999992,
+          "heapUsed": 82433040,
+          "rss": 222347264
+        },
+        {
+          "milliseconds": 12.962834000000157,
+          "heapUsed": 77305888,
+          "rss": 222707712
+        },
+        {
+          "milliseconds": 13.57899999999995,
+          "heapUsed": 72684840,
+          "rss": 223100928
+        },
+        {
+          "milliseconds": 13.75408399999992,
+          "heapUsed": 68056480,
+          "rss": 223444992
+        },
+        {
+          "milliseconds": 13.117040999999972,
+          "heapUsed": 63885536,
+          "rss": 223821824
+        },
+        {
+          "milliseconds": 12.851208999999926,
+          "heapUsed": 92310984,
+          "rss": 224100352
+        },
+        {
+          "milliseconds": 13.464582999999948,
+          "heapUsed": 86895232,
+          "rss": 224477184
+        },
+        {
+          "milliseconds": 15.14912500000014,
+          "heapUsed": 81753408,
+          "rss": 224854016
+        },
+        {
+          "milliseconds": 14.712125000000015,
+          "heapUsed": 77146400,
+          "rss": 225214464
+        },
+        {
+          "milliseconds": 14.071374999999989,
+          "heapUsed": 72451248,
+          "rss": 225574912
+        },
+        {
+          "milliseconds": 20.685874999999896,
+          "heapUsed": 41563712,
+          "rss": 225951744
+        },
+        {
+          "milliseconds": 14.662792000000081,
+          "heapUsed": 70286008,
+          "rss": 225951744
+        },
+        {
+          "milliseconds": 14.70879100000002,
+          "heapUsed": 65578600,
+          "rss": 225951744
+        },
+        {
+          "milliseconds": 14.274874999999838,
+          "heapUsed": 60754528,
+          "rss": 226082816
+        },
+        {
+          "milliseconds": 13.84524999999985,
+          "heapUsed": 55600776,
+          "rss": 226082816
+        },
+        {
+          "milliseconds": 13.971542,
+          "heapUsed": 51036464,
+          "rss": 226082816
+        },
+        {
+          "milliseconds": 14.190209000000095,
+          "heapUsed": 46842600,
+          "rss": 226099200
+        },
+        {
+          "milliseconds": 14.447124999999915,
+          "heapUsed": 75271072,
+          "rss": 226099200
+        },
+        {
+          "milliseconds": 13.959082999999964,
+          "heapUsed": 69864016,
+          "rss": 226099200
+        },
+        {
+          "milliseconds": 14.006040999999868,
+          "heapUsed": 64447800,
+          "rss": 226099200
+        },
+        {
+          "milliseconds": 13.260915999999952,
+          "heapUsed": 59315832,
+          "rss": 226099200
+        },
+        {
+          "milliseconds": 13.735832999999957,
+          "heapUsed": 54709960,
+          "rss": 226099200
+        },
+        {
+          "milliseconds": 14.093624999999975,
+          "heapUsed": 50134424,
+          "rss": 226099200
+        },
+        {
+          "milliseconds": 13.510708999999906,
+          "heapUsed": 46218376,
+          "rss": 226131968
+        },
+        {
+          "milliseconds": 13.341584000000012,
+          "heapUsed": 74433856,
+          "rss": 226131968
+        },
+        {
+          "milliseconds": 13.417500000000018,
+          "heapUsed": 69280304,
+          "rss": 226131968
+        },
+        {
+          "milliseconds": 13.181584000000157,
+          "heapUsed": 64136472,
+          "rss": 226328576
+        },
+        {
+          "milliseconds": 13.347540999999865,
+          "heapUsed": 59005640,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.007000000000062,
+          "heapUsed": 54112456,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.587291999999934,
+          "heapUsed": 50147192,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 12.753125000000182,
+          "heapUsed": 78366920,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.323999999999842,
+          "heapUsed": 72951496,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.157666999999947,
+          "heapUsed": 67797816,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 12.766791999999896,
+          "heapUsed": 62671208,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 12.984500000000025,
+          "heapUsed": 57798304,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.393166000000065,
+          "heapUsed": 53427976,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.072959000000083,
+          "heapUsed": 81792080,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.260250000000042,
+          "heapUsed": 76380912,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.581416999999874,
+          "heapUsed": 71226744,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 12.988792000000103,
+          "heapUsed": 65835120,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.924125000000004,
+          "heapUsed": 61475600,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.481374999999844,
+          "heapUsed": 56584072,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.466416000000208,
+          "heapUsed": 52738632,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 12.88491699999986,
+          "heapUsed": 81100664,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.104583000000048,
+          "heapUsed": 75683224,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.182708999999932,
+          "heapUsed": 70540008,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.293749999999818,
+          "heapUsed": 65669768,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.263083999999935,
+          "heapUsed": 60713152,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.256291999999803,
+          "heapUsed": 56344224,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.272542000000158,
+          "heapUsed": 84786104,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 14.436291999999867,
+          "heapUsed": 79368848,
+          "rss": 226344960
+        },
+        {
+          "milliseconds": 13.985625000000255,
+          "heapUsed": 74218560,
+          "rss": 226361344
+        },
+        {
+          "milliseconds": 13.620042000000012,
+          "heapUsed": 68830400,
+          "rss": 226361344
+        },
+        {
+          "milliseconds": 13.656166999999641,
+          "heapUsed": 63978944,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.428916999999728,
+          "heapUsed": 59810840,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.319332999999915,
+          "heapUsed": 88237568,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.266000000000076,
+          "heapUsed": 82820272,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.47774999999956,
+          "heapUsed": 77675056,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.389500000000226,
+          "heapUsed": 72305912,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.763208999999733,
+          "heapUsed": 67711192,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.396334000000024,
+          "heapUsed": 63079944,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.03579099999979,
+          "heapUsed": 91093216,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.70495800000026,
+          "heapUsed": 86024536,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.793290999999954,
+          "heapUsed": 80869320,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.039832999999817,
+          "heapUsed": 75473288,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.084458000000268,
+          "heapUsed": 70855768,
+          "rss": 226459648
+        },
+        {
+          "milliseconds": 13.449207999999999,
+          "heapUsed": 66007456,
+          "rss": 226476032
+        },
+        {
+          "milliseconds": 13.411333000000013,
+          "heapUsed": 61982040,
+          "rss": 226476032
+        },
+        {
+          "milliseconds": 12.816959000000224,
+          "heapUsed": 90263464,
+          "rss": 226476032
+        },
+        {
+          "milliseconds": 13.32925000000023,
+          "heapUsed": 85108152,
+          "rss": 226476032
+        },
+        {
+          "milliseconds": 13.704000000000178,
+          "heapUsed": 79701080,
+          "rss": 226476032
+        },
+        {
+          "milliseconds": 13.298041000000012,
+          "heapUsed": 74571208,
+          "rss": 226476032
+        }
+      ],
+      "timing": {
+        "medianMs": 13.587291999999934,
+        "p95Ms": 16.09462499999995
+      },
+      "memory": {
+        "startingHeap": 52722400,
+        "peakObservedHeap": 92838128,
+        "endingHeap": 74571544,
+        "peakObservedRss": 226476032
+      },
+      "outputs": {
+        "dark": {
+          "rawBytes": 473837,
+          "gzipBytes": 66071,
+          "sha256": "c945af283cd8f70b83096ce666627d70a351e9f1a1f760335f9a2ebfdd1e997a",
+          "elements": 5592,
+          "cssTargets": 0,
+          "cssKeyframes": 6,
+          "smilElements": 2,
+          "duplicateIds": [],
+          "danglingReferences": [],
+          "externalReferences": [],
+          "unsupportedSelectors": [],
+          "scripts": 0,
+          "eventHandlers": 0,
+          "viewBox": "0 0 840 240",
+          "title": "@benchmark\n2024-12-29: 0 contributions\n2024-12-30: 0 contributions\n2025-01-05: 0 contributions\n2024-12-31: 0 contributions\n2025-01-06: 0 contributions\n2025-01-12: 0 contributions\n2025-01-01: 0 contributions\n2025-01-07: 0 contributions\n2025-01-13: 0 contributions\n2025-01-19: 0 contributions\n2025-01-02: 0 contributions\n2025-01-08: 0 contributions\n2025-01-14: 0 contributions\n2025-01-20: 0 contributions\n2025-01-26: 0 contributions\n2025-01-03: 0 contributions\n2025-01-09: 0 contributions\n2025-01-15: 0 contributions\n2025-01-21: 0 contributions\n2025-01-27: 0 contributions\n2025-02-02: 0 contributions\n2025-01-04: 0 contributions\n2025-01-10: 0 contributions\n2025-01-16: 0 contributions\n2025-01-22: 0 contributions\n2025-01-28: 0 contributions\n2025-02-03: 0 contributions\n2025-02-09: 0 contributions\n2025-01-11: 0 contributions\n2025-01-17: 0 contributions\n2025-01-23: 0 contributions\n2025-01-29: 0 contributions\n2025-02-04: 0 contributions\n2025-02-10: 0 contributions\n2025-02-16: 0 contributions\n2025-01-18: 0 contributions\n2025-01-24: 0 contributions\n2025-01-30: 0 contributions\n2025-02-05: 0 contributions\n2025-02-11: 0 contributions\n2025-02-17: 0 contributions\n2025-02-23: 0 contributions\n2025-01-25: 0 contributions\n2025-01-31: 0 contributions\n2025-02-06: 0 contributions\n2025-02-12: 0 contributions\n2025-02-18: 0 contributions\n2025-02-24: 0 contributions\n2025-03-02: 0 contributions\n2025-02-01: 0 contributions\n2025-02-07: 0 contributions\n2025-02-13: 0 contributions\n2025-02-19: 0 contributions\n2025-02-25: 0 contributions\n2025-03-03: 0 contributions\n2025-03-09: 0 contributions\n2025-02-08: 0 contributions\n2025-02-14: 0 contributions\n2025-02-20: 0 contributions\n2025-02-26: 0 contributions\n2025-03-04: 0 contributions\n2025-03-10: 0 contributions\n2025-03-16: 0 contributions\n2025-02-15: 0 contributions\n2025-02-21: 0 contributions\n2025-02-27: 0 contributions\n2025-03-05: 0 contributions\n2025-03-11: 0 contributions\n2025-03-17: 0 contributions\n2025-03-23: 0 contributions\n2025-02-22: 0 contributions\n2025-02-28: 0 contributions\n2025-03-06: 0 contributions\n2025-03-12: 0 contributions\n2025-03-18: 0 contributions\n2025-03-24: 0 contributions\n2025-03-30: 0 contributions\n2025-03-01: 0 contributions\n2025-03-07: 0 contributions\n2025-03-13: 0 contributions\n2025-03-19: 0 contributions\n2025-03-25: 0 contributions\n2025-03-31: 0 contributions\n2025-04-06: 0 contributions\n2025-03-08: 0 contributions\n2025-03-14: 0 contributions\n2025-03-20: 0 contributions\n2025-03-26: 0 contributions\n2025-04-01: 0 contributions\n2025-04-07: 0 contributions\n2025-04-13: 0 contributions\n2025-03-15: 0 contributions\n2025-03-21: 0 contributions\n2025-03-27: 0 contributions\n2025-04-02: 0 contributions\n2025-04-08: 0 contributions\n2025-04-14: 0 contributions\n2025-04-20: 0 contributions\n2025-03-22: 0 contributions\n2025-03-28: 0 contributions\n2025-04-03: 0 contributions\n2025-04-09: 0 contributions\n2025-04-15: 0 contributions\n2025-04-21: 0 contributions\n2025-04-27: 0 contributions\n2025-03-29: 0 contributions\n2025-04-04: 0 contributions\n2025-04-10: 0 contributions\n2025-04-16: 0 contributions\n2025-04-22: 0 contributions\n2025-04-28: 0 contributions\n2025-05-04: 0 contributions\n2025-04-05: 0 contributions\n2025-04-11: 0 contributions\n2025-04-17: 0 contributions\n2025-04-23: 0 contributions\n2025-04-29: 0 contributions\n2025-05-05: 0 contributions\n2025-05-11: 0 contributions\n2025-04-12: 0 contributions\n2025-04-18: 0 contributions\n2025-04-24: 0 contributions\n2025-04-30: 0 contributions\n2025-05-06: 0 contributions\n2025-05-12: 0 contributions\n2025-05-18: 0 contributions\n2025-04-19: 0 contributions\n2025-04-25: 0 contributions\n2025-05-01: 0 contributions\n2025-05-07: 0 contributions\n2025-05-13: 0 contributions\n2025-05-19: 0 contributions\n2025-05-25: 0 contributions\n2025-04-26: 0 contributions\n2025-05-02: 0 contributions\n2025-05-08: 0 contributions\n2025-05-14: 0 contributions\n2025-05-20: 0 contributions\n2025-05-26: 0 contributions\n2025-06-01: 0 contributions\n2025-05-03: 0 contributions\n2025-05-09: 0 contributions\n2025-05-15: 0 contributions\n2025-05-21: 0 contributions\n2025-05-27: 0 contributions\n2025-06-02: 0 contributions\n2025-06-08: 0 contributions\n2025-05-10: 0 contributions\n2025-05-16: 0 contributions\n2025-05-22: 0 contributions\n2025-05-28: 0 contributions\n2025-06-03: 0 contributions\n2025-06-09: 0 contributions\n2025-06-15: 0 contributions\n2025-05-17: 0 contributions\n2025-05-23: 0 contributions\n2025-05-29: 0 contributions\n2025-06-04: 0 contributions\n2025-06-10: 0 contributions\n2025-06-16: 0 contributions\n2025-06-22: 0 contributions\n2025-05-24: 0 contributions\n2025-05-30: 0 contributions\n2025-06-05: 0 contributions\n2025-06-11: 0 contributions\n2025-06-17: 0 contributions\n2025-06-23: 0 contributions\n2025-06-29: 0 contributions\n2025-05-31: 0 contributions\n2025-06-06: 0 contributions\n2025-06-12: 0 contributions\n2025-06-18: 0 contributions\n2025-06-24: 0 contributions\n2025-06-30: 0 contributions\n2025-07-06: 0 contributions\n2025-06-07: 0 contributions\n2025-06-13: 0 contributions\n2025-06-19: 0 contributions\n2025-06-25: 0 contributions\n2025-07-01: 0 contributions\n2025-07-07: 0 contributions\n2025-07-13: 0 contributions\n2025-06-14: 0 contributions\n2025-06-20: 0 contributions\n2025-06-26: 0 contributions\n2025-07-02: 0 contributions\n2025-07-08: 0 contributions\n2025-07-14: 0 contributions\n2025-07-20: 0 contributions\n2025-06-21: 0 contributions\n2025-06-27: 0 contributions\n2025-07-03: 0 contributions\n2025-07-09: 0 contributions\n2025-07-15: 0 contributions\n2025-07-21: 0 contributions\n2025-07-27: 0 contributions\n2025-06-28: 0 contributions\n2025-07-04: 0 contributions\n2025-07-10: 0 contributions\n2025-07-16: 0 contributions\n2025-07-22: 0 contributions\n2025-07-28: 0 contributions\n2025-08-03: 0 contributions\n2025-07-05: 0 contributions\n2025-07-11: 0 contributions\n2025-07-17: 0 contributions\n2025-07-23: 0 contributions\n2025-07-29: 0 contributions\n2025-08-04: 0 contributions\n2025-08-10: 0 contributions\n2025-07-12: 0 contributions\n2025-07-18: 0 contributions\n2025-07-24: 0 contributions\n2025-07-30: 0 contributions\n2025-08-05: 0 contributions\n2025-08-11: 0 contributions\n2025-08-17: 0 contributions\n2025-07-19: 0 contributions\n2025-07-25: 0 contributions\n2025-07-31: 0 contributions\n2025-08-06: 0 contributions\n2025-08-12: 0 contributions\n2025-08-18: 0 contributions\n2025-08-24: 0 contributions\n2025-07-26: 0 contributions\n2025-08-01: 0 contributions\n2025-08-07: 0 contributions\n2025-08-13: 0 contributions\n2025-08-19: 0 contributions\n2025-08-25: 0 contributions\n2025-08-31: 0 contributions\n2025-08-02: 0 contributions\n2025-08-08: 0 contributions\n2025-08-14: 0 contributions\n2025-08-20: 0 contributions\n2025-08-26: 0 contributions\n2025-09-01: 0 contributions\n2025-09-07: 0 contributions\n2025-08-09: 0 contributions\n2025-08-15: 0 contributions\n2025-08-21: 0 contributions\n2025-08-27: 0 contributions\n2025-09-02: 0 contributions\n2025-09-08: 0 contributions\n2025-09-14: 0 contributions\n2025-08-16: 0 contributions\n2025-08-22: 0 contributions\n2025-08-28: 0 contributions\n2025-09-03: 0 contributions\n2025-09-09: 0 contributions\n2025-09-15: 0 contributions\n2025-09-21: 0 contributions\n2025-08-23: 0 contributions\n2025-08-29: 0 contributions\n2025-09-04: 0 contributions\n2025-09-10: 0 contributions\n2025-09-16: 0 contributions\n2025-09-22: 0 contributions\n2025-09-28: 0 contributions\n2025-08-30: 0 contributions\n2025-09-05: 0 contributions\n2025-09-11: 0 contributions\n2025-09-17: 0 contributions\n2025-09-23: 0 contributions\n2025-09-29: 0 contributions\n2025-10-05: 0 contributions\n2025-09-06: 0 contributions\n2025-09-12: 0 contributions\n2025-09-18: 0 contributions\n2025-09-24: 0 contributions\n2025-09-30: 0 contributions\n2025-10-06: 0 contributions\n2025-10-12: 0 contributions\n2025-09-13: 0 contributions\n2025-09-19: 0 contributions\n2025-09-25: 0 contributions\n2025-10-01: 0 contributions\n2025-10-07: 0 contributions\n2025-10-13: 0 contributions\n2025-10-19: 0 contributions\n2025-09-20: 0 contributions\n2025-09-26: 0 contributions\n2025-10-02: 0 contributions\n2025-10-08: 0 contributions\n2025-10-14: 0 contributions\n2025-10-20: 0 contributions\n2025-10-26: 0 contributions\n2025-09-27: 0 contributions\n2025-10-03: 0 contributions\n2025-10-09: 0 contributions\n2025-10-15: 0 contributions\n2025-10-21: 0 contributions\n2025-10-27: 0 contributions\n2025-11-02: 0 contributions\n2025-10-04: 0 contributions\n2025-10-10: 0 contributions\n2025-10-16: 0 contributions\n2025-10-22: 0 contributions\n2025-10-28: 0 contributions\n2025-11-03: 0 contributions\n2025-11-09: 0 contributions\n2025-10-11: 0 contributions\n2025-10-17: 0 contributions\n2025-10-23: 0 contributions\n2025-10-29: 0 contributions\n2025-11-04: 0 contributions\n2025-11-10: 0 contributions\n2025-11-16: 0 contributions\n2025-10-18: 0 contributions\n2025-10-24: 0 contributions\n2025-10-30: 0 contributions\n2025-11-05: 0 contributions\n2025-11-11: 0 contributions\n2025-11-17: 0 contributions\n2025-11-23: 0 contributions\n2025-10-25: 0 contributions\n2025-10-31: 0 contributions\n2025-11-06: 0 contributions\n2025-11-12: 0 contributions\n2025-11-18: 0 contributions\n2025-11-24: 0 contributions\n2025-11-30: 0 contributions\n2025-11-01: 0 contributions\n2025-11-07: 0 contributions\n2025-11-13: 0 contributions\n2025-11-19: 0 contributions\n2025-11-25: 0 contributions\n2025-12-01: 0 contributions\n2025-12-07: 0 contributions\n2025-11-08: 0 contributions\n2025-11-14: 0 contributions\n2025-11-20: 0 contributions\n2025-11-26: 0 contributions\n2025-12-02: 0 contributions\n2025-12-08: 0 contributions\n2025-12-14: 0 contributions\n2025-11-15: 0 contributions\n2025-11-21: 0 contributions\n2025-11-27: 0 contributions\n2025-12-03: 0 contributions\n2025-12-09: 0 contributions\n2025-12-15: 0 contributions\n2025-12-21: 0 contributions\n2025-11-22: 0 contributions\n2025-11-28: 0 contributions\n2025-12-04: 0 contributions\n2025-12-10: 0 contributions\n2025-12-16: 0 contributions\n2025-12-22: 0 contributions\n2025-11-29: 0 contributions\n2025-12-05: 0 contributions\n2025-12-11: 0 contributions\n2025-12-17: 0 contributions\n2025-12-23: 0 contributions\n2025-12-06: 0 contributions\n2025-12-12: 0 contributions\n2025-12-18: 0 contributions\n2025-12-24: 0 contributions\n2025-12-13: 0 contributions\n2025-12-19: 0 contributions\n2025-12-25: 0 contributions\n2025-12-20: 0 contributions\n2025-12-26: 0 contributions\n2025-12-27: 0 contributions\n2024-12-29: 0 contributions\n2024-12-30: 0 contributions\n2025-01-05: 0 contributions\n2024-12-31: 0 contributions\n2025-01-06: 0 contributions\n2025-01-12: 0 contributions\n2025-01-01: 0 contributions\n2025-01-07: 0 contributions\n2025-01-13: 0 contributions\n2025-01-19: 0 contributions\n2025-01-02: 0 contributions\n2025-01-08: 0 contributions\n2025-01-14: 0 contributions\n2025-01-20: 0 contributions\n2025-01-26: 0 contributions\n2025-01-03: 0 contributions\n2025-01-09: 0 contributions\n2025-01-15: 0 contributions\n2025-01-21: 0 contributions\n2025-01-27: 0 contributions\n2025-02-02: 0 contributions\n2025-01-04: 0 contributions\n2025-01-10: 0 contributions\n2025-01-16: 0 contributions\n2025-01-22: 0 contributions\n2025-01-28: 0 contributions\n2025-02-03: 0 contributions\n2025-02-09: 0 contributions\n2025-01-11: 0 contributions\n2025-01-17: 0 contributions\n2025-01-23: 0 contributions\n2025-01-29: 0 contributions\n2025-02-04: 0 contributions\n2025-02-10: 0 contributions\n2025-02-16: 0 contributions\n2025-01-18: 0 contributions\n2025-01-24: 0 contributions\n2025-01-30: 0 contributions\n2025-02-05: 0 contributions\n2025-02-11: 0 contributions\n2025-02-17: 0 contributions\n2025-02-23: 0 contributions\n2025-01-25: 0 contributions\n2025-01-31: 0 contributions\n2025-02-06: 0 contributions\n2025-02-12: 0 contributions\n2025-02-18: 0 contributions\n2025-02-24: 0 contributions\n2025-03-02: 0 contributions\n2025-02-01: 0 contributions\n2025-02-07: 0 contributions\n2025-02-13: 0 contributions\n2025-02-19: 0 contributions\n2025-02-25: 0 contributions\n2025-03-03: 0 contributions\n2025-03-09: 0 contributions\n2025-02-08: 0 contributions\n2025-02-14: 0 contributions\n2025-02-20: 0 contributions\n2025-02-26: 0 contributions\n2025-03-04: 0 contributions\n2025-03-10: 0 contributions\n2025-03-16: 0 contributions\n2025-02-15: 0 contributions\n2025-02-21: 0 contributions\n2025-02-27: 0 contributions\n2025-03-05: 0 contributions\n2025-03-11: 0 contributions\n2025-03-17: 0 contributions\n2025-03-23: 0 contributions\n2025-02-22: 0 contributions\n2025-02-28: 0 contributions\n2025-03-06: 0 contributions\n2025-03-12: 0 contributions\n2025-03-18: 0 contributions\n2025-03-24: 0 contributions\n2025-03-30: 0 contributions\n2025-03-01: 0 contributions\n2025-03-07: 0 contributions\n2025-03-13: 0 contributions\n2025-03-19: 0 contributions\n2025-03-25: 0 contributions\n2025-03-31: 0 contributions\n2025-04-06: 0 contributions\n2025-03-08: 0 contributions\n2025-03-14: 0 contributions\n2025-03-20: 0 contributions\n2025-03-26: 0 contributions\n2025-04-01: 0 contributions\n2025-04-07: 0 contributions\n2025-04-13: 0 contributions\n2025-03-15: 0 contributions\n2025-03-21: 0 contributions\n2025-03-27: 0 contributions\n2025-04-02: 0 contributions\n2025-04-08: 0 contributions\n2025-04-14: 0 contributions\n2025-04-20: 0 contributions\n2025-03-22: 0 contributions\n2025-03-28: 0 contributions\n2025-04-03: 0 contributions\n2025-04-09: 0 contributions\n2025-04-15: 0 contributions\n2025-04-21: 0 contributions\n2025-04-27: 0 contributions\n2025-03-29: 0 contributions\n2025-04-04: 0 contributions\n2025-04-10: 0 contributions\n2025-04-16: 0 contributions\n2025-04-22: 0 contributions\n2025-04-28: 0 contributions\n2025-05-04: 0 contributions\n2025-04-05: 0 contributions\n2025-04-11: 0 contributions\n2025-04-17: 0 contributions\n2025-04-23: 0 contributions\n2025-04-29: 0 contributions\n2025-05-05: 0 contributions\n2025-05-11: 0 contributions\n2025-04-12: 0 contributions\n2025-04-18: 0 contributions\n2025-04-24: 0 contributions\n2025-04-30: 0 contributions\n2025-05-06: 0 contributions\n2025-05-12: 0 contributions\n2025-05-18: 0 contributions\n2025-04-19: 0 contributions\n2025-04-25: 0 contributions\n2025-05-01: 0 contributions\n2025-05-07: 0 contributions\n2025-05-13: 0 contributions\n2025-05-19: 0 contributions\n2025-05-25: 0 contributions\n2025-04-26: 0 contributions\n2025-05-02: 0 contributions\n2025-05-08: 0 contributions\n2025-05-14: 0 contributions\n2025-05-20: 0 contributions\n2025-05-26: 0 contributions\n2025-06-01: 0 contributions\n2025-05-03: 0 contributions\n2025-05-09: 0 contributions\n2025-05-15: 0 contributions\n2025-05-21: 0 contributions\n2025-05-27: 0 contributions\n2025-06-02: 0 contributions\n2025-06-08: 0 contributions\n2025-05-10: 0 contributions\n2025-05-16: 0 contributions\n2025-05-22: 0 contributions\n2025-05-28: 0 contributions\n2025-06-03: 0 contributions\n2025-06-09: 0 contributions\n2025-06-15: 0 contributions\n2025-05-17: 0 contributions\n2025-05-23: 0 contributions\n2025-05-29: 0 contributions\n2025-06-04: 0 contributions\n2025-06-10: 0 contributions\n2025-06-16: 0 contributions\n2025-06-22: 0 contributions\n2025-05-24: 0 contributions\n2025-05-30: 0 contributions\n2025-06-05: 0 contributions\n2025-06-11: 0 contributions\n2025-06-17: 0 contributions\n2025-06-23: 0 contributions\n2025-06-29: 0 contributions\n2025-05-31: 0 contributions\n2025-06-06: 0 contributions\n2025-06-12: 0 contributions\n2025-06-18: 0 contributions\n2025-06-24: 0 contributions\n2025-06-30: 0 contributions\n2025-07-06: 0 contributions\n2025-06-07: 0 contributions\n2025-06-13: 0 contributions\n2025-06-19: 0 contributions\n2025-06-25: 0 contributions\n2025-07-01: 0 contributions\n2025-07-07: 0 contributions\n2025-07-13: 0 contributions\n2025-06-14: 0 contributions\n2025-06-20: 0 contributions\n2025-06-26: 0 contributions\n2025-07-02: 0 contributions\n2025-07-08: 0 contributions\n2025-07-14: 0 contributions\n2025-07-20: 0 contributions\n2025-06-21: 0 contributions\n2025-06-27: 0 contributions\n2025-07-03: 0 contributions\n2025-07-09: 0 contributions\n2025-07-15: 0 contributions\n2025-07-21: 0 contributions\n2025-07-27: 0 contributions\n2025-06-28: 0 contributions\n2025-07-04: 0 contributions\n2025-07-10: 0 contributions\n2025-07-16: 0 contributions\n2025-07-22: 0 contributions\n2025-07-28: 0 contributions\n2025-08-03: 0 contributions\n2025-07-05: 0 contributions\n2025-07-11: 0 contributions\n2025-07-17: 0 contributions\n2025-07-23: 0 contributions\n2025-07-29: 0 contributions\n2025-08-04: 0 contributions\n2025-08-10: 0 contributions\n2025-07-12: 0 contributions\n2025-07-18: 0 contributions\n2025-07-24: 0 contributions\n2025-07-30: 0 contributions\n2025-08-05: 0 contributions\n2025-08-11: 0 contributions\n2025-08-17: 0 contributions\n2025-07-19: 0 contributions\n2025-07-25: 0 contributions\n2025-07-31: 0 contributions\n2025-08-06: 0 contributions\n2025-08-12: 0 contributions\n2025-08-18: 0 contributions\n2025-08-24: 0 contributions\n2025-07-26: 0 contributions\n2025-08-01: 0 contributions\n2025-08-07: 0 contributions\n2025-08-13: 0 contributions\n2025-08-19: 0 contributions\n2025-08-25: 0 contributions\n2025-08-31: 0 contributions\n2025-08-02: 0 contributions\n2025-08-08: 0 contributions\n2025-08-14: 0 contributions\n2025-08-20: 0 contributions\n2025-08-26: 0 contributions\n2025-09-01: 0 contributions\n2025-09-07: 0 contributions\n2025-08-09: 0 contributions\n2025-08-15: 0 contributions\n2025-08-21: 0 contributions\n2025-08-27: 0 contributions\n2025-09-02: 0 contributions\n2025-09-08: 0 contributions\n2025-09-14: 0 contributions\n2025-08-16: 0 contributions\n2025-08-22: 0 contributions\n2025-08-28: 0 contributions\n2025-09-03: 0 contributions\n2025-09-09: 0 contributions\n2025-09-15: 0 contributions\n2025-09-21: 0 contributions\n2025-08-23: 0 contributions\n2025-08-29: 0 contributions\n2025-09-04: 0 contributions\n2025-09-10: 0 contributions\n2025-09-16: 0 contributions\n2025-09-22: 0 contributions\n2025-09-28: 0 contributions\n2025-08-30: 0 contributions\n2025-09-05: 0 contributions\n2025-09-11: 0 contributions\n2025-09-17: 0 contributions\n2025-09-23: 0 contributions\n2025-09-29: 0 contributions\n2025-10-05: 0 contributions\n2025-09-06: 0 contributions\n2025-09-12: 0 contributions\n2025-09-18: 0 contributions\n2025-09-24: 0 contributions\n2025-09-30: 0 contributions\n2025-10-06: 0 contributions\n2025-10-12: 0 contributions\n2025-09-13: 0 contributions\n2025-09-19: 0 contributions\n2025-09-25: 0 contributions\n2025-10-01: 0 contributions\n2025-10-07: 0 contributions\n2025-10-13: 0 contributions\n2025-10-19: 0 contributions\n2025-09-20: 0 contributions\n2025-09-26: 0 contributions\n2025-10-02: 0 contributions\n2025-10-08: 0 contributions\n2025-10-14: 0 contributions\n2025-10-20: 0 contributions\n2025-10-26: 0 contributions\n2025-09-27: 0 contributions\n2025-10-03: 0 contributions\n2025-10-09: 0 contributions\n2025-10-15: 0 contributions\n2025-10-21: 0 contributions\n2025-10-27: 0 contributions\n2025-11-02: 0 contributions\n2025-10-04: 0 contributions\n2025-10-10: 0 contributions\n2025-10-16: 0 contributions\n2025-10-22: 0 contributions\n2025-10-28: 0 contributions\n2025-11-03: 0 contributions\n2025-11-09: 0 contributions\n2025-10-11: 0 contributions\n2025-10-17: 0 contributions\n2025-10-23: 0 contributions\n2025-10-29: 0 contributions\n2025-11-04: 0 contributions\n2025-11-10: 0 contributions\n2025-11-16: 0 contributions\n2025-10-18: 0 contributions\n2025-10-24: 0 contributions\n2025-10-30: 0 contributions\n2025-11-05: 0 contributions\n2025-11-11: 0 contributions\n2025-11-17: 0 contributions\n2025-11-23: 0 contributions\n2025-10-25: 0 contributions\n2025-10-31: 0 contributions\n2025-11-06: 0 contributions\n2025-11-12: 0 contributions\n2025-11-18: 0 contributions\n2025-11-24: 0 contributions\n2025-11-30: 0 contributions\n2025-11-01: 0 contributions\n2025-11-07: 0 contributions\n2025-11-13: 0 contributions\n2025-11-19: 0 contributions\n2025-11-25: 0 contributions\n2025-12-01: 0 contributions\n2025-12-07: 0 contributions\n2025-11-08: 0 contributions\n2025-11-14: 0 contributions\n2025-11-20: 0 contributions\n2025-11-26: 0 contributions\n2025-12-02: 0 contributions\n2025-12-08: 0 contributions\n2025-12-14: 0 contributions\n2025-11-15: 0 contributions\n2025-11-21: 0 contributions\n2025-11-27: 0 contributions\n2025-12-03: 0 contributions\n2025-12-09: 0 contributions\n2025-12-15: 0 contributions\n2025-12-21: 0 contributions\n2025-11-22: 0 contributions\n2025-11-28: 0 contributions\n2025-12-04: 0 contributions\n2025-12-10: 0 contributions\n2025-12-16: 0 contributions\n2025-12-22: 0 contributions\n2025-11-29: 0 contributions\n2025-12-05: 0 contributions\n2025-12-11: 0 contributions\n2025-12-17: 0 contributions\n2025-12-23: 0 contributions\n2025-12-06: 0 contributions\n2025-12-12: 0 contributions\n2025-12-18: 0 contributions\n2025-12-24: 0 contributions\n2025-12-13: 0 contributions\n2025-12-19: 0 contributions\n2025-12-25: 0 contributions\n2025-12-20: 0 contributions\n2025-12-26: 0 contributions\n2025-12-27: 0 contributions",
+          "description": "Isometric contribution terrain for @benchmark from 2024-12-29 to 2025-12-27. 0 contributions across 0 active days. 0 wonders discovered. relative normalization, maximum 1."
+        },
+        "light": {
+          "rawBytes": 471704,
+          "gzipBytes": 65186,
+          "sha256": "78d9499e79b4d54fce23648bb3fe4b60a8be8eb2b2a6748bef9509c85ced2d33",
+          "elements": 5538,
+          "cssTargets": 0,
+          "cssKeyframes": 6,
+          "smilElements": 2,
+          "duplicateIds": [],
+          "danglingReferences": [],
+          "externalReferences": [],
+          "unsupportedSelectors": [],
+          "scripts": 0,
+          "eventHandlers": 0,
+          "viewBox": "0 0 840 240",
+          "title": "@benchmark\n2024-12-29: 0 contributions\n2024-12-30: 0 contributions\n2025-01-05: 0 contributions\n2024-12-31: 0 contributions\n2025-01-06: 0 contributions\n2025-01-12: 0 contributions\n2025-01-01: 0 contributions\n2025-01-07: 0 contributions\n2025-01-13: 0 contributions\n2025-01-19: 0 contributions\n2025-01-02: 0 contributions\n2025-01-08: 0 contributions\n2025-01-14: 0 contributions\n2025-01-20: 0 contributions\n2025-01-26: 0 contributions\n2025-01-03: 0 contributions\n2025-01-09: 0 contributions\n2025-01-15: 0 contributions\n2025-01-21: 0 contributions\n2025-01-27: 0 contributions\n2025-02-02: 0 contributions\n2025-01-04: 0 contributions\n2025-01-10: 0 contributions\n2025-01-16: 0 contributions\n2025-01-22: 0 contributions\n2025-01-28: 0 contributions\n2025-02-03: 0 contributions\n2025-02-09: 0 contributions\n2025-01-11: 0 contributions\n2025-01-17: 0 contributions\n2025-01-23: 0 contributions\n2025-01-29: 0 contributions\n2025-02-04: 0 contributions\n2025-02-10: 0 contributions\n2025-02-16: 0 contributions\n2025-01-18: 0 contributions\n2025-01-24: 0 contributions\n2025-01-30: 0 contributions\n2025-02-05: 0 contributions\n2025-02-11: 0 contributions\n2025-02-17: 0 contributions\n2025-02-23: 0 contributions\n2025-01-25: 0 contributions\n2025-01-31: 0 contributions\n2025-02-06: 0 contributions\n2025-02-12: 0 contributions\n2025-02-18: 0 contributions\n2025-02-24: 0 contributions\n2025-03-02: 0 contributions\n2025-02-01: 0 contributions\n2025-02-07: 0 contributions\n2025-02-13: 0 contributions\n2025-02-19: 0 contributions\n2025-02-25: 0 contributions\n2025-03-03: 0 contributions\n2025-03-09: 0 contributions\n2025-02-08: 0 contributions\n2025-02-14: 0 contributions\n2025-02-20: 0 contributions\n2025-02-26: 0 contributions\n2025-03-04: 0 contributions\n2025-03-10: 0 contributions\n2025-03-16: 0 contributions\n2025-02-15: 0 contributions\n2025-02-21: 0 contributions\n2025-02-27: 0 contributions\n2025-03-05: 0 contributions\n2025-03-11: 0 contributions\n2025-03-17: 0 contributions\n2025-03-23: 0 contributions\n2025-02-22: 0 contributions\n2025-02-28: 0 contributions\n2025-03-06: 0 contributions\n2025-03-12: 0 contributions\n2025-03-18: 0 contributions\n2025-03-24: 0 contributions\n2025-03-30: 0 contributions\n2025-03-01: 0 contributions\n2025-03-07: 0 contributions\n2025-03-13: 0 contributions\n2025-03-19: 0 contributions\n2025-03-25: 0 contributions\n2025-03-31: 0 contributions\n2025-04-06: 0 contributions\n2025-03-08: 0 contributions\n2025-03-14: 0 contributions\n2025-03-20: 0 contributions\n2025-03-26: 0 contributions\n2025-04-01: 0 contributions\n2025-04-07: 0 contributions\n2025-04-13: 0 contributions\n2025-03-15: 0 contributions\n2025-03-21: 0 contributions\n2025-03-27: 0 contributions\n2025-04-02: 0 contributions\n2025-04-08: 0 contributions\n2025-04-14: 0 contributions\n2025-04-20: 0 contributions\n2025-03-22: 0 contributions\n2025-03-28: 0 contributions\n2025-04-03: 0 contributions\n2025-04-09: 0 contributions\n2025-04-15: 0 contributions\n2025-04-21: 0 contributions\n2025-04-27: 0 contributions\n2025-03-29: 0 contributions\n2025-04-04: 0 contributions\n2025-04-10: 0 contributions\n2025-04-16: 0 contributions\n2025-04-22: 0 contributions\n2025-04-28: 0 contributions\n2025-05-04: 0 contributions\n2025-04-05: 0 contributions\n2025-04-11: 0 contributions\n2025-04-17: 0 contributions\n2025-04-23: 0 contributions\n2025-04-29: 0 contributions\n2025-05-05: 0 contributions\n2025-05-11: 0 contributions\n2025-04-12: 0 contributions\n2025-04-18: 0 contributions\n2025-04-24: 0 contributions\n2025-04-30: 0 contributions\n2025-05-06: 0 contributions\n2025-05-12: 0 contributions\n2025-05-18: 0 contributions\n2025-04-19: 0 contributions\n2025-04-25: 0 contributions\n2025-05-01: 0 contributions\n2025-05-07: 0 contributions\n2025-05-13: 0 contributions\n2025-05-19: 0 contributions\n2025-05-25: 0 contributions\n2025-04-26: 0 contributions\n2025-05-02: 0 contributions\n2025-05-08: 0 contributions\n2025-05-14: 0 contributions\n2025-05-20: 0 contributions\n2025-05-26: 0 contributions\n2025-06-01: 0 contributions\n2025-05-03: 0 contributions\n2025-05-09: 0 contributions\n2025-05-15: 0 contributions\n2025-05-21: 0 contributions\n2025-05-27: 0 contributions\n2025-06-02: 0 contributions\n2025-06-08: 0 contributions\n2025-05-10: 0 contributions\n2025-05-16: 0 contributions\n2025-05-22: 0 contributions\n2025-05-28: 0 contributions\n2025-06-03: 0 contributions\n2025-06-09: 0 contributions\n2025-06-15: 0 contributions\n2025-05-17: 0 contributions\n2025-05-23: 0 contributions\n2025-05-29: 0 contributions\n2025-06-04: 0 contributions\n2025-06-10: 0 contributions\n2025-06-16: 0 contributions\n2025-06-22: 0 contributions\n2025-05-24: 0 contributions\n2025-05-30: 0 contributions\n2025-06-05: 0 contributions\n2025-06-11: 0 contributions\n2025-06-17: 0 contributions\n2025-06-23: 0 contributions\n2025-06-29: 0 contributions\n2025-05-31: 0 contributions\n2025-06-06: 0 contributions\n2025-06-12: 0 contributions\n2025-06-18: 0 contributions\n2025-06-24: 0 contributions\n2025-06-30: 0 contributions\n2025-07-06: 0 contributions\n2025-06-07: 0 contributions\n2025-06-13: 0 contributions\n2025-06-19: 0 contributions\n2025-06-25: 0 contributions\n2025-07-01: 0 contributions\n2025-07-07: 0 contributions\n2025-07-13: 0 contributions\n2025-06-14: 0 contributions\n2025-06-20: 0 contributions\n2025-06-26: 0 contributions\n2025-07-02: 0 contributions\n2025-07-08: 0 contributions\n2025-07-14: 0 contributions\n2025-07-20: 0 contributions\n2025-06-21: 0 contributions\n2025-06-27: 0 contributions\n2025-07-03: 0 contributions\n2025-07-09: 0 contributions\n2025-07-15: 0 contributions\n2025-07-21: 0 contributions\n2025-07-27: 0 contributions\n2025-06-28: 0 contributions\n2025-07-04: 0 contributions\n2025-07-10: 0 contributions\n2025-07-16: 0 contributions\n2025-07-22: 0 contributions\n2025-07-28: 0 contributions\n2025-08-03: 0 contributions\n2025-07-05: 0 contributions\n2025-07-11: 0 contributions\n2025-07-17: 0 contributions\n2025-07-23: 0 contributions\n2025-07-29: 0 contributions\n2025-08-04: 0 contributions\n2025-08-10: 0 contributions\n2025-07-12: 0 contributions\n2025-07-18: 0 contributions\n2025-07-24: 0 contributions\n2025-07-30: 0 contributions\n2025-08-05: 0 contributions\n2025-08-11: 0 contributions\n2025-08-17: 0 contributions\n2025-07-19: 0 contributions\n2025-07-25: 0 contributions\n2025-07-31: 0 contributions\n2025-08-06: 0 contributions\n2025-08-12: 0 contributions\n2025-08-18: 0 contributions\n2025-08-24: 0 contributions\n2025-07-26: 0 contributions\n2025-08-01: 0 contributions\n2025-08-07: 0 contributions\n2025-08-13: 0 contributions\n2025-08-19: 0 contributions\n2025-08-25: 0 contributions\n2025-08-31: 0 contributions\n2025-08-02: 0 contributions\n2025-08-08: 0 contributions\n2025-08-14: 0 contributions\n2025-08-20: 0 contributions\n2025-08-26: 0 contributions\n2025-09-01: 0 contributions\n2025-09-07: 0 contributions\n2025-08-09: 0 contributions\n2025-08-15: 0 contributions\n2025-08-21: 0 contributions\n2025-08-27: 0 contributions\n2025-09-02: 0 contributions\n2025-09-08: 0 contributions\n2025-09-14: 0 contributions\n2025-08-16: 0 contributions\n2025-08-22: 0 contributions\n2025-08-28: 0 contributions\n2025-09-03: 0 contributions\n2025-09-09: 0 contributions\n2025-09-15: 0 contributions\n2025-09-21: 0 contributions\n2025-08-23: 0 contributions\n2025-08-29: 0 contributions\n2025-09-04: 0 contributions\n2025-09-10: 0 contributions\n2025-09-16: 0 contributions\n2025-09-22: 0 contributions\n2025-09-28: 0 contributions\n2025-08-30: 0 contributions\n2025-09-05: 0 contributions\n2025-09-11: 0 contributions\n2025-09-17: 0 contributions\n2025-09-23: 0 contributions\n2025-09-29: 0 contributions\n2025-10-05: 0 contributions\n2025-09-06: 0 contributions\n2025-09-12: 0 contributions\n2025-09-18: 0 contributions\n2025-09-24: 0 contributions\n2025-09-30: 0 contributions\n2025-10-06: 0 contributions\n2025-10-12: 0 contributions\n2025-09-13: 0 contributions\n2025-09-19: 0 contributions\n2025-09-25: 0 contributions\n2025-10-01: 0 contributions\n2025-10-07: 0 contributions\n2025-10-13: 0 contributions\n2025-10-19: 0 contributions\n2025-09-20: 0 contributions\n2025-09-26: 0 contributions\n2025-10-02: 0 contributions\n2025-10-08: 0 contributions\n2025-10-14: 0 contributions\n2025-10-20: 0 contributions\n2025-10-26: 0 contributions\n2025-09-27: 0 contributions\n2025-10-03: 0 contributions\n2025-10-09: 0 contributions\n2025-10-15: 0 contributions\n2025-10-21: 0 contributions\n2025-10-27: 0 contributions\n2025-11-02: 0 contributions\n2025-10-04: 0 contributions\n2025-10-10: 0 contributions\n2025-10-16: 0 contributions\n2025-10-22: 0 contributions\n2025-10-28: 0 contributions\n2025-11-03: 0 contributions\n2025-11-09: 0 contributions\n2025-10-11: 0 contributions\n2025-10-17: 0 contributions\n2025-10-23: 0 contributions\n2025-10-29: 0 contributions\n2025-11-04: 0 contributions\n2025-11-10: 0 contributions\n2025-11-16: 0 contributions\n2025-10-18: 0 contributions\n2025-10-24: 0 contributions\n2025-10-30: 0 contributions\n2025-11-05: 0 contributions\n2025-11-11: 0 contributions\n2025-11-17: 0 contributions\n2025-11-23: 0 contributions\n2025-10-25: 0 contributions\n2025-10-31: 0 contributions\n2025-11-06: 0 contributions\n2025-11-12: 0 contributions\n2025-11-18: 0 contributions\n2025-11-24: 0 contributions\n2025-11-30: 0 contributions\n2025-11-01: 0 contributions\n2025-11-07: 0 contributions\n2025-11-13: 0 contributions\n2025-11-19: 0 contributions\n2025-11-25: 0 contributions\n2025-12-01: 0 contributions\n2025-12-07: 0 contributions\n2025-11-08: 0 contributions\n2025-11-14: 0 contributions\n2025-11-20: 0 contributions\n2025-11-26: 0 contributions\n2025-12-02: 0 contributions\n2025-12-08: 0 contributions\n2025-12-14: 0 contributions\n2025-11-15: 0 contributions\n2025-11-21: 0 contributions\n2025-11-27: 0 contributions\n2025-12-03: 0 contributions\n2025-12-09: 0 contributions\n2025-12-15: 0 contributions\n2025-12-21: 0 contributions\n2025-11-22: 0 contributions\n2025-11-28: 0 contributions\n2025-12-04: 0 contributions\n2025-12-10: 0 contributions\n2025-12-16: 0 contributions\n2025-12-22: 0 contributions\n2025-11-29: 0 contributions\n2025-12-05: 0 contributions\n2025-12-11: 0 contributions\n2025-12-17: 0 contributions\n2025-12-23: 0 contributions\n2025-12-06: 0 contributions\n2025-12-12: 0 contributions\n2025-12-18: 0 contributions\n2025-12-24: 0 contributions\n2025-12-13: 0 contributions\n2025-12-19: 0 contributions\n2025-12-25: 0 contributions\n2025-12-20: 0 contributions\n2025-12-26: 0 contributions\n2025-12-27: 0 contributions\n2024-12-29: 0 contributions\n2024-12-30: 0 contributions\n2025-01-05: 0 contributions\n2024-12-31: 0 contributions\n2025-01-06: 0 contributions\n2025-01-12: 0 contributions\n2025-01-01: 0 contributions\n2025-01-07: 0 contributions\n2025-01-13: 0 contributions\n2025-01-19: 0 contributions\n2025-01-02: 0 contributions\n2025-01-08: 0 contributions\n2025-01-14: 0 contributions\n2025-01-20: 0 contributions\n2025-01-26: 0 contributions\n2025-01-03: 0 contributions\n2025-01-09: 0 contributions\n2025-01-15: 0 contributions\n2025-01-21: 0 contributions\n2025-01-27: 0 contributions\n2025-02-02: 0 contributions\n2025-01-04: 0 contributions\n2025-01-10: 0 contributions\n2025-01-16: 0 contributions\n2025-01-22: 0 contributions\n2025-01-28: 0 contributions\n2025-02-03: 0 contributions\n2025-02-09: 0 contributions\n2025-01-11: 0 contributions\n2025-01-17: 0 contributions\n2025-01-23: 0 contributions\n2025-01-29: 0 contributions\n2025-02-04: 0 contributions\n2025-02-10: 0 contributions\n2025-02-16: 0 contributions\n2025-01-18: 0 contributions\n2025-01-24: 0 contributions\n2025-01-30: 0 contributions\n2025-02-05: 0 contributions\n2025-02-11: 0 contributions\n2025-02-17: 0 contributions\n2025-02-23: 0 contributions\n2025-01-25: 0 contributions\n2025-01-31: 0 contributions\n2025-02-06: 0 contributions\n2025-02-12: 0 contributions\n2025-02-18: 0 contributions\n2025-02-24: 0 contributions\n2025-03-02: 0 contributions\n2025-02-01: 0 contributions\n2025-02-07: 0 contributions\n2025-02-13: 0 contributions\n2025-02-19: 0 contributions\n2025-02-25: 0 contributions\n2025-03-03: 0 contributions\n2025-03-09: 0 contributions\n2025-02-08: 0 contributions\n2025-02-14: 0 contributions\n2025-02-20: 0 contributions\n2025-02-26: 0 contributions\n2025-03-04: 0 contributions\n2025-03-10: 0 contributions\n2025-03-16: 0 contributions\n2025-02-15: 0 contributions\n2025-02-21: 0 contributions\n2025-02-27: 0 contributions\n2025-03-05: 0 contributions\n2025-03-11: 0 contributions\n2025-03-17: 0 contributions\n2025-03-23: 0 contributions\n2025-02-22: 0 contributions\n2025-02-28: 0 contributions\n2025-03-06: 0 contributions\n2025-03-12: 0 contributions\n2025-03-18: 0 contributions\n2025-03-24: 0 contributions\n2025-03-30: 0 contributions\n2025-03-01: 0 contributions\n2025-03-07: 0 contributions\n2025-03-13: 0 contributions\n2025-03-19: 0 contributions\n2025-03-25: 0 contributions\n2025-03-31: 0 contributions\n2025-04-06: 0 contributions\n2025-03-08: 0 contributions\n2025-03-14: 0 contributions\n2025-03-20: 0 contributions\n2025-03-26: 0 contributions\n2025-04-01: 0 contributions\n2025-04-07: 0 contributions\n2025-04-13: 0 contributions\n2025-03-15: 0 contributions\n2025-03-21: 0 contributions\n2025-03-27: 0 contributions\n2025-04-02: 0 contributions\n2025-04-08: 0 contributions\n2025-04-14: 0 contributions\n2025-04-20: 0 contributions\n2025-03-22: 0 contributions\n2025-03-28: 0 contributions\n2025-04-03: 0 contributions\n2025-04-09: 0 contributions\n2025-04-15: 0 contributions\n2025-04-21: 0 contributions\n2025-04-27: 0 contributions\n2025-03-29: 0 contributions\n2025-04-04: 0 contributions\n2025-04-10: 0 contributions\n2025-04-16: 0 contributions\n2025-04-22: 0 contributions\n2025-04-28: 0 contributions\n2025-05-04: 0 contributions\n2025-04-05: 0 contributions\n2025-04-11: 0 contributions\n2025-04-17: 0 contributions\n2025-04-23: 0 contributions\n2025-04-29: 0 contributions\n2025-05-05: 0 contributions\n2025-05-11: 0 contributions\n2025-04-12: 0 contributions\n2025-04-18: 0 contributions\n2025-04-24: 0 contributions\n2025-04-30: 0 contributions\n2025-05-06: 0 contributions\n2025-05-12: 0 contributions\n2025-05-18: 0 contributions\n2025-04-19: 0 contributions\n2025-04-25: 0 contributions\n2025-05-01: 0 contributions\n2025-05-07: 0 contributions\n2025-05-13: 0 contributions\n2025-05-19: 0 contributions\n2025-05-25: 0 contributions\n2025-04-26: 0 contributions\n2025-05-02: 0 contributions\n2025-05-08: 0 contributions\n2025-05-14: 0 contributions\n2025-05-20: 0 contributions\n2025-05-26: 0 contributions\n2025-06-01: 0 contributions\n2025-05-03: 0 contributions\n2025-05-09: 0 contributions\n2025-05-15: 0 contributions\n2025-05-21: 0 contributions\n2025-05-27: 0 contributions\n2025-06-02: 0 contributions\n2025-06-08: 0 contributions\n2025-05-10: 0 contributions\n2025-05-16: 0 contributions\n2025-05-22: 0 contributions\n2025-05-28: 0 contributions\n2025-06-03: 0 contributions\n2025-06-09: 0 contributions\n2025-06-15: 0 contributions\n2025-05-17: 0 contributions\n2025-05-23: 0 contributions\n2025-05-29: 0 contributions\n2025-06-04: 0 contributions\n2025-06-10: 0 contributions\n2025-06-16: 0 contributions\n2025-06-22: 0 contributions\n2025-05-24: 0 contributions\n2025-05-30: 0 contributions\n2025-06-05: 0 contributions\n2025-06-11: 0 contributions\n2025-06-17: 0 contributions\n2025-06-23: 0 contributions\n2025-06-29: 0 contributions\n2025-05-31: 0 contributions\n2025-06-06: 0 contributions\n2025-06-12: 0 contributions\n2025-06-18: 0 contributions\n2025-06-24: 0 contributions\n2025-06-30: 0 contributions\n2025-07-06: 0 contributions\n2025-06-07: 0 contributions\n2025-06-13: 0 contributions\n2025-06-19: 0 contributions\n2025-06-25: 0 contributions\n2025-07-01: 0 contributions\n2025-07-07: 0 contributions\n2025-07-13: 0 contributions\n2025-06-14: 0 contributions\n2025-06-20: 0 contributions\n2025-06-26: 0 contributions\n2025-07-02: 0 contributions\n2025-07-08: 0 contributions\n2025-07-14: 0 contributions\n2025-07-20: 0 contributions\n2025-06-21: 0 contributions\n2025-06-27: 0 contributions\n2025-07-03: 0 contributions\n2025-07-09: 0 contributions\n2025-07-15: 0 contributions\n2025-07-21: 0 contributions\n2025-07-27: 0 contributions\n2025-06-28: 0 contributions\n2025-07-04: 0 contributions\n2025-07-10: 0 contributions\n2025-07-16: 0 contributions\n2025-07-22: 0 contributions\n2025-07-28: 0 contributions\n2025-08-03: 0 contributions\n2025-07-05: 0 contributions\n2025-07-11: 0 contributions\n2025-07-17: 0 contributions\n2025-07-23: 0 contributions\n2025-07-29: 0 contributions\n2025-08-04: 0 contributions\n2025-08-10: 0 contributions\n2025-07-12: 0 contributions\n2025-07-18: 0 contributions\n2025-07-24: 0 contributions\n2025-07-30: 0 contributions\n2025-08-05: 0 contributions\n2025-08-11: 0 contributions\n2025-08-17: 0 contributions\n2025-07-19: 0 contributions\n2025-07-25: 0 contributions\n2025-07-31: 0 contributions\n2025-08-06: 0 contributions\n2025-08-12: 0 contributions\n2025-08-18: 0 contributions\n2025-08-24: 0 contributions\n2025-07-26: 0 contributions\n2025-08-01: 0 contributions\n2025-08-07: 0 contributions\n2025-08-13: 0 contributions\n2025-08-19: 0 contributions\n2025-08-25: 0 contributions\n2025-08-31: 0 contributions\n2025-08-02: 0 contributions\n2025-08-08: 0 contributions\n2025-08-14: 0 contributions\n2025-08-20: 0 contributions\n2025-08-26: 0 contributions\n2025-09-01: 0 contributions\n2025-09-07: 0 contributions\n2025-08-09: 0 contributions\n2025-08-15: 0 contributions\n2025-08-21: 0 contributions\n2025-08-27: 0 contributions\n2025-09-02: 0 contributions\n2025-09-08: 0 contributions\n2025-09-14: 0 contributions\n2025-08-16: 0 contributions\n2025-08-22: 0 contributions\n2025-08-28: 0 contributions\n2025-09-03: 0 contributions\n2025-09-09: 0 contributions\n2025-09-15: 0 contributions\n2025-09-21: 0 contributions\n2025-08-23: 0 contributions\n2025-08-29: 0 contributions\n2025-09-04: 0 contributions\n2025-09-10: 0 contributions\n2025-09-16: 0 contributions\n2025-09-22: 0 contributions\n2025-09-28: 0 contributions\n2025-08-30: 0 contributions\n2025-09-05: 0 contributions\n2025-09-11: 0 contributions\n2025-09-17: 0 contributions\n2025-09-23: 0 contributions\n2025-09-29: 0 contributions\n2025-10-05: 0 contributions\n2025-09-06: 0 contributions\n2025-09-12: 0 contributions\n2025-09-18: 0 contributions\n2025-09-24: 0 contributions\n2025-09-30: 0 contributions\n2025-10-06: 0 contributions\n2025-10-12: 0 contributions\n2025-09-13: 0 contributions\n2025-09-19: 0 contributions\n2025-09-25: 0 contributions\n2025-10-01: 0 contributions\n2025-10-07: 0 contributions\n2025-10-13: 0 contributions\n2025-10-19: 0 contributions\n2025-09-20: 0 contributions\n2025-09-26: 0 contributions\n2025-10-02: 0 contributions\n2025-10-08: 0 contributions\n2025-10-14: 0 contributions\n2025-10-20: 0 contributions\n2025-10-26: 0 contributions\n2025-09-27: 0 contributions\n2025-10-03: 0 contributions\n2025-10-09: 0 contributions\n2025-10-15: 0 contributions\n2025-10-21: 0 contributions\n2025-10-27: 0 contributions\n2025-11-02: 0 contributions\n2025-10-04: 0 contributions\n2025-10-10: 0 contributions\n2025-10-16: 0 contributions\n2025-10-22: 0 contributions\n2025-10-28: 0 contributions\n2025-11-03: 0 contributions\n2025-11-09: 0 contributions\n2025-10-11: 0 contributions\n2025-10-17: 0 contributions\n2025-10-23: 0 contributions\n2025-10-29: 0 contributions\n2025-11-04: 0 contributions\n2025-11-10: 0 contributions\n2025-11-16: 0 contributions\n2025-10-18: 0 contributions\n2025-10-24: 0 contributions\n2025-10-30: 0 contributions\n2025-11-05: 0 contributions\n2025-11-11: 0 contributions\n2025-11-17: 0 contributions\n2025-11-23: 0 contributions\n2025-10-25: 0 contributions\n2025-10-31: 0 contributions\n2025-11-06: 0 contributions\n2025-11-12: 0 contributions\n2025-11-18: 0 contributions\n2025-11-24: 0 contributions\n2025-11-30: 0 contributions\n2025-11-01: 0 contributions\n2025-11-07: 0 contributions\n2025-11-13: 0 contributions\n2025-11-19: 0 contributions\n2025-11-25: 0 contributions\n2025-12-01: 0 contributions\n2025-12-07: 0 contributions\n2025-11-08: 0 contributions\n2025-11-14: 0 contributions\n2025-11-20: 0 contributions\n2025-11-26: 0 contributions\n2025-12-02: 0 contributions\n2025-12-08: 0 contributions\n2025-12-14: 0 contributions\n2025-11-15: 0 contributions\n2025-11-21: 0 contributions\n2025-11-27: 0 contributions\n2025-12-03: 0 contributions\n2025-12-09: 0 contributions\n2025-12-15: 0 contributions\n2025-12-21: 0 contributions\n2025-11-22: 0 contributions\n2025-11-28: 0 contributions\n2025-12-04: 0 contributions\n2025-12-10: 0 contributions\n2025-12-16: 0 contributions\n2025-12-22: 0 contributions\n2025-11-29: 0 contributions\n2025-12-05: 0 contributions\n2025-12-11: 0 contributions\n2025-12-17: 0 contributions\n2025-12-23: 0 contributions\n2025-12-06: 0 contributions\n2025-12-12: 0 contributions\n2025-12-18: 0 contributions\n2025-12-24: 0 contributions\n2025-12-13: 0 contributions\n2025-12-19: 0 contributions\n2025-12-25: 0 contributions\n2025-12-20: 0 contributions\n2025-12-26: 0 contributions\n2025-12-27: 0 contributions",
+          "description": "Isometric contribution terrain for @benchmark from 2024-12-29 to 2025-12-27. 0 contributions across 0 active days. 0 wonders discovered. relative normalization, maximum 1."
+        }
+      },
+      "artifacts": {
+        "data": "tests/fixtures/benchmark-baseline-samples/empty.data.json",
+        "darkSvg": "tests/fixtures/benchmark-baseline-samples/empty-dark.svg",
+        "lightSvg": "tests/fixtures/benchmark-baseline-samples/empty-light.svg",
+        "darkPng": "tests/fixtures/benchmark-baseline-samples/empty-dark.png",
+        "lightPng": "tests/fixtures/benchmark-baseline-samples/empty-light.png"
+      }
+    },
+    {
+      "name": "mixed",
+      "dataSha256": "d14537d260567babbafe79b7740dad266664b28886e41a829d91a4ac84e87db6",
+      "metadata": {
+        "username": "benchmark",
+        "year": 2025,
+        "fromDate": "2024-12-29",
+        "toDate": "2025-12-27",
+        "days": 364,
+        "weeks": 52,
+        "contributions": 803,
+        "activeDays": 142
+      },
+      "samples": [
+        {
+          "milliseconds": 17.34491699999944,
+          "heapUsed": 95690064,
+          "rss": 469368832
+        },
+        {
+          "milliseconds": 17.20287499999995,
+          "heapUsed": 96173488,
+          "rss": 469876736
+        },
+        {
+          "milliseconds": 16.80487499999981,
+          "heapUsed": 96672792,
+          "rss": 471220224
+        },
+        {
+          "milliseconds": 16.94300000000021,
+          "heapUsed": 96904896,
+          "rss": 471711744
+        },
+        {
+          "milliseconds": 17.04162499999984,
+          "heapUsed": 97345048,
+          "rss": 472170496
+        },
+        {
+          "milliseconds": 24.29345799999919,
+          "heapUsed": 45595768,
+          "rss": 472743936
+        },
+        {
+          "milliseconds": 19.867875000000822,
+          "heapUsed": 48393360,
+          "rss": 473006080
+        },
+        {
+          "milliseconds": 18.05870799999957,
+          "heapUsed": 50631984,
+          "rss": 473006080
+        },
+        {
+          "milliseconds": 17.370874999999614,
+          "heapUsed": 52222776,
+          "rss": 473006080
+        },
+        {
+          "milliseconds": 17.387375000000247,
+          "heapUsed": 53961536,
+          "rss": 473006080
+        },
+        {
+          "milliseconds": 17.092625000000226,
+          "heapUsed": 55206848,
+          "rss": 473006080
+        },
+        {
+          "milliseconds": 17.168292000000292,
+          "heapUsed": 56444248,
+          "rss": 473022464
+        },
+        {
+          "milliseconds": 17.03520800000024,
+          "heapUsed": 57744320,
+          "rss": 473022464
+        },
+        {
+          "milliseconds": 16.66595799999959,
+          "heapUsed": 58956512,
+          "rss": 473022464
+        },
+        {
+          "milliseconds": 17.613500000000386,
+          "heapUsed": 60230648,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 17.57745900000009,
+          "heapUsed": 61738160,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 17.7690419999999,
+          "heapUsed": 63019792,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 16.784292000000278,
+          "heapUsed": 64299008,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 18.180167000000438,
+          "heapUsed": 65276944,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 18.224959000000126,
+          "heapUsed": 66030912,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 19.42974999999933,
+          "heapUsed": 67016312,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 20.144874999999956,
+          "heapUsed": 67960552,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 17.53216699999939,
+          "heapUsed": 68726928,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 18.61462500000016,
+          "heapUsed": 69707224,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 17.580540999999357,
+          "heapUsed": 70165608,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 18.16675000000032,
+          "heapUsed": 70903200,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 17.2173329999996,
+          "heapUsed": 71372448,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 17.38891600000079,
+          "heapUsed": 71829888,
+          "rss": 473038848
+        },
+        {
+          "milliseconds": 17.715291999999863,
+          "heapUsed": 72123840,
+          "rss": 473055232
+        },
+        {
+          "milliseconds": 16.672625000000153,
+          "heapUsed": 72813984,
+          "rss": 473055232
+        },
+        {
+          "milliseconds": 16.82445800000005,
+          "heapUsed": 73063192,
+          "rss": 473055232
+        },
+        {
+          "milliseconds": 16.66754199999923,
+          "heapUsed": 73488616,
+          "rss": 473055232
+        },
+        {
+          "milliseconds": 17.824542000000292,
+          "heapUsed": 73960808,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 16.499665999999706,
+          "heapUsed": 74417960,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 16.47808299999997,
+          "heapUsed": 74874352,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 17.534625000000233,
+          "heapUsed": 75382464,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 18.503375000000233,
+          "heapUsed": 75858824,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 17.937958000000435,
+          "heapUsed": 76317768,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 17.948041999999987,
+          "heapUsed": 76775424,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 18.250999999999294,
+          "heapUsed": 77232576,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 18.3379589999995,
+          "heapUsed": 77689728,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 18.645790999999917,
+          "heapUsed": 78146880,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 18.459332999999788,
+          "heapUsed": 78604032,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 18.77929200000017,
+          "heapUsed": 79475104,
+          "rss": 473071616
+        },
+        {
+          "milliseconds": 17.65416599999935,
+          "heapUsed": 79594688,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 17.805041999999958,
+          "heapUsed": 80053488,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 19.139541999999892,
+          "heapUsed": 80540328,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 17.71650000000045,
+          "heapUsed": 80996456,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.419541999999637,
+          "heapUsed": 81454760,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.45575000000008,
+          "heapUsed": 81929728,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 17.663249999999607,
+          "heapUsed": 82386880,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.33704200000011,
+          "heapUsed": 82649888,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 17.836832999999388,
+          "heapUsed": 83339744,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 17.837375000000065,
+          "heapUsed": 83811552,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.33704200000011,
+          "heapUsed": 84269744,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.27574999999979,
+          "heapUsed": 84726952,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 17.62737500000003,
+          "heapUsed": 85184104,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.78429099999994,
+          "heapUsed": 85641256,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 19.95862500000021,
+          "heapUsed": 85874424,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 19.69445799999994,
+          "heapUsed": 86555560,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 20.99187500000062,
+          "heapUsed": 87012712,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.51245800000015,
+          "heapUsed": 87469864,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.19562499999938,
+          "heapUsed": 87927016,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 17.99241600000005,
+          "heapUsed": 88384168,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.675874999999905,
+          "heapUsed": 88844256,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 19.09937499999978,
+          "heapUsed": 89302792,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.750750000000153,
+          "heapUsed": 89759944,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.48962500000016,
+          "heapUsed": 90217096,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.17645799999991,
+          "heapUsed": 90674248,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.298999999999978,
+          "heapUsed": 91132248,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.21612499999992,
+          "heapUsed": 91589400,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 18.12779099999989,
+          "heapUsed": 91822568,
+          "rss": 473088000
+        },
+        {
+          "milliseconds": 19.025125000000116,
+          "heapUsed": 92573296,
+          "rss": 473104384
+        },
+        {
+          "milliseconds": 18.82158299999992,
+          "heapUsed": 93050344,
+          "rss": 473120768
+        },
+        {
+          "milliseconds": 18.769916999999623,
+          "heapUsed": 93507368,
+          "rss": 473120768
+        },
+        {
+          "milliseconds": 18.36175000000003,
+          "heapUsed": 93980680,
+          "rss": 473137152
+        },
+        {
+          "milliseconds": 17.720750000000407,
+          "heapUsed": 94454984,
+          "rss": 473137152
+        },
+        {
+          "milliseconds": 17.726167000000714,
+          "heapUsed": 94911464,
+          "rss": 473137152
+        },
+        {
+          "milliseconds": 17.722917000000052,
+          "heapUsed": 95368000,
+          "rss": 473137152
+        },
+        {
+          "milliseconds": 18.68658400000004,
+          "heapUsed": 95873520,
+          "rss": 473169920
+        },
+        {
+          "milliseconds": 18.0131250000004,
+          "heapUsed": 96330000,
+          "rss": 473169920
+        },
+        {
+          "milliseconds": 18.044667000000118,
+          "heapUsed": 96786920,
+          "rss": 473546752
+        },
+        {
+          "milliseconds": 18.172999999999774,
+          "heapUsed": 97243400,
+          "rss": 474005504
+        },
+        {
+          "milliseconds": 18.018291999999747,
+          "heapUsed": 97699880,
+          "rss": 474480640
+        },
+        {
+          "milliseconds": 18.69329199999993,
+          "heapUsed": 98157496,
+          "rss": 474939392
+        },
+        {
+          "milliseconds": 19.076665999999932,
+          "heapUsed": 98621896,
+          "rss": 475414528
+        },
+        {
+          "milliseconds": 18.41004199999952,
+          "heapUsed": 99079400,
+          "rss": 475906048
+        },
+        {
+          "milliseconds": 18.256791000000703,
+          "heapUsed": 99538560,
+          "rss": 476364800
+        },
+        {
+          "milliseconds": 17.927458000000115,
+          "heapUsed": 99995936,
+          "rss": 476823552
+        },
+        {
+          "milliseconds": 18.310832999999548,
+          "heapUsed": 100455224,
+          "rss": 477315072
+        },
+        {
+          "milliseconds": 18.38116599999921,
+          "heapUsed": 100911704,
+          "rss": 477790208
+        },
+        {
+          "milliseconds": 18.08679100000063,
+          "heapUsed": 101368184,
+          "rss": 478248960
+        },
+        {
+          "milliseconds": 17.54516599999988,
+          "heapUsed": 101837128,
+          "rss": 478707712
+        },
+        {
+          "milliseconds": 17.755416999999397,
+          "heapUsed": 102294744,
+          "rss": 479166464
+        },
+        {
+          "milliseconds": 17.405666000000565,
+          "heapUsed": 102751336,
+          "rss": 479657984
+        },
+        {
+          "milliseconds": 17.42333299999973,
+          "heapUsed": 103207816,
+          "rss": 480100352
+        },
+        {
+          "milliseconds": 17.711834000000636,
+          "heapUsed": 103664296,
+          "rss": 480575488
+        },
+        {
+          "milliseconds": 17.61712500000067,
+          "heapUsed": 104120776,
+          "rss": 481050624
+        },
+        {
+          "milliseconds": 17.890667000000576,
+          "heapUsed": 104577256,
+          "rss": 481492992
+        },
+        {
+          "milliseconds": 18.167500000000473,
+          "heapUsed": 105033736,
+          "rss": 481968128
+        }
+      ],
+      "timing": {
+        "medianMs": 18.018291999999747,
+        "p95Ms": 19.69445799999994
+      },
+      "memory": {
+        "startingHeap": 95101472,
+        "peakObservedHeap": 105034072,
+        "endingHeap": 105034072,
+        "peakObservedRss": 481968128
+      },
+      "outputs": {
+        "dark": {
+          "rawBytes": 638628,
+          "gzipBytes": 97442,
+          "sha256": "48e5d0311484b525e8cef7b130b0d0dd14805428cda79b753943b33dcea0fdd9",
+          "elements": 7733,
+          "cssTargets": 19,
+          "cssKeyframes": 8,
+          "smilElements": 6,
+          "duplicateIds": [],
+          "danglingReferences": [],
+          "externalReferences": [],
+          "unsupportedSelectors": [],
+          "scripts": 0,
+          "eventHandlers": 0,
+          "viewBox": "0 0 840 240",
+          "title": "@benchmark\n2024-12-29: 2 contributions\n2024-12-30: 6 contributions\n2025-01-05: 0 contributions\n2024-12-31: 0 contributions\n2025-01-06: 2 contributions\n2025-01-12: 0 contributions\n2025-01-01: 0 contributions\n2025-01-07: 0 contributions\n2025-01-13: 0 contributions\n2025-01-19: 0 contributions\n2025-01-02: 5 contributions\n2025-01-08: 4 contributions\n2025-01-14: 0 contributions\n2025-01-20: 3 contributions\n2025-01-26: 10 contributions\n2025-01-03: 0 contributions\n2025-01-09: 0 contributions\n2025-01-15: 0 contributions\n2025-01-21: 0 contributions\n2025-01-27: 8 contributions\n2025-02-02: 1 contributions\n2025-01-04: 1 contributions\n2025-01-10: 0 contributions\n2025-01-16: 0 contributions\n2025-01-22: 0 contributions\n2025-01-28: 0 contributions\n2025-02-03: 0 contributions\n2025-02-09: 0 contributions\n2025-01-11: 0 contributions\n2025-01-17: 0 contributions\n2025-01-23: 0 contributions\n2025-01-29: 0 contributions\n2025-02-04: 0 contributions\n2025-02-10: 6 contributions\n2025-02-16: 0 contributions\n2025-01-18: 0 contributions\n2025-01-24: 3 contributions\n2025-01-30: 3 contributions\n2025-02-05: 0 contributions\n2025-02-11: 20 contributions\n2025-02-17: 4 contributions\n2025-02-23: 3 contributions\n2025-01-25: 8 contributions\n2025-01-31: 0 contributions\n2025-02-06: 0 contributions\n2025-02-12: 0 contributions\n2025-02-18: 14 contributions\n2025-02-24: 0 contributions\n2025-03-02: 2 contributions\n2025-02-01: 9 contributions\n2025-02-07: 0 contributions\n2025-02-13: 0 contributions\n2025-02-19: 3 contributions\n2025-02-25: 0 contributions\n2025-03-03: 0 contributions\n2025-03-09: 0 contributions\n2025-02-08: 0 contributions\n2025-02-14: 1 contributions\n2025-02-20: 0 contributions\n2025-02-26: 5 contributions\n2025-03-04: 3 contributions\n2025-03-10: 0 contributions\n2025-03-16: 0 contributions\n2025-02-15: 3 contributions\n2025-02-21: 0 contributions\n2025-02-27: 0 contributions\n2025-03-05: 0 contributions\n2025-03-11: 0 contributions\n2025-03-17: 0 contributions\n2025-03-23: 0 contributions\n2025-02-22: 0 contributions\n2025-02-28: 3 contributions\n2025-03-06: 0 contributions\n2025-03-12: 0 contributions\n2025-03-18: 0 contributions\n2025-03-24: 0 contributions\n2025-03-30: 0 contributions\n2025-03-01: 9 contributions\n2025-03-07: 0 contributions\n2025-03-13: 0 contributions\n2025-03-19: 1 contributions\n2025-03-25: 3 contributions\n2025-03-31: 4 contributions\n2025-04-06: 0 contributions\n2025-03-08: 0 contributions\n2025-03-14: 5 contributions\n2025-03-20: 0 contributions\n2025-03-26: 5 contributions\n2025-04-01: 0 contributions\n2025-04-07: 3 contributions\n2025-04-13: 11 contributions\n2025-03-15: 0 contributions\n2025-03-21: 0 contributions\n2025-03-27: 0 contributions\n2025-04-02: 16 contributions\n2025-04-08: 6 contributions\n2025-04-14: 0 contributions\n2025-04-20: 0 contributions\n2025-03-22: 0 contributions\n2025-03-28: 0 contributions\n2025-04-03: 7 contributions\n2025-04-09: 7 contributions\n2025-04-15: 0 contributions\n2025-04-21: 0 contributions\n2025-04-27: 0 contributions\n2025-03-29: 5 contributions\n2025-04-04: 1 contributions\n2025-04-10: 0 contributions\n2025-04-16: 0 contributions\n2025-04-22: 0 contributions\n2025-04-28: 0 contributions\n2025-05-04: 0 contributions\n2025-04-05: 0 contributions\n2025-04-11: 0 contributions\n2025-04-17: 3 contributions\n2025-04-23: 0 contributions\n2025-04-29: 0 contributions\n2025-05-05: 0 contributions\n2025-05-11: 11 contributions\n2025-04-12: 2 contributions\n2025-04-18: 12 contributions\n2025-04-24: 3 contributions\n2025-04-30: 0 contributions\n2025-05-06: 0 contributions\n2025-05-12: 3 contributions\n2025-05-18: 0 contributions\n2025-04-19: 0 contributions\n2025-04-25: 0 contributions\n2025-05-01: 0 contributions\n2025-05-07: 0 contributions\n2025-05-13: 0 contributions\n2025-05-19: 0 contributions\n2025-05-25: 11 contributions\n2025-04-26: 0 contributions\n2025-05-02: 2 contributions\n2025-05-08: 0 contributions\n2025-05-14: 0 contributions\n2025-05-20: 0 contributions\n2025-05-26: 0 contributions\n2025-06-01: 0 contributions\n2025-05-03: 0 contributions\n2025-05-09: 0 contributions\n2025-05-15: 0 contributions\n2025-05-21: 6 contributions\n2025-05-27: 0 contributions\n2025-06-02: 3 contributions\n2025-06-08: 1 contributions\n2025-05-10: 0 contributions\n2025-05-16: 0 contributions\n2025-05-22: 0 contributions\n2025-05-28: 2 contributions\n2025-06-03: 0 contributions\n2025-06-09: 0 contributions\n2025-06-15: 0 contributions\n2025-05-17: 3 contributions\n2025-05-23: 9 contributions\n2025-05-29: 2 contributions\n2025-06-04: 0 contributions\n2025-06-10: 0 contributions\n2025-06-16: 0 contributions\n2025-06-22: 0 contributions\n2025-05-24: 0 contributions\n2025-05-30: 0 contributions\n2025-06-05: 0 contributions\n2025-06-11: 3 contributions\n2025-06-17: 2 contributions\n2025-06-23: 6 contributions\n2025-06-29: 0 contributions\n2025-05-31: 19 contributions\n2025-06-06: 0 contributions\n2025-06-12: 3 contributions\n2025-06-18: 0 contributions\n2025-06-24: 0 contributions\n2025-06-30: 0 contributions\n2025-07-06: 0 contributions\n2025-06-07: 3 contributions\n2025-06-13: 0 contributions\n2025-06-19: 2 contributions\n2025-06-25: 0 contributions\n2025-07-01: 0 contributions\n2025-07-07: 0 contributions\n2025-07-13: 0 contributions\n2025-06-14: 10 contributions\n2025-06-20: 0 contributions\n2025-06-26: 0 contributions\n2025-07-02: 2 contributions\n2025-07-08: 0 contributions\n2025-07-14: 2 contributions\n2025-07-20: 0 contributions\n2025-06-21: 0 contributions\n2025-06-27: 3 contributions\n2025-07-03: 0 contributions\n2025-07-09: 17 contributions\n2025-07-15: 0 contributions\n2025-07-21: 0 contributions\n2025-07-27: 10 contributions\n2025-06-28: 5 contributions\n2025-07-04: 0 contributions\n2025-07-10: 5 contributions\n2025-07-16: 2 contributions\n2025-07-22: 0 contributions\n2025-07-28: 0 contributions\n2025-08-03: 4 contributions\n2025-07-05: 3 contributions\n2025-07-11: 1 contributions\n2025-07-17: 7 contributions\n2025-07-23: 2 contributions\n2025-07-29: 0 contributions\n2025-08-04: 0 contributions\n2025-08-10: 0 contributions\n2025-07-12: 3 contributions\n2025-07-18: 0 contributions\n2025-07-24: 0 contributions\n2025-07-30: 1 contributions\n2025-08-05: 0 contributions\n2025-08-11: 2 contributions\n2025-08-17: 1 contributions\n2025-07-19: 0 contributions\n2025-07-25: 10 contributions\n2025-07-31: 5 contributions\n2025-08-06: 0 contributions\n2025-08-12: 0 contributions\n2025-08-18: 11 contributions\n2025-08-24: 0 contributions\n2025-07-26: 1 contributions\n2025-08-01: 0 contributions\n2025-08-07: 0 contributions\n2025-08-13: 0 contributions\n2025-08-19: 3 contributions\n2025-08-25: 0 contributions\n2025-08-31: 0 contributions\n2025-08-02: 0 contributions\n2025-08-08: 0 contributions\n2025-08-14: 5 contributions\n2025-08-20: 0 contributions\n2025-08-26: 0 contributions\n2025-09-01: 0 contributions\n2025-09-07: 0 contributions\n2025-08-09: 5 contributions\n2025-08-15: 0 contributions\n2025-08-21: 0 contributions\n2025-08-27: 3 contributions\n2025-09-02: 0 contributions\n2025-09-08: 0 contributions\n2025-09-14: 13 contributions\n2025-08-16: 0 contributions\n2025-08-22: 0 contributions\n2025-08-28: 0 contributions\n2025-09-03: 0 contributions\n2025-09-09: 6 contributions\n2025-09-15: 0 contributions\n2025-09-21: 1 contributions\n2025-08-23: 0 contributions\n2025-08-29: 10 contributions\n2025-09-04: 5 contributions\n2025-09-10: 20 contributions\n2025-09-16: 3 contributions\n2025-09-22: 0 contributions\n2025-09-28: 0 contributions\n2025-08-30: 0 contributions\n2025-09-05: 0 contributions\n2025-09-11: 12 contributions\n2025-09-17: 0 contributions\n2025-09-23: 2 contributions\n2025-09-29: 5 contributions\n2025-10-05: 3 contributions\n2025-09-06: 0 contributions\n2025-09-12: 12 contributions\n2025-09-18: 0 contributions\n2025-09-24: 3 contributions\n2025-09-30: 0 contributions\n2025-10-06: 0 contributions\n2025-10-12: 3 contributions\n2025-09-13: 0 contributions\n2025-09-19: 1 contributions\n2025-09-25: 0 contributions\n2025-10-01: 1 contributions\n2025-10-07: 5 contributions\n2025-10-13: 1 contributions\n2025-10-19: 0 contributions\n2025-09-20: 0 contributions\n2025-09-26: 1 contributions\n2025-10-02: 0 contributions\n2025-10-08: 0 contributions\n2025-10-14: 0 contributions\n2025-10-20: 0 contributions\n2025-10-26: 0 contributions\n2025-09-27: 3 contributions\n2025-10-03: 14 contributions\n2025-10-09: 14 contributions\n2025-10-15: 8 contributions\n2025-10-21: 2 contributions\n2025-10-27: 0 contributions\n2025-11-02: 2 contributions\n2025-10-04: 0 contributions\n2025-10-10: 3 contributions\n2025-10-16: 0 contributions\n2025-10-22: 0 contributions\n2025-10-28: 1 contributions\n2025-11-03: 10 contributions\n2025-11-09: 15 contributions\n2025-10-11: 0 contributions\n2025-10-17: 0 contributions\n2025-10-23: 0 contributions\n2025-10-29: 12 contributions\n2025-11-04: 9 contributions\n2025-11-10: 9 contributions\n2025-11-16: 0 contributions\n2025-10-18: 1 contributions\n2025-10-24: 0 contributions\n2025-10-30: 0 contributions\n2025-11-05: 0 contributions\n2025-11-11: 9 contributions\n2025-11-17: 0 contributions\n2025-11-23: 2 contributions\n2025-10-25: 0 contributions\n2025-10-31: 0 contributions\n2025-11-06: 17 contributions\n2025-11-12: 0 contributions\n2025-11-18: 6 contributions\n2025-11-24: 0 contributions\n2025-11-30: 1 contributions\n2025-11-01: 20 contributions\n2025-11-07: 13 contributions\n2025-11-13: 0 contributions\n2025-11-19: 0 contributions\n2025-11-25: 0 contributions\n2025-12-01: 1 contributions\n2025-12-07: 7 contributions\n2025-11-08: 2 contributions\n2025-11-14: 11 contributions\n2025-11-20: 0 contributions\n2025-11-26: 0 contributions\n2025-12-02: 0 contributions\n2025-12-08: 10 contributions\n2025-12-14: 0 contributions\n2025-11-15: 0 contributions\n2025-11-21: 0 contributions\n2025-11-27: 0 contributions\n2025-12-03: 0 contributions\n2025-12-09: 0 contributions\n2025-12-15: 4 contributions\n2025-12-21: 0 contributions\n2025-11-22: 0 contributions\n2025-11-28: 1 contributions\n2025-12-04: 2 contributions\n2025-12-10: 3 contributions\n2025-12-16: 0 contributions\n2025-12-22: 0 contributions\n2025-11-29: 0 contributions\n2025-12-05: 4 contributions\n2025-12-11: 10 contributions\n2025-12-17: 0 contributions\n2025-12-23: 0 contributions\n2025-12-06: 0 contributions\n2025-12-12: 0 contributions\n2025-12-18: 0 contributions\n2025-12-24: 0 contributions\n2025-12-13: 10 contributions\n2025-12-19: 0 contributions\n2025-12-25: 0 contributions\n2025-12-20: 4 contributions\n2025-12-26: 7 contributions\n2025-12-27: 0 contributions\n2024-12-29: 2 contributions\n2024-12-30: 6 contributions\n2025-01-05: 0 contributions\n2024-12-31: 0 contributions\n2025-01-06: 2 contributions\n2025-01-12: 0 contributions\n2025-01-01: 0 contributions\n2025-01-07: 0 contributions\n2025-01-13: 0 contributions\n2025-01-19: 0 contributions\n2025-01-02: 5 contributions\n2025-01-08: 4 contributions\n2025-01-14: 0 contributions\n2025-01-20: 3 contributions\n2025-01-26: 10 contributions\n2025-01-03: 0 contributions\n2025-01-09: 0 contributions\n2025-01-15: 0 contributions\n2025-01-21: 0 contributions\n2025-01-27: 8 contributions\n2025-02-02: 1 contributions\n2025-01-04: 1 contributions\n2025-01-10: 0 contributions\n2025-01-16: 0 contributions\n2025-01-22: 0 contributions\n2025-01-28: 0 contributions\n2025-02-03: 0 contributions\n2025-02-09: 0 contributions\n2025-01-11: 0 contributions\n2025-01-17: 0 contributions\n2025-01-23: 0 contributions\n2025-01-29: 0 contributions\n2025-02-04: 0 contributions\n2025-02-10: 6 contributions\n2025-02-16: 0 contributions\n2025-01-18: 0 contributions\n2025-01-24: 3 contributions\n2025-01-30: 3 contributions\n2025-02-05: 0 contributions\n2025-02-11: 20 contributions\n2025-02-17: 4 contributions\n2025-02-23: 3 contributions\n2025-01-25: 8 contributions\n2025-01-31: 0 contributions\n2025-02-06: 0 contributions\n2025-02-12: 0 contributions\n2025-02-18: 14 contributions\n2025-02-24: 0 contributions\n2025-03-02: 2 contributions\n2025-02-01: 9 contributions\n2025-02-07: 0 contributions\n2025-02-13: 0 contributions\n2025-02-19: 3 contributions\n2025-02-25: 0 contributions\n2025-03-03: 0 contributions\n2025-03-09: 0 contributions\n2025-02-08: 0 contributions\n2025-02-14: 1 contributions\n2025-02-20: 0 contributions\n2025-02-26: 5 contributions\n2025-03-04: 3 contributions\n2025-03-10: 0 contributions\n2025-03-16: 0 contributions\n2025-02-15: 3 contributions\n2025-02-21: 0 contributions\n2025-02-27: 0 contributions\n2025-03-05: 0 contributions\n2025-03-11: 0 contributions\n2025-03-17: 0 contributions\n2025-03-23: 0 contributions\n2025-02-22: 0 contributions\n2025-02-28: 3 contributions\n2025-03-06: 0 contributions\n2025-03-12: 0 contributions\n2025-03-18: 0 contributions\n2025-03-24: 0 contributions\n2025-03-30: 0 contributions\n2025-03-01: 9 contributions\n2025-03-07: 0 contributions\n2025-03-13: 0 contributions\n2025-03-19: 1 contributions\n2025-03-25: 3 contributions\n2025-03-31: 4 contributions\n2025-04-06: 0 contributions\n2025-03-08: 0 contributions\n2025-03-14: 5 contributions\n2025-03-20: 0 contributions\n2025-03-26: 5 contributions\n2025-04-01: 0 contributions\n2025-04-07: 3 contributions\n2025-04-13: 11 contributions\n2025-03-15: 0 contributions\n2025-03-21: 0 contributions\n2025-03-27: 0 contributions\n2025-04-02: 16 contributions\n2025-04-08: 6 contributions\n2025-04-14: 0 contributions\n2025-04-20: 0 contributions\n2025-03-22: 0 contributions\n2025-03-28: 0 contributions\n2025-04-03: 7 contributions\n2025-04-09: 7 contributions\n2025-04-15: 0 contributions\n2025-04-21: 0 contributions\n2025-04-27: 0 contributions\n2025-03-29: 5 contributions\n2025-04-04: 1 contributions\n2025-04-10: 0 contributions\n2025-04-16: 0 contributions\n2025-04-22: 0 contributions\n2025-04-28: 0 contributions\n2025-05-04: 0 contributions\n2025-04-05: 0 contributions\n2025-04-11: 0 contributions\n2025-04-17: 3 contributions\n2025-04-23: 0 contributions\n2025-04-29: 0 contributions\n2025-05-05: 0 contributions\n2025-05-11: 11 contributions\n2025-04-12: 2 contributions\n2025-04-18: 12 contributions\n2025-04-24: 3 contributions\n2025-04-30: 0 contributions\n2025-05-06: 0 contributions\n2025-05-12: 3 contributions\n2025-05-18: 0 contributions\n2025-04-19: 0 contributions\n2025-04-25: 0 contributions\n2025-05-01: 0 contributions\n2025-05-07: 0 contributions\n2025-05-13: 0 contributions\n2025-05-19: 0 contributions\n2025-05-25: 11 contributions\n2025-04-26: 0 contributions\n2025-05-02: 2 contributions\n2025-05-08: 0 contributions\n2025-05-14: 0 contributions\n2025-05-20: 0 contributions\n2025-05-26: 0 contributions\n2025-06-01: 0 contributions\n2025-05-03: 0 contributions\n2025-05-09: 0 contributions\n2025-05-15: 0 contributions\n2025-05-21: 6 contributions\n2025-05-27: 0 contributions\n2025-06-02: 3 contributions\n2025-06-08: 1 contributions\n2025-05-10: 0 contributions\n2025-05-16: 0 contributions\n2025-05-22: 0 contributions\n2025-05-28: 2 contributions\n2025-06-03: 0 contributions\n2025-06-09: 0 contributions\n2025-06-15: 0 contributions\n2025-05-17: 3 contributions\n2025-05-23: 9 contributions\n2025-05-29: 2 contributions\n2025-06-04: 0 contributions\n2025-06-10: 0 contributions\n2025-06-16: 0 contributions\n2025-06-22: 0 contributions\n2025-05-24: 0 contributions\n2025-05-30: 0 contributions\n2025-06-05: 0 contributions\n2025-06-11: 3 contributions\n2025-06-17: 2 contributions\n2025-06-23: 6 contributions\n2025-06-29: 0 contributions\n2025-05-31: 19 contributions\n2025-06-06: 0 contributions\n2025-06-12: 3 contributions\n2025-06-18: 0 contributions\n2025-06-24: 0 contributions\n2025-06-30: 0 contributions\n2025-07-06: 0 contributions\n2025-06-07: 3 contributions\n2025-06-13: 0 contributions\n2025-06-19: 2 contributions\n2025-06-25: 0 contributions\n2025-07-01: 0 contributions\n2025-07-07: 0 contributions\n2025-07-13: 0 contributions\n2025-06-14: 10 contributions\n2025-06-20: 0 contributions\n2025-06-26: 0 contributions\n2025-07-02: 2 contributions\n2025-07-08: 0 contributions\n2025-07-14: 2 contributions\n2025-07-20: 0 contributions\n2025-06-21: 0 contributions\n2025-06-27: 3 contributions\n2025-07-03: 0 contributions\n2025-07-09: 17 contributions\n2025-07-15: 0 contributions\n2025-07-21: 0 contributions\n2025-07-27: 10 contributions\n2025-06-28: 5 contributions\n2025-07-04: 0 contributions\n2025-07-10: 5 contributions\n2025-07-16: 2 contributions\n2025-07-22: 0 contributions\n2025-07-28: 0 contributions\n2025-08-03: 4 contributions\n2025-07-05: 3 contributions\n2025-07-11: 1 contributions\n2025-07-17: 7 contributions\n2025-07-23: 2 contributions\n2025-07-29: 0 contributions\n2025-08-04: 0 contributions\n2025-08-10: 0 contributions\n2025-07-12: 3 contributions\n2025-07-18: 0 contributions\n2025-07-24: 0 contributions\n2025-07-30: 1 contributions\n2025-08-05: 0 contributions\n2025-08-11: 2 contributions\n2025-08-17: 1 contributions\n2025-07-19: 0 contributions\n2025-07-25: 10 contributions\n2025-07-31: 5 contributions\n2025-08-06: 0 contributions\n2025-08-12: 0 contributions\n2025-08-18: 11 contributions\n2025-08-24: 0 contributions\n2025-07-26: 1 contributions\n2025-08-01: 0 contributions\n2025-08-07: 0 contributions\n2025-08-13: 0 contributions\n2025-08-19: 3 contributions\n2025-08-25: 0 contributions\n2025-08-31: 0 contributions\n2025-08-02: 0 contributions\n2025-08-08: 0 contributions\n2025-08-14: 5 contributions\n2025-08-20: 0 contributions\n2025-08-26: 0 contributions\n2025-09-01: 0 contributions\n2025-09-07: 0 contributions\n2025-08-09: 5 contributions\n2025-08-15: 0 contributions\n2025-08-21: 0 contributions\n2025-08-27: 3 contributions\n2025-09-02: 0 contributions\n2025-09-08: 0 contributions\n2025-09-14: 13 contributions\n2025-08-16: 0 contributions\n2025-08-22: 0 contributions\n2025-08-28: 0 contributions\n2025-09-03: 0 contributions\n2025-09-09: 6 contributions\n2025-09-15: 0 contributions\n2025-09-21: 1 contributions\n2025-08-23: 0 contributions\n2025-08-29: 10 contributions\n2025-09-04: 5 contributions\n2025-09-10: 20 contributions\n2025-09-16: 3 contributions\n2025-09-22: 0 contributions\n2025-09-28: 0 contributions\n2025-08-30: 0 contributions\n2025-09-05: 0 contributions\n2025-09-11: 12 contributions\n2025-09-17: 0 contributions\n2025-09-23: 2 contributions\n2025-09-29: 5 contributions\n2025-10-05: 3 contributions\n2025-09-06: 0 contributions\n2025-09-12: 12 contributions\n2025-09-18: 0 contributions\n2025-09-24: 3 contributions\n2025-09-30: 0 contributions\n2025-10-06: 0 contributions\n2025-10-12: 3 contributions\n2025-09-13: 0 contributions\n2025-09-19: 1 contributions\n2025-09-25: 0 contributions\n2025-10-01: 1 contributions\n2025-10-07: 5 contributions\n2025-10-13: 1 contributions\n2025-10-19: 0 contributions\n2025-09-20: 0 contributions\n2025-09-26: 1 contributions\n2025-10-02: 0 contributions\n2025-10-08: 0 contributions\n2025-10-14: 0 contributions\n2025-10-20: 0 contributions\n2025-10-26: 0 contributions\n2025-09-27: 3 contributions\n2025-10-03: 14 contributions\n2025-10-09: 14 contributions\n2025-10-15: 8 contributions\n2025-10-21: 2 contributions\n2025-10-27: 0 contributions\n2025-11-02: 2 contributions\n2025-10-04: 0 contributions\n2025-10-10: 3 contributions\n2025-10-16: 0 contributions\n2025-10-22: 0 contributions\n2025-10-28: 1 contributions\n2025-11-03: 10 contributions\n2025-11-09: 15 contributions\n2025-10-11: 0 contributions\n2025-10-17: 0 contributions\n2025-10-23: 0 contributions\n2025-10-29: 12 contributions\n2025-11-04: 9 contributions\n2025-11-10: 9 contributions\n2025-11-16: 0 contributions\n2025-10-18: 1 contributions\n2025-10-24: 0 contributions\n2025-10-30: 0 contributions\n2025-11-05: 0 contributions\n2025-11-11: 9 contributions\n2025-11-17: 0 contributions\n2025-11-23: 2 contributions\n2025-10-25: 0 contributions\n2025-10-31: 0 contributions\n2025-11-06: 17 contributions\n2025-11-12: 0 contributions\n2025-11-18: 6 contributions\n2025-11-24: 0 contributions\n2025-11-30: 1 contributions\n2025-11-01: 20 contributions\n2025-11-07: 13 contributions\n2025-11-13: 0 contributions\n2025-11-19: 0 contributions\n2025-11-25: 0 contributions\n2025-12-01: 1 contributions\n2025-12-07: 7 contributions\n2025-11-08: 2 contributions\n2025-11-14: 11 contributions\n2025-11-20: 0 contributions\n2025-11-26: 0 contributions\n2025-12-02: 0 contributions\n2025-12-08: 10 contributions\n2025-12-14: 0 contributions\n2025-11-15: 0 contributions\n2025-11-21: 0 contributions\n2025-11-27: 0 contributions\n2025-12-03: 0 contributions\n2025-12-09: 0 contributions\n2025-12-15: 4 contributions\n2025-12-21: 0 contributions\n2025-11-22: 0 contributions\n2025-11-28: 1 contributions\n2025-12-04: 2 contributions\n2025-12-10: 3 contributions\n2025-12-16: 0 contributions\n2025-12-22: 0 contributions\n2025-11-29: 0 contributions\n2025-12-05: 4 contributions\n2025-12-11: 10 contributions\n2025-12-17: 0 contributions\n2025-12-23: 0 contributions\n2025-12-06: 0 contributions\n2025-12-12: 0 contributions\n2025-12-18: 0 contributions\n2025-12-24: 0 contributions\n2025-12-13: 10 contributions\n2025-12-19: 0 contributions\n2025-12-25: 0 contributions\n2025-12-20: 4 contributions\n2025-12-26: 7 contributions\n2025-12-27: 0 contributions",
+          "description": "Isometric contribution terrain for @benchmark from 2024-12-29 to 2025-12-27. 803 contributions across 142 active days. 0 wonders discovered. relative normalization, maximum 12."
+        },
+        "light": {
+          "rawBytes": 636847,
+          "gzipBytes": 96722,
+          "sha256": "b46733e41140318483b57d6f28d9d08a69c520701e64a952307ff0b51df3edb8",
+          "elements": 7679,
+          "cssTargets": 19,
+          "cssKeyframes": 8,
+          "smilElements": 6,
+          "duplicateIds": [],
+          "danglingReferences": [],
+          "externalReferences": [],
+          "unsupportedSelectors": [],
+          "scripts": 0,
+          "eventHandlers": 0,
+          "viewBox": "0 0 840 240",
+          "title": "@benchmark\n2024-12-29: 2 contributions\n2024-12-30: 6 contributions\n2025-01-05: 0 contributions\n2024-12-31: 0 contributions\n2025-01-06: 2 contributions\n2025-01-12: 0 contributions\n2025-01-01: 0 contributions\n2025-01-07: 0 contributions\n2025-01-13: 0 contributions\n2025-01-19: 0 contributions\n2025-01-02: 5 contributions\n2025-01-08: 4 contributions\n2025-01-14: 0 contributions\n2025-01-20: 3 contributions\n2025-01-26: 10 contributions\n2025-01-03: 0 contributions\n2025-01-09: 0 contributions\n2025-01-15: 0 contributions\n2025-01-21: 0 contributions\n2025-01-27: 8 contributions\n2025-02-02: 1 contributions\n2025-01-04: 1 contributions\n2025-01-10: 0 contributions\n2025-01-16: 0 contributions\n2025-01-22: 0 contributions\n2025-01-28: 0 contributions\n2025-02-03: 0 contributions\n2025-02-09: 0 contributions\n2025-01-11: 0 contributions\n2025-01-17: 0 contributions\n2025-01-23: 0 contributions\n2025-01-29: 0 contributions\n2025-02-04: 0 contributions\n2025-02-10: 6 contributions\n2025-02-16: 0 contributions\n2025-01-18: 0 contributions\n2025-01-24: 3 contributions\n2025-01-30: 3 contributions\n2025-02-05: 0 contributions\n2025-02-11: 20 contributions\n2025-02-17: 4 contributions\n2025-02-23: 3 contributions\n2025-01-25: 8 contributions\n2025-01-31: 0 contributions\n2025-02-06: 0 contributions\n2025-02-12: 0 contributions\n2025-02-18: 14 contributions\n2025-02-24: 0 contributions\n2025-03-02: 2 contributions\n2025-02-01: 9 contributions\n2025-02-07: 0 contributions\n2025-02-13: 0 contributions\n2025-02-19: 3 contributions\n2025-02-25: 0 contributions\n2025-03-03: 0 contributions\n2025-03-09: 0 contributions\n2025-02-08: 0 contributions\n2025-02-14: 1 contributions\n2025-02-20: 0 contributions\n2025-02-26: 5 contributions\n2025-03-04: 3 contributions\n2025-03-10: 0 contributions\n2025-03-16: 0 contributions\n2025-02-15: 3 contributions\n2025-02-21: 0 contributions\n2025-02-27: 0 contributions\n2025-03-05: 0 contributions\n2025-03-11: 0 contributions\n2025-03-17: 0 contributions\n2025-03-23: 0 contributions\n2025-02-22: 0 contributions\n2025-02-28: 3 contributions\n2025-03-06: 0 contributions\n2025-03-12: 0 contributions\n2025-03-18: 0 contributions\n2025-03-24: 0 contributions\n2025-03-30: 0 contributions\n2025-03-01: 9 contributions\n2025-03-07: 0 contributions\n2025-03-13: 0 contributions\n2025-03-19: 1 contributions\n2025-03-25: 3 contributions\n2025-03-31: 4 contributions\n2025-04-06: 0 contributions\n2025-03-08: 0 contributions\n2025-03-14: 5 contributions\n2025-03-20: 0 contributions\n2025-03-26: 5 contributions\n2025-04-01: 0 contributions\n2025-04-07: 3 contributions\n2025-04-13: 11 contributions\n2025-03-15: 0 contributions\n2025-03-21: 0 contributions\n2025-03-27: 0 contributions\n2025-04-02: 16 contributions\n2025-04-08: 6 contributions\n2025-04-14: 0 contributions\n2025-04-20: 0 contributions\n2025-03-22: 0 contributions\n2025-03-28: 0 contributions\n2025-04-03: 7 contributions\n2025-04-09: 7 contributions\n2025-04-15: 0 contributions\n2025-04-21: 0 contributions\n2025-04-27: 0 contributions\n2025-03-29: 5 contributions\n2025-04-04: 1 contributions\n2025-04-10: 0 contributions\n2025-04-16: 0 contributions\n2025-04-22: 0 contributions\n2025-04-28: 0 contributions\n2025-05-04: 0 contributions\n2025-04-05: 0 contributions\n2025-04-11: 0 contributions\n2025-04-17: 3 contributions\n2025-04-23: 0 contributions\n2025-04-29: 0 contributions\n2025-05-05: 0 contributions\n2025-05-11: 11 contributions\n2025-04-12: 2 contributions\n2025-04-18: 12 contributions\n2025-04-24: 3 contributions\n2025-04-30: 0 contributions\n2025-05-06: 0 contributions\n2025-05-12: 3 contributions\n2025-05-18: 0 contributions\n2025-04-19: 0 contributions\n2025-04-25: 0 contributions\n2025-05-01: 0 contributions\n2025-05-07: 0 contributions\n2025-05-13: 0 contributions\n2025-05-19: 0 contributions\n2025-05-25: 11 contributions\n2025-04-26: 0 contributions\n2025-05-02: 2 contributions\n2025-05-08: 0 contributions\n2025-05-14: 0 contributions\n2025-05-20: 0 contributions\n2025-05-26: 0 contributions\n2025-06-01: 0 contributions\n2025-05-03: 0 contributions\n2025-05-09: 0 contributions\n2025-05-15: 0 contributions\n2025-05-21: 6 contributions\n2025-05-27: 0 contributions\n2025-06-02: 3 contributions\n2025-06-08: 1 contributions\n2025-05-10: 0 contributions\n2025-05-16: 0 contributions\n2025-05-22: 0 contributions\n2025-05-28: 2 contributions\n2025-06-03: 0 contributions\n2025-06-09: 0 contributions\n2025-06-15: 0 contributions\n2025-05-17: 3 contributions\n2025-05-23: 9 contributions\n2025-05-29: 2 contributions\n2025-06-04: 0 contributions\n2025-06-10: 0 contributions\n2025-06-16: 0 contributions\n2025-06-22: 0 contributions\n2025-05-24: 0 contributions\n2025-05-30: 0 contributions\n2025-06-05: 0 contributions\n2025-06-11: 3 contributions\n2025-06-17: 2 contributions\n2025-06-23: 6 contributions\n2025-06-29: 0 contributions\n2025-05-31: 19 contributions\n2025-06-06: 0 contributions\n2025-06-12: 3 contributions\n2025-06-18: 0 contributions\n2025-06-24: 0 contributions\n2025-06-30: 0 contributions\n2025-07-06: 0 contributions\n2025-06-07: 3 contributions\n2025-06-13: 0 contributions\n2025-06-19: 2 contributions\n2025-06-25: 0 contributions\n2025-07-01: 0 contributions\n2025-07-07: 0 contributions\n2025-07-13: 0 contributions\n2025-06-14: 10 contributions\n2025-06-20: 0 contributions\n2025-06-26: 0 contributions\n2025-07-02: 2 contributions\n2025-07-08: 0 contributions\n2025-07-14: 2 contributions\n2025-07-20: 0 contributions\n2025-06-21: 0 contributions\n2025-06-27: 3 contributions\n2025-07-03: 0 contributions\n2025-07-09: 17 contributions\n2025-07-15: 0 contributions\n2025-07-21: 0 contributions\n2025-07-27: 10 contributions\n2025-06-28: 5 contributions\n2025-07-04: 0 contributions\n2025-07-10: 5 contributions\n2025-07-16: 2 contributions\n2025-07-22: 0 contributions\n2025-07-28: 0 contributions\n2025-08-03: 4 contributions\n2025-07-05: 3 contributions\n2025-07-11: 1 contributions\n2025-07-17: 7 contributions\n2025-07-23: 2 contributions\n2025-07-29: 0 contributions\n2025-08-04: 0 contributions\n2025-08-10: 0 contributions\n2025-07-12: 3 contributions\n2025-07-18: 0 contributions\n2025-07-24: 0 contributions\n2025-07-30: 1 contributions\n2025-08-05: 0 contributions\n2025-08-11: 2 contributions\n2025-08-17: 1 contributions\n2025-07-19: 0 contributions\n2025-07-25: 10 contributions\n2025-07-31: 5 contributions\n2025-08-06: 0 contributions\n2025-08-12: 0 contributions\n2025-08-18: 11 contributions\n2025-08-24: 0 contributions\n2025-07-26: 1 contributions\n2025-08-01: 0 contributions\n2025-08-07: 0 contributions\n2025-08-13: 0 contributions\n2025-08-19: 3 contributions\n2025-08-25: 0 contributions\n2025-08-31: 0 contributions\n2025-08-02: 0 contributions\n2025-08-08: 0 contributions\n2025-08-14: 5 contributions\n2025-08-20: 0 contributions\n2025-08-26: 0 contributions\n2025-09-01: 0 contributions\n2025-09-07: 0 contributions\n2025-08-09: 5 contributions\n2025-08-15: 0 contributions\n2025-08-21: 0 contributions\n2025-08-27: 3 contributions\n2025-09-02: 0 contributions\n2025-09-08: 0 contributions\n2025-09-14: 13 contributions\n2025-08-16: 0 contributions\n2025-08-22: 0 contributions\n2025-08-28: 0 contributions\n2025-09-03: 0 contributions\n2025-09-09: 6 contributions\n2025-09-15: 0 contributions\n2025-09-21: 1 contributions\n2025-08-23: 0 contributions\n2025-08-29: 10 contributions\n2025-09-04: 5 contributions\n2025-09-10: 20 contributions\n2025-09-16: 3 contributions\n2025-09-22: 0 contributions\n2025-09-28: 0 contributions\n2025-08-30: 0 contributions\n2025-09-05: 0 contributions\n2025-09-11: 12 contributions\n2025-09-17: 0 contributions\n2025-09-23: 2 contributions\n2025-09-29: 5 contributions\n2025-10-05: 3 contributions\n2025-09-06: 0 contributions\n2025-09-12: 12 contributions\n2025-09-18: 0 contributions\n2025-09-24: 3 contributions\n2025-09-30: 0 contributions\n2025-10-06: 0 contributions\n2025-10-12: 3 contributions\n2025-09-13: 0 contributions\n2025-09-19: 1 contributions\n2025-09-25: 0 contributions\n2025-10-01: 1 contributions\n2025-10-07: 5 contributions\n2025-10-13: 1 contributions\n2025-10-19: 0 contributions\n2025-09-20: 0 contributions\n2025-09-26: 1 contributions\n2025-10-02: 0 contributions\n2025-10-08: 0 contributions\n2025-10-14: 0 contributions\n2025-10-20: 0 contributions\n2025-10-26: 0 contributions\n2025-09-27: 3 contributions\n2025-10-03: 14 contributions\n2025-10-09: 14 contributions\n2025-10-15: 8 contributions\n2025-10-21: 2 contributions\n2025-10-27: 0 contributions\n2025-11-02: 2 contributions\n2025-10-04: 0 contributions\n2025-10-10: 3 contributions\n2025-10-16: 0 contributions\n2025-10-22: 0 contributions\n2025-10-28: 1 contributions\n2025-11-03: 10 contributions\n2025-11-09: 15 contributions\n2025-10-11: 0 contributions\n2025-10-17: 0 contributions\n2025-10-23: 0 contributions\n2025-10-29: 12 contributions\n2025-11-04: 9 contributions\n2025-11-10: 9 contributions\n2025-11-16: 0 contributions\n2025-10-18: 1 contributions\n2025-10-24: 0 contributions\n2025-10-30: 0 contributions\n2025-11-05: 0 contributions\n2025-11-11: 9 contributions\n2025-11-17: 0 contributions\n2025-11-23: 2 contributions\n2025-10-25: 0 contributions\n2025-10-31: 0 contributions\n2025-11-06: 17 contributions\n2025-11-12: 0 contributions\n2025-11-18: 6 contributions\n2025-11-24: 0 contributions\n2025-11-30: 1 contributions\n2025-11-01: 20 contributions\n2025-11-07: 13 contributions\n2025-11-13: 0 contributions\n2025-11-19: 0 contributions\n2025-11-25: 0 contributions\n2025-12-01: 1 contributions\n2025-12-07: 7 contributions\n2025-11-08: 2 contributions\n2025-11-14: 11 contributions\n2025-11-20: 0 contributions\n2025-11-26: 0 contributions\n2025-12-02: 0 contributions\n2025-12-08: 10 contributions\n2025-12-14: 0 contributions\n2025-11-15: 0 contributions\n2025-11-21: 0 contributions\n2025-11-27: 0 contributions\n2025-12-03: 0 contributions\n2025-12-09: 0 contributions\n2025-12-15: 4 contributions\n2025-12-21: 0 contributions\n2025-11-22: 0 contributions\n2025-11-28: 1 contributions\n2025-12-04: 2 contributions\n2025-12-10: 3 contributions\n2025-12-16: 0 contributions\n2025-12-22: 0 contributions\n2025-11-29: 0 contributions\n2025-12-05: 4 contributions\n2025-12-11: 10 contributions\n2025-12-17: 0 contributions\n2025-12-23: 0 contributions\n2025-12-06: 0 contributions\n2025-12-12: 0 contributions\n2025-12-18: 0 contributions\n2025-12-24: 0 contributions\n2025-12-13: 10 contributions\n2025-12-19: 0 contributions\n2025-12-25: 0 contributions\n2025-12-20: 4 contributions\n2025-12-26: 7 contributions\n2025-12-27: 0 contributions\n2024-12-29: 2 contributions\n2024-12-30: 6 contributions\n2025-01-05: 0 contributions\n2024-12-31: 0 contributions\n2025-01-06: 2 contributions\n2025-01-12: 0 contributions\n2025-01-01: 0 contributions\n2025-01-07: 0 contributions\n2025-01-13: 0 contributions\n2025-01-19: 0 contributions\n2025-01-02: 5 contributions\n2025-01-08: 4 contributions\n2025-01-14: 0 contributions\n2025-01-20: 3 contributions\n2025-01-26: 10 contributions\n2025-01-03: 0 contributions\n2025-01-09: 0 contributions\n2025-01-15: 0 contributions\n2025-01-21: 0 contributions\n2025-01-27: 8 contributions\n2025-02-02: 1 contributions\n2025-01-04: 1 contributions\n2025-01-10: 0 contributions\n2025-01-16: 0 contributions\n2025-01-22: 0 contributions\n2025-01-28: 0 contributions\n2025-02-03: 0 contributions\n2025-02-09: 0 contributions\n2025-01-11: 0 contributions\n2025-01-17: 0 contributions\n2025-01-23: 0 contributions\n2025-01-29: 0 contributions\n2025-02-04: 0 contributions\n2025-02-10: 6 contributions\n2025-02-16: 0 contributions\n2025-01-18: 0 contributions\n2025-01-24: 3 contributions\n2025-01-30: 3 contributions\n2025-02-05: 0 contributions\n2025-02-11: 20 contributions\n2025-02-17: 4 contributions\n2025-02-23: 3 contributions\n2025-01-25: 8 contributions\n2025-01-31: 0 contributions\n2025-02-06: 0 contributions\n2025-02-12: 0 contributions\n2025-02-18: 14 contributions\n2025-02-24: 0 contributions\n2025-03-02: 2 contributions\n2025-02-01: 9 contributions\n2025-02-07: 0 contributions\n2025-02-13: 0 contributions\n2025-02-19: 3 contributions\n2025-02-25: 0 contributions\n2025-03-03: 0 contributions\n2025-03-09: 0 contributions\n2025-02-08: 0 contributions\n2025-02-14: 1 contributions\n2025-02-20: 0 contributions\n2025-02-26: 5 contributions\n2025-03-04: 3 contributions\n2025-03-10: 0 contributions\n2025-03-16: 0 contributions\n2025-02-15: 3 contributions\n2025-02-21: 0 contributions\n2025-02-27: 0 contributions\n2025-03-05: 0 contributions\n2025-03-11: 0 contributions\n2025-03-17: 0 contributions\n2025-03-23: 0 contributions\n2025-02-22: 0 contributions\n2025-02-28: 3 contributions\n2025-03-06: 0 contributions\n2025-03-12: 0 contributions\n2025-03-18: 0 contributions\n2025-03-24: 0 contributions\n2025-03-30: 0 contributions\n2025-03-01: 9 contributions\n2025-03-07: 0 contributions\n2025-03-13: 0 contributions\n2025-03-19: 1 contributions\n2025-03-25: 3 contributions\n2025-03-31: 4 contributions\n2025-04-06: 0 contributions\n2025-03-08: 0 contributions\n2025-03-14: 5 contributions\n2025-03-20: 0 contributions\n2025-03-26: 5 contributions\n2025-04-01: 0 contributions\n2025-04-07: 3 contributions\n2025-04-13: 11 contributions\n2025-03-15: 0 contributions\n2025-03-21: 0 contributions\n2025-03-27: 0 contributions\n2025-04-02: 16 contributions\n2025-04-08: 6 contributions\n2025-04-14: 0 contributions\n2025-04-20: 0 contributions\n2025-03-22: 0 contributions\n2025-03-28: 0 contributions\n2025-04-03: 7 contributions\n2025-04-09: 7 contributions\n2025-04-15: 0 contributions\n2025-04-21: 0 contributions\n2025-04-27: 0 contributions\n2025-03-29: 5 contributions\n2025-04-04: 1 contributions\n2025-04-10: 0 contributions\n2025-04-16: 0 contributions\n2025-04-22: 0 contributions\n2025-04-28: 0 contributions\n2025-05-04: 0 contributions\n2025-04-05: 0 contributions\n2025-04-11: 0 contributions\n2025-04-17: 3 contributions\n2025-04-23: 0 contributions\n2025-04-29: 0 contributions\n2025-05-05: 0 contributions\n2025-05-11: 11 contributions\n2025-04-12: 2 contributions\n2025-04-18: 12 contributions\n2025-04-24: 3 contributions\n2025-04-30: 0 contributions\n2025-05-06: 0 contributions\n2025-05-12: 3 contributions\n2025-05-18: 0 contributions\n2025-04-19: 0 contributions\n2025-04-25: 0 contributions\n2025-05-01: 0 contributions\n2025-05-07: 0 contributions\n2025-05-13: 0 contributions\n2025-05-19: 0 contributions\n2025-05-25: 11 contributions\n2025-04-26: 0 contributions\n2025-05-02: 2 contributions\n2025-05-08: 0 contributions\n2025-05-14: 0 contributions\n2025-05-20: 0 contributions\n2025-05-26: 0 contributions\n2025-06-01: 0 contributions\n2025-05-03: 0 contributions\n2025-05-09: 0 contributions\n2025-05-15: 0 contributions\n2025-05-21: 6 contributions\n2025-05-27: 0 contributions\n2025-06-02: 3 contributions\n2025-06-08: 1 contributions\n2025-05-10: 0 contributions\n2025-05-16: 0 contributions\n2025-05-22: 0 contributions\n2025-05-28: 2 contributions\n2025-06-03: 0 contributions\n2025-06-09: 0 contributions\n2025-06-15: 0 contributions\n2025-05-17: 3 contributions\n2025-05-23: 9 contributions\n2025-05-29: 2 contributions\n2025-06-04: 0 contributions\n2025-06-10: 0 contributions\n2025-06-16: 0 contributions\n2025-06-22: 0 contributions\n2025-05-24: 0 contributions\n2025-05-30: 0 contributions\n2025-06-05: 0 contributions\n2025-06-11: 3 contributions\n2025-06-17: 2 contributions\n2025-06-23: 6 contributions\n2025-06-29: 0 contributions\n2025-05-31: 19 contributions\n2025-06-06: 0 contributions\n2025-06-12: 3 contributions\n2025-06-18: 0 contributions\n2025-06-24: 0 contributions\n2025-06-30: 0 contributions\n2025-07-06: 0 contributions\n2025-06-07: 3 contributions\n2025-06-13: 0 contributions\n2025-06-19: 2 contributions\n2025-06-25: 0 contributions\n2025-07-01: 0 contributions\n2025-07-07: 0 contributions\n2025-07-13: 0 contributions\n2025-06-14: 10 contributions\n2025-06-20: 0 contributions\n2025-06-26: 0 contributions\n2025-07-02: 2 contributions\n2025-07-08: 0 contributions\n2025-07-14: 2 contributions\n2025-07-20: 0 contributions\n2025-06-21: 0 contributions\n2025-06-27: 3 contributions\n2025-07-03: 0 contributions\n2025-07-09: 17 contributions\n2025-07-15: 0 contributions\n2025-07-21: 0 contributions\n2025-07-27: 10 contributions\n2025-06-28: 5 contributions\n2025-07-04: 0 contributions\n2025-07-10: 5 contributions\n2025-07-16: 2 contributions\n2025-07-22: 0 contributions\n2025-07-28: 0 contributions\n2025-08-03: 4 contributions\n2025-07-05: 3 contributions\n2025-07-11: 1 contributions\n2025-07-17: 7 contributions\n2025-07-23: 2 contributions\n2025-07-29: 0 contributions\n2025-08-04: 0 contributions\n2025-08-10: 0 contributions\n2025-07-12: 3 contributions\n2025-07-18: 0 contributions\n2025-07-24: 0 contributions\n2025-07-30: 1 contributions\n2025-08-05: 0 contributions\n2025-08-11: 2 contributions\n2025-08-17: 1 contributions\n2025-07-19: 0 contributions\n2025-07-25: 10 contributions\n2025-07-31: 5 contributions\n2025-08-06: 0 contributions\n2025-08-12: 0 contributions\n2025-08-18: 11 contributions\n2025-08-24: 0 contributions\n2025-07-26: 1 contributions\n2025-08-01: 0 contributions\n2025-08-07: 0 contributions\n2025-08-13: 0 contributions\n2025-08-19: 3 contributions\n2025-08-25: 0 contributions\n2025-08-31: 0 contributions\n2025-08-02: 0 contributions\n2025-08-08: 0 contributions\n2025-08-14: 5 contributions\n2025-08-20: 0 contributions\n2025-08-26: 0 contributions\n2025-09-01: 0 contributions\n2025-09-07: 0 contributions\n2025-08-09: 5 contributions\n2025-08-15: 0 contributions\n2025-08-21: 0 contributions\n2025-08-27: 3 contributions\n2025-09-02: 0 contributions\n2025-09-08: 0 contributions\n2025-09-14: 13 contributions\n2025-08-16: 0 contributions\n2025-08-22: 0 contributions\n2025-08-28: 0 contributions\n2025-09-03: 0 contributions\n2025-09-09: 6 contributions\n2025-09-15: 0 contributions\n2025-09-21: 1 contributions\n2025-08-23: 0 contributions\n2025-08-29: 10 contributions\n2025-09-04: 5 contributions\n2025-09-10: 20 contributions\n2025-09-16: 3 contributions\n2025-09-22: 0 contributions\n2025-09-28: 0 contributions\n2025-08-30: 0 contributions\n2025-09-05: 0 contributions\n2025-09-11: 12 contributions\n2025-09-17: 0 contributions\n2025-09-23: 2 contributions\n2025-09-29: 5 contributions\n2025-10-05: 3 contributions\n2025-09-06: 0 contributions\n2025-09-12: 12 contributions\n2025-09-18: 0 contributions\n2025-09-24: 3 contributions\n2025-09-30: 0 contributions\n2025-10-06: 0 contributions\n2025-10-12: 3 contributions\n2025-09-13: 0 contributions\n2025-09-19: 1 contributions\n2025-09-25: 0 contributions\n2025-10-01: 1 contributions\n2025-10-07: 5 contributions\n2025-10-13: 1 contributions\n2025-10-19: 0 contributions\n2025-09-20: 0 contributions\n2025-09-26: 1 contributions\n2025-10-02: 0 contributions\n2025-10-08: 0 contributions\n2025-10-14: 0 contributions\n2025-10-20: 0 contributions\n2025-10-26: 0 contributions\n2025-09-27: 3 contributions\n2025-10-03: 14 contributions\n2025-10-09: 14 contributions\n2025-10-15: 8 contributions\n2025-10-21: 2 contributions\n2025-10-27: 0 contributions\n2025-11-02: 2 contributions\n2025-10-04: 0 contributions\n2025-10-10: 3 contributions\n2025-10-16: 0 contributions\n2025-10-22: 0 contributions\n2025-10-28: 1 contributions\n2025-11-03: 10 contributions\n2025-11-09: 15 contributions\n2025-10-11: 0 contributions\n2025-10-17: 0 contributions\n2025-10-23: 0 contributions\n2025-10-29: 12 contributions\n2025-11-04: 9 contributions\n2025-11-10: 9 contributions\n2025-11-16: 0 contributions\n2025-10-18: 1 contributions\n2025-10-24: 0 contributions\n2025-10-30: 0 contributions\n2025-11-05: 0 contributions\n2025-11-11: 9 contributions\n2025-11-17: 0 contributions\n2025-11-23: 2 contributions\n2025-10-25: 0 contributions\n2025-10-31: 0 contributions\n2025-11-06: 17 contributions\n2025-11-12: 0 contributions\n2025-11-18: 6 contributions\n2025-11-24: 0 contributions\n2025-11-30: 1 contributions\n2025-11-01: 20 contributions\n2025-11-07: 13 contributions\n2025-11-13: 0 contributions\n2025-11-19: 0 contributions\n2025-11-25: 0 contributions\n2025-12-01: 1 contributions\n2025-12-07: 7 contributions\n2025-11-08: 2 contributions\n2025-11-14: 11 contributions\n2025-11-20: 0 contributions\n2025-11-26: 0 contributions\n2025-12-02: 0 contributions\n2025-12-08: 10 contributions\n2025-12-14: 0 contributions\n2025-11-15: 0 contributions\n2025-11-21: 0 contributions\n2025-11-27: 0 contributions\n2025-12-03: 0 contributions\n2025-12-09: 0 contributions\n2025-12-15: 4 contributions\n2025-12-21: 0 contributions\n2025-11-22: 0 contributions\n2025-11-28: 1 contributions\n2025-12-04: 2 contributions\n2025-12-10: 3 contributions\n2025-12-16: 0 contributions\n2025-12-22: 0 contributions\n2025-11-29: 0 contributions\n2025-12-05: 4 contributions\n2025-12-11: 10 contributions\n2025-12-17: 0 contributions\n2025-12-23: 0 contributions\n2025-12-06: 0 contributions\n2025-12-12: 0 contributions\n2025-12-18: 0 contributions\n2025-12-24: 0 contributions\n2025-12-13: 10 contributions\n2025-12-19: 0 contributions\n2025-12-25: 0 contributions\n2025-12-20: 4 contributions\n2025-12-26: 7 contributions\n2025-12-27: 0 contributions",
+          "description": "Isometric contribution terrain for @benchmark from 2024-12-29 to 2025-12-27. 803 contributions across 142 active days. 0 wonders discovered. relative normalization, maximum 12."
+        }
+      },
+      "artifacts": {
+        "data": "tests/fixtures/benchmark-baseline-samples/mixed.data.json",
+        "darkSvg": "tests/fixtures/benchmark-baseline-samples/mixed-dark.svg",
+        "lightSvg": "tests/fixtures/benchmark-baseline-samples/mixed-light.svg",
+        "darkPng": "tests/fixtures/benchmark-baseline-samples/mixed-dark.png",
+        "lightPng": "tests/fixtures/benchmark-baseline-samples/mixed-light.png"
+      }
+    },
+    {
+      "name": "full",
+      "dataSha256": "57256446c1ac8fb93cdf11ede47b811849096374025edca15d527ee96da642b5",
+      "metadata": {
+        "username": "benchmark",
+        "year": 2025,
+        "fromDate": "2024-12-29",
+        "toDate": "2025-12-27",
+        "days": 364,
+        "weeks": 52,
+        "contributions": 7280,
+        "activeDays": 364
+      },
+      "samples": [
+        {
+          "milliseconds": 22.78783300000032,
+          "heapUsed": 75868016,
+          "rss": 511393792
+        },
+        {
+          "milliseconds": 21.801708000000872,
+          "heapUsed": 84714928,
+          "rss": 512606208
+        },
+        {
+          "milliseconds": 22.232124999998632,
+          "heapUsed": 93486232,
+          "rss": 513998848
+        },
+        {
+          "milliseconds": 22.16295899999932,
+          "heapUsed": 101228544,
+          "rss": 514736128
+        },
+        {
+          "milliseconds": 22.660375000001295,
+          "heapUsed": 108693616,
+          "rss": 515031040
+        },
+        {
+          "milliseconds": 22.147791000001234,
+          "heapUsed": 82316056,
+          "rss": 515031040
+        },
+        {
+          "milliseconds": 22.372333000001163,
+          "heapUsed": 91041296,
+          "rss": 516227072
+        },
+        {
+          "milliseconds": 22.14770800000042,
+          "heapUsed": 99821000,
+          "rss": 517636096
+        },
+        {
+          "milliseconds": 21.494124999999258,
+          "heapUsed": 107543016,
+          "rss": 518373376
+        },
+        {
+          "milliseconds": 23.88604099999975,
+          "heapUsed": 115065064,
+          "rss": 518668288
+        },
+        {
+          "milliseconds": 25.746083,
+          "heapUsed": 88738728,
+          "rss": 518668288
+        },
+        {
+          "milliseconds": 23.5692080000008,
+          "heapUsed": 97573840,
+          "rss": 519913472
+        },
+        {
+          "milliseconds": 22.6318339999998,
+          "heapUsed": 106411408,
+          "rss": 521371648
+        },
+        {
+          "milliseconds": 22.413667000000714,
+          "heapUsed": 114066144,
+          "rss": 522092544
+        },
+        {
+          "milliseconds": 24.386083000001236,
+          "heapUsed": 121552752,
+          "rss": 522403840
+        },
+        {
+          "milliseconds": 25.407083000000057,
+          "heapUsed": 95065800,
+          "rss": 522420224
+        },
+        {
+          "milliseconds": 23.403707999999824,
+          "heapUsed": 103884024,
+          "rss": 523616256
+        },
+        {
+          "milliseconds": 22.64941700000054,
+          "heapUsed": 112677552,
+          "rss": 525008896
+        },
+        {
+          "milliseconds": 23.79845800000112,
+          "heapUsed": 120332504,
+          "rss": 525713408
+        },
+        {
+          "milliseconds": 23.77179199999955,
+          "heapUsed": 127846184,
+          "rss": 526024704
+        },
+        {
+          "milliseconds": 35.58379199999945,
+          "heapUsed": 51395632,
+          "rss": 496910336
+        },
+        {
+          "milliseconds": 27.389375000000655,
+          "heapUsed": 61455112,
+          "rss": 498565120
+        },
+        {
+          "milliseconds": 25.398833000001105,
+          "heapUsed": 71021952,
+          "rss": 499924992
+        },
+        {
+          "milliseconds": 24.909459000000425,
+          "heapUsed": 79171504,
+          "rss": 500400128
+        },
+        {
+          "milliseconds": 29.450291999999536,
+          "heapUsed": 53019648,
+          "rss": 500400128
+        },
+        {
+          "milliseconds": 26.971749999998792,
+          "heapUsed": 62743752,
+          "rss": 502054912
+        },
+        {
+          "milliseconds": 27.831333000000086,
+          "heapUsed": 71915952,
+          "rss": 503414784
+        },
+        {
+          "milliseconds": 26.55949999999939,
+          "heapUsed": 80059736,
+          "rss": 504299520
+        },
+        {
+          "milliseconds": 25.448624999999083,
+          "heapUsed": 87928304,
+          "rss": 504594432
+        },
+        {
+          "milliseconds": 25.642582999998922,
+          "heapUsed": 61645216,
+          "rss": 504594432
+        },
+        {
+          "milliseconds": 23.70770799999991,
+          "heapUsed": 70744736,
+          "rss": 506085376
+        },
+        {
+          "milliseconds": 22.48412500000086,
+          "heapUsed": 79800664,
+          "rss": 507461632
+        },
+        {
+          "milliseconds": 22.441791999999623,
+          "heapUsed": 87563008,
+          "rss": 508166144
+        },
+        {
+          "milliseconds": 24.600209000000177,
+          "heapUsed": 95327936,
+          "rss": 508477440
+        },
+        {
+          "milliseconds": 22.013750000000073,
+          "heapUsed": 69084432,
+          "rss": 508477440
+        },
+        {
+          "milliseconds": 21.390041999999085,
+          "heapUsed": 77928992,
+          "rss": 509657088
+        },
+        {
+          "milliseconds": 21.19233399999939,
+          "heapUsed": 86861392,
+          "rss": 511016960
+        },
+        {
+          "milliseconds": 20.946250000000873,
+          "heapUsed": 94566040,
+          "rss": 511721472
+        },
+        {
+          "milliseconds": 21.607332999999926,
+          "heapUsed": 102131352,
+          "rss": 512016384
+        },
+        {
+          "milliseconds": 22.027291000000332,
+          "heapUsed": 75818000,
+          "rss": 512016384
+        },
+        {
+          "milliseconds": 22.648917000000438,
+          "heapUsed": 84589512,
+          "rss": 513196032
+        },
+        {
+          "milliseconds": 22.506999999999607,
+          "heapUsed": 93529104,
+          "rss": 514572288
+        },
+        {
+          "milliseconds": 21.067124999999578,
+          "heapUsed": 101233752,
+          "rss": 515276800
+        },
+        {
+          "milliseconds": 21.544708000001265,
+          "heapUsed": 108874808,
+          "rss": 515571712
+        },
+        {
+          "milliseconds": 22.42675000000054,
+          "heapUsed": 82478736,
+          "rss": 515588096
+        },
+        {
+          "milliseconds": 20.800208999999086,
+          "heapUsed": 91289104,
+          "rss": 516767744
+        },
+        {
+          "milliseconds": 20.994709000000512,
+          "heapUsed": 100187608,
+          "rss": 518127616
+        },
+        {
+          "milliseconds": 20.76179200000115,
+          "heapUsed": 107811816,
+          "rss": 518832128
+        },
+        {
+          "milliseconds": 21.355792000000292,
+          "heapUsed": 115482696,
+          "rss": 519143424
+        },
+        {
+          "milliseconds": 21.61579200000051,
+          "heapUsed": 88989392,
+          "rss": 519143424
+        },
+        {
+          "milliseconds": 21.096958000000086,
+          "heapUsed": 97777920,
+          "rss": 520323072
+        },
+        {
+          "milliseconds": 21.01812500000051,
+          "heapUsed": 107159848,
+          "rss": 521682944
+        },
+        {
+          "milliseconds": 21.09637500000099,
+          "heapUsed": 114557256,
+          "rss": 522092544
+        },
+        {
+          "milliseconds": 21.98779099999956,
+          "heapUsed": 122157592,
+          "rss": 522403840
+        },
+        {
+          "milliseconds": 24.939292000000933,
+          "heapUsed": 96123280,
+          "rss": 522403840
+        },
+        {
+          "milliseconds": 23.46587499999987,
+          "heapUsed": 104631728,
+          "rss": 523599872
+        },
+        {
+          "milliseconds": 21.621917000000394,
+          "heapUsed": 113571968,
+          "rss": 524550144
+        },
+        {
+          "milliseconds": 20.86504099999911,
+          "heapUsed": 120941600,
+          "rss": 524959744
+        },
+        {
+          "milliseconds": 22.06920899999932,
+          "heapUsed": 128595480,
+          "rss": 525287424
+        },
+        {
+          "milliseconds": 21.437583999999333,
+          "heapUsed": 102320016,
+          "rss": 525303808
+        },
+        {
+          "milliseconds": 21.451333000000886,
+          "heapUsed": 110770704,
+          "rss": 526483456
+        },
+        {
+          "milliseconds": 22.493207999999868,
+          "heapUsed": 119625000,
+          "rss": 527450112
+        },
+        {
+          "milliseconds": 21.683584000000337,
+          "heapUsed": 127449256,
+          "rss": 528171008
+        },
+        {
+          "milliseconds": 22.689291999999114,
+          "heapUsed": 134984272,
+          "rss": 528465920
+        },
+        {
+          "milliseconds": 22.61291600000004,
+          "heapUsed": 108697720,
+          "rss": 528465920
+        },
+        {
+          "milliseconds": 21.848125000000437,
+          "heapUsed": 117078112,
+          "rss": 529661952
+        },
+        {
+          "milliseconds": 20.878708999998707,
+          "heapUsed": 125815504,
+          "rss": 530644992
+        },
+        {
+          "milliseconds": 21.82208300000093,
+          "heapUsed": 133622416,
+          "rss": 531120128
+        },
+        {
+          "milliseconds": 22.29291700000067,
+          "heapUsed": 140720536,
+          "rss": 531120128
+        },
+        {
+          "milliseconds": 21.867041999999856,
+          "heapUsed": 114324864,
+          "rss": 531120128
+        },
+        {
+          "milliseconds": 22.501415999999153,
+          "heapUsed": 122704072,
+          "rss": 532316160
+        },
+        {
+          "milliseconds": 21.370042000000467,
+          "heapUsed": 131471296,
+          "rss": 533331968
+        },
+        {
+          "milliseconds": 21.201999999999316,
+          "heapUsed": 139201592,
+          "rss": 533807104
+        },
+        {
+          "milliseconds": 22.090292000000773,
+          "heapUsed": 146304880,
+          "rss": 533807104
+        },
+        {
+          "milliseconds": 21.867792000000918,
+          "heapUsed": 119938984,
+          "rss": 533807104
+        },
+        {
+          "milliseconds": 22.414582999999766,
+          "heapUsed": 128313232,
+          "rss": 535019520
+        },
+        {
+          "milliseconds": 20.70929099999921,
+          "heapUsed": 137151680,
+          "rss": 535986176
+        },
+        {
+          "milliseconds": 21.595500000001266,
+          "heapUsed": 144951536,
+          "rss": 536477696
+        },
+        {
+          "milliseconds": 21.543958000000202,
+          "heapUsed": 152048736,
+          "rss": 536477696
+        },
+        {
+          "milliseconds": 22.028791000000638,
+          "heapUsed": 125609624,
+          "rss": 536477696
+        },
+        {
+          "milliseconds": 22.06000000000131,
+          "heapUsed": 133992312,
+          "rss": 537673728
+        },
+        {
+          "milliseconds": 22.69895799999904,
+          "heapUsed": 142771744,
+          "rss": 538640384
+        },
+        {
+          "milliseconds": 23.585583000000042,
+          "heapUsed": 150611344,
+          "rss": 539197440
+        },
+        {
+          "milliseconds": 22.258249999998952,
+          "heapUsed": 157690320,
+          "rss": 539197440
+        },
+        {
+          "milliseconds": 22.46650000000045,
+          "heapUsed": 131295656,
+          "rss": 539197440
+        },
+        {
+          "milliseconds": 21.57429200000115,
+          "heapUsed": 139679496,
+          "rss": 530382848
+        },
+        {
+          "milliseconds": 22.371750000000247,
+          "heapUsed": 148516456,
+          "rss": 532447232
+        },
+        {
+          "milliseconds": 22.23058300000048,
+          "heapUsed": 156343416,
+          "rss": 533889024
+        },
+        {
+          "milliseconds": 22.646750000001703,
+          "heapUsed": 163440616,
+          "rss": 534544384
+        },
+        {
+          "milliseconds": 22.511084000001574,
+          "heapUsed": 137043008,
+          "rss": 535265280
+        },
+        {
+          "milliseconds": 22.373500000001513,
+          "heapUsed": 145407504,
+          "rss": 537133056
+        },
+        {
+          "milliseconds": 21.54658399999971,
+          "heapUsed": 154166512,
+          "rss": 538787840
+        },
+        {
+          "milliseconds": 22.056000000000495,
+          "heapUsed": 161947696,
+          "rss": 539983872
+        },
+        {
+          "milliseconds": 22.034999999999854,
+          "heapUsed": 169085600,
+          "rss": 540672000
+        },
+        {
+          "milliseconds": 24.1528330000001,
+          "heapUsed": 142654744,
+          "rss": 541409280
+        },
+        {
+          "milliseconds": 22.953832999999577,
+          "heapUsed": 151074816,
+          "rss": 543326208
+        },
+        {
+          "milliseconds": 21.47241600000052,
+          "heapUsed": 159873576,
+          "rss": 544997376
+        },
+        {
+          "milliseconds": 21.60241700000006,
+          "heapUsed": 167546360,
+          "rss": 546406400
+        },
+        {
+          "milliseconds": 21.97949999999946,
+          "heapUsed": 174984568,
+          "rss": 547389440
+        },
+        {
+          "milliseconds": 21.945165999999517,
+          "heapUsed": 148520368,
+          "rss": 548110336
+        }
+      ],
+      "timing": {
+        "medianMs": 22.23058300000048,
+        "p95Ms": 26.55949999999939
+      },
+      "memory": {
+        "startingHeap": 102197712,
+        "peakObservedHeap": 174984568,
+        "endingHeap": 148520704,
+        "peakObservedRss": 548110336
+      },
+      "outputs": {
+        "dark": {
+          "rawBytes": 1073964,
+          "gzipBytes": 142397,
+          "sha256": "d63e146acadd84a5d9711a154546cd0f6a9dab1b413601c3aa1cff5f3c27eab4",
+          "elements": 13587,
+          "cssTargets": 27,
+          "cssKeyframes": 8,
+          "smilElements": 20,
+          "duplicateIds": [],
+          "danglingReferences": [],
+          "externalReferences": [],
+          "unsupportedSelectors": [],
+          "scripts": 0,
+          "eventHandlers": 0,
+          "viewBox": "0 0 840 240",
+          "title": "@benchmark\n2024-12-29: 20 contributions\n2024-12-30: 20 contributions\n2025-01-05: 20 contributions\n2024-12-31: 20 contributions\n2025-01-06: 20 contributions\n2025-01-12: 20 contributions\n2025-01-01: 20 contributions\n2025-01-07: 20 contributions\n2025-01-13: 20 contributions\n2025-01-19: 20 contributions\n2025-01-02: 20 contributions\n2025-01-08: 20 contributions\n2025-01-14: 20 contributions\n2025-01-20: 20 contributions\n2025-01-26: 20 contributions\n2025-01-03: 20 contributions\n2025-01-09: 20 contributions\n2025-01-15: 20 contributions\n2025-01-21: 20 contributions\n2025-01-27: 20 contributions\n2025-02-02: 20 contributions\n2025-01-04: 20 contributions\n2025-01-10: 20 contributions\n2025-01-16: 20 contributions\n2025-01-22: 20 contributions\n2025-01-28: 20 contributions\n2025-02-03: 20 contributions\n2025-02-09: 20 contributions\n2025-01-11: 20 contributions\n2025-01-17: 20 contributions\n2025-01-23: 20 contributions\n2025-01-29: 20 contributions\n2025-02-04: 20 contributions\n2025-02-10: 20 contributions\n2025-02-16: 20 contributions\n2025-01-18: 20 contributions\n2025-01-24: 20 contributions\n2025-01-30: 20 contributions\n2025-02-05: 20 contributions\n2025-02-11: 20 contributions\n2025-02-17: 20 contributions\n2025-02-23: 20 contributions\n2025-01-25: 20 contributions\n2025-01-31: 20 contributions\n2025-02-06: 20 contributions\n2025-02-12: 20 contributions\n2025-02-18: 20 contributions\n2025-02-24: 20 contributions\n2025-03-02: 20 contributions\n2025-02-01: 20 contributions\n2025-02-07: 20 contributions\n2025-02-13: 20 contributions\n2025-02-19: 20 contributions\n2025-02-25: 20 contributions\n2025-03-03: 20 contributions\n2025-03-09: 20 contributions\n2025-02-08: 20 contributions\n2025-02-14: 20 contributions\n2025-02-20: 20 contributions\n2025-02-26: 20 contributions\n2025-03-04: 20 contributions\n2025-03-10: 20 contributions\n2025-03-16: 20 contributions\n2025-02-15: 20 contributions\n2025-02-21: 20 contributions\n2025-02-27: 20 contributions\n2025-03-05: 20 contributions\n2025-03-11: 20 contributions\n2025-03-17: 20 contributions\n2025-03-23: 20 contributions\n2025-02-22: 20 contributions\n2025-02-28: 20 contributions\n2025-03-06: 20 contributions\n2025-03-12: 20 contributions\n2025-03-18: 20 contributions\n2025-03-24: 20 contributions\n2025-03-30: 20 contributions\n2025-03-01: 20 contributions\n2025-03-07: 20 contributions\n2025-03-13: 20 contributions\n2025-03-19: 20 contributions\n2025-03-25: 20 contributions\n2025-03-31: 20 contributions\n2025-04-06: 20 contributions\n2025-03-08: 20 contributions\n2025-03-14: 20 contributions\n2025-03-20: 20 contributions\n2025-03-26: 20 contributions\n2025-04-01: 20 contributions\n2025-04-07: 20 contributions\n2025-04-13: 20 contributions\n2025-03-15: 20 contributions\n2025-03-21: 20 contributions\n2025-03-27: 20 contributions\n2025-04-02: 20 contributions\n2025-04-08: 20 contributions\n2025-04-14: 20 contributions\n2025-04-20: 20 contributions\n2025-03-22: 20 contributions\n2025-03-28: 20 contributions\n2025-04-03: 20 contributions\n2025-04-09: 20 contributions\n2025-04-15: 20 contributions\n2025-04-21: 20 contributions\n2025-04-27: 20 contributions\n2025-03-29: 20 contributions\n2025-04-04: 20 contributions\n2025-04-10: 20 contributions\n2025-04-16: 20 contributions\n2025-04-22: 20 contributions\n2025-04-28: 20 contributions\n2025-05-04: 20 contributions\n2025-04-05: 20 contributions\n2025-04-11: 20 contributions\n2025-04-17: 20 contributions\n2025-04-23: 20 contributions\n2025-04-29: 20 contributions\n2025-05-05: 20 contributions\n2025-05-11: 20 contributions\n2025-04-12: 20 contributions\n2025-04-18: 20 contributions\n2025-04-24: 20 contributions\n2025-04-30: 20 contributions\n2025-05-06: 20 contributions\n2025-05-12: 20 contributions\n2025-05-18: 20 contributions\n2025-04-19: 20 contributions\n2025-04-25: 20 contributions\n2025-05-01: 20 contributions\n2025-05-07: 20 contributions\n2025-05-13: 20 contributions\n2025-05-19: 20 contributions\n2025-05-25: 20 contributions\n2025-04-26: 20 contributions\n2025-05-02: 20 contributions\n2025-05-08: 20 contributions\n2025-05-14: 20 contributions\n2025-05-20: 20 contributions\n2025-05-26: 20 contributions\n2025-06-01: 20 contributions\n2025-05-03: 20 contributions\n2025-05-09: 20 contributions\n2025-05-15: 20 contributions\n2025-05-21: 20 contributions\n2025-05-27: 20 contributions\n2025-06-02: 20 contributions\n2025-06-08: 20 contributions\n2025-05-10: 20 contributions\n2025-05-16: 20 contributions\n2025-05-22: 20 contributions\n2025-05-28: 20 contributions\n2025-06-03: 20 contributions\n2025-06-09: 20 contributions\n2025-06-15: 20 contributions\n2025-05-17: 20 contributions\n2025-05-23: 20 contributions\n2025-05-29: 20 contributions\n2025-06-04: 20 contributions\n2025-06-10: 20 contributions\n2025-06-16: 20 contributions\n2025-06-22: 20 contributions\n2025-05-24: 20 contributions\n2025-05-30: 20 contributions\n2025-06-05: 20 contributions\n2025-06-11: 20 contributions\n2025-06-17: 20 contributions\n2025-06-23: 20 contributions\n2025-06-29: 20 contributions\n2025-05-31: 20 contributions\n2025-06-06: 20 contributions\n2025-06-12: 20 contributions\n2025-06-18: 20 contributions\n2025-06-24: 20 contributions\n2025-06-30: 20 contributions\n2025-07-06: 20 contributions\n2025-06-07: 20 contributions\n2025-06-13: 20 contributions\n2025-06-19: 20 contributions\n2025-06-25: 20 contributions\n2025-07-01: 20 contributions\n2025-07-07: 20 contributions\n2025-07-13: 20 contributions\n2025-06-14: 20 contributions\n2025-06-20: 20 contributions\n2025-06-26: 20 contributions\n2025-07-02: 20 contributions\n2025-07-08: 20 contributions\n2025-07-14: 20 contributions\n2025-07-20: 20 contributions\n2025-06-21: 20 contributions\n2025-06-27: 20 contributions\n2025-07-03: 20 contributions\n2025-07-09: 20 contributions\n2025-07-15: 20 contributions\n2025-07-21: 20 contributions\n2025-07-27: 20 contributions\n2025-06-28: 20 contributions\n2025-07-04: 20 contributions\n2025-07-10: 20 contributions\n2025-07-16: 20 contributions\n2025-07-22: 20 contributions\n2025-07-28: 20 contributions\n2025-08-03: 20 contributions\n2025-07-05: 20 contributions\n2025-07-11: 20 contributions\n2025-07-17: 20 contributions\n2025-07-23: 20 contributions\n2025-07-29: 20 contributions\n2025-08-04: 20 contributions\n2025-08-10: 20 contributions\n2025-07-12: 20 contributions\n2025-07-18: 20 contributions\n2025-07-24: 20 contributions\n2025-07-30: 20 contributions\n2025-08-05: 20 contributions\n2025-08-11: 20 contributions\n2025-08-17: 20 contributions\n2025-07-19: 20 contributions\n2025-07-25: 20 contributions\n2025-07-31: 20 contributions\n2025-08-06: 20 contributions\n2025-08-12: 20 contributions\n2025-08-18: 20 contributions\n2025-08-24: 20 contributions\n2025-07-26: 20 contributions\n2025-08-01: 20 contributions\n2025-08-07: 20 contributions\n2025-08-13: 20 contributions\n2025-08-19: 20 contributions\n2025-08-25: 20 contributions\n2025-08-31: 20 contributions\n2025-08-02: 20 contributions\n2025-08-08: 20 contributions\n2025-08-14: 20 contributions\n2025-08-20: 20 contributions\n2025-08-26: 20 contributions\n2025-09-01: 20 contributions\n2025-09-07: 20 contributions\n2025-08-09: 20 contributions\n2025-08-15: 20 contributions\n2025-08-21: 20 contributions\n2025-08-27: 20 contributions\n2025-09-02: 20 contributions\n2025-09-08: 20 contributions\n2025-09-14: 20 contributions\n2025-08-16: 20 contributions\n2025-08-22: 20 contributions\n2025-08-28: 20 contributions\n2025-09-03: 20 contributions\n2025-09-09: 20 contributions\n2025-09-15: 20 contributions\n2025-09-21: 20 contributions\n2025-08-23: 20 contributions\n2025-08-29: 20 contributions\n2025-09-04: 20 contributions\n2025-09-10: 20 contributions\n2025-09-16: 20 contributions\n2025-09-22: 20 contributions\n2025-09-28: 20 contributions\n2025-08-30: 20 contributions\n2025-09-05: 20 contributions\n2025-09-11: 20 contributions\n2025-09-17: 20 contributions\n2025-09-23: 20 contributions\n2025-09-29: 20 contributions\n2025-10-05: 20 contributions\n2025-09-06: 20 contributions\n2025-09-12: 20 contributions\n2025-09-18: 20 contributions\n2025-09-24: 20 contributions\n2025-09-30: 20 contributions\n2025-10-06: 20 contributions\n2025-10-12: 20 contributions\n2025-09-13: 20 contributions\n2025-09-19: 20 contributions\n2025-09-25: 20 contributions\n2025-10-01: 20 contributions\n2025-10-07: 20 contributions\n2025-10-13: 20 contributions\n2025-10-19: 20 contributions\n2025-09-20: 20 contributions\n2025-09-26: 20 contributions\n2025-10-02: 20 contributions\n2025-10-08: 20 contributions\n2025-10-14: 20 contributions\n2025-10-20: 20 contributions\n2025-10-26: 20 contributions\n2025-09-27: 20 contributions\n2025-10-03: 20 contributions\n2025-10-09: 20 contributions\n2025-10-15: 20 contributions\n2025-10-21: 20 contributions\n2025-10-27: 20 contributions\n2025-11-02: 20 contributions\n2025-10-04: 20 contributions\n2025-10-10: 20 contributions\n2025-10-16: 20 contributions\n2025-10-22: 20 contributions\n2025-10-28: 20 contributions\n2025-11-03: 20 contributions\n2025-11-09: 20 contributions\n2025-10-11: 20 contributions\n2025-10-17: 20 contributions\n2025-10-23: 20 contributions\n2025-10-29: 20 contributions\n2025-11-04: 20 contributions\n2025-11-10: 20 contributions\n2025-11-16: 20 contributions\n2025-10-18: 20 contributions\n2025-10-24: 20 contributions\n2025-10-30: 20 contributions\n2025-11-05: 20 contributions\n2025-11-11: 20 contributions\n2025-11-17: 20 contributions\n2025-11-23: 20 contributions\n2025-10-25: 20 contributions\n2025-10-31: 20 contributions\n2025-11-06: 20 contributions\n2025-11-12: 20 contributions\n2025-11-18: 20 contributions\n2025-11-24: 20 contributions\n2025-11-30: 20 contributions\n2025-11-01: 20 contributions\n2025-11-07: 20 contributions\n2025-11-13: 20 contributions\n2025-11-19: 20 contributions\n2025-11-25: 20 contributions\n2025-12-01: 20 contributions\n2025-12-07: 20 contributions\n2025-11-08: 20 contributions\n2025-11-14: 20 contributions\n2025-11-20: 20 contributions\n2025-11-26: 20 contributions\n2025-12-02: 20 contributions\n2025-12-08: 20 contributions\n2025-12-14: 20 contributions\n2025-11-15: 20 contributions\n2025-11-21: 20 contributions\n2025-11-27: 20 contributions\n2025-12-03: 20 contributions\n2025-12-09: 20 contributions\n2025-12-15: 20 contributions\n2025-12-21: 20 contributions\n2025-11-22: 20 contributions\n2025-11-28: 20 contributions\n2025-12-04: 20 contributions\n2025-12-10: 20 contributions\n2025-12-16: 20 contributions\n2025-12-22: 20 contributions\n2025-11-29: 20 contributions\n2025-12-05: 20 contributions\n2025-12-11: 20 contributions\n2025-12-17: 20 contributions\n2025-12-23: 20 contributions\n2025-12-06: 20 contributions\n2025-12-12: 20 contributions\n2025-12-18: 20 contributions\n2025-12-24: 20 contributions\n2025-12-13: 20 contributions\n2025-12-19: 20 contributions\n2025-12-25: 20 contributions\n2025-12-20: 20 contributions\n2025-12-26: 20 contributions\n2025-12-27: 20 contributions\n2024-12-29: 20 contributions\n2024-12-30: 20 contributions\n2025-01-05: 20 contributions\n2024-12-31: 20 contributions\n2025-01-06: 20 contributions\n2025-01-12: 20 contributions\n2025-01-01: 20 contributions\n2025-01-07: 20 contributions\n2025-01-13: 20 contributions\n2025-01-19: 20 contributions\n2025-01-02: 20 contributions\n2025-01-08: 20 contributions\n2025-01-14: 20 contributions\n2025-01-20: 20 contributions\n2025-01-26: 20 contributions\n2025-01-03: 20 contributions\n2025-01-09: 20 contributions\n2025-01-15: 20 contributions\n2025-01-21: 20 contributions\n2025-01-27: 20 contributions\n2025-02-02: 20 contributions\n2025-01-04: 20 contributions\n2025-01-10: 20 contributions\n2025-01-16: 20 contributions\n2025-01-22: 20 contributions\n2025-01-28: 20 contributions\n2025-02-03: 20 contributions\n2025-02-09: 20 contributions\n2025-01-11: 20 contributions\n2025-01-17: 20 contributions\n2025-01-23: 20 contributions\n2025-01-29: 20 contributions\n2025-02-04: 20 contributions\n2025-02-10: 20 contributions\n2025-02-16: 20 contributions\n2025-01-18: 20 contributions\n2025-01-24: 20 contributions\n2025-01-30: 20 contributions\n2025-02-05: 20 contributions\n2025-02-11: 20 contributions\n2025-02-17: 20 contributions\n2025-02-23: 20 contributions\n2025-01-25: 20 contributions\n2025-01-31: 20 contributions\n2025-02-06: 20 contributions\n2025-02-12: 20 contributions\n2025-02-18: 20 contributions\n2025-02-24: 20 contributions\n2025-03-02: 20 contributions\n2025-02-01: 20 contributions\n2025-02-07: 20 contributions\n2025-02-13: 20 contributions\n2025-02-19: 20 contributions\n2025-02-25: 20 contributions\n2025-03-03: 20 contributions\n2025-03-09: 20 contributions\n2025-02-08: 20 contributions\n2025-02-14: 20 contributions\n2025-02-20: 20 contributions\n2025-02-26: 20 contributions\n2025-03-04: 20 contributions\n2025-03-10: 20 contributions\n2025-03-16: 20 contributions\n2025-02-15: 20 contributions\n2025-02-21: 20 contributions\n2025-02-27: 20 contributions\n2025-03-05: 20 contributions\n2025-03-11: 20 contributions\n2025-03-17: 20 contributions\n2025-03-23: 20 contributions\n2025-02-22: 20 contributions\n2025-02-28: 20 contributions\n2025-03-06: 20 contributions\n2025-03-12: 20 contributions\n2025-03-18: 20 contributions\n2025-03-24: 20 contributions\n2025-03-30: 20 contributions\n2025-03-01: 20 contributions\n2025-03-07: 20 contributions\n2025-03-13: 20 contributions\n2025-03-19: 20 contributions\n2025-03-25: 20 contributions\n2025-03-31: 20 contributions\n2025-04-06: 20 contributions\n2025-03-08: 20 contributions\n2025-03-14: 20 contributions\n2025-03-20: 20 contributions\n2025-03-26: 20 contributions\n2025-04-01: 20 contributions\n2025-04-07: 20 contributions\n2025-04-13: 20 contributions\n2025-03-15: 20 contributions\n2025-03-21: 20 contributions\n2025-03-27: 20 contributions\n2025-04-02: 20 contributions\n2025-04-08: 20 contributions\n2025-04-14: 20 contributions\n2025-04-20: 20 contributions\n2025-03-22: 20 contributions\n2025-03-28: 20 contributions\n2025-04-03: 20 contributions\n2025-04-09: 20 contributions\n2025-04-15: 20 contributions\n2025-04-21: 20 contributions\n2025-04-27: 20 contributions\n2025-03-29: 20 contributions\n2025-04-04: 20 contributions\n2025-04-10: 20 contributions\n2025-04-16: 20 contributions\n2025-04-22: 20 contributions\n2025-04-28: 20 contributions\n2025-05-04: 20 contributions\n2025-04-05: 20 contributions\n2025-04-11: 20 contributions\n2025-04-17: 20 contributions\n2025-04-23: 20 contributions\n2025-04-29: 20 contributions\n2025-05-05: 20 contributions\n2025-05-11: 20 contributions\n2025-04-12: 20 contributions\n2025-04-18: 20 contributions\n2025-04-24: 20 contributions\n2025-04-30: 20 contributions\n2025-05-06: 20 contributions\n2025-05-12: 20 contributions\n2025-05-18: 20 contributions\n2025-04-19: 20 contributions\n2025-04-25: 20 contributions\n2025-05-01: 20 contributions\n2025-05-07: 20 contributions\n2025-05-13: 20 contributions\n2025-05-19: 20 contributions\n2025-05-25: 20 contributions\n2025-04-26: 20 contributions\n2025-05-02: 20 contributions\n2025-05-08: 20 contributions\n2025-05-14: 20 contributions\n2025-05-20: 20 contributions\n2025-05-26: 20 contributions\n2025-06-01: 20 contributions\n2025-05-03: 20 contributions\n2025-05-09: 20 contributions\n2025-05-15: 20 contributions\n2025-05-21: 20 contributions\n2025-05-27: 20 contributions\n2025-06-02: 20 contributions\n2025-06-08: 20 contributions\n2025-05-10: 20 contributions\n2025-05-16: 20 contributions\n2025-05-22: 20 contributions\n2025-05-28: 20 contributions\n2025-06-03: 20 contributions\n2025-06-09: 20 contributions\n2025-06-15: 20 contributions\n2025-05-17: 20 contributions\n2025-05-23: 20 contributions\n2025-05-29: 20 contributions\n2025-06-04: 20 contributions\n2025-06-10: 20 contributions\n2025-06-16: 20 contributions\n2025-06-22: 20 contributions\n2025-05-24: 20 contributions\n2025-05-30: 20 contributions\n2025-06-05: 20 contributions\n2025-06-11: 20 contributions\n2025-06-17: 20 contributions\n2025-06-23: 20 contributions\n2025-06-29: 20 contributions\n2025-05-31: 20 contributions\n2025-06-06: 20 contributions\n2025-06-12: 20 contributions\n2025-06-18: 20 contributions\n2025-06-24: 20 contributions\n2025-06-30: 20 contributions\n2025-07-06: 20 contributions\n2025-06-07: 20 contributions\n2025-06-13: 20 contributions\n2025-06-19: 20 contributions\n2025-06-25: 20 contributions\n2025-07-01: 20 contributions\n2025-07-07: 20 contributions\n2025-07-13: 20 contributions\n2025-06-14: 20 contributions\n2025-06-20: 20 contributions\n2025-06-26: 20 contributions\n2025-07-02: 20 contributions\n2025-07-08: 20 contributions\n2025-07-14: 20 contributions\n2025-07-20: 20 contributions\n2025-06-21: 20 contributions\n2025-06-27: 20 contributions\n2025-07-03: 20 contributions\n2025-07-09: 20 contributions\n2025-07-15: 20 contributions\n2025-07-21: 20 contributions\n2025-07-27: 20 contributions\n2025-06-28: 20 contributions\n2025-07-04: 20 contributions\n2025-07-10: 20 contributions\n2025-07-16: 20 contributions\n2025-07-22: 20 contributions\n2025-07-28: 20 contributions\n2025-08-03: 20 contributions\n2025-07-05: 20 contributions\n2025-07-11: 20 contributions\n2025-07-17: 20 contributions\n2025-07-23: 20 contributions\n2025-07-29: 20 contributions\n2025-08-04: 20 contributions\n2025-08-10: 20 contributions\n2025-07-12: 20 contributions\n2025-07-18: 20 contributions\n2025-07-24: 20 contributions\n2025-07-30: 20 contributions\n2025-08-05: 20 contributions\n2025-08-11: 20 contributions\n2025-08-17: 20 contributions\n2025-07-19: 20 contributions\n2025-07-25: 20 contributions\n2025-07-31: 20 contributions\n2025-08-06: 20 contributions\n2025-08-12: 20 contributions\n2025-08-18: 20 contributions\n2025-08-24: 20 contributions\n2025-07-26: 20 contributions\n2025-08-01: 20 contributions\n2025-08-07: 20 contributions\n2025-08-13: 20 contributions\n2025-08-19: 20 contributions\n2025-08-25: 20 contributions\n2025-08-31: 20 contributions\n2025-08-02: 20 contributions\n2025-08-08: 20 contributions\n2025-08-14: 20 contributions\n2025-08-20: 20 contributions\n2025-08-26: 20 contributions\n2025-09-01: 20 contributions\n2025-09-07: 20 contributions\n2025-08-09: 20 contributions\n2025-08-15: 20 contributions\n2025-08-21: 20 contributions\n2025-08-27: 20 contributions\n2025-09-02: 20 contributions\n2025-09-08: 20 contributions\n2025-09-14: 20 contributions\n2025-08-16: 20 contributions\n2025-08-22: 20 contributions\n2025-08-28: 20 contributions\n2025-09-03: 20 contributions\n2025-09-09: 20 contributions\n2025-09-15: 20 contributions\n2025-09-21: 20 contributions\n2025-08-23: 20 contributions\n2025-08-29: 20 contributions\n2025-09-04: 20 contributions\n2025-09-10: 20 contributions\n2025-09-16: 20 contributions\n2025-09-22: 20 contributions\n2025-09-28: 20 contributions\n2025-08-30: 20 contributions\n2025-09-05: 20 contributions\n2025-09-11: 20 contributions\n2025-09-17: 20 contributions\n2025-09-23: 20 contributions\n2025-09-29: 20 contributions\n2025-10-05: 20 contributions\n2025-09-06: 20 contributions\n2025-09-12: 20 contributions\n2025-09-18: 20 contributions\n2025-09-24: 20 contributions\n2025-09-30: 20 contributions\n2025-10-06: 20 contributions\n2025-10-12: 20 contributions\n2025-09-13: 20 contributions\n2025-09-19: 20 contributions\n2025-09-25: 20 contributions\n2025-10-01: 20 contributions\n2025-10-07: 20 contributions\n2025-10-13: 20 contributions\n2025-10-19: 20 contributions\n2025-09-20: 20 contributions\n2025-09-26: 20 contributions\n2025-10-02: 20 contributions\n2025-10-08: 20 contributions\n2025-10-14: 20 contributions\n2025-10-20: 20 contributions\n2025-10-26: 20 contributions\n2025-09-27: 20 contributions\n2025-10-03: 20 contributions\n2025-10-09: 20 contributions\n2025-10-15: 20 contributions\n2025-10-21: 20 contributions\n2025-10-27: 20 contributions\n2025-11-02: 20 contributions\n2025-10-04: 20 contributions\n2025-10-10: 20 contributions\n2025-10-16: 20 contributions\n2025-10-22: 20 contributions\n2025-10-28: 20 contributions\n2025-11-03: 20 contributions\n2025-11-09: 20 contributions\n2025-10-11: 20 contributions\n2025-10-17: 20 contributions\n2025-10-23: 20 contributions\n2025-10-29: 20 contributions\n2025-11-04: 20 contributions\n2025-11-10: 20 contributions\n2025-11-16: 20 contributions\n2025-10-18: 20 contributions\n2025-10-24: 20 contributions\n2025-10-30: 20 contributions\n2025-11-05: 20 contributions\n2025-11-11: 20 contributions\n2025-11-17: 20 contributions\n2025-11-23: 20 contributions\n2025-10-25: 20 contributions\n2025-10-31: 20 contributions\n2025-11-06: 20 contributions\n2025-11-12: 20 contributions\n2025-11-18: 20 contributions\n2025-11-24: 20 contributions\n2025-11-30: 20 contributions\n2025-11-01: 20 contributions\n2025-11-07: 20 contributions\n2025-11-13: 20 contributions\n2025-11-19: 20 contributions\n2025-11-25: 20 contributions\n2025-12-01: 20 contributions\n2025-12-07: 20 contributions\n2025-11-08: 20 contributions\n2025-11-14: 20 contributions\n2025-11-20: 20 contributions\n2025-11-26: 20 contributions\n2025-12-02: 20 contributions\n2025-12-08: 20 contributions\n2025-12-14: 20 contributions\n2025-11-15: 20 contributions\n2025-11-21: 20 contributions\n2025-11-27: 20 contributions\n2025-12-03: 20 contributions\n2025-12-09: 20 contributions\n2025-12-15: 20 contributions\n2025-12-21: 20 contributions\n2025-11-22: 20 contributions\n2025-11-28: 20 contributions\n2025-12-04: 20 contributions\n2025-12-10: 20 contributions\n2025-12-16: 20 contributions\n2025-12-22: 20 contributions\n2025-11-29: 20 contributions\n2025-12-05: 20 contributions\n2025-12-11: 20 contributions\n2025-12-17: 20 contributions\n2025-12-23: 20 contributions\n2025-12-06: 20 contributions\n2025-12-12: 20 contributions\n2025-12-18: 20 contributions\n2025-12-24: 20 contributions\n2025-12-13: 20 contributions\n2025-12-19: 20 contributions\n2025-12-25: 20 contributions\n2025-12-20: 20 contributions\n2025-12-26: 20 contributions\n2025-12-27: 20 contributions",
+          "description": "Isometric contribution terrain for @benchmark from 2024-12-29 to 2025-12-27. 7,280 contributions across 364 active days. 3 wonders discovered. relative normalization, maximum 20."
+        },
+        "light": {
+          "rawBytes": 1072699,
+          "gzipBytes": 141663,
+          "sha256": "4130b563f9ff92d898338359b52073ee68b13b77f1b42cb27083769b5a439392",
+          "elements": 13533,
+          "cssTargets": 27,
+          "cssKeyframes": 8,
+          "smilElements": 20,
+          "duplicateIds": [],
+          "danglingReferences": [],
+          "externalReferences": [],
+          "unsupportedSelectors": [],
+          "scripts": 0,
+          "eventHandlers": 0,
+          "viewBox": "0 0 840 240",
+          "title": "@benchmark\n2024-12-29: 20 contributions\n2024-12-30: 20 contributions\n2025-01-05: 20 contributions\n2024-12-31: 20 contributions\n2025-01-06: 20 contributions\n2025-01-12: 20 contributions\n2025-01-01: 20 contributions\n2025-01-07: 20 contributions\n2025-01-13: 20 contributions\n2025-01-19: 20 contributions\n2025-01-02: 20 contributions\n2025-01-08: 20 contributions\n2025-01-14: 20 contributions\n2025-01-20: 20 contributions\n2025-01-26: 20 contributions\n2025-01-03: 20 contributions\n2025-01-09: 20 contributions\n2025-01-15: 20 contributions\n2025-01-21: 20 contributions\n2025-01-27: 20 contributions\n2025-02-02: 20 contributions\n2025-01-04: 20 contributions\n2025-01-10: 20 contributions\n2025-01-16: 20 contributions\n2025-01-22: 20 contributions\n2025-01-28: 20 contributions\n2025-02-03: 20 contributions\n2025-02-09: 20 contributions\n2025-01-11: 20 contributions\n2025-01-17: 20 contributions\n2025-01-23: 20 contributions\n2025-01-29: 20 contributions\n2025-02-04: 20 contributions\n2025-02-10: 20 contributions\n2025-02-16: 20 contributions\n2025-01-18: 20 contributions\n2025-01-24: 20 contributions\n2025-01-30: 20 contributions\n2025-02-05: 20 contributions\n2025-02-11: 20 contributions\n2025-02-17: 20 contributions\n2025-02-23: 20 contributions\n2025-01-25: 20 contributions\n2025-01-31: 20 contributions\n2025-02-06: 20 contributions\n2025-02-12: 20 contributions\n2025-02-18: 20 contributions\n2025-02-24: 20 contributions\n2025-03-02: 20 contributions\n2025-02-01: 20 contributions\n2025-02-07: 20 contributions\n2025-02-13: 20 contributions\n2025-02-19: 20 contributions\n2025-02-25: 20 contributions\n2025-03-03: 20 contributions\n2025-03-09: 20 contributions\n2025-02-08: 20 contributions\n2025-02-14: 20 contributions\n2025-02-20: 20 contributions\n2025-02-26: 20 contributions\n2025-03-04: 20 contributions\n2025-03-10: 20 contributions\n2025-03-16: 20 contributions\n2025-02-15: 20 contributions\n2025-02-21: 20 contributions\n2025-02-27: 20 contributions\n2025-03-05: 20 contributions\n2025-03-11: 20 contributions\n2025-03-17: 20 contributions\n2025-03-23: 20 contributions\n2025-02-22: 20 contributions\n2025-02-28: 20 contributions\n2025-03-06: 20 contributions\n2025-03-12: 20 contributions\n2025-03-18: 20 contributions\n2025-03-24: 20 contributions\n2025-03-30: 20 contributions\n2025-03-01: 20 contributions\n2025-03-07: 20 contributions\n2025-03-13: 20 contributions\n2025-03-19: 20 contributions\n2025-03-25: 20 contributions\n2025-03-31: 20 contributions\n2025-04-06: 20 contributions\n2025-03-08: 20 contributions\n2025-03-14: 20 contributions\n2025-03-20: 20 contributions\n2025-03-26: 20 contributions\n2025-04-01: 20 contributions\n2025-04-07: 20 contributions\n2025-04-13: 20 contributions\n2025-03-15: 20 contributions\n2025-03-21: 20 contributions\n2025-03-27: 20 contributions\n2025-04-02: 20 contributions\n2025-04-08: 20 contributions\n2025-04-14: 20 contributions\n2025-04-20: 20 contributions\n2025-03-22: 20 contributions\n2025-03-28: 20 contributions\n2025-04-03: 20 contributions\n2025-04-09: 20 contributions\n2025-04-15: 20 contributions\n2025-04-21: 20 contributions\n2025-04-27: 20 contributions\n2025-03-29: 20 contributions\n2025-04-04: 20 contributions\n2025-04-10: 20 contributions\n2025-04-16: 20 contributions\n2025-04-22: 20 contributions\n2025-04-28: 20 contributions\n2025-05-04: 20 contributions\n2025-04-05: 20 contributions\n2025-04-11: 20 contributions\n2025-04-17: 20 contributions\n2025-04-23: 20 contributions\n2025-04-29: 20 contributions\n2025-05-05: 20 contributions\n2025-05-11: 20 contributions\n2025-04-12: 20 contributions\n2025-04-18: 20 contributions\n2025-04-24: 20 contributions\n2025-04-30: 20 contributions\n2025-05-06: 20 contributions\n2025-05-12: 20 contributions\n2025-05-18: 20 contributions\n2025-04-19: 20 contributions\n2025-04-25: 20 contributions\n2025-05-01: 20 contributions\n2025-05-07: 20 contributions\n2025-05-13: 20 contributions\n2025-05-19: 20 contributions\n2025-05-25: 20 contributions\n2025-04-26: 20 contributions\n2025-05-02: 20 contributions\n2025-05-08: 20 contributions\n2025-05-14: 20 contributions\n2025-05-20: 20 contributions\n2025-05-26: 20 contributions\n2025-06-01: 20 contributions\n2025-05-03: 20 contributions\n2025-05-09: 20 contributions\n2025-05-15: 20 contributions\n2025-05-21: 20 contributions\n2025-05-27: 20 contributions\n2025-06-02: 20 contributions\n2025-06-08: 20 contributions\n2025-05-10: 20 contributions\n2025-05-16: 20 contributions\n2025-05-22: 20 contributions\n2025-05-28: 20 contributions\n2025-06-03: 20 contributions\n2025-06-09: 20 contributions\n2025-06-15: 20 contributions\n2025-05-17: 20 contributions\n2025-05-23: 20 contributions\n2025-05-29: 20 contributions\n2025-06-04: 20 contributions\n2025-06-10: 20 contributions\n2025-06-16: 20 contributions\n2025-06-22: 20 contributions\n2025-05-24: 20 contributions\n2025-05-30: 20 contributions\n2025-06-05: 20 contributions\n2025-06-11: 20 contributions\n2025-06-17: 20 contributions\n2025-06-23: 20 contributions\n2025-06-29: 20 contributions\n2025-05-31: 20 contributions\n2025-06-06: 20 contributions\n2025-06-12: 20 contributions\n2025-06-18: 20 contributions\n2025-06-24: 20 contributions\n2025-06-30: 20 contributions\n2025-07-06: 20 contributions\n2025-06-07: 20 contributions\n2025-06-13: 20 contributions\n2025-06-19: 20 contributions\n2025-06-25: 20 contributions\n2025-07-01: 20 contributions\n2025-07-07: 20 contributions\n2025-07-13: 20 contributions\n2025-06-14: 20 contributions\n2025-06-20: 20 contributions\n2025-06-26: 20 contributions\n2025-07-02: 20 contributions\n2025-07-08: 20 contributions\n2025-07-14: 20 contributions\n2025-07-20: 20 contributions\n2025-06-21: 20 contributions\n2025-06-27: 20 contributions\n2025-07-03: 20 contributions\n2025-07-09: 20 contributions\n2025-07-15: 20 contributions\n2025-07-21: 20 contributions\n2025-07-27: 20 contributions\n2025-06-28: 20 contributions\n2025-07-04: 20 contributions\n2025-07-10: 20 contributions\n2025-07-16: 20 contributions\n2025-07-22: 20 contributions\n2025-07-28: 20 contributions\n2025-08-03: 20 contributions\n2025-07-05: 20 contributions\n2025-07-11: 20 contributions\n2025-07-17: 20 contributions\n2025-07-23: 20 contributions\n2025-07-29: 20 contributions\n2025-08-04: 20 contributions\n2025-08-10: 20 contributions\n2025-07-12: 20 contributions\n2025-07-18: 20 contributions\n2025-07-24: 20 contributions\n2025-07-30: 20 contributions\n2025-08-05: 20 contributions\n2025-08-11: 20 contributions\n2025-08-17: 20 contributions\n2025-07-19: 20 contributions\n2025-07-25: 20 contributions\n2025-07-31: 20 contributions\n2025-08-06: 20 contributions\n2025-08-12: 20 contributions\n2025-08-18: 20 contributions\n2025-08-24: 20 contributions\n2025-07-26: 20 contributions\n2025-08-01: 20 contributions\n2025-08-07: 20 contributions\n2025-08-13: 20 contributions\n2025-08-19: 20 contributions\n2025-08-25: 20 contributions\n2025-08-31: 20 contributions\n2025-08-02: 20 contributions\n2025-08-08: 20 contributions\n2025-08-14: 20 contributions\n2025-08-20: 20 contributions\n2025-08-26: 20 contributions\n2025-09-01: 20 contributions\n2025-09-07: 20 contributions\n2025-08-09: 20 contributions\n2025-08-15: 20 contributions\n2025-08-21: 20 contributions\n2025-08-27: 20 contributions\n2025-09-02: 20 contributions\n2025-09-08: 20 contributions\n2025-09-14: 20 contributions\n2025-08-16: 20 contributions\n2025-08-22: 20 contributions\n2025-08-28: 20 contributions\n2025-09-03: 20 contributions\n2025-09-09: 20 contributions\n2025-09-15: 20 contributions\n2025-09-21: 20 contributions\n2025-08-23: 20 contributions\n2025-08-29: 20 contributions\n2025-09-04: 20 contributions\n2025-09-10: 20 contributions\n2025-09-16: 20 contributions\n2025-09-22: 20 contributions\n2025-09-28: 20 contributions\n2025-08-30: 20 contributions\n2025-09-05: 20 contributions\n2025-09-11: 20 contributions\n2025-09-17: 20 contributions\n2025-09-23: 20 contributions\n2025-09-29: 20 contributions\n2025-10-05: 20 contributions\n2025-09-06: 20 contributions\n2025-09-12: 20 contributions\n2025-09-18: 20 contributions\n2025-09-24: 20 contributions\n2025-09-30: 20 contributions\n2025-10-06: 20 contributions\n2025-10-12: 20 contributions\n2025-09-13: 20 contributions\n2025-09-19: 20 contributions\n2025-09-25: 20 contributions\n2025-10-01: 20 contributions\n2025-10-07: 20 contributions\n2025-10-13: 20 contributions\n2025-10-19: 20 contributions\n2025-09-20: 20 contributions\n2025-09-26: 20 contributions\n2025-10-02: 20 contributions\n2025-10-08: 20 contributions\n2025-10-14: 20 contributions\n2025-10-20: 20 contributions\n2025-10-26: 20 contributions\n2025-09-27: 20 contributions\n2025-10-03: 20 contributions\n2025-10-09: 20 contributions\n2025-10-15: 20 contributions\n2025-10-21: 20 contributions\n2025-10-27: 20 contributions\n2025-11-02: 20 contributions\n2025-10-04: 20 contributions\n2025-10-10: 20 contributions\n2025-10-16: 20 contributions\n2025-10-22: 20 contributions\n2025-10-28: 20 contributions\n2025-11-03: 20 contributions\n2025-11-09: 20 contributions\n2025-10-11: 20 contributions\n2025-10-17: 20 contributions\n2025-10-23: 20 contributions\n2025-10-29: 20 contributions\n2025-11-04: 20 contributions\n2025-11-10: 20 contributions\n2025-11-16: 20 contributions\n2025-10-18: 20 contributions\n2025-10-24: 20 contributions\n2025-10-30: 20 contributions\n2025-11-05: 20 contributions\n2025-11-11: 20 contributions\n2025-11-17: 20 contributions\n2025-11-23: 20 contributions\n2025-10-25: 20 contributions\n2025-10-31: 20 contributions\n2025-11-06: 20 contributions\n2025-11-12: 20 contributions\n2025-11-18: 20 contributions\n2025-11-24: 20 contributions\n2025-11-30: 20 contributions\n2025-11-01: 20 contributions\n2025-11-07: 20 contributions\n2025-11-13: 20 contributions\n2025-11-19: 20 contributions\n2025-11-25: 20 contributions\n2025-12-01: 20 contributions\n2025-12-07: 20 contributions\n2025-11-08: 20 contributions\n2025-11-14: 20 contributions\n2025-11-20: 20 contributions\n2025-11-26: 20 contributions\n2025-12-02: 20 contributions\n2025-12-08: 20 contributions\n2025-12-14: 20 contributions\n2025-11-15: 20 contributions\n2025-11-21: 20 contributions\n2025-11-27: 20 contributions\n2025-12-03: 20 contributions\n2025-12-09: 20 contributions\n2025-12-15: 20 contributions\n2025-12-21: 20 contributions\n2025-11-22: 20 contributions\n2025-11-28: 20 contributions\n2025-12-04: 20 contributions\n2025-12-10: 20 contributions\n2025-12-16: 20 contributions\n2025-12-22: 20 contributions\n2025-11-29: 20 contributions\n2025-12-05: 20 contributions\n2025-12-11: 20 contributions\n2025-12-17: 20 contributions\n2025-12-23: 20 contributions\n2025-12-06: 20 contributions\n2025-12-12: 20 contributions\n2025-12-18: 20 contributions\n2025-12-24: 20 contributions\n2025-12-13: 20 contributions\n2025-12-19: 20 contributions\n2025-12-25: 20 contributions\n2025-12-20: 20 contributions\n2025-12-26: 20 contributions\n2025-12-27: 20 contributions\n2024-12-29: 20 contributions\n2024-12-30: 20 contributions\n2025-01-05: 20 contributions\n2024-12-31: 20 contributions\n2025-01-06: 20 contributions\n2025-01-12: 20 contributions\n2025-01-01: 20 contributions\n2025-01-07: 20 contributions\n2025-01-13: 20 contributions\n2025-01-19: 20 contributions\n2025-01-02: 20 contributions\n2025-01-08: 20 contributions\n2025-01-14: 20 contributions\n2025-01-20: 20 contributions\n2025-01-26: 20 contributions\n2025-01-03: 20 contributions\n2025-01-09: 20 contributions\n2025-01-15: 20 contributions\n2025-01-21: 20 contributions\n2025-01-27: 20 contributions\n2025-02-02: 20 contributions\n2025-01-04: 20 contributions\n2025-01-10: 20 contributions\n2025-01-16: 20 contributions\n2025-01-22: 20 contributions\n2025-01-28: 20 contributions\n2025-02-03: 20 contributions\n2025-02-09: 20 contributions\n2025-01-11: 20 contributions\n2025-01-17: 20 contributions\n2025-01-23: 20 contributions\n2025-01-29: 20 contributions\n2025-02-04: 20 contributions\n2025-02-10: 20 contributions\n2025-02-16: 20 contributions\n2025-01-18: 20 contributions\n2025-01-24: 20 contributions\n2025-01-30: 20 contributions\n2025-02-05: 20 contributions\n2025-02-11: 20 contributions\n2025-02-17: 20 contributions\n2025-02-23: 20 contributions\n2025-01-25: 20 contributions\n2025-01-31: 20 contributions\n2025-02-06: 20 contributions\n2025-02-12: 20 contributions\n2025-02-18: 20 contributions\n2025-02-24: 20 contributions\n2025-03-02: 20 contributions\n2025-02-01: 20 contributions\n2025-02-07: 20 contributions\n2025-02-13: 20 contributions\n2025-02-19: 20 contributions\n2025-02-25: 20 contributions\n2025-03-03: 20 contributions\n2025-03-09: 20 contributions\n2025-02-08: 20 contributions\n2025-02-14: 20 contributions\n2025-02-20: 20 contributions\n2025-02-26: 20 contributions\n2025-03-04: 20 contributions\n2025-03-10: 20 contributions\n2025-03-16: 20 contributions\n2025-02-15: 20 contributions\n2025-02-21: 20 contributions\n2025-02-27: 20 contributions\n2025-03-05: 20 contributions\n2025-03-11: 20 contributions\n2025-03-17: 20 contributions\n2025-03-23: 20 contributions\n2025-02-22: 20 contributions\n2025-02-28: 20 contributions\n2025-03-06: 20 contributions\n2025-03-12: 20 contributions\n2025-03-18: 20 contributions\n2025-03-24: 20 contributions\n2025-03-30: 20 contributions\n2025-03-01: 20 contributions\n2025-03-07: 20 contributions\n2025-03-13: 20 contributions\n2025-03-19: 20 contributions\n2025-03-25: 20 contributions\n2025-03-31: 20 contributions\n2025-04-06: 20 contributions\n2025-03-08: 20 contributions\n2025-03-14: 20 contributions\n2025-03-20: 20 contributions\n2025-03-26: 20 contributions\n2025-04-01: 20 contributions\n2025-04-07: 20 contributions\n2025-04-13: 20 contributions\n2025-03-15: 20 contributions\n2025-03-21: 20 contributions\n2025-03-27: 20 contributions\n2025-04-02: 20 contributions\n2025-04-08: 20 contributions\n2025-04-14: 20 contributions\n2025-04-20: 20 contributions\n2025-03-22: 20 contributions\n2025-03-28: 20 contributions\n2025-04-03: 20 contributions\n2025-04-09: 20 contributions\n2025-04-15: 20 contributions\n2025-04-21: 20 contributions\n2025-04-27: 20 contributions\n2025-03-29: 20 contributions\n2025-04-04: 20 contributions\n2025-04-10: 20 contributions\n2025-04-16: 20 contributions\n2025-04-22: 20 contributions\n2025-04-28: 20 contributions\n2025-05-04: 20 contributions\n2025-04-05: 20 contributions\n2025-04-11: 20 contributions\n2025-04-17: 20 contributions\n2025-04-23: 20 contributions\n2025-04-29: 20 contributions\n2025-05-05: 20 contributions\n2025-05-11: 20 contributions\n2025-04-12: 20 contributions\n2025-04-18: 20 contributions\n2025-04-24: 20 contributions\n2025-04-30: 20 contributions\n2025-05-06: 20 contributions\n2025-05-12: 20 contributions\n2025-05-18: 20 contributions\n2025-04-19: 20 contributions\n2025-04-25: 20 contributions\n2025-05-01: 20 contributions\n2025-05-07: 20 contributions\n2025-05-13: 20 contributions\n2025-05-19: 20 contributions\n2025-05-25: 20 contributions\n2025-04-26: 20 contributions\n2025-05-02: 20 contributions\n2025-05-08: 20 contributions\n2025-05-14: 20 contributions\n2025-05-20: 20 contributions\n2025-05-26: 20 contributions\n2025-06-01: 20 contributions\n2025-05-03: 20 contributions\n2025-05-09: 20 contributions\n2025-05-15: 20 contributions\n2025-05-21: 20 contributions\n2025-05-27: 20 contributions\n2025-06-02: 20 contributions\n2025-06-08: 20 contributions\n2025-05-10: 20 contributions\n2025-05-16: 20 contributions\n2025-05-22: 20 contributions\n2025-05-28: 20 contributions\n2025-06-03: 20 contributions\n2025-06-09: 20 contributions\n2025-06-15: 20 contributions\n2025-05-17: 20 contributions\n2025-05-23: 20 contributions\n2025-05-29: 20 contributions\n2025-06-04: 20 contributions\n2025-06-10: 20 contributions\n2025-06-16: 20 contributions\n2025-06-22: 20 contributions\n2025-05-24: 20 contributions\n2025-05-30: 20 contributions\n2025-06-05: 20 contributions\n2025-06-11: 20 contributions\n2025-06-17: 20 contributions\n2025-06-23: 20 contributions\n2025-06-29: 20 contributions\n2025-05-31: 20 contributions\n2025-06-06: 20 contributions\n2025-06-12: 20 contributions\n2025-06-18: 20 contributions\n2025-06-24: 20 contributions\n2025-06-30: 20 contributions\n2025-07-06: 20 contributions\n2025-06-07: 20 contributions\n2025-06-13: 20 contributions\n2025-06-19: 20 contributions\n2025-06-25: 20 contributions\n2025-07-01: 20 contributions\n2025-07-07: 20 contributions\n2025-07-13: 20 contributions\n2025-06-14: 20 contributions\n2025-06-20: 20 contributions\n2025-06-26: 20 contributions\n2025-07-02: 20 contributions\n2025-07-08: 20 contributions\n2025-07-14: 20 contributions\n2025-07-20: 20 contributions\n2025-06-21: 20 contributions\n2025-06-27: 20 contributions\n2025-07-03: 20 contributions\n2025-07-09: 20 contributions\n2025-07-15: 20 contributions\n2025-07-21: 20 contributions\n2025-07-27: 20 contributions\n2025-06-28: 20 contributions\n2025-07-04: 20 contributions\n2025-07-10: 20 contributions\n2025-07-16: 20 contributions\n2025-07-22: 20 contributions\n2025-07-28: 20 contributions\n2025-08-03: 20 contributions\n2025-07-05: 20 contributions\n2025-07-11: 20 contributions\n2025-07-17: 20 contributions\n2025-07-23: 20 contributions\n2025-07-29: 20 contributions\n2025-08-04: 20 contributions\n2025-08-10: 20 contributions\n2025-07-12: 20 contributions\n2025-07-18: 20 contributions\n2025-07-24: 20 contributions\n2025-07-30: 20 contributions\n2025-08-05: 20 contributions\n2025-08-11: 20 contributions\n2025-08-17: 20 contributions\n2025-07-19: 20 contributions\n2025-07-25: 20 contributions\n2025-07-31: 20 contributions\n2025-08-06: 20 contributions\n2025-08-12: 20 contributions\n2025-08-18: 20 contributions\n2025-08-24: 20 contributions\n2025-07-26: 20 contributions\n2025-08-01: 20 contributions\n2025-08-07: 20 contributions\n2025-08-13: 20 contributions\n2025-08-19: 20 contributions\n2025-08-25: 20 contributions\n2025-08-31: 20 contributions\n2025-08-02: 20 contributions\n2025-08-08: 20 contributions\n2025-08-14: 20 contributions\n2025-08-20: 20 contributions\n2025-08-26: 20 contributions\n2025-09-01: 20 contributions\n2025-09-07: 20 contributions\n2025-08-09: 20 contributions\n2025-08-15: 20 contributions\n2025-08-21: 20 contributions\n2025-08-27: 20 contributions\n2025-09-02: 20 contributions\n2025-09-08: 20 contributions\n2025-09-14: 20 contributions\n2025-08-16: 20 contributions\n2025-08-22: 20 contributions\n2025-08-28: 20 contributions\n2025-09-03: 20 contributions\n2025-09-09: 20 contributions\n2025-09-15: 20 contributions\n2025-09-21: 20 contributions\n2025-08-23: 20 contributions\n2025-08-29: 20 contributions\n2025-09-04: 20 contributions\n2025-09-10: 20 contributions\n2025-09-16: 20 contributions\n2025-09-22: 20 contributions\n2025-09-28: 20 contributions\n2025-08-30: 20 contributions\n2025-09-05: 20 contributions\n2025-09-11: 20 contributions\n2025-09-17: 20 contributions\n2025-09-23: 20 contributions\n2025-09-29: 20 contributions\n2025-10-05: 20 contributions\n2025-09-06: 20 contributions\n2025-09-12: 20 contributions\n2025-09-18: 20 contributions\n2025-09-24: 20 contributions\n2025-09-30: 20 contributions\n2025-10-06: 20 contributions\n2025-10-12: 20 contributions\n2025-09-13: 20 contributions\n2025-09-19: 20 contributions\n2025-09-25: 20 contributions\n2025-10-01: 20 contributions\n2025-10-07: 20 contributions\n2025-10-13: 20 contributions\n2025-10-19: 20 contributions\n2025-09-20: 20 contributions\n2025-09-26: 20 contributions\n2025-10-02: 20 contributions\n2025-10-08: 20 contributions\n2025-10-14: 20 contributions\n2025-10-20: 20 contributions\n2025-10-26: 20 contributions\n2025-09-27: 20 contributions\n2025-10-03: 20 contributions\n2025-10-09: 20 contributions\n2025-10-15: 20 contributions\n2025-10-21: 20 contributions\n2025-10-27: 20 contributions\n2025-11-02: 20 contributions\n2025-10-04: 20 contributions\n2025-10-10: 20 contributions\n2025-10-16: 20 contributions\n2025-10-22: 20 contributions\n2025-10-28: 20 contributions\n2025-11-03: 20 contributions\n2025-11-09: 20 contributions\n2025-10-11: 20 contributions\n2025-10-17: 20 contributions\n2025-10-23: 20 contributions\n2025-10-29: 20 contributions\n2025-11-04: 20 contributions\n2025-11-10: 20 contributions\n2025-11-16: 20 contributions\n2025-10-18: 20 contributions\n2025-10-24: 20 contributions\n2025-10-30: 20 contributions\n2025-11-05: 20 contributions\n2025-11-11: 20 contributions\n2025-11-17: 20 contributions\n2025-11-23: 20 contributions\n2025-10-25: 20 contributions\n2025-10-31: 20 contributions\n2025-11-06: 20 contributions\n2025-11-12: 20 contributions\n2025-11-18: 20 contributions\n2025-11-24: 20 contributions\n2025-11-30: 20 contributions\n2025-11-01: 20 contributions\n2025-11-07: 20 contributions\n2025-11-13: 20 contributions\n2025-11-19: 20 contributions\n2025-11-25: 20 contributions\n2025-12-01: 20 contributions\n2025-12-07: 20 contributions\n2025-11-08: 20 contributions\n2025-11-14: 20 contributions\n2025-11-20: 20 contributions\n2025-11-26: 20 contributions\n2025-12-02: 20 contributions\n2025-12-08: 20 contributions\n2025-12-14: 20 contributions\n2025-11-15: 20 contributions\n2025-11-21: 20 contributions\n2025-11-27: 20 contributions\n2025-12-03: 20 contributions\n2025-12-09: 20 contributions\n2025-12-15: 20 contributions\n2025-12-21: 20 contributions\n2025-11-22: 20 contributions\n2025-11-28: 20 contributions\n2025-12-04: 20 contributions\n2025-12-10: 20 contributions\n2025-12-16: 20 contributions\n2025-12-22: 20 contributions\n2025-11-29: 20 contributions\n2025-12-05: 20 contributions\n2025-12-11: 20 contributions\n2025-12-17: 20 contributions\n2025-12-23: 20 contributions\n2025-12-06: 20 contributions\n2025-12-12: 20 contributions\n2025-12-18: 20 contributions\n2025-12-24: 20 contributions\n2025-12-13: 20 contributions\n2025-12-19: 20 contributions\n2025-12-25: 20 contributions\n2025-12-20: 20 contributions\n2025-12-26: 20 contributions\n2025-12-27: 20 contributions",
+          "description": "Isometric contribution terrain for @benchmark from 2024-12-29 to 2025-12-27. 7,280 contributions across 364 active days. 3 wonders discovered. relative normalization, maximum 20."
+        }
+      },
+      "artifacts": {
+        "data": "tests/fixtures/benchmark-baseline-samples/full.data.json",
+        "darkSvg": "tests/fixtures/benchmark-baseline-samples/full-dark.svg",
+        "lightSvg": "tests/fixtures/benchmark-baseline-samples/full-light.svg",
+        "darkPng": "tests/fixtures/benchmark-baseline-samples/full-dark.png",
+        "lightPng": "tests/fixtures/benchmark-baseline-samples/full-light.png"
+      }
+    }
+  ]
+}

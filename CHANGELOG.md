@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Portable scene API** — browser-safe rendering now prepares one deterministic scene and shades matching dark/light SVGs with structured date, normalization, asset, and Wonder metadata
+- **Versioned settings and snapshots** — schema-versioned JSON import/export supports reproducible offline rendering, strict validation, bounded imports, and source provenance
+- **Multi-year archives** — CLI, Action, and JavaScript APIs compare two to five annual snapshots with a shared or explicit fixed height scale and stacked comparison SVGs
+- **Card layout and static PNG** — banner/card outputs, static dark/light PNG generation, and scale controls are available across supported adapters
+- **Motion modes** — `full`, `subtle`, and `off` policies share a complete reduced-motion fallback, with PNG always rendered from a motion-free scene
+- **Browser explorer and setup wizard** — the enhanced demo supports snapshot/archive import, per-date details, zoom, saved annual data, comparisons, workflow/README downloads, and a Wonder encyclopedia
+- **Authenticated local preview** — `maeul-sky preview` binds to loopback and fetches actual account data with `GITHUB_TOKEN` kept only in the server environment
+- **Korean village style** — four original catalog assets (`hanok`, `pavilion`, `stoneWall`, and `onggi`) and truthful neighborhood paths complement the classic style
+- **Generated asset catalog** — a searchable, filterable gallery and registry-driven dark/light SVG and PNG sheets document 193 ordinary IDs (189 classic and 4 Korean) separately from 30 Wonders, with regeneration and registry consistency checks
 - **Village presets** — Nature, Balanced, and Civilization provide understandable building-density choices across the Action, CLI, and JavaScript API
 - **Repository-owner targeting** — the Action accepts an explicit `username` and otherwise uses the repository owner, including scheduled runs
 - **Terrain insight bar** — generated SVGs now show their covered dates, active days, busiest month, and discovered Wonder count
@@ -24,6 +33,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Contribution calendar rendering** — supplied UTC dates now determine Sunday-based positions, including partial weeks, gaps, leap days, and ranges longer than 53 weeks without inventing missing dates
+- **Deterministic layout identity** — versioned date-based seeds keep dark/light scene geometry aligned and allow an explicit `layoutSeed` override, with documented stability limits around neighbors, normalization, and Wonder budgets
+- **Output adapters** — CLI and Action accept settings/snapshot input, layout, style, normalization, archive, PNG, and snapshot-output controls while preserving the default two-SVG workflow
+- **Asset architecture** — the compatibility facades now expose typed, modular renderer catalogs containing 193 ordinary IDs and 30 separately counted Wonders
+- **Generated documentation assets** — README previews, six demo presets, examples, cases, and catalog sheets now declare their seeded synthetic source and exact supplied range
 - **Project documentation** — added a task-based quick start, accurate rolling-range defaults, CLI and API examples, privacy notes, troubleshooting, presets, and Epic Wonders across all supported languages
 - **Package metadata** — now describes the village experience and includes Action and profile README discovery terms
 - **CLI and Action adapters** — both now delegate shared behavior to the Terrain Generation module
@@ -33,6 +47,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Restrict local archive CSS rules to their annual row so generic selectors resolve the correct year’s paint server; preserve selector specificity and document the existing imported/global CSS boundary.
+
+- Preserve wildcard, partial-match, and case-flag CSS attribute selectors when archive references are namespaced; reject indistinguishable selector-value collisions before writing output.
+
+- **Custom Theme archive composition** — parse CSS and XML to support standalone documents, namespace prefixes and escaped/Unicode references while preserving independent annual rows; invalid input fails before archive output is written
+- **Zoom positioning** — opening/resetting the explorer centers visible Terrain, and button/keyboard zoom preserves the viewport focal point
+
+- **Archive replay and comparison** — preserve unselected stored snapshots, retain the selected user's identity across browser reloads, and compose custom-theme SVGs independently of XML quote and whitespace style
+- **Input compatibility** — accept `style` and `villageStyle` across public inputs, preserve canonical v1 settings, honor explicit CLI tokens, infer Action input identities, and validate Action snapshot booleans
+- **Calendar and scale boundaries** — absolute-date seasons support years 1–9999, fractional scale labels remain accurate, and SVG legends explain terrain heights with date-derived calendar cues
+- **Generated workflow permissions** — village generation uses read-only permissions and a separate dependent publication job receives write access
+- **XML text validity** — reject forbidden XML scalars before SVG/PNG generation while preserving valid Unicode and escaped text
+- **Static output semantics** — motion-free SVG and PNG retain complete terrain, water, effects, and accessibility content without CSS keyframes or SMIL animation
+- **Snapshot trust boundary** — imported statistics are recomputed from validated dates/counts, and malformed, duplicate, oversized, or unsupported-version data fails without replacing saved browser state
+- **Local preview privacy** — browser forms, links, storage, responses, and logs no longer carry the GitHub token; upstream failures are sanitized at the loopback boundary
 - **npm publish warnings** — corrected bin path and repository URL format in package.json
 - **Packaged CLI startup** — removed the duplicate shebang and sourced the CLI version from package metadata
 - **Contribution weekdays and streaks** — statistics now use calendar dates and break streaks across missing dates
@@ -101,8 +130,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Isometric terrain theme** with 100-level elevation system mapped to GitHub contribution data
 - **4-season cycle** (Winter, Spring, Summer, Autumn) with 8 transition zones and smooth color tinting
-- **48 seasonal assets** — snowmen, cherry blossoms, sunflowers, autumn maples, and more
-- **118 terrain asset types** — trees, buildings, windmills, scarecrows, flags, benches, and more
+- **48 seasonal assets in the v1.0.0 registry** — snowmen, cherry blossoms, sunflowers, autumn maples, and more
+- **118 terrain asset types in the v1.0.0 registry** — trees, buildings, windmills, scarecrows, flags, benches, and more
 - **Biome generation** — procedural rivers, ponds, and forest clusters via seeded simplex noise
 - **Animated SVG effects** — drifting clouds (SMIL), water shimmer, town sparkle, flag wave (CSS)
 - **Celestial bodies** — stars and crescent moon (dark mode), sun with rays (light mode)

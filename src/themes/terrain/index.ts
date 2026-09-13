@@ -1,240 +1,33 @@
-import type {
-  Theme,
-  ContributionData,
-  ThemeOptions,
-  ThemeOutput,
-  ColorMode,
-  ThemePalette,
-  PaletteColor,
-} from '../../core/types.js';
-import { formatNumber, svgRoot, svgStyle } from '../../core/svg.js';
-import {
-  contributionGrid,
-  enrichGridCells100,
-  renderTitle,
-  renderSubtitle,
-  renderStatsBar,
-} from '../shared.js';
-import { getSeasonalPalette100 } from './palette.js';
-import { renderSeasonalTerrainBlocks, getIsoCells } from './blocks.js';
-import {
-  renderTerrainCSS,
-  renderAnimatedOverlays,
-  renderClouds,
-  renderWaterOverlays,
-  renderWaterRipples,
-  renderCelestials,
-  renderSnowParticles,
-  renderFallingPetals,
-  renderFallingLeaves,
-} from './effects.js';
-import { renderSeasonalTerrainAssets, renderAssetCSS } from './assets.js';
-import {
-  selectEpicBuildings,
-  renderEpicBuildings,
-  renderEpicGlowDefs,
-  renderEpicCSS,
-} from './epics.js';
-import { generateBiomeMap } from './biomes.js';
-import { hash } from '../../utils/math.js';
-import type { Hemisphere } from './seasons.js';
-import { computeSeasonRotation } from './seasons.js';
-import type { TerrainPalette100 } from './palette.js';
+import type { ContributionData, Theme } from '../../core/types.js';
+import type { TerrainRenderResult } from '../../core/scene-types.js';
+import type { TerrainRenderOptions } from './scene/options.js';
+import { prepareTerrainScene } from './scene/prepare.js';
+import { renderTerrainScene } from './scene/render.js';
+import { terrainMetadata } from './scene/metadata.js';
 
-// ── Theme Definition ─────────────────────────────────────────
+export { prepareTerrainScene } from './scene/prepare.js';
+export { renderTerrainScene } from './scene/render.js';
+export type { TerrainRenderOptions, TerrainSceneRenderOptions } from './scene/options.js';
 
-const terrainTheme: Theme = {
-  name: 'terrain',
-  displayName: 'Terrain',
-  description: 'Your contributions build a living world — more code, richer civilization',
-  render(data: ContributionData, options: ThemeOptions): ThemeOutput {
-    return {
-      dark: renderMode(data, options, 'dark'),
-      light: renderMode(data, options, 'light'),
-    };
-  },
-};
-
-const REDUCED_MOTION_CSS = `
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; }
-  animate, animateMotion, animateTransform { display: none; }
-}`;
-
-// ── Mode Renderer ────────────────────────────────────────────
-
-/**
- * Compose all visual layers into a complete SVG for one color mode.
- *
- * Layer order (back to front):
- * 1. Style (CSS animations)
- * 2. Celestials (stars+moon or sun, deepest sky layer)
- * 3. Clouds (behind terrain for depth)
- * 4. Terrain blocks (isometric 3D, seasonally tinted)
- * 5. Water overlays (river/pond shimmer on blocks)
- * 6. Water ripples (static wavy lines on water surfaces)
- * 7. Assets (trees, buildings, animals — seasonal variants)
- * 8. Seasonal particles (snow, petals, leaves)
- * 9. Animated overlays (water shimmer, town sparkle)
- * 10. Title (top-left)
- * 11. Stats bar (bottom)
- */
-function renderMode(data: ContributionData, options: ThemeOptions, mode: ColorMode): string {
-  const hemisphere: Hemisphere = options.hemisphere || 'north';
-  const density = options.density ?? 5;
-  const oldestDate = new Date(data.weeks[0]?.days[0]?.date || new Date());
-  const seasonRotation = computeSeasonRotation(oldestDate, hemisphere);
-  const seed = hash(data.username + mode);
-  const variantSeed = hash(data.username + String(data.year));
-
-  const weekCount = Math.max(52, data.weeks.length);
-
-  const weekPalettes: TerrainPalette100[] = [];
-  for (let w = 0; w < weekCount; w++) {
-    weekPalettes.push(getSeasonalPalette100(mode, w, seasonRotation));
-  }
-
-  // Use mid-year (summer) palette as reference for shared utilities
-  const palette = weekPalettes[26];
-
-  // Build grid cells with 100-level intensity
-  const cells = contributionGrid(data, {
-    cellSize: 11,
-    gap: 2,
-    offsetX: 24,
-    offsetY: 42,
-  });
-  const cells100 = enrichGridCells100(cells, data);
-
-  // Compute isometric layout
-  const originX = 405;
-  const originY = 6;
-
-  // Get isometric cells for effects and assets
-  const isoCells = getIsoCells(cells100, palette, originX, originY);
-
-  // Generate biome overlay (rivers, ponds, forests) with offset seed
-  const biomeMap = generateBiomeMap(weekCount, 7, seed + 7919);
-
-  // Select epic buildings (before regular assets so we can exclude their cells)
-  const epicSeed = hash(data.username + 'epic' + String(data.year));
-  const { placed: epicPlaced, epicCells } = selectEpicBuildings(
-    isoCells,
-    epicSeed,
-    data.stats,
-    biomeMap,
-  );
-
-  // Build layers
-  const terrainCSS = renderTerrainCSS(isoCells, biomeMap);
-  const assetCSS = renderAssetCSS();
-  const epicCSS = renderEpicCSS();
-  const css = terrainCSS + '\n' + assetCSS + '\n' + epicCSS + '\n' + REDUCED_MOTION_CSS;
-
-  const isDark = mode === 'dark';
-  const celestials = renderCelestials(seed, palette, isDark);
-  const clouds = renderClouds(seed, palette);
-
-  // Use seasonal terrain blocks with per-week palettes
-  const blocks = renderSeasonalTerrainBlocks(
-    cells100,
-    weekPalettes,
-    originX,
-    originY,
-    seasonRotation,
-    biomeMap,
-  );
-
-  const waterOverlays = renderWaterOverlays(isoCells, palette, biomeMap);
-  const waterRipples = renderWaterRipples(isoCells, palette, biomeMap);
-
-  // Use seasonal terrain assets with per-week palettes (skip epic cells)
-  const assets = renderSeasonalTerrainAssets(
-    isoCells,
-    seed,
-    weekPalettes,
-    variantSeed,
-    biomeMap,
-    seasonRotation,
-    density,
-    epicCells,
-  );
-
-  // Render epic buildings on top of regular assets
-  const epicBuildings = renderEpicBuildings(epicPlaced, weekPalettes);
-
-  // Seasonal particle effects
-  const snowParticles = renderSnowParticles(isoCells, seed, seasonRotation);
-  const fallingPetals = renderFallingPetals(isoCells, seed, palette, seasonRotation);
-  const fallingLeaves = renderFallingLeaves(isoCells, seed, palette, seasonRotation);
-
-  const overlays = renderAnimatedOverlays(isoCells, palette);
-
-  // Build ThemePalette bridge for shared utilities
-  // Sample 5 anchor levels across the 100-level range
-  const anchorLevels = [0, 20, 45, 70, 95];
-  const levelColors = anchorLevels.map((l): PaletteColor => ({
-    hex: palette.getElevation(l).top,
-    opacity: l === 0 ? 0.5 : 1,
-  })) as [PaletteColor, PaletteColor, PaletteColor, PaletteColor, PaletteColor];
-
-  const themePalette: ThemePalette = {
-    text: palette.text,
-    contribution: { levels: levelColors },
-    background: palette.bg,
+export function renderTerrain(
+  data: ContributionData,
+  options: TerrainRenderOptions = {},
+): TerrainRenderResult {
+  const scene = prepareTerrainScene(data, options);
+  const display = { width: options.width, height: options.height, namespace: options.namespace };
+  return {
+    dark: renderTerrainScene(scene, 'dark', display),
+    light: renderTerrainScene(scene, 'light', display),
+    metadata: terrainMetadata(scene),
   };
-
-  const title = renderTitle(options.title, themePalette);
-  const subtitle = renderSubtitle(data.stats, epicPlaced.length, themePalette);
-  const statsBar = renderStatsBar(data.stats, themePalette);
-
-  // Epic glow gradient definitions
-  const epicDefs = epicPlaced.length > 0 ? `<defs>${renderEpicGlowDefs(mode)}</defs>` : '';
-
-  // Assemble
-  const content = [
-    svgStyle(css),
-    epicDefs,
-    celestials,
-    clouds,
-    blocks,
-    waterOverlays,
-    waterRipples,
-    assets,
-    epicBuildings,
-    snowParticles,
-    fallingPetals,
-    fallingLeaves,
-    overlays,
-    title,
-    subtitle,
-    statsBar,
-  ].join('\n');
-
-  const tierCounts = epicPlaced.reduce<Record<string, number>>((counts, epic) => {
-    counts[epic.tier] = (counts[epic.tier] ?? 0) + 1;
-    return counts;
-  }, {});
-  const wonderDescription = Object.entries(tierCounts)
-    .map(([tier, count]) => `${count} ${tier}`)
-    .join(', ');
-  const dateDescription =
-    data.stats.fromDate && data.stats.toDate
-      ? `from ${data.stats.fromDate} to ${data.stats.toDate}`
-      : 'for the available contribution range';
-  const description = [
-    `Isometric contribution terrain for @${data.username} ${dateDescription}.`,
-    `${formatNumber(data.stats.total)} contributions across ${formatNumber(data.stats.activeDays)} active days.`,
-    data.stats.busiestMonth ? `Busiest month: ${data.stats.busiestMonth}.` : '',
-    wonderDescription ? `Wonders discovered: ${wonderDescription}.` : 'No rare wonders discovered.',
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  return svgRoot({ width: options.width, height: options.height }, content, {
-    title: options.title,
-    description,
-  });
 }
 
-export { terrainTheme };
+export const terrainTheme: Theme = {
+  name: 'terrain',
+  displayName: 'Terrain',
+  description: 'Your contributions build a living world with forests, homes and Wonders',
+  render(data, options) {
+    const { dark, light } = renderTerrain(data, options);
+    return { dark, light };
+  },
+};

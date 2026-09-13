@@ -1,158 +1,88 @@
-import { seededRandom } from '../../utils/math.js';
+import { hash, lerp, seededRandom } from '../../utils/math.js';
 
-/** Spatial context for a single grid cell, independent of contribution level */
 export interface BiomeContext {
-  /** Cell is part of a river path */
   isRiver: boolean;
-  /** Cell is part of a pond/lake */
   isPond: boolean;
-  /** Cell is adjacent to river or pond (but not water itself) */
   nearWater: boolean;
-  /** Forest density 0–1 from nearest forest nucleus */
   forestDensity: number;
 }
 
-/**
- * Generate a biome overlay map for the entire grid.
- * Produces spatial features (rivers, ponds, forests) distributed
- * independently of contribution levels so that water and trees
- * appear naturally across all biome zones.
- *
- * @param weeks - Number of weeks (columns), typically 52
- * @param days - Number of days (rows), typically 7
- * @param seed - Deterministic seed
- * @returns Map keyed by "week,day" → BiomeContext
- */
+function sample(seed: number, purpose: string, sector: number): number {
+  return seededRandom(hash(`${seed}:${purpose}:${sector}`))();
+}
+
+function riverDay(week: number, river: number, days: number, seed: number): number {
+  const sector = Math.floor(week / 6);
+  const t = (week - sector * 6) / 6;
+  const bend = lerp(
+    sample(seed, `river-${river}`, sector),
+    sample(seed, `river-${river}`, sector + 1),
+    t * t * (3 - 2 * t),
+  );
+  const split = Math.max(1, Math.floor(days / 2));
+  const start = river === 0 ? 0 : Math.min(split, days - 1);
+  const span = river === 0 ? split : days - start;
+  return start + Math.round(bend * Math.max(0, span - 1));
+}
+
+function waterAt(week: number, day: number, days: number, seed: number) {
+  const isRiver = day === riverDay(week, 0, days, seed) || day === riverDay(week, 1, days, seed);
+  const pondSector = Math.floor(week / 26);
+  let isPond = false;
+  for (let sector = pondSector - 1; sector <= pondSector + 1; sector++) {
+    const centerWeek = sector * 26 + 3 + Math.floor(sample(seed, 'pond-week', sector) * 20);
+    const centerDay = riverDay(centerWeek, 0, days, seed);
+    const radius = sample(seed, 'pond-size', sector) > 0.5 ? 1 : 0;
+    isPond ||=
+      Math.abs(week - centerWeek) + Math.abs(day - centerDay) <= radius ||
+      (week === centerWeek && day === Math.min(days - 1, centerDay + 1));
+  }
+  return { isRiver, isPond };
+}
+
+function forestAt(week: number, day: number, days: number, seed: number): number {
+  const home = Math.floor(week / 9);
+  let density = 0;
+  for (let sector = home - 1; sector <= home + 1; sector++) {
+    const x = sector * 9 + Math.floor(sample(seed, 'forest-week', sector) * 9);
+    const y = Math.floor(sample(seed, 'forest-day', sector) * days);
+    const radius = 2 + sample(seed, 'forest-radius', sector) * 2;
+    density = Math.max(density, 1 - Math.hypot(week - x, day - y) / radius);
+  }
+  return density;
+}
+
 export function generateBiomeMap(
   weeks: number,
   days: number,
   seed: number,
+  firstAbsoluteWeek = 0,
 ): Map<string, BiomeContext> {
-  const rng = seededRandom(seed);
   const map = new Map<string, BiomeContext>();
-
-  // Initialize all cells
-  for (let w = 0; w < weeks; w++) {
-    for (let d = 0; d < days; d++) {
-      map.set(`${w},${d}`, {
-        isRiver: false,
-        isPond: false,
-        nearWater: false,
-        forestDensity: 0,
+  for (let week = 0; week < weeks; week++) {
+    const absoluteWeek = firstAbsoluteWeek + week;
+    for (let day = 0; day < days; day++) {
+      const water = waterAt(absoluteWeek, day, days, seed);
+      const neighbors = [
+        [-1, 0],
+        [1, 0],
+        [0, -1],
+        [0, 1],
+      ];
+      const nearWater =
+        !water.isRiver &&
+        !water.isPond &&
+        neighbors.some(([dw, dd]) => {
+          if (day + dd < 0 || day + dd >= days) return false;
+          const neighbor = waterAt(absoluteWeek + dw, day + dd, days, seed);
+          return neighbor.isRiver || neighbor.isPond;
+        });
+      map.set(`${week},${day}`, {
+        ...water,
+        nearWater,
+        forestDensity: forestAt(absoluteWeek, day, days, seed),
       });
     }
   }
-
-  // ── Layer 1: River Paths ────────────────────────────
-  const NUM_RIVERS = 2;
-  const riverBends: Array<{ w: number; d: number }> = [];
-
-  for (let r = 0; r < NUM_RIVERS; r++) {
-    // Stagger rivers across rows: first in top half, second in bottom half
-    let day =
-      r === 0
-        ? Math.floor(rng() * Math.floor(days / 2))
-        : Math.floor(days / 2) + Math.floor(rng() * Math.ceil(days / 2));
-
-    for (let week = 0; week < weeks; week++) {
-      const ctx = map.get(`${week},${day}`);
-      /* v8 ignore start */
-      if (ctx) ctx.isRiver = true;
-      /* v8 ignore stop */
-
-      // Drift: 60% straight, 20% up, 20% down
-      const drift = rng();
-      const prevDay = day;
-      if (drift < 0.2) day = Math.max(0, day - 1);
-      else if (drift > 0.8) day = Math.min(days - 1, day + 1);
-
-      if (day !== prevDay) {
-        riverBends.push({ w: week, d: day });
-      }
-    }
-  }
-
-  // ── Layer 2: Ponds at River Bends ───────────────────
-  const numPonds = Math.min(riverBends.length, 1 + Math.floor(rng() * 2));
-  const shuffledBends = riverBends
-    .map((b) => ({ b, sort: rng() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map((x) => x.b);
-
-  for (let p = 0; p < numPonds; p++) {
-    const center = shuffledBends[p];
-    /* v8 ignore start */
-    if (!center) break;
-    /* v8 ignore stop */
-
-    const pondSize = 2 + Math.floor(rng() * 3);
-    const pondCells = [center];
-
-    for (let i = 0; i < pondSize; i++) {
-      const base = pondCells[Math.floor(rng() * pondCells.length)];
-      const dw = Math.floor(rng() * 3) - 1;
-      const dd = Math.floor(rng() * 3) - 1;
-      const nw = base.w + dw;
-      const nd = base.d + dd;
-      if (nw >= 0 && nw < weeks && nd >= 0 && nd < days) {
-        pondCells.push({ w: nw, d: nd });
-      }
-    }
-
-    for (const pc of pondCells) {
-      const ctx = map.get(`${pc.w},${pc.d}`);
-      /* v8 ignore start */
-      if (ctx) ctx.isPond = true;
-      /* v8 ignore stop */
-    }
-  }
-
-  // ── Mark nearWater ──────────────────────────────────
-  for (let w = 0; w < weeks; w++) {
-    for (let d = 0; d < days; d++) {
-      const ctx = map.get(`${w},${d}`)!;
-      if (ctx.isRiver || ctx.isPond) continue;
-
-      const neighbors = [
-        map.get(`${w - 1},${d}`),
-        map.get(`${w + 1},${d}`),
-        map.get(`${w},${d - 1}`),
-        map.get(`${w},${d + 1}`),
-      ];
-      if (neighbors.some((n) => n && (n.isRiver || n.isPond))) {
-        ctx.nearWater = true;
-      }
-    }
-  }
-
-  // ── Layer 3: Forest Clusters ────────────────────────
-  const numForests = 4 + Math.floor(rng() * 3);
-  const nuclei: Array<{ w: number; d: number; radius: number }> = [];
-
-  for (let f = 0; f < numForests; f++) {
-    nuclei.push({
-      w: Math.floor(rng() * weeks),
-      d: Math.floor(rng() * days),
-      radius: 2 + rng() * 3,
-    });
-  }
-
-  for (let w = 0; w < weeks; w++) {
-    for (let d = 0; d < days; d++) {
-      const ctx = map.get(`${w},${d}`)!;
-      let maxDensity = 0;
-
-      for (const nucleus of nuclei) {
-        const dist = Math.sqrt((w - nucleus.w) ** 2 + (d - nucleus.d) ** 2);
-        if (dist < nucleus.radius) {
-          const density = 1 - dist / nucleus.radius;
-          if (density > maxDensity) maxDensity = density;
-        }
-      }
-
-      ctx.forestDensity = maxDensity;
-    }
-  }
-
   return map;
 }

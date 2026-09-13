@@ -1,0 +1,36 @@
+import type { AssetBounds } from '../assets/types.js';
+import type { EpicBuildingType } from './types.js';
+
+/** Union of three variants at 4x raster sampling, rounded outward with motion padding. */
+export const EPIC_BOUNDS: Readonly<Record<EpicBuildingType, AssetBounds>> = {
+  mountFuji: { x: -8, y: -14, width: 16, height: 17 },
+  giantSequoia: { x: -7, y: -16, width: 14, height: 18 },
+  coralReef: { x: -7, y: -10, width: 14, height: 13 },
+  geyser: { x: -5, y: -13, width: 10, height: 16 },
+  hotSpring: { x: -6, y: -7, width: 12, height: 11 },
+  grandCanyon: { x: -7, y: -9, width: 14, height: 12 },
+  oasis: { x: -7, y: -9, width: 14, height: 13 },
+  volcano: { x: -7, y: -14, width: 14, height: 17 },
+  giantMushroom: { x: -6, y: -11, width: 12, height: 13 },
+  colosseum: { x: -7, y: -7, width: 14, height: 10 },
+  pagoda: { x: -6, y: -15, width: 12, height: 17 },
+  torii: { x: -7, y: -10, width: 14, height: 12 },
+  eiffelTower: { x: -5, y: -16, width: 10, height: 18 },
+  windmillGrand: { x: -7, y: -15, width: 14, height: 17 },
+  aurora: { x: -8, y: -13, width: 16, height: 16 },
+  giantWaterfall: { x: -7, y: -13, width: 14, height: 16 },
+  bambooGrove: { x: -7, y: -14, width: 13, height: 16 },
+  glacierPeak: { x: -7, y: -15, width: 14, height: 18 },
+  bioluminescentPool: { x: -7, y: -4, width: 14, height: 8 },
+  meteorCrater: { x: -7, y: -4, width: 14, height: 8 },
+  bonsaiGiant: { x: -6, y: -11, width: 12, height: 13 },
+  tajMahal: { x: -7, y: -13, width: 14, height: 16 },
+  stBasils: { x: -5, y: -13, width: 10, height: 16 },
+  operaHouse: { x: -7, y: -7, width: 14, height: 10 },
+  floatingIsland: { x: -6, y: -8, width: 12, height: 16 },
+  crystalSpire: { x: -6, y: -15, width: 11, height: 17 },
+  dragonNest: { x: -6, y: -7, width: 13, height: 10 },
+  worldTree: { x: -7, y: -16, width: 14, height: 19 },
+  sakuraEternal: { x: -7, y: -15, width: 14, height: 18 },
+  ancientPortal: { x: -6, y: -13, width: 12, height: 16 },
+};

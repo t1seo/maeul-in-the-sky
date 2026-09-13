@@ -1,3 +1,10 @@
+import type {
+  MotionMode,
+  NormalizationOptions,
+  TerrainLayout,
+  VillageStyle,
+} from './render-options.js';
+
 // ── Contribution Data ──────────────────────────────────────────
 
 /** A single day's contribution data */
@@ -64,6 +71,12 @@ export interface ThemeOptions {
   hemisphere?: 'north' | 'south';
   /** Building density 1-10 (default: 5, higher = buildings at lower activity) */
   density?: number;
+  motion?: MotionMode;
+  layout?: TerrainLayout;
+  style?: VillageStyle;
+  villageStyle?: VillageStyle;
+  normalization?: NormalizationOptions;
+  layoutSeed?: string;
 }
 
 /** Rendered SVG output for both color modes */

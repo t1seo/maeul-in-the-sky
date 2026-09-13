@@ -37,7 +37,7 @@ describe('terrain week count', () => {
 
     terrainTheme.render(data, { title: '@fifty-three-weeks', width: 840, height: 240 });
 
-    expect(generateBiomeMap).toHaveBeenCalledTimes(2);
-    expect(generateBiomeMap).toHaveBeenCalledWith(53, 7, expect.any(Number));
+    expect(generateBiomeMap).toHaveBeenCalledTimes(1);
+    expect(generateBiomeMap).toHaveBeenCalledWith(53, 7, expect.any(Number), 2869);
   });
 });

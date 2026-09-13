@@ -5,9 +5,8 @@ branding:
   color: 'green'
 inputs:
   username:
-    description: 'GitHub user whose Contribution Calendar is used (defaults to repository owner)'
+    description: 'GitHub user whose Contribution Calendar is used (inferred from input/config, otherwise repository owner)'
     required: false
-    default: '${{ github.repository_owner }}'
   github_token:
     description: 'GitHub token for API access'
     required: false
@@ -27,21 +26,67 @@ inputs:
     description: 'Target year to visualize'
     required: false
   hemisphere:
-    description: 'Hemisphere for seasonal terrain (north or south)'
+    description: 'Hemisphere for seasonal terrain (north or south; defaults to north)'
     required: false
-    default: 'north'
   preset:
-    description: 'Village preset (nature, balanced, or civilization)'
+    description: 'Village preset (nature, balanced, or civilization; defaults to balanced)'
     required: false
-    default: 'balanced'
   density:
     description: 'Advanced building density override from 1-10'
+    required: false
+  config:
+    description: 'Path to a versioned Maeul settings JSON file'
+    required: false
+  input:
+    description: 'Path to a contribution snapshot JSON file; skips the GitHub request'
+    required: false
+  write_snapshot:
+    description: 'Write a reusable contribution snapshot (true or false)'
+    required: false
+  motion:
+    description: 'Motion level: full, subtle, or off'
+    required: false
+  layout:
+    description: 'Output layout: banner or card'
+    required: false
+  village_style:
+    description: 'Village architecture: classic or korean'
+    required: false
+  layout_seed:
+    description: 'Optional reproducible layout seed override'
+    required: false
+  normalization:
+    description: 'Height scale: relative, fixed, or shared (multiple years only)'
+    required: false
+  max_count:
+    description: 'Positive contribution count used as the maximum for a fixed scale'
+    required: false
+  format:
+    description: 'Output formats: svg, png, or both'
+    required: false
+  scale:
+    description: 'PNG scale from 1 to 4; defaults to 2'
+    required: false
+  years:
+    description: 'Comma-separated years to archive and compare with a common height scale'
     required: false
 outputs:
   dark_svg_path:
     description: 'Path to the generated dark mode SVG'
   light_svg_path:
     description: 'Path to the generated light mode SVG'
+  dark_png_path:
+    description: 'Path to the optional static dark mode PNG'
+  light_png_path:
+    description: 'Path to the optional static light mode PNG'
+  snapshot_path:
+    description: 'Path to the optional contribution snapshot'
+  archive_path:
+    description: 'Path to the multi-year archive JSON'
+  comparison_dark_svg_path:
+    description: 'Path to the dark comparison SVG'
+  comparison_light_svg_path:
+    description: 'Path to the light comparison SVG'
 runs:
   using: 'node24'
   main: 'dist/action.cjs'

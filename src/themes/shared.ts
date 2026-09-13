@@ -1,6 +1,8 @@
 import type { ContributionData, ContributionStats, ThemePalette } from '../core/types.js';
-import { formatNumber } from '../core/svg.js';
-import { getContributionDayOfWeek } from '../core/calendar.js';
+import { escapeXml, formatNumber } from '../core/svg.js';
+import type { NormalizationOptions } from '../core/render-options.js';
+import { computeP90Max, normalizeCount100 } from '../core/settings/normalization.js';
+import { getContributionDayOfWeek, normalizeContributionWeeks } from '../core/calendar.js';
 import { clamp } from '../utils/math.js';
 
 /** 10-level intensity (0 = none, 9 = maximum) */
@@ -101,7 +103,7 @@ export function renderStatsBar(stats: ContributionStats, palette: ThemePalette):
     `${formatNumber(stats.currentStreak)}d current streak`,
     `${formatNumber(stats.longestStreak)}d longest streak`,
     `Busiest: ${stats.busiestMonth ? formatMonth(stats.busiestMonth) : 'None'}`,
-    `Most active: ${stats.mostActiveDay}`,
+    `Most active: ${stats.activeDays ? stats.mostActiveDay : 'None'}`,
   ];
 
   const segments = items
@@ -122,6 +124,9 @@ export function renderStatsBar(stats: ContributionStats, palette: ThemePalette):
 
 /** A positioned contribution cell ready for rendering */
 export interface GridCell {
+  week?: number;
+  day?: number;
+  absoluteWeek?: number;
   /** X coordinate */
   x: number;
   /** Y coordinate */
@@ -152,11 +157,18 @@ export function contributionGrid(
   const { cellSize, gap, offsetX, offsetY } = options;
   const cells: GridCell[] = [];
 
-  for (let week = 0; week < data.weeks.length; week++) {
-    const weekData = data.weeks[week];
+  const weeks = normalizeContributionWeeks(data.weeks);
+  const firstSunday = Date.parse(weeks[0]?.firstDay ?? '1970-01-04');
+  for (const weekData of weeks) {
+    const sunday = Date.parse(weekData.firstDay);
+    const week = Math.round((sunday - firstSunday) / 604800000);
+    const absoluteWeek = Math.floor((sunday - Date.UTC(1970, 0, 4)) / 604800000);
     for (const dayData of weekData.days) {
       const day = getContributionDayOfWeek(dayData.date);
       cells.push({
+        week,
+        day,
+        absoluteWeek,
         x: offsetX + week * (cellSize + gap),
         y: offsetY + day * (cellSize + gap),
         level: dayData.level,
@@ -222,9 +234,7 @@ export function enrichGridCells(cells: GridCell[], data: ContributionData): Grid
 export function computeLevel100(count: number, maxCount: number): Level100 {
   if (count === 0) return 0;
   if (maxCount <= 0) return 1;
-  const ratio = clamp(count / maxCount, 0, 1);
-  const curved = Math.sqrt(ratio);
-  return clamp(Math.round(curved * 98) + 1, 1, 99);
+  return normalizeCount100(count, maxCount);
 }
 
 /**
@@ -232,36 +242,14 @@ export function computeLevel100(count: number, maxCount: number): Level100 {
  * Uses the P90 of non-zero counts as the effective max, so outlier days
  * don't compress the entire range into low levels.
  */
-export function enrichGridCells100(cells: GridCell[], data: ContributionData): GridCell100[] {
-  const nonZeroCounts: number[] = [];
-  for (const week of data.weeks) {
-    for (const day of week.days) {
-      if (day.count > 0) nonZeroCounts.push(day.count);
-    }
-  }
-
-  // P90 of non-zero counts — outliers above this cap at level 99
-  nonZeroCounts.sort((a, b) => a - b);
-  const p90Index = Math.floor(nonZeroCounts.length * 0.9);
-  const effectiveMax =
-    nonZeroCounts.length > 0 ? nonZeroCounts[Math.min(p90Index, nonZeroCounts.length - 1)] : 1;
-
-  return cells.map((cell) => ({
-    ...cell,
-    level100: computeLevel100(cell.count, effectiveMax),
-  }));
-}
-
-/**
- * Escape special XML characters in text content
- * @param str - String to escape
- * @returns XML-safe string
- */
-function escapeXml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+export function enrichGridCells100(
+  cells: GridCell[],
+  data: ContributionData,
+  normalization: NormalizationOptions = { kind: 'relative' },
+): GridCell100[] {
+  const maxCount =
+    normalization.kind === 'fixed'
+      ? normalization.maxCount
+      : computeP90Max(data.weeks.flatMap((week) => week.days.map((day) => day.count)));
+  return cells.map((cell) => ({ ...cell, level100: normalizeCount100(cell.count, maxCount) }));
 }

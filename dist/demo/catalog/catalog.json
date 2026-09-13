@@ -1,0 +1,7112 @@
+{
+  "assets": {
+    "counts": {
+      "total": 193,
+      "classic": 189,
+      "korean": 4
+    },
+    "entries": [
+      {
+        "id": "whale",
+        "displayName": "Whale",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -6,
+          "width": 13,
+          "height": 9
+        },
+        "description": "Whale, a water asset available throughout the year."
+      },
+      {
+        "id": "fish",
+        "displayName": "Fish",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 9,
+          "height": 6
+        },
+        "description": "Fish, a water asset available throughout the year."
+      },
+      {
+        "id": "fishSchool",
+        "displayName": "Fish School",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Fish School, a water asset available throughout the year."
+      },
+      {
+        "id": "boat",
+        "displayName": "Boat",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 10,
+          "height": 8
+        },
+        "description": "Boat, a water asset available throughout the year."
+      },
+      {
+        "id": "seagull",
+        "displayName": "Seagull",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -8,
+          "y": -11,
+          "width": 17,
+          "height": 16
+        },
+        "description": "Seagull, a water asset available throughout the year."
+      },
+      {
+        "id": "dock",
+        "displayName": "Dock",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 8,
+          "height": 5
+        },
+        "description": "Dock, a water asset available throughout the year."
+      },
+      {
+        "id": "waves",
+        "displayName": "Waves",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 5
+        },
+        "description": "Waves, a water asset available throughout the year."
+      },
+      {
+        "id": "kelp",
+        "displayName": "Kelp",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -9,
+          "width": 5,
+          "height": 11
+        },
+        "description": "Kelp, a water asset available throughout the year."
+      },
+      {
+        "id": "coral",
+        "displayName": "Coral",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 8
+        },
+        "description": "Coral, a water asset available throughout the year."
+      },
+      {
+        "id": "jellyfish",
+        "displayName": "Jellyfish",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        },
+        "description": "Jellyfish, a water asset available throughout the year."
+      },
+      {
+        "id": "turtle",
+        "displayName": "Turtle",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -8,
+          "y": -8,
+          "width": 15,
+          "height": 14
+        },
+        "description": "Turtle, a water asset available throughout the year."
+      },
+      {
+        "id": "buoy",
+        "displayName": "Buoy",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 7
+        },
+        "description": "Buoy, a water asset available throughout the year."
+      },
+      {
+        "id": "sailboat",
+        "displayName": "Sailboat",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 10,
+          "height": 9
+        },
+        "description": "Sailboat, a water asset available throughout the year."
+      },
+      {
+        "id": "lighthouse",
+        "displayName": "Lighthouse",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -12,
+          "width": 6,
+          "height": 13
+        },
+        "description": "Lighthouse, a water asset available throughout the year."
+      },
+      {
+        "id": "crab",
+        "displayName": "Crab",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        },
+        "description": "Crab, a water asset available throughout the year."
+      },
+      {
+        "id": "rock",
+        "displayName": "Rock",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        },
+        "description": "Rock, a shore asset available throughout the year."
+      },
+      {
+        "id": "boulder",
+        "displayName": "Boulder",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -5,
+          "width": 8,
+          "height": 7
+        },
+        "description": "Boulder, a shore asset available throughout the year."
+      },
+      {
+        "id": "flower",
+        "displayName": "Flower",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        },
+        "description": "Flower, a shore asset available throughout the year."
+      },
+      {
+        "id": "bush",
+        "displayName": "Bush",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -4,
+          "width": 10,
+          "height": 6
+        },
+        "description": "Bush, a shore asset available throughout the year."
+      },
+      {
+        "id": "driftwood",
+        "displayName": "Driftwood",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 5
+        },
+        "description": "Driftwood, a shore asset available throughout the year."
+      },
+      {
+        "id": "sandcastle",
+        "displayName": "Sandcastle",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 6,
+          "height": 7
+        },
+        "description": "Sandcastle, a shore asset available throughout the year."
+      },
+      {
+        "id": "tidePools",
+        "displayName": "Tide Pools",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 8,
+          "height": 4
+        },
+        "description": "Tide Pools, a shore asset available throughout the year."
+      },
+      {
+        "id": "heron",
+        "displayName": "Heron",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -8,
+          "width": 6,
+          "height": 9
+        },
+        "description": "Heron, a shore asset available throughout the year."
+      },
+      {
+        "id": "shellfish",
+        "displayName": "Shellfish",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 7,
+          "height": 4
+        },
+        "description": "Shellfish, a shore asset available throughout the year."
+      },
+      {
+        "id": "cattail",
+        "displayName": "Cattail",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -8,
+          "width": 4,
+          "height": 9
+        },
+        "description": "Cattail, a shore asset available throughout the year."
+      },
+      {
+        "id": "frog",
+        "displayName": "Frog",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -3,
+          "width": 4,
+          "height": 5
+        },
+        "description": "Frog, a shore asset available throughout the year."
+      },
+      {
+        "id": "lily",
+        "displayName": "Lily",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Lily, a shore asset available throughout the year."
+      },
+      {
+        "id": "pine",
+        "displayName": "Pine",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -13,
+          "width": 10,
+          "height": 15
+        },
+        "description": "Pine, a woodland asset available throughout the year."
+      },
+      {
+        "id": "deciduous",
+        "displayName": "Deciduous",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -6,
+          "y": -13,
+          "width": 12,
+          "height": 15
+        },
+        "description": "Deciduous, a woodland asset available throughout the year."
+      },
+      {
+        "id": "mushroom",
+        "displayName": "Mushroom",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        },
+        "description": "Mushroom, a woodland asset available throughout the year."
+      },
+      {
+        "id": "stump",
+        "displayName": "Stump",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Stump, a woodland asset available throughout the year."
+      },
+      {
+        "id": "deer",
+        "displayName": "Deer",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 9,
+          "height": 9
+        },
+        "description": "Deer, a woodland asset available throughout the year."
+      },
+      {
+        "id": "rabbit",
+        "displayName": "Rabbit",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 7,
+          "height": 6
+        },
+        "description": "Rabbit, a woodland asset available throughout the year."
+      },
+      {
+        "id": "fox",
+        "displayName": "Fox",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -5,
+          "width": 9,
+          "height": 7
+        },
+        "description": "Fox, a woodland asset available throughout the year."
+      },
+      {
+        "id": "butterfly",
+        "displayName": "Butterfly",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -7,
+          "y": -10,
+          "width": 14,
+          "height": 13
+        },
+        "description": "Butterfly, a woodland asset available throughout the year."
+      },
+      {
+        "id": "beehive",
+        "displayName": "Beehive",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -8,
+          "width": 6,
+          "height": 8
+        },
+        "description": "Beehive, a woodland asset available throughout the year."
+      },
+      {
+        "id": "wildflowerPatch",
+        "displayName": "Wildflower Patch",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Wildflower Patch, a woodland asset available throughout the year."
+      },
+      {
+        "id": "tallGrass",
+        "displayName": "Tall Grass",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        },
+        "description": "Tall Grass, a woodland asset available throughout the year."
+      },
+      {
+        "id": "birch",
+        "displayName": "Birch",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -12,
+          "width": 10,
+          "height": 14
+        },
+        "description": "Birch, a woodland asset available throughout the year."
+      },
+      {
+        "id": "haybale",
+        "displayName": "Haybale",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Haybale, a woodland asset available throughout the year."
+      },
+      {
+        "id": "willow",
+        "displayName": "Willow",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -6,
+          "y": -9,
+          "width": 12,
+          "height": 11
+        },
+        "description": "Willow, a woodland asset available throughout the year."
+      },
+      {
+        "id": "palm",
+        "displayName": "Palm",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -6,
+          "y": -11,
+          "width": 12,
+          "height": 13
+        },
+        "description": "Palm, a woodland asset available throughout the year."
+      },
+      {
+        "id": "bird",
+        "displayName": "Bird",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -7,
+          "y": -12,
+          "width": 16,
+          "height": 15
+        },
+        "description": "Bird, a woodland asset available throughout the year."
+      },
+      {
+        "id": "owl",
+        "displayName": "Owl",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        },
+        "description": "Owl, a woodland asset available throughout the year."
+      },
+      {
+        "id": "squirrel",
+        "displayName": "Squirrel",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -4,
+          "width": 5,
+          "height": 5
+        },
+        "description": "Squirrel, a woodland asset available throughout the year."
+      },
+      {
+        "id": "moss",
+        "displayName": "Moss",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 8,
+          "height": 4
+        },
+        "description": "Moss, a woodland asset available throughout the year."
+      },
+      {
+        "id": "fern",
+        "displayName": "Fern",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -5,
+          "width": 10,
+          "height": 7
+        },
+        "description": "Fern, a woodland asset available throughout the year."
+      },
+      {
+        "id": "deadTree",
+        "displayName": "Dead Tree",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 7,
+          "height": 9
+        },
+        "description": "Dead Tree, a woodland asset available throughout the year."
+      },
+      {
+        "id": "log",
+        "displayName": "Log",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -2,
+          "width": 10,
+          "height": 3
+        },
+        "description": "Log, a woodland asset available throughout the year."
+      },
+      {
+        "id": "berryBush",
+        "displayName": "Berry Bush",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 5
+        },
+        "description": "Berry Bush, a woodland asset available throughout the year."
+      },
+      {
+        "id": "spider",
+        "displayName": "Spider",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 7
+        },
+        "description": "Spider, a woodland asset available throughout the year."
+      },
+      {
+        "id": "wheat",
+        "displayName": "Wheat",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 8
+        },
+        "description": "Wheat, a farm asset available throughout the year."
+      },
+      {
+        "id": "fence",
+        "displayName": "Fence",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -5,
+          "width": 10,
+          "height": 6
+        },
+        "description": "Fence, a farm asset available throughout the year."
+      },
+      {
+        "id": "scarecrow",
+        "displayName": "Scarecrow",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -10,
+          "width": 9,
+          "height": 11
+        },
+        "description": "Scarecrow, a farm asset available throughout the year."
+      },
+      {
+        "id": "barn",
+        "displayName": "Barn",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -6,
+          "y": -9,
+          "width": 12,
+          "height": 12
+        },
+        "description": "Barn, a farm asset available throughout the year."
+      },
+      {
+        "id": "sheep",
+        "displayName": "Sheep",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -5,
+          "width": 8,
+          "height": 7
+        },
+        "description": "Sheep, a farm asset available throughout the year."
+      },
+      {
+        "id": "cow",
+        "displayName": "Cow",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -6,
+          "width": 10,
+          "height": 8
+        },
+        "description": "Cow, a farm asset available throughout the year."
+      },
+      {
+        "id": "chicken",
+        "displayName": "Chicken",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 8,
+          "height": 7
+        },
+        "description": "Chicken, a farm asset available throughout the year."
+      },
+      {
+        "id": "horse",
+        "displayName": "Horse",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -9,
+          "width": 10,
+          "height": 11
+        },
+        "description": "Horse, a farm asset available throughout the year."
+      },
+      {
+        "id": "donkey",
+        "displayName": "Donkey",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 9
+        },
+        "description": "Donkey, a farm asset available throughout the year."
+      },
+      {
+        "id": "goat",
+        "displayName": "Goat",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 8
+        },
+        "description": "Goat, a farm asset available throughout the year."
+      },
+      {
+        "id": "ricePaddy",
+        "displayName": "Rice Paddy",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -6,
+          "y": -5,
+          "width": 12,
+          "height": 8
+        },
+        "description": "Rice Paddy, a farm asset available throughout the year."
+      },
+      {
+        "id": "silo",
+        "displayName": "Silo",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -10,
+          "width": 6,
+          "height": 11
+        },
+        "description": "Silo, a farm asset available throughout the year."
+      },
+      {
+        "id": "pigpen",
+        "displayName": "Pigpen",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 8,
+          "height": 4
+        },
+        "description": "Pigpen, a farm asset available throughout the year."
+      },
+      {
+        "id": "trough",
+        "displayName": "Trough",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        },
+        "description": "Trough, a farm asset available throughout the year."
+      },
+      {
+        "id": "haystack",
+        "displayName": "Haystack",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 6,
+          "height": 7
+        },
+        "description": "Haystack, a farm asset available throughout the year."
+      },
+      {
+        "id": "orchard",
+        "displayName": "Orchard",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -9,
+          "width": 8,
+          "height": 10
+        },
+        "description": "Orchard, a farm asset available throughout the year."
+      },
+      {
+        "id": "appleTree",
+        "displayName": "Apple Tree",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 11
+        },
+        "description": "Apple Tree, a farm asset available throughout the year."
+      },
+      {
+        "id": "oliveTree",
+        "displayName": "Olive Tree",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 11
+        },
+        "description": "Olive Tree, a farm asset available throughout the year."
+      },
+      {
+        "id": "lemonTree",
+        "displayName": "Lemon Tree",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 10
+        },
+        "description": "Lemon Tree, a farm asset available throughout the year."
+      },
+      {
+        "id": "orangeTree",
+        "displayName": "Orange Tree",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 11
+        },
+        "description": "Orange Tree, a farm asset available throughout the year."
+      },
+      {
+        "id": "pearTree",
+        "displayName": "Pear Tree",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 11
+        },
+        "description": "Pear Tree, a farm asset available throughout the year."
+      },
+      {
+        "id": "peachTree",
+        "displayName": "Peach Tree",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 11
+        },
+        "description": "Peach Tree, a farm asset available throughout the year."
+      },
+      {
+        "id": "beeFarm",
+        "displayName": "Bee Farm",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        },
+        "description": "Bee Farm, a farm asset available throughout the year."
+      },
+      {
+        "id": "pumpkin",
+        "displayName": "Pumpkin",
+        "category": "farm",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 6
+        },
+        "description": "Pumpkin, a farm asset available throughout the year."
+      },
+      {
+        "id": "tent",
+        "displayName": "Tent",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 10,
+          "height": 9
+        },
+        "description": "Tent, a village asset available throughout the year."
+      },
+      {
+        "id": "hut",
+        "displayName": "Hut",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 10,
+          "height": 8
+        },
+        "description": "Hut, a village asset available throughout the year."
+      },
+      {
+        "id": "house",
+        "displayName": "House",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 10,
+          "height": 11
+        },
+        "description": "House, a village asset available throughout the year."
+      },
+      {
+        "id": "houseB",
+        "displayName": "Gabled house",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 10,
+          "height": 11
+        },
+        "description": "Gabled house, a village asset available throughout the year."
+      },
+      {
+        "id": "church",
+        "displayName": "Church",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -13,
+          "width": 8,
+          "height": 15
+        },
+        "description": "Church, a village asset available throughout the year."
+      },
+      {
+        "id": "windmill",
+        "displayName": "Windmill",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -12,
+          "width": 10,
+          "height": 13
+        },
+        "description": "Windmill, a village asset available throughout the year."
+      },
+      {
+        "id": "well",
+        "displayName": "Well",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 9
+        },
+        "description": "Well, a village asset available throughout the year."
+      },
+      {
+        "id": "tavern",
+        "displayName": "Tavern",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 10,
+          "height": 10
+        },
+        "description": "Tavern, a village asset available throughout the year."
+      },
+      {
+        "id": "bakery",
+        "displayName": "Bakery",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -10,
+          "width": 8,
+          "height": 11
+        },
+        "description": "Bakery, a village asset available throughout the year."
+      },
+      {
+        "id": "stable",
+        "displayName": "Stable",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -6,
+          "width": 10,
+          "height": 7
+        },
+        "description": "Stable, a village asset available throughout the year."
+      },
+      {
+        "id": "garden",
+        "displayName": "Garden",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 4
+        },
+        "description": "Garden, a village asset available throughout the year."
+      },
+      {
+        "id": "laundry",
+        "displayName": "Laundry",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -5,
+          "width": 10,
+          "height": 6
+        },
+        "description": "Laundry, a village asset available throughout the year."
+      },
+      {
+        "id": "doghouse",
+        "displayName": "Doghouse",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 8,
+          "height": 7
+        },
+        "description": "Doghouse, a village asset available throughout the year."
+      },
+      {
+        "id": "shrine",
+        "displayName": "Shrine",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 6,
+          "height": 7
+        },
+        "description": "Shrine, a village asset available throughout the year."
+      },
+      {
+        "id": "wagon",
+        "displayName": "Wagon",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -6,
+          "width": 9,
+          "height": 8
+        },
+        "description": "Wagon, a village asset available throughout the year."
+      },
+      {
+        "id": "market",
+        "displayName": "Market",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 13,
+          "height": 9
+        },
+        "description": "Market, a town asset available throughout the year."
+      },
+      {
+        "id": "inn",
+        "displayName": "Inn",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 12,
+          "height": 11
+        },
+        "description": "Inn, a town asset available throughout the year."
+      },
+      {
+        "id": "blacksmith",
+        "displayName": "Blacksmith",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 9
+        },
+        "description": "Blacksmith, a town asset available throughout the year."
+      },
+      {
+        "id": "castle",
+        "displayName": "Castle",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -13,
+          "width": 8,
+          "height": 14
+        },
+        "description": "Castle, a town asset available throughout the year."
+      },
+      {
+        "id": "tower",
+        "displayName": "Tower",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -12,
+          "width": 6,
+          "height": 13
+        },
+        "description": "Tower, a town asset available throughout the year."
+      },
+      {
+        "id": "bridge",
+        "displayName": "Bridge",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -6,
+          "y": -4,
+          "width": 12,
+          "height": 6
+        },
+        "description": "Bridge, a town asset available throughout the year."
+      },
+      {
+        "id": "cathedral",
+        "displayName": "Cathedral",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -13,
+          "width": 10,
+          "height": 16
+        },
+        "description": "Cathedral, a town asset available throughout the year."
+      },
+      {
+        "id": "library",
+        "displayName": "Library",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 8
+        },
+        "description": "Library, a town asset available throughout the year."
+      },
+      {
+        "id": "clocktower",
+        "displayName": "Clocktower",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -14,
+          "width": 6,
+          "height": 15
+        },
+        "description": "Clocktower, a town asset available throughout the year."
+      },
+      {
+        "id": "statue",
+        "displayName": "Statue",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -7,
+          "width": 4,
+          "height": 8
+        },
+        "description": "Statue, a town asset available throughout the year."
+      },
+      {
+        "id": "park",
+        "displayName": "Park",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 10,
+          "height": 9
+        },
+        "description": "Park, a town asset available throughout the year."
+      },
+      {
+        "id": "warehouse",
+        "displayName": "Warehouse",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 10,
+          "height": 8
+        },
+        "description": "Warehouse, a town asset available throughout the year."
+      },
+      {
+        "id": "gatehouse",
+        "displayName": "Gatehouse",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 9
+        },
+        "description": "Gatehouse, a town asset available throughout the year."
+      },
+      {
+        "id": "manor",
+        "displayName": "Manor",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -9,
+          "width": 10,
+          "height": 12
+        },
+        "description": "Manor, a town asset available throughout the year."
+      },
+      {
+        "id": "reeds",
+        "displayName": "Reeds",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -7,
+          "width": 6,
+          "height": 8
+        },
+        "description": "Reeds, a water asset available throughout the year."
+      },
+      {
+        "id": "fountain",
+        "displayName": "Fountain",
+        "category": "town",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 8
+        },
+        "description": "Fountain, a town asset available throughout the year."
+      },
+      {
+        "id": "canal",
+        "displayName": "Canal",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 8,
+          "height": 3
+        },
+        "description": "Canal, a water asset available throughout the year."
+      },
+      {
+        "id": "watermill",
+        "displayName": "Watermill",
+        "category": "village",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 11,
+          "height": 9
+        },
+        "description": "Watermill, a village asset available throughout the year."
+      },
+      {
+        "id": "gardenTree",
+        "displayName": "Garden Tree",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -8,
+          "width": 6,
+          "height": 9
+        },
+        "description": "Garden Tree, a woodland asset available throughout the year."
+      },
+      {
+        "id": "pondLily",
+        "displayName": "Pond Lily",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        },
+        "description": "Pond Lily, a water asset available throughout the year."
+      },
+      {
+        "id": "cart",
+        "displayName": "Cart",
+        "category": "decoration",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 9,
+          "height": 5
+        },
+        "description": "Cart, a decoration asset available throughout the year."
+      },
+      {
+        "id": "barrel",
+        "displayName": "Barrel",
+        "category": "decoration",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 7
+        },
+        "description": "Barrel, a decoration asset available throughout the year."
+      },
+      {
+        "id": "torch",
+        "displayName": "Torch",
+        "category": "decoration",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -7,
+          "width": 5,
+          "height": 9
+        },
+        "description": "Torch, a decoration asset available throughout the year."
+      },
+      {
+        "id": "flag",
+        "displayName": "Flag",
+        "category": "decoration",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -10,
+          "width": 7,
+          "height": 11
+        },
+        "description": "Flag, a decoration asset available throughout the year."
+      },
+      {
+        "id": "cobblePath",
+        "displayName": "Cobble Path",
+        "category": "decoration",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 9,
+          "height": 5
+        },
+        "description": "Cobble Path, a decoration asset available throughout the year."
+      },
+      {
+        "id": "smoke",
+        "displayName": "Smoke",
+        "category": "decoration",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -11,
+          "width": 11,
+          "height": 11
+        },
+        "description": "Smoke, a decoration asset available throughout the year."
+      },
+      {
+        "id": "signpost",
+        "displayName": "Signpost",
+        "category": "decoration",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 7
+        },
+        "description": "Signpost, a decoration asset available throughout the year."
+      },
+      {
+        "id": "lantern",
+        "displayName": "Lantern",
+        "category": "decoration",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -7,
+          "width": 4,
+          "height": 8
+        },
+        "description": "Lantern, a decoration asset available throughout the year."
+      },
+      {
+        "id": "woodpile",
+        "displayName": "Woodpile",
+        "category": "decoration",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 5
+        },
+        "description": "Woodpile, a decoration asset available throughout the year."
+      },
+      {
+        "id": "puddle",
+        "displayName": "Puddle",
+        "category": "decoration",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        },
+        "description": "Puddle, a decoration asset available throughout the year."
+      },
+      {
+        "id": "campfire",
+        "displayName": "Campfire",
+        "category": "decoration",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 6
+        },
+        "description": "Campfire, a decoration asset available throughout the year."
+      },
+      {
+        "id": "snowPine",
+        "displayName": "Snow Pine",
+        "category": "woodland",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -10,
+          "width": 10,
+          "height": 13
+        },
+        "description": "Snow Pine, a woodland asset for winter."
+      },
+      {
+        "id": "snowDeciduous",
+        "displayName": "Snow Deciduous",
+        "category": "woodland",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 10,
+          "height": 11
+        },
+        "description": "Snow Deciduous, a woodland asset for winter."
+      },
+      {
+        "id": "snowman",
+        "displayName": "Snowman",
+        "category": "decoration",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 9,
+          "height": 12
+        },
+        "description": "Snowman, a decoration asset for winter."
+      },
+      {
+        "id": "snowdrift",
+        "displayName": "Snowdrift",
+        "category": "decoration",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 6
+        },
+        "description": "Snowdrift, a decoration asset for winter."
+      },
+      {
+        "id": "igloo",
+        "displayName": "Igloo",
+        "category": "village",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -5,
+          "width": 10,
+          "height": 7
+        },
+        "description": "Igloo, a village asset for winter."
+      },
+      {
+        "id": "frozenPond",
+        "displayName": "Frozen Pond",
+        "category": "water",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 8,
+          "height": 6
+        },
+        "description": "Frozen Pond, a water asset for winter."
+      },
+      {
+        "id": "icicle",
+        "displayName": "Icicle",
+        "category": "decoration",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        },
+        "description": "Icicle, a decoration asset for winter."
+      },
+      {
+        "id": "sled",
+        "displayName": "Sled",
+        "category": "decoration",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -4,
+          "width": 10,
+          "height": 6
+        },
+        "description": "Sled, a decoration asset for winter."
+      },
+      {
+        "id": "snowCoveredRock",
+        "displayName": "Snow Covered Rock",
+        "category": "shore",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 8,
+          "height": 6
+        },
+        "description": "Snow Covered Rock, a shore asset for winter."
+      },
+      {
+        "id": "bareBush",
+        "displayName": "Bare Bush",
+        "category": "woodland",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        },
+        "description": "Bare Bush, a woodland asset for winter."
+      },
+      {
+        "id": "winterBird",
+        "displayName": "Winter Bird",
+        "category": "woodland",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Winter Bird, a woodland asset for winter."
+      },
+      {
+        "id": "firewood",
+        "displayName": "Firewood",
+        "category": "decoration",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        },
+        "description": "Firewood, a decoration asset for winter."
+      },
+      {
+        "id": "houseWinter",
+        "displayName": "Snowy house",
+        "category": "village",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -9,
+          "width": 10,
+          "height": 12
+        },
+        "description": "Snowy house, a village asset for winter."
+      },
+      {
+        "id": "houseBWinter",
+        "displayName": "Snowy gabled house",
+        "category": "village",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -9,
+          "width": 10,
+          "height": 12
+        },
+        "description": "Snowy gabled house, a village asset for winter."
+      },
+      {
+        "id": "barnWinter",
+        "displayName": "Snowy barn",
+        "category": "farm",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -6,
+          "y": -9,
+          "width": 12,
+          "height": 12
+        },
+        "description": "Snowy barn, a farm asset for winter."
+      },
+      {
+        "id": "churchWinter",
+        "displayName": "Snowy church",
+        "category": "village",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -13,
+          "width": 8,
+          "height": 15
+        },
+        "description": "Snowy church, a village asset for winter."
+      },
+      {
+        "id": "christmasTree",
+        "displayName": "Christmas Tree",
+        "category": "decoration",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -10,
+          "width": 8,
+          "height": 13
+        },
+        "description": "Christmas Tree, a decoration asset for winter."
+      },
+      {
+        "id": "winterLantern",
+        "displayName": "Winter Lantern",
+        "category": "decoration",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 10
+        },
+        "description": "Winter Lantern, a decoration asset for winter."
+      },
+      {
+        "id": "frozenFountain",
+        "displayName": "Frozen Fountain",
+        "category": "town",
+        "season": "winter",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 8
+        },
+        "description": "Frozen Fountain, a town asset for winter."
+      },
+      {
+        "id": "cherryBlossom",
+        "displayName": "Cherry Blossom",
+        "category": "woodland",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 10,
+          "height": 10
+        },
+        "description": "Cherry Blossom, a woodland asset for spring."
+      },
+      {
+        "id": "cherryBlossomSmall",
+        "displayName": "Cherry Blossom Small",
+        "category": "woodland",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 8
+        },
+        "description": "Cherry Blossom Small, a woodland asset for spring."
+      },
+      {
+        "id": "cherryPetals",
+        "displayName": "Cherry Petals",
+        "category": "decoration",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Cherry Petals, a decoration asset for spring."
+      },
+      {
+        "id": "tulip",
+        "displayName": "Tulip",
+        "category": "decoration",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -4,
+          "width": 5,
+          "height": 6
+        },
+        "description": "Tulip, a decoration asset for spring."
+      },
+      {
+        "id": "tulipField",
+        "displayName": "Tulip Field",
+        "category": "decoration",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        },
+        "description": "Tulip Field, a decoration asset for spring."
+      },
+      {
+        "id": "sprout",
+        "displayName": "Sprout",
+        "category": "farm",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -3,
+          "width": 4,
+          "height": 5
+        },
+        "description": "Sprout, a farm asset for spring."
+      },
+      {
+        "id": "nest",
+        "displayName": "Nest",
+        "category": "woodland",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Nest, a woodland asset for spring."
+      },
+      {
+        "id": "lamb",
+        "displayName": "Lamb",
+        "category": "farm",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 9,
+          "height": 7
+        },
+        "description": "Lamb, a farm asset for spring."
+      },
+      {
+        "id": "crocus",
+        "displayName": "Crocus",
+        "category": "decoration",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -3,
+          "width": 4,
+          "height": 5
+        },
+        "description": "Crocus, a decoration asset for spring."
+      },
+      {
+        "id": "rainPuddle",
+        "displayName": "Rain Puddle",
+        "category": "decoration",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        },
+        "description": "Rain Puddle, a decoration asset for spring."
+      },
+      {
+        "id": "birdhouse",
+        "displayName": "Birdhouse",
+        "category": "woodland",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 6,
+          "height": 8
+        },
+        "description": "Birdhouse, a woodland asset for spring."
+      },
+      {
+        "id": "gardenBed",
+        "displayName": "Garden Bed",
+        "category": "farm",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 8,
+          "height": 5
+        },
+        "description": "Garden Bed, a farm asset for spring."
+      },
+      {
+        "id": "cherryBlossomFull",
+        "displayName": "Cherry Blossom Full",
+        "category": "woodland",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -9,
+          "width": 10,
+          "height": 13
+        },
+        "description": "Cherry Blossom Full, a woodland asset for spring."
+      },
+      {
+        "id": "cherryBlossomBranch",
+        "displayName": "Cherry Blossom Branch",
+        "category": "woodland",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -5,
+          "width": 8,
+          "height": 7
+        },
+        "description": "Cherry Blossom Branch, a woodland asset for spring."
+      },
+      {
+        "id": "peachBlossom",
+        "displayName": "Peach Blossom",
+        "category": "woodland",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 12
+        },
+        "description": "Peach Blossom, a woodland asset for spring."
+      },
+      {
+        "id": "flowerBed",
+        "displayName": "Flower Bed",
+        "category": "decoration",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Flower Bed, a decoration asset for spring."
+      },
+      {
+        "id": "wateringCan",
+        "displayName": "Watering Can",
+        "category": "decoration",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -4,
+          "width": 6,
+          "height": 6
+        },
+        "description": "Watering Can, a decoration asset for spring."
+      },
+      {
+        "id": "seedling",
+        "displayName": "Seedling",
+        "category": "farm",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -3,
+          "width": 4,
+          "height": 5
+        },
+        "description": "Seedling, a farm asset for spring."
+      },
+      {
+        "id": "robinBird",
+        "displayName": "Robin Bird",
+        "category": "woodland",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -2,
+          "width": 5,
+          "height": 4
+        },
+        "description": "Robin Bird, a woodland asset for spring."
+      },
+      {
+        "id": "butterflyGarden",
+        "displayName": "Butterfly Garden",
+        "category": "woodland",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 4
+        },
+        "description": "Butterfly Garden, a woodland asset for spring."
+      },
+      {
+        "id": "umbrella",
+        "displayName": "Umbrella",
+        "category": "decoration",
+        "season": "spring",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 7
+        },
+        "description": "Umbrella, a decoration asset for spring."
+      },
+      {
+        "id": "parasol",
+        "displayName": "Parasol",
+        "category": "shore",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 8
+        },
+        "description": "Parasol, a shore asset for summer."
+      },
+      {
+        "id": "beachTowel",
+        "displayName": "Beach Towel",
+        "category": "shore",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 8,
+          "height": 5
+        },
+        "description": "Beach Towel, a shore asset for summer."
+      },
+      {
+        "id": "sandcastleSummer",
+        "displayName": "Summer sandcastle",
+        "category": "shore",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 7
+        },
+        "description": "Summer sandcastle, a shore asset for summer."
+      },
+      {
+        "id": "surfboard",
+        "displayName": "Surfboard",
+        "category": "shore",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 6,
+          "height": 8
+        },
+        "description": "Surfboard, a shore asset for summer."
+      },
+      {
+        "id": "iceCreamCart",
+        "displayName": "Ice Cream Cart",
+        "category": "decoration",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 7,
+          "height": 8
+        },
+        "description": "Ice Cream Cart, a decoration asset for summer."
+      },
+      {
+        "id": "hammock",
+        "displayName": "Hammock",
+        "category": "decoration",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -4,
+          "width": 10,
+          "height": 5
+        },
+        "description": "Hammock, a decoration asset for summer."
+      },
+      {
+        "id": "sunflower",
+        "displayName": "Sunflower",
+        "category": "farm",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 10,
+          "height": 9
+        },
+        "description": "Sunflower, a farm asset for summer."
+      },
+      {
+        "id": "watermelon",
+        "displayName": "Watermelon",
+        "category": "farm",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        },
+        "description": "Watermelon, a farm asset for summer."
+      },
+      {
+        "id": "sprinkler",
+        "displayName": "Sprinkler",
+        "category": "decoration",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 6
+        },
+        "description": "Sprinkler, a decoration asset for summer."
+      },
+      {
+        "id": "lemonade",
+        "displayName": "Lemonade",
+        "category": "decoration",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 8,
+          "height": 5
+        },
+        "description": "Lemonade, a decoration asset for summer."
+      },
+      {
+        "id": "fireflies",
+        "displayName": "Fireflies",
+        "category": "decoration",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -6,
+          "y": -5,
+          "width": 11,
+          "height": 6
+        },
+        "description": "Fireflies, a decoration asset for summer."
+      },
+      {
+        "id": "swimmingPool",
+        "displayName": "Swimming Pool",
+        "category": "town",
+        "season": "summer",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 7
+        },
+        "description": "Swimming Pool, a town asset for summer."
+      },
+      {
+        "id": "autumnMaple",
+        "displayName": "Autumn Maple",
+        "category": "woodland",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 12
+        },
+        "description": "Autumn Maple, a woodland asset for autumn."
+      },
+      {
+        "id": "autumnOak",
+        "displayName": "Autumn Oak",
+        "category": "woodland",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 12
+        },
+        "description": "Autumn Oak, a woodland asset for autumn."
+      },
+      {
+        "id": "autumnBirch",
+        "displayName": "Autumn Birch",
+        "category": "woodland",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 7,
+          "height": 10
+        },
+        "description": "Autumn Birch, a woodland asset for autumn."
+      },
+      {
+        "id": "autumnGinkgo",
+        "displayName": "Autumn Ginkgo",
+        "category": "woodland",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 10
+        },
+        "description": "Autumn Ginkgo, a woodland asset for autumn."
+      },
+      {
+        "id": "fallenLeaves",
+        "displayName": "Fallen Leaves",
+        "category": "decoration",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        },
+        "description": "Fallen Leaves, a decoration asset for autumn."
+      },
+      {
+        "id": "leafSwirl",
+        "displayName": "Leaf Swirl",
+        "category": "decoration",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Leaf Swirl, a decoration asset for autumn."
+      },
+      {
+        "id": "acorn",
+        "displayName": "Acorn",
+        "category": "woodland",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -2,
+          "width": 4,
+          "height": 4
+        },
+        "description": "Acorn, a woodland asset for autumn."
+      },
+      {
+        "id": "cornStalk",
+        "displayName": "Corn stalks",
+        "category": "farm",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        },
+        "description": "Corn stalks, a farm asset for autumn."
+      },
+      {
+        "id": "scarecrowAutumn",
+        "displayName": "Scarecrow Autumn",
+        "category": "farm",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 7,
+          "height": 8
+        },
+        "description": "Scarecrow Autumn, a farm asset for autumn."
+      },
+      {
+        "id": "harvestBasket",
+        "displayName": "Harvest Basket",
+        "category": "farm",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 4
+        },
+        "description": "Harvest Basket, a farm asset for autumn."
+      },
+      {
+        "id": "hotDrink",
+        "displayName": "Hot Drink",
+        "category": "decoration",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -2,
+          "y": -4,
+          "width": 5,
+          "height": 6
+        },
+        "description": "Hot Drink, a decoration asset for autumn."
+      },
+      {
+        "id": "autumnWreath",
+        "displayName": "Autumn Wreath",
+        "category": "decoration",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 7
+        },
+        "description": "Autumn Wreath, a decoration asset for autumn."
+      },
+      {
+        "id": "pumpkinPatch",
+        "displayName": "Pumpkin Patch",
+        "category": "farm",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Pumpkin Patch, a farm asset for autumn."
+      },
+      {
+        "id": "hayMaze",
+        "displayName": "Hay Maze",
+        "category": "farm",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Hay Maze, a farm asset for autumn."
+      },
+      {
+        "id": "appleBasket",
+        "displayName": "Apple Basket",
+        "category": "farm",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        },
+        "description": "Apple Basket, a farm asset for autumn."
+      },
+      {
+        "id": "rake",
+        "displayName": "Rake",
+        "category": "decoration",
+        "season": "autumn",
+        "style": "classic",
+        "bounds": {
+          "x": -4,
+          "y": -5,
+          "width": 8,
+          "height": 8
+        },
+        "description": "Rake, a decoration asset for autumn."
+      },
+      {
+        "id": "hanok",
+        "displayName": "Hanok house",
+        "category": "village",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -10,
+          "y": -15,
+          "width": 20,
+          "height": 19
+        },
+        "description": "A timber-frame home with curved giwa roof tiles, cream walls and wooden lattice doors."
+      },
+      {
+        "id": "pavilion",
+        "displayName": "Korean pavilion",
+        "category": "village",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -9,
+          "y": -15,
+          "width": 18,
+          "height": 19
+        },
+        "description": "An open-sided resting pavilion with raised stone footing and a gently swept tiled roof."
+      },
+      {
+        "id": "stoneWall",
+        "displayName": "Korean stone wall",
+        "category": "village",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -9,
+          "y": -8,
+          "width": 18,
+          "height": 15
+        },
+        "description": "An irregular stacked stone boundary capped with dark roof tiles."
+      },
+      {
+        "id": "onggi",
+        "displayName": "Onggi jars",
+        "category": "village",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -7,
+          "y": -8,
+          "width": 14,
+          "height": 12
+        },
+        "description": "Three glazed earthenware storage jars with broad shoulders and flat lids on a stone terrace."
+      }
+    ]
+  },
+  "wonders": {
+    "counts": {
+      "total": 30,
+      "rare": 14,
+      "epic": 10,
+      "legendary": 6
+    },
+    "entries": [
+      {
+        "id": "mountFuji",
+        "type": "mountFuji",
+        "tier": "rare",
+        "displayName": "Mount Fuji",
+        "category": "nature",
+        "description": "A snow-capped volcanic cone above the village.",
+        "bounds": {
+          "x": -8,
+          "y": -14,
+          "width": 16,
+          "height": 17
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "colosseum",
+        "type": "colosseum",
+        "tier": "rare",
+        "displayName": "Colosseum",
+        "category": "landmark",
+        "description": "An oval amphitheatre with two tiers of stone arches.",
+        "bounds": {
+          "x": -7,
+          "y": -7,
+          "width": 14,
+          "height": 10
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "giantSequoia",
+        "type": "giantSequoia",
+        "tier": "rare",
+        "displayName": "Giant sequoia",
+        "category": "nature",
+        "description": "A towering evergreen with a broad russet trunk.",
+        "bounds": {
+          "x": -7,
+          "y": -16,
+          "width": 14,
+          "height": 18
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "coralReef",
+        "type": "coralReef",
+        "tier": "rare",
+        "displayName": "Coral reef",
+        "category": "nature",
+        "description": "A miniature reef of branching, brightly colored coral.",
+        "bounds": {
+          "x": -7,
+          "y": -10,
+          "width": 14,
+          "height": 13
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "pagoda",
+        "type": "pagoda",
+        "tier": "rare",
+        "displayName": "Pagoda",
+        "category": "landmark",
+        "description": "A tiered tower with sweeping rooflines.",
+        "bounds": {
+          "x": -6,
+          "y": -15,
+          "width": 12,
+          "height": 17
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "torii",
+        "type": "torii",
+        "tier": "rare",
+        "displayName": "Torii gate",
+        "category": "landmark",
+        "description": "A vermilion gate with a gently curved crossbeam.",
+        "bounds": {
+          "x": -7,
+          "y": -10,
+          "width": 14,
+          "height": 12
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "geyser",
+        "type": "geyser",
+        "tier": "rare",
+        "displayName": "Geyser",
+        "category": "nature",
+        "description": "A spring sending pale water jets above a rocky basin.",
+        "bounds": {
+          "x": -5,
+          "y": -13,
+          "width": 10,
+          "height": 16
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "hotSpring",
+        "type": "hotSpring",
+        "tier": "rare",
+        "displayName": "Hot spring",
+        "category": "nature",
+        "description": "A steaming pool ringed by warm stones.",
+        "bounds": {
+          "x": -6,
+          "y": -7,
+          "width": 12,
+          "height": 11
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "eiffelTower",
+        "type": "eiffelTower",
+        "tier": "rare",
+        "displayName": "Eiffel Tower",
+        "category": "landmark",
+        "description": "A tapering lattice tower with a wide arched base.",
+        "bounds": {
+          "x": -5,
+          "y": -16,
+          "width": 10,
+          "height": 18
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "grandCanyon",
+        "type": "grandCanyon",
+        "tier": "rare",
+        "displayName": "Grand Canyon",
+        "category": "nature",
+        "description": "Layered red cliffs cut by a narrow river.",
+        "bounds": {
+          "x": -7,
+          "y": -9,
+          "width": 14,
+          "height": 12
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "windmillGrand",
+        "type": "windmillGrand",
+        "tier": "rare",
+        "displayName": "Grand windmill",
+        "category": "landmark",
+        "description": "A tall mill with four large turning sails.",
+        "bounds": {
+          "x": -7,
+          "y": -15,
+          "width": 14,
+          "height": 17
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "oasis",
+        "type": "oasis",
+        "tier": "rare",
+        "displayName": "Oasis",
+        "category": "nature",
+        "description": "A small turquoise pool sheltered by palms.",
+        "bounds": {
+          "x": -7,
+          "y": -9,
+          "width": 14,
+          "height": 13
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "volcano",
+        "type": "volcano",
+        "tier": "rare",
+        "displayName": "Volcano",
+        "category": "nature",
+        "description": "A dark volcanic cone with a glowing crater.",
+        "bounds": {
+          "x": -7,
+          "y": -14,
+          "width": 14,
+          "height": 17
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "giantMushroom",
+        "type": "giantMushroom",
+        "tier": "rare",
+        "displayName": "Giant mushroom",
+        "category": "nature",
+        "description": "An oversized spotted cap rising above smaller fungi.",
+        "bounds": {
+          "x": -6,
+          "y": -11,
+          "width": 12,
+          "height": 13
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 88,
+          "minRichness": 0.45,
+          "baseChance": 0.018,
+          "statsDescription": "At least 200 total contributions OR a longest streak of at least 7 days.",
+          "stats": {
+            "combination": "or",
+            "total": 200,
+            "longestStreak": 7
+          }
+        }
+      },
+      {
+        "id": "aurora",
+        "type": "aurora",
+        "tier": "epic",
+        "displayName": "Aurora",
+        "category": "nature",
+        "description": "Ribbons of green and violet light over a dark landscape.",
+        "bounds": {
+          "x": -8,
+          "y": -13,
+          "width": 16,
+          "height": 16
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 93,
+          "minRichness": 0.55,
+          "baseChance": 0.008,
+          "statsDescription": "At least 500 total contributions AND a longest streak of at least 14 days.",
+          "stats": {
+            "combination": "and",
+            "total": 500,
+            "longestStreak": 14
+          }
+        }
+      },
+      {
+        "id": "tajMahal",
+        "type": "tajMahal",
+        "tier": "epic",
+        "displayName": "Taj Mahal",
+        "category": "landmark",
+        "description": "A pale domed monument flanked by slender minarets.",
+        "bounds": {
+          "x": -7,
+          "y": -13,
+          "width": 14,
+          "height": 16
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 93,
+          "minRichness": 0.55,
+          "baseChance": 0.008,
+          "statsDescription": "At least 500 total contributions AND a longest streak of at least 14 days.",
+          "stats": {
+            "combination": "and",
+            "total": 500,
+            "longestStreak": 14
+          }
+        }
+      },
+      {
+        "id": "giantWaterfall",
+        "type": "giantWaterfall",
+        "tier": "epic",
+        "displayName": "Giant waterfall",
+        "category": "nature",
+        "description": "A broad cascade descending from a high stone ledge.",
+        "bounds": {
+          "x": -7,
+          "y": -13,
+          "width": 14,
+          "height": 16
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 93,
+          "minRichness": 0.55,
+          "baseChance": 0.008,
+          "statsDescription": "At least 500 total contributions AND a longest streak of at least 14 days.",
+          "stats": {
+            "combination": "and",
+            "total": 500,
+            "longestStreak": 14
+          }
+        }
+      },
+      {
+        "id": "stBasils",
+        "type": "stBasils",
+        "tier": "epic",
+        "displayName": "Saint Basil’s Cathedral",
+        "category": "landmark",
+        "description": "A cluster of colorful onion domes and slender spires.",
+        "bounds": {
+          "x": -5,
+          "y": -13,
+          "width": 10,
+          "height": 16
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 93,
+          "minRichness": 0.55,
+          "baseChance": 0.008,
+          "statsDescription": "At least 500 total contributions AND a longest streak of at least 14 days.",
+          "stats": {
+            "combination": "and",
+            "total": 500,
+            "longestStreak": 14
+          }
+        }
+      },
+      {
+        "id": "bambooGrove",
+        "type": "bambooGrove",
+        "tier": "epic",
+        "displayName": "Bamboo grove",
+        "category": "nature",
+        "description": "Tall jointed bamboo stems form a quiet green grove.",
+        "bounds": {
+          "x": -7,
+          "y": -14,
+          "width": 13,
+          "height": 16
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 93,
+          "minRichness": 0.55,
+          "baseChance": 0.008,
+          "statsDescription": "At least 500 total contributions AND a longest streak of at least 14 days.",
+          "stats": {
+            "combination": "and",
+            "total": 500,
+            "longestStreak": 14
+          }
+        }
+      },
+      {
+        "id": "operaHouse",
+        "type": "operaHouse",
+        "tier": "epic",
+        "displayName": "Sydney Opera House",
+        "category": "landmark",
+        "description": "White sail-shaped roofs rising from a low waterfront platform.",
+        "bounds": {
+          "x": -7,
+          "y": -7,
+          "width": 14,
+          "height": 10
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 93,
+          "minRichness": 0.55,
+          "baseChance": 0.008,
+          "statsDescription": "At least 500 total contributions AND a longest streak of at least 14 days.",
+          "stats": {
+            "combination": "and",
+            "total": 500,
+            "longestStreak": 14
+          }
+        }
+      },
+      {
+        "id": "glacierPeak",
+        "type": "glacierPeak",
+        "tier": "epic",
+        "displayName": "Glacier peak",
+        "category": "nature",
+        "description": "An angular ice peak with blue crevasses.",
+        "bounds": {
+          "x": -7,
+          "y": -15,
+          "width": 14,
+          "height": 18
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 93,
+          "minRichness": 0.55,
+          "baseChance": 0.008,
+          "statsDescription": "At least 500 total contributions AND a longest streak of at least 14 days.",
+          "stats": {
+            "combination": "and",
+            "total": 500,
+            "longestStreak": 14
+          }
+        }
+      },
+      {
+        "id": "bioluminescentPool",
+        "type": "bioluminescentPool",
+        "tier": "epic",
+        "displayName": "Bioluminescent pool",
+        "category": "nature",
+        "description": "A sheltered pool dotted with softly glowing lights.",
+        "bounds": {
+          "x": -7,
+          "y": -4,
+          "width": 14,
+          "height": 8
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 93,
+          "minRichness": 0.55,
+          "baseChance": 0.008,
+          "statsDescription": "At least 500 total contributions AND a longest streak of at least 14 days.",
+          "stats": {
+            "combination": "and",
+            "total": 500,
+            "longestStreak": 14
+          }
+        }
+      },
+      {
+        "id": "meteorCrater",
+        "type": "meteorCrater",
+        "tier": "epic",
+        "displayName": "Meteor crater",
+        "category": "nature",
+        "description": "A round impact basin holding a luminous fallen stone.",
+        "bounds": {
+          "x": -7,
+          "y": -4,
+          "width": 14,
+          "height": 8
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 93,
+          "minRichness": 0.55,
+          "baseChance": 0.008,
+          "statsDescription": "At least 500 total contributions AND a longest streak of at least 14 days.",
+          "stats": {
+            "combination": "and",
+            "total": 500,
+            "longestStreak": 14
+          }
+        }
+      },
+      {
+        "id": "bonsaiGiant",
+        "type": "bonsaiGiant",
+        "tier": "epic",
+        "displayName": "Giant bonsai",
+        "category": "nature",
+        "description": "A broad sculpted canopy on a twisting old trunk.",
+        "bounds": {
+          "x": -6,
+          "y": -11,
+          "width": 12,
+          "height": 13
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 93,
+          "minRichness": 0.55,
+          "baseChance": 0.008,
+          "statsDescription": "At least 500 total contributions AND a longest streak of at least 14 days.",
+          "stats": {
+            "combination": "and",
+            "total": 500,
+            "longestStreak": 14
+          }
+        }
+      },
+      {
+        "id": "floatingIsland",
+        "type": "floatingIsland",
+        "tier": "legendary",
+        "displayName": "Floating island",
+        "category": "fantasy",
+        "description": "A grassy island suspended above its rocky underside.",
+        "bounds": {
+          "x": -6,
+          "y": -8,
+          "width": 12,
+          "height": 16
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 97,
+          "minRichness": 0.65,
+          "baseChance": 0.003,
+          "statsDescription": "At least 1000 total contributions AND a longest streak of at least 30 days.",
+          "stats": {
+            "combination": "and",
+            "total": 1000,
+            "longestStreak": 30
+          }
+        }
+      },
+      {
+        "id": "crystalSpire",
+        "type": "crystalSpire",
+        "tier": "legendary",
+        "displayName": "Crystal spire",
+        "category": "fantasy",
+        "description": "A cluster of translucent pointed crystals.",
+        "bounds": {
+          "x": -6,
+          "y": -15,
+          "width": 11,
+          "height": 17
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 97,
+          "minRichness": 0.65,
+          "baseChance": 0.003,
+          "statsDescription": "At least 1000 total contributions AND a longest streak of at least 30 days.",
+          "stats": {
+            "combination": "and",
+            "total": 1000,
+            "longestStreak": 30
+          }
+        }
+      },
+      {
+        "id": "dragonNest",
+        "type": "dragonNest",
+        "tier": "legendary",
+        "displayName": "Dragon nest",
+        "category": "fantasy",
+        "description": "A rocky nest sheltering a curled dragon.",
+        "bounds": {
+          "x": -6,
+          "y": -7,
+          "width": 13,
+          "height": 10
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 97,
+          "minRichness": 0.65,
+          "baseChance": 0.003,
+          "statsDescription": "At least 1000 total contributions AND a longest streak of at least 30 days.",
+          "stats": {
+            "combination": "and",
+            "total": 1000,
+            "longestStreak": 30
+          }
+        }
+      },
+      {
+        "id": "worldTree",
+        "type": "worldTree",
+        "tier": "legendary",
+        "displayName": "World tree",
+        "category": "fantasy",
+        "description": "An immense branching tree dotted with golden lights.",
+        "bounds": {
+          "x": -7,
+          "y": -16,
+          "width": 14,
+          "height": 19
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 97,
+          "minRichness": 0.65,
+          "baseChance": 0.003,
+          "statsDescription": "At least 1000 total contributions AND a longest streak of at least 30 days.",
+          "stats": {
+            "combination": "and",
+            "total": 1000,
+            "longestStreak": 30
+          }
+        }
+      },
+      {
+        "id": "sakuraEternal",
+        "type": "sakuraEternal",
+        "tier": "legendary",
+        "displayName": "Eternal sakura",
+        "category": "fantasy",
+        "description": "A luminous flowering cherry tree with drifting petals.",
+        "bounds": {
+          "x": -7,
+          "y": -15,
+          "width": 14,
+          "height": 18
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 97,
+          "minRichness": 0.65,
+          "baseChance": 0.003,
+          "statsDescription": "At least 1000 total contributions AND a longest streak of at least 30 days.",
+          "stats": {
+            "combination": "and",
+            "total": 1000,
+            "longestStreak": 30
+          }
+        }
+      },
+      {
+        "id": "ancientPortal",
+        "type": "ancientPortal",
+        "tier": "legendary",
+        "displayName": "Ancient portal",
+        "category": "fantasy",
+        "description": "An old stone arch framing a swirling magical opening.",
+        "bounds": {
+          "x": -6,
+          "y": -13,
+          "width": 12,
+          "height": 16
+        },
+        "style": "wonder",
+        "season": "all",
+        "gate": {
+          "minLevel": 97,
+          "minRichness": 0.65,
+          "baseChance": 0.003,
+          "statsDescription": "At least 1000 total contributions AND a longest streak of at least 30 days.",
+          "stats": {
+            "combination": "and",
+            "total": 1000,
+            "longestStreak": 30
+          }
+        }
+      }
+    ]
+  },
+  "gallery": {
+    "familyCounts": {
+      "nature": 116,
+      "building": 37,
+      "decoration": 36,
+      "wonder": 30,
+      "korean": 4
+    },
+    "records": [
+      {
+        "id": "whale",
+        "kind": "asset",
+        "displayName": "Whale",
+        "description": "Whale, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -5,
+          "y": -6,
+          "width": 13,
+          "height": 9
+        }
+      },
+      {
+        "id": "fish",
+        "kind": "asset",
+        "displayName": "Fish",
+        "description": "Fish, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 9,
+          "height": 6
+        }
+      },
+      {
+        "id": "fishSchool",
+        "kind": "asset",
+        "displayName": "Fish School",
+        "description": "Fish School, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "boat",
+        "kind": "asset",
+        "displayName": "Boat",
+        "description": "Boat, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 10,
+          "height": 8
+        }
+      },
+      {
+        "id": "seagull",
+        "kind": "asset",
+        "displayName": "Seagull",
+        "description": "Seagull, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -8,
+          "y": -11,
+          "width": 17,
+          "height": 16
+        }
+      },
+      {
+        "id": "dock",
+        "kind": "asset",
+        "displayName": "Dock",
+        "description": "Dock, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 8,
+          "height": 5
+        }
+      },
+      {
+        "id": "waves",
+        "kind": "asset",
+        "displayName": "Waves",
+        "description": "Waves, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 5
+        }
+      },
+      {
+        "id": "kelp",
+        "kind": "asset",
+        "displayName": "Kelp",
+        "description": "Kelp, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -2,
+          "y": -9,
+          "width": 5,
+          "height": 11
+        }
+      },
+      {
+        "id": "coral",
+        "kind": "asset",
+        "displayName": "Coral",
+        "description": "Coral, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 8
+        }
+      },
+      {
+        "id": "jellyfish",
+        "kind": "asset",
+        "displayName": "Jellyfish",
+        "description": "Jellyfish, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        }
+      },
+      {
+        "id": "turtle",
+        "kind": "asset",
+        "displayName": "Turtle",
+        "description": "Turtle, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -8,
+          "y": -8,
+          "width": 15,
+          "height": 14
+        }
+      },
+      {
+        "id": "buoy",
+        "kind": "asset",
+        "displayName": "Buoy",
+        "description": "Buoy, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 7
+        }
+      },
+      {
+        "id": "sailboat",
+        "kind": "asset",
+        "displayName": "Sailboat",
+        "description": "Sailboat, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 10,
+          "height": 9
+        }
+      },
+      {
+        "id": "lighthouse",
+        "kind": "asset",
+        "displayName": "Lighthouse",
+        "description": "Lighthouse, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -3,
+          "y": -12,
+          "width": 6,
+          "height": 13
+        }
+      },
+      {
+        "id": "crab",
+        "kind": "asset",
+        "displayName": "Crab",
+        "description": "Crab, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        }
+      },
+      {
+        "id": "rock",
+        "kind": "asset",
+        "displayName": "Rock",
+        "description": "Rock, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        }
+      },
+      {
+        "id": "boulder",
+        "kind": "asset",
+        "displayName": "Boulder",
+        "description": "Boulder, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -4,
+          "y": -5,
+          "width": 8,
+          "height": 7
+        }
+      },
+      {
+        "id": "flower",
+        "kind": "asset",
+        "displayName": "Flower",
+        "description": "Flower, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        }
+      },
+      {
+        "id": "bush",
+        "kind": "asset",
+        "displayName": "Bush",
+        "description": "Bush, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -5,
+          "y": -4,
+          "width": 10,
+          "height": 6
+        }
+      },
+      {
+        "id": "driftwood",
+        "kind": "asset",
+        "displayName": "Driftwood",
+        "description": "Driftwood, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 5
+        }
+      },
+      {
+        "id": "sandcastle",
+        "kind": "asset",
+        "displayName": "Sandcastle",
+        "description": "Sandcastle, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 6,
+          "height": 7
+        }
+      },
+      {
+        "id": "tidePools",
+        "kind": "asset",
+        "displayName": "Tide Pools",
+        "description": "Tide Pools, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 8,
+          "height": 4
+        }
+      },
+      {
+        "id": "heron",
+        "kind": "asset",
+        "displayName": "Heron",
+        "description": "Heron, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -3,
+          "y": -8,
+          "width": 6,
+          "height": 9
+        }
+      },
+      {
+        "id": "shellfish",
+        "kind": "asset",
+        "displayName": "Shellfish",
+        "description": "Shellfish, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 7,
+          "height": 4
+        }
+      },
+      {
+        "id": "cattail",
+        "kind": "asset",
+        "displayName": "Cattail",
+        "description": "Cattail, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -2,
+          "y": -8,
+          "width": 4,
+          "height": 9
+        }
+      },
+      {
+        "id": "frog",
+        "kind": "asset",
+        "displayName": "Frog",
+        "description": "Frog, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -2,
+          "y": -3,
+          "width": 4,
+          "height": 5
+        }
+      },
+      {
+        "id": "lily",
+        "kind": "asset",
+        "displayName": "Lily",
+        "description": "Lily, a shore asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "pine",
+        "kind": "asset",
+        "displayName": "Pine",
+        "description": "Pine, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -5,
+          "y": -13,
+          "width": 10,
+          "height": 15
+        }
+      },
+      {
+        "id": "deciduous",
+        "kind": "asset",
+        "displayName": "Deciduous",
+        "description": "Deciduous, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -6,
+          "y": -13,
+          "width": 12,
+          "height": 15
+        }
+      },
+      {
+        "id": "mushroom",
+        "kind": "asset",
+        "displayName": "Mushroom",
+        "description": "Mushroom, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        }
+      },
+      {
+        "id": "stump",
+        "kind": "asset",
+        "displayName": "Stump",
+        "description": "Stump, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "deer",
+        "kind": "asset",
+        "displayName": "Deer",
+        "description": "Deer, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 9,
+          "height": 9
+        }
+      },
+      {
+        "id": "rabbit",
+        "kind": "asset",
+        "displayName": "Rabbit",
+        "description": "Rabbit, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 7,
+          "height": 6
+        }
+      },
+      {
+        "id": "fox",
+        "kind": "asset",
+        "displayName": "Fox",
+        "description": "Fox, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -4,
+          "y": -5,
+          "width": 9,
+          "height": 7
+        }
+      },
+      {
+        "id": "butterfly",
+        "kind": "asset",
+        "displayName": "Butterfly",
+        "description": "Butterfly, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -7,
+          "y": -10,
+          "width": 14,
+          "height": 13
+        }
+      },
+      {
+        "id": "beehive",
+        "kind": "asset",
+        "displayName": "Beehive",
+        "description": "Beehive, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -8,
+          "width": 6,
+          "height": 8
+        }
+      },
+      {
+        "id": "wildflowerPatch",
+        "kind": "asset",
+        "displayName": "Wildflower Patch",
+        "description": "Wildflower Patch, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "tallGrass",
+        "kind": "asset",
+        "displayName": "Tall Grass",
+        "description": "Tall Grass, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        }
+      },
+      {
+        "id": "birch",
+        "kind": "asset",
+        "displayName": "Birch",
+        "description": "Birch, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -5,
+          "y": -12,
+          "width": 10,
+          "height": 14
+        }
+      },
+      {
+        "id": "haybale",
+        "kind": "asset",
+        "displayName": "Haybale",
+        "description": "Haybale, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "willow",
+        "kind": "asset",
+        "displayName": "Willow",
+        "description": "Willow, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -6,
+          "y": -9,
+          "width": 12,
+          "height": 11
+        }
+      },
+      {
+        "id": "palm",
+        "kind": "asset",
+        "displayName": "Palm",
+        "description": "Palm, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -6,
+          "y": -11,
+          "width": 12,
+          "height": 13
+        }
+      },
+      {
+        "id": "bird",
+        "kind": "asset",
+        "displayName": "Bird",
+        "description": "Bird, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -7,
+          "y": -12,
+          "width": 16,
+          "height": 15
+        }
+      },
+      {
+        "id": "owl",
+        "kind": "asset",
+        "displayName": "Owl",
+        "description": "Owl, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        }
+      },
+      {
+        "id": "squirrel",
+        "kind": "asset",
+        "displayName": "Squirrel",
+        "description": "Squirrel, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -2,
+          "y": -4,
+          "width": 5,
+          "height": 5
+        }
+      },
+      {
+        "id": "moss",
+        "kind": "asset",
+        "displayName": "Moss",
+        "description": "Moss, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 8,
+          "height": 4
+        }
+      },
+      {
+        "id": "fern",
+        "kind": "asset",
+        "displayName": "Fern",
+        "description": "Fern, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -5,
+          "y": -5,
+          "width": 10,
+          "height": 7
+        }
+      },
+      {
+        "id": "deadTree",
+        "kind": "asset",
+        "displayName": "Dead Tree",
+        "description": "Dead Tree, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 7,
+          "height": 9
+        }
+      },
+      {
+        "id": "log",
+        "kind": "asset",
+        "displayName": "Log",
+        "description": "Log, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -5,
+          "y": -2,
+          "width": 10,
+          "height": 3
+        }
+      },
+      {
+        "id": "berryBush",
+        "kind": "asset",
+        "displayName": "Berry Bush",
+        "description": "Berry Bush, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 5
+        }
+      },
+      {
+        "id": "spider",
+        "kind": "asset",
+        "displayName": "Spider",
+        "description": "Spider, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 7
+        }
+      },
+      {
+        "id": "wheat",
+        "kind": "asset",
+        "displayName": "Wheat",
+        "description": "Wheat, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 8
+        }
+      },
+      {
+        "id": "fence",
+        "kind": "asset",
+        "displayName": "Fence",
+        "description": "Fence, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -5,
+          "y": -5,
+          "width": 10,
+          "height": 6
+        }
+      },
+      {
+        "id": "scarecrow",
+        "kind": "asset",
+        "displayName": "Scarecrow",
+        "description": "Scarecrow, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -10,
+          "width": 9,
+          "height": 11
+        }
+      },
+      {
+        "id": "barn",
+        "kind": "asset",
+        "displayName": "Barn",
+        "description": "Barn, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -6,
+          "y": -9,
+          "width": 12,
+          "height": 12
+        }
+      },
+      {
+        "id": "sheep",
+        "kind": "asset",
+        "displayName": "Sheep",
+        "description": "Sheep, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -5,
+          "width": 8,
+          "height": 7
+        }
+      },
+      {
+        "id": "cow",
+        "kind": "asset",
+        "displayName": "Cow",
+        "description": "Cow, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -5,
+          "y": -6,
+          "width": 10,
+          "height": 8
+        }
+      },
+      {
+        "id": "chicken",
+        "kind": "asset",
+        "displayName": "Chicken",
+        "description": "Chicken, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 8,
+          "height": 7
+        }
+      },
+      {
+        "id": "horse",
+        "kind": "asset",
+        "displayName": "Horse",
+        "description": "Horse, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -9,
+          "width": 10,
+          "height": 11
+        }
+      },
+      {
+        "id": "donkey",
+        "kind": "asset",
+        "displayName": "Donkey",
+        "description": "Donkey, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 9
+        }
+      },
+      {
+        "id": "goat",
+        "kind": "asset",
+        "displayName": "Goat",
+        "description": "Goat, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 8
+        }
+      },
+      {
+        "id": "ricePaddy",
+        "kind": "asset",
+        "displayName": "Rice Paddy",
+        "description": "Rice Paddy, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -6,
+          "y": -5,
+          "width": 12,
+          "height": 8
+        }
+      },
+      {
+        "id": "silo",
+        "kind": "asset",
+        "displayName": "Silo",
+        "description": "Silo, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -10,
+          "width": 6,
+          "height": 11
+        }
+      },
+      {
+        "id": "pigpen",
+        "kind": "asset",
+        "displayName": "Pigpen",
+        "description": "Pigpen, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 8,
+          "height": 4
+        }
+      },
+      {
+        "id": "trough",
+        "kind": "asset",
+        "displayName": "Trough",
+        "description": "Trough, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        }
+      },
+      {
+        "id": "haystack",
+        "kind": "asset",
+        "displayName": "Haystack",
+        "description": "Haystack, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 6,
+          "height": 7
+        }
+      },
+      {
+        "id": "orchard",
+        "kind": "asset",
+        "displayName": "Orchard",
+        "description": "Orchard, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -9,
+          "width": 8,
+          "height": 10
+        }
+      },
+      {
+        "id": "appleTree",
+        "kind": "asset",
+        "displayName": "Apple Tree",
+        "description": "Apple Tree, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 11
+        }
+      },
+      {
+        "id": "oliveTree",
+        "kind": "asset",
+        "displayName": "Olive Tree",
+        "description": "Olive Tree, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 11
+        }
+      },
+      {
+        "id": "lemonTree",
+        "kind": "asset",
+        "displayName": "Lemon Tree",
+        "description": "Lemon Tree, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 10
+        }
+      },
+      {
+        "id": "orangeTree",
+        "kind": "asset",
+        "displayName": "Orange Tree",
+        "description": "Orange Tree, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 11
+        }
+      },
+      {
+        "id": "pearTree",
+        "kind": "asset",
+        "displayName": "Pear Tree",
+        "description": "Pear Tree, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 11
+        }
+      },
+      {
+        "id": "peachTree",
+        "kind": "asset",
+        "displayName": "Peach Tree",
+        "description": "Peach Tree, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 11
+        }
+      },
+      {
+        "id": "beeFarm",
+        "kind": "asset",
+        "displayName": "Bee Farm",
+        "description": "Bee Farm, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        }
+      },
+      {
+        "id": "pumpkin",
+        "kind": "asset",
+        "displayName": "Pumpkin",
+        "description": "Pumpkin, a farm asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 6
+        }
+      },
+      {
+        "id": "tent",
+        "kind": "asset",
+        "displayName": "Tent",
+        "description": "Tent, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 10,
+          "height": 9
+        }
+      },
+      {
+        "id": "hut",
+        "kind": "asset",
+        "displayName": "Hut",
+        "description": "Hut, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 10,
+          "height": 8
+        }
+      },
+      {
+        "id": "house",
+        "kind": "asset",
+        "displayName": "House",
+        "description": "House, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 10,
+          "height": 11
+        }
+      },
+      {
+        "id": "houseB",
+        "kind": "asset",
+        "displayName": "Gabled house",
+        "description": "Gabled house, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 10,
+          "height": 11
+        }
+      },
+      {
+        "id": "church",
+        "kind": "asset",
+        "displayName": "Church",
+        "description": "Church, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -4,
+          "y": -13,
+          "width": 8,
+          "height": 15
+        }
+      },
+      {
+        "id": "windmill",
+        "kind": "asset",
+        "displayName": "Windmill",
+        "description": "Windmill, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -5,
+          "y": -12,
+          "width": 10,
+          "height": 13
+        }
+      },
+      {
+        "id": "well",
+        "kind": "asset",
+        "displayName": "Well",
+        "description": "Well, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 9
+        }
+      },
+      {
+        "id": "tavern",
+        "kind": "asset",
+        "displayName": "Tavern",
+        "description": "Tavern, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 10,
+          "height": 10
+        }
+      },
+      {
+        "id": "bakery",
+        "kind": "asset",
+        "displayName": "Bakery",
+        "description": "Bakery, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -4,
+          "y": -10,
+          "width": 8,
+          "height": 11
+        }
+      },
+      {
+        "id": "stable",
+        "kind": "asset",
+        "displayName": "Stable",
+        "description": "Stable, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -5,
+          "y": -6,
+          "width": 10,
+          "height": 7
+        }
+      },
+      {
+        "id": "garden",
+        "kind": "asset",
+        "displayName": "Garden",
+        "description": "Garden, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 4
+        }
+      },
+      {
+        "id": "laundry",
+        "kind": "asset",
+        "displayName": "Laundry",
+        "description": "Laundry, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -5,
+          "y": -5,
+          "width": 10,
+          "height": 6
+        }
+      },
+      {
+        "id": "doghouse",
+        "kind": "asset",
+        "displayName": "Doghouse",
+        "description": "Doghouse, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 8,
+          "height": 7
+        }
+      },
+      {
+        "id": "shrine",
+        "kind": "asset",
+        "displayName": "Shrine",
+        "description": "Shrine, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 6,
+          "height": 7
+        }
+      },
+      {
+        "id": "wagon",
+        "kind": "asset",
+        "displayName": "Wagon",
+        "description": "Wagon, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -5,
+          "y": -6,
+          "width": 9,
+          "height": 8
+        }
+      },
+      {
+        "id": "market",
+        "kind": "asset",
+        "displayName": "Market",
+        "description": "Market, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 13,
+          "height": 9
+        }
+      },
+      {
+        "id": "inn",
+        "kind": "asset",
+        "displayName": "Inn",
+        "description": "Inn, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 12,
+          "height": 11
+        }
+      },
+      {
+        "id": "blacksmith",
+        "kind": "asset",
+        "displayName": "Blacksmith",
+        "description": "Blacksmith, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 9
+        }
+      },
+      {
+        "id": "castle",
+        "kind": "asset",
+        "displayName": "Castle",
+        "description": "Castle, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -4,
+          "y": -13,
+          "width": 8,
+          "height": 14
+        }
+      },
+      {
+        "id": "tower",
+        "kind": "asset",
+        "displayName": "Tower",
+        "description": "Tower, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -3,
+          "y": -12,
+          "width": 6,
+          "height": 13
+        }
+      },
+      {
+        "id": "bridge",
+        "kind": "asset",
+        "displayName": "Bridge",
+        "description": "Bridge, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -6,
+          "y": -4,
+          "width": 12,
+          "height": 6
+        }
+      },
+      {
+        "id": "cathedral",
+        "kind": "asset",
+        "displayName": "Cathedral",
+        "description": "Cathedral, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -5,
+          "y": -13,
+          "width": 10,
+          "height": 16
+        }
+      },
+      {
+        "id": "library",
+        "kind": "asset",
+        "displayName": "Library",
+        "description": "Library, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 8
+        }
+      },
+      {
+        "id": "clocktower",
+        "kind": "asset",
+        "displayName": "Clocktower",
+        "description": "Clocktower, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -3,
+          "y": -14,
+          "width": 6,
+          "height": 15
+        }
+      },
+      {
+        "id": "statue",
+        "kind": "asset",
+        "displayName": "Statue",
+        "description": "Statue, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -2,
+          "y": -7,
+          "width": 4,
+          "height": 8
+        }
+      },
+      {
+        "id": "park",
+        "kind": "asset",
+        "displayName": "Park",
+        "description": "Park, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -5,
+          "y": -8,
+          "width": 10,
+          "height": 9
+        }
+      },
+      {
+        "id": "warehouse",
+        "kind": "asset",
+        "displayName": "Warehouse",
+        "description": "Warehouse, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 10,
+          "height": 8
+        }
+      },
+      {
+        "id": "gatehouse",
+        "kind": "asset",
+        "displayName": "Gatehouse",
+        "description": "Gatehouse, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 9
+        }
+      },
+      {
+        "id": "manor",
+        "kind": "asset",
+        "displayName": "Manor",
+        "description": "Manor, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -5,
+          "y": -9,
+          "width": 10,
+          "height": 12
+        }
+      },
+      {
+        "id": "reeds",
+        "kind": "asset",
+        "displayName": "Reeds",
+        "description": "Reeds, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -3,
+          "y": -7,
+          "width": 6,
+          "height": 8
+        }
+      },
+      {
+        "id": "fountain",
+        "kind": "asset",
+        "displayName": "Fountain",
+        "description": "Fountain, a town asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 8
+        }
+      },
+      {
+        "id": "canal",
+        "kind": "asset",
+        "displayName": "Canal",
+        "description": "Canal, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 8,
+          "height": 3
+        }
+      },
+      {
+        "id": "watermill",
+        "kind": "asset",
+        "displayName": "Watermill",
+        "description": "Watermill, a village asset available throughout the year.",
+        "family": "building",
+        "style": "classic",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 11,
+          "height": 9
+        }
+      },
+      {
+        "id": "gardenTree",
+        "kind": "asset",
+        "displayName": "Garden Tree",
+        "description": "Garden Tree, a woodland asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -8,
+          "width": 6,
+          "height": 9
+        }
+      },
+      {
+        "id": "pondLily",
+        "kind": "asset",
+        "displayName": "Pond Lily",
+        "description": "Pond Lily, a water asset available throughout the year.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        }
+      },
+      {
+        "id": "cart",
+        "kind": "asset",
+        "displayName": "Cart",
+        "description": "Cart, a decoration asset available throughout the year.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 9,
+          "height": 5
+        }
+      },
+      {
+        "id": "barrel",
+        "kind": "asset",
+        "displayName": "Barrel",
+        "description": "Barrel, a decoration asset available throughout the year.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 7
+        }
+      },
+      {
+        "id": "torch",
+        "kind": "asset",
+        "displayName": "Torch",
+        "description": "Torch, a decoration asset available throughout the year.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -2,
+          "y": -7,
+          "width": 5,
+          "height": 9
+        }
+      },
+      {
+        "id": "flag",
+        "kind": "asset",
+        "displayName": "Flag",
+        "description": "Flag, a decoration asset available throughout the year.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -2,
+          "y": -10,
+          "width": 7,
+          "height": 11
+        }
+      },
+      {
+        "id": "cobblePath",
+        "kind": "asset",
+        "displayName": "Cobble Path",
+        "description": "Cobble Path, a decoration asset available throughout the year.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 9,
+          "height": 5
+        }
+      },
+      {
+        "id": "smoke",
+        "kind": "asset",
+        "displayName": "Smoke",
+        "description": "Smoke, a decoration asset available throughout the year.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -5,
+          "y": -11,
+          "width": 11,
+          "height": 11
+        }
+      },
+      {
+        "id": "signpost",
+        "kind": "asset",
+        "displayName": "Signpost",
+        "description": "Signpost, a decoration asset available throughout the year.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 7
+        }
+      },
+      {
+        "id": "lantern",
+        "kind": "asset",
+        "displayName": "Lantern",
+        "description": "Lantern, a decoration asset available throughout the year.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -2,
+          "y": -7,
+          "width": 4,
+          "height": 8
+        }
+      },
+      {
+        "id": "woodpile",
+        "kind": "asset",
+        "displayName": "Woodpile",
+        "description": "Woodpile, a decoration asset available throughout the year.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 5
+        }
+      },
+      {
+        "id": "puddle",
+        "kind": "asset",
+        "displayName": "Puddle",
+        "description": "Puddle, a decoration asset available throughout the year.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        }
+      },
+      {
+        "id": "campfire",
+        "kind": "asset",
+        "displayName": "Campfire",
+        "description": "Campfire, a decoration asset available throughout the year.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 6
+        }
+      },
+      {
+        "id": "snowPine",
+        "kind": "asset",
+        "displayName": "Snow Pine",
+        "description": "Snow Pine, a woodland asset for winter.",
+        "family": "nature",
+        "style": "classic",
+        "season": "winter",
+        "category": "woodland",
+        "bounds": {
+          "x": -5,
+          "y": -10,
+          "width": 10,
+          "height": 13
+        }
+      },
+      {
+        "id": "snowDeciduous",
+        "kind": "asset",
+        "displayName": "Snow Deciduous",
+        "description": "Snow Deciduous, a woodland asset for winter.",
+        "family": "nature",
+        "style": "classic",
+        "season": "winter",
+        "category": "woodland",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 10,
+          "height": 11
+        }
+      },
+      {
+        "id": "snowman",
+        "kind": "asset",
+        "displayName": "Snowman",
+        "description": "Snowman, a decoration asset for winter.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "winter",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 9,
+          "height": 12
+        }
+      },
+      {
+        "id": "snowdrift",
+        "kind": "asset",
+        "displayName": "Snowdrift",
+        "description": "Snowdrift, a decoration asset for winter.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "winter",
+        "category": "decoration",
+        "bounds": {
+          "x": -5,
+          "y": -3,
+          "width": 10,
+          "height": 6
+        }
+      },
+      {
+        "id": "igloo",
+        "kind": "asset",
+        "displayName": "Igloo",
+        "description": "Igloo, a village asset for winter.",
+        "family": "building",
+        "style": "classic",
+        "season": "winter",
+        "category": "village",
+        "bounds": {
+          "x": -5,
+          "y": -5,
+          "width": 10,
+          "height": 7
+        }
+      },
+      {
+        "id": "frozenPond",
+        "kind": "asset",
+        "displayName": "Frozen Pond",
+        "description": "Frozen Pond, a water asset for winter.",
+        "family": "nature",
+        "style": "classic",
+        "season": "winter",
+        "category": "water",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 8,
+          "height": 6
+        }
+      },
+      {
+        "id": "icicle",
+        "kind": "asset",
+        "displayName": "Icicle",
+        "description": "Icicle, a decoration asset for winter.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "winter",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 6
+        }
+      },
+      {
+        "id": "sled",
+        "kind": "asset",
+        "displayName": "Sled",
+        "description": "Sled, a decoration asset for winter.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "winter",
+        "category": "decoration",
+        "bounds": {
+          "x": -5,
+          "y": -4,
+          "width": 10,
+          "height": 6
+        }
+      },
+      {
+        "id": "snowCoveredRock",
+        "kind": "asset",
+        "displayName": "Snow Covered Rock",
+        "description": "Snow Covered Rock, a shore asset for winter.",
+        "family": "nature",
+        "style": "classic",
+        "season": "winter",
+        "category": "shore",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 8,
+          "height": 6
+        }
+      },
+      {
+        "id": "bareBush",
+        "kind": "asset",
+        "displayName": "Bare Bush",
+        "description": "Bare Bush, a woodland asset for winter.",
+        "family": "nature",
+        "style": "classic",
+        "season": "winter",
+        "category": "woodland",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        }
+      },
+      {
+        "id": "winterBird",
+        "kind": "asset",
+        "displayName": "Winter Bird",
+        "description": "Winter Bird, a woodland asset for winter.",
+        "family": "nature",
+        "style": "classic",
+        "season": "winter",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "firewood",
+        "kind": "asset",
+        "displayName": "Firewood",
+        "description": "Firewood, a decoration asset for winter.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "winter",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        }
+      },
+      {
+        "id": "houseWinter",
+        "kind": "asset",
+        "displayName": "Snowy house",
+        "description": "Snowy house, a village asset for winter.",
+        "family": "building",
+        "style": "classic",
+        "season": "winter",
+        "category": "village",
+        "bounds": {
+          "x": -5,
+          "y": -9,
+          "width": 10,
+          "height": 12
+        }
+      },
+      {
+        "id": "houseBWinter",
+        "kind": "asset",
+        "displayName": "Snowy gabled house",
+        "description": "Snowy gabled house, a village asset for winter.",
+        "family": "building",
+        "style": "classic",
+        "season": "winter",
+        "category": "village",
+        "bounds": {
+          "x": -5,
+          "y": -9,
+          "width": 10,
+          "height": 12
+        }
+      },
+      {
+        "id": "barnWinter",
+        "kind": "asset",
+        "displayName": "Snowy barn",
+        "description": "Snowy barn, a farm asset for winter.",
+        "family": "nature",
+        "style": "classic",
+        "season": "winter",
+        "category": "farm",
+        "bounds": {
+          "x": -6,
+          "y": -9,
+          "width": 12,
+          "height": 12
+        }
+      },
+      {
+        "id": "churchWinter",
+        "kind": "asset",
+        "displayName": "Snowy church",
+        "description": "Snowy church, a village asset for winter.",
+        "family": "building",
+        "style": "classic",
+        "season": "winter",
+        "category": "village",
+        "bounds": {
+          "x": -4,
+          "y": -13,
+          "width": 8,
+          "height": 15
+        }
+      },
+      {
+        "id": "christmasTree",
+        "kind": "asset",
+        "displayName": "Christmas Tree",
+        "description": "Christmas Tree, a decoration asset for winter.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "winter",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -10,
+          "width": 8,
+          "height": 13
+        }
+      },
+      {
+        "id": "winterLantern",
+        "kind": "asset",
+        "displayName": "Winter Lantern",
+        "description": "Winter Lantern, a decoration asset for winter.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "winter",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 10
+        }
+      },
+      {
+        "id": "frozenFountain",
+        "kind": "asset",
+        "displayName": "Frozen Fountain",
+        "description": "Frozen Fountain, a town asset for winter.",
+        "family": "building",
+        "style": "classic",
+        "season": "winter",
+        "category": "town",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 8
+        }
+      },
+      {
+        "id": "cherryBlossom",
+        "kind": "asset",
+        "displayName": "Cherry Blossom",
+        "description": "Cherry Blossom, a woodland asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "woodland",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 10,
+          "height": 10
+        }
+      },
+      {
+        "id": "cherryBlossomSmall",
+        "kind": "asset",
+        "displayName": "Cherry Blossom Small",
+        "description": "Cherry Blossom Small, a woodland asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 8
+        }
+      },
+      {
+        "id": "cherryPetals",
+        "kind": "asset",
+        "displayName": "Cherry Petals",
+        "description": "Cherry Petals, a decoration asset for spring.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "spring",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "tulip",
+        "kind": "asset",
+        "displayName": "Tulip",
+        "description": "Tulip, a decoration asset for spring.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "spring",
+        "category": "decoration",
+        "bounds": {
+          "x": -2,
+          "y": -4,
+          "width": 5,
+          "height": 6
+        }
+      },
+      {
+        "id": "tulipField",
+        "kind": "asset",
+        "displayName": "Tulip Field",
+        "description": "Tulip Field, a decoration asset for spring.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "spring",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        }
+      },
+      {
+        "id": "sprout",
+        "kind": "asset",
+        "displayName": "Sprout",
+        "description": "Sprout, a farm asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "farm",
+        "bounds": {
+          "x": -2,
+          "y": -3,
+          "width": 4,
+          "height": 5
+        }
+      },
+      {
+        "id": "nest",
+        "kind": "asset",
+        "displayName": "Nest",
+        "description": "Nest, a woodland asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "lamb",
+        "kind": "asset",
+        "displayName": "Lamb",
+        "description": "Lamb, a farm asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 9,
+          "height": 7
+        }
+      },
+      {
+        "id": "crocus",
+        "kind": "asset",
+        "displayName": "Crocus",
+        "description": "Crocus, a decoration asset for spring.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "spring",
+        "category": "decoration",
+        "bounds": {
+          "x": -2,
+          "y": -3,
+          "width": 4,
+          "height": 5
+        }
+      },
+      {
+        "id": "rainPuddle",
+        "kind": "asset",
+        "displayName": "Rain Puddle",
+        "description": "Rain Puddle, a decoration asset for spring.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "spring",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        }
+      },
+      {
+        "id": "birdhouse",
+        "kind": "asset",
+        "displayName": "Birdhouse",
+        "description": "Birdhouse, a woodland asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 6,
+          "height": 8
+        }
+      },
+      {
+        "id": "gardenBed",
+        "kind": "asset",
+        "displayName": "Garden Bed",
+        "description": "Garden Bed, a farm asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 8,
+          "height": 5
+        }
+      },
+      {
+        "id": "cherryBlossomFull",
+        "kind": "asset",
+        "displayName": "Cherry Blossom Full",
+        "description": "Cherry Blossom Full, a woodland asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "woodland",
+        "bounds": {
+          "x": -5,
+          "y": -9,
+          "width": 10,
+          "height": 13
+        }
+      },
+      {
+        "id": "cherryBlossomBranch",
+        "kind": "asset",
+        "displayName": "Cherry Blossom Branch",
+        "description": "Cherry Blossom Branch, a woodland asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "woodland",
+        "bounds": {
+          "x": -5,
+          "y": -5,
+          "width": 8,
+          "height": 7
+        }
+      },
+      {
+        "id": "peachBlossom",
+        "kind": "asset",
+        "displayName": "Peach Blossom",
+        "description": "Peach Blossom, a woodland asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "woodland",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 12
+        }
+      },
+      {
+        "id": "flowerBed",
+        "kind": "asset",
+        "displayName": "Flower Bed",
+        "description": "Flower Bed, a decoration asset for spring.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "spring",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "wateringCan",
+        "kind": "asset",
+        "displayName": "Watering Can",
+        "description": "Watering Can, a decoration asset for spring.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "spring",
+        "category": "decoration",
+        "bounds": {
+          "x": -2,
+          "y": -4,
+          "width": 6,
+          "height": 6
+        }
+      },
+      {
+        "id": "seedling",
+        "kind": "asset",
+        "displayName": "Seedling",
+        "description": "Seedling, a farm asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "farm",
+        "bounds": {
+          "x": -2,
+          "y": -3,
+          "width": 4,
+          "height": 5
+        }
+      },
+      {
+        "id": "robinBird",
+        "kind": "asset",
+        "displayName": "Robin Bird",
+        "description": "Robin Bird, a woodland asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "woodland",
+        "bounds": {
+          "x": -2,
+          "y": -2,
+          "width": 5,
+          "height": 4
+        }
+      },
+      {
+        "id": "butterflyGarden",
+        "kind": "asset",
+        "displayName": "Butterfly Garden",
+        "description": "Butterfly Garden, a woodland asset for spring.",
+        "family": "nature",
+        "style": "classic",
+        "season": "spring",
+        "category": "woodland",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 4
+        }
+      },
+      {
+        "id": "umbrella",
+        "kind": "asset",
+        "displayName": "Umbrella",
+        "description": "Umbrella, a decoration asset for spring.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "spring",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 7
+        }
+      },
+      {
+        "id": "parasol",
+        "kind": "asset",
+        "displayName": "Parasol",
+        "description": "Parasol, a shore asset for summer.",
+        "family": "nature",
+        "style": "classic",
+        "season": "summer",
+        "category": "shore",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 8,
+          "height": 8
+        }
+      },
+      {
+        "id": "beachTowel",
+        "kind": "asset",
+        "displayName": "Beach Towel",
+        "description": "Beach Towel, a shore asset for summer.",
+        "family": "nature",
+        "style": "classic",
+        "season": "summer",
+        "category": "shore",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 8,
+          "height": 5
+        }
+      },
+      {
+        "id": "sandcastleSummer",
+        "kind": "asset",
+        "displayName": "Summer sandcastle",
+        "description": "Summer sandcastle, a shore asset for summer.",
+        "family": "nature",
+        "style": "classic",
+        "season": "summer",
+        "category": "shore",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 7
+        }
+      },
+      {
+        "id": "surfboard",
+        "kind": "asset",
+        "displayName": "Surfboard",
+        "description": "Surfboard, a shore asset for summer.",
+        "family": "nature",
+        "style": "classic",
+        "season": "summer",
+        "category": "shore",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 6,
+          "height": 8
+        }
+      },
+      {
+        "id": "iceCreamCart",
+        "kind": "asset",
+        "displayName": "Ice Cream Cart",
+        "description": "Ice Cream Cart, a decoration asset for summer.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "summer",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 7,
+          "height": 8
+        }
+      },
+      {
+        "id": "hammock",
+        "kind": "asset",
+        "displayName": "Hammock",
+        "description": "Hammock, a decoration asset for summer.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "summer",
+        "category": "decoration",
+        "bounds": {
+          "x": -5,
+          "y": -4,
+          "width": 10,
+          "height": 5
+        }
+      },
+      {
+        "id": "sunflower",
+        "kind": "asset",
+        "displayName": "Sunflower",
+        "description": "Sunflower, a farm asset for summer.",
+        "family": "nature",
+        "style": "classic",
+        "season": "summer",
+        "category": "farm",
+        "bounds": {
+          "x": -5,
+          "y": -7,
+          "width": 10,
+          "height": 9
+        }
+      },
+      {
+        "id": "watermelon",
+        "kind": "asset",
+        "displayName": "Watermelon",
+        "description": "Watermelon, a farm asset for summer.",
+        "family": "nature",
+        "style": "classic",
+        "season": "summer",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        }
+      },
+      {
+        "id": "sprinkler",
+        "kind": "asset",
+        "displayName": "Sprinkler",
+        "description": "Sprinkler, a decoration asset for summer.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "summer",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 6
+        }
+      },
+      {
+        "id": "lemonade",
+        "kind": "asset",
+        "displayName": "Lemonade",
+        "description": "Lemonade, a decoration asset for summer.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "summer",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -3,
+          "width": 8,
+          "height": 5
+        }
+      },
+      {
+        "id": "fireflies",
+        "kind": "asset",
+        "displayName": "Fireflies",
+        "description": "Fireflies, a decoration asset for summer.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "summer",
+        "category": "decoration",
+        "bounds": {
+          "x": -6,
+          "y": -5,
+          "width": 11,
+          "height": 6
+        }
+      },
+      {
+        "id": "swimmingPool",
+        "kind": "asset",
+        "displayName": "Swimming Pool",
+        "description": "Swimming Pool, a town asset for summer.",
+        "family": "building",
+        "style": "classic",
+        "season": "summer",
+        "category": "town",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 7
+        }
+      },
+      {
+        "id": "autumnMaple",
+        "kind": "asset",
+        "displayName": "Autumn Maple",
+        "description": "Autumn Maple, a woodland asset for autumn.",
+        "family": "nature",
+        "style": "classic",
+        "season": "autumn",
+        "category": "woodland",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 12
+        }
+      },
+      {
+        "id": "autumnOak",
+        "kind": "asset",
+        "displayName": "Autumn Oak",
+        "description": "Autumn Oak, a woodland asset for autumn.",
+        "family": "nature",
+        "style": "classic",
+        "season": "autumn",
+        "category": "woodland",
+        "bounds": {
+          "x": -4,
+          "y": -8,
+          "width": 8,
+          "height": 12
+        }
+      },
+      {
+        "id": "autumnBirch",
+        "kind": "asset",
+        "displayName": "Autumn Birch",
+        "description": "Autumn Birch, a woodland asset for autumn.",
+        "family": "nature",
+        "style": "classic",
+        "season": "autumn",
+        "category": "woodland",
+        "bounds": {
+          "x": -4,
+          "y": -6,
+          "width": 7,
+          "height": 10
+        }
+      },
+      {
+        "id": "autumnGinkgo",
+        "kind": "asset",
+        "displayName": "Autumn Ginkgo",
+        "description": "Autumn Ginkgo, a woodland asset for autumn.",
+        "family": "nature",
+        "style": "classic",
+        "season": "autumn",
+        "category": "woodland",
+        "bounds": {
+          "x": -4,
+          "y": -7,
+          "width": 8,
+          "height": 10
+        }
+      },
+      {
+        "id": "fallenLeaves",
+        "kind": "asset",
+        "displayName": "Fallen Leaves",
+        "description": "Fallen Leaves, a decoration asset for autumn.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "autumn",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -2,
+          "width": 6,
+          "height": 4
+        }
+      },
+      {
+        "id": "leafSwirl",
+        "kind": "asset",
+        "displayName": "Leaf Swirl",
+        "description": "Leaf Swirl, a decoration asset for autumn.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "autumn",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -4,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "acorn",
+        "kind": "asset",
+        "displayName": "Acorn",
+        "description": "Acorn, a woodland asset for autumn.",
+        "family": "nature",
+        "style": "classic",
+        "season": "autumn",
+        "category": "woodland",
+        "bounds": {
+          "x": -2,
+          "y": -2,
+          "width": 4,
+          "height": 4
+        }
+      },
+      {
+        "id": "cornStalk",
+        "kind": "asset",
+        "displayName": "Corn stalks",
+        "description": "Corn stalks, a farm asset for autumn.",
+        "family": "nature",
+        "style": "classic",
+        "season": "autumn",
+        "category": "farm",
+        "bounds": {
+          "x": -4,
+          "y": -4,
+          "width": 8,
+          "height": 6
+        }
+      },
+      {
+        "id": "scarecrowAutumn",
+        "kind": "asset",
+        "displayName": "Scarecrow Autumn",
+        "description": "Scarecrow Autumn, a farm asset for autumn.",
+        "family": "nature",
+        "style": "classic",
+        "season": "autumn",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -6,
+          "width": 7,
+          "height": 8
+        }
+      },
+      {
+        "id": "harvestBasket",
+        "kind": "asset",
+        "displayName": "Harvest Basket",
+        "description": "Harvest Basket, a farm asset for autumn.",
+        "family": "nature",
+        "style": "classic",
+        "season": "autumn",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 4
+        }
+      },
+      {
+        "id": "hotDrink",
+        "kind": "asset",
+        "displayName": "Hot Drink",
+        "description": "Hot Drink, a decoration asset for autumn.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "autumn",
+        "category": "decoration",
+        "bounds": {
+          "x": -2,
+          "y": -4,
+          "width": 5,
+          "height": 6
+        }
+      },
+      {
+        "id": "autumnWreath",
+        "kind": "asset",
+        "displayName": "Autumn Wreath",
+        "description": "Autumn Wreath, a decoration asset for autumn.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "autumn",
+        "category": "decoration",
+        "bounds": {
+          "x": -3,
+          "y": -5,
+          "width": 6,
+          "height": 7
+        }
+      },
+      {
+        "id": "pumpkinPatch",
+        "kind": "asset",
+        "displayName": "Pumpkin Patch",
+        "description": "Pumpkin Patch, a farm asset for autumn.",
+        "family": "nature",
+        "style": "classic",
+        "season": "autumn",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "hayMaze",
+        "kind": "asset",
+        "displayName": "Hay Maze",
+        "description": "Hay Maze, a farm asset for autumn.",
+        "family": "nature",
+        "style": "classic",
+        "season": "autumn",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "appleBasket",
+        "kind": "asset",
+        "displayName": "Apple Basket",
+        "description": "Apple Basket, a farm asset for autumn.",
+        "family": "nature",
+        "style": "classic",
+        "season": "autumn",
+        "category": "farm",
+        "bounds": {
+          "x": -3,
+          "y": -3,
+          "width": 6,
+          "height": 5
+        }
+      },
+      {
+        "id": "rake",
+        "kind": "asset",
+        "displayName": "Rake",
+        "description": "Rake, a decoration asset for autumn.",
+        "family": "decoration",
+        "style": "classic",
+        "season": "autumn",
+        "category": "decoration",
+        "bounds": {
+          "x": -4,
+          "y": -5,
+          "width": 8,
+          "height": 8
+        }
+      },
+      {
+        "id": "hanok",
+        "kind": "asset",
+        "displayName": "Hanok house",
+        "description": "A timber-frame home with curved giwa roof tiles, cream walls and wooden lattice doors.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -10,
+          "y": -15,
+          "width": 20,
+          "height": 19
+        }
+      },
+      {
+        "id": "pavilion",
+        "kind": "asset",
+        "displayName": "Korean pavilion",
+        "description": "An open-sided resting pavilion with raised stone footing and a gently swept tiled roof.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -9,
+          "y": -15,
+          "width": 18,
+          "height": 19
+        }
+      },
+      {
+        "id": "stoneWall",
+        "kind": "asset",
+        "displayName": "Korean stone wall",
+        "description": "An irregular stacked stone boundary capped with dark roof tiles.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -9,
+          "y": -8,
+          "width": 18,
+          "height": 15
+        }
+      },
+      {
+        "id": "onggi",
+        "kind": "asset",
+        "displayName": "Onggi jars",
+        "description": "Three glazed earthenware storage jars with broad shoulders and flat lids on a stone terrace.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -7,
+          "y": -8,
+          "width": 14,
+          "height": 12
+        }
+      },
+      {
+        "id": "mountFuji",
+        "kind": "wonder",
+        "displayName": "Mount Fuji",
+        "description": "A snow-capped volcanic cone above the village.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -8,
+          "y": -14,
+          "width": 16,
+          "height": 17
+        }
+      },
+      {
+        "id": "colosseum",
+        "kind": "wonder",
+        "displayName": "Colosseum",
+        "description": "An oval amphitheatre with two tiers of stone arches.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "landmark",
+        "bounds": {
+          "x": -7,
+          "y": -7,
+          "width": 14,
+          "height": 10
+        }
+      },
+      {
+        "id": "giantSequoia",
+        "kind": "wonder",
+        "displayName": "Giant sequoia",
+        "description": "A towering evergreen with a broad russet trunk.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -7,
+          "y": -16,
+          "width": 14,
+          "height": 18
+        }
+      },
+      {
+        "id": "coralReef",
+        "kind": "wonder",
+        "displayName": "Coral reef",
+        "description": "A miniature reef of branching, brightly colored coral.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -7,
+          "y": -10,
+          "width": 14,
+          "height": 13
+        }
+      },
+      {
+        "id": "pagoda",
+        "kind": "wonder",
+        "displayName": "Pagoda",
+        "description": "A tiered tower with sweeping rooflines.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "landmark",
+        "bounds": {
+          "x": -6,
+          "y": -15,
+          "width": 12,
+          "height": 17
+        }
+      },
+      {
+        "id": "torii",
+        "kind": "wonder",
+        "displayName": "Torii gate",
+        "description": "A vermilion gate with a gently curved crossbeam.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "landmark",
+        "bounds": {
+          "x": -7,
+          "y": -10,
+          "width": 14,
+          "height": 12
+        }
+      },
+      {
+        "id": "geyser",
+        "kind": "wonder",
+        "displayName": "Geyser",
+        "description": "A spring sending pale water jets above a rocky basin.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -5,
+          "y": -13,
+          "width": 10,
+          "height": 16
+        }
+      },
+      {
+        "id": "hotSpring",
+        "kind": "wonder",
+        "displayName": "Hot spring",
+        "description": "A steaming pool ringed by warm stones.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -6,
+          "y": -7,
+          "width": 12,
+          "height": 11
+        }
+      },
+      {
+        "id": "eiffelTower",
+        "kind": "wonder",
+        "displayName": "Eiffel Tower",
+        "description": "A tapering lattice tower with a wide arched base.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "landmark",
+        "bounds": {
+          "x": -5,
+          "y": -16,
+          "width": 10,
+          "height": 18
+        }
+      },
+      {
+        "id": "grandCanyon",
+        "kind": "wonder",
+        "displayName": "Grand Canyon",
+        "description": "Layered red cliffs cut by a narrow river.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -7,
+          "y": -9,
+          "width": 14,
+          "height": 12
+        }
+      },
+      {
+        "id": "windmillGrand",
+        "kind": "wonder",
+        "displayName": "Grand windmill",
+        "description": "A tall mill with four large turning sails.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "landmark",
+        "bounds": {
+          "x": -7,
+          "y": -15,
+          "width": 14,
+          "height": 17
+        }
+      },
+      {
+        "id": "oasis",
+        "kind": "wonder",
+        "displayName": "Oasis",
+        "description": "A small turquoise pool sheltered by palms.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -7,
+          "y": -9,
+          "width": 14,
+          "height": 13
+        }
+      },
+      {
+        "id": "volcano",
+        "kind": "wonder",
+        "displayName": "Volcano",
+        "description": "A dark volcanic cone with a glowing crater.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -7,
+          "y": -14,
+          "width": 14,
+          "height": 17
+        }
+      },
+      {
+        "id": "giantMushroom",
+        "kind": "wonder",
+        "displayName": "Giant mushroom",
+        "description": "An oversized spotted cap rising above smaller fungi.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -6,
+          "y": -11,
+          "width": 12,
+          "height": 13
+        }
+      },
+      {
+        "id": "aurora",
+        "kind": "wonder",
+        "displayName": "Aurora",
+        "description": "Ribbons of green and violet light over a dark landscape.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -8,
+          "y": -13,
+          "width": 16,
+          "height": 16
+        }
+      },
+      {
+        "id": "tajMahal",
+        "kind": "wonder",
+        "displayName": "Taj Mahal",
+        "description": "A pale domed monument flanked by slender minarets.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "landmark",
+        "bounds": {
+          "x": -7,
+          "y": -13,
+          "width": 14,
+          "height": 16
+        }
+      },
+      {
+        "id": "giantWaterfall",
+        "kind": "wonder",
+        "displayName": "Giant waterfall",
+        "description": "A broad cascade descending from a high stone ledge.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -7,
+          "y": -13,
+          "width": 14,
+          "height": 16
+        }
+      },
+      {
+        "id": "stBasils",
+        "kind": "wonder",
+        "displayName": "Saint Basil’s Cathedral",
+        "description": "A cluster of colorful onion domes and slender spires.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "landmark",
+        "bounds": {
+          "x": -5,
+          "y": -13,
+          "width": 10,
+          "height": 16
+        }
+      },
+      {
+        "id": "bambooGrove",
+        "kind": "wonder",
+        "displayName": "Bamboo grove",
+        "description": "Tall jointed bamboo stems form a quiet green grove.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -7,
+          "y": -14,
+          "width": 13,
+          "height": 16
+        }
+      },
+      {
+        "id": "operaHouse",
+        "kind": "wonder",
+        "displayName": "Sydney Opera House",
+        "description": "White sail-shaped roofs rising from a low waterfront platform.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "landmark",
+        "bounds": {
+          "x": -7,
+          "y": -7,
+          "width": 14,
+          "height": 10
+        }
+      },
+      {
+        "id": "glacierPeak",
+        "kind": "wonder",
+        "displayName": "Glacier peak",
+        "description": "An angular ice peak with blue crevasses.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -7,
+          "y": -15,
+          "width": 14,
+          "height": 18
+        }
+      },
+      {
+        "id": "bioluminescentPool",
+        "kind": "wonder",
+        "displayName": "Bioluminescent pool",
+        "description": "A sheltered pool dotted with softly glowing lights.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -7,
+          "y": -4,
+          "width": 14,
+          "height": 8
+        }
+      },
+      {
+        "id": "meteorCrater",
+        "kind": "wonder",
+        "displayName": "Meteor crater",
+        "description": "A round impact basin holding a luminous fallen stone.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -7,
+          "y": -4,
+          "width": 14,
+          "height": 8
+        }
+      },
+      {
+        "id": "bonsaiGiant",
+        "kind": "wonder",
+        "displayName": "Giant bonsai",
+        "description": "A broad sculpted canopy on a twisting old trunk.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "nature",
+        "bounds": {
+          "x": -6,
+          "y": -11,
+          "width": 12,
+          "height": 13
+        }
+      },
+      {
+        "id": "floatingIsland",
+        "kind": "wonder",
+        "displayName": "Floating island",
+        "description": "A grassy island suspended above its rocky underside.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "fantasy",
+        "bounds": {
+          "x": -6,
+          "y": -8,
+          "width": 12,
+          "height": 16
+        }
+      },
+      {
+        "id": "crystalSpire",
+        "kind": "wonder",
+        "displayName": "Crystal spire",
+        "description": "A cluster of translucent pointed crystals.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "fantasy",
+        "bounds": {
+          "x": -6,
+          "y": -15,
+          "width": 11,
+          "height": 17
+        }
+      },
+      {
+        "id": "dragonNest",
+        "kind": "wonder",
+        "displayName": "Dragon nest",
+        "description": "A rocky nest sheltering a curled dragon.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "fantasy",
+        "bounds": {
+          "x": -6,
+          "y": -7,
+          "width": 13,
+          "height": 10
+        }
+      },
+      {
+        "id": "worldTree",
+        "kind": "wonder",
+        "displayName": "World tree",
+        "description": "An immense branching tree dotted with golden lights.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "fantasy",
+        "bounds": {
+          "x": -7,
+          "y": -16,
+          "width": 14,
+          "height": 19
+        }
+      },
+      {
+        "id": "sakuraEternal",
+        "kind": "wonder",
+        "displayName": "Eternal sakura",
+        "description": "A luminous flowering cherry tree with drifting petals.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "fantasy",
+        "bounds": {
+          "x": -7,
+          "y": -15,
+          "width": 14,
+          "height": 18
+        }
+      },
+      {
+        "id": "ancientPortal",
+        "kind": "wonder",
+        "displayName": "Ancient portal",
+        "description": "An old stone arch framing a swirling magical opening.",
+        "family": "wonder",
+        "style": "wonder",
+        "season": "all",
+        "category": "fantasy",
+        "bounds": {
+          "x": -6,
+          "y": -13,
+          "width": 12,
+          "height": 16
+        }
+      }
+    ]
+  }
+}

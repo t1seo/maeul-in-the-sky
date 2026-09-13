@@ -50,10 +50,14 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
       - run: npm ci
-      - run: npx vitest run --coverage
+      - run: npx playwright install --with-deps chromium
+      - run: npm run check:catalog
+      - run: npx vitest run --coverage --maxWorkers=2
+        env:
+          MAEUL_MOTION_HEADED: '0'
 
   artifact:
     name: Package Smoke
@@ -62,10 +66,78 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
       - run: npm ci
+      - run: npx playwright install --with-deps chromium
       - run: npm run test:artifact
+
+  browser:
+    name: Browser Regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run build
+      - run: npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-report-traces-and-static-approval-images-linux
+          path: |
+            playwright-report/
+            test-results/browser/
+          retention-days: 14
+
+  pixels:
+    name: Approved Static Images
+    runs-on: macos-15
+    timeout-minutes: 15
+    env:
+      MAEUL_VISUAL_BASELINE: '1'
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install chromium
+      - run: npm run build
+      - run: npx playwright test tests/visual/static.spec.ts --project=chromium-desktop
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: approved-static-image-diffs-macos
+          path: |
+            playwright-report/
+            test-results/browser/
+          retention-days: 14
+
+  benchmark:
+    name: Renderer Budgets
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run benchmark -- --warmup 20 --iterations 100 --output test-results/benchmark/current.json --baseline tests/fixtures/benchmark-baseline.json --check
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: renderer-benchmark-samples-and-budget-results
+          path: test-results/benchmark/
+          retention-days: 14
 
   audit:
     name: Security Audit

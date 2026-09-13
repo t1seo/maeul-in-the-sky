@@ -1,7 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { optimizeGeneratedArtifact } from './optimization/artifact.js';
 import { computeStats } from '../src/core/stats.js';
-import { VILLAGE_PRESETS, type VillagePreset } from '../src/core/presets.js';
+import { VILLAGE_PRESETS } from '../src/core/presets.js';
 import { getTheme } from '../src/themes/registry.js';
 import type { ContributionDay, ContributionWeek } from '../src/core/types.js';
 
@@ -47,17 +48,23 @@ const data = {
 const outputDirectory = join(import.meta.dirname, '..', 'docs', 'demo', 'assets');
 mkdirSync(outputDirectory, { recursive: true });
 
-for (const [presetName, preset] of Object.entries(VILLAGE_PRESETS) as Array<
-  [VillagePreset, (typeof VILLAGE_PRESETS)[VillagePreset]]
->) {
+for (const [presetName, preset] of Object.entries(VILLAGE_PRESETS)) {
   const output = theme.render(data, {
-    title: `@maeul-sky · ${preset.displayName}`,
+    title: `@maeul-sky · ${preset.displayName} · Sample`,
     width: 840,
     height: 240,
     density: preset.density,
   });
-  writeFileSync(join(outputDirectory, `preset-${presetName}-dark.svg`), output.dark);
-  writeFileSync(join(outputDirectory, `preset-${presetName}-light.svg`), output.light);
+  writeFileSync(
+    join(outputDirectory, `preset-${presetName}-dark.svg`),
+    optimizeGeneratedArtifact(output.dark),
+  );
+  writeFileSync(
+    join(outputDirectory, `preset-${presetName}-light.svg`),
+    optimizeGeneratedArtifact(output.light),
+  );
 }
 
 console.log(`Generated 6 demo terrains in ${outputDirectory}`);
+
+console.log('Source: seeded synthetic sample, 364 supplied days, 2025-01-05 to 2026-01-03.');

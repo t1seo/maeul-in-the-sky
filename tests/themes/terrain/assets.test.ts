@@ -31,9 +31,10 @@ function createFullRangeData(): ContributionData {
       const level100 = idx % 100;
       const count = level100;
       const level = Math.min(4, Math.floor(level100 / 25)) as 0 | 1 | 2 | 3 | 4;
-      days.push({ date: '2025-01-01', count, level });
+      const date = new Date(Date.UTC(2024, 11, 29 + idx)).toISOString().slice(0, 10);
+      days.push({ date, count, level });
     }
-    weeks.push({ firstDay: '2025-01-01', days });
+    weeks.push({ firstDay: days[0].date, days });
   }
   return {
     weeks,
@@ -44,8 +45,8 @@ function createFullRangeData(): ContributionData {
       mostActiveDay: '',
       activeDays: 0,
       busiestMonth: '',
-      fromDate: '2025-01-01',
-      toDate: '2025-01-01',
+      fromDate: '2024-12-29',
+      toDate: '2025-12-27',
     },
     year: 2025,
     username: 'testuser',

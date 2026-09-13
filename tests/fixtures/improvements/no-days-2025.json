@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "kind": "maeul-snapshot",
+  "username": "benchmark",
+  "year": 2025,
+  "weeks": [],
+  "settings": {
+    "preset": "balanced",
+    "density": 5,
+    "title": "@benchmark",
+    "hemisphere": "north",
+    "motion": "full",
+    "layout": "banner",
+    "style": "classic",
+    "normalization": {
+      "kind": "relative"
+    }
+  },
+  "source": {
+    "kind": "sample"
+  }
+}

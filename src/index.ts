@@ -1,53 +1,10 @@
 #!/usr/bin/env node
-
-/**
- * Maeul in the Sky CLI — Build a village from a GitHub Contribution Calendar
- */
-
-import { Command } from 'commander';
 import packageJson from '../package.json' with { type: 'json' };
+import { createCliProgram } from './cli/program.js';
 
-import { generateTerrain } from './generate.js';
-
-const program = new Command();
-
-program
-  .name('maeul-sky')
-  .description('Build an animated isometric village from a GitHub Contribution Calendar')
-  .version(packageJson.version)
-  .requiredOption('-u, --user <username>', 'GitHub username')
-  .option('-t, --theme <name>', 'Theme name')
-  .option('--title <text>', 'Custom title text')
-  .option('-o, --output <dir>', 'Output directory', './')
-  .option('-y, --year <number>', 'Year to visualize (omit for rolling 52 weeks)')
-  .option('--token <token>', 'GitHub personal access token (or use GITHUB_TOKEN env)')
-  .option('--hemisphere <hemisphere>', 'Hemisphere for seasonal terrain (north or south)', 'north')
-  .option('--preset <name>', 'Village preset: nature, balanced, or civilization', 'balanced')
-  .option('--density <number>', 'Advanced building density override (1-10)')
-  .action(async (opts) => {
-    try {
-      const result = await generateTerrain({
-        username: opts.user,
-        theme: opts.theme,
-        title: opts.title,
-        outputDir: opts.output,
-        year: opts.year,
-        token: opts.token || process.env.GITHUB_TOKEN,
-        hemisphere: opts.hemisphere,
-        preset: opts.preset,
-        density: opts.density,
-        onProgress: (message) => console.log(message),
-      });
-      console.log(`Written: ${result.darkPath}`);
-      console.log(`Written: ${result.lightPath}`);
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(`Error: ${error.message}`);
-      } else {
-        console.error(`Error: ${String(error)}`);
-      }
-      process.exitCode = 1;
-    }
-  });
-
-await program.parseAsync();
+try {
+  await createCliProgram(packageJson.version).parseAsync();
+} catch (error) {
+  console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
+  process.exitCode = 1;
+}

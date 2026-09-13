@@ -21,6 +21,14 @@ coverage/
 
 # Playwright
 .playwright-mcp/
+playwright-report/
+.vitest-attachments/
+tests/demo/browser/__screenshots__/
+test-results/
+
+# Local Orca runs, authenticated snapshots, and QA evidence
+.orca/
+evidence/
 
 # Internal docs & artifacts
 docs/*

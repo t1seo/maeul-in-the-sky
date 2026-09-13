@@ -5,6 +5,7 @@
 
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { optimizeGeneratedArtifact } from './optimization/artifact.js';
 import { computeStats } from '../src/core/stats.js';
 import { getTheme, listThemes } from '../src/themes/registry.js';
 import type { ContributionData, ContributionDay } from '../src/core/types.js';
@@ -15,7 +16,7 @@ import '../src/themes/terrain/index.js';
 // Generate realistic 52-week mock data
 function generateRealisticData(username: string): ContributionData {
   const weeks = [];
-  const baseDate = new Date(2025, 0, 5); // Jan 5, 2025 (Sunday)
+  const baseDate = new Date(Date.UTC(2025, 0, 5)); // Jan 5, 2025 (Sunday)
 
   // Seed-based pseudo-random for determinism
   let seed = 42;
@@ -27,11 +28,11 @@ function generateRealisticData(username: string): ContributionData {
   for (let w = 0; w < 52; w++) {
     const days: ContributionDay[] = [];
     const weekStart = new Date(baseDate);
-    weekStart.setDate(weekStart.getDate() + w * 7);
+    weekStart.setUTCDate(weekStart.getUTCDate() + w * 7);
 
     for (let d = 0; d < 7; d++) {
       const date = new Date(weekStart);
-      date.setDate(date.getDate() + d);
+      date.setUTCDate(date.getUTCDate() + d);
       const dateStr = date.toISOString().split('T')[0];
 
       // Simulate realistic patterns: weekdays more active, some bursts
@@ -47,8 +48,9 @@ function generateRealisticData(username: string): ContributionData {
         if (r > 0.6) count = Math.floor(r * 5) + 1;
       }
 
-      const level = count === 0 ? 0 : count <= 2 ? 1 : count <= 5 ? 2 : count <= 10 ? 3 : 4;
-      days.push({ date: dateStr, count, level: level as 0 | 1 | 2 | 3 | 4 });
+      const level: ContributionDay['level'] =
+        count === 0 ? 0 : count <= 2 ? 1 : count <= 5 ? 2 : count <= 10 ? 3 : 4;
+      days.push({ date: dateStr, count, level: level });
     }
 
     weeks.push({ firstDay: days[0].date, days });
@@ -70,9 +72,10 @@ console.log(
 );
 
 for (const themeName of themes) {
-  const theme = getTheme(themeName)!;
+  const theme = getTheme(themeName);
+  if (!theme) throw new Error(`Theme ${themeName} is not registered`);
   const output = theme.render(data, {
-    title: `@maeul-sky-user`,
+    title: '@maeul-sky-user · Synthetic sample',
     width: 840,
     height: 240,
   });
@@ -80,14 +83,16 @@ for (const themeName of themes) {
   const darkPath = join(outDir, `maeul-in-the-sky-dark.svg`);
   const lightPath = join(outDir, `maeul-in-the-sky-light.svg`);
 
-  writeFileSync(darkPath, output.dark, 'utf-8');
-  writeFileSync(lightPath, output.light, 'utf-8');
+  writeFileSync(darkPath, optimizeGeneratedArtifact(output.dark), 'utf-8');
+  writeFileSync(lightPath, optimizeGeneratedArtifact(output.light), 'utf-8');
 
-  const darkSize = (Buffer.byteLength(output.dark) / 1024).toFixed(1);
-  const lightSize = (Buffer.byteLength(output.light) / 1024).toFixed(1);
+  const darkSize = (Buffer.byteLength(optimizeGeneratedArtifact(output.dark)) / 1024).toFixed(1);
+  const lightSize = (Buffer.byteLength(optimizeGeneratedArtifact(output.light)) / 1024).toFixed(1);
   console.log(`${theme.displayName}:`);
   console.log(`  Dark:  ${darkPath} (${darkSize} KB)`);
   console.log(`  Light: ${lightPath} (${lightSize} KB)`);
 }
 
 console.log(`\nDone! Open the SVG files in a browser to preview.`);
+
+console.log('Source: seeded synthetic sample, 364 supplied days, 2025-01-05 to 2026-01-03.');

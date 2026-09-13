@@ -1,4 +1,8 @@
+import { createRequire } from 'node:module';
 import { defineConfig } from 'tsup';
+
+const requireFromConfig = createRequire(import.meta.url);
+const cssTreeCommonJsEntry = requireFromConfig.resolve('css-tree');
 
 export default defineConfig([
   {
@@ -30,6 +34,21 @@ export default defineConfig([
     splitting: false,
     sourcemap: true,
     bundle: true,
+    noExternal: [/.*/],
+    esbuildOptions(options) {
+      options.alias = { ...options.alias, 'css-tree': cssTreeCommonJsEntry };
+    },
+  },
+  {
+    entry: { browser: 'src/browser.ts' },
+    format: ['esm'],
+    platform: 'browser',
+    target: 'es2022',
+    dts: true,
+    clean: false,
+    splitting: false,
+    sourcemap: true,
+    minify: true,
     noExternal: [/.*/],
   },
 ]);

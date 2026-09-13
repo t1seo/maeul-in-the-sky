@@ -14,6 +14,10 @@
       "types": "./dist/lib.d.ts",
       "import": "./dist/lib.js",
       "require": "./dist/lib.cjs"
+    },
+    "./browser": {
+      "types": "./dist/browser.d.ts",
+      "import": "./dist/browser.js"
     }
   },
   "files": [
@@ -21,12 +25,18 @@
     "action.yml"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && npm run build:demo && tsx scripts/package-runtime-assets.ts",
+    "build:demo": "tsx scripts/build-demo.ts",
     "dev": "tsup --watch",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:artifact": "npm run build && tsx scripts/smoke-package.ts",
-    "generate:demo": "tsx scripts/generate-demo.ts",
+    "test:browser": "playwright test",
+    "test:browser:update": "MAEUL_VISUAL_BASELINE=1 playwright test tests/visual/static.spec.ts --project=chromium-desktop --update-snapshots",
+    "generate:demo": "tsx scripts/generate-demo.ts && npm run build:demo",
+    "generate:catalog": "tsx scripts/generate-catalog.ts docs/demo/catalog",
+    "check:catalog": "tsx scripts/catalog/check-generated.ts docs/demo/catalog",
+    "benchmark": "tsx scripts/benchmark/render.ts",
     "lint": "eslint src/ tests/ scripts/",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\" \"scripts/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\" \"scripts/**/*.ts\"",
@@ -62,8 +72,12 @@
   },
   "dependencies": {
     "@actions/core": "^3.0.1",
+    "@resvg/resvg-wasm": "^2.6.2",
     "commander": "^14.0.3",
-    "simplex-noise": "^4.0.3"
+    "css-tree": "3.2.1",
+    "saxes": "6.0.0",
+    "simplex-noise": "^4.0.3",
+    "zod": "^4.6.4"
   },
   "lint-staged": {
     "*.ts": [
@@ -76,16 +90,23 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "@types/css-tree": "2.3.11",
+    "@types/culori": "^4.0.1",
     "@types/node": "^25.9.5",
-    "@vitest/coverage-v8": "^4.1.10",
+    "@vitest/browser-playwright": "^4.1.11",
+    "@vitest/coverage-v8": "^4.1.11",
+    "culori": "^4.0.2",
     "eslint": "^10.8.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "^3.9.6",
+    "svgo": "^4.1.0",
     "tsup": "^8.5.1",
     "tsx": "^4.23.7",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.66.0",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   }
 }

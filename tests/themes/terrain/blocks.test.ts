@@ -293,8 +293,6 @@ describe('renderSeasonalTerrainBlocks with frozen water in winter', () => {
   // Create cells with level100 in the natural water zone (9-22)
   // and use rotation=0 so week 0 is winter zone 0
   function makeWinterWaterCells(): GridCell100[] {
-    // Each cell will be placed in week 0 (winter zone 0 with rotation=0)
-    // We need exactly 7 cells for 1 full week so toIsoCells assigns week=0
     return [
       { x: 0, y: 0, level: 1, count: 1, date: '2025-01-01', level100: 10 },
       { x: 13, y: 0, level: 1, count: 1, date: '2025-01-02', level100: 15 },
@@ -331,7 +329,7 @@ describe('renderSeasonalTerrainBlocks with frozen water in winter', () => {
         y: 0,
         level: level100 <= 22 ? 1 : 3,
         count: level100 <= 22 ? 2 : 10,
-        date: '2025-01-01',
+        date: new Date(Date.UTC(2024, 11, 29 + i)).toISOString().slice(0, 10),
         level100,
       });
     }
