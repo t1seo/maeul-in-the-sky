@@ -32,7 +32,7 @@ src/
 │       ├── seasons.ts     # 4-season system (8 zones, tinting, asset overrides)
 │       ├── biomes.ts      # Procedural biome generation (rivers, ponds, forests)
 │       ├── effects/       # Clouds, celestials, water overlays, and particles
-│       ├── assets/        # 193 ordinary catalog IDs and modular renderers
+│       ├── assets/        # 202 ordinary catalog IDs and modular renderers
 │       └── epics/         # 30 separately counted Wonder gates/renderers
 ├── demo/                  # Portable enhanced demo controllers
 ├── preview/               # Loopback-only authenticated preview service
@@ -117,5 +117,8 @@ npx tsx scripts/generate-catalog.ts docs/demo/catalog # Generate registry catalo
 - SVG viewport: 840 x 240
 - `THW = 8` (tile half-width), `THH = 3.5` (tile half-height)
 - Grid: all supplied Sunday-based weeks and available days, including partial edge weeks
-- Catalog: 193 ordinary IDs (189 classic + 4 Korean), including 68 seasonal IDs; 30 Wonders are counted separately
+- Catalog: 202 ordinary IDs (189 classic + 13 Korean), including 68 seasonal IDs; 30 Wonders are counted separately, for 232 total IDs
+- Culture (`classic`/`korean`) and art style (`miniature`/`pixel`) are independent; existing settings default to miniature
+- Pixel sprites are generated offline for all 232 IDs and 636 variant slots; run `npm run generate:pixel` after artwork changes, then `npm run check:pixel`
+- Layout version 2 derives daily rewards from raw contribution counts at 0/1/5/10/25/50; decoration density does not lower a reward tier or replace its guaranteed primary asset
 - Animation budget: 50 max (water 15, sparkle 10, clouds 2, windmills 4, flags 4)
