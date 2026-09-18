@@ -1,0 +1,102 @@
+{
+  "date": "2026-09-19",
+  "revision": "2b608bcfda7746723dd1af30c554e3c944afd32b",
+  "method": "Existing catalog + prepareTerrainScene, fitScene and sceneViewport; preserved fixture settings except layout and motion off. CSS display width scaling is calculated, not a browser screenshot measurement. Bounds include padding; visible painted height may be smaller.",
+  "ordinary": {
+    "total": 193,
+    "classic": 189,
+    "korean": 4
+  },
+  "wonders": {
+    "total": 30,
+    "rare": 14,
+    "epic": 10,
+    "legendary": 6
+  },
+  "categories": {
+    "water": 19,
+    "shore": 17,
+    "woodland": 43,
+    "farm": 37,
+    "village": 24,
+    "town": 17,
+    "decoration": 36
+  },
+  "seasons": {
+    "all": 125,
+    "winter": 19,
+    "spring": 21,
+    "summer": 12,
+    "autumn": 16
+  },
+  "measurements": [
+    {
+      "fixture": "mixed-2025",
+      "layout": "banner",
+      "scale": 0.7900677200902935,
+      "sceneBounds": {
+        "x": -57,
+        "y": -4.5,
+        "width": 474,
+        "height": 221.5
+      },
+      "naturalWidth": 840,
+      "pineReservedBoundsHeightSvgUnits": 15,
+      "pineReservedBoundsHeightAtNaturalWidth": 11.851015801354402,
+      "pineReservedBoundsHeightAt390Width": 5.502257336343114,
+      "placements": 169,
+      "wonders": 0
+    },
+    {
+      "fixture": "mixed-2025",
+      "layout": "card",
+      "scale": 0.6772009029345373,
+      "sceneBounds": {
+        "x": -57,
+        "y": -4.5,
+        "width": 474,
+        "height": 221.5
+      },
+      "naturalWidth": 420,
+      "pineReservedBoundsHeightSvgUnits": 15,
+      "pineReservedBoundsHeightAtNaturalWidth": 10.15801354401806,
+      "pineReservedBoundsHeightAt390Width": 9.43244114801677,
+      "placements": 169,
+      "wonders": 0
+    },
+    {
+      "fixture": "full-2025",
+      "layout": "banner",
+      "scale": 0.7415889083264458,
+      "sceneBounds": {
+        "x": -57,
+        "y": -7.9797969402279705,
+        "width": 474,
+        "height": 235.97979694022797
+      },
+      "naturalWidth": 840,
+      "pineReservedBoundsHeightSvgUnits": 15,
+      "pineReservedBoundsHeightAtNaturalWidth": 11.123833624896687,
+      "pineReservedBoundsHeightAt390Width": 5.1646370401306045,
+      "placements": 439,
+      "wonders": 3
+    },
+    {
+      "fixture": "full-2025",
+      "layout": "card",
+      "scale": 0.635647635708382,
+      "sceneBounds": {
+        "x": -57,
+        "y": -7.9797969402279705,
+        "width": 474,
+        "height": 235.97979694022797
+      },
+      "naturalWidth": 420,
+      "pineReservedBoundsHeightSvgUnits": 15,
+      "pineReservedBoundsHeightAtNaturalWidth": 9.53471453562573,
+      "pineReservedBoundsHeightAt390Width": 8.85366349736675,
+      "placements": 439,
+      "wonders": 3
+    }
+  ]
+}

@@ -37,13 +37,15 @@ describe('catalog regeneration', { timeout: 30_000 }, () => {
       'catalog.js',
       'catalog-sprite-dark.svg',
       'catalog-sprite-light.svg',
+      'catalog-sprite-pixel-dark.svg',
+      'catalog-sprite-pixel-light.svg',
     ]) {
       expect((await readFile(join(outputDirectory, name))).byteLength).toBeGreaterThan(0);
     }
     await expect(verifyGeneratedCatalog(outputDirectory)).resolves.toEqual({
-      assets: 193,
+      assets: 202,
       wonders: 30,
-      records: 223,
+      records: 232,
     });
   });
 

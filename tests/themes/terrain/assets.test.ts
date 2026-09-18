@@ -110,12 +110,13 @@ describe('selectAssets', () => {
     }
   });
 
-  it('covers all level ranges with multiple seeds', () => {
+  it('covers all level ranges for legacy level-only grids with multiple seeds', () => {
     const seeds = [42, 100, 12345];
     const allTypes = new Set<string>();
+    const legacyCells = isoCells.map((cell) => ({ ...cell, count: undefined }));
 
     for (const seed of seeds) {
-      const assets = selectAssets(isoCells, seed);
+      const assets = selectAssets(legacyCells, seed);
       for (const asset of assets) {
         allTypes.add(asset.type);
       }
@@ -570,9 +571,10 @@ describe('density parameter integration', () => {
     'fountain',
   ]);
 
-  it('density=10 produces more building assets than density=1', () => {
-    const highDensity = selectAssets(isoCells, 42, undefined, biomeMap, 0, 10);
-    const lowDensity = selectAssets(isoCells, 42, undefined, biomeMap, 0, 1);
+  it('retains the density-driven building mix for legacy level-only grids', () => {
+    const legacyCells = isoCells.map((cell) => ({ ...cell, count: undefined }));
+    const highDensity = selectAssets(legacyCells, 42, undefined, biomeMap, 0, 10);
+    const lowDensity = selectAssets(legacyCells, 42, undefined, biomeMap, 0, 1);
 
     const highBuildings = highDensity.filter((a) => BUILDING_TYPES.has(a.type)).length;
     const lowBuildings = lowDensity.filter((a) => BUILDING_TYPES.has(a.type)).length;

@@ -32,6 +32,14 @@ import * as seasonalAutumnCornStalk from './renderers/seasonal-autumn-corn-stalk
 import * as seasonalAutumnAppleBasket from './renderers/seasonal-autumn-apple-basket.js';
 
 import { svgHanok, svgPavilion, svgStoneWall, svgOnggi } from './renderers/korean-village.js';
+import {
+  svgChoga,
+  svgKoreanWatermill,
+  svgHanokGate,
+  svgHanokEstate,
+} from './renderers/korean-rural-buildings.js';
+import { svgJangseung, svgSotdae, svgStoneBridge } from './renderers/korean-rural-props.js';
+import { svgRiceTerrace, svgKimchiGarden } from './renderers/korean-rural-fields.js';
 
 export const ASSET_RENDERERS: Record<AssetType, AssetRenderer> = {
   whale: waterWhale.svgWhale,
@@ -227,4 +235,13 @@ export const ASSET_RENDERERS: Record<AssetType, AssetRenderer> = {
   pavilion: svgPavilion,
   stoneWall: svgStoneWall,
   onggi: svgOnggi,
+  choga: svgChoga,
+  jangseung: svgJangseung,
+  sotdae: svgSotdae,
+  riceTerrace: svgRiceTerrace,
+  koreanWatermill: svgKoreanWatermill,
+  hanokGate: svgHanokGate,
+  kimchiGarden: svgKimchiGarden,
+  stoneBridge: svgStoneBridge,
+  hanokEstate: svgHanokEstate,
 };

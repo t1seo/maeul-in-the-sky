@@ -91,6 +91,7 @@ export const FIXTURE_SETTINGS = {
   motion: 'full',
   layout: 'banner',
   style: 'classic',
+  artStyle: 'miniature',
   normalization: { kind: 'relative' },
 } as const satisfies import('../../src/core/render-options.js').ResolvedRenderSettings;
 

@@ -49,6 +49,7 @@ export function createTerrainGenerator(dependencies: TerrainGeneratorDependencie
             motion: settings.motion,
             layout: settings.layout,
             style: settings.style,
+            artStyle: settings.artStyle,
             normalization: settings.normalization,
             ...(settings.layoutSeed === undefined ? {} : { layoutSeed: settings.layoutSeed }),
           }

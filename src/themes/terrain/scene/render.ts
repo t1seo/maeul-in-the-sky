@@ -26,13 +26,22 @@ import { fitScene, sceneViewport } from './bounds.js';
 import { dateSeasonPosition } from './season.js';
 import { renderDepthLayer } from './depth.js';
 import { renderPresentation } from './presentation.js';
+import { renderDailyRewards } from './rewards.js';
 
 export function renderTerrainScene(
   scene: TerrainScene,
   mode: ColorMode,
   options: TerrainSceneRenderOptions = {},
 ): string {
-  const supported = new Set(['width', 'height', 'namespace', 'title', 'motion', 'layout']);
+  const supported = new Set([
+    'width',
+    'height',
+    'namespace',
+    'title',
+    'motion',
+    'layout',
+    'artStyle',
+  ]);
   for (const key of Object.keys(options)) {
     if (!supported.has(key))
       throw new InputValidationError([
@@ -84,7 +93,8 @@ export function renderTerrainScene(
       renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) +
       renderWaterOverlays(isoCells, reference, biomes) +
       renderWaterRipples(isoCells, reference, biomes) +
-      renderDepthLayer(scene, isoCells, palettes) +
+      renderDepthLayer(scene, isoCells, palettes, settings.artStyle) +
+      renderDailyRewards(presented, palettes) +
       renderSnowParticles(isoCells, seed, rotation) +
       renderFallingPetals(isoCells, seed, reference, rotation) +
       renderFallingLeaves(isoCells, seed, reference, rotation) +
@@ -112,6 +122,7 @@ export function renderTerrainScene(
       'data-layout': settings.layout,
       'data-scene': scene.seed.root,
       'data-color-mode': mode,
+      'data-art-style': settings.artStyle,
     },
     content,
     { title: settings.title, description, namespace: accessibilityNamespace },

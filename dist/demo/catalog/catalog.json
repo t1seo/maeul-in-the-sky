@@ -1,9 +1,9 @@
 {
   "assets": {
     "counts": {
-      "total": 193,
+      "total": 202,
       "classic": 189,
-      "korean": 4
+      "korean": 13
     },
     "entries": [
       {
@@ -2706,7 +2706,133 @@
           "width": 14,
           "height": 12
         },
-        "description": "Three glazed earthenware storage jars with broad shoulders and flat lids on a stone terrace."
+        "description": "A jangdokdae stone platform with rounded glazed onggi jars, raised lids and varied storage sizes."
+      },
+      {
+        "id": "choga",
+        "displayName": "Choga cottage",
+        "category": "village",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -10,
+          "y": -13,
+          "width": 20,
+          "height": 17
+        },
+        "description": "A rural choga cottage with a rounded rice-straw roof, tied thatch, plaster walls and a timber doorway."
+      },
+      {
+        "id": "jangseung",
+        "displayName": "Jangseung guardians",
+        "category": "decoration",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -7,
+          "y": -16,
+          "width": 14,
+          "height": 19
+        },
+        "description": "Paired carved wooden jangseung guardians with expressive faces, marking the entrance of a rural village."
+      },
+      {
+        "id": "sotdae",
+        "displayName": "Sotdae bird poles",
+        "category": "decoration",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -8,
+          "y": -17,
+          "width": 16,
+          "height": 20
+        },
+        "description": "Wooden sotdae poles topped with carved duck-shaped birds, traditional markers at Korean village boundaries."
+      },
+      {
+        "id": "riceTerrace",
+        "displayName": "Terraced rice paddies",
+        "category": "farm",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -10,
+          "y": -8,
+          "width": 20,
+          "height": 15
+        },
+        "description": "Curved, stepped rice paddies with earthen embankments, shallow irrigation water and planted rice shoots."
+      },
+      {
+        "id": "koreanWatermill",
+        "displayName": "Korean watermill",
+        "category": "village",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -12,
+          "y": -15,
+          "width": 24,
+          "height": 21
+        },
+        "description": "A thatched rural mill beside an irrigation channel, with a large timber paddle wheel and grain-workshop doorway."
+      },
+      {
+        "id": "hanokGate",
+        "displayName": "Hanok courtyard gate",
+        "category": "village",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -11,
+          "y": -17,
+          "width": 22,
+          "height": 22
+        },
+        "description": "A timber courtyard gateway with swept giwa eaves, paneled doors, stone footings and a stepped entrance."
+      },
+      {
+        "id": "kimchiGarden",
+        "displayName": "Cabbage and radish garden",
+        "category": "farm",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -9,
+          "y": -8,
+          "width": 18,
+          "height": 13
+        },
+        "description": "Raised household vegetable beds with leafy napa cabbages and white radishes traditionally grown for kimchi."
+      },
+      {
+        "id": "stoneBridge",
+        "displayName": "Korean stone bridge",
+        "category": "town",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -11,
+          "y": -11,
+          "width": 22,
+          "height": 17
+        },
+        "description": "A low arched stone bridge with wedge-shaped masonry, a curved walking deck and grounded abutments."
+      },
+      {
+        "id": "hanokEstate",
+        "displayName": "Hanok courtyard estate",
+        "category": "town",
+        "season": "all",
+        "style": "korean",
+        "bounds": {
+          "x": -12,
+          "y": -20,
+          "width": 24,
+          "height": 25
+        },
+        "description": "A substantial hanok compound with a main giwa-roofed hall, side wings, timber latticework and an open stone courtyard."
       }
     ]
   },
@@ -3536,7 +3662,7 @@
       "building": 37,
       "decoration": 36,
       "wonder": 30,
-      "korean": 4
+      "korean": 13
     },
     "records": [
       {
@@ -6615,7 +6741,7 @@
         "id": "onggi",
         "kind": "asset",
         "displayName": "Onggi jars",
-        "description": "Three glazed earthenware storage jars with broad shoulders and flat lids on a stone terrace.",
+        "description": "A jangdokdae stone platform with rounded glazed onggi jars, raised lids and varied storage sizes.",
         "family": "korean",
         "style": "korean",
         "season": "all",
@@ -6625,6 +6751,150 @@
           "y": -8,
           "width": 14,
           "height": 12
+        }
+      },
+      {
+        "id": "choga",
+        "kind": "asset",
+        "displayName": "Choga cottage",
+        "description": "A rural choga cottage with a rounded rice-straw roof, tied thatch, plaster walls and a timber doorway.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -10,
+          "y": -13,
+          "width": 20,
+          "height": 17
+        }
+      },
+      {
+        "id": "jangseung",
+        "kind": "asset",
+        "displayName": "Jangseung guardians",
+        "description": "Paired carved wooden jangseung guardians with expressive faces, marking the entrance of a rural village.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -7,
+          "y": -16,
+          "width": 14,
+          "height": 19
+        }
+      },
+      {
+        "id": "sotdae",
+        "kind": "asset",
+        "displayName": "Sotdae bird poles",
+        "description": "Wooden sotdae poles topped with carved duck-shaped birds, traditional markers at Korean village boundaries.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "decoration",
+        "bounds": {
+          "x": -8,
+          "y": -17,
+          "width": 16,
+          "height": 20
+        }
+      },
+      {
+        "id": "riceTerrace",
+        "kind": "asset",
+        "displayName": "Terraced rice paddies",
+        "description": "Curved, stepped rice paddies with earthen embankments, shallow irrigation water and planted rice shoots.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -10,
+          "y": -8,
+          "width": 20,
+          "height": 15
+        }
+      },
+      {
+        "id": "koreanWatermill",
+        "kind": "asset",
+        "displayName": "Korean watermill",
+        "description": "A thatched rural mill beside an irrigation channel, with a large timber paddle wheel and grain-workshop doorway.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -12,
+          "y": -15,
+          "width": 24,
+          "height": 21
+        }
+      },
+      {
+        "id": "hanokGate",
+        "kind": "asset",
+        "displayName": "Hanok courtyard gate",
+        "description": "A timber courtyard gateway with swept giwa eaves, paneled doors, stone footings and a stepped entrance.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "village",
+        "bounds": {
+          "x": -11,
+          "y": -17,
+          "width": 22,
+          "height": 22
+        }
+      },
+      {
+        "id": "kimchiGarden",
+        "kind": "asset",
+        "displayName": "Cabbage and radish garden",
+        "description": "Raised household vegetable beds with leafy napa cabbages and white radishes traditionally grown for kimchi.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "farm",
+        "bounds": {
+          "x": -9,
+          "y": -8,
+          "width": 18,
+          "height": 13
+        }
+      },
+      {
+        "id": "stoneBridge",
+        "kind": "asset",
+        "displayName": "Korean stone bridge",
+        "description": "A low arched stone bridge with wedge-shaped masonry, a curved walking deck and grounded abutments.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -11,
+          "y": -11,
+          "width": 22,
+          "height": 17
+        }
+      },
+      {
+        "id": "hanokEstate",
+        "kind": "asset",
+        "displayName": "Hanok courtyard estate",
+        "description": "A substantial hanok compound with a main giwa-roofed hall, side wings, timber latticework and an open stone courtyard.",
+        "family": "korean",
+        "style": "korean",
+        "season": "all",
+        "category": "town",
+        "bounds": {
+          "x": -12,
+          "y": -20,
+          "width": 24,
+          "height": 25
         }
       },
       {

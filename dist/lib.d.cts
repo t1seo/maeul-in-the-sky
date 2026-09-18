@@ -24,6 +24,7 @@ declare function isVillagePreset(value: string): value is VillagePreset;
 type MotionMode = 'full' | 'subtle' | 'off';
 type TerrainLayout = 'banner' | 'card';
 type VillageStyle$1 = 'classic' | 'korean';
+type ArtStyle = 'miniature' | 'pixel';
 type Hemisphere = 'north' | 'south';
 type NormalizationOptions = {
     readonly kind: 'relative';
@@ -39,6 +40,7 @@ type ResolvedRenderSettings = {
     readonly motion: MotionMode;
     readonly layout: TerrainLayout;
     readonly style: VillageStyle$1;
+    readonly artStyle: ArtStyle;
     readonly normalization: NormalizationOptions;
     readonly layoutSeed?: string;
 };
@@ -113,6 +115,7 @@ interface ThemeOptions {
     motion?: MotionMode;
     layout?: TerrainLayout;
     style?: VillageStyle$1;
+    artStyle?: ArtStyle;
     villageStyle?: VillageStyle$1;
     normalization?: NormalizationOptions;
     layoutSeed?: string;
@@ -175,6 +178,8 @@ type SceneBiome = {
     readonly nearWater: boolean;
     readonly forestDensity: number;
 };
+type RewardTier = 0 | 1 | 2 | 3 | 4 | 5;
+type PositiveRewardTier = Exclude<RewardTier, 0>;
 type SceneCell = {
     readonly date: string;
     readonly week: number;
@@ -182,6 +187,7 @@ type SceneCell = {
     readonly absoluteWeek: number;
     readonly count: number;
     readonly level100: number;
+    readonly rewardTier?: RewardTier;
     readonly height: number;
     readonly isoX: number;
     readonly isoY: number;
@@ -204,6 +210,13 @@ type ScenePlacement = {
     readonly variant: number;
     readonly animated: boolean;
     readonly decorative?: boolean;
+    readonly primary?: boolean;
+    readonly rewardTier?: PositiveRewardTier;
+};
+type SceneDailyReward = ScenePlacement & {
+    readonly count: number;
+    readonly rewardTier: PositiveRewardTier;
+    readonly minimumCount: number;
 };
 type WonderThreshold = {
     readonly metric: 'level100' | 'richness' | 'total' | 'longestStreak';
@@ -231,11 +244,11 @@ type NeighborhoodPath = {
 };
 type LayoutSeedPolicy = {
     readonly root: string;
-    readonly policy: 'username-date-v1';
+    readonly policy: 'username-date-v1' | 'username-date-v2';
 };
 type TerrainScene = {
     readonly schemaVersion: 1;
-    readonly layoutVersion: 1;
+    readonly layoutVersion: 1 | 2;
     readonly username: string;
     readonly year: number;
     readonly fromDate: string;
@@ -248,6 +261,7 @@ type TerrainScene = {
     readonly biomes: readonly SceneBiomeEntry[];
     readonly placements: readonly ScenePlacement[];
     readonly wonders: readonly SceneWonderPlacement[];
+    readonly rewards?: readonly SceneDailyReward[];
     readonly neighborhoodPaths: readonly NeighborhoodPath[];
     readonly bounds: SceneBounds;
 };
@@ -257,13 +271,15 @@ type TerrainCellMetadata = {
     readonly week: number;
     readonly day: number;
     readonly level100: number;
+    readonly rewardTier?: RewardTier;
     readonly biome: SceneBiome;
     readonly assetIds: readonly string[];
     readonly wonderIds: readonly string[];
+    readonly rewardIds?: readonly string[];
 };
 type TerrainMetadata = {
     readonly schemaVersion: 1;
-    readonly layoutVersion: 1;
+    readonly layoutVersion: 1 | 2;
     readonly username: string;
     readonly year: number;
     readonly fromDate: string;
@@ -277,6 +293,7 @@ type TerrainMetadata = {
     readonly cells: readonly TerrainCellMetadata[];
     readonly placements: readonly ScenePlacement[];
     readonly wonders: readonly SceneWonderPlacement[];
+    readonly rewards?: readonly SceneDailyReward[];
     readonly neighborhoodPaths: readonly NeighborhoodPath[];
 };
 type TerrainRenderResult = {
@@ -289,7 +306,7 @@ type TerrainRenderOptions = Partial<ThemeOptions> & {
     readonly preset?: VillagePreset;
     readonly namespace?: string;
 };
-type TerrainSceneRenderOptions = Pick<TerrainRenderOptions, 'width' | 'height' | 'title' | 'motion' | 'layout' | 'namespace'>;
+type TerrainSceneRenderOptions = Pick<TerrainRenderOptions, 'width' | 'height' | 'title' | 'motion' | 'layout' | 'namespace' | 'artStyle'>;
 
 declare function prepareTerrainScene(data: ContributionData, options?: TerrainRenderOptions): TerrainScene;
 
@@ -298,8 +315,12 @@ declare function renderTerrainScene(scene: TerrainScene, mode: ColorMode, option
 declare function renderTerrain(data: ContributionData, options?: TerrainRenderOptions): TerrainRenderResult;
 
 interface AssetColors {
+    giwa: string;
+    thatch: string;
     trunk: string;
     pine: string;
+    evergreenLight: string;
+    evergreenDark: string;
     leaf: string;
     bush: string;
     roofA: string;
@@ -547,7 +568,7 @@ interface AssetColors {
     epicPortal: string;
 }
 
-type AssetType = 'whale' | 'fish' | 'fishSchool' | 'boat' | 'seagull' | 'dock' | 'waves' | 'kelp' | 'coral' | 'jellyfish' | 'turtle' | 'buoy' | 'sailboat' | 'lighthouse' | 'crab' | 'rock' | 'boulder' | 'flower' | 'bush' | 'driftwood' | 'sandcastle' | 'tidePools' | 'heron' | 'shellfish' | 'cattail' | 'frog' | 'lily' | 'pine' | 'deciduous' | 'mushroom' | 'stump' | 'deer' | 'rabbit' | 'fox' | 'butterfly' | 'beehive' | 'wildflowerPatch' | 'tallGrass' | 'birch' | 'haybale' | 'willow' | 'palm' | 'bird' | 'owl' | 'squirrel' | 'moss' | 'fern' | 'deadTree' | 'log' | 'berryBush' | 'spider' | 'wheat' | 'fence' | 'scarecrow' | 'barn' | 'sheep' | 'cow' | 'chicken' | 'horse' | 'ricePaddy' | 'silo' | 'pigpen' | 'trough' | 'haystack' | 'orchard' | 'beeFarm' | 'pumpkin' | 'appleTree' | 'oliveTree' | 'lemonTree' | 'orangeTree' | 'pearTree' | 'peachTree' | 'donkey' | 'goat' | 'tent' | 'hut' | 'house' | 'houseB' | 'church' | 'windmill' | 'well' | 'tavern' | 'bakery' | 'stable' | 'garden' | 'laundry' | 'doghouse' | 'shrine' | 'wagon' | 'market' | 'inn' | 'blacksmith' | 'castle' | 'tower' | 'bridge' | 'cathedral' | 'library' | 'clocktower' | 'statue' | 'park' | 'warehouse' | 'gatehouse' | 'manor' | 'reeds' | 'fountain' | 'canal' | 'watermill' | 'gardenTree' | 'pondLily' | 'cart' | 'barrel' | 'torch' | 'flag' | 'cobblePath' | 'smoke' | 'signpost' | 'lantern' | 'woodpile' | 'puddle' | 'campfire' | 'snowPine' | 'snowDeciduous' | 'snowman' | 'snowdrift' | 'igloo' | 'frozenPond' | 'icicle' | 'sled' | 'snowCoveredRock' | 'bareBush' | 'winterBird' | 'firewood' | 'houseWinter' | 'houseBWinter' | 'barnWinter' | 'churchWinter' | 'christmasTree' | 'winterLantern' | 'frozenFountain' | 'cherryBlossom' | 'cherryBlossomSmall' | 'cherryPetals' | 'tulip' | 'tulipField' | 'sprout' | 'nest' | 'lamb' | 'crocus' | 'rainPuddle' | 'birdhouse' | 'gardenBed' | 'cherryBlossomFull' | 'cherryBlossomBranch' | 'peachBlossom' | 'flowerBed' | 'wateringCan' | 'seedling' | 'robinBird' | 'butterflyGarden' | 'umbrella' | 'parasol' | 'beachTowel' | 'sandcastleSummer' | 'surfboard' | 'iceCreamCart' | 'hammock' | 'sunflower' | 'watermelon' | 'sprinkler' | 'lemonade' | 'fireflies' | 'swimmingPool' | 'autumnMaple' | 'autumnOak' | 'autumnBirch' | 'autumnGinkgo' | 'fallenLeaves' | 'leafSwirl' | 'acorn' | 'cornStalk' | 'scarecrowAutumn' | 'harvestBasket' | 'hotDrink' | 'autumnWreath' | 'pumpkinPatch' | 'hayMaze' | 'appleBasket' | 'rake' | 'hanok' | 'pavilion' | 'stoneWall' | 'onggi';
+type AssetType = 'whale' | 'fish' | 'fishSchool' | 'boat' | 'seagull' | 'dock' | 'waves' | 'kelp' | 'coral' | 'jellyfish' | 'turtle' | 'buoy' | 'sailboat' | 'lighthouse' | 'crab' | 'rock' | 'boulder' | 'flower' | 'bush' | 'driftwood' | 'sandcastle' | 'tidePools' | 'heron' | 'shellfish' | 'cattail' | 'frog' | 'lily' | 'pine' | 'deciduous' | 'mushroom' | 'stump' | 'deer' | 'rabbit' | 'fox' | 'butterfly' | 'beehive' | 'wildflowerPatch' | 'tallGrass' | 'birch' | 'haybale' | 'willow' | 'palm' | 'bird' | 'owl' | 'squirrel' | 'moss' | 'fern' | 'deadTree' | 'log' | 'berryBush' | 'spider' | 'wheat' | 'fence' | 'scarecrow' | 'barn' | 'sheep' | 'cow' | 'chicken' | 'horse' | 'ricePaddy' | 'silo' | 'pigpen' | 'trough' | 'haystack' | 'orchard' | 'beeFarm' | 'pumpkin' | 'appleTree' | 'oliveTree' | 'lemonTree' | 'orangeTree' | 'pearTree' | 'peachTree' | 'donkey' | 'goat' | 'tent' | 'hut' | 'house' | 'houseB' | 'church' | 'windmill' | 'well' | 'tavern' | 'bakery' | 'stable' | 'garden' | 'laundry' | 'doghouse' | 'shrine' | 'wagon' | 'market' | 'inn' | 'blacksmith' | 'castle' | 'tower' | 'bridge' | 'cathedral' | 'library' | 'clocktower' | 'statue' | 'park' | 'warehouse' | 'gatehouse' | 'manor' | 'reeds' | 'fountain' | 'canal' | 'watermill' | 'gardenTree' | 'pondLily' | 'cart' | 'barrel' | 'torch' | 'flag' | 'cobblePath' | 'smoke' | 'signpost' | 'lantern' | 'woodpile' | 'puddle' | 'campfire' | 'snowPine' | 'snowDeciduous' | 'snowman' | 'snowdrift' | 'igloo' | 'frozenPond' | 'icicle' | 'sled' | 'snowCoveredRock' | 'bareBush' | 'winterBird' | 'firewood' | 'houseWinter' | 'houseBWinter' | 'barnWinter' | 'churchWinter' | 'christmasTree' | 'winterLantern' | 'frozenFountain' | 'cherryBlossom' | 'cherryBlossomSmall' | 'cherryPetals' | 'tulip' | 'tulipField' | 'sprout' | 'nest' | 'lamb' | 'crocus' | 'rainPuddle' | 'birdhouse' | 'gardenBed' | 'cherryBlossomFull' | 'cherryBlossomBranch' | 'peachBlossom' | 'flowerBed' | 'wateringCan' | 'seedling' | 'robinBird' | 'butterflyGarden' | 'umbrella' | 'parasol' | 'beachTowel' | 'sandcastleSummer' | 'surfboard' | 'iceCreamCart' | 'hammock' | 'sunflower' | 'watermelon' | 'sprinkler' | 'lemonade' | 'fireflies' | 'swimmingPool' | 'autumnMaple' | 'autumnOak' | 'autumnBirch' | 'autumnGinkgo' | 'fallenLeaves' | 'leafSwirl' | 'acorn' | 'cornStalk' | 'scarecrowAutumn' | 'harvestBasket' | 'hotDrink' | 'autumnWreath' | 'pumpkinPatch' | 'hayMaze' | 'appleBasket' | 'rake' | 'hanok' | 'pavilion' | 'stoneWall' | 'onggi' | 'choga' | 'jangseung' | 'sotdae' | 'riceTerrace' | 'koreanWatermill' | 'hanokGate' | 'kimchiGarden' | 'stoneBridge' | 'hanokEstate';
 
 type VillageStyle = 'classic' | 'korean';
 type AssetCategory = 'water' | 'shore' | 'woodland' | 'farm' | 'village' | 'town' | 'decoration';
@@ -568,7 +589,7 @@ interface AssetCatalogEntry {
     readonly description: string;
 }
 
-declare function renderCatalogAsset(type: AssetType, colors: AssetColors, variant?: number): string;
+declare function renderCatalogAsset(type: AssetType, colors: AssetColors, variant?: number, artStyle?: ArtStyle): string;
 
 declare function isAssetType(value: string): value is AssetType;
 declare function getAssetCatalogEntry(id: AssetType): AssetCatalogEntry;
@@ -581,6 +602,8 @@ declare const ASSET_CATALOG_COUNTS: Readonly<{
 
 type EpicTier = 'rare' | 'epic' | 'legendary';
 type EpicBuildingType = 'mountFuji' | 'colosseum' | 'giantSequoia' | 'coralReef' | 'pagoda' | 'torii' | 'geyser' | 'hotSpring' | 'eiffelTower' | 'grandCanyon' | 'windmillGrand' | 'oasis' | 'volcano' | 'giantMushroom' | 'aurora' | 'tajMahal' | 'giantWaterfall' | 'stBasils' | 'bambooGrove' | 'operaHouse' | 'glacierPeak' | 'bioluminescentPool' | 'meteorCrater' | 'bonsaiGiant' | 'floatingIsland' | 'crystalSpire' | 'dragonNest' | 'worldTree' | 'sakuraEternal' | 'ancientPortal';
+
+declare function renderCatalogEpic(type: EpicBuildingType, colors: AssetColors, artStyle?: ArtStyle): string;
 
 interface EpicStatsRule {
     readonly combination: 'or' | 'and';
@@ -765,6 +788,7 @@ interface TerrainGenerationRequest {
     readonly motion?: string;
     readonly layout?: string;
     readonly style?: string;
+    readonly artStyle?: string;
     readonly villageStyle?: string;
     readonly normalization?: string;
     readonly maxCount?: string | number;
@@ -842,4 +866,4 @@ type StartedPreviewServer = PreviewServerHandle & PreviewAddress;
 declare function createPreviewServer(options?: PreviewServerOptions): PreviewServerHandle;
 declare function startPreviewServer(options?: PreviewServerOptions): Promise<StartedPreviewServer>;
 
-export { ASSET_CATALOG, ASSET_CATALOG_COUNTS, type ArchiveV1, type ColorMode, type ContributionData, type ContributionDay, type ContributionStats, type ContributionWeek, DEFAULT_VILLAGE_PRESET, EPIC_CATALOG, EPIC_CATALOG_COUNTS, type FetchContributionsOptions, GitHubApiError, type GitHubApiErrorCode, type Hemisphere, InputValidationError, type MotionMode, type NormalizationOptions, type NormalizationSummary, type RenderSettingsInput, type ResolvedRenderSettings, type SceneCell, type ScenePlacement, type SceneWonderPlacement, type SettingsV1, type SnapshotSource, type SnapshotV1, type TerrainArchiveRequest, type TerrainArchiveResult, type TerrainCellMetadata, type TerrainGenerationRequest, type TerrainGenerationResult, type TerrainLayout, type TerrainMetadata, type TerrainRenderOptions, type TerrainRenderResult, type TerrainScene, type TerrainSceneRenderOptions, type Theme, type ThemeOptions, type ThemeOutput, VILLAGE_PRESETS, type ValidationIssue, type VillagePreset, type VillageStyle$1 as VillageStyle, computeSharedNormalization, computeStats, createArchive, createArchiveGenerator, createPreviewServer, createSnapshot, createTerrainGenerator, fetchContributions, generateArchive, generateTerrain, getAssetCatalogEntry, getEpicCatalogEntry, getTheme, isAssetType, isEpicBuildingType, isVillagePreset, listThemes, parseArchive, parseSettings, parseSnapshot, prepareTerrainScene, registerTheme, renderCatalogAsset, renderPng, renderTerrain, renderTerrainScene, resolveRenderSettings, selectComparisonSnapshots, serializeArchive, serializeSettings, serializeSnapshot, snapshotToContributionData, startPreviewServer, upsertArchiveSnapshot };
+export { ASSET_CATALOG, ASSET_CATALOG_COUNTS, type ArchiveV1, type ArtStyle, type ColorMode, type ContributionData, type ContributionDay, type ContributionStats, type ContributionWeek, DEFAULT_VILLAGE_PRESET, EPIC_CATALOG, EPIC_CATALOG_COUNTS, type FetchContributionsOptions, GitHubApiError, type GitHubApiErrorCode, type Hemisphere, InputValidationError, type MotionMode, type NormalizationOptions, type NormalizationSummary, type PositiveRewardTier, type RenderSettingsInput, type ResolvedRenderSettings, type RewardTier, type SceneCell, type SceneDailyReward, type ScenePlacement, type SceneWonderPlacement, type SettingsV1, type SnapshotSource, type SnapshotV1, type TerrainArchiveRequest, type TerrainArchiveResult, type TerrainCellMetadata, type TerrainGenerationRequest, type TerrainGenerationResult, type TerrainLayout, type TerrainMetadata, type TerrainRenderOptions, type TerrainRenderResult, type TerrainScene, type TerrainSceneRenderOptions, type Theme, type ThemeOptions, type ThemeOutput, VILLAGE_PRESETS, type ValidationIssue, type VillagePreset, type VillageStyle$1 as VillageStyle, computeSharedNormalization, computeStats, createArchive, createArchiveGenerator, createPreviewServer, createSnapshot, createTerrainGenerator, fetchContributions, generateArchive, generateTerrain, getAssetCatalogEntry, getEpicCatalogEntry, getTheme, isAssetType, isEpicBuildingType, isVillagePreset, listThemes, parseArchive, parseSettings, parseSnapshot, prepareTerrainScene, registerTheme, renderCatalogAsset, renderCatalogEpic, renderPng, renderTerrain, renderTerrainScene, resolveRenderSettings, selectComparisonSnapshots, serializeArchive, serializeSettings, serializeSnapshot, snapshotToContributionData, startPreviewServer, upsertArchiveSnapshot };

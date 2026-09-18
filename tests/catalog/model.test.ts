@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { ASSET_CATALOG } from '../../src/themes/terrain/assets.js';
 import { EPIC_CATALOG } from '../../src/themes/terrain/epics.js';
+import { KOREAN_CATALOG_IDS } from './fixtures.js';
 import {
   buildCatalogRecords,
   countCatalogFamilies,
@@ -16,14 +17,15 @@ describe('generated catalog data', () => {
     const records = buildCatalogRecords(ASSET_CATALOG, EPIC_CATALOG);
 
     // Then
-    expect(records).toHaveLength(223);
-    expect(new Set(records.map((entry) => entry.id)).size).toBe(223);
+    expect(records).toHaveLength(232);
+    expect(new Set(records.map((entry) => entry.id)).size).toBe(232);
     expect(records.map((entry) => entry.id)).toEqual(expectedIds);
-    expect(records.filter((entry) => entry.kind === 'asset')).toHaveLength(193);
+    expect(records.filter((entry) => entry.kind === 'asset')).toHaveLength(202);
+    expect(records.filter((entry) => entry.style === 'classic')).toHaveLength(189);
     expect(records.filter((entry) => entry.kind === 'wonder')).toHaveLength(30);
   });
 
-  it('C04-data: keeps the four recognizable Korean catalog IDs', () => {
+  it('C04-data: includes all thirteen Korean IDs including the original four', () => {
     // Given
     const records = buildCatalogRecords(ASSET_CATALOG, EPIC_CATALOG);
 
@@ -31,7 +33,7 @@ describe('generated catalog data', () => {
     const koreanIds = records.filter((entry) => entry.family === 'korean').map((entry) => entry.id);
 
     // Then
-    expect(koreanIds).toEqual(['hanok', 'pavilion', 'stoneWall', 'onggi']);
+    expect(koreanIds.sort()).toEqual([...KOREAN_CATALOG_IDS].sort());
   });
 
   it('C04-data: derives exact family totals from generated records', () => {
@@ -42,9 +44,9 @@ describe('generated catalog data', () => {
     const counts = countCatalogFamilies(records);
 
     // Then
-    expect(Object.values(counts).reduce((sum, count) => sum + count, 0)).toBe(223);
+    expect(Object.values(counts).reduce((sum, count) => sum + count, 0)).toBe(232);
     expect(counts.wonder).toBe(30);
-    expect(counts.korean).toBe(4);
+    expect(counts.korean).toBe(13);
   });
 });
 

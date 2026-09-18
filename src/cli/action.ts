@@ -50,6 +50,7 @@ export function readActionRequest(dependencies: ActionDependencies): TerrainGene
     motion: input('motion'),
     layout: input('layout'),
     style: input('village_style'),
+    artStyle: input('art_style'),
     normalization: input('normalization'),
     maxCount: input('max_count'),
     format: input('format'),

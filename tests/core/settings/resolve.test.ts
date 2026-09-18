@@ -18,6 +18,7 @@ describe('C01-precedence', () => {
       motion: 'full',
       layout: 'banner',
       style: 'classic',
+      artStyle: 'miniature',
       normalization: { kind: 'relative' },
     });
   });

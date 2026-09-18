@@ -47,6 +47,7 @@ describe('Action adapter', () => {
       write_snapshot: 'true',
       layout: 'card',
       village_style: 'korean',
+      art_style: 'pixel',
       layout_seed: 'action-seed',
     });
     await runAction(test.action);
@@ -67,7 +68,7 @@ describe('Action adapter', () => {
     expect(test.action.setOutput).not.toHaveBeenCalledWith('dark_svg_path', '');
     expect(test.render).toHaveBeenCalledWith(
       expect.anything(),
-      expect.objectContaining({ layoutSeed: 'action-seed' }),
+      expect.objectContaining({ layoutSeed: 'action-seed', artStyle: 'pixel', style: 'korean' }),
     );
   });
   it('uses config identity before repository-owner fallback', async () => {

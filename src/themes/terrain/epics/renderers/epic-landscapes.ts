@@ -4,17 +4,14 @@ import type { AssetColors } from '../../palette.js';
 export function renderAurora(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0" rx="5" ry="1.5" fill="${c.snowGround}" opacity="0.3"/>` +
-    `<path d="M-6,-2 Q-3,-8 0,-5 Q3,-9 6,-3" stroke="${c.epicJade}" stroke-width="1.5" fill="none" opacity="0.4" ${motionMarkup('class="epic-glow-pulse"')}/>` +
-    `<path d="M-5,-3 Q-2,-10 1,-6 Q4,-11 6,-4" stroke="${c.epicPortal}" stroke-width="1" fill="none" opacity="0.35" ${motionMarkup('class="epic-glow-pulse"')}/>` +
-    `<path d="M-6,-1 Q-3,-6 0,-4 Q3,-7 5,-2" stroke="${c.epicMagic}" stroke-width="0.8" fill="none" opacity="0.3"/>` +
-    `<path d="M-4,-4 Q-1,-11 2,-7 Q5,-12 6,-5" stroke="${c.epicCrystal}" stroke-width="0.6" fill="none" opacity="0.25" ${motionMarkup('class="epic-glow-pulse"')}/>` +
-    `<polygon points="-4,0 -3.5,-2 -3,0" fill="${c.epicJade}" opacity="0.4"/>` +
-    `<polygon points="-2,0 -1.5,-2.5 -1,0" fill="${c.epicJade}" opacity="0.35"/>` +
-    `<polygon points="2.5,0 3,-1.8 3.5,0" fill="${c.epicJade}" opacity="0.35"/>` +
-    `<circle cx="-3" cy="-10" r="0.2" fill="${c.epicCrystal}" opacity="0.5"/>` +
-    `<circle cx="2" cy="-11" r="0.15" fill="${c.epicCrystal}" opacity="0.4"/>` +
-    `<circle cx="4.5" cy="-9" r="0.18" fill="${c.epicCrystal}" opacity="0.45"/>` +
+    `<path d="M-6.6,.4-4.9,-1.4-1,-1.7 2.1,-.9 5.9,-1.2 6.6,.7 2.5,1.7-2.8,1.5Z" fill="${c.ice}"/>` +
+    `<path d="M-6.6,.4-4.9,-1.4-1,-1.7 2.1,-.9 5.9,-1.2 3.9,.4-.4,.3-2.8,1.1Z" fill="${c.snowCap}"/>` +
+    `<path d="M-6.7,-5Q-4.7,-12.6-.8,-10.4 2,-8.3 5.8,-12L6.4,-7.1Q3.5,-3.6 .1,-6.8-3.2,-9.6-6.7,-2.1Z" fill="${c.epicJade}" opacity=".8" ${motionMarkup('class="epic-glow-pulse"')}/>` +
+    `<path d="M-6.7,-5Q-4.7,-12.6-.8,-10.4 2,-8.3 5.8,-12L6,-10.6Q2,-6.9-.9,-9.3-4.1,-11.5-6.7,-3.6Z" fill="${c.epicCrystal}"/>` +
+    `<path d="M-5.3,-4.9Q-2.2,-8.2 .5,-5.7 3,-3.5 6.4,-7.1L6.7,-4.8Q3.7,-1.6 .5,-4.5-2.5,-7-5.7,-2.8Z" fill="${c.epicMagic}" opacity=".75" ${motionMarkup('class="epic-glow-pulse"')}/>` +
+    `<path d="M-4.1,-9.3-4.8,-5.4-3.6,-7.5ZM-1.6,-9.6-2,-6.6-1.1,-7.5ZM2.1,-8.6 2.3,-5.4 2.8,-6.1ZM4.7,-9.8 4.9,-6 5.4,-7.1Z" fill="${c.epicPortal}"/>` +
+    `<path d="M-5,.4-4.3,-1-4.8,-1-3.7,-3.3-2.8,-1.1-3.3,-1.1-2.5,.5ZM-2,.6-1.2,-1.4-.5,.6ZM2.7,.7 3.6,-1.7 4.5,.7Z" fill="${c.pine}"/>` +
+    `<path d="M-3.7,-3.3-4.2,-2.1-3.6,-2.4-3.2,-2.1ZM3.6,-1.7 3.2,-.5 3.7,-.8 4,-.5Z" fill="${c.snowCap}"/>` +
     `</g>`
   );
 }
@@ -22,20 +19,16 @@ export function renderAurora(x: number, y: number, c: AssetColors): string {
 export function renderGiantWaterfall(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.5" rx="5" ry="1" fill="${c.shadow}" opacity="0.12"/>` +
-    `<rect x="-5.5" y="-10" width="4" height="10" fill="${c.boulder}"/>` +
-    `<rect x="-5.5" y="-10" width="2" height="10" fill="${c.rock}" opacity="0.3"/>` +
-    `<rect x="1.5" y="-10" width="4" height="10" fill="${c.rock}"/>` +
-    `<rect x="3.5" y="-10" width="2" height="10" fill="${c.boulder}" opacity="0.3"/>` +
-    `<rect x="-1.5" y="-10" width="3" height="10" fill="${c.epicCrystal}" opacity="0.45"/>` +
-    `<rect x="-0.6" y="-10" width="1.2" height="10" fill="${c.epicCrystal}" opacity="0.25"/>` +
-    `<line x1="-1" y1="-4" x2="1" y2="-4" stroke="${c.epicCrystal}" stroke-width="0.2" opacity="0.3"/>` +
-    `<line x1="-0.8" y1="-7" x2="0.8" y2="-7" stroke="${c.epicCrystal}" stroke-width="0.15" opacity="0.25"/>` +
-    `<ellipse cx="0" cy="-10.5" rx="6" ry="1.5" fill="${c.epicJade}"/>` +
-    `<ellipse cx="-1" cy="0.5" rx="2.5" ry="0.8" fill="${c.epicCrystal}" opacity="0.2"/>` +
-    `<ellipse cx="1" cy="0.3" rx="2" ry="0.6" fill="${c.epicCrystal}" opacity="0.15"/>` +
-    `<circle cx="-3" cy="0" r="0.6" fill="${c.boulder}" opacity="0.5"/>` +
-    `<circle cx="3.5" cy="0.2" r="0.5" fill="${c.rock}" opacity="0.4"/>` +
+    `<path d="M-6,.3-5.8,-9.5-3.9,-11.5 .5,-10.6 4.7,-11.2 6,-8.6 5.4,.8 .1,1.9Z" fill="${c.boulder}"/>` +
+    `<path d="M-5.8,-9.5-3.9,-11.5-.8,-10.1-1.2,-5.5-3.1,-4.3-3.4,.9-6,.3Z" fill="${c.rock}"/>` +
+    `<path d="M2.3,-10.5 4.7,-11.2 6,-8.6 5.4,.8 3.6,1.2 4,-4 2.8,-5.6Z" fill="${c.rock}"/>` +
+    `<path d="M-5.8,-9.5-3.9,-11.5 .5,-10.6 4.7,-11.2 6,-8.6 3,-8.9 .1,-9.8-3.5,-8.5Z" fill="${c.epicJade}"/>` +
+    `<path d="M-5.3,-9.8-3.9,-11.5-.6,-10.8-2.7,-9.6ZM2.5,-10.5 4.7,-11.2 5.3,-10.1 3.4,-9.7Z" fill="${c.leafLight}"/>` +
+    `<path d="M-.8,-10.7 1.7,-10.6 2.3,-9Q1.4,-5 2.1,-1.7L3.3,.5Q.5,2.2-2.6,.4L-1.4,-2.2Q-.5,-5.6-1.6,-9.4Z" fill="${c.epicCrystal}"/>` +
+    `<path d="M-.8,-10.7-.3,-9.2Q.6,-6-.3,-2.1L-.9,.2-1.8,-.2-.8,-3Q-.1,-6.1-1.1,-9.3ZM1,-8.2Q.5,-5.9 1.4,-3.5L1,-.9Q.2,-4.8 1,-8.2Z" fill="${c.snowCap}"/>` +
+    `<path d="M-4.9,-7.4-3.2,-6.5-4.7,-4.6M-5.5,-2.9-4,-2.7M4.5,-8 4.1,-6.2 5.4,-5.7M4.2,-3.2 5.3,-2.7" stroke="${c.boulder}" stroke-width=".45" fill="none"/>` +
+    `<path d="M-4.5,.5Q-3.5,-.4-2.1,.5-1.6,-.8-.4,.1 .8,-.7 1.5,.3 3,-.6 4,.4 2.8,1.9-.1,1.7-3.3,1.9-4.5,.5Z" fill="${c.epicCrystal}"/>` +
+    `<path d="M-2.8,.6Q-.8,1.3 1.3,.6M2.3,.9 3.1,.7" stroke="${c.snowCap}" stroke-width=".35" fill="none"/>` +
     `</g>`
   );
 }
@@ -43,24 +36,13 @@ export function renderGiantWaterfall(x: number, y: number, c: AssetColors): stri
 export function renderBambooGrove(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.2" rx="3.5" ry="0.7" fill="${c.shadow}" opacity="0.12"/>` +
-    `<line x1="-3" y1="0" x2="-3" y2="-11" stroke="${c.epicJade}" stroke-width="0.7"/>` +
-    `<line x1="-1.5" y1="0" x2="-1.5" y2="-13" stroke="${c.epicJade}" stroke-width="0.6"/>` +
-    `<line x1="0" y1="0" x2="0" y2="-12" stroke="${c.epicJade}" stroke-width="0.7"/>` +
-    `<line x1="1.5" y1="0" x2="1.5" y2="-11.5" stroke="${c.epicJade}" stroke-width="0.6"/>` +
-    `<line x1="3" y1="0" x2="3" y2="-10" stroke="${c.epicJade}" stroke-width="0.65"/>` +
-    `<line x1="-3.4" y1="-4" x2="-2.6" y2="-4" stroke="${c.leaf}" stroke-width="0.3"/>` +
-    `<line x1="-3.4" y1="-7" x2="-2.6" y2="-7" stroke="${c.leaf}" stroke-width="0.3"/>` +
-    `<line x1="-1.9" y1="-5" x2="-1.1" y2="-5" stroke="${c.leaf}" stroke-width="0.3"/>` +
-    `<line x1="-1.9" y1="-9" x2="-1.1" y2="-9" stroke="${c.leaf}" stroke-width="0.3"/>` +
-    `<line x1="-0.4" y1="-6" x2="0.4" y2="-6" stroke="${c.leaf}" stroke-width="0.3"/>` +
-    `<line x1="1.1" y1="-4.5" x2="1.9" y2="-4.5" stroke="${c.leaf}" stroke-width="0.3"/>` +
-    `<line x1="2.6" y1="-5" x2="3.4" y2="-5" stroke="${c.leaf}" stroke-width="0.3"/>` +
-    `<path d="M-3,-7 Q-4.5,-7 -5.5,-6.5" stroke="${c.leaf}" stroke-width="0.35" fill="none"/>` +
-    `<path d="M-1.5,-9 Q-3,-9 -4,-8.5" stroke="${c.leaf}" stroke-width="0.3" fill="none"/>` +
-    `<path d="M0,-6 Q1.5,-6 2.5,-5.5" stroke="${c.leaf}" stroke-width="0.3" fill="none"/>` +
-    `<path d="M1.5,-4.5 Q3,-4.5 4,-4" stroke="${c.leaf}" stroke-width="0.3" fill="none"/>` +
-    `<path d="M3,-5 Q4.5,-5 5,-4.5" stroke="${c.leaf}" stroke-width="0.25" fill="none"/>` +
+    `<path d="M-4.8,.4-3.1,-.8 3.3,-.8 4.7,.6 1.2,1.3-2.6,1Z" fill="${c.moss}"/>` +
+    `<path d="M-3.9,.3-4.2,-10.8-3.4,-11-3.1,.3ZM-1.9,.3-2.1,-13.1-1.3,-13.1-1,.3ZM-.1,.6 .3,-12.1 1.2,-12.1 .8,.6ZM1.6,.4 2.7,-11.2 3.4,-11.1 2.4,.4ZM3.1,.6 4.1,-8.7 4.8,-8.6 3.8,.6Z" fill="${c.epicJade}"/>` +
+    `<path d="M-3.9,0-4,-10.6M-1.6,0-1.8,-13M.2,.2 .6,-12M2,.2 3,-11M3.4,.3 4.4,-8.5" stroke="${c.leafLight}" stroke-width=".24"/>` +
+    `<path d="M-4.2,-8.1H-3.3M-4,-4.4H-3.2M-2,-10H-1.2M-2,-6.4H-1.1M-1.9,-2.8H-1M.2,-9.1H1.1M.1,-5.2H1M2.4,-8.1H3.2M2,-4.5H2.8M3.6,-5.4H4.5M3.3,-2.1H4" stroke="${c.palm}" stroke-width=".4"/>` +
+    `<path d="M-3.6,-8Q-5.6,-10.6-6.2,-9.9-6.3,-8.7-3.6,-8ZM-3.6,-8Q-5.8,-8.6-6.1,-6.5-4.7,-6.8-3.6,-8ZM-1.6,-10Q-3.5,-12.2-4.8,-11.6-4,-10.2-1.6,-10ZM-1.6,-10Q-.7,-12 1,-11.3 .2,-9.7-1.6,-10Z" fill="${c.palm}"/>` +
+    `<path d="M.6,-5.3Q-1.3,-8.4-2.4,-7.4-1.8,-5.5 .6,-5.3ZM.6,-5.3Q1.6,-8.3 3.1,-7.9 2.4,-6 .6,-5.3ZM2.8,-8.2Q3.8,-10.6 5.4,-10.3 4.9,-8.6 2.8,-8.2ZM3.9,-5.4Q5.7,-7 5.5,-4.8L3.9,-5.4Z" fill="${c.leaf}"/>` +
+    `<path d="M-3.6,-8Q-5.4,-9.5-6.2,-9.9M-1.6,-10-4.8,-11.6M.6,-5.3 2.7,-7.5M2.8,-8.2 5.1,-10" stroke="${c.leafLight}" stroke-width=".2" fill="none"/>` +
     `</g>`
   );
 }
@@ -68,17 +50,14 @@ export function renderBambooGrove(x: number, y: number, c: AssetColors): string 
 export function renderGlacierPeak(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.3" rx="5" ry="1" fill="${c.shadow}" opacity="0.12"/>` +
-    `<polygon points="-6,0 -1,-10 1,-10 6,0" fill="${c.ice}"/>` +
-    `<polygon points="0,-10 1,-10 6,0 0,0" fill="${c.snowGround}" opacity="0.5"/>` +
-    `<polygon points="-1,-10 0,-13.5 1,-10" fill="${c.snowCap}"/>` +
-    `<polygon points="-3.5,-5 -2.5,-8 -1.5,-5" fill="${c.icicle}" opacity="0.5"/>` +
-    `<polygon points="2,-4 3,-7.5 4,-4" fill="${c.icicle}" opacity="0.45"/>` +
-    `<path d="M-5,-2 Q-3,-3 -1,-2 Q1,-3 3,-2 Q5,-3 6,0" fill="${c.snowCap}" opacity="0.25"/>` +
-    `<line x1="-2" y1="-3" x2="-1" y2="-5.5" stroke="${c.epicCrystal}" stroke-width="0.25" opacity="0.4"/>` +
-    `<line x1="1.5" y1="-2" x2="2" y2="-4" stroke="${c.epicCrystal}" stroke-width="0.2" opacity="0.35"/>` +
-    `<line x1="-3" y1="-1" x2="-3.2" y2="0" stroke="${c.icicle}" stroke-width="0.3" opacity="0.4"/>` +
-    `<line x1="3.5" y1="-1" x2="3.7" y2="0" stroke="${c.icicle}" stroke-width="0.25" opacity="0.35"/>` +
+    `<path d="M-6.5,.5-4,-7.8-2.4,-5.8-.6,-14 2.5,-7.2 4.3,-9.8 6.5,.8 2,2.1-3.2,1.8Z" fill="${c.ice}"/>` +
+    `<path d="M-.6,-14 2.5,-7.2 1.4,-5.1 3,1.8 .2,.8-1.5,-4.8Z" fill="${c.frozenWater}"/>` +
+    `<path d="M4.3,-9.8 6.5,.8 3,1.8 4.2,-3.2Z" fill="${c.icicle}"/>` +
+    `<path d="M-4,-7.8-2.4,-5.8-1.5,-4.8-3.2,1.8-4.4,-.8Z" fill="${c.frozenWater}"/>` +
+    `<path d="M-.6,-14-2,-8.2-.8,-9.2-.1,-7.6 .8,-9.3ZM-4,-7.8-5,-4.8-3.7,-5.4-2.4,-5.8ZM4.3,-9.8 3.1,-7.6 4.4,-8.2 5.2,-6Z" fill="${c.snowCap}"/>` +
+    `<path d="M-1.9,-6.5-2.7,-2.1-1.3,-3.6-.7,.5 .3,-.4-1.1,-4.2ZM3.8,-5.4 3.2,-2.4 3.9,-1.4 4,-3.7Z" fill="${c.epicCrystal}"/>` +
+    `<path d="M-6.5,.5-4.4,-.8-3.2,.5-1.1,-.3 .2,.8 2.5,.2 4.1,1.1 6.5,.8 2,2.1-3.2,1.8Z" fill="${c.snowGround}"/>` +
+    `<path d="M-3.4,1.6-2.2,.8-.6,1.2 .6,.7 1.8,1.6 .1,2Z" fill="${c.snowCap}"/>` +
     `</g>`
   );
 }
@@ -86,19 +65,14 @@ export function renderGlacierPeak(x: number, y: number, c: AssetColors): string 
 export function renderBioluminescentPool(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.3" rx="5.5" ry="1.2" fill="${c.shadow}" opacity="0.1"/>` +
-    `<ellipse cx="0" cy="0" rx="5.5" ry="2.2" fill="${c.boulder}"/>` +
-    `<circle cx="-4" cy="-0.5" r="0.8" fill="${c.rock}" opacity="0.5"/>` +
-    `<circle cx="4" cy="-0.3" r="0.7" fill="${c.rock}" opacity="0.45"/>` +
-    `<ellipse cx="0" cy="-0.3" rx="4" ry="1.5" fill="${c.epicPortal}" opacity="0.4" ${motionMarkup('class="epic-glow-pulse"')}/>` +
-    `<ellipse cx="0" cy="-0.5" rx="2.5" ry="0.9" fill="${c.epicPortal}" opacity="0.3" ${motionMarkup('class="epic-glow-pulse"')}/>` +
-    `<circle cx="-1.5" cy="-0.3" r="0.3" fill="${c.epicPortal}" opacity="0.6" ${motionMarkup('class="epic-glow-pulse"')}/>` +
-    `<circle cx="1.2" cy="-0.5" r="0.25" fill="${c.epicCrystal}" opacity="0.5" ${motionMarkup('class="epic-glow-pulse"')}/>` +
-    `<circle cx="0" cy="0.2" r="0.2" fill="${c.epicPortal}" opacity="0.4"/>` +
-    `<line x1="-3" y1="-1" x2="-3" y2="-2" stroke="${c.epicPortal}" stroke-width="0.2"/>` +
-    `<ellipse cx="-3" cy="-2.2" rx="0.4" ry="0.25" fill="${c.epicPortal}" opacity="0.5" ${motionMarkup('class="epic-glow-pulse"')}/>` +
-    `<line x1="3.5" y1="-0.8" x2="3.5" y2="-1.8" stroke="${c.epicPortal}" stroke-width="0.2"/>` +
-    `<ellipse cx="3.5" cy="-2" rx="0.35" ry="0.2" fill="${c.epicCrystal}" opacity="0.45" ${motionMarkup('class="epic-glow-pulse"')}/>` +
+    `<path d="M-6,-.7-4.6,-2.4-1.6,-2.7 1.5,-1.9 4.4,-2.2 6,-.6 5.5,1.5 1.8,2.7-2.3,2.5-5.7,1.3Z" fill="${c.boulder}"/>` +
+    `<path d="M-6,-.7-4.6,-2.4-1.6,-2.7 1.5,-1.9 4.4,-2.2 6,-.6 3.6,.7-2,.9Z" fill="${c.rock}"/>` +
+    `<path d="M-4.6,-.6Q-3.5,-1.9-.8,-1.1 1.8,-.8 3.3,-1.4 5,-.8 4.4,.4 3.1,2-1.4,1.7-4.8,1.3-4.6,-.6Z" fill="${c.water}"/>` +
+    `<path d="M-3.8,-.3Q-2.7,-1.2-.5,-.3 1.6,.4 3.8,-.5 4.4,.6 1.5,1.2-1.2,2-3.8,-.3Z" fill="${c.epicPortal}" ${motionMarkup('class="epic-glow-pulse"')}/>` +
+    `<path d="M-3.2,-2.1V-3M-4.8,-.4V-1.1M3.7,-1.7V-2.6M5.1,.1V-.7" stroke="${c.epicCrystal}" stroke-width=".35"/>` +
+    `<path d="M-4.2,-3Q-3.3,-4.1-2.3,-3-3.2,-2.5-4.2,-3ZM-5.5,-1.1Q-4.8,-2-4.1,-1.1ZM2.8,-2.6Q3.7,-3.8 4.6,-2.6 3.7,-2.1 2.8,-2.6ZM4.5,-.7Q5.1,-1.6 5.7,-.7Z" fill="${c.epicPortal}" ${motionMarkup('class="epic-glow-pulse"')}/>` +
+    `<path d="M-2.2,.1a.3,.3 0 1 0 .6,0 .3,.3 0 1 0-.6,0ZM-.2,.6a.35,.35 0 1 0 .7,0 .35,.35 0 1 0-.7,0ZM2.1,.1a.25,.25 0 1 0 .5,0 .25,.25 0 1 0-.5,0Z" fill="${c.epicCrystal}"/>` +
+    `<path d="M-5.5,1.3-3.2,1.4-2.4,2.1-4.5,1.8ZM3.3,1.8 5.5,1.1 4.8,2.1Z" fill="${c.moss}"/>` +
     `</g>`
   );
 }
@@ -106,19 +80,15 @@ export function renderBioluminescentPool(x: number, y: number, c: AssetColors): 
 export function renderMeteorCrater(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.3" rx="5.5" ry="1.2" fill="${c.shadow}" opacity="0.12"/>` +
-    `<ellipse cx="0" cy="0" rx="5.5" ry="2.8" fill="${c.rock}"/>` +
-    `<ellipse cx="0" cy="-0.3" rx="4" ry="1.8" fill="${c.boulder}" opacity="0.7"/>` +
-    `<ellipse cx="0" cy="-0.2" rx="2.2" ry="0.9" fill="${c.shadow}" opacity="0.5"/>` +
-    `<polygon points="-0.5,-0.5 0.2,-1.2 0.8,-0.3 0.3,0.2" fill="${c.rock}"/>` +
-    `<polygon points="-0.5,-0.5 0.2,-1.2 0.8,-0.3 0.3,0.2" fill="${c.epicGold}" opacity="0.3"/>` +
-    `<circle cx="0.1" cy="-0.4" r="1" fill="${c.epicGold}" opacity="0.15"/>` +
-    `<circle cx="-4.5" cy="-1" r="0.5" fill="${c.rock}" opacity="0.5"/>` +
-    `<circle cx="4" cy="0.5" r="0.6" fill="${c.rock}" opacity="0.45"/>` +
-    `<circle cx="-2.5" cy="1.2" r="0.35" fill="${c.boulder}" opacity="0.4"/>` +
-    `<circle cx="2.5" cy="-1.5" r="0.4" fill="${c.boulder}" opacity="0.35"/>` +
-    `<line x1="0" y1="-0.5" x2="-3" y2="-1.5" stroke="${c.shadow}" stroke-width="0.2" opacity="0.3"/>` +
-    `<line x1="0" y1="-0.5" x2="2.5" y2="0.5" stroke="${c.shadow}" stroke-width="0.2" opacity="0.25"/>` +
+    `<path d="M-6.3,-.8-4.5,-2.5-2,-3.1 1.2,-2.8 3.8,-2.3 6.2,-.5 5.5,1.5 2.3,2.8-1.8,3-5.6,1.5Z" fill="${c.boulder}"/>` +
+    `<path d="M-6.3,-.8-4.5,-2.5-2,-3.1 1.2,-2.8 3.8,-2.3 6.2,-.5 3.6,.9-1,1.9-4.6,.6Z" fill="${c.rock}"/>` +
+    `<path d="M-4.4,-.7Q-.7,-3.1 3.9,-.9L4.2,.1Q1.2,2.3-3.1,1.1Z" fill="${c.shadow}"/>` +
+    `<path d="M-4.4,-.7-3.1,1.1Q1.2,2.3 4.2,.1L3.5,-.4Q.9,1.2-2.9,.4Z" fill="${c.trunk}"/>` +
+    `<path d="M-1.7,.2-1.4,-1.5 .1,-2.3 1.6,-1.5 1.9,.2 .5,1Z" fill="${c.boulder}"/>` +
+    `<path d="M-1.7,.2-1.4,-1.5 .1,-2.3 .4,-.6-.1,.7Z" fill="${c.rock}"/>` +
+    `<path d="M.1,-2.3 .5,-1.3 .1,-.5 .9,-.1 .5,1 .1,.1-.5,-.5 0,-1.3Z" fill="${c.torchFlame}"/>` +
+    `<path d="M-4.7,-2.3-3.2,-1.6M-2,-3.1-1.8,-2.1M3.8,-2.3 2.9,-1.5M6,-.4 4.2,-.1M4.4,1.9 3.1,.9M-1.8,3-1.1,1.7M-5.6,1.5-4,.7" stroke="${c.shadow}" stroke-width=".35"/>` +
+    `<path d="M-5.4,-.6-4.6,-1.1-3.9,-.3-4.8,0ZM2,2.1 2.6,1.5 3.4,1.8 2.8,2.4Z" fill="${c.epicMarble}"/>` +
     `</g>`
   );
 }

@@ -43,6 +43,7 @@ export const renderSettingsSchema = z.strictObject({
   motion: z.enum(['full', 'subtle', 'off']),
   layout: z.enum(['banner', 'card']),
   style: villageStyleSchema,
+  artStyle: z.enum(['miniature', 'pixel']),
   normalization: normalizationSchema,
   layoutSeed: xml10TextSchema.max(256).optional(),
 });

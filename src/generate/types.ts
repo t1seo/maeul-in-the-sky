@@ -21,6 +21,7 @@ export interface TerrainGenerationRequest {
   readonly motion?: string;
   readonly layout?: string;
   readonly style?: string;
+  readonly artStyle?: string;
   readonly villageStyle?: string;
   readonly normalization?: string;
   readonly maxCount?: string | number;

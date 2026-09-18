@@ -8,6 +8,9 @@ import { blendWithBiome } from './biome-pool.js';
 import { applyVillageStyle } from './style-pool.js';
 import { assetCellIdentity, assetDateSeed, dateSeasonWeek } from './date-seed.js';
 import { isAssetType } from './catalog.js';
+import { dailyPrimaryPlacement } from './progression-primary.js';
+import { DAILY_DECORATION_CEILINGS, getDailyRewardTier } from './progression.js';
+import { dailyDecorationOffset } from './progression-composition.js';
 
 const SMIL_TYPES: ReadonlySet<AssetType> = new Set([
   'seagull',
@@ -27,7 +30,11 @@ const SMIL_TYPES: ReadonlySet<AssetType> = new Set([
 const CSS_TYPES: ReadonlySet<AssetType> = new Set(['cattail', 'tallGrass', 'laundry']);
 
 function poolForCell(cell: IsoCell, options: AssetSelectionOptions): AssetPool {
-  const level = getEffectiveLevel(cell.count === 0 ? 0 : cell.level100, options.density ?? 5);
+  const effective = getEffectiveLevel(cell.count === 0 ? 0 : cell.level100, options.density ?? 5);
+  const level =
+    cell.count === undefined
+      ? effective
+      : Math.min(effective, DAILY_DECORATION_CEILINGS[getDailyRewardTier(cell.count)]);
   let pool = getLevelPool100(level);
   // Zero activity can have bare-ground decoration, never seasonal/biome settlement additions.
   if (cell.count === 0 || cell.level100 === 0) return pool;
@@ -66,14 +73,26 @@ export function selectAssetPlacements(
     const identity = assetCellIdentity(cell);
     // Compatibility for manually constructed/duplicate-date grids; valid calendars use date alone.
     const key = (dates.get(identity) ?? 0) > 1 ? `${identity}:${cell.week},${cell.day}` : identity;
-    const rng = seededRandom(assetDateSeed(seed, key, 'selection'));
-    const variants = seededRandom(assetDateSeed(options.variantSeed ?? seed, key, 'variant'));
+    const primary = dailyPrimaryPlacement(cell, key, seed, options);
+    if (primary) assets.push(primary);
+    const rng = seededRandom(assetDateSeed(seed, key, primary ? 'decoration' : 'selection'));
+    const variants = seededRandom(
+      assetDateSeed(options.variantSeed ?? seed, key, primary ? 'decoration-variant' : 'variant'),
+    );
     const pool = poolForCell(cell, options);
     const abundance = cell.count === 0 ? 0 : cell.level100 / 99;
     if (rng() >= pool.chance + abundance * 0.2 || pool.types.length === 0) continue;
-    const slots = cell.count !== 0 && cell.level100 >= 43 && rng() < 0.4 ? 2 : 1;
-    for (let slot = 0; slot < slots; slot++) {
+    const slots = primary ? 1 : cell.count !== 0 && cell.level100 >= 43 && rng() < 0.4 ? 2 : 1;
+    for (let index = 0; index < slots; index++) {
+      const slot = primary ? index + 1 : index;
       const type = pool.types[Math.floor(rng() * pool.types.length)];
+      const offset = primary
+        ? dailyDecorationOffset(primary, type, rng())
+        : {
+            ox: (rng() - 0.5) * (slot === 0 ? 3 : 4),
+            oy: (rng() - 0.5) * (slot === 0 ? 1.5 : 2),
+          };
+      if (!offset) continue;
       assets.push({
         id: `asset:${key}:${slot}`,
         date: cell.date,
@@ -82,8 +101,7 @@ export function selectAssetPlacements(
         type,
         cx: cell.isoX,
         cy: cell.isoY,
-        ox: (rng() - 0.5) * (slot === 0 ? 3 : 4),
-        oy: (rng() - 0.5) * (slot === 0 ? 1.5 : 2),
+        ...offset,
         variant: Math.floor(variants() * 3),
         animated: false,
       });

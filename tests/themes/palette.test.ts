@@ -180,11 +180,12 @@ describe('getSeasonalPalette100', () => {
     expect(autumnElev.top).not.toBe(baseElev.top);
   });
 
-  it('autumn zone tints asset colors with warmth', () => {
+  it('autumn zone preserves wood while warming foliage', () => {
     const base = getTerrainPalette100('dark');
     const autumn = getSeasonalPalette100('dark', 42, 0);
 
-    expect(autumn.assets.trunk).not.toBe(base.assets.trunk);
+    expect(autumn.assets.trunk).toBe(base.assets.trunk);
+    expect(autumn.assets.leaf).not.toBe(base.assets.leaf);
   });
 
   it('spring zone (week 16, rotation 0) applies green tinting', () => {
@@ -369,20 +370,17 @@ describe('getSeasonalPalette100 colorShift and tinting paths', () => {
     expect(springE.top).not.toBe(baseE.top);
   });
 
-  it('seasonal palette tints rgba asset colors (smoke)', () => {
+  it('seasonal palette preserves translucent material colors (smoke)', () => {
     const winter = getSeasonalPalette100('dark', 2, 0);
-    // smoke is rgba(180,180,180,0.4) in base. After winter tint, still rgba
     expect(winter.assets.smoke).toMatch(/^rgba\(/);
-    // Should be different from base due to winter tinting
     const base = getTerrainPalette100('dark');
-    expect(winter.assets.smoke).not.toBe(base.assets.smoke);
+    expect(winter.assets.smoke).toBe(base.assets.smoke);
   });
 
-  it('seasonal palette tints hex asset colors', () => {
+  it('seasonal palette preserves wood contrast under snow', () => {
     const winter = getSeasonalPalette100('dark', 2, 0);
-    // trunk is a hex color in base
     expect(winter.assets.trunk).toMatch(/^#[0-9a-f]{6}$/);
     const base = getTerrainPalette100('dark');
-    expect(winter.assets.trunk).not.toBe(base.assets.trunk);
+    expect(winter.assets.trunk).toBe(base.assets.trunk);
   });
 });

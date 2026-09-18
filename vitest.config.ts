@@ -30,7 +30,13 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['src/**/*.ts'],
-      exclude: ['src/index.ts', 'src/action.ts', 'src/lib.ts', 'src/core/types.ts'],
+      exclude: [
+        'src/index.ts',
+        'src/action.ts',
+        'src/lib.ts',
+        'src/core/types.ts',
+        'src/themes/terrain/pixel/generated/**',
+      ],
       thresholds: {
         statements: 95,
         branches: 90,

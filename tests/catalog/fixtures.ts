@@ -1,0 +1,15 @@
+export const KOREAN_CATALOG_IDS = [
+  'hanok',
+  'pavilion',
+  'stoneWall',
+  'onggi',
+  'choga',
+  'jangseung',
+  'sotdae',
+  'riceTerrace',
+  'koreanWatermill',
+  'hanokGate',
+  'kimchiGarden',
+  'stoneBridge',
+  'hanokEstate',
+] as const;

@@ -23,6 +23,7 @@ npx playwright install --with-deps chromium
 Run the development checks:
 
 ```bash
+npx tsx scripts/pixel/generate.ts --check
 npm run lint
 npm run typecheck
 npm run format:check
@@ -31,14 +32,16 @@ npm test
 npm run test:artifact
 ```
 
-Generate the local preset demo after renderer or asset changes:
+After renderer or asset artwork changes, regenerate the compiled pixel assets before running tests or builds. The `--check` command detects source/output drift without rewriting files. Then regenerate the local preset demo and catalog:
 
 ```bash
+npx tsx scripts/pixel/generate.ts
+npx tsx scripts/pixel/generate.ts --check
 npm run generate:demo
 npm run generate:catalog
 ```
 
-Serve `docs/demo` over local HTTP and inspect Nature, Balanced, and Civilization in both color modes, plus the asset catalog at `/catalog/`. Animation changes must also be checked with reduced motion enabled. The full cross-browser suite (`npm run test:browser`) additionally requires `npx playwright install --with-deps firefox webkit`.
+Serve `docs/demo` over local HTTP and inspect Nature, Balanced, and Civilization in both color modes and miniature/pixel art styles, plus the asset catalog at `/catalog/`. Check both classic and Korean culture, including the new Korean assets. Animation changes must also be checked with reduced motion enabled. The full cross-browser suite (`npm run test:browser`) additionally requires `npx playwright install --with-deps firefox webkit`.
 
 ## Project layout
 

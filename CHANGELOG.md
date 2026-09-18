@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Independent art styles** — `miniature` and compiled SVG `pixel` artwork are available across the scene API, CLI, Action, demo, sharing, imports, exports, and catalog; existing settings default to miniature
+- **Korean countryside expansion** — nine new assets add thatched homes, village guardians, rice terraces, a watermill, a hanok gate, a kimchi garden, a stone bridge, and a hanok estate
+- **Daily contribution rewards** — raw daily contribution thresholds at 0, 1, 5, 10, 25, and 50 guarantee a primary asset or Wonder plus a tier marker on positive dates, independently of height normalization and decoration density; zero dates receive no activity reward
+- **Art generation checks** — all 232 catalog IDs have compiled pixel artwork, with source/output drift checks in builds and CI and reproducible visual comparisons in the release report
 - **Portable scene API** — browser-safe rendering now prepares one deterministic scene and shades matching dark/light SVGs with structured date, normalization, asset, and Wonder metadata
 - **Versioned settings and snapshots** — schema-versioned JSON import/export supports reproducible offline rendering, strict validation, bounded imports, and source provenance
 - **Multi-year archives** — CLI, Action, and JavaScript APIs compare two to five annual snapshots with a shared or explicit fixed height scale and stacked comparison SVGs
@@ -16,9 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Motion modes** — `full`, `subtle`, and `off` policies share a complete reduced-motion fallback, with PNG always rendered from a motion-free scene
 - **Browser explorer and setup wizard** — the enhanced demo supports snapshot/archive import, per-date details, zoom, saved annual data, comparisons, workflow/README downloads, and a Wonder encyclopedia
 - **Authenticated local preview** — `maeul-sky preview` binds to loopback and fetches actual account data with `GITHUB_TOKEN` kept only in the server environment
-- **Korean village style** — four original catalog assets (`hanok`, `pavilion`, `stoneWall`, and `onggi`) and truthful neighborhood paths complement the classic style
-- **Generated asset catalog** — a searchable, filterable gallery and registry-driven dark/light SVG and PNG sheets document 193 ordinary IDs (189 classic and 4 Korean) separately from 30 Wonders, with regeneration and registry consistency checks
-- **Village presets** — Nature, Balanced, and Civilization provide understandable building-density choices across the Action, CLI, and JavaScript API
+- **Korean village style** — 13 catalog assets, including the four originals (`hanok`, `pavilion`, `stoneWall`, and `onggi`), and truthful neighborhood paths complement the classic style
+- **Generated asset catalog** — a searchable, filterable gallery and registry-driven dark/light SVG and PNG sheets document 202 ordinary IDs (189 classic and 13 Korean) separately from 30 Wonders, with both art styles and regeneration checks
+- **Village presets** — Nature, Balanced, and Civilization provide decoration-mix choices across the Action, CLI, and JavaScript API
 - **Repository-owner targeting** — the Action accepts an explicit `username` and otherwise uses the repository owner, including scheduled runs
 - **Terrain insight bar** — generated SVGs now show their covered dates, active days, busiest month, and discovered Wonder count
 - **Accessible SVG output** — generated Terrain includes an accessible name and description plus reduced-motion behavior
@@ -33,10 +37,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Complete artwork redesign** — all 223 existing asset IDs retain their identity with rebuilt silhouettes, materials, lighting, and details; spring flowers, summer foliage, autumn harvests, and winter snow distinguish the four seasons while preserving wood, animal, and evergreen colors
+- **Layout version 2** — date-based primary rewards and bounded surrounding decorations use a new declared layout identity; legacy settings and prepared scenes remain accepted, but regenerating a scene can change its arrangement
+- **Decoration density** — density now adjusts surrounding decoration choices within available space and growth stages; it does not lower a daily reward tier or change its guaranteed primary asset
+- **Renderer cost baseline** — increased art detail and daily rewards require a documented new feature baseline after simplification; prior/current size and timing measurements remain public, and future +5% size, +20% median, and +30% p95 regression limits are unchanged
+- **Current-source setup** — new-feature workflow examples use the main Action bundle; npm 1.4.0 and the existing v1 tag do not include these unreleased features
 - **Contribution calendar rendering** — supplied UTC dates now determine Sunday-based positions, including partial weeks, gaps, leap days, and ranges longer than 53 weeks without inventing missing dates
 - **Deterministic layout identity** — versioned date-based seeds keep dark/light scene geometry aligned and allow an explicit `layoutSeed` override, with documented stability limits around neighbors, normalization, and Wonder budgets
 - **Output adapters** — CLI and Action accept settings/snapshot input, layout, style, normalization, archive, PNG, and snapshot-output controls while preserving the default two-SVG workflow
-- **Asset architecture** — the compatibility facades now expose typed, modular renderer catalogs containing 193 ordinary IDs and 30 separately counted Wonders
+- **Asset architecture** — the compatibility facades now expose typed, modular renderer catalogs containing 202 ordinary IDs and 30 separately counted Wonders
 - **Generated documentation assets** — README previews, six demo presets, examples, cases, and catalog sheets now declare their seeded synthetic source and exact supplied range
 - **Project documentation** — added a task-based quick start, accurate rolling-range defaults, CLI and API examples, privacy notes, troubleshooting, presets, and Epic Wonders across all supported languages
 - **Package metadata** — now describes the village experience and includes Action and profile README discovery terms
@@ -46,6 +55,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dependencies** — updated the test and Action toolchains; `npm audit` now reports zero vulnerabilities
 
 ### Fixed
+
+- Preserve eligible lower-tier Wonder draws when an upper-tier draw fails, retain the daily reward marker at Wonder positions, and keep animated portal geometry within its declared bounds.
 
 - Restrict local archive CSS rules to their annual row so generic selectors resolve the correct year’s paint server; preserve selector specificity and document the existing imported/global CSS boundary.
 

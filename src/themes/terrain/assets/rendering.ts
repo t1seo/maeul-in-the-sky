@@ -6,18 +6,23 @@ import type { AssetSelectionOptions, AssetType, PlacedAsset } from './types.js';
 import { currentMotionContext, withMotionContext, motionMarkup } from '../../../core/animation.js';
 import { ASSET_RENDERERS } from './renderers.js';
 import { selectAssets } from './selection.js';
+import type { ArtStyle } from '../../../core/render-options.js';
+import { renderPixelAsset } from '../pixel/render.js';
 
 export function renderCatalogAsset(
   type: AssetType,
   colors: AssetColors,
   variant: number = 0,
+  artStyle: ArtStyle = 'miniature',
 ): string {
+  if (artStyle === 'pixel') return renderPixelAsset(type, 0, 0, colors, variant);
   return ASSET_RENDERERS[type](0, 0, colors, variant);
 }
 
 export function renderAssetPlacements(
   placed: readonly PlacedAsset[],
   palettes: TerrainPalette100 | readonly TerrainPalette100[],
+  artStyle: ArtStyle = 'miniature',
 ): string {
   const paletteFor = (week: number): TerrainPalette100 => {
     if ('assets' in palettes) return palettes;
@@ -26,14 +31,23 @@ export function renderAssetPlacements(
   const context = currentMotionContext();
   const parts = placed.map((asset) => {
     const palette = paletteFor(asset.cell.week);
-    const art = withMotionContext({ ...context, mode: asset.animated ? context.mode : 'off' }, () =>
-      ASSET_RENDERERS[asset.type](
-        asset.cx + asset.ox,
-        asset.cy + asset.oy,
-        palette.assets,
-        asset.variant,
-      ),
-    );
+    const art =
+      artStyle === 'pixel'
+        ? renderPixelAsset(
+            asset.type,
+            asset.cx + asset.ox,
+            asset.cy + asset.oy,
+            palette.assets,
+            asset.variant,
+          )
+        : withMotionContext({ ...context, mode: asset.animated ? context.mode : 'off' }, () =>
+            ASSET_RENDERERS[asset.type](
+              asset.cx + asset.ox,
+              asset.cy + asset.oy,
+              palette.assets,
+              asset.variant,
+            ),
+          );
     return `<g data-asset-id="${escapeXml(asset.id)}" data-catalog-id="${asset.catalogId}" data-date="${escapeXml(asset.date ?? '')}">${art}</g>`;
   });
   return `<g class="terrain-assets">${parts.join('')}</g>`;
@@ -47,10 +61,12 @@ export function renderTerrainAssets(
   biomeMap?: Map<string, BiomeContext>,
   density: number = 5,
   options: AssetSelectionOptions = {},
+  artStyle: ArtStyle = 'miniature',
 ): string {
   return renderAssetPlacements(
     selectAssets(isoCells, seed, variantSeed, biomeMap, undefined, density, undefined, options),
     palette,
+    artStyle,
   );
 }
 
@@ -64,6 +80,7 @@ export function renderSeasonalTerrainAssets(
   density: number = 5,
   excludeCells?: Set<string>,
   options: AssetSelectionOptions = {},
+  artStyle: ArtStyle = 'miniature',
 ): string {
   return renderAssetPlacements(
     selectAssets(
@@ -77,6 +94,7 @@ export function renderSeasonalTerrainAssets(
       options,
     ),
     weekPalettes,
+    artStyle,
   );
 }
 

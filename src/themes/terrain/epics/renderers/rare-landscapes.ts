@@ -3,17 +3,14 @@ import type { AssetColors } from '../../palette.js';
 export function renderMountFuji(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.2" rx="5" ry="1" fill="${c.shadow}" opacity="0.15"/>` +
-    `<polygon points="-7,0 0,-13 7,0" fill="${c.boulder}"/>` +
-    `<polygon points="0,-13 7,0 0,0" fill="${c.rock}" opacity="0.6"/>` +
-    `<line x1="-4" y1="-4" x2="4" y2="-4" stroke="${c.rock}" stroke-width="0.3" opacity="0.4"/>` +
-    `<line x1="-3" y1="-7" x2="3" y2="-7" stroke="${c.rock}" stroke-width="0.25" opacity="0.35"/>` +
-    `<polygon points="-3,-9 0,-13 3,-9" fill="${c.snowCap}"/>` +
-    `<polygon points="0,-13 3,-9 0,-9" fill="${c.snowGround}" opacity="0.7"/>` +
-    `<path d="M-3,-9 Q-2,-8 -1,-8.6 Q0,-8 1,-8.6 Q2,-8 3,-9" fill="${c.snowCap}" opacity="0.5"/>` +
-    `<circle cx="-4" cy="-2" r="0.8" fill="${c.epicJade}" opacity="0.5"/>` +
-    `<circle cx="-2.5" cy="-2.5" r="0.7" fill="${c.epicJade}" opacity="0.45"/>` +
-    `<circle cx="3" cy="-2" r="0.7" fill="${c.epicJade}" opacity="0.4"/>` +
+    `<ellipse cy=".6" rx="6.4" ry="1.1" fill="${c.shadow}" opacity="0.15"/>` +
+    `<path d="M-7,.3Q-4.7,-3.3 -2.8,-7.3L-.7,-12.8 .9,-12.6 3,-7Q4.8,-3 7,.3L2,1.2-3,1Z" fill="${c.rock}"/>` +
+    `<path d="M.9,-12.6 3,-7Q4.8,-3 7,.3L2,1.2 .2,-5.2Z" fill="${c.boulder}"/>` +
+    `<path d="M-.7,-12.8-2.8,-7.3-6,.2-3,-1.2-.4,-7.3Z" fill="${c.epicMarble}" opacity=".35"/>` +
+    `<path d="M-2.9,-7.5-.7,-12.8 .9,-12.6 3,-7 1.4,-8.3 .8,-7.5-.1,-9-1.1,-8.2-1.5,-9Z" fill="${c.snowCap}"/>` +
+    `<path d="M.2,-12.7 .9,-12.6 3,-7 1.4,-8.3 .8,-7.5 .2,-9.6Z" fill="${c.ice}"/>` +
+    `<path d="M-5.6,-.4-4.8,-2-4,-.5-3.5,-1.6-2.5,.3-6,.6ZM2.7,.2 3.4,-1.4 4.1,-.6 4.6,-1.2 5.8,.5Z" fill="${c.pine}"/>` +
+    `<path d="M-2,.5Q.4,-.2 2.4,.6L1.6,1.2-2,1Z" fill="${c.epicCrystal}"/>` +
     `</g>`
   );
 }
@@ -21,18 +18,14 @@ export function renderMountFuji(x: number, y: number, c: AssetColors): string {
 export function renderGiantSequoia(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.2" rx="3.5" ry="0.8" fill="${c.shadow}" opacity="0.15"/>` +
-    `<path d="M-2.5,0 Q-2.2,-0.8 -1.8,-1" stroke="${c.trunk}" stroke-width="0.6" fill="none"/>` +
-    `<path d="M2.5,0 Q2.2,-0.8 1.8,-1" stroke="${c.trunk}" stroke-width="0.6" fill="none"/>` +
-    `<rect x="-1.8" y="-7" width="3.6" height="7" fill="${c.trunk}" rx="0.6"/>` +
-    `<rect x="-0.5" y="-7" width="1" height="7" fill="${c.trunk}" opacity="0.5"/>` +
-    `<line x1="-1.8" y1="-4" x2="-2.8" y2="-4.5" stroke="${c.trunk}" stroke-width="0.5"/>` +
-    `<line x1="1.8" y1="-5" x2="2.6" y2="-5.5" stroke="${c.trunk}" stroke-width="0.4"/>` +
-    `<ellipse cx="0" cy="-9" rx="5.5" ry="3.5" fill="${c.bushDark}"/>` +
-    `<ellipse cx="0" cy="-9" rx="5" ry="3.2" fill="${c.epicJade}"/>` +
-    `<ellipse cx="-1.5" cy="-11" rx="3.5" ry="2.5" fill="${c.epicJade}" opacity="0.85"/>` +
-    `<ellipse cx="1.5" cy="-11" rx="3" ry="2.2" fill="${c.leaf}" opacity="0.6"/>` +
-    `<ellipse cx="0" cy="-12.5" rx="2.5" ry="1.8" fill="${c.leafLight}" opacity="0.5"/>` +
+    `<ellipse cy=".4" rx="4.2" ry=".8" fill="${c.shadow}" opacity="0.15"/>` +
+    `<path d="M-3.6,.5Q-2,-.7-1.8,-4L-1.1,-11 1,-11 1.8,-4Q1.9,-.7 3.4,.5L1.2,.1 0,.8-1.3,.1Z" fill="${c.trunk}"/>` +
+    `<path d="M-.9,-9-.7,-2-1.3,.1 0,.8 .4,-3 .2,-10ZM1,-7 1.3,-2 2.3,.2 1.8,-4Z" fill="${c.bareBranch}"/>` +
+    `<path d="M-.7,.2V-1.8Q0,-3 .7,-1.8V.3Z" fill="${c.shadow}"/>` +
+    `<path d="M-1,-5.2-3.4,-7.3-3,-7.9-.5,-6.1 2.7,-8.6 3.2,-8.1 .8,-5.8Z" fill="${c.trunk}"/>` +
+    `<path d="M-5.7,-6.8Q-5.9,-8.5-4,-9.1-4.8,-10.8-2.8,-11.5-3.1,-13-1.4,-13.6L-.2,-15 1,-13.7Q3,-13.8 2.6,-11.7 4.7,-11 3.6,-9.4 5.6,-8.8 5,-6.9 3.8,-5.8 1.4,-6.4L.1,-7-1.8,-6Q-4.6,-5.5-5.7,-6.8Z" fill="${c.bushDark}"/>` +
+    `<path d="M-5.4,-7.5Q-4.9,-9-3.3,-9.1-4,-10.8-2,-11.4-2.3,-13-1,-13.5L-.2,-15 .8,-13.4Q2.6,-13.1 1.6,-11.5 3.6,-10.8 2.4,-9.4 4.2,-8.7 3.6,-7.5L.5,-8.1-1.6,-7.1Z" fill="${c.epicJade}"/>` +
+    `<path d="M-3.3,-10.2Q-3.2,-11-1.7,-11.5-2,-12.8-.7,-13.2L-.2,-15 .4,-13.3-.1,-11.8 1,-11.1-.7,-10.7Z" fill="${c.leafLight}"/>` +
     `</g>`
   );
 }
@@ -40,19 +33,15 @@ export function renderGiantSequoia(x: number, y: number, c: AssetColors): string
 export function renderCoralReef(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.3" rx="5.5" ry="1.2" fill="${c.shadow}" opacity="0.12"/>` +
-    `<ellipse cx="0" cy="0" rx="5" ry="1.5" fill="${c.coral}" opacity="0.3"/>` +
-    `<path d="M-3,0 L-3,-4 L-4,-5.5 M-3,-3 L-2,-5" stroke="${c.coral}" stroke-width="0.8" fill="none"/>` +
-    `<path d="M1,0 L1,-5 L0,-7 M1,-3 L2.2,-5.5" stroke="${c.epicMagic}" stroke-width="0.7" fill="none"/>` +
-    `<path d="M3.5,0 Q3,-2 4.5,-4 Q5,-3 5.5,-4 Q5,-1.5 3.5,0" fill="${c.epicPortal}" opacity="0.5"/>` +
-    `<circle cx="-4" cy="-5.8" r="1" fill="${c.coral}"/>` +
-    `<circle cx="-2" cy="-5.3" r="0.7" fill="${c.coral}" opacity="0.8"/>` +
-    `<circle cx="0" cy="-7.2" r="1.1" fill="${c.epicMagic}"/>` +
-    `<circle cx="2.2" cy="-5.8" r="0.8" fill="${c.epicMagic}" opacity="0.8"/>` +
-    `<path d="M-1,-3 L0.2,-3.4 L-1,-3.8 Z" fill="${c.epicGold}" opacity="0.7"/>` +
-    `<path d="M-1.3,-3.2 L-1,-3.4 L-1.3,-3.6" fill="${c.epicGold}" opacity="0.5"/>` +
-    `<circle cx="1.5" cy="-6" r="0.2" fill="${c.epicCrystal}" opacity="0.3"/>` +
-    `<circle cx="0.5" cy="-8" r="0.15" fill="${c.epicCrystal}" opacity="0.25"/>` +
+    `<path d="M-6,.3-4.7,-1.3 .8,-1.6 5.5,-.5 6,1 2,2-3.7,1.5Z" fill="${c.boulder}"/>` +
+    `<path d="M-6,.3-4.7,-1.3 .8,-1.6 5.5,-.5 1.5,.7-3,.8Z" fill="${c.rock}"/>` +
+    `<path d="M-3.8,.1-3.7,-3.6-5.4,-4.9-5.8,-7-5,-7.2-4.5,-5.4-3.7,-4.8-3.9,-7.6-3,-8-2.6,-7.5-2.8,-4.4-1.7,-5.3-1.4,-7-.6,-6.8-.7,-4.8-2.6,-3.2-2.5,.2Z" fill="${c.coral}"/>` +
+    `<path d="M2,.2 1.7,-3.4Q-.2,-3.3-.2,-5.8L.4,-8.3 1.5,-7.7 2.4,-8.8 3.2,-7.6 4.6,-8 5.4,-6.4 4.8,-4.2 3,-3.1 2.8,.4Z" fill="${c.epicMagic}"/>` +
+    `<path d="M2.4,-3.7 .6,-6.8 1.9,-5.7 2.4,-7.8 2.9,-5.7 4.4,-6.8 3.5,-4.5Z" fill="${c.cherryPetalPink}"/>` +
+    `<path d="M-.8,.7V-2.8Q-.2,-3.7 .5,-2.8V.6M3.5,.7V-1.8Q4.2,-2.8 4.9,-1.8V.4" fill="${c.epicGold}"/>` +
+    `<path d="M-.5,-2.7H.2M3.9,-1.8H4.6" stroke="${c.trunk}" stroke-width=".4"/>` +
+    `<path d="M-1.2,-4.1Q-.2,-5.2 1,-4.3L1.7,-4.9V-3.8L1,-4Q-.1,-3.4-1.2,-4.1Z" fill="${c.fish}"/>` +
+    `<path d="M-5.1,.2-4.4,-.4-3.6,.3-4.4,.8ZM1.3,.6 2.1,.1 2.8,.8 2,1.2Z" fill="${c.epicCrystal}"/>` +
     `</g>`
   );
 }
@@ -60,18 +49,14 @@ export function renderCoralReef(x: number, y: number, c: AssetColors): string {
 export function renderGeyser(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.2" rx="3.5" ry="0.8" fill="${c.shadow}" opacity="0.15"/>` +
-    `<ellipse cx="0" cy="0" rx="3.5" ry="1.4" fill="${c.rock}"/>` +
-    `<ellipse cx="0" cy="-0.3" rx="2.5" ry="1" fill="${c.boulder}"/>` +
-    `<ellipse cx="0" cy="-0.2" rx="1.5" ry="0.5" fill="${c.epicGold}" opacity="0.2"/>` +
-    `<path d="M-1,-1 Q-0.6,-5 0,-9 Q0.6,-5 1,-1" fill="${c.epicCrystal}" opacity="0.45"/>` +
-    `<path d="M-0.5,-1 Q0,-6 0.5,-1" fill="${c.epicCrystal}" opacity="0.25"/>` +
-    `<circle cx="-1.5" cy="-9" r="0.6" fill="${c.epicCrystal}" opacity="0.3"/>` +
-    `<circle cx="1.2" cy="-9.5" r="0.5" fill="${c.epicCrystal}" opacity="0.25"/>` +
-    `<circle cx="0" cy="-10.5" r="0.7" fill="${c.epicCrystal}" opacity="0.2"/>` +
-    `<circle cx="-0.8" cy="-11" r="0.4" fill="${c.epicCrystal}" opacity="0.15"/>` +
-    `<path d="M-2,-7 Q-2.5,-8.5 -1.5,-9.5" stroke="${c.epicCrystal}" stroke-width="0.3" fill="none" opacity="0.2"/>` +
-    `<path d="M1.5,-8 Q2,-9.5 1,-10" stroke="${c.epicCrystal}" stroke-width="0.25" fill="none" opacity="0.18"/>` +
+    `<path d="M-4.1,.1-3,-1.6-.7,-2.4 2,-1.9 4,-.3 3.1,1.4-.7,1.9-3.6,1.2Z" fill="${c.boulder}"/>` +
+    `<path d="M-4.1,.1-3,-1.6-.7,-2.4 2,-1.9 4,-.3 .6,.8Z" fill="${c.epicMarble}"/>` +
+    `<ellipse cy="-.6" rx="2.2" ry=".7" fill="${c.water}"/>` +
+    `<path d="M-1.5,-.5Q-.5,-4-.8,-7.5-1.1,-10.3-3.3,-8.6-2.7,-11.2-1,-10.7L-.3,-12Q.7,-11.5 .8,-9.5 2,-11 3,-10.1 3.9,-9.3 3.5,-7.9 2.5,-10 1.4,-7.7 .9,-4.2 1.7,-.5Z" fill="${c.epicCrystal}"/>` +
+    `<path d="M-.5,-.6Q.4,-5-.1,-9.6 .9,-8.1 .6,-5 .5,-2.4 1,-.6Z" fill="${c.snowCap}"/>` +
+    `<path d="M-2.8,-7.8Q-4,-6.2-3.4,-6.1-2.5,-5.9-2.8,-7.8ZM2.8,-6.7Q2,-5 2.8,-5 3.5,-5 2.8,-6.7Z" fill="${c.waterLight}"/>` +
+    `<path d="M-2.6,-.5Q-1,.4 .2,-.3 1.3,.3 2.6,-.5L3.1,.1Q0,1.4-3.1,.1Z" fill="${c.epicCrystal}"/>` +
+    `<path d="M-3.7,.5-1.8,1.1 .2,1.2M1.4,1 2.8,.6" stroke="${c.rock}" stroke-width=".3" fill="none"/>` +
     `</g>`
   );
 }
@@ -79,17 +64,13 @@ export function renderGeyser(x: number, y: number, c: AssetColors): string {
 export function renderHotSpring(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.3" rx="5" ry="1.2" fill="${c.shadow}" opacity="0.12"/>` +
-    `<ellipse cx="0" cy="0" rx="5" ry="2.2" fill="${c.rock}"/>` +
-    `<circle cx="-3.5" cy="-0.5" r="1" fill="${c.boulder}" opacity="0.6"/>` +
-    `<circle cx="3.5" cy="-0.3" r="0.9" fill="${c.boulder}" opacity="0.55"/>` +
-    `<circle cx="0" cy="-1.8" r="0.7" fill="${c.boulder}" opacity="0.5"/>` +
-    `<ellipse cx="0" cy="-0.3" rx="3.8" ry="1.6" fill="none" stroke="${c.epicGold}" stroke-width="0.3" opacity="0.2"/>` +
-    `<ellipse cx="0" cy="-0.3" rx="3.5" ry="1.5" fill="${c.epicCrystal}" opacity="0.45"/>` +
-    `<ellipse cx="0" cy="-0.5" rx="2" ry="0.8" fill="${c.epicPortal}" opacity="0.25"/>` +
-    `<path d="M-1.5,-1 Q-2,-3 -1,-4.5" stroke="${c.epicCrystal}" stroke-width="0.3" fill="none" opacity="0.35"/>` +
-    `<path d="M0.5,-1 Q0,-3.5 1,-5" stroke="${c.epicCrystal}" stroke-width="0.3" fill="none" opacity="0.3"/>` +
-    `<path d="M2,-0.8 Q2.5,-2.5 2,-4" stroke="${c.epicCrystal}" stroke-width="0.25" fill="none" opacity="0.25"/>` +
+    `<path d="M-5.5,-.7Q-4.5,-3.3-.4,-2.3 3.7,-3.1 5.4,-.7L5.1,1.1Q2.2,3.1-2.9,2.1L-5.3,1Z" fill="${c.boulder}"/>` +
+    `<path d="M-5.5,-.7Q-4.5,-3.3-.4,-2.3 3.7,-3.1 5.4,-.7 4.9,1.2 .3,1.6-4.5,1.5-5.5,-.7Z" fill="${c.epicMarble}"/>` +
+    `<path d="M-4.3,-.7Q-3.2,-1.9-.5,-1.5 2.8,-2.3 4.2,-.8 4.2,.6 .3,.8-3.6,.9-4.3,-.7Z" fill="${c.waterLight}"/>` +
+    `<path d="M-3.5,-.2Q-2.2,-1.1-.5,-.7 1.5,-1.3 3,-.7 3.2,.1 .3,.5-2.2,.7-3.5,-.2Z" fill="${c.epicCrystal}"/>` +
+    `<path d="M-5,-.6-4.8,-1.7-3.6,-2-3,-1.2-3.6,-.5ZM2.7,-1.4 3,-2.4 4.2,-2 4.8,-1 3.8,-.6Z" fill="${c.rock}"/>` +
+    `<path d="M-3.2,1.1-2.4,1.5M-.7,1.7-.4,.9M2.1,1.4 2.5,.8" stroke="${c.boulder}" stroke-width=".3"/>` +
+    `<path d="M-2.3,-2.3Q-3.7,-3.6-2.5,-4.7L-2.4,-6Q-1.4,-4.8-2.3,-4-2.9,-3.3-2.3,-2.3ZM.6,-2.6Q-.6,-3.8 .5,-5.2L.6,-6.2Q1.4,-5 .7,-4.3 .1,-3.4 .6,-2.6ZM2.4,-2.5Q1.7,-3.2 2.4,-4.3 3.1,-3.3 2.4,-2.5Z" fill="${c.snowCap}" opacity=".65"/>` +
     `</g>`
   );
 }
@@ -97,18 +78,15 @@ export function renderHotSpring(x: number, y: number, c: AssetColors): string {
 export function renderGrandCanyon(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.3" rx="6" ry="1" fill="${c.shadow}" opacity="0.12"/>` +
-    `<polygon points="-6,0 -5,-7 -3,-6 -2,-8 -1,-4" fill="${c.boulder}"/>` +
-    `<polygon points="-6,0 -5,-5 -3,-4 -1,-4 -1,0" fill="${c.rock}" opacity="0.7"/>` +
-    `<line x1="-5.5" y1="-2" x2="-1.5" y2="-2" stroke="${c.epicGold}" stroke-width="0.3" opacity="0.3"/>` +
-    `<line x1="-5" y1="-4" x2="-2" y2="-4" stroke="${c.rock}" stroke-width="0.25" opacity="0.4"/>` +
-    `<polygon points="1,-4 2,-8 3,-6 5,-7 6,0" fill="${c.boulder}"/>` +
-    `<polygon points="1,-4 1,0 6,0 5,-5 3,-4" fill="${c.rock}" opacity="0.7"/>` +
-    `<line x1="1.5" y1="-2" x2="5.5" y2="-2" stroke="${c.epicGold}" stroke-width="0.3" opacity="0.3"/>` +
-    `<line x1="2" y1="-4" x2="5" y2="-4" stroke="${c.rock}" stroke-width="0.25" opacity="0.4"/>` +
-    `<path d="M-0.8,0 Q0,-0.3 0.8,0" fill="${c.epicCrystal}" opacity="0.4"/>` +
-    `<circle cx="-5" cy="-7.3" r="0.5" fill="${c.epicJade}" opacity="0.4"/>` +
-    `<circle cx="4.5" cy="-7.3" r="0.4" fill="${c.epicJade}" opacity="0.35"/>` +
+    `<path d="M-6.5,.7-5.9,-6.5-3.3,-7.9-.7,-6.3-1.4,-3.2-1,1.7Z" fill="${c.autumnRust}"/>` +
+    `<path d="M-5.9,-6.5-3.3,-7.9-.7,-6.3-3.2,-5.4Z" fill="${c.sandcastleWall}"/>` +
+    `<path d="M-3.2,-5.4-.7,-6.3-1.4,-3.2-1,1.7-3.4,.7Z" fill="${c.oakBrown}"/>` +
+    `<path d="M1.1,1.5 1.4,-4.4 2.6,-7.2 5,-7.8 6.4,-5.9 6.6,.6Z" fill="${c.autumnRust}"/>` +
+    `<path d="M1.4,-4.4 2.6,-7.2 5,-7.8 6.4,-5.9 3.8,-5.1Z" fill="${c.sandcastleWall}"/>` +
+    `<path d="M1.1,1.5 1.4,-4.4 3.8,-5.1 3.3,-2.2 3.6,.9Z" fill="${c.oakBrown}"/>` +
+    `<path d="M-6,-4.4-3.1,-3.7-1.1,-4.4M-6.3,-1.6-3.4,-1-1.3,-1.6M1.3,-2.3 3.6,-3.1 6.5,-3.6M1.2,-.2 3.4,-.8 6.6,-1.4" stroke="${c.wheat}" stroke-width=".5" fill="none"/>` +
+    `<path d="M-.5,-3.5Q1,-2.7 .2,-1.5-1.2,-.3 1.1,.5L2.1,1.5 .2,2Q-2.1,.4-1,-1.2 .2,-2.5-.5,-3.5Z" fill="${c.waterLight}"/>` +
+    `<path d="M-4.7,-6.4-4.8,-7.4-4.5,-7.4-4.4,-6.4ZM4.2,-6.4 4.4,-7.2 4.8,-7.1 4.7,-6.3Z" fill="${c.palm}"/>` +
     `</g>`
   );
 }
@@ -116,19 +94,15 @@ export function renderGrandCanyon(x: number, y: number, c: AssetColors): string 
 export function renderOasis(x: number, y: number, c: AssetColors): string {
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0.3" rx="5" ry="1.2" fill="${c.shadow}" opacity="0.12"/>` +
-    `<ellipse cx="0" cy="0.2" rx="5.5" ry="2" fill="${c.epicGold}" opacity="0.15"/>` +
-    `<ellipse cx="0" cy="0" rx="4" ry="1.5" fill="${c.epicCrystal}" opacity="0.5"/>` +
-    `<ellipse cx="0" cy="-0.2" rx="3" ry="1" fill="${c.epicCrystal}" opacity="0.3"/>` +
-    `<path d="M-2.5,0 Q-2.8,-3 -2.2,-6" stroke="${c.trunk}" stroke-width="0.7" fill="none"/>` +
-    `<path d="M-2.2,-6 Q-4.5,-5.5 -5.5,-4.5" stroke="${c.palm}" stroke-width="0.5" fill="none"/>` +
-    `<path d="M-2.2,-6 Q-0.5,-5.5 0.5,-5.5" stroke="${c.palm}" stroke-width="0.5" fill="none"/>` +
-    `<path d="M-2.2,-6 Q-3.5,-5 -4,-3.5" stroke="${c.palm}" stroke-width="0.4" fill="none"/>` +
-    `<path d="M-2.2,-6 Q-1,-7 0,-7" stroke="${c.palm}" stroke-width="0.4" fill="none"/>` +
-    `<path d="M2,0 Q2.3,-2.5 1.8,-5" stroke="${c.trunk}" stroke-width="0.6" fill="none"/>` +
-    `<path d="M1.8,-5 Q4,-4.5 4.5,-3.5" stroke="${c.palm}" stroke-width="0.45" fill="none"/>` +
-    `<path d="M1.8,-5 Q0,-4.5 -0.8,-4.5" stroke="${c.palm}" stroke-width="0.45" fill="none"/>` +
-    `<path d="M1.8,-5 Q3,-3.5 3.5,-2.5" stroke="${c.palm}" stroke-width="0.35" fill="none"/>` +
+    `<path d="M-6,.3Q-5,-1.4-2.3,-1.7 1.6,-3 5.6,-.9L6.1,1Q4.2,3-1.4,2.5-5,2.3-6,.3Z" fill="${c.sandcastleWall}"/>` +
+    `<path d="M-4.6,.2Q-3.2,-1.1-.6,-.7 2.3,-2 4.5,-.5 4.8,1.3 1,1.7-3,1.8-4.6,.2Z" fill="${c.water}"/>` +
+    `<path d="M-3.6,.4Q-.9,-.7 .4,-.1 3,-1 3.8,-.3 3.3,1.1 .6,1.1Z" fill="${c.epicCrystal}"/>` +
+    `<path d="M-3.7,.3Q-2.6,-2.9-3.3,-6.3L-2.5,-6.4Q-1.7,-2.8-2.7,.5ZM2.6,.2Q2.2,-2.7 3,-5.1L3.7,-4.9Q3,-2.1 3.4,.3Z" fill="${c.trunk}"/>` +
+    `<path d="M-3,-6.2Q-5.8,-7.4-6.3,-4.8L-3.7,-5.8Q-5.6,-4.9-5.2,-3.4L-2.9,-5.7Q-1.7,-3.5-.6,-3.7L-1.7,-5.6 .1,-5.3Q-.7,-7.4-2.6,-6.5Z" fill="${c.palm}"/>` +
+    `<path d="M-3,-6.2Q-4,-8.1-2.7,-8L-2.2,-6.5Q-.6,-8.2 .5,-6.9L-2,-6Z" fill="${c.leafLight}"/>` +
+    `<path d="M3.3,-5Q1.3,-6.7 .1,-4.6L2.5,-4.9 1.5,-3.4Q3,-3.5 3.3,-4.5L4.9,-2.9Q5,-4.2 4,-4.8L6.1,-4.5Q5.8,-6.1 3.3,-5Z" fill="${c.palm}"/>` +
+    `<path d="M3.3,-5Q3.4,-6.9 4.8,-6.3L3.8,-4.9Z" fill="${c.leafLight}"/>` +
+    `<path d="M-3.4,-5.6H-2.6M2.9,-4.5H3.6M-3.1,-3.1H-2.3M2.9,-1.7H3.3" stroke="${c.wheat}" stroke-width=".4"/>` +
     `</g>`
   );
 }

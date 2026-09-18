@@ -107,6 +107,7 @@ export async function generateCatalog(outputDirectory: string): Promise<void> {
     { name: 'wonders', title: 'Maeul Wonders · separate landmark catalog', items: wonders },
   ];
   const galleryItems = createGalleryItems();
+  const pixelGalleryItems = createGalleryItems('pixel');
   const galleryRecords = galleryItems.map((item) => item.record);
   for (const mode of ['dark', 'light'] as const) {
     for (const group of groups) {
@@ -145,6 +146,14 @@ export async function generateCatalog(outputDirectory: string): Promise<void> {
     writeFile(
       resolve(outputDirectory, 'catalog-sprite-light.svg'),
       renderCatalogSprite(galleryItems, 'light'),
+    ),
+    writeFile(
+      resolve(outputDirectory, 'catalog-sprite-pixel-dark.svg'),
+      renderCatalogSprite(pixelGalleryItems, 'dark'),
+    ),
+    writeFile(
+      resolve(outputDirectory, 'catalog-sprite-pixel-light.svg'),
+      renderCatalogSprite(pixelGalleryItems, 'light'),
     ),
     copyFile(
       fileURLToPath(new URL('./catalog/client.css', import.meta.url)),

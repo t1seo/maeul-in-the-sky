@@ -1,201 +1,201 @@
 import type { AssetColors } from '../../palette.js';
+import { farmFruitTree, farmMaterial, farmRoundFruit } from './farm-art-material.js';
 
 export function svgPigpen(x: number, y: number, c: AssetColors, _v: number): string {
+  const pig = farmMaterial(c.pig, c);
+  const wood = farmMaterial(c.fence, c);
   return (
     `<g transform="translate(${x},${y})">` +
-    `<rect x="-2.5" y="-1" width="5" height="1" fill="${c.fence}" opacity="0.5"/>` +
-    `<ellipse cx="0" cy="-1" rx="1.2" ry="0.8" fill="${c.pig}"/>` +
-    `<circle cx="-1" cy="-1.3" r="0.4" fill="${c.pig}"/>` +
-    `<ellipse cx="-1.3" cy="-1.2" rx="0.25" ry="0.15" fill="#eaa"/>` +
-    `</g>`
+    `<path d="M-3.4,-.5 0,-1.9 3.4,-.45 .1,.9Z" fill="${c.gardenSoil}" opacity=".3"/>` +
+    `<path d="M-3.3,-1.8 0,-2.55 3.3,-1.7v.3L0,-2.2 -3.3,-1.5ZM-3.5,-.1v-2.3h.35v2.3M3.15,-.15v-2.15h.35v2.15M-.2,-1.25v-1.5h.4v1.5" fill="${wood.shade}"/>` +
+    `<path d="M-.85,-.9h.35v1h-.45ZM1.1,-.85h.4V.1h-.45Z" fill="${pig.shade}"/>` +
+    `<path d="M-1.25,-1.1Q-1.05,-2.25 .45,-2.1 2,-2.15 1.8,-.95 1.65,-.2 .4,-.25L-1,-.45Z" fill="${pig.base}"/>` +
+    `<path d="M-1.15,-1.25Q-1.05,-2.25 .45,-2.1 1.5,-2.2 1.65,-1.45 .45,-1.1 -.1,-1.45Z" fill="${pig.light}"/>` +
+    `<path d="M1.7,-1.25q.85,-.15 .65,-.65-.5,-.35-.55,.05t.8,.5" stroke="${pig.shade}" stroke-width=".17" fill="none"/>` +
+    `<path d="M-1.05,-1.85Q-2,-2.1 -2.15,-1.25 -2,-.55 -1.2,-.65L-.7,-1.2Z" fill="${pig.base}"/>` +
+    `<path d="M-1.75,-1.65 -2.1,-2.4 -1.35,-2.05 -1.2,-1.6Z" fill="${pig.shade}"/>` +
+    `<ellipse cx="-2" cy="-1" rx=".5" ry=".34" fill="${pig.light}"/>` +
+    `<path d="M-2.25,-1.05h.12v.15h-.12ZM-1.95,-1.05h.12v.15h-.12Z" fill="${pig.shade}"/>` +
+    `<circle cx="-1.5" cy="-1.4" r=".1" fill="${c.trunk}"/>` +
+    `<path d="M-3.35,.1 0,.55 3.35,-.05V.3L0,.9 -3.35,.45Z" fill="${wood.base}"/>` +
+    `<path d="M-3.5,.65v-1.9h.4V.7ZM-.2,.9V-.8h.4V.9ZM3.15,.55v-1.8h.4v1.75Z" fill="${wood.light}"/></g>`
   );
 }
 
 export function svgTrough(x: number, y: number, c: AssetColors, _v: number): string {
+  const wood = farmMaterial(c.trough, c);
   return (
     `<g transform="translate(${x},${y})">` +
-    `<rect x="-2" y="-1" width="4" height="0.8" fill="${c.trough}"/>` +
-    `<line x1="-1.5" y1="-0.2" x2="-1.5" y2="0.5" stroke="${c.trunk}" stroke-width="0.3"/>` +
-    `<line x1="1.5" y1="-0.2" x2="1.5" y2="0.5" stroke="${c.trunk}" stroke-width="0.3"/>` +
-    `<rect x="-1.8" y="-0.8" width="3.6" height="0.5" fill="${c.tidePools}" opacity="0.4"/>` +
-    `</g>`
+    `<path d="M-2.3,.15h.4v1.15h-.4ZM1.8,-.05h.4v1.15h-.4Z" fill="${c.trunk}"/>` +
+    `<path d="M-2.8,-1.1-.25,-.3 2.8,-.95 2.45,.35-.25,1.05-2.5,.4Z" fill="${wood.base}"/>` +
+    `<path d="M-.25,-.3 2.8,-.95 2.45,.35-.25,1.05Z" fill="${wood.shade}"/>` +
+    `<path d="M-2.8,-1.1 .4,-1.8 2.8,-.95-.25,-.3Z" fill="${wood.light}"/>` +
+    `<path d="M-2.25,-1.08 .35,-1.55 2.25,-.96-.25,-.55Z" fill="${c.trunk}"/>` +
+    `<path d="M-1.95,-.97 .35,-1.37 1.95,-.92-.25,-.55Z" fill="${c.tidePools}"/>` +
+    `<path d="M-1.4,-.98 .1,-1.22 .65,-1.04-.8,-.8Z" fill="${c.waterLight}"/>` +
+    `<path d="M-1.8,-.75l.2,1.3M1.6,-.65 1.4,.6" stroke="${wood.light}" stroke-width=".19"/></g>`
   );
 }
 
 export function svgHaystack(x: number, y: number, c: AssetColors, _v: number): string {
+  const hay = farmMaterial(c.haystack, c);
   return (
     `<g transform="translate(${x},${y})">` +
-    `<polygon points="-2,0 2,0 1.5,-3 -1.5,-3" fill="${c.haystack}"/>` +
-    `<polygon points="-1.5,-3 0,-4.5 1.5,-3" fill="${c.haystack}"/>` +
-    `</g>`
+    `<ellipse cx=".2" cy=".4" rx="2.65" ry=".45" fill="${c.shadow}" opacity=".14"/>` +
+    `<path d="M-.18,-4.2v-1.35h.32v1.35Z" fill="${c.trunk}"/>` +
+    `<path d="M-2.65,-.05-2.3,-1.1-2.05,-1.2-1.75,-3.2Q-1.35,-4.45-.15,-5.05 1.4,-4.6 1.95,-3.15L2.2,-1.35 2.65,.05Q.2,1.05-2.65,-.05Z" fill="${hay.base}"/>` +
+    `<path d="M-.15,-5.05Q1.4,-4.6 1.95,-3.15L2.2,-1.35 2.65,.05Q1.5,.6 .5,.55L.75,-1.15 .4,-3.25Z" fill="${hay.shade}"/>` +
+    `<path d="M-2.05,-1.2-1.75,-3.2Q-1.35,-4.45-.15,-5.05L-.7,-3.25-1.35,-2.2Z" fill="${hay.light}"/>` +
+    `<path d="M-1.95,-2.65Q0,-1.8 1.95,-2.6" stroke="${c.fence}" stroke-width=".28" fill="none"/>` +
+    `<path d="M-1.4,-1.9-1.85,-.25M-.65,-1.65-.9,.25M.25,-1.65 .1,.35M1.1,-1.55 1.45,.15M-.6,-4.1-.95,-3.25M.3,-4.3 .65,-3.25" stroke="${hay.light}" stroke-width=".18" fill="none"/></g>`
   );
 }
 
 export function svgOrchard(x: number, y: number, c: AssetColors, _v: number): string {
-  return (
-    `<g transform="translate(${x},${y})">` +
-    `<line x1="0" y1="0" x2="0" y2="-3" stroke="${c.trunk}" stroke-width="0.6"/>` +
-    `<circle cx="0" cy="-5" r="2.5" fill="${c.orchard}"/>` +
-    `<circle cx="-1" cy="-4.5" r="0.35" fill="${c.orchardFruit}"/>` +
-    `<circle cx="0.8" cy="-5.2" r="0.35" fill="${c.orchardFruit}"/>` +
-    `<circle cx="0" cy="-3.8" r="0.3" fill="${c.orchardFruit}"/>` +
-    `</g>`
-  );
+  return farmFruitTree(x, y, c, {
+    leaf: c.orchard,
+    fruit: c.orchardFruit,
+    silhouette:
+      'M-3.1,-4.4Q-3.75,-6.3 -2.05,-6.7Q-2.15,-8.5-.3,-8.35 1.3,-8.65 1.85,-7.1Q3.6,-7.1 3.4,-5.6 4,-4.4 2.8,-3.7 2.35,-2.7 .8,-3.2 -.7,-2.55-1.65,-3.4-3.25,-3.1-3.1,-4.4Z',
+    light:
+      'M-3.1,-4.4Q-3.75,-6.3 -2.05,-6.7Q-2.15,-8.5-.3,-8.35 1.3,-8.65 1.85,-7.1 .2,-7.55-.15,-6.2-1.8,-6.5-1.95,-5.05Z',
+    shade:
+      'M1.85,-7.1Q3.6,-7.1 3.4,-5.6 4,-4.4 2.8,-3.7 2.35,-2.7 .8,-3.2-.7,-2.55-1.65,-3.4 .2,-3.3 .7,-4.4 2.75,-4.05 2.7,-5.6Z',
+    fruitPath: [
+      [-2, -5.3, 0.4],
+      [-0.3, -6.9, 0.42],
+      [1.7, -5.7, 0.42],
+      [0.5, -4, 0.45],
+      [-1.3, -4.2, 0.32],
+    ]
+      .map(([px, py, r]) => farmRoundFruit(px, py, r))
+      .join(''),
+  });
 }
 
 export function svgAppleTree(x: number, y: number, c: AssetColors, v: number): string {
-  // Apple tree with red apples
-  const leaf = c.orchard;
-  /* v8 ignore start */
-  const apple = c.appleRed || '#c41e3a';
-  /* v8 ignore stop */
-  const trunk = c.trunk;
-  if (v === 1) {
-    // Many apples
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-      `<circle cx="0" cy="-4.5" r="2.5" fill="${leaf}"/>` +
-      `<circle cx="-1.5" cy="-3.5" r="1.5" fill="${leaf}" opacity="0.9"/>` +
-      `<circle cx="1.5" cy="-3.5" r="1.5" fill="${leaf}" opacity="0.85"/>` +
-      `<circle cx="-1" cy="-4" r="0.35" fill="${apple}"/>` +
-      `<circle cx="0.5" cy="-5" r="0.35" fill="${apple}"/>` +
-      `<circle cx="1.2" cy="-4" r="0.3" fill="${apple}"/>` +
-      `<circle cx="-0.3" cy="-3.5" r="0.3" fill="${apple}"/>` +
-      `<circle cx="0" cy="-5.5" r="0.3" fill="${apple}"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // With fallen apples
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-      `<circle cx="0" cy="-4.5" r="2.3" fill="${leaf}"/>` +
-      `<circle cx="-1.2" cy="-3.5" r="1.3" fill="${leaf}" opacity="0.9"/>` +
-      `<circle cx="1.2" cy="-3.5" r="1.3" fill="${leaf}" opacity="0.85"/>` +
-      `<circle cx="-0.5" cy="-4.5" r="0.3" fill="${apple}"/>` +
-      `<circle cx="0.8" cy="-4" r="0.3" fill="${apple}"/>` +
-      `<circle cx="-1.5" cy="0.3" r="0.25" fill="${apple}" opacity="0.8"/>` +
-      `<circle cx="0.8" cy="0.5" r="0.25" fill="${apple}" opacity="0.75"/>` +
-      `</g>`
-    );
-  }
-  // Standard apple tree
-  return (
-    `<g transform="translate(${x},${y})">` +
-    `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-    `<circle cx="0" cy="-4.5" r="2.5" fill="${leaf}"/>` +
-    `<circle cx="-1.5" cy="-3.5" r="1.5" fill="${leaf}" opacity="0.9"/>` +
-    `<circle cx="1.5" cy="-3.5" r="1.5" fill="${leaf}" opacity="0.85"/>` +
-    `<circle cx="-1" cy="-4.2" r="0.35" fill="${apple}"/>` +
-    `<circle cx="0.6" cy="-5" r="0.35" fill="${apple}"/>` +
-    `<circle cx="0" cy="-3.8" r="0.3" fill="${apple}"/>` +
-    `</g>`
-  );
+  const laden = v === 1;
+  const harvest = v === 2;
+  const fruit = harvest
+    ? [
+        [-1.35, -4.8, 0.36],
+        [1.1, -4.4, 0.4],
+        [-1.65, 0.2, 0.35],
+        [1.2, 0.45, 0.32],
+      ]
+    : laden
+      ? [
+          [-2, -4.6, 0.45],
+          [-0.8, -6, 0.45],
+          [0.7, -5.3, 0.5],
+          [2, -4.4, 0.42],
+          [-0.6, -3.3, 0.4],
+        ]
+      : [
+          [-1.75, -4.7, 0.4],
+          [0.1, -5.7, 0.45],
+          [1.45, -3.9, 0.45],
+        ];
+  return farmFruitTree(x, y, c, {
+    leaf: c.orchard,
+    fruit: c.appleRed,
+    silhouette: laden
+      ? 'M-3.3,-4Q-3.6,-5.75-1.85,-6.1-1.5,-7.65 .05,-7.3 1.4,-7.7 2,-6.2 3.7,-6.1 3.4,-4.5 3.8,-2.8 1.9,-2.7 .7,-1.8-.25,-2.8-2.4,-2.05-3.3,-4Z'
+      : 'M-2.95,-4Q-3.65,-5.6-1.8,-6.15-1.55,-7.65 .05,-7.3 1.4,-7.7 1.95,-6.15 3.5,-6.05 3.1,-4.5 3.35,-3.05 1.8,-2.9 .6,-2.25-.3,-2.9-2.5,-2.4-2.95,-4Z',
+    light:
+      'M-2.95,-4Q-3.65,-5.6-1.8,-6.15-1.55,-7.65 .05,-7.3 1.4,-7.7 1.95,-6.15 .4,-6.5-.25,-5.3-1.85,-5.8-2.15,-4.35Z',
+    shade: laden
+      ? 'M3.4,-4.5Q3.8,-2.8 1.9,-2.7 .7,-1.8-.25,-2.8-2.4,-2.05-3.3,-4-1.8,-3.1-.65,-3.65 .75,-2.75 1.3,-4.05 2.35,-3.4 3.4,-4.5Z'
+      : 'M3.1,-4.5Q3.35,-3.05 1.8,-2.9 .6,-2.25-.3,-2.9-2.5,-2.4-2.95,-4-1.55,-3.15-.5,-3.65 .6,-2.9 1.25,-4 2.3,-3.6 3.1,-4.5Z',
+    fruitPath: fruit.map(([px, py, r]) => farmRoundFruit(px, py, r)).join(''),
+  });
 }
 
 export function svgOliveTree(x: number, y: number, c: AssetColors, v: number): string {
-  // Mediterranean olive tree with silver-green foliage
-  /* v8 ignore start */
-  const leaf = c.oliveGreen || '#808060';
-  const fruit = c.oliveFruit || '#4a4a30';
-  /* v8 ignore stop */
-  const trunk = c.trunk;
-  if (v === 1) {
-    // Gnarled old tree
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<path d="M-0.3,2 Q-0.8,0 -0.5,-1 Q-0.2,-2 0,-2" stroke="${trunk}" fill="none" stroke-width="0.8"/>` +
-      `<path d="M0.3,2 Q0.8,0 0.5,-1 Q0.2,-2 0,-2" stroke="${trunk}" fill="none" stroke-width="0.8"/>` +
-      `<ellipse cx="0" cy="-4" rx="2.5" ry="1.8" fill="${leaf}" opacity="0.7"/>` +
-      `<ellipse cx="-1.5" cy="-3.5" rx="1.2" ry="0.9" fill="${leaf}" opacity="0.6"/>` +
-      `<ellipse cx="1.5" cy="-3.5" rx="1.2" ry="0.9" fill="${leaf}" opacity="0.55"/>` +
-      `<circle cx="-0.8" cy="-3.8" r="0.2" fill="${fruit}"/>` +
-      `<circle cx="0.5" cy="-4.2" r="0.2" fill="${fruit}"/>` +
-      `<circle cx="1" cy="-3.5" r="0.18" fill="${fruit}"/>` +
-      `</g>`
-    );
-  }
-  // Standard olive tree
-  return (
-    `<g transform="translate(${x},${y})">` +
-    `<rect x="-0.4" y="-1" width="0.8" height="3" fill="${trunk}"/>` +
-    `<ellipse cx="0" cy="-3.5" rx="2.2" ry="1.6" fill="${leaf}" opacity="0.7"/>` +
-    `<ellipse cx="-1.2" cy="-3" rx="1" ry="0.8" fill="${leaf}" opacity="0.6"/>` +
-    `<ellipse cx="1.2" cy="-3" rx="1" ry="0.8" fill="${leaf}" opacity="0.55"/>` +
-    `<circle cx="-0.5" cy="-3.5" r="0.18" fill="${fruit}"/>` +
-    `<circle cx="0.6" cy="-3.8" r="0.18" fill="${fruit}"/>` +
-    `</g>`
-  );
+  const old = v === 1;
+  return farmFruitTree(x, y, c, {
+    leaf: c.oliveGreen,
+    fruit: c.oliveFruit,
+    silhouette: old
+      ? 'M-3.3,-3.4Q-4,-4.8-2.25,-5.25-2.6,-6.5-.8,-6.4 .35,-6.9 1,-5.6 2.7,-6.05 3.25,-4.8 3.9,-3.5 2.1,-3.25 1.3,-2.4 .25,-3.45-1.15,-2.65-1.85,-3.35-2.9,-2.7-3.3,-3.4Z'
+      : 'M-2.7,-3.7Q-3.4,-5.1-1.7,-5.5-1.1,-6.65 .3,-6 .9,-5.1 2,-5.1 3.45,-4.4 2.55,-3.25 1.5,-2.65 .35,-3.3-.8,-2.6-1.6,-3.45-2.45,-3-2.7,-3.7Z',
+    light: old
+      ? 'M-3.3,-3.4Q-4,-4.8-2.25,-5.25-2.6,-6.5-.8,-6.4 .35,-6.9 1,-5.6-.75,-5.85-1.3,-4.8-2.6,-4.95-3.3,-3.4Z'
+      : 'M-2.7,-3.7Q-3.4,-5.1-1.7,-5.5-1.1,-6.65 .3,-6 .9,-5.1 2,-5.1 .4,-4.5-.6,-4.85-1.85,-4.3-2.7,-3.7Z',
+    shade: old
+      ? 'M.25,-3.45Q1.3,-2.4 2.1,-3.25 3.9,-3.5 3.25,-4.8 2.2,-4 1.5,-4.35Z'
+      : 'M.35,-3.3Q1.5,-2.65 2.55,-3.25 3.45,-4.4 2,-5.1 2.15,-3.7 .35,-3.3Z',
+    branch: old
+      ? 'M-.95,.3Q-.5,-.5-.85,-1.5L-1.5,-3.75-1.05,-3.9-.15,-2.35 .65,-3.95 1.05,-3.7 .15,-1.75Q-.1,-.7 .7,.3Z'
+      : 'M-.55,.3-.45,-2.3-1.4,-3.9-1.05,-4.1 .05,-2.9 .85,-4.05 1.2,-3.8 .4,-2.25 .5,.25Z',
+    fruitPath: [
+      [-1.8, -4.25, 0.23],
+      [-0.6, -4.8, 0.25],
+      [1.4, -3.8, 0.23],
+    ]
+      .map(([px, py, r]) => farmRoundFruit(px, py, r))
+      .join(''),
+  });
 }
 
 export function svgLemonTree(x: number, y: number, c: AssetColors, v: number): string {
-  // Lemon tree with bright yellow lemons
-  const leaf = c.palm; // bright green
-  /* v8 ignore start */
-  const lemon = c.lemonYellow || '#fff44f';
-  /* v8 ignore stop */
-  const trunk = c.trunk;
-  if (v === 1) {
-    // Heavy with lemons
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-0.4" y="-1" width="0.8" height="2.5" fill="${trunk}"/>` +
-      `<circle cx="0" cy="-3.5" r="2" fill="${leaf}"/>` +
-      `<circle cx="-1" cy="-2.8" r="1.2" fill="${leaf}" opacity="0.9"/>` +
-      `<circle cx="1" cy="-2.8" r="1.2" fill="${leaf}" opacity="0.85"/>` +
-      `<ellipse cx="-0.8" cy="-3.5" rx="0.35" ry="0.25" fill="${lemon}"/>` +
-      `<ellipse cx="0.5" cy="-4" rx="0.35" ry="0.25" fill="${lemon}"/>` +
-      `<ellipse cx="0.8" cy="-3" rx="0.3" ry="0.22" fill="${lemon}"/>` +
-      `<ellipse cx="-0.2" cy="-2.8" rx="0.3" ry="0.22" fill="${lemon}"/>` +
-      `</g>`
-    );
-  }
-  // Standard lemon tree
-  return (
-    `<g transform="translate(${x},${y})">` +
-    `<rect x="-0.4" y="-1" width="0.8" height="2.5" fill="${trunk}"/>` +
-    `<circle cx="0" cy="-3.5" r="2" fill="${leaf}"/>` +
-    `<circle cx="-1" cy="-2.8" r="1.2" fill="${leaf}" opacity="0.9"/>` +
-    `<circle cx="1" cy="-2.8" r="1.2" fill="${leaf}" opacity="0.85"/>` +
-    `<ellipse cx="-0.5" cy="-3.5" rx="0.3" ry="0.22" fill="${lemon}"/>` +
-    `<ellipse cx="0.6" cy="-3.8" rx="0.3" ry="0.22" fill="${lemon}"/>` +
-    `</g>`
-  );
+  const laden = v === 1;
+  const fruit = laden
+    ? [
+        [-1.8, -3.75],
+        [-0.45, -5.05],
+        [1.4, -4.15],
+        [0.15, -2.7],
+      ]
+    : [
+        [-1.3, -4.2],
+        [1.25, -3.55],
+      ];
+  return farmFruitTree(x, y, c, {
+    leaf: c.palm,
+    fruit: c.lemonYellow,
+    silhouette: laden
+      ? 'M-2.9,-3.45Q-3.3,-4.9-1.9,-5.25-1.5,-6.7-.1,-6.2 1.1,-6.85 1.65,-5.35 3.2,-5 3.15,-3.55 2.65,-2.2 1.4,-2.65 .6,-1.9-.5,-2.45-2.55,-1.8-2.9,-3.45Z'
+      : 'M-2.5,-3.7Q-3,-5.2-1.5,-5.45-1.1,-6.6 .1,-6.15 1.6,-6.3 1.8,-5 3,-4.8 2.6,-3.4 1.9,-2.6 .8,-3-.4,-2.3-1.4,-3-2.5,-2.65-2.5,-3.7Z',
+    light:
+      'M-2.5,-3.7Q-3,-5.2-1.5,-5.45-1.1,-6.6 .1,-6.15 1.6,-6.3 1.8,-5 .4,-5.35-.5,-4.55-1.7,-4.9-2.5,-3.7Z',
+    shade: laden
+      ? 'M3.15,-3.55Q2.65,-2.2 1.4,-2.65 .6,-1.9-.5,-2.45-2.55,-1.8-2.9,-3.45-.75,-3.05-.15,-3.4 1.5,-2.8 3.15,-3.55Z'
+      : 'M2.6,-3.4Q1.9,-2.6 .8,-3-.4,-2.3-1.4,-3-2.5,-2.65-2.5,-3.7-.7,-3.45 .15,-3.85 1.35,-3.4 2.6,-3.4Z',
+    fruitPath: fruit
+      .map(([px, py]) => `M${px - 0.48},${py}q.18,-.47 .6,-.4l.37,.28q-.1,.5-.58,.5Z`)
+      .join(''),
+  });
 }
 
 export function svgOrangeTree(x: number, y: number, c: AssetColors, v: number): string {
-  // Orange tree with orange fruits
-  const leaf = c.orchard; // dark green
-  /* v8 ignore start */
-  const orange = c.orangeFruit || '#ff8c00';
-  /* v8 ignore stop */
-  const trunk = c.trunk;
-  if (v === 1) {
-    // Many oranges
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-      `<circle cx="0" cy="-4.2" r="2.3" fill="${leaf}"/>` +
-      `<circle cx="-1.3" cy="-3.2" r="1.3" fill="${leaf}" opacity="0.9"/>` +
-      `<circle cx="1.3" cy="-3.2" r="1.3" fill="${leaf}" opacity="0.85"/>` +
-      `<circle cx="-0.8" cy="-4" r="0.4" fill="${orange}"/>` +
-      `<circle cx="0.5" cy="-4.5" r="0.35" fill="${orange}"/>` +
-      `<circle cx="1" cy="-3.5" r="0.35" fill="${orange}"/>` +
-      `<circle cx="-0.2" cy="-3.2" r="0.3" fill="${orange}"/>` +
-      `</g>`
-    );
-  }
-  // Standard orange tree
-  return (
-    `<g transform="translate(${x},${y})">` +
-    `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-    `<circle cx="0" cy="-4.2" r="2.3" fill="${leaf}"/>` +
-    `<circle cx="-1.3" cy="-3.2" r="1.3" fill="${leaf}" opacity="0.9"/>` +
-    `<circle cx="1.3" cy="-3.2" r="1.3" fill="${leaf}" opacity="0.85"/>` +
-    `<circle cx="-0.6" cy="-4" r="0.4" fill="${orange}"/>` +
-    `<circle cx="0.7" cy="-4.3" r="0.35" fill="${orange}"/>` +
-    `</g>`
-  );
+  const laden = v === 1;
+  return farmFruitTree(x, y, c, {
+    leaf: c.orchard,
+    fruit: c.orangeFruit,
+    silhouette: laden
+      ? 'M-2.8,-4Q-3.1,-5.6-1.7,-6-.9,-7.35 .35,-6.8 1.8,-7.25 2.3,-5.8 3.4,-5.35 3.05,-3.8 2.75,-2.3 1.25,-2.55 .35,-1.75-.75,-2.65-2.65,-2.3-2.8,-4Z'
+      : 'M-2.65,-4.2Q-2.85,-5.65-1.4,-6.1-.7,-7.25 .65,-6.65 2,-6.6 2.2,-5.45 3.05,-4.45 2.6,-3.4 2,-2.35 .75,-2.85-.3,-2.3-1.25,-3-2.85,-3-2.65,-4.2Z',
+    light:
+      'M-2.65,-4.2Q-2.85,-5.65-1.4,-6.1-.7,-7.25 .65,-6.65 2,-6.6 2.2,-5.45 .85,-5.85 .1,-5.05-1,-5.5-1.8,-4.25Z',
+    shade: laden
+      ? 'M3.05,-3.8Q2.75,-2.3 1.25,-2.55 .35,-1.75-.75,-2.65-2.65,-2.3-2.8,-4-.95,-3.1 .3,-3.6 1.3,-2.9 3.05,-3.8Z'
+      : 'M2.6,-3.4Q2,-2.35 .75,-2.85-.3,-2.3-1.25,-3-2.85,-3-2.65,-4.2-1.1,-3.3 .05,-3.8 1.5,-3.35 2.6,-3.4Z',
+    fruitPath: (laden
+      ? [
+          [-1.8, -4.9, 0.48],
+          [-0.25, -5.9, 0.45],
+          [1.5, -4.9, 0.45],
+          [0.65, -3.25, 0.5],
+          [-1, -3.5, 0.4],
+        ]
+      : [
+          [-1.4, -4.8, 0.45],
+          [1.3, -4.2, 0.5],
+          [0.15, -5.75, 0.4],
+        ]
+    )
+      .map(([px, py, r]) => farmRoundFruit(px, py, r))
+      .join(''),
+  });
 }

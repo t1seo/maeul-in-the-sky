@@ -56,6 +56,26 @@
             <p id="preset-description">A mix of nature, farms, villages, and cities.</p>
           </div>
           <form id="settings-form" class="enhanced" hidden novalidate>
+            <div class="form-row appearance-fields">
+              <div>
+                <label for="style">Village style</label
+                ><select id="style" name="style" aria-describedby="appearance-note">
+                  <option value="classic">Classic</option>
+                  <option value="korean">Korean</option>
+                </select>
+              </div>
+              <div>
+                <label for="art-style">Art style</label
+                ><select id="art-style" name="artStyle" aria-describedby="appearance-note">
+                  <option value="miniature">Miniature</option>
+                  <option value="pixel">Pixel art</option>
+                </select>
+              </div>
+            </div>
+            <small id="appearance-note">
+              Classic villages or the Korean countryside, in soft miniature or crisp pixel art. Mix
+              them your way.
+            </small>
             <label for="username">GitHub username</label
             ><input
               id="username"
@@ -97,7 +117,7 @@
             <details class="advanced">
               <summary>Fine-tune your world</summary>
               <label for="density"
-                >Building density <output id="density-value" for="density">5</output></label
+                >Decoration mix <output id="density-value" for="density">5</output></label
               ><input id="density" name="density" type="range" min="1" max="10" value="5" />
               <div class="form-row">
                 <div>
@@ -116,11 +136,6 @@
                   </select>
                 </div>
               </div>
-              <label for="style">Village style</label
-              ><select id="style" name="style">
-                <option value="classic">Classic</option>
-                <option value="korean">Korean</option>
-              </select>
               <label for="normalization">Height scale</label
               ><select id="normalization" name="normalization">
                 <option value="relative">Relative · this history</option>
@@ -189,7 +204,7 @@
             ><span>More</span
             ><span class="season-note">Height follows activity. Seasons follow dates.</span>
           </div>
-          <details class="date-inspector enhanced" hidden>
+          <details id="day-explorer" class="date-inspector enhanced" hidden>
             <summary>Explore a day</summary>
             <label for="date-select">Contribution date</label
             ><select id="date-select"></select>
@@ -205,6 +220,149 @@
       <p id="app-status" class="status-line" role="status">
         The sample is ready. Interactive tools load when the browser bundle is available.
       </p>
+      <div class="world-guide">
+        <section id="season-guide" aria-labelledby="season-heading">
+          <div class="guide-heading">
+            <div>
+              <p class="eyebrow">A year in your village</p>
+              <h2 id="season-heading">Four seasons. A changing world.</h2>
+            </div>
+            <p>
+              Seasons follow each date. Choose your hemisphere to bring spring, summer, autumn, and
+              winter home.
+            </p>
+          </div>
+          <ul class="season-cards">
+            <li class="season-card spring">
+              <svg class="season-picture" viewBox="0 0 80 60" aria-hidden="true" focusable="false">
+                <ellipse cx="40" cy="51" rx="25" ry="5" fill="#c4d2aa" />
+                <path d="M38 49V24h5v25z" fill="#826347" />
+                <path d="M40 34 27 23m13 17 14-17" fill="none" stroke="#826347" stroke-width="3" />
+                <path
+                  d="M16 24c-3-10 8-17 17-14C40 0 54 6 54 14c15-1 18 18 7 23-9 6-16 2-22 0-12 7-28-1-23-13z"
+                  fill="#da9dac"
+                />
+                <path
+                  d="M20 21c-2-6 5-12 13-10 7-7 16-4 17 2-7 3-5 11-15 10-7 5-12 3-15-2z"
+                  fill="#f2c9cc"
+                />
+                <path d="m24 43 4 3-4 3-3-3m32-6 4 3-4 3-3-3" fill="#e9b1be" />
+              </svg>
+              <h3>Spring</h3>
+              <p>Blossoms, fresh shoots, and the first soft greens.</p>
+            </li>
+            <li class="season-card summer">
+              <svg class="season-picture" viewBox="0 0 80 60" aria-hidden="true" focusable="false">
+                <ellipse cx="40" cy="51" rx="25" ry="5" fill="#afc5a0" />
+                <path d="M38 50V24h5v26z" fill="#826347" />
+                <path
+                  d="M19 32c-8-9 0-21 10-20 6-14 23-12 26 0 17 3 18 22 3 27-8 3-14-1-17-3-8 9-25 5-22-4z"
+                  fill="#477b51"
+                />
+                <path
+                  d="M23 24c-3-5 1-12 9-11 5-9 16-10 20-1-8 0-6 11-16 10-3 5-10 7-13 2z"
+                  fill="#83aa65"
+                />
+                <path
+                  d="M14 49h8m35-2h10"
+                  stroke="#5d8b59"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <h3>Summer</h3>
+              <p>Full leafy canopies, lush fields, and life by the water.</p>
+            </li>
+            <li class="season-card autumn">
+              <svg class="season-picture" viewBox="0 0 80 60" aria-hidden="true" focusable="false">
+                <ellipse cx="40" cy="51" rx="25" ry="5" fill="#dac5a1" />
+                <path d="M38 50V23h5v27z" fill="#826347" />
+                <path
+                  d="M17 26c-5-9 6-20 15-17 11-10 24-1 24 8 13 1 13 17 4 20-8 5-15 0-19 1-13 6-27-2-24-12z"
+                  fill="#ba6540"
+                />
+                <path
+                  d="M20 21c0-8 8-11 13-10 8-7 17-2 19 4-7 0-9 10-16 7-8 4-12 4-16-1z"
+                  fill="#e7a653"
+                />
+                <path d="m19 46 5-2 3 4-5 2m29-5 6-1 3 4-6 2" fill="#cd8543" />
+              </svg>
+              <h3>Autumn</h3>
+              <p>Amber leaves, golden harvests, and warm earth.</p>
+            </li>
+            <li class="season-card winter">
+              <svg class="season-picture" viewBox="0 0 80 60" aria-hidden="true" focusable="false">
+                <ellipse cx="40" cy="51" rx="25" ry="5" fill="#c3d3d6" />
+                <path d="M38 50V18h5v32z" fill="#786854" />
+                <path d="m40 5 14 17-6-1 13 15-8-1 11 11H16l12-12-8 1 13-15-7 1z" fill="#68887e" />
+                <path
+                  d="m40 5 14 17-12-5-16 4zm-7 17 8 6 7-6 10 12-17-4-19 5zm-4 14 12 5 12-5 11 10H16z"
+                  fill="#f5faf7"
+                />
+                <path
+                  d="M19 50h10m20 0h12"
+                  stroke="#f5faf7"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <h3>Winter</h3>
+              <p>Snow-capped roofs, frosted trees, and quiet branches.</p>
+            </li>
+          </ul>
+          <p class="guide-note">
+            Southern hemisphere seasons shift by half a year. Your contribution dates stay the same.
+          </p>
+        </section>
+        <section id="growth-guide" aria-labelledby="growth-heading">
+          <div class="guide-heading">
+            <div>
+              <p class="eyebrow">Little by little</p>
+              <h2 id="growth-heading">Every day leaves its own mark.</h2>
+            </div>
+            <p>
+              Daily contributions grow more than the height of your terrain. Reach a new range to
+              give that day a richer main feature.
+            </p>
+          </div>
+          <p class="growth-unit">GitHub contributions per day</p>
+          <ol class="growth-steps">
+            <li>
+              <span class="growth-count">0</span><strong>A quiet day</strong
+              ><span>Resting terrain</span>
+            </li>
+            <li>
+              <span class="growth-count">1–4</span><strong>First signs</strong
+              ><span>A little life appears</span>
+            </li>
+            <li>
+              <span class="growth-count">5–9</span><strong>Taking root</strong
+              ><span>A fuller feature</span>
+            </li>
+            <li>
+              <span class="growth-count">10–24</span><strong>Growing steadily</strong
+              ><span>A more developed scene</span>
+            </li>
+            <li>
+              <span class="growth-count">25–49</span><strong>A thriving day</strong
+              ><span>A substantial centerpiece</span>
+            </li>
+            <li>
+              <span class="growth-count">50+</span><strong>A standout day</strong
+              ><span>The richest daily feature</span>
+            </li>
+          </ol>
+          <p class="guide-note">
+            At 25 and 50 contributions, the main feature becomes more substantial, even when terrain
+            height has reached its limit. Density and other busy days do not lower a day's growth.
+            Wonders are extra discoveries alongside this daily growth.
+          </p>
+          <p class="guide-note">
+            These are playful visual milestones, not a measure of code quality. Open
+            <a href="#day-explorer">Explore a day</a> to see its contributions and discoveries.
+          </p>
+        </section>
+      </div>
       <section class="source-section enhanced" hidden aria-labelledby="source-heading">
         <div>
           <p class="eyebrow">Bring your own history</p>

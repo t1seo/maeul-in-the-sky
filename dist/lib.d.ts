@@ -24,6 +24,7 @@ declare function isVillagePreset(value: string): value is VillagePreset;
 type MotionMode = 'full' | 'subtle' | 'off';
 type TerrainLayout = 'banner' | 'card';
 type VillageStyle$1 = 'classic' | 'korean';
+type ArtStyle = 'miniature' | 'pixel';
 type Hemisphere = 'north' | 'south';
 type NormalizationOptions =
   | {
@@ -41,6 +42,7 @@ type ResolvedRenderSettings = {
   readonly motion: MotionMode;
   readonly layout: TerrainLayout;
   readonly style: VillageStyle$1;
+  readonly artStyle: ArtStyle;
   readonly normalization: NormalizationOptions;
   readonly layoutSeed?: string;
 };
@@ -115,6 +117,7 @@ interface ThemeOptions {
   motion?: MotionMode;
   layout?: TerrainLayout;
   style?: VillageStyle$1;
+  artStyle?: ArtStyle;
   villageStyle?: VillageStyle$1;
   normalization?: NormalizationOptions;
   layoutSeed?: string;
@@ -177,6 +180,8 @@ type SceneBiome = {
   readonly nearWater: boolean;
   readonly forestDensity: number;
 };
+type RewardTier = 0 | 1 | 2 | 3 | 4 | 5;
+type PositiveRewardTier = Exclude<RewardTier, 0>;
 type SceneCell = {
   readonly date: string;
   readonly week: number;
@@ -184,6 +189,7 @@ type SceneCell = {
   readonly absoluteWeek: number;
   readonly count: number;
   readonly level100: number;
+  readonly rewardTier?: RewardTier;
   readonly height: number;
   readonly isoX: number;
   readonly isoY: number;
@@ -206,6 +212,13 @@ type ScenePlacement = {
   readonly variant: number;
   readonly animated: boolean;
   readonly decorative?: boolean;
+  readonly primary?: boolean;
+  readonly rewardTier?: PositiveRewardTier;
+};
+type SceneDailyReward = ScenePlacement & {
+  readonly count: number;
+  readonly rewardTier: PositiveRewardTier;
+  readonly minimumCount: number;
 };
 type WonderThreshold = {
   readonly metric: 'level100' | 'richness' | 'total' | 'longestStreak';
@@ -233,11 +246,11 @@ type NeighborhoodPath = {
 };
 type LayoutSeedPolicy = {
   readonly root: string;
-  readonly policy: 'username-date-v1';
+  readonly policy: 'username-date-v1' | 'username-date-v2';
 };
 type TerrainScene = {
   readonly schemaVersion: 1;
-  readonly layoutVersion: 1;
+  readonly layoutVersion: 1 | 2;
   readonly username: string;
   readonly year: number;
   readonly fromDate: string;
@@ -250,6 +263,7 @@ type TerrainScene = {
   readonly biomes: readonly SceneBiomeEntry[];
   readonly placements: readonly ScenePlacement[];
   readonly wonders: readonly SceneWonderPlacement[];
+  readonly rewards?: readonly SceneDailyReward[];
   readonly neighborhoodPaths: readonly NeighborhoodPath[];
   readonly bounds: SceneBounds;
 };
@@ -259,13 +273,15 @@ type TerrainCellMetadata = {
   readonly week: number;
   readonly day: number;
   readonly level100: number;
+  readonly rewardTier?: RewardTier;
   readonly biome: SceneBiome;
   readonly assetIds: readonly string[];
   readonly wonderIds: readonly string[];
+  readonly rewardIds?: readonly string[];
 };
 type TerrainMetadata = {
   readonly schemaVersion: 1;
-  readonly layoutVersion: 1;
+  readonly layoutVersion: 1 | 2;
   readonly username: string;
   readonly year: number;
   readonly fromDate: string;
@@ -279,6 +295,7 @@ type TerrainMetadata = {
   readonly cells: readonly TerrainCellMetadata[];
   readonly placements: readonly ScenePlacement[];
   readonly wonders: readonly SceneWonderPlacement[];
+  readonly rewards?: readonly SceneDailyReward[];
   readonly neighborhoodPaths: readonly NeighborhoodPath[];
 };
 type TerrainRenderResult = {
@@ -293,7 +310,7 @@ type TerrainRenderOptions = Partial<ThemeOptions> & {
 };
 type TerrainSceneRenderOptions = Pick<
   TerrainRenderOptions,
-  'width' | 'height' | 'title' | 'motion' | 'layout' | 'namespace'
+  'width' | 'height' | 'title' | 'motion' | 'layout' | 'namespace' | 'artStyle'
 >;
 
 declare function prepareTerrainScene(
@@ -313,8 +330,12 @@ declare function renderTerrain(
 ): TerrainRenderResult;
 
 interface AssetColors {
+  giwa: string;
+  thatch: string;
   trunk: string;
   pine: string;
+  evergreenLight: string;
+  evergreenDark: string;
   leaf: string;
   bush: string;
   roofA: string;
@@ -755,7 +776,16 @@ type AssetType =
   | 'hanok'
   | 'pavilion'
   | 'stoneWall'
-  | 'onggi';
+  | 'onggi'
+  | 'choga'
+  | 'jangseung'
+  | 'sotdae'
+  | 'riceTerrace'
+  | 'koreanWatermill'
+  | 'hanokGate'
+  | 'kimchiGarden'
+  | 'stoneBridge'
+  | 'hanokEstate';
 
 type VillageStyle = 'classic' | 'korean';
 type AssetCategory = 'water' | 'shore' | 'woodland' | 'farm' | 'village' | 'town' | 'decoration';
@@ -776,7 +806,12 @@ interface AssetCatalogEntry {
   readonly description: string;
 }
 
-declare function renderCatalogAsset(type: AssetType, colors: AssetColors, variant?: number): string;
+declare function renderCatalogAsset(
+  type: AssetType,
+  colors: AssetColors,
+  variant?: number,
+  artStyle?: ArtStyle,
+): string;
 
 declare function isAssetType(value: string): value is AssetType;
 declare function getAssetCatalogEntry(id: AssetType): AssetCatalogEntry;
@@ -819,6 +854,12 @@ type EpicBuildingType =
   | 'worldTree'
   | 'sakuraEternal'
   | 'ancientPortal';
+
+declare function renderCatalogEpic(
+  type: EpicBuildingType,
+  colors: AssetColors,
+  artStyle?: ArtStyle,
+): string;
 
 interface EpicStatsRule {
   readonly combination: 'or' | 'and';
@@ -1033,6 +1074,7 @@ interface TerrainGenerationRequest {
   readonly motion?: string;
   readonly layout?: string;
   readonly style?: string;
+  readonly artStyle?: string;
   readonly villageStyle?: string;
   readonly normalization?: string;
   readonly maxCount?: string | number;
@@ -1120,6 +1162,7 @@ export {
   ASSET_CATALOG,
   ASSET_CATALOG_COUNTS,
   type ArchiveV1,
+  type ArtStyle,
   type ColorMode,
   type ContributionData,
   type ContributionDay,
@@ -1136,9 +1179,12 @@ export {
   type MotionMode,
   type NormalizationOptions,
   type NormalizationSummary,
+  type PositiveRewardTier,
   type RenderSettingsInput,
   type ResolvedRenderSettings,
+  type RewardTier,
   type SceneCell,
+  type SceneDailyReward,
   type ScenePlacement,
   type SceneWonderPlacement,
   type SettingsV1,
@@ -1185,6 +1231,7 @@ export {
   prepareTerrainScene,
   registerTheme,
   renderCatalogAsset,
+  renderCatalogEpic,
   renderPng,
   renderTerrain,
   renderTerrainScene,

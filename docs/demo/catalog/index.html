@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-mode="dark">
+<html lang="en" data-mode="dark" data-art-style="miniature">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,17 +15,18 @@
     <p class="kicker">Maeul field guide · registry edition</p>
     <h1>Every small thing<br>in the sky.</h1>
     <p class="lede">Explore the original trees, buildings, and landmarks that bring each village to life. Find a favorite by season, style, or name.</p>
-    <dl class="totals" aria-label="Registry totals"><div><dt>Ordinary</dt><dd><strong>193</strong></dd></div><div><dt>Wonders</dt><dd><strong>30</strong></dd></div><div><dt>Korean originals</dt><dd><strong>4</strong></dd></div></dl>
+    <dl class="totals" aria-label="Registry totals"><div><dt>Ordinary</dt><dd><strong>202</strong></dd></div><div><dt>Wonders</dt><dd><strong>30</strong></dd></div><div><dt>Korean originals</dt><dd><strong>13</strong></dd></div></dl>
   </header>
   <main>
     <form class="catalog-controls" id="catalog-controls" role="search">
       <div class="control"><label for="search-filter">Find an asset</label><input id="search-filter" type="search" autocomplete="off" placeholder="Try hanok or forest"></div>
       <div class="control"><label for="season-filter">Season</label><select id="season-filter"><option value="all">All seasons</option><option value="winter">Winter</option><option value="spring">Spring</option><option value="summer">Summer</option><option value="autumn">Autumn</option></select></div>
-      <div class="control"><label for="family-filter">Family</label><select id="family-filter"><option value="all">All families</option><option value="nature">Nature (116)</option><option value="building">Buildings (37)</option><option value="decoration">Decorations (36)</option><option value="wonder">Wonders (30)</option><option value="korean">Korean (4)</option></select></div>
+      <div class="control"><label for="family-filter">Family</label><select id="family-filter"><option value="all">All families</option><option value="nature">Nature (116)</option><option value="building">Buildings (37)</option><option value="decoration">Decorations (36)</option><option value="wonder">Wonders (30)</option><option value="korean">Korean (13)</option></select></div>
       <div class="control"><label for="style-filter">Style</label><select id="style-filter"><option value="all">All styles</option><option value="classic">Classic</option><option value="korean">Korean</option><option value="wonder">Wonder</option></select></div>
+      <div class="control"><label for="art-style-filter">Art style</label><select id="art-style-filter"><option value="miniature">Miniature</option><option value="pixel">Pixel village</option></select></div>
       <fieldset class="mode-switch"><legend>Lighting</legend><button type="button" data-mode="dark" aria-pressed="true">Dark</button><button type="button" data-mode="light" aria-pressed="false">Light</button></fieldset>
     </form>
-    <div class="result-line"><p id="result-count" role="status" aria-live="polite">Showing 223 of 223 entries</p><p>Season filters include year-round assets.</p></div>
+    <div class="result-line"><p id="result-count" role="status" aria-live="polite">Showing 232 of 232 entries</p><p>Season filters include year-round assets.</p></div>
     <section class="catalog-grid" id="catalog-grid" aria-label="Asset catalog"><article class="catalog-card" data-catalog-card data-catalog-id="whale" data-key="asset-whale" data-family="nature" data-style="classic" data-season="all" data-search="whale whale whale, a water asset available throughout the year. nature classic all water" aria-labelledby="title-asset-whale" aria-describedby="description-asset-whale">
   <div class="art-frame"><svg class="catalog-art" viewBox="-6.56 -7.08 16.12 11.16" role="img" aria-label="Whale preview"><use href="catalog-sprite-dark.svg#asset-whale"></use></svg></div>
   <div class="card-copy"><p class="eyebrow">nature · all</p><h2 id="title-asset-whale">Whale</h2><code>whale</code><p id="description-asset-whale">Whale, a water asset available throughout the year.</p></div>
@@ -794,9 +795,45 @@
   <div class="art-frame"><svg class="catalog-art" viewBox="-11.16 -9.8 22.32 18.6" role="img" aria-label="Korean stone wall preview"><use href="catalog-sprite-dark.svg#asset-stoneWall"></use></svg></div>
   <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-stoneWall">Korean stone wall</h2><code>stoneWall</code><p id="description-asset-stoneWall">An irregular stacked stone boundary capped with dark roof tiles.</p></div>
 </article>
-<article class="catalog-card" data-catalog-card data-catalog-id="onggi" data-key="asset-onggi" data-family="korean" data-style="korean" data-season="all" data-search="onggi onggi jars three glazed earthenware storage jars with broad shoulders and flat lids on a stone terrace. korean korean all village" aria-labelledby="title-asset-onggi" aria-describedby="description-asset-onggi">
+<article class="catalog-card" data-catalog-card data-catalog-id="onggi" data-key="asset-onggi" data-family="korean" data-style="korean" data-season="all" data-search="onggi onggi jars a jangdokdae stone platform with rounded glazed onggi jars, raised lids and varied storage sizes. korean korean all village" aria-labelledby="title-asset-onggi" aria-describedby="description-asset-onggi">
   <div class="art-frame"><svg class="catalog-art" viewBox="-8.68 -9.44 17.36 14.88" role="img" aria-label="Onggi jars preview"><use href="catalog-sprite-dark.svg#asset-onggi"></use></svg></div>
-  <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-onggi">Onggi jars</h2><code>onggi</code><p id="description-asset-onggi">Three glazed earthenware storage jars with broad shoulders and flat lids on a stone terrace.</p></div>
+  <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-onggi">Onggi jars</h2><code>onggi</code><p id="description-asset-onggi">A jangdokdae stone platform with rounded glazed onggi jars, raised lids and varied storage sizes.</p></div>
+</article>
+<article class="catalog-card" data-catalog-card data-catalog-id="choga" data-key="asset-choga" data-family="korean" data-style="korean" data-season="all" data-search="choga choga cottage a rural choga cottage with a rounded rice-straw roof, tied thatch, plaster walls and a timber doorway. korean korean all village" aria-labelledby="title-asset-choga" aria-describedby="description-asset-choga">
+  <div class="art-frame"><svg class="catalog-art" viewBox="-12.4 -15.04 24.8 21.08" role="img" aria-label="Choga cottage preview"><use href="catalog-sprite-dark.svg#asset-choga"></use></svg></div>
+  <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-choga">Choga cottage</h2><code>choga</code><p id="description-asset-choga">A rural choga cottage with a rounded rice-straw roof, tied thatch, plaster walls and a timber doorway.</p></div>
+</article>
+<article class="catalog-card" data-catalog-card data-catalog-id="jangseung" data-key="asset-jangseung" data-family="korean" data-style="korean" data-season="all" data-search="jangseung jangseung guardians paired carved wooden jangseung guardians with expressive faces, marking the entrance of a rural village. korean korean all decoration" aria-labelledby="title-asset-jangseung" aria-describedby="description-asset-jangseung">
+  <div class="art-frame"><svg class="catalog-art" viewBox="-8.68 -18.28 17.36 23.56" role="img" aria-label="Jangseung guardians preview"><use href="catalog-sprite-dark.svg#asset-jangseung"></use></svg></div>
+  <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-jangseung">Jangseung guardians</h2><code>jangseung</code><p id="description-asset-jangseung">Paired carved wooden jangseung guardians with expressive faces, marking the entrance of a rural village.</p></div>
+</article>
+<article class="catalog-card" data-catalog-card data-catalog-id="sotdae" data-key="asset-sotdae" data-family="korean" data-style="korean" data-season="all" data-search="sotdae sotdae bird poles wooden sotdae poles topped with carved duck-shaped birds, traditional markers at korean village boundaries. korean korean all decoration" aria-labelledby="title-asset-sotdae" aria-describedby="description-asset-sotdae">
+  <div class="art-frame"><svg class="catalog-art" viewBox="-9.92 -19.4 19.84 24.8" role="img" aria-label="Sotdae bird poles preview"><use href="catalog-sprite-dark.svg#asset-sotdae"></use></svg></div>
+  <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-sotdae">Sotdae bird poles</h2><code>sotdae</code><p id="description-asset-sotdae">Wooden sotdae poles topped with carved duck-shaped birds, traditional markers at Korean village boundaries.</p></div>
+</article>
+<article class="catalog-card" data-catalog-card data-catalog-id="riceTerrace" data-key="asset-riceTerrace" data-family="korean" data-style="korean" data-season="all" data-search="riceterrace terraced rice paddies curved, stepped rice paddies with earthen embankments, shallow irrigation water and planted rice shoots. korean korean all farm" aria-labelledby="title-asset-riceTerrace" aria-describedby="description-asset-riceTerrace">
+  <div class="art-frame"><svg class="catalog-art" viewBox="-12.4 -9.8 24.8 18.6" role="img" aria-label="Terraced rice paddies preview"><use href="catalog-sprite-dark.svg#asset-riceTerrace"></use></svg></div>
+  <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-riceTerrace">Terraced rice paddies</h2><code>riceTerrace</code><p id="description-asset-riceTerrace">Curved, stepped rice paddies with earthen embankments, shallow irrigation water and planted rice shoots.</p></div>
+</article>
+<article class="catalog-card" data-catalog-card data-catalog-id="koreanWatermill" data-key="asset-koreanWatermill" data-family="korean" data-style="korean" data-season="all" data-search="koreanwatermill korean watermill a thatched rural mill beside an irrigation channel, with a large timber paddle wheel and grain-workshop doorway. korean korean all village" aria-labelledby="title-asset-koreanWatermill" aria-describedby="description-asset-koreanWatermill">
+  <div class="art-frame"><svg class="catalog-art" viewBox="-14.88 -17.52 29.76 26.04" role="img" aria-label="Korean watermill preview"><use href="catalog-sprite-dark.svg#asset-koreanWatermill"></use></svg></div>
+  <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-koreanWatermill">Korean watermill</h2><code>koreanWatermill</code><p id="description-asset-koreanWatermill">A thatched rural mill beside an irrigation channel, with a large timber paddle wheel and grain-workshop doorway.</p></div>
+</article>
+<article class="catalog-card" data-catalog-card data-catalog-id="hanokGate" data-key="asset-hanokGate" data-family="korean" data-style="korean" data-season="all" data-search="hanokgate hanok courtyard gate a timber courtyard gateway with swept giwa eaves, paneled doors, stone footings and a stepped entrance. korean korean all village" aria-labelledby="title-asset-hanokGate" aria-describedby="description-asset-hanokGate">
+  <div class="art-frame"><svg class="catalog-art" viewBox="-13.64 -19.64 27.28 27.28" role="img" aria-label="Hanok courtyard gate preview"><use href="catalog-sprite-dark.svg#asset-hanokGate"></use></svg></div>
+  <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-hanokGate">Hanok courtyard gate</h2><code>hanokGate</code><p id="description-asset-hanokGate">A timber courtyard gateway with swept giwa eaves, paneled doors, stone footings and a stepped entrance.</p></div>
+</article>
+<article class="catalog-card" data-catalog-card data-catalog-id="kimchiGarden" data-key="asset-kimchiGarden" data-family="korean" data-style="korean" data-season="all" data-search="kimchigarden cabbage and radish garden raised household vegetable beds with leafy napa cabbages and white radishes traditionally grown for kimchi. korean korean all farm" aria-labelledby="title-asset-kimchiGarden" aria-describedby="description-asset-kimchiGarden">
+  <div class="art-frame"><svg class="catalog-art" viewBox="-11.16 -9.56 22.32 16.12" role="img" aria-label="Cabbage and radish garden preview"><use href="catalog-sprite-dark.svg#asset-kimchiGarden"></use></svg></div>
+  <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-kimchiGarden">Cabbage and radish garden</h2><code>kimchiGarden</code><p id="description-asset-kimchiGarden">Raised household vegetable beds with leafy napa cabbages and white radishes traditionally grown for kimchi.</p></div>
+</article>
+<article class="catalog-card" data-catalog-card data-catalog-id="stoneBridge" data-key="asset-stoneBridge" data-family="korean" data-style="korean" data-season="all" data-search="stonebridge korean stone bridge a low arched stone bridge with wedge-shaped masonry, a curved walking deck and grounded abutments. korean korean all town" aria-labelledby="title-asset-stoneBridge" aria-describedby="description-asset-stoneBridge">
+  <div class="art-frame"><svg class="catalog-art" viewBox="-13.64 -13.04 27.28 21.08" role="img" aria-label="Korean stone bridge preview"><use href="catalog-sprite-dark.svg#asset-stoneBridge"></use></svg></div>
+  <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-stoneBridge">Korean stone bridge</h2><code>stoneBridge</code><p id="description-asset-stoneBridge">A low arched stone bridge with wedge-shaped masonry, a curved walking deck and grounded abutments.</p></div>
+</article>
+<article class="catalog-card" data-catalog-card data-catalog-id="hanokEstate" data-key="asset-hanokEstate" data-family="korean" data-style="korean" data-season="all" data-search="hanokestate hanok courtyard estate a substantial hanok compound with a main giwa-roofed hall, side wings, timber latticework and an open stone courtyard. korean korean all town" aria-labelledby="title-asset-hanokEstate" aria-describedby="description-asset-hanokEstate">
+  <div class="art-frame"><svg class="catalog-art" viewBox="-14.88 -23 29.76 31" role="img" aria-label="Hanok courtyard estate preview"><use href="catalog-sprite-dark.svg#asset-hanokEstate"></use></svg></div>
+  <div class="card-copy"><p class="eyebrow">korean · all</p><h2 id="title-asset-hanokEstate">Hanok courtyard estate</h2><code>hanokEstate</code><p id="description-asset-hanokEstate">A substantial hanok compound with a main giwa-roofed hall, side wings, timber latticework and an open stone courtyard.</p></div>
 </article>
 <article class="catalog-card" data-catalog-card data-catalog-id="mountFuji" data-key="wonder-mountFuji" data-family="wonder" data-style="wonder" data-season="all" data-search="mountfuji mount fuji a snow-capped volcanic cone above the village. wonder wonder all nature" aria-labelledby="title-wonder-mountFuji" aria-describedby="description-wonder-mountFuji">
   <div class="art-frame"><svg class="catalog-art" viewBox="-9.92 -16.04 19.84 21.08" role="img" aria-label="Mount Fuji preview"><use href="catalog-sprite-dark.svg#wonder-mountFuji"></use></svg></div>

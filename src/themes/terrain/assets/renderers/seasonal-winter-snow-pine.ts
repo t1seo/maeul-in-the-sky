@@ -1,177 +1,112 @@
 import type { AssetColors } from '../../palette.js';
 
 export function svgSnowPine(x: number, y: number, c: AssetColors, v: number): string {
-  const snow = c.snowCap;
-  const trunk = c.trunk;
-  /* v8 ignore start */
-  const icicle = c.icicleBlue || '#d0e8f8';
-  /* v8 ignore stop */
-  if (v === 1) {
-    // Heavy snow with icicles
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-      `<polygon points="0,-8 -3,-2 3,-2" fill="${c.pine}" opacity="0.6"/>` +
-      `<polygon points="0,-8 -3,-2 3,-2" fill="${snow}" opacity="0.55"/>` +
-      `<polygon points="0,-6 -2.5,-1.5 2.5,-1.5" fill="${snow}" opacity="0.6"/>` +
-      `<ellipse cx="0" cy="-8" rx="1.5" ry="0.5" fill="${snow}"/>` +
-      `<line x1="-2" y1="-3" x2="-2" y2="-2" stroke="${icicle}" stroke-width="0.12"/>` +
-      `<line x1="-1" y1="-4" x2="-1" y2="-3" stroke="${icicle}" stroke-width="0.1"/>` +
-      `<line x1="1.5" y1="-3.5" x2="1.5" y2="-2.5" stroke="${icicle}" stroke-width="0.12"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Frosted blue with more detail
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-      `<polygon points="0,-7.5 -3.5,-1 3.5,-1" fill="${c.ice}" opacity="0.5"/>` +
-      `<polygon points="0,-6 -2.5,-2 2.5,-2" fill="${c.pine}" opacity="0.4"/>` +
-      `<polygon points="0,-7.5 -2.5,-2.5 2.5,-2.5" fill="${snow}" opacity="0.45"/>` +
-      `<ellipse cx="0" cy="-7.5" rx="1.2" ry="0.4" fill="${snow}"/>` +
-      `<ellipse cx="-2" cy="-2.5" rx="0.8" ry="0.25" fill="${snow}" opacity="0.5"/>` +
-      `<ellipse cx="2" cy="-2.5" rx="0.8" ry="0.25" fill="${snow}" opacity="0.5"/>` +
-      `</g>`
-    );
-  }
-  // Light snow with subtle icicles
+  const crown =
+    v === 1
+      ? 'M-.3,-8.6 Q-1,-7 -1.8,-5.8 L-1,-5.7 Q-2,-4.2 -2.9,-3.5 L-1.9,-3.4 Q-3,-1.8 -3.8,-1 Q-2.5,-.15 -.4,-.5 Q1.8,.35 3.5,-.7 Q2.6,-1.6 2,-3.2 L2.9,-3.2 Q1.8,-4.5 1.2,-5.7 L1.8,-5.8 Q.6,-7 -.3,-8.6Z'
+      : v === 2
+        ? 'M.3,-8.3 Q-.7,-6.8 -1.3,-5.7 L-.8,-5.5 -2.2,-3.9 -1.3,-3.9 Q-2.5,-2.4 -3.7,-1 Q-1.8,-.15 -.2,-.7 Q1.7,.1 3.4,-.9 L1.8,-3 2.6,-3.1 1,-5 1.6,-5.1 Q.9,-6.7 .3,-8.3Z'
+        : 'M-.2,-7.6 Q-.7,-6.1 -1.5,-5.1 L-.8,-5 Q-1.7,-3.7 -2.5,-3.1 L-1.5,-3 Q-2.4,-1.5 -3.3,-.8 Q-1.4,-.1 -.1,-.5 Q1.7,.1 3.2,-.7 Q2.4,-1.5 1.9,-2.8 L2.5,-2.9 1,-4.8 1.5,-4.9 Q.5,-6 -.2,-7.6Z';
+  const right =
+    v === 1
+      ? 'M-.3,-8.6 Q.6,-7 1.8,-5.8 L1.2,-5.7 Q1.8,-4.5 2.9,-3.2 L2,-3.2 Q2.6,-1.6 3.5,-.7 Q1.8,.35 -.4,-.5 L.1,-1.6 -.6,-3.4 .2,-4.5 -.5,-6Z'
+      : v === 2
+        ? 'M.3,-8.3 Q.9,-6.7 1.6,-5.1 L1,-5 2.6,-3.1 1.8,-3 3.4,-.9 Q1.7,.1 -.2,-.7 L.5,-2.2 -.2,-3.8 .6,-5.5Z'
+        : 'M-.2,-7.6 Q.5,-6 1.5,-4.9 L1,-4.8 2.5,-2.9 1.9,-2.8 Q2.4,-1.5 3.2,-.7 Q1.7,.1 -.1,-.5 L.4,-1.8 -.3,-3 .3,-4.8Z';
+  const caps =
+    v === 1
+      ? 'M-.3,-8.8 Q-1.3,-7.8 -1.9,-5.9 Q-.9,-5.25 .1,-5.7 Q1.3,-5.2 1.9,-5.75 Q.6,-7 -.3,-8.8Z M-1,-5.3 Q-1.9,-4.8 -3,-3.5 Q-1.7,-2.65 -.3,-3.3 Q1.1,-2.55 2.85,-3.25 L1.7,-4.55 Q.3,-3.65 -1,-5.3Z M-1.8,-3 Q-2.7,-2.35 -3.8,-1 Q-2,-.45 -.65,-1 Q.6,-.25 1.6,-.7 L3.4,-.85 2.25,-2.4 Q.1,-1.6 -1.8,-3Z'
+      : v === 2
+        ? 'M.3,-8.4 Q-.8,-7.3 -1.25,-5.75 L.1,-5.6 1.45,-5.15 Q.9,-6.9 .3,-8.4Z M-1.4,-4.7 -2.1,-3.95 Q-.9,-3.4 .15,-3.8 L1.4,-3.5 .65,-4.25Z M-2.6,-2.15 -3.55,-1.05 Q-1.75,-.55 -.8,-1.1 L.3,-1.4 Q-1.25,-1.4 -2.6,-2.15Z'
+        : 'M-.2,-7.7 Q-.85,-6.9 -1.4,-5.25 Q-.4,-4.7 .6,-5.15 L1.3,-4.95 Q.45,-6.2 -.2,-7.7Z M-1.55,-4.1 -2.4,-3.15 Q-1.4,-2.7 -.6,-3.1 L.2,-3.35 Q-.9,-3.35 -1.55,-4.1Z M-2.45,-1.95 -3.2,-.9 Q-2.1,-.65 -1.35,-1.1 L-.4,-1.4 Q-1.55,-1.25 -2.45,-1.95Z';
   return (
     `<g transform="translate(${x},${y})">` +
-    `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-    `<polygon points="0,-7 -3,-1 3,-1" fill="${c.pine}"/>` +
-    `<polygon points="0,-7 -1.5,-4 1.5,-4" fill="${snow}" opacity="0.45"/>` +
-    `<ellipse cx="0.5" cy="-6" rx="1" ry="0.3" fill="${snow}" opacity="0.5"/>` +
-    `<ellipse cx="-1.5" cy="-3" rx="0.7" ry="0.25" fill="${snow}" opacity="0.4"/>` +
-    `<line x1="-2" y1="-2.5" x2="-2" y2="-1.8" stroke="${icicle}" stroke-width="0.08" opacity="0.7"/>` +
-    `<line x1="2" y1="-2.5" x2="2" y2="-1.8" stroke="${icicle}" stroke-width="0.08" opacity="0.7"/>` +
+    `<ellipse cx=".4" cy="1.8" rx="2.1" ry=".5" fill="${c.shadow}" opacity=".14"/>` +
+    `<path d="M-.55,2 -.45,-2 .35,-2 .55,2Z" fill="${c.trunk}"/>` +
+    `<path d="M-.45,1.8 -.35,-1.8 -.05,-1.8 .05,1.95Z" fill="${c.firewoodLog}"/>` +
+    `<path d="${crown}" fill="${v === 2 ? c.ice : c.pine}"/>` +
+    `<path d="${right}" fill="${v === 2 ? c.frozenWater : c.bushDark}"/>` +
+    `<path d="${caps}" fill="${c.snowCap}"/>` +
+    (v === 1
+      ? `<path d="M-2.75,-1.05 -2.35,-.95 -2.5,.15Z M1.8,-3.1 2.1,-3.15 1.95,-2.3Z" fill="${c.icicleBlue}"/>`
+      : '') +
     `</g>`
   );
 }
 
 export function svgSnowDeciduous(x: number, y: number, c: AssetColors, v: number): string {
-  const branch = c.bareBranch;
-  const snow = c.snowCap;
-  if (v === 1) {
-    // Thin/tall
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<line x1="0" y1="2" x2="0" y2="-5" stroke="${branch}" stroke-width="0.8"/>` +
-      `<line x1="0" y1="-2" x2="-2" y2="-4" stroke="${branch}" stroke-width="0.4"/>` +
-      `<line x1="0" y1="-3" x2="1.5" y2="-5" stroke="${branch}" stroke-width="0.4"/>` +
-      `<line x1="0" y1="-1" x2="2" y2="-2.5" stroke="${branch}" stroke-width="0.4"/>` +
-      `<ellipse cx="-1.5" cy="-4.2" rx="1" ry="0.4" fill="${snow}" opacity="0.6"/>` +
-      `<ellipse cx="1.2" cy="-5.2" rx="0.8" ry="0.3" fill="${snow}" opacity="0.5"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Wide/old
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-0.6" y="-1" width="1.2" height="3.5" fill="${branch}"/>` +
-      `<line x1="0" y1="-1" x2="-3" y2="-3.5" stroke="${branch}" stroke-width="0.6"/>` +
-      `<line x1="0" y1="-1.5" x2="2.5" y2="-4" stroke="${branch}" stroke-width="0.6"/>` +
-      `<line x1="0" y1="0" x2="-2.5" y2="-1.5" stroke="${branch}" stroke-width="0.5"/>` +
-      `<line x1="0" y1="0" x2="3" y2="-2" stroke="${branch}" stroke-width="0.5"/>` +
-      `<ellipse cx="-2.5" cy="-3.7" rx="1.2" ry="0.5" fill="${snow}" opacity="0.55"/>` +
-      `<ellipse cx="2" cy="-4.2" rx="1" ry="0.4" fill="${snow}" opacity="0.5"/>` +
-      `<ellipse cx="0" cy="-2" rx="1.5" ry="0.4" fill="${snow}" opacity="0.4"/>` +
-      `</g>`
-    );
-  }
-  // Single tree
+  const branches =
+    v === 1
+      ? 'M-.45,2.2 -.3,-1.7 -2.45,-4.1 -2.2,-4.45 -.8,-3.35 -.65,-5.8 -.25,-5.8 -.2,-3.4 .5,-4.6 1.6,-6 .3,-3.4 .2,-1.6 1.65,-2.7 2.5,-3.9 2.75,-3.7 1.95,-2.25 .3,-.8 .5,2.2Z'
+      : v === 2
+        ? 'M-.85,2.4 -.5,-.1 -2.6,-1.25 -3.8,-1.35 -3.85,-1.7 -2.65,-1.75 -1,-.95 -.9,-2.4 -3.3,-3.4 -4,-4.45 -3.7,-4.65 -2.95,-3.85 -1.25,-3.35 -1.9,-5.3 -1.55,-5.45 -.55,-3.5 .2,-4.25 1.1,-5.7 1.45,-5.5 .85,-4.3 2.8,-4.65 3.65,-5.35 3.85,-5.1 3,-4.25 .55,-3.45 .35,-1.35 2.6,-2.2 3.75,-3.3 4,-3.1 2.95,-1.75 .5,-.45 .85,2.4Z'
+        : 'M-.55,2.2 -.45,-.6 -2.8,-2.7 -3.25,-4 -2.9,-4.05 -2.45,-3 -1,-2.25 -.85,-4.35 -1.55,-5.2 -1.2,-5.35 -.35,-4.5 -.25,-3.45 1.55,-4.8 2.25,-5.5 2.5,-5.2 1.7,-4.4 .1,-2.7 .05,-1.05 1.9,-2.25 2.75,-3.3 3,-3.05 2.2,-1.85 .3,-.25 .65,2.2Z';
+  const snow =
+    v === 1
+      ? 'M-2.65,-4.35 Q-2.7,-4.8 -2.05,-4.7 L-.95,-3.8 -.8,-3.3 Q-1.75,-3.6 -2.65,-4.35Z M.6,-4.95 Q.9,-5.8 1.65,-6.15 L1.75,-5.85 1.05,-4.95Z M1.35,-2.65 Q2,-3.4 2.55,-3.85 L2.8,-3.65 1.9,-2.5Z'
+      : v === 2
+        ? 'M-3.9,-4.55 Q-3.65,-4.9 -3.2,-4.3 L-2.8,-3.95 -1.3,-3.55 -1.05,-3.2 Q-2.6,-3.45 -3.4,-3.85Z M.8,-4.4 Q1.65,-4.9 2.65,-4.85 L3.6,-5.35 3.85,-5.1 2.8,-4.4 1,-4.1Z M-3.95,-1.7 Q-3.25,-2.1 -2.55,-1.85 L-1.5,-1.25 -2.5,-1.35Z M1.8,-2.2 3.7,-3.4 3.95,-3.1 2.9,-1.95Z'
+        : 'M-3.2,-4.25 Q-2.8,-4.55 -2.65,-3.8 L-2.3,-3.15 -1.2,-2.6 -1.05,-2.2 -2.75,-2.95Z M.8,-4.5 Q1.25,-4.95 1.7,-4.9 L2.25,-5.65 2.6,-5.35 1.75,-4.5 1,-4.25Z M1.65,-2.25 Q2.2,-3 2.75,-3.35 L2.95,-3.1 2.15,-2.1Z';
   return (
     `<g transform="translate(${x},${y})">` +
-    `<line x1="0" y1="2" x2="0" y2="-4" stroke="${branch}" stroke-width="0.7"/>` +
-    `<line x1="0" y1="-1.5" x2="-2.5" y2="-3.5" stroke="${branch}" stroke-width="0.4"/>` +
-    `<line x1="0" y1="-2.5" x2="2" y2="-4.5" stroke="${branch}" stroke-width="0.4"/>` +
-    `<line x1="0" y1="-0.5" x2="2" y2="-2" stroke="${branch}" stroke-width="0.4"/>` +
-    `<ellipse cx="-2" cy="-3.7" rx="1" ry="0.35" fill="${snow}" opacity="0.5"/>` +
-    `<ellipse cx="1.8" cy="-4.7" rx="0.8" ry="0.3" fill="${snow}" opacity="0.5"/>` +
+    `<ellipse cx=".3" cy="2.1" rx="1.5" ry=".45" fill="${c.ice}"/>` +
+    `<path d="${branches}" fill="${c.bareBranch}"/>` +
+    `<path d="M-.45,2.15 -.35,-.5 -.1,-1.2 .02,.2 .2,2.25Z" fill="${c.firewoodLog}"/>` +
+    `<path d="${snow}" fill="${c.snowCap}"/>` +
+    `<path d="M-1.5,2 Q-.65,1.6 -.4,1.9 L.1,2.45 Q-.9,2.65 -1.5,2Z" fill="${c.snowCap}"/>` +
     `</g>`
   );
 }
 
 export function svgSnowman(x: number, y: number, c: AssetColors, v: number): string {
-  const body = c.snowCap;
-  const coal = c.snowmanCoal;
-  const carrot = c.snowmanCarrot;
-  const scarf = c.scarfRed;
-  if (v === 1) {
-    // With broom
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<circle cx="0" cy="0" r="2.2" fill="${body}"/>` +
-      `<circle cx="0" cy="-2.8" r="1.6" fill="${body}"/>` +
-      `<circle cx="0" cy="-4.8" r="1.1" fill="${body}"/>` +
-      `<circle cx="-0.4" cy="-5" r="0.2" fill="${coal}"/>` +
-      `<circle cx="0.4" cy="-5" r="0.2" fill="${coal}"/>` +
-      `<polygon points="0,-4.8 1.2,-4.6 0,-4.5" fill="${carrot}"/>` +
-      `<rect x="-1" y="-3.6" width="2" height="0.4" rx="0.2" fill="${scarf}"/>` +
-      `<line x1="2" y1="-3" x2="3.5" y2="-6" stroke="${c.bareBranch}" stroke-width="0.4"/>` +
-      `<line x1="3.2" y1="-5.5" x2="3.8" y2="-6.5" stroke="${c.bareBranch}" stroke-width="0.3"/>` +
-      `<line x1="3.2" y1="-5.5" x2="3.8" y2="-5.2" stroke="${c.bareBranch}" stroke-width="0.3"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Melting
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="0.5" rx="2.8" ry="1.5" fill="${body}"/>` +
-      `<circle cx="0" cy="-1.5" r="1.8" fill="${body}"/>` +
-      `<circle cx="0" cy="-3.2" r="1" fill="${body}"/>` +
-      `<circle cx="-0.3" cy="-3.4" r="0.15" fill="${coal}"/>` +
-      `<circle cx="0.3" cy="-3.4" r="0.15" fill="${coal}"/>` +
-      `<polygon points="0,-3.2 1,-3 0,-2.9" fill="${carrot}"/>` +
-      `<ellipse cx="0" cy="1.5" rx="3" ry="0.5" fill="${c.ice}" opacity="0.3"/>` +
-      `</g>`
-    );
-  }
-  // Classic
+  const melting = v === 2;
+  const headY = melting ? -3.35 : v === 1 ? -5.1 : -4.8;
+  const torsoY = melting ? -1.6 : v === 1 ? -2.85 : -2.55;
+  const base = melting
+    ? 'M-2.9,.8 Q-3.6,.1 -2.2,-.65 Q-1.15,-1.25 .2,-.7 Q2.1,-1.4 2.8,-.05 Q3.9,.8 2.25,1.8 Q.7,2.15 -.55,1.6 Q-2,2.15 -2.9,.8Z'
+    : 'M-2.1,.8 Q-2.65,-.7 -1.35,-1.85 Q.1,-2.7 1.55,-1.5 Q2.95,-.1 2,1.45 Q.7,2.3 -.9,1.9Z';
   return (
     `<g transform="translate(${x},${y})">` +
-    `<circle cx="0" cy="0" r="2" fill="${body}"/>` +
-    `<circle cx="0" cy="-2.5" r="1.5" fill="${body}"/>` +
-    `<circle cx="0" cy="-4.3" r="1" fill="${body}"/>` +
-    `<circle cx="-0.35" cy="-4.5" r="0.18" fill="${coal}"/>` +
-    `<circle cx="0.35" cy="-4.5" r="0.18" fill="${coal}"/>` +
-    `<polygon points="0,-4.3 1.2,-4.1 0,-4" fill="${carrot}"/>` +
-    `<circle cx="0" cy="-2.2" r="0.15" fill="${coal}"/>` +
-    `<circle cx="0" cy="-2.7" r="0.15" fill="${coal}"/>` +
-    `<rect x="-1" y="-3.2" width="2" height="0.35" rx="0.15" fill="${scarf}"/>` +
-    `<rect x="-1.2" y="-5.5" width="2.4" height="0.5" fill="${coal}"/>` +
-    `<rect x="-0.8" y="-6" width="1.6" height="0.6" fill="${coal}"/>` +
+    (melting ? `<ellipse cx=".5" cy="1.5" rx="3.25" ry=".65" fill="${c.ice}"/>` : '') +
+    `<path d="M-1.2,${torsoY} -2.9,${torsoY - 1} -3.25,${torsoY - 1.9} M-2.9,${torsoY - 1} -3.65,${torsoY - 0.8} M1,${torsoY} 2.5,${torsoY - 0.8} 3,${torsoY - 1.8}" fill="none" stroke="${c.bareBranch}" stroke-width=".28" stroke-linecap="round"/>` +
+    `<path d="${base}" fill="${c.ice}"/>` +
+    `<path d="M-2.1,.8 Q-2.65,-.7 -1.35,-1.85 Q-.1,-2.4 .7,-1.75 Q1.7,-.2 .6,1.25 Q-1,1.85 -2.1,.8Z" fill="${c.snowCap}"/>` +
+    `<ellipse cx="0" cy="${torsoY}" rx="1.65" ry="1.6" fill="${c.ice}"/>` +
+    `<ellipse cx="-.4" cy="${torsoY - 0.22}" rx="1.15" ry="1.3" fill="${c.snowCap}"/>` +
+    `<circle cx="-.12" cy="${headY}" r="1.12" fill="${c.ice}"/>` +
+    `<ellipse cx="-.4" cy="${headY - 0.15}" rx=".84" ry=".91" fill="${c.snowCap}"/>` +
+    `<path d="M-1.2,${headY + 0.78} Q-.15,${headY + 1.15} .9,${headY + 0.65} L1,${headY + 1.05} .5,${headY + 1.3} .95,${headY + 2.15} .32,${headY + 2.1} .05,${headY + 1.35} Q-.6,${headY + 1.3} -1.2,${headY + 1.1}Z" fill="${c.scarfRed}"/>` +
+    `<path d="M-.6,${headY - 0.2}h.28v.28h-.28Z M.1,${headY - 0.15}h.28v.28H.1Z M-.25,${torsoY}h.28v.3h-.28Z M-.25,${torsoY + 0.65}h.28v.3h-.28Z" fill="${c.snowmanCoal}"/>` +
+    `<path d="M.15,${headY + 0.1} 1.38,${headY + 0.35} .05,${headY + 0.45}Z" fill="${c.snowmanCarrot}"/>` +
+    (v === 0
+      ? `<path d="M-1.4,-5.8 -.95,-6.05 -1,-7.05 .5,-7.25 .75,-6.1 1.2,-6.15 1.25,-5.8 Q-.1,-5.3 -1.4,-5.8Z" fill="${c.snowmanCoal}"/><path d="M-.97,-6.3 .7,-6.5 .75,-6.15 -.93,-5.98Z" fill="${c.scarfRed}"/>`
+      : '') +
+    (v === 1
+      ? `<path d="M2.5,.9 3.45,-5.8" stroke="${c.bareBranch}" stroke-width=".3"/><path d="M3.1,-5.05 2.95,-6.8 3.55,-7.25 4.25,-6.95 3.8,-5Z" fill="${c.wheat}"/><path d="M3.12,-5.3 3.85,-5.22" stroke="${c.firewoodLog}" stroke-width=".22"/>`
+      : '') +
+    (melting
+      ? `<path d="M1.7,.5 2.2,.3 3.1,.8 2.7,1.2Z M2.2,.3 2.35,-.55 3.1,-.35 3.1,.8Z" fill="${c.snowmanCoal}"/>`
+      : '') +
     `</g>`
   );
 }
 
 export function svgSnowdrift(x: number, y: number, c: AssetColors, v: number): string {
-  const snow = c.snowCap;
-  if (v === 1) {
-    // Large
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="0" rx="3.5" ry="1.2" fill="${snow}"/>` +
-      `<ellipse cx="-1" cy="-0.5" rx="2" ry="0.8" fill="${c.frostWhite}" opacity="0.6"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Wind-shaped
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<path d="M-3,0 Q-1,-1.5 2,-0.5 Q3,0 3.5,0.3" fill="${snow}" stroke="none"/>` +
-      `<ellipse cx="0" cy="0.2" rx="3" ry="0.6" fill="${snow}" opacity="0.8"/>` +
-      `</g>`
-    );
-  }
-  // Small
+  const bank =
+    v === 1
+      ? 'M-4,.4 Q-3.8,-.4 -2.8,-.7 Q-2,-2.5 -.1,-1.65 Q1.3,-1.2 2,-.65 Q3.6,-1 4,.55 Q2.4,1.65 .2,1.3 Q-2.6,1.65 -4,.4Z'
+      : v === 2
+        ? 'M-3.8,.6 Q-2.35,-.3 -1.6,-.95 Q-.55,-1.8 1.3,-1.45 Q.4,-.6 1.6,-.15 L4,.5 Q1.9,1.65 -.3,1.15 Q-2.8,1.3 -3.8,.6Z'
+        : 'M-2.7,.3 Q-2.1,-.35 -1.5,-.5 Q-.85,-1.7 .65,-1.15 Q1.65,-1 2.65,.5 Q1.1,1.4 -.7,1.05 Q-2.1,1.2 -2.7,.3Z';
+  const crest =
+    v === 1
+      ? 'M-4,.4 Q-3.8,-.4 -2.8,-.7 Q-2,-2.5 -.1,-1.65 Q1.3,-1.2 2,-.65 Q.5,.4 -.7,.3 Q-2.55,-.05 -4,.4Z'
+      : v === 2
+        ? 'M-3.8,.6 Q-2.35,-.3 -1.6,-.95 Q-.55,-1.8 1.3,-1.45 Q-.5,-.9 -1.1,-.15 Q-2,.55 -3.8,.6Z'
+        : 'M-2.7,.3 Q-2.1,-.35 -1.5,-.5 Q-.85,-1.7 .65,-1.15 L1.5,-.45 Q.1,.35 -.85,.2Z';
   return (
-    `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0" rx="2" ry="0.8" fill="${snow}"/>` +
-    `<ellipse cx="0.3" cy="-0.3" rx="1.2" ry="0.5" fill="${c.frostWhite}" opacity="0.5"/>` +
-    `</g>`
+    `<g transform="translate(${x},${y})"><path d="${bank}" fill="${c.ice}"/>` +
+    `<path d="${crest}" fill="${c.snowCap}"/>` +
+    `<path d="M-1.4,.75 Q.4,.95 1.8,.5 Q.4,1.2 -1.4,.75Z" fill="${c.frostWhite}"/></g>`
   );
 }

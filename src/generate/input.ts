@@ -66,6 +66,7 @@ export async function resolveGenerationInput(
       request.motion,
       request.layout,
       request.style,
+      request.artStyle,
       request.villageStyle,
       request.normalization,
       request.layoutSeed,

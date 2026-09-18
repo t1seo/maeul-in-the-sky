@@ -1,0 +1,373 @@
+{
+  "before": {
+    "source": {
+      "revision": "2b608bcfda7746723dd1af30c554e3c944afd32b",
+      "historical": false,
+      "dirty": false,
+      "sourceSha256": "f95f8d3d0074443c2c197512ee03917f8db70cfc698cad0647f03b7177e5b3a6",
+      "harnessSha256": "6ad30775aaa6e986132d37ac86800fb00002591719a31d1ddec849c939d71250",
+      "changedDuringRun": false
+    },
+    "environment": {
+      "node": "v26.0.0",
+      "v8": "14.6.202.33-node.19",
+      "platform": "darwin",
+      "arch": "arm64",
+      "osRelease": "25.5.0",
+      "cpuModel": "Apple M1",
+      "logicalCpus": 8,
+      "totalMemory": 17179869184,
+      "timingKey": "b1264b63face7cdd430454b5926ba91a8c5f0e341d39389e64f8bcb7434ffc14",
+      "timingCaveat": "Shared host; no forced GC or process isolation between fixtures. Timing only gates matching runtime/OS/hardware; matching identity cannot prove equal load. Heap peaks are observations between renders, not true allocation peaks.",
+      "dependencies": {
+        "tsx": "4.23.7",
+        "typescript": "5.9.3",
+        "simplex-noise": "4.0.3",
+        "svgo": "4.1.0",
+        "zod": "4.6.4",
+        "@resvg/resvg-js": "2.6.2"
+      }
+    },
+    "config": {
+      "warmup": 20,
+      "iterations": 100,
+      "options": {
+        "title": "@benchmark",
+        "width": 840,
+        "height": 240,
+        "density": 5,
+        "hemisphere": "north"
+      },
+      "gzipLevel": 9,
+      "timingScope": "Synchronous terrainTheme.render dark+light pair; excludes import/startup, metrics, PNG, network and disk. Fixtures run empty/mixed/full in one process.",
+      "percentileMethod": "Nearest rank: sorted[ceil(n*p)-1], p=0.5 and 0.95 (research-compatible)."
+    },
+    "fixtures": [
+      {
+        "name": "empty",
+        "dataSha256": "d32d787c63ddce555da81c8e4031caf9ff29fb876c1bc49215b27d41c168ebd6",
+        "timing": {
+          "medianMs": 14.348542000000066,
+          "p95Ms": 17.334082999999964
+        },
+        "outputs": {
+          "dark": {
+            "rawBytes": 478479,
+            "gzipBytes": 68257,
+            "elements": 5620,
+            "cssTargets": 0,
+            "smilElements": 2
+          },
+          "light": {
+            "rawBytes": 476346,
+            "gzipBytes": 67305,
+            "elements": 5566,
+            "cssTargets": 0,
+            "smilElements": 2
+          }
+        }
+      },
+      {
+        "name": "mixed",
+        "dataSha256": "d14537d260567babbafe79b7740dad266664b28886e41a829d91a4ac84e87db6",
+        "timing": {
+          "medianMs": 18.419208000000253,
+          "p95Ms": 20.331041999999798
+        },
+        "outputs": {
+          "dark": {
+            "rawBytes": 643271,
+            "gzipBytes": 99618,
+            "elements": 7761,
+            "cssTargets": 19,
+            "smilElements": 6
+          },
+          "light": {
+            "rawBytes": 641490,
+            "gzipBytes": 98857,
+            "elements": 7707,
+            "cssTargets": 19,
+            "smilElements": 6
+          }
+        }
+      },
+      {
+        "name": "full",
+        "dataSha256": "57256446c1ac8fb93cdf11ede47b811849096374025edca15d527ee96da642b5",
+        "timing": {
+          "medianMs": 23.1457500000015,
+          "p95Ms": 27.132042000001093
+        },
+        "outputs": {
+          "dark": {
+            "rawBytes": 1078607,
+            "gzipBytes": 145825,
+            "elements": 13615,
+            "cssTargets": 27,
+            "smilElements": 20
+          },
+          "light": {
+            "rawBytes": 1077342,
+            "gzipBytes": 144998,
+            "elements": 13561,
+            "cssTargets": 27,
+            "smilElements": 20
+          }
+        }
+      }
+    ]
+  },
+  "after": {
+    "source": {
+      "revision": "2b608bcfda7746723dd1af30c554e3c944afd32b",
+      "historical": false,
+      "dirty": true,
+      "sourceSha256": "3389bce8a3fecedffd6a34011a5617da1a8932f10635aea154c5274108ffb465",
+      "harnessSha256": "e57263c31a4cdcc7ebb57422e6fc40ff234a0153df223dc7f1de384a6da52d00",
+      "changedDuringRun": false
+    },
+    "environment": {
+      "node": "v26.0.0",
+      "v8": "14.6.202.33-node.19",
+      "platform": "darwin",
+      "arch": "arm64",
+      "osRelease": "25.5.0",
+      "cpuModel": "Apple M1",
+      "logicalCpus": 8,
+      "totalMemory": 17179869184,
+      "timingKey": "b1264b63face7cdd430454b5926ba91a8c5f0e341d39389e64f8bcb7434ffc14",
+      "timingCaveat": "Shared host; no forced GC or process isolation between fixtures. Timing only gates matching runtime/OS/hardware; matching identity cannot prove equal load. Heap peaks are observations between renders, not true allocation peaks.",
+      "dependencies": {
+        "tsx": "4.23.7",
+        "typescript": "5.9.3",
+        "simplex-noise": "4.0.3",
+        "svgo": "4.1.0",
+        "zod": "4.6.4",
+        "@resvg/resvg-js": "2.6.2"
+      }
+    },
+    "config": {
+      "warmup": 20,
+      "iterations": 100,
+      "options": {
+        "title": "@benchmark",
+        "width": 840,
+        "height": 240,
+        "density": 5,
+        "hemisphere": "north"
+      },
+      "gzipLevel": 9,
+      "timingScope": "Synchronous terrainTheme.render dark+light pair; excludes import/startup, metrics, PNG, network and disk. Fixtures run empty/mixed/full in one process.",
+      "percentileMethod": "Nearest rank: sorted[ceil(n*p)-1], p=0.5 and 0.95 (research-compatible)."
+    },
+    "fixtures": [
+      {
+        "name": "empty",
+        "dataSha256": "d32d787c63ddce555da81c8e4031caf9ff29fb876c1bc49215b27d41c168ebd6",
+        "timing": {
+          "medianMs": 14.633375000000115,
+          "p95Ms": 15.912417000000005
+        },
+        "outputs": {
+          "dark": {
+            "rawBytes": 517900,
+            "gzipBytes": 70161,
+            "elements": 5552,
+            "cssTargets": 0,
+            "smilElements": 2
+          },
+          "light": {
+            "rawBytes": 516773,
+            "gzipBytes": 69414,
+            "elements": 5514,
+            "cssTargets": 0,
+            "smilElements": 2
+          }
+        }
+      },
+      {
+        "name": "mixed",
+        "dataSha256": "d14537d260567babbafe79b7740dad266664b28886e41a829d91a4ac84e87db6",
+        "timing": {
+          "medianMs": 22.45879100000002,
+          "p95Ms": 28.6059580000001
+        },
+        "outputs": {
+          "dark": {
+            "rawBytes": 945057,
+            "gzipBytes": 134798,
+            "elements": 10606,
+            "cssTargets": 19,
+            "smilElements": 11
+          },
+          "light": {
+            "rawBytes": 944018,
+            "gzipBytes": 134120,
+            "elements": 10568,
+            "cssTargets": 19,
+            "smilElements": 11
+          }
+        }
+      },
+      {
+        "name": "full",
+        "dataSha256": "57256446c1ac8fb93cdf11ede47b811849096374025edca15d527ee96da642b5",
+        "timing": {
+          "medianMs": 30.752458999999362,
+          "p95Ms": 32.91120799999953
+        },
+        "outputs": {
+          "dark": {
+            "rawBytes": 1742317,
+            "gzipBytes": 170890,
+            "elements": 19509,
+            "cssTargets": 18,
+            "smilElements": 10
+          },
+          "light": {
+            "rawBytes": 1740500,
+            "gzipBytes": 170102,
+            "elements": 19471,
+            "cssTargets": 18,
+            "smilElements": 10
+          }
+        }
+      }
+    ]
+  },
+  "preOptimization": {
+    "source": {
+      "revision": "2b608bcfda7746723dd1af30c554e3c944afd32b",
+      "historical": false,
+      "dirty": true,
+      "sourceSha256": "301c4d6482e193186a6b11901fb00dde01668f2e660cd9c139df97c326e076c8",
+      "harnessSha256": "e57263c31a4cdcc7ebb57422e6fc40ff234a0153df223dc7f1de384a6da52d00",
+      "changedDuringRun": false
+    },
+    "environment": {
+      "node": "v26.0.0",
+      "v8": "14.6.202.33-node.19",
+      "platform": "darwin",
+      "arch": "arm64",
+      "osRelease": "25.5.0",
+      "cpuModel": "Apple M1",
+      "logicalCpus": 8,
+      "totalMemory": 17179869184,
+      "timingKey": "b1264b63face7cdd430454b5926ba91a8c5f0e341d39389e64f8bcb7434ffc14",
+      "timingCaveat": "Shared host; no forced GC or process isolation between fixtures. Timing only gates matching runtime/OS/hardware; matching identity cannot prove equal load. Heap peaks are observations between renders, not true allocation peaks.",
+      "dependencies": {
+        "tsx": "4.23.7",
+        "typescript": "5.9.3",
+        "simplex-noise": "4.0.3",
+        "svgo": "4.1.0",
+        "zod": "4.6.4",
+        "@resvg/resvg-js": "2.6.2"
+      }
+    },
+    "config": {
+      "warmup": 20,
+      "iterations": 100,
+      "options": {
+        "title": "@benchmark",
+        "width": 840,
+        "height": 240,
+        "density": 5,
+        "hemisphere": "north"
+      },
+      "gzipLevel": 9,
+      "timingScope": "Synchronous terrainTheme.render dark+light pair; excludes import/startup, metrics, PNG, network and disk. Fixtures run empty/mixed/full in one process.",
+      "percentileMethod": "Nearest rank: sorted[ceil(n*p)-1], p=0.5 and 0.95 (research-compatible)."
+    },
+    "fixtures": [
+      {
+        "name": "empty",
+        "dataSha256": "d32d787c63ddce555da81c8e4031caf9ff29fb876c1bc49215b27d41c168ebd6",
+        "timing": {
+          "medianMs": 15.150375000000167,
+          "p95Ms": 17.472167000000127
+        },
+        "outputs": {
+          "dark": {
+            "rawBytes": 517900,
+            "gzipBytes": 70161,
+            "elements": 5552,
+            "cssTargets": 0,
+            "smilElements": 2
+          },
+          "light": {
+            "rawBytes": 516773,
+            "gzipBytes": 69414,
+            "elements": 5514,
+            "cssTargets": 0,
+            "smilElements": 2
+          }
+        }
+      },
+      {
+        "name": "mixed",
+        "dataSha256": "d14537d260567babbafe79b7740dad266664b28886e41a829d91a4ac84e87db6",
+        "timing": {
+          "medianMs": 23.407208000000537,
+          "p95Ms": 28.692957999999635
+        },
+        "outputs": {
+          "dark": {
+            "rawBytes": 950241,
+            "gzipBytes": 134822,
+            "elements": 10798,
+            "cssTargets": 19,
+            "smilElements": 11
+          },
+          "light": {
+            "rawBytes": 949202,
+            "gzipBytes": 134146,
+            "elements": 10760,
+            "cssTargets": 19,
+            "smilElements": 11
+          }
+        }
+      },
+      {
+        "name": "full",
+        "dataSha256": "57256446c1ac8fb93cdf11ede47b811849096374025edca15d527ee96da642b5",
+        "timing": {
+          "medianMs": 32.44008300000132,
+          "p95Ms": 53.263458999999784
+        },
+        "outputs": {
+          "dark": {
+            "rawBytes": 1781629,
+            "gzipBytes": 171108,
+            "elements": 20965,
+            "cssTargets": 18,
+            "smilElements": 10
+          },
+          "light": {
+            "rawBytes": 1779812,
+            "gzipBytes": 170310,
+            "elements": 20927,
+            "cssTargets": 18,
+            "smilElements": 10
+          }
+        }
+      }
+    ]
+  },
+  "sameRuntimeAndConfiguration": true,
+  "originalSizeBudgetPassed": false,
+  "approval": "Coordinator approved the asset/progression feature baseline after reducing overlapping secondary assets and merging reward inlays; existing +5% size/+20% median/+30% p95 regression thresholds remain unchanged. This is a quality/capability update, not a claim of faster rendering.",
+  "rasterEquivalenceCases": 40,
+  "newBaselineVerification": {
+    "passed": true,
+    "timingComparable": true,
+    "failures": [],
+    "warnings": [],
+    "budgets": {
+      "rawBytes": 1.05,
+      "gzipBytes": 1.05,
+      "elements": 1.05,
+      "medianMs": 1.2,
+      "p95Ms": 1.3
+    }
+  }
+}

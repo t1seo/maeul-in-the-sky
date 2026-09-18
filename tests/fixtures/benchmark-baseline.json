@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "createdAt": "2026-09-13T07:40:05.278Z",
+  "createdAt": "2026-09-18T21:00:08.034Z",
   "source": {
-    "revision": "c6d60487e50347fd84b770b57618d181acd874de",
+    "revision": "2b608bcfda7746723dd1af30c554e3c944afd32b",
     "historical": false,
     "dirty": true,
-    "sourceSha256": "0e2e4c4e70d360a659775e83d34133814309f1e0f8c898446726a38619f20af1",
-    "harnessSha256": "6ad30775aaa6e986132d37ac86800fb00002591719a31d1ddec849c939d71250",
+    "sourceSha256": "3389bce8a3fecedffd6a34011a5617da1a8932f10635aea154c5274108ffb465",
+    "harnessSha256": "e57263c31a4cdcc7ebb57422e6fc40ff234a0153df223dc7f1de384a6da52d00",
     "changedDuringRun": false
   },
   "environment": {
-    "node": "v26.8.1",
-    "v8": "14.6.202.34-node.28",
+    "node": "v26.0.0",
+    "v8": "14.6.202.33-node.19",
     "platform": "darwin",
     "arch": "arm64",
     "osRelease": "25.5.0",
     "cpuModel": "Apple M1",
     "logicalCpus": 8,
     "totalMemory": 17179869184,
-    "timingKey": "b7fd5c79d12502f13f1194ebdbe69178187ddbf62363f4348918413368a4be03",
+    "timingKey": "b1264b63face7cdd430454b5926ba91a8c5f0e341d39389e64f8bcb7434ffc14",
     "timingCaveat": "Shared host; no forced GC or process isolation between fixtures. Timing only gates matching runtime/OS/hardware; matching identity cannot prove equal load. Heap peaks are observations between renders, not true allocation peaks.",
     "dependencies": {
       "tsx": "4.23.7",
@@ -59,522 +59,522 @@
       },
       "samples": [
         {
-          "milliseconds": 14.56000000000006,
-          "heapUsed": 49249776,
-          "rss": 207290368
+          "milliseconds": 15.912417000000005,
+          "heapUsed": 47473664,
+          "rss": 193167360
         },
         {
-          "milliseconds": 15.584208999999987,
-          "heapUsed": 77884160,
-          "rss": 207749120
+          "milliseconds": 15.500167000000033,
+          "heapUsed": 45746840,
+          "rss": 193249280
         },
         {
-          "milliseconds": 17.753084000000058,
-          "heapUsed": 73201368,
-          "rss": 208371712
+          "milliseconds": 15.440625000000068,
+          "heapUsed": 43474680,
+          "rss": 193249280
         },
         {
-          "milliseconds": 17.14737500000001,
-          "heapUsed": 68494888,
+          "milliseconds": 15.580832999999984,
+          "heapUsed": 73475200,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 16.454541000000063,
+          "heapUsed": 69774144,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 17.10450000000003,
+          "heapUsed": 66334264,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 15.657624999999939,
+          "heapUsed": 62258176,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 15.293207999999936,
+          "heapUsed": 58579968,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 16.06545799999992,
+          "heapUsed": 55424920,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 16.639208000000053,
+          "heapUsed": 52246856,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 15.825582999999938,
+          "heapUsed": 49575200,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 15.897082999999952,
+          "heapUsed": 47045992,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 15.241040999999996,
+          "heapUsed": 76750928,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 15.731999999999971,
+          "heapUsed": 72805392,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 15.39716599999997,
+          "heapUsed": 68846808,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 14.789582999999993,
+          "heapUsed": 65124928,
+          "rss": 193265664
+        },
+        {
+          "milliseconds": 15.080083000000059,
+          "heapUsed": 61782360,
+          "rss": 193363968
+        },
+        {
+          "milliseconds": 15.082667000000129,
+          "heapUsed": 58357664,
+          "rss": 193363968
+        },
+        {
+          "milliseconds": 14.809417000000167,
+          "heapUsed": 55429144,
+          "rss": 193363968
+        },
+        {
+          "milliseconds": 15.010833999999932,
+          "heapUsed": 52938632,
+          "rss": 193363968
+        },
+        {
+          "milliseconds": 14.68158399999993,
+          "heapUsed": 82623832,
+          "rss": 193363968
+        },
+        {
+          "milliseconds": 14.742332999999917,
+          "heapUsed": 78417912,
+          "rss": 193363968
+        },
+        {
+          "milliseconds": 15.415750000000116,
+          "heapUsed": 74469616,
+          "rss": 193363968
+        },
+        {
+          "milliseconds": 14.47524999999996,
+          "heapUsed": 70767128,
+          "rss": 193363968
+        },
+        {
+          "milliseconds": 14.884207999999944,
+          "heapUsed": 66892848,
+          "rss": 193396736
+        },
+        {
+          "milliseconds": 14.633375000000115,
+          "heapUsed": 64002768,
+          "rss": 193396736
+        },
+        {
+          "milliseconds": 15.695791999999983,
+          "heapUsed": 61124760,
+          "rss": 193396736
+        },
+        {
+          "milliseconds": 15.221832999999833,
+          "heapUsed": 57909440,
+          "rss": 193396736
+        },
+        {
+          "milliseconds": 14.801582999999937,
+          "heapUsed": 54883728,
+          "rss": 193396736
+        },
+        {
+          "milliseconds": 14.315667000000076,
+          "heapUsed": 84205344,
+          "rss": 193396736
+        },
+        {
+          "milliseconds": 14.659708000000137,
+          "heapUsed": 79965344,
+          "rss": 193396736
+        },
+        {
+          "milliseconds": 16.05212500000016,
+          "heapUsed": 75794736,
+          "rss": 193396736
+        },
+        {
+          "milliseconds": 14.823916999999938,
+          "heapUsed": 71819192,
+          "rss": 193740800
+        },
+        {
+          "milliseconds": 14.710917000000109,
+          "heapUsed": 68151224,
+          "rss": 194248704
+        },
+        {
+          "milliseconds": 14.348124999999982,
+          "heapUsed": 64440856,
+          "rss": 194691072
+        },
+        {
+          "milliseconds": 14.257083000000193,
+          "heapUsed": 61368088,
+          "rss": 195198976
+        },
+        {
+          "milliseconds": 14.026166999999987,
+          "heapUsed": 90653576,
+          "rss": 195575808
+        },
+        {
+          "milliseconds": 14.208624999999984,
+          "heapUsed": 86488776,
+          "rss": 196100096
+        },
+        {
+          "milliseconds": 14.597125000000005,
+          "heapUsed": 82249736,
+          "rss": 196575232
+        },
+        {
+          "milliseconds": 14.31879200000003,
+          "heapUsed": 78067624,
+          "rss": 197115904
+        },
+        {
+          "milliseconds": 14.679665999999997,
+          "heapUsed": 74103544,
+          "rss": 197640192
+        },
+        {
+          "milliseconds": 14.153166000000056,
+          "heapUsed": 70912152,
+          "rss": 198115328
+        },
+        {
+          "milliseconds": 14.04770799999983,
+          "heapUsed": 67219544,
+          "rss": 198656000
+        },
+        {
+          "milliseconds": 14.62279199999989,
+          "heapUsed": 64281032,
+          "rss": 199081984
+        },
+        {
+          "milliseconds": 15.078500000000076,
+          "heapUsed": 93598592,
+          "rss": 199524352
+        },
+        {
+          "milliseconds": 14.835624999999936,
+          "heapUsed": 89326720,
+          "rss": 199983104
+        },
+        {
+          "milliseconds": 14.61545799999999,
+          "heapUsed": 85065056,
+          "rss": 200474624
+        },
+        {
+          "milliseconds": 14.271250000000009,
+          "heapUsed": 80836640,
+          "rss": 200982528
+        },
+        {
+          "milliseconds": 14.224042000000054,
+          "heapUsed": 77097856,
+          "rss": 201441280
+        },
+        {
+          "milliseconds": 14.270582999999988,
+          "heapUsed": 73335280,
+          "rss": 201949184
+        },
+        {
+          "milliseconds": 14.659625000000005,
+          "heapUsed": 69656600,
+          "rss": 202407936
+        },
+        {
+          "milliseconds": 14.615125000000035,
+          "heapUsed": 66659056,
+          "rss": 202932224
+        },
+        {
+          "milliseconds": 14.380083999999897,
+          "heapUsed": 95752592,
+          "rss": 203325440
+        },
+        {
+          "milliseconds": 14.479332999999997,
+          "heapUsed": 91250752,
+          "rss": 203833344
+        },
+        {
+          "milliseconds": 14.792667000000165,
+          "heapUsed": 87036080,
+          "rss": 204357632
+        },
+        {
+          "milliseconds": 14.644416000000092,
+          "heapUsed": 82821152,
+          "rss": 204849152
+        },
+        {
+          "milliseconds": 14.442958999999973,
+          "heapUsed": 79130784,
+          "rss": 205389824
+        },
+        {
+          "milliseconds": 14.131124999999884,
+          "heapUsed": 75415664,
+          "rss": 205881344
+        },
+        {
+          "milliseconds": 14.343499999999949,
+          "heapUsed": 72234232,
+          "rss": 206389248
+        },
+        {
+          "milliseconds": 14.265959000000066,
+          "heapUsed": 101211280,
+          "rss": 206782464
+        },
+        {
+          "milliseconds": 14.266624999999976,
+          "heapUsed": 96709968,
+          "rss": 207323136
+        },
+        {
+          "milliseconds": 14.597042000000101,
+          "heapUsed": 92472176,
+          "rss": 207798272
+        },
+        {
+          "milliseconds": 14.564208000000008,
+          "heapUsed": 88270192,
+          "rss": 208338944
+        },
+        {
+          "milliseconds": 14.108582999999953,
+          "heapUsed": 84325984,
           "rss": 208846848
         },
         {
-          "milliseconds": 14.741667000000007,
-          "heapUsed": 63825128,
-          "rss": 209453056
+          "milliseconds": 14.649457999999868,
+          "heapUsed": 80370232,
+          "rss": 209338368
         },
         {
-          "milliseconds": 14.543083000000024,
-          "heapUsed": 59226912,
-          "rss": 209993728
+          "milliseconds": 15.330083000000059,
+          "heapUsed": 77193544,
+          "rss": 209879040
         },
         {
-          "milliseconds": 13.971915999999965,
-          "heapUsed": 55028960,
-          "rss": 210501632
+          "milliseconds": 14.913667000000032,
+          "heapUsed": 74123320,
+          "rss": 210354176
         },
         {
-          "milliseconds": 15.180124999999862,
-          "heapUsed": 83467072,
-          "rss": 211042304
+          "milliseconds": 14.923958999999968,
+          "heapUsed": 103245520,
+          "rss": 210763776
         },
         {
-          "milliseconds": 13.923541999999998,
-          "heapUsed": 78221672,
-          "rss": 211582976
+          "milliseconds": 15.038999999999987,
+          "heapUsed": 98743488,
+          "rss": 211238912
         },
         {
-          "milliseconds": 14.527082999999948,
-          "heapUsed": 73238184,
-          "rss": 212156416
+          "milliseconds": 14.862958000000162,
+          "heapUsed": 94527760,
+          "rss": 211746816
         },
         {
-          "milliseconds": 15.545250000000124,
-          "heapUsed": 68014968,
-          "rss": 212680704
+          "milliseconds": 14.459582999999839,
+          "heapUsed": 90290000,
+          "rss": 212238336
         },
         {
-          "milliseconds": 16.09462499999995,
-          "heapUsed": 63709792,
-          "rss": 213385216
+          "milliseconds": 14.634667000000036,
+          "heapUsed": 86382448,
+          "rss": 212779008
         },
         {
-          "milliseconds": 16.819082999999864,
-          "heapUsed": 59193608,
-          "rss": 213942272
+          "milliseconds": 15.001875000000155,
+          "heapUsed": 82684280,
+          "rss": 213270528
         },
         {
-          "milliseconds": 13.721125000000029,
-          "heapUsed": 55314224,
-          "rss": 214466560
+          "milliseconds": 15.236041999999998,
+          "heapUsed": 79394792,
+          "rss": 215187456
         },
         {
-          "milliseconds": 13.56916699999988,
-          "heapUsed": 83799360,
-          "rss": 214941696
+          "milliseconds": 13.763000000000147,
+          "heapUsed": 108518240,
+          "rss": 215580672
         },
         {
-          "milliseconds": 13.41216600000007,
-          "heapUsed": 78552896,
-          "rss": 215482368
+          "milliseconds": 14.411125000000084,
+          "heapUsed": 104016720,
+          "rss": 216088576
         },
         {
-          "milliseconds": 13.025583000000097,
-          "heapUsed": 73582784,
-          "rss": 216055808
+          "milliseconds": 14.451166999999941,
+          "heapUsed": 99779288,
+          "rss": 216530944
         },
         {
-          "milliseconds": 15.159999999999854,
-          "heapUsed": 68741360,
-          "rss": 216563712
+          "milliseconds": 14.143166999999949,
+          "heapUsed": 95330400,
+          "rss": 217055232
         },
         {
-          "milliseconds": 14.841250000000173,
-          "heapUsed": 64040072,
-          "rss": 217104384
+          "milliseconds": 14.94320800000014,
+          "heapUsed": 91672888,
+          "rss": 217595904
         },
         {
-          "milliseconds": 15.842457999999851,
-          "heapUsed": 60041816,
-          "rss": 217710592
-        },
-        {
-          "milliseconds": 13.069124999999985,
-          "heapUsed": 88518384,
+          "milliseconds": 14.511875000000146,
+          "heapUsed": 87728736,
           "rss": 218169344
         },
         {
-          "milliseconds": 13.891832999999906,
-          "heapUsed": 83294496,
-          "rss": 218726400
+          "milliseconds": 14.794625000000224,
+          "heapUsed": 84253344,
+          "rss": 218611712
         },
         {
-          "milliseconds": 14.196374999999989,
-          "heapUsed": 78331008,
-          "rss": 219299840
+          "milliseconds": 14.314542000000074,
+          "heapUsed": 81324872,
+          "rss": 219119616
         },
         {
-          "milliseconds": 14.213790999999901,
-          "heapUsed": 73126440,
-          "rss": 219873280
+          "milliseconds": 13.752624999999625,
+          "heapUsed": 110327056,
+          "rss": 219512832
         },
         {
-          "milliseconds": 14.954833000000008,
-          "heapUsed": 68517152,
-          "rss": 220463104
+          "milliseconds": 14.43120799999997,
+          "heapUsed": 105847096,
+          "rss": 220004352
         },
         {
-          "milliseconds": 15.659415999999965,
-          "heapUsed": 64387656,
-          "rss": 221003776
+          "milliseconds": 14.561541999999918,
+          "heapUsed": 101635440,
+          "rss": 220545024
         },
         {
-          "milliseconds": 16.828500000000076,
-          "heapUsed": 92838128,
-          "rss": 221528064
+          "milliseconds": 14.432749999999942,
+          "heapUsed": 97423416,
+          "rss": 221036544
         },
         {
-          "milliseconds": 15.840416999999889,
-          "heapUsed": 87584248,
-          "rss": 221937664
+          "milliseconds": 14.199625000000196,
+          "heapUsed": 93731848,
+          "rss": 221544448
         },
         {
-          "milliseconds": 14.15083299999992,
-          "heapUsed": 82433040,
-          "rss": 222347264
+          "milliseconds": 14.7404590000001,
+          "heapUsed": 90302560,
+          "rss": 222052352
         },
         {
-          "milliseconds": 12.962834000000157,
-          "heapUsed": 77305888,
-          "rss": 222707712
+          "milliseconds": 14.237832999999682,
+          "heapUsed": 86874560,
+          "rss": 222609408
         },
         {
-          "milliseconds": 13.57899999999995,
-          "heapUsed": 72684840,
-          "rss": 223100928
+          "milliseconds": 13.71316700000034,
+          "heapUsed": 115852280,
+          "rss": 222986240
         },
         {
-          "milliseconds": 13.75408399999992,
-          "heapUsed": 68056480,
-          "rss": 223444992
+          "milliseconds": 14.335916999999881,
+          "heapUsed": 111350248,
+          "rss": 223461376
         },
         {
-          "milliseconds": 13.117040999999972,
-          "heapUsed": 63885536,
-          "rss": 223821824
+          "milliseconds": 14.39258400000017,
+          "heapUsed": 107110984,
+          "rss": 223985664
         },
         {
-          "milliseconds": 12.851208999999926,
-          "heapUsed": 92310984,
-          "rss": 224100352
+          "milliseconds": 14.425917000000027,
+          "heapUsed": 102647160,
+          "rss": 224526336
         },
         {
-          "milliseconds": 13.464582999999948,
-          "heapUsed": 86895232,
-          "rss": 224477184
+          "milliseconds": 14.248082999999951,
+          "heapUsed": 98964568,
+          "rss": 225001472
         },
         {
-          "milliseconds": 15.14912500000014,
-          "heapUsed": 81753408,
-          "rss": 224854016
+          "milliseconds": 14.932542000000012,
+          "heapUsed": 94986792,
+          "rss": 225542144
         },
         {
-          "milliseconds": 14.712125000000015,
-          "heapUsed": 77146400,
-          "rss": 225214464
+          "milliseconds": 14.289041999999881,
+          "heapUsed": 91511088,
+          "rss": 225984512
         },
         {
-          "milliseconds": 14.071374999999989,
-          "heapUsed": 72451248,
-          "rss": 225574912
+          "milliseconds": 14.044875000000047,
+          "heapUsed": 88670952,
+          "rss": 226492416
         },
         {
-          "milliseconds": 20.685874999999896,
-          "heapUsed": 41563712,
-          "rss": 225951744
+          "milliseconds": 13.73679200000015,
+          "heapUsed": 117582456,
+          "rss": 226885632
         },
         {
-          "milliseconds": 14.662792000000081,
-          "heapUsed": 70286008,
-          "rss": 225951744
+          "milliseconds": 14.32004199999983,
+          "heapUsed": 113342552,
+          "rss": 227360768
         },
         {
-          "milliseconds": 14.70879100000002,
-          "heapUsed": 65578600,
-          "rss": 225951744
-        },
-        {
-          "milliseconds": 14.274874999999838,
-          "heapUsed": 60754528,
-          "rss": 226082816
-        },
-        {
-          "milliseconds": 13.84524999999985,
-          "heapUsed": 55600776,
-          "rss": 226082816
-        },
-        {
-          "milliseconds": 13.971542,
-          "heapUsed": 51036464,
-          "rss": 226082816
-        },
-        {
-          "milliseconds": 14.190209000000095,
-          "heapUsed": 46842600,
-          "rss": 226099200
-        },
-        {
-          "milliseconds": 14.447124999999915,
-          "heapUsed": 75271072,
-          "rss": 226099200
-        },
-        {
-          "milliseconds": 13.959082999999964,
-          "heapUsed": 69864016,
-          "rss": 226099200
-        },
-        {
-          "milliseconds": 14.006040999999868,
-          "heapUsed": 64447800,
-          "rss": 226099200
-        },
-        {
-          "milliseconds": 13.260915999999952,
-          "heapUsed": 59315832,
-          "rss": 226099200
-        },
-        {
-          "milliseconds": 13.735832999999957,
-          "heapUsed": 54709960,
-          "rss": 226099200
-        },
-        {
-          "milliseconds": 14.093624999999975,
-          "heapUsed": 50134424,
-          "rss": 226099200
-        },
-        {
-          "milliseconds": 13.510708999999906,
-          "heapUsed": 46218376,
-          "rss": 226131968
-        },
-        {
-          "milliseconds": 13.341584000000012,
-          "heapUsed": 74433856,
-          "rss": 226131968
-        },
-        {
-          "milliseconds": 13.417500000000018,
-          "heapUsed": 69280304,
-          "rss": 226131968
-        },
-        {
-          "milliseconds": 13.181584000000157,
-          "heapUsed": 64136472,
-          "rss": 226328576
-        },
-        {
-          "milliseconds": 13.347540999999865,
-          "heapUsed": 59005640,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.007000000000062,
-          "heapUsed": 54112456,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.587291999999934,
-          "heapUsed": 50147192,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 12.753125000000182,
-          "heapUsed": 78366920,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.323999999999842,
-          "heapUsed": 72951496,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.157666999999947,
-          "heapUsed": 67797816,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 12.766791999999896,
-          "heapUsed": 62671208,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 12.984500000000025,
-          "heapUsed": 57798304,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.393166000000065,
-          "heapUsed": 53427976,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.072959000000083,
-          "heapUsed": 81792080,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.260250000000042,
-          "heapUsed": 76380912,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.581416999999874,
-          "heapUsed": 71226744,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 12.988792000000103,
-          "heapUsed": 65835120,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.924125000000004,
-          "heapUsed": 61475600,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.481374999999844,
-          "heapUsed": 56584072,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.466416000000208,
-          "heapUsed": 52738632,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 12.88491699999986,
-          "heapUsed": 81100664,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.104583000000048,
-          "heapUsed": 75683224,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.182708999999932,
-          "heapUsed": 70540008,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.293749999999818,
-          "heapUsed": 65669768,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.263083999999935,
-          "heapUsed": 60713152,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.256291999999803,
-          "heapUsed": 56344224,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.272542000000158,
-          "heapUsed": 84786104,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 14.436291999999867,
-          "heapUsed": 79368848,
-          "rss": 226344960
-        },
-        {
-          "milliseconds": 13.985625000000255,
-          "heapUsed": 74218560,
-          "rss": 226361344
-        },
-        {
-          "milliseconds": 13.620042000000012,
-          "heapUsed": 68830400,
-          "rss": 226361344
-        },
-        {
-          "milliseconds": 13.656166999999641,
-          "heapUsed": 63978944,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.428916999999728,
-          "heapUsed": 59810840,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.319332999999915,
-          "heapUsed": 88237568,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.266000000000076,
-          "heapUsed": 82820272,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.47774999999956,
-          "heapUsed": 77675056,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.389500000000226,
-          "heapUsed": 72305912,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.763208999999733,
-          "heapUsed": 67711192,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.396334000000024,
-          "heapUsed": 63079944,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.03579099999979,
-          "heapUsed": 91093216,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.70495800000026,
-          "heapUsed": 86024536,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.793290999999954,
-          "heapUsed": 80869320,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.039832999999817,
-          "heapUsed": 75473288,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.084458000000268,
-          "heapUsed": 70855768,
-          "rss": 226459648
-        },
-        {
-          "milliseconds": 13.449207999999999,
-          "heapUsed": 66007456,
-          "rss": 226476032
-        },
-        {
-          "milliseconds": 13.411333000000013,
-          "heapUsed": 61982040,
-          "rss": 226476032
-        },
-        {
-          "milliseconds": 12.816959000000224,
-          "heapUsed": 90263464,
-          "rss": 226476032
-        },
-        {
-          "milliseconds": 13.32925000000023,
-          "heapUsed": 85108152,
-          "rss": 226476032
-        },
-        {
-          "milliseconds": 13.704000000000178,
-          "heapUsed": 79701080,
-          "rss": 226476032
-        },
-        {
-          "milliseconds": 13.298041000000012,
-          "heapUsed": 74571208,
-          "rss": 226476032
+          "milliseconds": 14.581166999999823,
+          "heapUsed": 108864104,
+          "rss": 227934208
         }
       ],
       "timing": {
-        "medianMs": 13.587291999999934,
-        "p95Ms": 16.09462499999995
+        "medianMs": 14.633375000000115,
+        "p95Ms": 15.912417000000005
       },
       "memory": {
-        "startingHeap": 52722400,
-        "peakObservedHeap": 92838128,
-        "endingHeap": 74571544,
-        "peakObservedRss": 226476032
+        "startingHeap": 49387536,
+        "peakObservedHeap": 117582456,
+        "endingHeap": 108864440,
+        "peakObservedRss": 227934208
       },
       "outputs": {
         "dark": {
-          "rawBytes": 473837,
-          "gzipBytes": 66071,
-          "sha256": "c945af283cd8f70b83096ce666627d70a351e9f1a1f760335f9a2ebfdd1e997a",
-          "elements": 5592,
+          "rawBytes": 517900,
+          "gzipBytes": 70161,
+          "sha256": "b6bf95a8d9cb93f2e165f8a2b3e8afe64f32c7900e1005758f3e9a1188d4c45f",
+          "elements": 5552,
           "cssTargets": 0,
           "cssKeyframes": 6,
           "smilElements": 2,
@@ -589,10 +589,10 @@
           "description": "Isometric contribution terrain for @benchmark from 2024-12-29 to 2025-12-27. 0 contributions across 0 active days. 0 wonders discovered. relative normalization, maximum 1."
         },
         "light": {
-          "rawBytes": 471704,
-          "gzipBytes": 65186,
-          "sha256": "78d9499e79b4d54fce23648bb3fe4b60a8be8eb2b2a6748bef9509c85ced2d33",
-          "elements": 5538,
+          "rawBytes": 516773,
+          "gzipBytes": 69414,
+          "sha256": "be4b82b255c8bcfb1e810c905a12e7c6a4ab1e38ec5d86bc3fbfc12d47d18aad",
+          "elements": 5514,
           "cssTargets": 0,
           "cssKeyframes": 6,
           "smilElements": 2,
@@ -630,525 +630,525 @@
       },
       "samples": [
         {
-          "milliseconds": 17.34491699999944,
-          "heapUsed": 95690064,
-          "rss": 469368832
+          "milliseconds": 20.491292000000612,
+          "heapUsed": 105050344,
+          "rss": 473481216
         },
         {
-          "milliseconds": 17.20287499999995,
-          "heapUsed": 96173488,
-          "rss": 469876736
+          "milliseconds": 22.012292000000343,
+          "heapUsed": 77605656,
+          "rss": 473481216
         },
         {
-          "milliseconds": 16.80487499999981,
-          "heapUsed": 96672792,
-          "rss": 471220224
+          "milliseconds": 21.07275000000027,
+          "heapUsed": 84032224,
+          "rss": 474447872
         },
         {
-          "milliseconds": 16.94300000000021,
-          "heapUsed": 96904896,
-          "rss": 471711744
+          "milliseconds": 20.916958000000704,
+          "heapUsed": 89882840,
+          "rss": 474923008
         },
         {
-          "milliseconds": 17.04162499999984,
-          "heapUsed": 97345048,
-          "rss": 472170496
+          "milliseconds": 20.411833000000115,
+          "heapUsed": 95690072,
+          "rss": 475348992
         },
         {
-          "milliseconds": 24.29345799999919,
-          "heapUsed": 45595768,
-          "rss": 472743936
+          "milliseconds": 20.316667000000052,
+          "heapUsed": 100833992,
+          "rss": 475594752
         },
         {
-          "milliseconds": 19.867875000000822,
-          "heapUsed": 48393360,
-          "rss": 473006080
+          "milliseconds": 20.55249999999978,
+          "heapUsed": 105724960,
+          "rss": 475594752
         },
         {
-          "milliseconds": 18.05870799999957,
-          "heapUsed": 50631984,
-          "rss": 473006080
+          "milliseconds": 21.09241699999984,
+          "heapUsed": 110555216,
+          "rss": 475611136
         },
         {
-          "milliseconds": 17.370874999999614,
-          "heapUsed": 52222776,
-          "rss": 473006080
+          "milliseconds": 20.574749999999767,
+          "heapUsed": 115093696,
+          "rss": 475611136
         },
         {
-          "milliseconds": 17.387375000000247,
-          "heapUsed": 53961536,
-          "rss": 473006080
+          "milliseconds": 20.890207999999802,
+          "heapUsed": 87597064,
+          "rss": 475611136
         },
         {
-          "milliseconds": 17.092625000000226,
-          "heapUsed": 55206848,
-          "rss": 473006080
+          "milliseconds": 20.57037499999933,
+          "heapUsed": 93922832,
+          "rss": 476266496
         },
         {
-          "milliseconds": 17.168292000000292,
-          "heapUsed": 56444248,
-          "rss": 473022464
+          "milliseconds": 21.097082999999657,
+          "heapUsed": 99717760,
+          "rss": 476708864
         },
         {
-          "milliseconds": 17.03520800000024,
-          "heapUsed": 57744320,
-          "rss": 473022464
+          "milliseconds": 20.492707999999766,
+          "heapUsed": 105771040,
+          "rss": 477151232
         },
         {
-          "milliseconds": 16.66595799999959,
-          "heapUsed": 58956512,
-          "rss": 473022464
+          "milliseconds": 21.471082999999453,
+          "heapUsed": 110904680,
+          "rss": 477609984
         },
         {
-          "milliseconds": 17.613500000000386,
-          "heapUsed": 60230648,
-          "rss": 473038848
+          "milliseconds": 21.670000000000073,
+          "heapUsed": 115658584,
+          "rss": 477609984
         },
         {
-          "milliseconds": 17.57745900000009,
-          "heapUsed": 61738160,
-          "rss": 473038848
+          "milliseconds": 20.646958000000268,
+          "heapUsed": 120258776,
+          "rss": 477609984
         },
         {
-          "milliseconds": 17.7690419999999,
-          "heapUsed": 63019792,
-          "rss": 473038848
+          "milliseconds": 20.39233400000012,
+          "heapUsed": 124776728,
+          "rss": 477609984
         },
         {
-          "milliseconds": 16.784292000000278,
-          "heapUsed": 64299008,
-          "rss": 473038848
+          "milliseconds": 20.743749999999636,
+          "heapUsed": 97295544,
+          "rss": 477609984
         },
         {
-          "milliseconds": 18.180167000000438,
-          "heapUsed": 65276944,
-          "rss": 473038848
+          "milliseconds": 20.697541999999885,
+          "heapUsed": 103162248,
+          "rss": 478265344
         },
         {
-          "milliseconds": 18.224959000000126,
-          "heapUsed": 66030912,
-          "rss": 473038848
-        },
-        {
-          "milliseconds": 19.42974999999933,
-          "heapUsed": 67016312,
-          "rss": 473038848
-        },
-        {
-          "milliseconds": 20.144874999999956,
-          "heapUsed": 67960552,
-          "rss": 473038848
-        },
-        {
-          "milliseconds": 17.53216699999939,
-          "heapUsed": 68726928,
-          "rss": 473038848
-        },
-        {
-          "milliseconds": 18.61462500000016,
-          "heapUsed": 69707224,
-          "rss": 473038848
-        },
-        {
-          "milliseconds": 17.580540999999357,
-          "heapUsed": 70165608,
-          "rss": 473038848
-        },
-        {
-          "milliseconds": 18.16675000000032,
-          "heapUsed": 70903200,
-          "rss": 473038848
-        },
-        {
-          "milliseconds": 17.2173329999996,
-          "heapUsed": 71372448,
-          "rss": 473038848
-        },
-        {
-          "milliseconds": 17.38891600000079,
-          "heapUsed": 71829888,
-          "rss": 473038848
-        },
-        {
-          "milliseconds": 17.715291999999863,
-          "heapUsed": 72123840,
-          "rss": 473055232
-        },
-        {
-          "milliseconds": 16.672625000000153,
-          "heapUsed": 72813984,
-          "rss": 473055232
-        },
-        {
-          "milliseconds": 16.82445800000005,
-          "heapUsed": 73063192,
-          "rss": 473055232
-        },
-        {
-          "milliseconds": 16.66754199999923,
-          "heapUsed": 73488616,
-          "rss": 473055232
-        },
-        {
-          "milliseconds": 17.824542000000292,
-          "heapUsed": 73960808,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 16.499665999999706,
-          "heapUsed": 74417960,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 16.47808299999997,
-          "heapUsed": 74874352,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 17.534625000000233,
-          "heapUsed": 75382464,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 18.503375000000233,
-          "heapUsed": 75858824,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 17.937958000000435,
-          "heapUsed": 76317768,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 17.948041999999987,
-          "heapUsed": 76775424,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 18.250999999999294,
-          "heapUsed": 77232576,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 18.3379589999995,
-          "heapUsed": 77689728,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 18.645790999999917,
-          "heapUsed": 78146880,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 18.459332999999788,
-          "heapUsed": 78604032,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 18.77929200000017,
-          "heapUsed": 79475104,
-          "rss": 473071616
-        },
-        {
-          "milliseconds": 17.65416599999935,
-          "heapUsed": 79594688,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 17.805041999999958,
-          "heapUsed": 80053488,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 19.139541999999892,
-          "heapUsed": 80540328,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 17.71650000000045,
-          "heapUsed": 80996456,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.419541999999637,
-          "heapUsed": 81454760,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.45575000000008,
-          "heapUsed": 81929728,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 17.663249999999607,
-          "heapUsed": 82386880,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.33704200000011,
-          "heapUsed": 82649888,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 17.836832999999388,
-          "heapUsed": 83339744,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 17.837375000000065,
-          "heapUsed": 83811552,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.33704200000011,
-          "heapUsed": 84269744,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.27574999999979,
-          "heapUsed": 84726952,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 17.62737500000003,
-          "heapUsed": 85184104,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.78429099999994,
-          "heapUsed": 85641256,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 19.95862500000021,
-          "heapUsed": 85874424,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 19.69445799999994,
-          "heapUsed": 86555560,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 20.99187500000062,
-          "heapUsed": 87012712,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.51245800000015,
-          "heapUsed": 87469864,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.19562499999938,
-          "heapUsed": 87927016,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 17.99241600000005,
-          "heapUsed": 88384168,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.675874999999905,
-          "heapUsed": 88844256,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 19.09937499999978,
-          "heapUsed": 89302792,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.750750000000153,
-          "heapUsed": 89759944,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.48962500000016,
-          "heapUsed": 90217096,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.17645799999991,
-          "heapUsed": 90674248,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.298999999999978,
-          "heapUsed": 91132248,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.21612499999992,
-          "heapUsed": 91589400,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 18.12779099999989,
-          "heapUsed": 91822568,
-          "rss": 473088000
-        },
-        {
-          "milliseconds": 19.025125000000116,
-          "heapUsed": 92573296,
-          "rss": 473104384
-        },
-        {
-          "milliseconds": 18.82158299999992,
-          "heapUsed": 93050344,
-          "rss": 473120768
-        },
-        {
-          "milliseconds": 18.769916999999623,
-          "heapUsed": 93507368,
-          "rss": 473120768
-        },
-        {
-          "milliseconds": 18.36175000000003,
-          "heapUsed": 93980680,
-          "rss": 473137152
-        },
-        {
-          "milliseconds": 17.720750000000407,
-          "heapUsed": 94454984,
-          "rss": 473137152
-        },
-        {
-          "milliseconds": 17.726167000000714,
-          "heapUsed": 94911464,
-          "rss": 473137152
-        },
-        {
-          "milliseconds": 17.722917000000052,
-          "heapUsed": 95368000,
-          "rss": 473137152
-        },
-        {
-          "milliseconds": 18.68658400000004,
-          "heapUsed": 95873520,
-          "rss": 473169920
-        },
-        {
-          "milliseconds": 18.0131250000004,
-          "heapUsed": 96330000,
-          "rss": 473169920
-        },
-        {
-          "milliseconds": 18.044667000000118,
-          "heapUsed": 96786920,
-          "rss": 473546752
-        },
-        {
-          "milliseconds": 18.172999999999774,
-          "heapUsed": 97243400,
-          "rss": 474005504
-        },
-        {
-          "milliseconds": 18.018291999999747,
-          "heapUsed": 97699880,
-          "rss": 474480640
-        },
-        {
-          "milliseconds": 18.69329199999993,
-          "heapUsed": 98157496,
-          "rss": 474939392
-        },
-        {
-          "milliseconds": 19.076665999999932,
-          "heapUsed": 98621896,
-          "rss": 475414528
-        },
-        {
-          "milliseconds": 18.41004199999952,
-          "heapUsed": 99079400,
-          "rss": 475906048
-        },
-        {
-          "milliseconds": 18.256791000000703,
-          "heapUsed": 99538560,
-          "rss": 476364800
-        },
-        {
-          "milliseconds": 17.927458000000115,
-          "heapUsed": 99995936,
-          "rss": 476823552
-        },
-        {
-          "milliseconds": 18.310832999999548,
-          "heapUsed": 100455224,
-          "rss": 477315072
-        },
-        {
-          "milliseconds": 18.38116599999921,
-          "heapUsed": 100911704,
-          "rss": 477790208
-        },
-        {
-          "milliseconds": 18.08679100000063,
-          "heapUsed": 101368184,
-          "rss": 478248960
-        },
-        {
-          "milliseconds": 17.54516599999988,
-          "heapUsed": 101837128,
+          "milliseconds": 21.296041999999943,
+          "heapUsed": 109344128,
           "rss": 478707712
         },
         {
-          "milliseconds": 17.755416999999397,
-          "heapUsed": 102294744,
-          "rss": 479166464
+          "milliseconds": 28.6059580000001,
+          "heapUsed": 49640784,
+          "rss": 470450176
         },
         {
-          "milliseconds": 17.405666000000565,
-          "heapUsed": 102751336,
-          "rss": 479657984
+          "milliseconds": 22.45274999999947,
+          "heapUsed": 55633448,
+          "rss": 471089152
         },
         {
-          "milliseconds": 17.42333299999973,
-          "heapUsed": 103207816,
-          "rss": 480100352
+          "milliseconds": 21.68616699999984,
+          "heapUsed": 62087856,
+          "rss": 471515136
         },
         {
-          "milliseconds": 17.711834000000636,
-          "heapUsed": 103664296,
-          "rss": 480575488
+          "milliseconds": 21.58508400000028,
+          "heapUsed": 67670888,
+          "rss": 471941120
         },
         {
-          "milliseconds": 17.61712500000067,
-          "heapUsed": 104120776,
-          "rss": 481050624
+          "milliseconds": 21.724832999999308,
+          "heapUsed": 72707592,
+          "rss": 471941120
         },
         {
-          "milliseconds": 17.890667000000576,
-          "heapUsed": 104577256,
-          "rss": 481492992
+          "milliseconds": 21.54412499999944,
+          "heapUsed": 77453144,
+          "rss": 471941120
         },
         {
-          "milliseconds": 18.167500000000473,
-          "heapUsed": 105033736,
-          "rss": 481968128
+          "milliseconds": 21.443707999999788,
+          "heapUsed": 81900640,
+          "rss": 471941120
+        },
+        {
+          "milliseconds": 22.504832999999962,
+          "heapUsed": 54300720,
+          "rss": 471941120
+        },
+        {
+          "milliseconds": 20.77320899999995,
+          "heapUsed": 60798552,
+          "rss": 472793088
+        },
+        {
+          "milliseconds": 20.513957999999548,
+          "heapUsed": 66391824,
+          "rss": 473219072
+        },
+        {
+          "milliseconds": 21.44170899999972,
+          "heapUsed": 72540640,
+          "rss": 473645056
+        },
+        {
+          "milliseconds": 21.116417000000183,
+          "heapUsed": 77875128,
+          "rss": 473874432
+        },
+        {
+          "milliseconds": 20.135582999999315,
+          "heapUsed": 82282960,
+          "rss": 473874432
+        },
+        {
+          "milliseconds": 20.247166000000107,
+          "heapUsed": 86954336,
+          "rss": 473874432
+        },
+        {
+          "milliseconds": 21.730625000000146,
+          "heapUsed": 91299568,
+          "rss": 473874432
+        },
+        {
+          "milliseconds": 21.066083000000617,
+          "heapUsed": 63456776,
+          "rss": 473874432
+        },
+        {
+          "milliseconds": 21.600124999999935,
+          "heapUsed": 70113040,
+          "rss": 474759168
+        },
+        {
+          "milliseconds": 24.21258399999988,
+          "heapUsed": 75597728,
+          "rss": 475185152
+        },
+        {
+          "milliseconds": 24.22254200000043,
+          "heapUsed": 81542960,
+          "rss": 475611136
+        },
+        {
+          "milliseconds": 23.886375000000044,
+          "heapUsed": 86657776,
+          "rss": 475824128
+        },
+        {
+          "milliseconds": 22.049332999999933,
+          "heapUsed": 91236096,
+          "rss": 475824128
+        },
+        {
+          "milliseconds": 23.795125000000553,
+          "heapUsed": 95741208,
+          "rss": 475824128
+        },
+        {
+          "milliseconds": 25.121874999999818,
+          "heapUsed": 100014976,
+          "rss": 475824128
+        },
+        {
+          "milliseconds": 23.957792000000154,
+          "heapUsed": 104773808,
+          "rss": 475840512
+        },
+        {
+          "milliseconds": 24.565749999999753,
+          "heapUsed": 76935088,
+          "rss": 476004352
+        },
+        {
+          "milliseconds": 24.542167000000518,
+          "heapUsed": 82656072,
+          "rss": 476659712
+        },
+        {
+          "milliseconds": 22.92991600000005,
+          "heapUsed": 87988472,
+          "rss": 477085696
+        },
+        {
+          "milliseconds": 23.63041599999997,
+          "heapUsed": 93506024,
+          "rss": 477511680
+        },
+        {
+          "milliseconds": 23.24791699999969,
+          "heapUsed": 98324512,
+          "rss": 477724672
+        },
+        {
+          "milliseconds": 23.262375000000247,
+          "heapUsed": 102446056,
+          "rss": 477724672
+        },
+        {
+          "milliseconds": 23.529750000000604,
+          "heapUsed": 106962760,
+          "rss": 477724672
+        },
+        {
+          "milliseconds": 24.133041999999477,
+          "heapUsed": 111006640,
+          "rss": 477757440
+        },
+        {
+          "milliseconds": 26.343708999999762,
+          "heapUsed": 83216528,
+          "rss": 477757440
+        },
+        {
+          "milliseconds": 24.613916999999674,
+          "heapUsed": 89583912,
+          "rss": 478609408
+        },
+        {
+          "milliseconds": 23.117082999999184,
+          "heapUsed": 94927016,
+          "rss": 479035392
+        },
+        {
+          "milliseconds": 22.58391699999993,
+          "heapUsed": 100868824,
+          "rss": 479477760
+        },
+        {
+          "milliseconds": 22.27637500000037,
+          "heapUsed": 105966616,
+          "rss": 479690752
+        },
+        {
+          "milliseconds": 21.693874999999935,
+          "heapUsed": 110323432,
+          "rss": 479690752
+        },
+        {
+          "milliseconds": 22.45879100000002,
+          "heapUsed": 114814104,
+          "rss": 479690752
+        },
+        {
+          "milliseconds": 22.239125000000058,
+          "heapUsed": 119010856,
+          "rss": 479690752
+        },
+        {
+          "milliseconds": 22.238667000000532,
+          "heapUsed": 123061480,
+          "rss": 479690752
+        },
+        {
+          "milliseconds": 22.876000000000204,
+          "heapUsed": 95212328,
+          "rss": 479690752
+        },
+        {
+          "milliseconds": 22.309416000000056,
+          "heapUsed": 101390400,
+          "rss": 480346112
+        },
+        {
+          "milliseconds": 22.431125000000065,
+          "heapUsed": 106756920,
+          "rss": 480788480
+        },
+        {
+          "milliseconds": 22.27704100000028,
+          "heapUsed": 112429992,
+          "rss": 481214464
+        },
+        {
+          "milliseconds": 21.948957999999948,
+          "heapUsed": 117308472,
+          "rss": 481443840
+        },
+        {
+          "milliseconds": 22.262665999999626,
+          "heapUsed": 121672752,
+          "rss": 481443840
+        },
+        {
+          "milliseconds": 22.777874999999767,
+          "heapUsed": 126146760,
+          "rss": 481476608
+        },
+        {
+          "milliseconds": 22.11854200000016,
+          "heapUsed": 130276928,
+          "rss": 481476608
+        },
+        {
+          "milliseconds": 22.073292000000038,
+          "heapUsed": 134364816,
+          "rss": 481476608
+        },
+        {
+          "milliseconds": 22.57141700000011,
+          "heapUsed": 106418176,
+          "rss": 481476608
+        },
+        {
+          "milliseconds": 22.14720800000032,
+          "heapUsed": 112199792,
+          "rss": 482131968
+        },
+        {
+          "milliseconds": 22.469082999999955,
+          "heapUsed": 117538632,
+          "rss": 482557952
+        },
+        {
+          "milliseconds": 22.422875000000204,
+          "heapUsed": 123041328,
+          "rss": 483000320
+        },
+        {
+          "milliseconds": 23.30829200000062,
+          "heapUsed": 127862336,
+          "rss": 483213312
+        },
+        {
+          "milliseconds": 23.873999999999796,
+          "heapUsed": 132232000,
+          "rss": 483246080
+        },
+        {
+          "milliseconds": 24.000332999999955,
+          "heapUsed": 136506832,
+          "rss": 483246080
+        },
+        {
+          "milliseconds": 23.809249999999338,
+          "heapUsed": 140524824,
+          "rss": 483246080
+        },
+        {
+          "milliseconds": 25.563374999999724,
+          "heapUsed": 144649024,
+          "rss": 483590144
+        },
+        {
+          "milliseconds": 30.42425000000003,
+          "heapUsed": 116718424,
+          "rss": 484720640
+        },
+        {
+          "milliseconds": 23.477916999999252,
+          "heapUsed": 122469880,
+          "rss": 486375424
+        },
+        {
+          "milliseconds": 25.47845799999959,
+          "heapUsed": 127798752,
+          "rss": 487768064
+        },
+        {
+          "milliseconds": 23.689500000000407,
+          "heapUsed": 133251704,
+          "rss": 489177088
+        },
+        {
+          "milliseconds": 23.293166999999812,
+          "heapUsed": 138112136,
+          "rss": 490373120
+        },
+        {
+          "milliseconds": 23.68224999999984,
+          "heapUsed": 142245344,
+          "rss": 491339776
+        },
+        {
+          "milliseconds": 23.75420799999938,
+          "heapUsed": 146759904,
+          "rss": 492322816
+        },
+        {
+          "milliseconds": 24.077500000000327,
+          "heapUsed": 150803712,
+          "rss": 493289472
+        },
+        {
+          "milliseconds": 23.18658400000004,
+          "heapUsed": 154893528,
+          "rss": 494223360
+        },
+        {
+          "milliseconds": 60.68879199999992,
+          "heapUsed": 126954152,
+          "rss": 495386624
+        },
+        {
+          "milliseconds": 26.011999999998807,
+          "heapUsed": 132746128,
+          "rss": 496959488
+        },
+        {
+          "milliseconds": 27.78754200000003,
+          "heapUsed": 138066080,
+          "rss": 498401280
+        },
+        {
+          "milliseconds": 28.629790999999386,
+          "heapUsed": 143553056,
+          "rss": 499793920
+        },
+        {
+          "milliseconds": 23.772875000000568,
+          "heapUsed": 148404152,
+          "rss": 500957184
+        },
+        {
+          "milliseconds": 27.301708000000872,
+          "heapUsed": 152709008,
+          "rss": 501940224
+        },
+        {
+          "milliseconds": 26.92066700000032,
+          "heapUsed": 156948216,
+          "rss": 502923264
+        },
+        {
+          "milliseconds": 25.24487500000032,
+          "heapUsed": 161061624,
+          "rss": 503840768
+        },
+        {
+          "milliseconds": 28.35045799999898,
+          "heapUsed": 165150376,
+          "rss": 504823808
+        },
+        {
+          "milliseconds": 27.86908300000141,
+          "heapUsed": 137208336,
+          "rss": 505937920
+        },
+        {
+          "milliseconds": 33.7677909999984,
+          "heapUsed": 142992072,
+          "rss": 507494400
+        },
+        {
+          "milliseconds": 126.10950000000048,
+          "heapUsed": 148248120,
+          "rss": 494796800
         }
       ],
       "timing": {
-        "medianMs": 18.018291999999747,
-        "p95Ms": 19.69445799999994
+        "medianMs": 22.45879100000002,
+        "p95Ms": 28.6059580000001
       },
       "memory": {
-        "startingHeap": 95101472,
-        "peakObservedHeap": 105034072,
-        "endingHeap": 105034072,
-        "peakObservedRss": 481968128
+        "startingHeap": 100256176,
+        "peakObservedHeap": 165150376,
+        "endingHeap": 148248456,
+        "peakObservedRss": 507494400
       },
       "outputs": {
         "dark": {
-          "rawBytes": 638628,
-          "gzipBytes": 97442,
-          "sha256": "48e5d0311484b525e8cef7b130b0d0dd14805428cda79b753943b33dcea0fdd9",
-          "elements": 7733,
+          "rawBytes": 945057,
+          "gzipBytes": 134798,
+          "sha256": "fc73ce092773e5b77427fab54e2835e826616c47cb2f4f66f901dee9697814e5",
+          "elements": 10606,
           "cssTargets": 19,
           "cssKeyframes": 8,
-          "smilElements": 6,
+          "smilElements": 11,
           "duplicateIds": [],
           "danglingReferences": [],
           "externalReferences": [],
@@ -1160,13 +1160,13 @@
           "description": "Isometric contribution terrain for @benchmark from 2024-12-29 to 2025-12-27. 803 contributions across 142 active days. 0 wonders discovered. relative normalization, maximum 12."
         },
         "light": {
-          "rawBytes": 636847,
-          "gzipBytes": 96722,
-          "sha256": "b46733e41140318483b57d6f28d9d08a69c520701e64a952307ff0b51df3edb8",
-          "elements": 7679,
+          "rawBytes": 944018,
+          "gzipBytes": 134120,
+          "sha256": "907e85a66a2f05e8c5fe577ee9cf924b1559369371c1caeb815a1a01c3ebc8dd",
+          "elements": 10568,
           "cssTargets": 19,
           "cssKeyframes": 8,
-          "smilElements": 6,
+          "smilElements": 11,
           "duplicateIds": [],
           "danglingReferences": [],
           "externalReferences": [],
@@ -1201,525 +1201,525 @@
       },
       "samples": [
         {
-          "milliseconds": 22.78783300000032,
-          "heapUsed": 75868016,
-          "rss": 511393792
+          "milliseconds": 30.84637500000099,
+          "heapUsed": 86290872,
+          "rss": 509394944
         },
         {
-          "milliseconds": 21.801708000000872,
-          "heapUsed": 84714928,
-          "rss": 512606208
+          "milliseconds": 30.270375000000058,
+          "heapUsed": 111042440,
+          "rss": 513572864
         },
         {
-          "milliseconds": 22.232124999998632,
-          "heapUsed": 93486232,
-          "rss": 513998848
+          "milliseconds": 31.99262500000077,
+          "heapUsed": 99684448,
+          "rss": 514555904
         },
         {
-          "milliseconds": 22.16295899999932,
-          "heapUsed": 101228544,
-          "rss": 514736128
+          "milliseconds": 32.858250000001135,
+          "heapUsed": 123117536,
+          "rss": 517570560
         },
         {
-          "milliseconds": 22.660375000001295,
-          "heapUsed": 108693616,
-          "rss": 515031040
+          "milliseconds": 31.58812500000022,
+          "heapUsed": 111158448,
+          "rss": 518193152
         },
         {
-          "milliseconds": 22.147791000001234,
-          "heapUsed": 82316056,
-          "rss": 515031040
+          "milliseconds": 30.374374999999418,
+          "heapUsed": 134334400,
+          "rss": 521502720
         },
         {
-          "milliseconds": 22.372333000001163,
-          "heapUsed": 91041296,
-          "rss": 516227072
+          "milliseconds": 30.197541999999885,
+          "heapUsed": 121020744,
+          "rss": 521601024
         },
         {
-          "milliseconds": 22.14770800000042,
-          "heapUsed": 99821000,
-          "rss": 517636096
+          "milliseconds": 29.403082999999242,
+          "heapUsed": 143362656,
+          "rss": 523812864
         },
         {
-          "milliseconds": 21.494124999999258,
-          "heapUsed": 107543016,
-          "rss": 518373376
+          "milliseconds": 30.5023340000007,
+          "heapUsed": 129567592,
+          "rss": 523763712
         },
         {
-          "milliseconds": 23.88604099999975,
-          "heapUsed": 115065064,
-          "rss": 518668288
+          "milliseconds": 29.373250000000553,
+          "heapUsed": 119359520,
+          "rss": 525058048
         },
         {
-          "milliseconds": 25.746083,
-          "heapUsed": 88738728,
-          "rss": 518668288
+          "milliseconds": 29.68345799999952,
+          "heapUsed": 144426168,
+          "rss": 529186816
         },
         {
-          "milliseconds": 23.5692080000008,
-          "heapUsed": 97573840,
-          "rss": 519913472
+          "milliseconds": 31.558917000000292,
+          "heapUsed": 132858208,
+          "rss": 530432000
         },
         {
-          "milliseconds": 22.6318339999998,
-          "heapUsed": 106411408,
-          "rss": 521371648
+          "milliseconds": 29.598125000000437,
+          "heapUsed": 156295944,
+          "rss": 533381120
         },
         {
-          "milliseconds": 22.413667000000714,
-          "heapUsed": 114066144,
-          "rss": 522092544
+          "milliseconds": 30.967375000000175,
+          "heapUsed": 143614544,
+          "rss": 533725184
         },
         {
-          "milliseconds": 24.386083000001236,
-          "heapUsed": 121552752,
-          "rss": 522403840
+          "milliseconds": 30.372917000000598,
+          "heapUsed": 166524216,
+          "rss": 534249472
         },
         {
-          "milliseconds": 25.407083000000057,
-          "heapUsed": 95065800,
-          "rss": 522420224
+          "milliseconds": 30.4565419999999,
+          "heapUsed": 152955264,
+          "rss": 534396928
         },
         {
-          "milliseconds": 23.403707999999824,
-          "heapUsed": 103884024,
-          "rss": 523616256
+          "milliseconds": 29.71770800000013,
+          "heapUsed": 142599704,
+          "rss": 536002560
         },
         {
-          "milliseconds": 22.64941700000054,
-          "heapUsed": 112677552,
-          "rss": 525008896
+          "milliseconds": 29.989125000000058,
+          "heapUsed": 167551632,
+          "rss": 538853376
         },
         {
-          "milliseconds": 23.79845800000112,
-          "heapUsed": 120332504,
-          "rss": 525713408
+          "milliseconds": 30.752458999999362,
+          "heapUsed": 156163048,
+          "rss": 538476544
         },
         {
-          "milliseconds": 23.77179199999955,
-          "heapUsed": 127846184,
-          "rss": 526024704
+          "milliseconds": 30.01887500000157,
+          "heapUsed": 179636904,
+          "rss": 541507584
         },
         {
-          "milliseconds": 35.58379199999945,
-          "heapUsed": 51395632,
-          "rss": 496910336
+          "milliseconds": 30.833042000000205,
+          "heapUsed": 167843296,
+          "rss": 542261248
         },
         {
-          "milliseconds": 27.389375000000655,
-          "heapUsed": 61455112,
-          "rss": 498565120
+          "milliseconds": 30.078749999998763,
+          "heapUsed": 190868520,
+          "rss": 544112640
         },
         {
-          "milliseconds": 25.398833000001105,
-          "heapUsed": 71021952,
-          "rss": 499924992
+          "milliseconds": 30.99499999999898,
+          "heapUsed": 177755792,
+          "rss": 544161792
         },
         {
-          "milliseconds": 24.909459000000425,
-          "heapUsed": 79171504,
-          "rss": 500400128
+          "milliseconds": 30.246250000000146,
+          "heapUsed": 200164896,
+          "rss": 547782656
         },
         {
-          "milliseconds": 29.450291999999536,
-          "heapUsed": 53019648,
-          "rss": 500400128
+          "milliseconds": 32.12274999999863,
+          "heapUsed": 186485888,
+          "rss": 549502976
         },
         {
-          "milliseconds": 26.971749999998792,
-          "heapUsed": 62743752,
-          "rss": 502054912
+          "milliseconds": 32.05925000000025,
+          "heapUsed": 176366096,
+          "rss": 552648704
         },
         {
-          "milliseconds": 27.831333000000086,
-          "heapUsed": 71915952,
-          "rss": 503414784
+          "milliseconds": 30.597125000000233,
+          "heapUsed": 201436184,
+          "rss": 558678016
         },
         {
-          "milliseconds": 26.55949999999939,
-          "heapUsed": 80059736,
-          "rss": 504299520
+          "milliseconds": 31.193708999999217,
+          "heapUsed": 189997424,
+          "rss": 561217536
         },
         {
-          "milliseconds": 25.448624999999083,
-          "heapUsed": 87928304,
-          "rss": 504594432
+          "milliseconds": 31.955041999999594,
+          "heapUsed": 213429424,
+          "rss": 564232192
         },
         {
-          "milliseconds": 25.642582999998922,
-          "heapUsed": 61645216,
-          "rss": 504594432
+          "milliseconds": 32.91120799999953,
+          "heapUsed": 200647480,
+          "rss": 564527104
         },
         {
-          "milliseconds": 23.70770799999991,
-          "heapUsed": 70744736,
-          "rss": 506085376
+          "milliseconds": 30.61908399999993,
+          "heapUsed": 223557808,
+          "rss": 567361536
         },
         {
-          "milliseconds": 22.48412500000086,
-          "heapUsed": 79800664,
-          "rss": 507461632
+          "milliseconds": 30.768749999999272,
+          "heapUsed": 210032520,
+          "rss": 567427072
         },
         {
-          "milliseconds": 22.441791999999623,
-          "heapUsed": 87563008,
-          "rss": 508166144
+          "milliseconds": 29.752167000000554,
+          "heapUsed": 199817344,
+          "rss": 570982400
         },
         {
-          "milliseconds": 24.600209000000177,
-          "heapUsed": 95327936,
-          "rss": 508477440
+          "milliseconds": 30.149584000000687,
+          "heapUsed": 224841568,
+          "rss": 577388544
         },
         {
-          "milliseconds": 22.013750000000073,
-          "heapUsed": 69084432,
-          "rss": 508477440
+          "milliseconds": 30.546667000000525,
+          "heapUsed": 213436576,
+          "rss": 580911104
         },
         {
-          "milliseconds": 21.390041999999085,
-          "heapUsed": 77928992,
-          "rss": 509657088
+          "milliseconds": 30.614041000000725,
+          "heapUsed": 236971744,
+          "rss": 585990144
         },
         {
-          "milliseconds": 21.19233399999939,
-          "heapUsed": 86861392,
-          "rss": 511016960
+          "milliseconds": 30.86908299999959,
+          "heapUsed": 225106928,
+          "rss": 588857344
         },
         {
-          "milliseconds": 20.946250000000873,
-          "heapUsed": 94566040,
-          "rss": 511721472
+          "milliseconds": 29.941749999999956,
+          "heapUsed": 248289968,
+          "rss": 593297408
         },
         {
-          "milliseconds": 21.607332999999926,
-          "heapUsed": 102131352,
-          "rss": 512016384
+          "milliseconds": 30.88141700000051,
+          "heapUsed": 234936592,
+          "rss": 595492864
         },
         {
-          "milliseconds": 22.027291000000332,
-          "heapUsed": 75818000,
-          "rss": 512016384
+          "milliseconds": 29.66637499999888,
+          "heapUsed": 257494248,
+          "rss": 599801856
         },
         {
-          "milliseconds": 22.648917000000438,
-          "heapUsed": 84589512,
-          "rss": 513196032
+          "milliseconds": 29.96125000000029,
+          "heapUsed": 243696800,
+          "rss": 601948160
         },
         {
-          "milliseconds": 22.506999999999607,
-          "heapUsed": 93529104,
-          "rss": 514572288
+          "milliseconds": 30.665917000000263,
+          "heapUsed": 232887472,
+          "rss": 605847552
         },
         {
-          "milliseconds": 21.067124999999578,
-          "heapUsed": 101233752,
-          "rss": 515276800
+          "milliseconds": 32.5551660000001,
+          "heapUsed": 257493248,
+          "rss": 612319232
         },
         {
-          "milliseconds": 21.544708000001265,
-          "heapUsed": 108874808,
-          "rss": 515571712
+          "milliseconds": 39.779749999999694,
+          "heapUsed": 76739808,
+          "rss": 528072704
         },
         {
-          "milliseconds": 22.42675000000054,
-          "heapUsed": 82478736,
-          "rss": 515588096
+          "milliseconds": 30.102042000000438,
+          "heapUsed": 66449840,
+          "rss": 529809408
         },
         {
-          "milliseconds": 20.800208999999086,
-          "heapUsed": 91289104,
-          "rss": 516767744
+          "milliseconds": 29.641875000001164,
+          "heapUsed": 91302208,
+          "rss": 533725184
         },
         {
-          "milliseconds": 20.994709000000512,
-          "heapUsed": 100187608,
-          "rss": 518127616
+          "milliseconds": 30.938207999999577,
+          "heapUsed": 79708008,
+          "rss": 534790144
         },
         {
-          "milliseconds": 20.76179200000115,
-          "heapUsed": 107811816,
-          "rss": 518832128
+          "milliseconds": 29.831500000000233,
+          "heapUsed": 103064160,
+          "rss": 537591808
         },
         {
-          "milliseconds": 21.355792000000292,
-          "heapUsed": 115482696,
-          "rss": 519143424
+          "milliseconds": 30.74366700000064,
+          "heapUsed": 90140816,
+          "rss": 537772032
         },
         {
-          "milliseconds": 21.61579200000051,
-          "heapUsed": 88989392,
-          "rss": 519143424
+          "milliseconds": 29.197040999999444,
+          "heapUsed": 112525952,
+          "rss": 540131328
         },
         {
-          "milliseconds": 21.096958000000086,
-          "heapUsed": 97777920,
-          "rss": 520323072
+          "milliseconds": 30.182584000000134,
+          "heapUsed": 98810728,
+          "rss": 540131328
         },
         {
-          "milliseconds": 21.01812500000051,
-          "heapUsed": 107159848,
-          "rss": 521682944
+          "milliseconds": 29.643165999999837,
+          "heapUsed": 87563928,
+          "rss": 542310400
         },
         {
-          "milliseconds": 21.09637500000099,
-          "heapUsed": 114557256,
-          "rss": 522092544
+          "milliseconds": 31.594583000000057,
+          "heapUsed": 111141040,
+          "rss": 545472512
         },
         {
-          "milliseconds": 21.98779099999956,
-          "heapUsed": 122157592,
-          "rss": 522403840
+          "milliseconds": 31.02179100000103,
+          "heapUsed": 100451040,
+          "rss": 547209216
         },
         {
-          "milliseconds": 24.939292000000933,
-          "heapUsed": 96123280,
-          "rss": 522403840
+          "milliseconds": 31.754124999999476,
+          "heapUsed": 125283784,
+          "rss": 551124992
         },
         {
-          "milliseconds": 23.46587499999987,
-          "heapUsed": 104631728,
-          "rss": 523599872
+          "milliseconds": 30.599041999999827,
+          "heapUsed": 113426640,
+          "rss": 552189952
         },
         {
-          "milliseconds": 21.621917000000394,
-          "heapUsed": 113571968,
-          "rss": 524550144
+          "milliseconds": 29.15899999999965,
+          "heapUsed": 136694904,
+          "rss": 554991616
         },
         {
-          "milliseconds": 20.86504099999911,
-          "heapUsed": 120941600,
-          "rss": 524959744
+          "milliseconds": 30.433500000001004,
+          "heapUsed": 123780752,
+          "rss": 555171840
         },
         {
-          "milliseconds": 22.06920899999932,
-          "heapUsed": 128595480,
-          "rss": 525287424
+          "milliseconds": 29.45587499999965,
+          "heapUsed": 146174096,
+          "rss": 557531136
         },
         {
-          "milliseconds": 21.437583999999333,
-          "heapUsed": 102320016,
-          "rss": 525303808
+          "milliseconds": 30.167999999999665,
+          "heapUsed": 132466696,
+          "rss": 557776896
         },
         {
-          "milliseconds": 21.451333000000886,
-          "heapUsed": 110770704,
-          "rss": 526483456
+          "milliseconds": 29.60187500000029,
+          "heapUsed": 154547784,
+          "rss": 559955968
         },
         {
-          "milliseconds": 22.493207999999868,
-          "heapUsed": 119625000,
-          "rss": 527450112
+          "milliseconds": 30.86750000000029,
+          "heapUsed": 140488128,
+          "rss": 559955968
         },
         {
-          "milliseconds": 21.683584000000337,
-          "heapUsed": 127449256,
-          "rss": 528171008
+          "milliseconds": 29.81750000000102,
+          "heapUsed": 129950920,
+          "rss": 561135616
         },
         {
-          "milliseconds": 22.689291999999114,
-          "heapUsed": 134984272,
-          "rss": 528465920
+          "milliseconds": 30.48633399999926,
+          "heapUsed": 154990832,
+          "rss": 565051392
         },
         {
-          "milliseconds": 22.61291600000004,
-          "heapUsed": 108697720,
-          "rss": 528465920
+          "milliseconds": 30.399749999998676,
+          "heapUsed": 142509472,
+          "rss": 565854208
         },
         {
-          "milliseconds": 21.848125000000437,
-          "heapUsed": 117078112,
-          "rss": 529661952
+          "milliseconds": 29.567291999999725,
+          "heapUsed": 165589440,
+          "rss": 568836096
         },
         {
-          "milliseconds": 20.878708999998707,
-          "heapUsed": 125815504,
-          "rss": 530644992
+          "milliseconds": 30.350165999998353,
+          "heapUsed": 153068152,
+          "rss": 569458688
         },
         {
-          "milliseconds": 21.82208300000093,
-          "heapUsed": 133622416,
-          "rss": 531120128
+          "milliseconds": 29.74687499999891,
+          "heapUsed": 175737472,
+          "rss": 571817984
         },
         {
-          "milliseconds": 22.29291700000067,
-          "heapUsed": 140720536,
-          "rss": 531120128
+          "milliseconds": 30.599459000000934,
+          "heapUsed": 162078352,
+          "rss": 571817984
         },
         {
-          "milliseconds": 21.867041999999856,
-          "heapUsed": 114324864,
-          "rss": 531120128
+          "milliseconds": 30.259916000000885,
+          "heapUsed": 184142656,
+          "rss": 573997056
         },
         {
-          "milliseconds": 22.501415999999153,
-          "heapUsed": 122704072,
-          "rss": 532316160
+          "milliseconds": 30.109291999999186,
+          "heapUsed": 170057776,
+          "rss": 573997056
         },
         {
-          "milliseconds": 21.370042000000467,
-          "heapUsed": 131471296,
-          "rss": 533331968
+          "milliseconds": 29.748250000000553,
+          "heapUsed": 158907400,
+          "rss": 575422464
         },
         {
-          "milliseconds": 21.201999999999316,
-          "heapUsed": 139201592,
-          "rss": 533807104
+          "milliseconds": 32.669292000000496,
+          "heapUsed": 183522624,
+          "rss": 579600384
         },
         {
-          "milliseconds": 22.090292000000773,
-          "heapUsed": 146304880,
-          "rss": 533807104
+          "milliseconds": 32.23270800000137,
+          "heapUsed": 171381672,
+          "rss": 580583424
         },
         {
-          "milliseconds": 21.867792000000918,
-          "heapUsed": 119938984,
-          "rss": 533807104
+          "milliseconds": 30.33245800000077,
+          "heapUsed": 194511952,
+          "rss": 583745536
         },
         {
-          "milliseconds": 22.414582999999766,
-          "heapUsed": 128313232,
-          "rss": 535019520
+          "milliseconds": 32.47383300000001,
+          "heapUsed": 182004544,
+          "rss": 584810496
         },
         {
-          "milliseconds": 20.70929099999921,
-          "heapUsed": 137151680,
-          "rss": 535986176
+          "milliseconds": 32.04987499999879,
+          "heapUsed": 205098752,
+          "rss": 587612160
         },
         {
-          "milliseconds": 21.595500000001266,
-          "heapUsed": 144951536,
-          "rss": 536477696
+          "milliseconds": 31.194375000000946,
+          "heapUsed": 191915608,
+          "rss": 587792384
         },
         {
-          "milliseconds": 21.543958000000202,
-          "heapUsed": 152048736,
-          "rss": 536477696
+          "milliseconds": 31.325584000000163,
+          "heapUsed": 214167352,
+          "rss": 590151680
         },
         {
-          "milliseconds": 22.028791000000638,
-          "heapUsed": 125609624,
-          "rss": 536477696
+          "milliseconds": 33.71458300000086,
+          "heapUsed": 200298872,
+          "rss": 590151680
         },
         {
-          "milliseconds": 22.06000000000131,
-          "heapUsed": 133992312,
-          "rss": 537673728
+          "milliseconds": 32.73662499999955,
+          "heapUsed": 222356232,
+          "rss": 592330752
         },
         {
-          "milliseconds": 22.69895799999904,
-          "heapUsed": 142771744,
-          "rss": 538640384
+          "milliseconds": 32.76000000000022,
+          "heapUsed": 208117480,
+          "rss": 592330752
         },
         {
-          "milliseconds": 23.585583000000042,
-          "heapUsed": 150611344,
-          "rss": 539197440
+          "milliseconds": 31.313250000001062,
+          "heapUsed": 197098392,
+          "rss": 593756160
         },
         {
-          "milliseconds": 22.258249999998952,
-          "heapUsed": 157690320,
-          "rss": 539197440
+          "milliseconds": 31.70091599999978,
+          "heapUsed": 221709376,
+          "rss": 597934080
         },
         {
-          "milliseconds": 22.46650000000045,
-          "heapUsed": 131295656,
-          "rss": 539197440
+          "milliseconds": 32.11104199999863,
+          "heapUsed": 209686904,
+          "rss": 598917120
         },
         {
-          "milliseconds": 21.57429200000115,
-          "heapUsed": 139679496,
-          "rss": 530382848
+          "milliseconds": 31.13245900000038,
+          "heapUsed": 232902096,
+          "rss": 602079232
         },
         {
-          "milliseconds": 22.371750000000247,
-          "heapUsed": 148516456,
-          "rss": 532447232
+          "milliseconds": 32.03916600000048,
+          "heapUsed": 220456488,
+          "rss": 603144192
         },
         {
-          "milliseconds": 22.23058300000048,
-          "heapUsed": 156343416,
-          "rss": 533889024
+          "milliseconds": 31.555915999999343,
+          "heapUsed": 243472360,
+          "rss": 605945856
         },
         {
-          "milliseconds": 22.646750000001703,
-          "heapUsed": 163440616,
-          "rss": 534544384
+          "milliseconds": 32.007165999999415,
+          "heapUsed": 230324664,
+          "rss": 606126080
         },
         {
-          "milliseconds": 22.511084000001574,
-          "heapUsed": 137043008,
-          "rss": 535265280
+          "milliseconds": 31.37750000000051,
+          "heapUsed": 252661344,
+          "rss": 608485376
         },
         {
-          "milliseconds": 22.373500000001513,
-          "heapUsed": 145407504,
-          "rss": 537133056
+          "milliseconds": 32.16241699999955,
+          "heapUsed": 238812624,
+          "rss": 608485376
         },
         {
-          "milliseconds": 21.54658399999971,
-          "heapUsed": 154166512,
-          "rss": 538787840
+          "milliseconds": 31.272375000000466,
+          "heapUsed": 260747536,
+          "rss": 610664448
         },
         {
-          "milliseconds": 22.056000000000495,
-          "heapUsed": 161947696,
-          "rss": 539983872
+          "milliseconds": 31.95795899999939,
+          "heapUsed": 246540192,
+          "rss": 610664448
         },
         {
-          "milliseconds": 22.034999999999854,
-          "heapUsed": 169085600,
-          "rss": 540672000
+          "milliseconds": 33.00141599999915,
+          "heapUsed": 235543272,
+          "rss": 612089856
         },
         {
-          "milliseconds": 24.1528330000001,
-          "heapUsed": 142654744,
-          "rss": 541409280
+          "milliseconds": 31.83612499999981,
+          "heapUsed": 260169952,
+          "rss": 616316928
         },
         {
-          "milliseconds": 22.953832999999577,
-          "heapUsed": 151074816,
-          "rss": 543326208
+          "milliseconds": 32.351582999999664,
+          "heapUsed": 248126272,
+          "rss": 619331584
         },
         {
-          "milliseconds": 21.47241600000052,
-          "heapUsed": 159873576,
-          "rss": 544997376
+          "milliseconds": 31.303791000000274,
+          "heapUsed": 271133384,
+          "rss": 624492544
         },
         {
-          "milliseconds": 21.60241700000006,
-          "heapUsed": 167546360,
-          "rss": 546406400
+          "milliseconds": 48.30645899999945,
+          "heapUsed": 54069208,
+          "rss": 537477120
         },
         {
-          "milliseconds": 21.97949999999946,
-          "heapUsed": 174984568,
-          "rss": 547389440
+          "milliseconds": 34.3432499999999,
+          "heapUsed": 79345392,
+          "rss": 541081600
         },
         {
-          "milliseconds": 21.945165999999517,
-          "heapUsed": 148520368,
-          "rss": 548110336
+          "milliseconds": 31.13733300000058,
+          "heapUsed": 67887600,
+          "rss": 542064640
         }
       ],
       "timing": {
-        "medianMs": 22.23058300000048,
-        "p95Ms": 26.55949999999939
+        "medianMs": 30.752458999999362,
+        "p95Ms": 32.91120799999953
       },
       "memory": {
-        "startingHeap": 102197712,
-        "peakObservedHeap": 174984568,
-        "endingHeap": 148520704,
-        "peakObservedRss": 548110336
+        "startingHeap": 97106576,
+        "peakObservedHeap": 271133384,
+        "endingHeap": 67887936,
+        "peakObservedRss": 624492544
       },
       "outputs": {
         "dark": {
-          "rawBytes": 1073964,
-          "gzipBytes": 142397,
-          "sha256": "d63e146acadd84a5d9711a154546cd0f6a9dab1b413601c3aa1cff5f3c27eab4",
-          "elements": 13587,
-          "cssTargets": 27,
+          "rawBytes": 1742317,
+          "gzipBytes": 170890,
+          "sha256": "9db48c985dda0fae19b897f88c878af88ff52e0381245c2bb5c11f94b4b3ca03",
+          "elements": 19509,
+          "cssTargets": 18,
           "cssKeyframes": 8,
-          "smilElements": 20,
+          "smilElements": 10,
           "duplicateIds": [],
           "danglingReferences": [],
           "externalReferences": [],
@@ -1731,13 +1731,13 @@
           "description": "Isometric contribution terrain for @benchmark from 2024-12-29 to 2025-12-27. 7,280 contributions across 364 active days. 3 wonders discovered. relative normalization, maximum 20."
         },
         "light": {
-          "rawBytes": 1072699,
-          "gzipBytes": 141663,
-          "sha256": "4130b563f9ff92d898338359b52073ee68b13b77f1b42cb27083769b5a439392",
-          "elements": 13533,
-          "cssTargets": 27,
+          "rawBytes": 1740500,
+          "gzipBytes": 170102,
+          "sha256": "1eed241c8b6f7b411c5b9667b6ad9f55dc55c1ea002a889f78fc37daf6149b46",
+          "elements": 19471,
+          "cssTargets": 18,
           "cssKeyframes": 8,
-          "smilElements": 20,
+          "smilElements": 10,
           "duplicateIds": [],
           "danglingReferences": [],
           "externalReferences": [],

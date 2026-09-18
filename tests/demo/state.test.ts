@@ -42,4 +42,44 @@ describe('C06 restore and validation', () => {
   it('restores Korean style when the old villageStyle alias is used', () => {
     expect(parseDemoQuery('?villageStyle=korean').document.settings.style).toBe('korean');
   });
+
+  it.each(['classic', 'korean'] as const)(
+    'preserves pixel art independently when the culture is %s',
+    (style) => {
+      // Given: an existing culture choice and the pixel art style.
+      const document = settingsFixture();
+      const state = {
+        document: { ...document, settings: { ...document.settings, style, artStyle: 'pixel' } },
+        mode: 'dark',
+      } as const;
+
+      // When: the settings link is shared and reopened.
+      const query = demoQuery(state);
+      const restored = parseDemoQuery(query);
+
+      // Then: both independent choices survive the round trip.
+      expect(new URLSearchParams(query).get('artStyle')).toBe('pixel');
+      expect(restored).toEqual(state);
+    },
+  );
+
+  it.each(['', '?style=korean', '?villageStyle=korean', '?v=1&preset=nature'])(
+    'uses miniature art when an older link omits artStyle: %s',
+    (query) => {
+      // Given: a settings link made before art styles were introduced.
+      // When: the link is reopened.
+      const restored = parseDemoQuery(query);
+
+      // Then: its art remains miniature.
+      expect(restored.document.settings.artStyle).toBe('miniature');
+    },
+  );
+
+  it('rejects an unsupported art style when a shared link is opened', () => {
+    // Given: an unrecognized art style in a shared link.
+    const query = '?style=korean&artStyle=watercolor';
+
+    // When / Then: parsing the link reports the invalid setting.
+    expect(() => parseDemoQuery(query)).toThrow();
+  });
 });

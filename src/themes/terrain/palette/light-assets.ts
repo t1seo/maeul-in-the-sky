@@ -1,6 +1,10 @@
 import type { AssetColors } from './asset-colors.js';
 
 export const LIGHT_ASSETS: AssetColors = {
+  giwa: '#555555',
+  thatch: '#d8b848',
+  evergreenLight: '#8dd88d',
+  evergreenDark: '#3d6a4d',
   trunk: '#7a5030',
   pine: '#358025',
   leaf: '#4a9e35',
