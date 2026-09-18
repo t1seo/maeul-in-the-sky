@@ -91,6 +91,18 @@ describe('Given neighboring actual residences', () => {
     expect(paths.every((path) => path.points.length <= 4)).toBe(true);
   });
 
+  it.each(['choga', 'hanokEstate'])(
+    'connects neighboring %s homes in a Korean village',
+    (catalogId) => {
+      const paths = neighborhoodPaths(
+        base.cells,
+        homes.map((home) => ({ ...home, catalogId })),
+        dry,
+      );
+      expect(paths.filter((path) => path.catalogId === 'neighborhood:path')).toHaveLength(2);
+    },
+  );
+
   it('never bridges a missing contribution date as if it were a supplied terrain cell', () => {
     const paths = neighborhoodPaths(
       base.cells.filter((cell) => cell.date !== '2025-01-06'),

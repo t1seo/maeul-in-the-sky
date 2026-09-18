@@ -14,6 +14,7 @@ export function settingsFixture(title = 'My village'): SettingsV1 {
       motion: 'full',
       layout: 'banner',
       style: 'classic',
+      artStyle: 'miniature',
       normalization: { kind: 'relative' },
     },
   };

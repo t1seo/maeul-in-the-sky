@@ -1,4 +1,5 @@
 import type {
+  ArtStyle,
   MotionMode,
   NormalizationOptions,
   TerrainLayout,
@@ -74,6 +75,7 @@ export interface ThemeOptions {
   motion?: MotionMode;
   layout?: TerrainLayout;
   style?: VillageStyle;
+  artStyle?: ArtStyle;
   villageStyle?: VillageStyle;
   normalization?: NormalizationOptions;
   layoutSeed?: string;

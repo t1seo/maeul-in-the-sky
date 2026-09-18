@@ -1,6 +1,6 @@
 import type { ColorMode } from '../../../core/types.js';
 import { clamp } from '../../../utils/math.js';
-import { getSeasonalTint } from '../seasons.js';
+import { getSeasonalTint, getTransitionBlend } from '../seasons.js';
 import { createTerrainPalette100, createSeasonalPalette100 } from './factory.js';
 import type { AssetColors } from './asset-colors.js';
 import type { TerrainPalette100 } from './types.js';
@@ -42,7 +42,12 @@ export function getSeasonalPalette100(
   const seasonalWeek = clamp((week + rotation) % 52, 0, 51);
   if (!Number.isInteger(seasonalWeek)) {
     const base = basePalettes[mode];
-    const palette = createSeasonalPalette100(mode, getSeasonalTint(week, rotation), base);
+    const palette = createSeasonalPalette100(
+      mode,
+      getSeasonalTint(week, rotation),
+      base,
+      getTransitionBlend(week, rotation),
+    );
     return copyPalette(palette, palette === base ? { ...palette.assets } : palette.assets);
   }
   const cached = seasonalPalettes[mode][seasonalWeek];
@@ -51,6 +56,7 @@ export function getSeasonalPalette100(
     mode,
     getSeasonalTint(week, rotation),
     basePalettes[mode],
+    getTransitionBlend(week, rotation),
   );
   seasonalPalettes[mode][seasonalWeek] = palette;
   return copyPalette(palette);

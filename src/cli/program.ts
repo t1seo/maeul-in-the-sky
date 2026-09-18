@@ -22,6 +22,7 @@ const cliSchema = z.strictObject({
   motion: optionText,
   layout: optionText,
   style: optionText,
+  artStyle: optionText,
   villageStyle: optionText,
   normalization: optionText,
   maxCount: optionText,
@@ -59,13 +60,14 @@ export function createCliProgram(
     .option('--token <token>', 'GitHub token (overrides GITHUB_TOKEN)')
     .option('--hemisphere <value>', 'north or south')
     .option('--preset <name>', 'nature, balanced, civilization')
-    .option('--density <number>', 'Building density 1–10')
+    .option('--density <number>', 'Extra decoration mix 1–10')
     .option('--config <path>', 'Settings JSON file')
     .option('--input <path>', 'Snapshot or archive JSON (no network)')
     .option('--write-snapshot [path]', 'Write a reusable snapshot JSON')
     .option('--motion <mode>', 'full, subtle, off')
     .option('--layout <layout>', 'banner or card')
     .option('--style <style>', 'classic or korean')
+    .option('--art-style <style>', 'miniature or pixel')
     .option('--village-style <style>', 'Alias for --style')
     .option('--normalization <kind>', 'relative, fixed, shared (archive only)')
     .option('--max-count <count>', 'Fixed contribution maximum')

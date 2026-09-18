@@ -292,8 +292,14 @@ h1 {
 }
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 10px;
+}
+.appearance-fields label {
+  margin-top: 16px;
+}
+.appearance-fields select {
+  padding-inline: 8px;
 }
 .advanced {
   margin-top: 18px;
@@ -474,6 +480,141 @@ output {
 .status-line[data-error='true'] {
   color: #9c2e27;
 }
+.world-guide {
+  margin-top: 55px;
+}
+.world-guide section + section {
+  margin-top: 42px;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+.guide-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 22px;
+}
+.guide-heading .eyebrow {
+  margin-bottom: 10px;
+}
+.guide-heading > p {
+  max-width: 370px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.season-cards,
+.growth-steps {
+  list-style: none;
+  display: grid;
+  padding: 0;
+  margin: 0;
+  gap: 12px;
+}
+.season-cards {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.season-card {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+.season-picture {
+  display: block;
+  width: 80px;
+  height: 60px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+.spring .season-picture {
+  background: #f4e9e6;
+}
+.summer .season-picture {
+  background: #e6eddc;
+}
+.autumn .season-picture {
+  background: #f2e5d1;
+}
+.winter .season-picture {
+  background: #e1e9e8;
+}
+.season-card h3 {
+  font-size: 23px;
+  margin-bottom: 8px;
+}
+.season-card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+.guide-note {
+  max-width: 880px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.guide-note a {
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.growth-unit {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.growth-steps {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.growth-steps li {
+  padding: 16px 13px;
+  border: 1px solid var(--line);
+  border-top: 3px solid #a9b998;
+  border-radius: 8px;
+  background: var(--panel);
+}
+.growth-steps li:first-child {
+  border-top-color: #ccd0c5;
+}
+.growth-steps li:nth-child(3) {
+  border-top-color: #7d9868;
+}
+.growth-steps li:nth-child(4) {
+  border-top-color: #597b55;
+}
+.growth-steps li:nth-child(5) {
+  border-top-color: #b58142;
+  background: #f5eddf;
+}
+.growth-steps li:last-child {
+  border-top-color: var(--green);
+  background: #e6ecdc;
+}
+.growth-steps span,
+.growth-steps strong {
+  display: block;
+}
+.growth-steps .growth-count {
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  font-size: 29px;
+  line-height: 1.15;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 12px;
+}
+.growth-steps strong {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+.growth-steps span {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
 .source-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -580,6 +721,16 @@ footer p {
   }
 }
 @media (max-width: 950px) {
+  .guide-heading {
+    display: block;
+  }
+  .guide-heading > p {
+    max-width: 600px;
+    margin-top: 12px;
+  }
+  .growth-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
   .site-header,
   main {
     width: calc(100% - 40px);
@@ -614,6 +765,17 @@ footer p {
   }
 }
 @media (max-width: 700px) {
+  .world-guide {
+    margin-top: 36px;
+  }
+  .season-cards,
+  .growth-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .season-card {
+    padding: 16px;
+  }
   .site-header,
   main {
     width: calc(100% - 32px);

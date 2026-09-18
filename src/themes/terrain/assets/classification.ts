@@ -124,6 +124,8 @@ export const CATEGORY_MEMBERS: Readonly<Record<AssetCategory, readonly AssetType
     'pumpkinPatch',
     'hayMaze',
     'appleBasket',
+    'riceTerrace',
+    'kimchiGarden',
   ],
   village: [
     'tent',
@@ -150,6 +152,9 @@ export const CATEGORY_MEMBERS: Readonly<Record<AssetCategory, readonly AssetType
     'pavilion',
     'stoneWall',
     'onggi',
+    'choga',
+    'koreanWatermill',
+    'hanokGate',
   ],
   town: [
     'market',
@@ -169,6 +174,8 @@ export const CATEGORY_MEMBERS: Readonly<Record<AssetCategory, readonly AssetType
     'fountain',
     'frozenFountain',
     'swimmingPool',
+    'stoneBridge',
+    'hanokEstate',
   ],
   decoration: [
     'cart',
@@ -207,5 +214,7 @@ export const CATEGORY_MEMBERS: Readonly<Record<AssetCategory, readonly AssetType
     'hotDrink',
     'autumnWreath',
     'rake',
+    'jangseung',
+    'sotdae',
   ],
 };

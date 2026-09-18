@@ -15,6 +15,9 @@ export type SceneBiome = {
   readonly forestDensity: number;
 };
 
+export type RewardTier = 0 | 1 | 2 | 3 | 4 | 5;
+export type PositiveRewardTier = Exclude<RewardTier, 0>;
+
 export type SceneCell = {
   readonly date: string;
   readonly week: number;
@@ -22,6 +25,7 @@ export type SceneCell = {
   readonly absoluteWeek: number;
   readonly count: number;
   readonly level100: number;
+  readonly rewardTier?: RewardTier;
   readonly height: number;
   readonly isoX: number;
   readonly isoY: number;
@@ -46,6 +50,14 @@ export type ScenePlacement = {
   readonly variant: number;
   readonly animated: boolean;
   readonly decorative?: boolean;
+  readonly primary?: boolean;
+  readonly rewardTier?: PositiveRewardTier;
+};
+
+export type SceneDailyReward = ScenePlacement & {
+  readonly count: number;
+  readonly rewardTier: PositiveRewardTier;
+  readonly minimumCount: number;
 };
 
 export type WonderThreshold = {
@@ -74,12 +86,12 @@ export type NeighborhoodPath = {
 
 export type LayoutSeedPolicy = {
   readonly root: string;
-  readonly policy: 'username-date-v1';
+  readonly policy: 'username-date-v1' | 'username-date-v2';
 };
 
 export type TerrainScene = {
   readonly schemaVersion: 1;
-  readonly layoutVersion: 1;
+  readonly layoutVersion: 1 | 2;
   readonly username: string;
   readonly year: number;
   readonly fromDate: string;
@@ -92,6 +104,7 @@ export type TerrainScene = {
   readonly biomes: readonly SceneBiomeEntry[];
   readonly placements: readonly ScenePlacement[];
   readonly wonders: readonly SceneWonderPlacement[];
+  readonly rewards?: readonly SceneDailyReward[];
   readonly neighborhoodPaths: readonly NeighborhoodPath[];
   readonly bounds: SceneBounds;
 };
@@ -102,14 +115,16 @@ export type TerrainCellMetadata = {
   readonly week: number;
   readonly day: number;
   readonly level100: number;
+  readonly rewardTier?: RewardTier;
   readonly biome: SceneBiome;
   readonly assetIds: readonly string[];
   readonly wonderIds: readonly string[];
+  readonly rewardIds?: readonly string[];
 };
 
 export type TerrainMetadata = {
   readonly schemaVersion: 1;
-  readonly layoutVersion: 1;
+  readonly layoutVersion: 1 | 2;
   readonly username: string;
   readonly year: number;
   readonly fromDate: string;
@@ -123,6 +138,7 @@ export type TerrainMetadata = {
   readonly cells: readonly TerrainCellMetadata[];
   readonly placements: readonly ScenePlacement[];
   readonly wonders: readonly SceneWonderPlacement[];
+  readonly rewards?: readonly SceneDailyReward[];
   readonly neighborhoodPaths: readonly NeighborhoodPath[];
 };
 

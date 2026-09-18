@@ -20,6 +20,7 @@ export function resolveRenderSettings(
     motion: overrides.motion ?? stored.motion ?? 'full',
     layout: overrides.layout ?? stored.layout ?? 'banner',
     style: overrides.style ?? stored.style ?? 'classic',
+    artStyle: overrides.artStyle ?? stored.artStyle ?? 'miniature',
     normalization: overrides.normalization ?? stored.normalization ?? { kind: 'relative' },
     ...(layoutSeed === undefined ? {} : { layoutSeed }),
   };

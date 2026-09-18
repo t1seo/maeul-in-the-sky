@@ -11,11 +11,11 @@ const fingerprints: unknown = JSON.parse(
 
 describe('asset catalog', () => {
   it('exports a complete catalog when classic and Korean assets are registered', () => {
-    expect(assets.ASSET_CATALOG_COUNTS).toEqual({ total: 193, classic: 189, korean: 4 });
-    expect(new Set(assets.ASSET_CATALOG.map((entry) => entry.id)).size).toBe(193);
+    expect(assets.ASSET_CATALOG_COUNTS).toEqual({ total: 202, classic: 189, korean: 13 });
+    expect(new Set(assets.ASSET_CATALOG.map((entry) => entry.id)).size).toBe(202);
   });
 
-  it('preserves all existing classic art variants after extraction', () => {
+  it('preserves all approved miniature art variants', () => {
     const hashes = Object.fromEntries(
       assets.ASSET_CATALOG.filter((entry) => entry.style === 'classic').map((entry) => [
         entry.id,

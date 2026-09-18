@@ -26,13 +26,17 @@ Maeul（마을）在韩语中意为“村庄”。Contribution Calendar 中的�
 
 输出是两个独立的 SVG 文件，可在个人资料 README 中随 GitHub 配色自动切换，不需要客户端 JavaScript。
 
+**本文面向当前 `main`。** 下述资源、四季、每日成长和画风改进尚未包含在已发布的 npm `1.4.0` 或当前 `v1` Action 标签中。本次更新面向 `main` 和 GitHub Pages 演示；Action 请使用 `@main`，CLI/API 请使用下方源码构建示例。
+
 ## 村庄包含的内容
 
 - 使用 100 级高度的确定性等距 Terrain
-- 与日历对应的四季和 68 个已注册季节资源 ID
+- 通过枝叶、花朵、轮廓和材质颜色区分的日历四季
 - 程序生成的河流、池塘、森林、天气和环境动画
-- 193 个普通资源 ID：189 个 classic 和 4 个原创韩国村庄资源
+- 202 个普通资源 ID：189 个 classic + 13 个 korean，其中季节型 68 个、全年型 134 个
 - Rare、Epic、Legendary 三个等级的 30 种 Epic Wonders
+- 重绘原有 223 个 ID，新增 9 个韩国乡村 ID，总计 232 个
+- 独立于文化的 miniature/pixel 画风，以及基于原始贡献数的每日奖励
 - 带无障碍标题、描述和减少动态效果支持的深色与浅色 SVG
 - 北半球与南半球的季节映射
 - 可见的贡献日期、活跃天数、连续贡献、最活跃月份和 Wonder 数量
@@ -43,7 +47,7 @@ README 预览和 6 张预设图片使用固定种子的**合成数据**，显示
 
 ## 选择村庄预设
 
-预设只改变出现的资源，不会改变贡献数、高度或颜色。
+预设改变额外装饰的组合，不会改变贡献数、高度、颜色或每日奖励等级。
 
 |                                                         Nature                                                          |                                                           Balanced                                                            |                                                               Civilization                                                                |
 | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
@@ -56,6 +60,8 @@ README 预览和 6 张预设图片使用固定种子的**合成数据**，显示
 ### 1. 添加 Action
 
 用于 GitHub 个人资料时，请在与用户名同名的仓库中添加 `.github/workflows/maeul-sky.yml`。
+
+新功能示例使用 `@main`；当前 `v1` 仍指向旧提交 `1d514430`。要复现同一版本，请把会随更新移动的 `@main` 替换为您已验证的完整提交 SHA。
 
 ```yaml
 name: Update Maeul in the Sky
@@ -74,7 +80,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: t1seo/maeul-in-the-sky@v1
+      - uses: t1seo/maeul-in-the-sky@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           preset: balanced
@@ -117,13 +123,14 @@ jobs:
 | `year`           | 日历年份；省略时使用最近 52 周            | 最近 52 周            |
 | `hemisphere`     | 季节映射：`north` 或 `south`              | `north`               |
 | `preset`         | `nature`、`balanced` 或 `civilization`    | `balanced`            |
-| `density`        | 1 到 10 的高级建筑密度覆盖值              | 预设值                |
+| `density`        | 1 到 10 的额外装饰组合覆盖值              | 预设值                |
 | `config`         | 版本 1 设置 JSON 路径                     | 无                    |
 | `input`          | 快照 JSON 路径；跳过网络请求              | 无                    |
 | `write_snapshot` | 写出可复用快照                            | `false`               |
 | `motion`         | `full`、`subtle`、`off`                   | `full`                |
 | `layout`         | `banner` 或 `card`                        | `banner`              |
-| `village_style`  | `classic` 或 `korean`                     | `classic`             |
+| `village_style`  | 文化：`classic` 或 `korean`                | `classic`             |
+| `art_style`      | 独立画风：`miniature` 或 `pixel`           | `miniature`           |
 | `layout_seed`    | 可选的确定性布局种子                      | 用户名/年份/日期身份  |
 | `normalization`  | `relative`、`fixed`、多年份专用 `shared`  | `relative`            |
 | `max_count`      | `fixed` 使用的正最大值                    | 无                    |
@@ -134,28 +141,33 @@ jobs:
 默认输出为 `dark_svg_path` 和 `light_svg_path`。对应运行还会提供 `dark_png_path`、`light_png_path`、`snapshot_path`、`archive_path`、`comparison_dark_svg_path` 和 `comparison_light_svg_path`。
 
 ```yaml
-- uses: t1seo/maeul-in-the-sky@v1
+- uses: t1seo/maeul-in-the-sky@main
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
     username: octocat
     preset: nature
+    village_style: korean
+    art_style: pixel
     hemisphere: south
     title: 'Octocat’s coding village'
 ```
 
-只有需要比三个预设更精细的控制时才使用 `density`。较高的值会让建筑出现在活动量较低的单元，较低的值会保留更多自然景观。
+`density`（1 到 10）调整额外装饰。可见变化取决于可用空间和每日成长阶段，不会降低每日奖励等级，也不会取消正贡献日期的主要资源保障。
 
 ## Terrain Generation 原理
 
-贡献强度会根据用户自身的活动范围进行相对归一化。即使不同用户的贡献数量不同，每个人最忙碌的日子都可能形成城市。
+高度仍默认使用 `relative`（正贡献数的 P90 与平方根映射），`fixed` 使用 `maxCount`。每日成长独立于高度，依据 Contribution Calendar 的原始贡献数，而不只是提交数。
 
-| 贡献模式 | Terrain 结果                 |
-| -------- | ---------------------------- |
-| 无活动   | 水域和空地                   |
-| 少量活动 | 岸边、草地和小型植被         |
-| 持续活动 | 森林和农场                   |
-| 高活动   | 村庄和城镇                   |
-| 峰值活动 | 城市、高塔和 Wonder 候选位置 |
+| 每日贡献数 | 奖励等级 |
+| ---------- | -------- |
+| 0          | 0，无奖励 |
+| 1–4        | 1        |
+| 5–9        | 2        |
+| 10–24      | 3        |
+| 25–49      | 4        |
+| 50 及以上  | 5        |
+
+正贡献日期保证有主要资源，或由 Wonder 占据该位置，并保留等级标记。高等级使用更成熟、符合文化与 Biome 的轮廓。等级不受其他日期、归一化和密度影响，也不会在当日贡献增加时下降。Wonder 出现时等级标记仍保留，但整个随机场景、额外装饰或全局 Wonder 选择不保证单调增加。这是视觉奖励规则，不是 GitHub 官方分类或代码质量评分。
 
 贡献数决定地形高度。输入日期按真实 UTC 星期和周日开头的周定位，包括不完整周和缺口。缺失日期不会被补造，已知 0 次的日期仍是真实的零值日。装饰不会增加贡献数。
 
@@ -171,25 +183,33 @@ Wonder 的选择会考虑当前单元的活动量、附近单元的丰富程度�
 
 ## 探索与设置
 
-在[演示](https://t1seo.github.io/maeul-in-the-sky/)中选择预设、用户名/年份/标题和半球。高级设置包括密度、动效、banner/card、classic/korean 风格、高度比例和布局种子。修改示例设置不会抓取账户。要使用真实数值，请导入快照或使用下面的本地服务。
+在[演示](https://t1seo.github.io/maeul-in-the-sky/)中选择预设、用户名/年份/标题和半球。还可选择密度、动效、banner/card、classic/korean 文化、miniature/pixel 画风、高度比例和布局种子。文化与画风可独立组合。修改示例设置不会抓取账户。要使用真实数值，请导入快照或使用下面的本地服务。
 
-选择日期可查看贡献数、Biome 和放置对象。探索器显示来源、准确日期范围、总数、活跃天数、连续贡献及高度/季节图例，并支持缩放、重置、键盘平移、Escape 和焦点返回。[Wonder 图鉴](https://t1seo.github.io/maeul-in-the-sky/#wonders)显示已发现/未发现状态和真实门槛。满足资格并不保证被选中；间距、周围 Terrain、概率和最多三个的预算也会生效。
+选择日期可查看贡献数、奖励等级、Biome 和放置对象。探索器显示来源、准确日期范围、总数、活跃天数、连续贡献及高度/季节图例，并支持缩放、重置、键盘平移、Escape 和焦点返回。[Wonder 图鉴](https://t1seo.github.io/maeul-in-the-sky/#wonders)显示已发现/未发现状态和真实门槛。满足资格并不保证被选中；间距、周围 Terrain、概率和最多三个的预算也会生效。
 
-设置区可以下载设置 JSON、工作流和 README 片段。生成的工作流发布到 `output` 分支，README 片段也指向该分支。包含 `${{` 的标题或布局种子可能被 GitHub 当作 Actions 表达式，因此不能导出到工作流，但仍可用于图片和 JSON。
+设置区可以下载设置 JSON、工作流和 README 片段。生成的工作流使用 `t1seo/maeul-in-the-sky@main` 发布到 `output` 分支，README 片段也指向该分支。需要复现版本时，请固定已验证的完整提交 SHA。包含 `${{` 的标题或布局种子可能被 GitHub 当作 Actions 表达式，因此不能导出到工作流，但仍可用于图片和 JSON。
 
 ## CLI
 
-需要 Node.js 20 或更高版本。以下新选项目前属于 **Unreleased**；从源码使用时，请先运行 `npm install && npm run build`，再把 `npx --yes maeul-in-the-sky` 替换为 `node dist/index.js`。
+需要 Node.js 20 或更高版本。以下示例面向**当前 `main`、尚未发布到 npm 的功能**，请先构建源码。
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" npx --yes maeul-in-the-sky \
+git clone --branch main https://github.com/t1seo/maeul-in-the-sky.git
+cd maeul-in-the-sky
+npm ci
+npx tsx scripts/pixel/generate.ts --check
+npm run build
+```
+
+```bash
+GITHUB_TOKEN="$(gh auth token)" node dist/index.js \
   --user octocat --preset civilization --output ./terrain
 
-npx --yes maeul-in-the-sky --input village.snapshot.json \
-  --layout card --village-style korean --motion off --format both --scale 2 \
+node dist/index.js --input village.snapshot.json \
+  --layout card --village-style korean --art-style pixel --motion off --format both --scale 2 \
   --write-snapshot --output ./terrain
 
-GITHUB_TOKEN="$(gh auth token)" npx --yes maeul-in-the-sky \
+GITHUB_TOKEN="$(gh auth token)" node dist/index.js \
   --user octocat --years 2024,2025 --normalization shared --output ./archive
 ```
 
@@ -211,6 +231,7 @@ GITHUB_TOKEN="$(gh auth token)" npx --yes maeul-in-the-sky \
 | `--motion`                        | `full` / `subtle` / `off`                                |
 | `--layout`                        | `banner`（840×240）/ `card`（420×360）                   |
 | `--style`, `--village-style`      | `classic` / `korean`                                     |
+| `--art-style`                     | `miniature` / `pixel`；独立画风，默认 `miniature`         |
 | `--normalization`                 | `relative` / `fixed` / 仅归档可用 `shared`               |
 | `--max-count`                     | 正有限最大值；`fixed` 必填                               |
 | `--layout-seed`                   | 可选确定性种子覆盖值                                     |
@@ -218,14 +239,14 @@ GITHUB_TOKEN="$(gh auth token)" npx --yes maeul-in-the-sky \
 | `--scale`                         | PNG 整数倍率 1 到 4；默认 2                              |
 | `--help`, `-h`; `--version`, `-V` | 显示帮助与版本                                           |
 
-请通过 `npx --yes maeul-in-the-sky --help` 查看已安装版本的真实参数，通过 `npx --yes maeul-in-the-sky preview --help` 查看本地服务参数。默认值是 `terrain`、`balanced`、密度 `5`、`north`、`classic`、`full`、`banner`、相对 P90 和最近 52 周。优先级为：显式 CLI/Action/UI 值 → 加载的设置 → 所选预设默认值 → 库默认值。单次渲染中，`--config` 优先于快照设置，二者不会按字段合并。只显式选择 preset 不会覆盖已保存 density。format 与 PNG scale 不属于保存的渲染设置。
+请通过 `node dist/index.js --help` 和 `node dist/index.js preview --help` 查看当前源码的参数。默认值是 `terrain`、`balanced`、密度 `5`、`north`、`classic`、`full`、`banner`、相对 P90、最近 52 周，画风默认 `miniature`。优先级为：显式 CLI/Action/UI 值 → 加载的设置 → 所选预设默认值 → 库默认值。单次渲染中，`--config` 优先于快照设置，二者不会按字段合并。只显式选择 preset 不会覆盖已保存 density。format 与 PNG scale 不属于保存的渲染设置。
 
 默认仍只写出 `maeul-in-the-sky-{dark,light}.svg` 两个文件。PNG 和快照仅在请求时添加。`--format png` 时 SVG 路径结果为空字符串。
 
 ### 本地预览自己的账户
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" npx --yes maeul-in-the-sky preview --port 4318
+GITHUB_TOKEN="$(gh auth token)" node dist/index.js preview --port 4318
 ```
 
 打开 `http://127.0.0.1:4318/` 并选择 **Fetch contributions**。服务只绑定 loopback，只读取服务器环境中的令牌。浏览器没有令牌输入框；不要把令牌放入链接、JSON 或表单。公开静态演示只导入 JSON，不连接 localhost。本地进程会缓存账户/年份响应 5 分钟，最多 32 项。
@@ -234,33 +255,42 @@ GITHUB_TOKEN="$(gh auth token)" npx --yes maeul-in-the-sky preview --port 4318
 
 设置（`maeul-settings`）、快照（`maeul-snapshot`）和归档（`maeul-archive`）使用 `schemaVersion: 1`。解析器会重新计算统计，拒绝不支持的版本、重复/无效日期和无效数值/选项。导入上限为 2 MiB、总计 20,000 天、20 个快照。
 
+文件格式版本仍为 1。文化保存为 `style: classic | korean`，画风保存为 `artStyle: miniature | pixel`；旧设置缺少 `artStyle` 时使用 `miniature`。设置、快照、分享链接和归档均保留这两项。
+
 可以比较同一账户的 2 到 5 个年份。默认共享比例会汇总所选快照中的正数并计算 P90，把该最大值作为固定归一化写入归档 manifest，因此相同数值具有相同 level/height。显式固定最大值优先。CLI 归档包含每年图片/快照、`archive.json` 和纵向堆叠的 dark/light 比较 SVG。
 
 设置链接只包含用户名/标题等配置，不包含数值、令牌或快照 payload。快照和归档含令牌可见的每日日期与数值，可能暴露私有活动总数，分享前请检查。来源标签不是 GitHub 来源的密码学证明。SVG 只包含日期和数值，不含仓库名、活动详情、可执行脚本或外部资源。
 
 ## 布局、动效与稳定性
 
-dark/light 会给同一个已准备 scene 着色，因此 Terrain、普通资源和 Wonder 的 geometry 一致。layout version 1 使用标准化用户名、可选 `layoutSeed` 和绝对日期。固定归一化及周围 context 不变时，移动窗口中的内部重叠日期会保留地形和普通放置，但屏幕位置会移动。相对 P90 可能改变高度，邻接条件和全局 Wonder 预算可能改变选择。不同设置、范围或未来 layout version 不保证逐像素一致。
+dark/light 为同一准备好的 scene 着色。新输出使用 `layoutVersion: 2`，依据标准化用户名、可选 `layoutSeed` 和绝对日期。旧版 1 scene 仍可渲染，但重新生成会使用版本 2，放置可能改变。固定归一化及周围条件不变时，移动窗口的内部重叠日期保留地形和普通放置，屏幕位置会移动。相对 P90、邻接条件和全局 Wonder 预算仍可能带来变化；不同设置、范围和布局版本不保证逐像素一致。
 
-相对归一化使用正数 P90 和平方根映射得到 level 1 到 99，0 保持 0。固定模式使用 `maxCount`。韩国风格添加 `hanok`、`pavilion`、`stoneWall`、`onggi` 和符合条件的邻里路径，但不会修改数值或 Wonder 条件。
+相对归一化得到 level 1 到 99，0 保持 0。季节依据日期和半球，以春花新叶、盛夏绿荫、秋叶收获、冬雪枯枝及材质颜色区分。韩国风格在原有 4 个 ID 上新增 `choga`、`jangseung`、`sotdae`、`riceTerrace`、`koreanWatermill`、`hanokGate`、`kimchiGarden`、`stoneBridge`、`hanokEstate`。高等级普通奖励也使用韩国建筑，不改变贡献数或 Wonder 条件。
+
+切换画风保留 ID、日期、贡献数和奖励等级。默认 `miniature` 使用细致的 SVG 原画；`pixel` 使用编译到 **0.5 SVG 单位逻辑网格**的真实 SVG 路径，有限调色板仍随季节与 dark/light 改变。像素资源渲染无需运行时 Resvg 或外部位图。场景适配缩放或外部非整数缩放时，不保证与物理屏幕像素精确对齐。
 
 banner/card 都保留提供的完整日期范围。`full` 开启全部环境效果，`subtle` 只保留慢云和轻柔水面，`off` 省略 CSS animation/keyframe 与 SMIL。reduced-motion 会选择完整的静态 fallback。PNG 始终以 `motion: off`、不透明背景和 1 到 4 倍（默认 2）重新渲染，因此是静态图片。
 
 ## JavaScript 与浏览器 API
 
+公开 npm 包仍是**不含上述改进的旧版 1.4.0**。
+
 ```bash
-npm install maeul-in-the-sky
+npm install maeul-in-the-sky@1.4.0
 ```
 
+要使用**当前 `main` API**，请先构建上述源码，再从仓库根目录的 `.mjs` 文件运行以下示例。
+
 ```js
-import { generateArchive, generateTerrain } from 'maeul-in-the-sky';
+import { generateArchive, generateTerrain } from './dist/lib.js';
 
 const result = await generateTerrain({
   username: 'octocat',
   token: process.env.GITHUB_TOKEN,
   preset: 'balanced',
   layout: 'card',
-  villageStyle: 'korean',
+  style: 'korean',
+  artStyle: 'pixel',
   motion: 'off',
   format: 'both',
   writeSnapshot: true,
@@ -278,7 +308,7 @@ await generateArchive({
 });
 ```
 
-Node entry 支持 ESM/CommonJS 以及文件系统、网络、PNG adapter。`maeul-in-the-sky/browser` ESM entry 不包含 Node 文件系统、token client 或 WASM rasterizer，并导出 `renderTerrain`、`prepareTerrainScene`、`renderTerrainScene`、解析器、设置、快照/归档 helper 和目录。浏览器与 Node 输入均接受 `style` 或 `villageStyle`；两个值不一致时会报错。版本 1 设置使用 `style` 序列化。在同一文档内嵌多个 scene 时请使用不同 namespace。
+源码构建提供 Node 入口 `dist/lib.js`（ESM）、`dist/lib.cjs`（CommonJS）和浏览器入口 `dist/browser.js`（ESM）。浏览器入口不包含 Node 文件系统、token client 或 WASM rasterizer，提供渲染、解析器、设置、快照/归档 helper 和目录。文化输入支持 `style` 或 `villageStyle`，值冲突时报错，保存名称为 `style`；画风为 `artStyle`。同一文档中的多个 scene 请使用不同 namespace。
 
 自定义 Theme 的归档比较会在本地解析 SVG 和 CSS，支持命名空间前缀和字符引用。嵌入各行时会移除 XML 声明和 DOCTYPE。不会加载外部 DTD 或自定义实体；格式错误的 XML 或不支持的引用会在写入归档文件之前抛出 `InputValidationError`。 若为引用添加前缀后产生值冲突，使 CSS 属性选择器无法保持原来的匹配与不匹配关系，也会在写入前以同一错误拒绝。
 
@@ -286,9 +316,17 @@ Node entry 支持 ESM/CommonJS 以及文件系统、网络、PNG adapter。`maeu
 
 ## 目录与可复现预览
 
-[交互式目录](demo/catalog/index.html)分别统计普通资源 **193 = classic 189 + korean 4** 与 Wonder **30 = Rare 14 + Epic 10 + Legendary 6**。普通资源中 68 个为季节型，125 个适用于所有季节。variant 和放置 instance 不增加 ID 总数。[在线 Wonder 图鉴](https://t1seo.github.io/maeul-in-the-sky/#wonders)显示真实发现状态和条件。
+[交互式目录](https://t1seo.github.io/maeul-in-the-sky/catalog/)支持 miniature/pixel 切换，包含全部 13 个韩国 ID。普通资源 **202 = classic 189 + korean 13**（季节型 68、全年型 134）与 Wonder **30 = Rare 14 + Epic 10 + Legendary 6** 分开统计，总计 **232 ID**。变体、画风和放置数量不增加 ID 总数。
 
-生成脚本使用固定 seed 与 UTC 日期。记录的新输入 SVG 优化实验在 6 个捕获 SVG 上减少了 16.54% 到 17.06% 的 gzip 大小，并出现少量 subpixel 差异。它不能证明渲染速度或 FPS 提升，也没有测量之后的所有预览。详情见[测量的渲染与 SVG 大小](demo/performance.md)。
+修改原画后请重新生成像素资源，并在测试或构建前运行 `--check` 检查漂移。其他生成命令请参阅[贡献指南](../CONTRIBUTING.md)。
+
+```bash
+npx tsx scripts/pixel/generate.ts
+npx tsx scripts/pixel/generate.ts --check
+npx tsx scripts/generate-catalog.ts docs/demo/catalog
+```
+
+生成脚本使用固定 seed 与 UTC 日期。之前 6 个 SVG 的 gzip 缩减 16.54% 到 17.06% 是本次原画更新前的记录，不是新资源的体积、渲染速度或 FPS 测量值。条件与限制见[历史测量](demo/performance.md)。
 
 ## 故障排查
 

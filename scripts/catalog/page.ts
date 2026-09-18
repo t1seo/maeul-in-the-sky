@@ -21,7 +21,7 @@ export function renderCatalogPage(
   const wonderCount = records.filter((record) => record.kind === 'wonder').length;
   const cards = records.map(cardMarkup).join('\n');
   return `<!doctype html>
-<html lang="en" data-mode="dark">
+<html lang="en" data-mode="dark" data-art-style="miniature">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,6 +45,7 @@ export function renderCatalogPage(
       <div class="control"><label for="season-filter">Season</label><select id="season-filter"><option value="all">All seasons</option><option value="winter">Winter</option><option value="spring">Spring</option><option value="summer">Summer</option><option value="autumn">Autumn</option></select></div>
       <div class="control"><label for="family-filter">Family</label><select id="family-filter"><option value="all">All families</option><option value="nature">Nature (${familyCounts.nature})</option><option value="building">Buildings (${familyCounts.building})</option><option value="decoration">Decorations (${familyCounts.decoration})</option><option value="wonder">Wonders (${familyCounts.wonder})</option><option value="korean">Korean (${familyCounts.korean})</option></select></div>
       <div class="control"><label for="style-filter">Style</label><select id="style-filter"><option value="all">All styles</option><option value="classic">Classic</option><option value="korean">Korean</option><option value="wonder">Wonder</option></select></div>
+      <div class="control"><label for="art-style-filter">Art style</label><select id="art-style-filter"><option value="miniature">Miniature</option><option value="pixel">Pixel village</option></select></div>
       <fieldset class="mode-switch"><legend>Lighting</legend><button type="button" data-mode="dark" aria-pressed="true">Dark</button><button type="button" data-mode="light" aria-pressed="false">Light</button></fieldset>
     </form>
     <div class="result-line"><p id="result-count" role="status" aria-live="polite">Showing ${records.length} of ${records.length} entries</p><p>Season filters include year-round assets.</p></div>

@@ -204,4 +204,13 @@ export type AssetType =
   | 'hanok'
   | 'pavilion'
   | 'stoneWall'
-  | 'onggi';
+  | 'onggi'
+  | 'choga'
+  | 'jangseung'
+  | 'sotdae'
+  | 'riceTerrace'
+  | 'koreanWatermill'
+  | 'hanokGate'
+  | 'kimchiGarden'
+  | 'stoneBridge'
+  | 'hanokEstate';

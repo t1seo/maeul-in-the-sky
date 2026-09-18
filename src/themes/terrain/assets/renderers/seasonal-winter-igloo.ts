@@ -1,172 +1,125 @@
 import type { AssetColors } from '../../palette.js';
 
 export function svgIgloo(x: number, y: number, c: AssetColors, v: number): string {
-  const block = c.igloo;
-  const ice = c.ice;
-  if (v === 1) {
-    // With entrance
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<path d="M-3.5,0.5 Q-3.5,-3 0,-3.5 Q3.5,-3 3.5,0.5 Z" fill="${block}"/>` +
-      `<path d="M-1,0.5 Q-1,-0.5 0,-0.8 Q1,-0.5 1,0.5 Z" fill="${ice}" opacity="0.5"/>` +
-      `<line x1="-2" y1="-1" x2="2" y2="-1" stroke="${ice}" stroke-width="0.2" opacity="0.4"/>` +
-      `<line x1="-2.5" y1="0" x2="2.5" y2="0" stroke="${ice}" stroke-width="0.2" opacity="0.4"/>` +
-      `<path d="M2,0.5 Q2.5,0.3 3,0.5 Q3,-0.2 2.5,-0.3 Q2,-0.2 2,0.5 Z" fill="${block}" opacity="0.8"/>` +
-      `</g>`
-    );
-  }
   if (v === 2) {
-    // Half-built
     return (
       `<g transform="translate(${x},${y})">` +
-      `<path d="M-3,0.5 Q-3,-1.5 0,-2 Q2,-1.5 2,0.5 Z" fill="${block}"/>` +
-      `<rect x="2.5" y="-0.5" width="1" height="0.5" fill="${block}" opacity="0.7"/>` +
-      `<rect x="2" y="0" width="1.2" height="0.5" fill="${block}" opacity="0.6"/>` +
-      `<line x1="-1.5" y1="0" x2="1.5" y2="0" stroke="${ice}" stroke-width="0.2" opacity="0.3"/>` +
+      `<path d="M-3.7,-.9 Q-.5,-2.5 2.4,-1 L2.4,.5 Q.1,1.75 -3.5,.4Z" fill="${c.ice}"/>` +
+      `<path d="M-3.7,-.9 -3.25,-2.1 -1.95,-2.5 -1.75,-3.1 -.2,-3.35 1.4,-2.9 1.5,-1.8 2.4,-1 Q-.3,.2 -3.7,-.9Z" fill="${c.igloo}"/>` +
+      `<path d="M-2.55,-1.5 Q-.65,-2.45 1.25,-1.55 Q-.6,-.8 -2.55,-1.5Z" fill="${c.frozenWater}"/>` +
+      `<path d="M-3.25,-2.1 -1.95,-2.5 -1.75,-3.1 -.2,-3.35 1.4,-2.9 .35,-2.55 -1.25,-2.7 -1.4,-2.12 -2.9,-1.65Z" fill="${c.snowCap}"/>` +
+      `<path d="M-3.55,-.1 Q-.4,.85 2.4,-.25 M-2.15,-.6 -2.05,.7 M.1,-.55 .15,1 M-.8,-2.65 -.7,-2" fill="none" stroke="${c.frozenWater}" stroke-width=".17"/>` +
+      `<path d="M2.65,.2 3.45,-.15 4.35,.25 3.6,.7Z M2.5,-.8 3.3,-1.15 4.3,-.8 3.4,-.35Z" fill="${c.snowCap}"/>` +
+      `<path d="M2.65,.2 3.6,.7 4.35,.25 4.35,.85 3.6,1.25 2.65,.7Z M2.5,-.8 3.4,-.35 4.3,-.8 4.3,-.3 3.4,.15 2.5,-.3Z" fill="${c.ice}"/>` +
       `</g>`
     );
   }
-  // Classic
   return (
     `<g transform="translate(${x},${y})">` +
-    `<path d="M-3,0.5 Q-3,-3 0,-3.5 Q3,-3 3,0.5 Z" fill="${block}"/>` +
-    `<line x1="-2" y1="-1" x2="2" y2="-1" stroke="${ice}" stroke-width="0.2" opacity="0.4"/>` +
-    `<line x1="-2.5" y1="0" x2="2.5" y2="0" stroke="${ice}" stroke-width="0.2" opacity="0.4"/>` +
-    `<line x1="-1" y1="-2" x2="1" y2="-2" stroke="${ice}" stroke-width="0.2" opacity="0.3"/>` +
+    `<path d="M-3.8,.2 C-3.8,-5.3 2.7,-5.5 3.5,-.25 Q3.5,1.05 -.1,1.25 Q-2.6,1.1 -3.8,.2Z" fill="${c.igloo}"/>` +
+    `<path d="M-.15,-4.05 C2.6,-4.4 3.3,-2.1 3.5,-.25 Q3.5,1.05 -.1,1.25 L-.8,.95 Q1.9,.15 1.65,-1.85 Q1.45,-3.4 -.15,-4.05Z" fill="${c.ice}"/>` +
+    `<path d="M-3.45,-1.15 Q-.2,-.3 3.25,-1 M-2.85,-2.45 Q-.15,-1.8 2.7,-2.3 M-1.8,-3.45 Q-.2,-3.1 1.5,-3.45 M-2,-2.25 -2.3,-.95 M.3,-2 .4,-.65 M1.2,-3.25 1.6,-2.15 M-1.1,-3.3 -1.2,-2.15 M-1,-.6 -1,1 M1.7,-.65 1.85,.9" fill="none" stroke="${c.frozenWater}" stroke-width=".16" opacity=".65"/>` +
+    `<path d="M-3.2,-2.5 Q-2.2,-4.7 .2,-4.05 Q-1.6,-3.95 -2.55,-2.65Z" fill="${c.snowCap}"/>` +
+    (v === 1
+      ? `<path d="M.5,.75 L2.6,1.6 4.25,.8 C4.35,-.35 3.5,-1.15 2.85,-1.1 L1,-.4Z" fill="${c.ice}"/><path d="M.5,.75 C.35,-.7 1.2,-1.5 2.2,-1.1 L3.4,-.6 Q2.1,-.3 2.6,1.6Z" fill="${c.snowCap}"/><path d="M2.9,1.45 Q2.7,-.25 3.45,-.25 Q4.05,-.15 3.95,.95Z" fill="${c.frozenWater}"/><path d="M3.1,1.3 Q2.95,.1 3.48,.08 L3.7,1.05Z" fill="${c.shadow}" opacity=".45"/>`
+      : `<path d="M-.7,1.1 Q-.95,-1.6 .55,-1.65 Q2,-1.35 1.6,1.03Z" fill="${c.snowCap}"/><path d="M-.35,1.12 Q-.5,-.95 .55,-1.15 Q1.5,-.95 1.2,1.08Z" fill="${c.frozenWater}"/><path d="M-.25,1.1 Q-.35,-.75 .45,-.9 L.55,1.08Z" fill="${c.shadow}" opacity=".45"/>`) +
     `</g>`
   );
 }
 
 export function svgFrozenPond(x: number, y: number, c: AssetColors, v: number): string {
-  const ice = c.ice;
-  const crack = c.frozenWater;
-  if (v === 1) {
-    // With cracks
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="0" rx="3" ry="1.2" fill="${ice}" opacity="0.7"/>` +
-      `<line x1="-1" y1="-0.3" x2="1.5" y2="0.5" stroke="${crack}" stroke-width="0.3" opacity="0.5"/>` +
-      `<line x1="0" y1="-0.5" x2="0.5" y2="0.8" stroke="${crack}" stroke-width="0.2" opacity="0.4"/>` +
-      `<ellipse cx="0.5" cy="-0.2" rx="0.8" ry="0.3" fill="#fff" opacity="0.2"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Thin ice
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="0" rx="2.5" ry="1" fill="${ice}" opacity="0.5"/>` +
-      `<ellipse cx="0" cy="0" rx="1.5" ry="0.6" fill="${crack}" opacity="0.3"/>` +
-      `<ellipse cx="0.3" cy="-0.1" rx="0.5" ry="0.2" fill="#fff" opacity="0.15"/>` +
-      `</g>`
-    );
-  }
-  // Solid
+  const shore =
+    v === 1
+      ? 'M-3.55,-.3 -2.6,-1.2 -.85,-1.55 .75,-1.05 2.6,-.95 3.55,.15 2.55,1.25 .65,1.6 -1.2,1.15 -2.65,1.25Z'
+      : v === 2
+        ? 'M-3.2,-.4 Q-2.5,-1.55 -.8,-1.2 Q1.6,-1.6 3.35,-.25 Q3.5,.95 1.15,1.35 Q-1.2,1.65 -2.95,.6Z'
+        : 'M-3.65,-.2 Q-3.3,-1.1 -1.6,-1.35 Q-.35,-2 1.05,-1.25 Q3.7,-1.1 3.5,.35 Q2.55,1.65 .4,1.35 Q-2.05,1.7 -3.65,-.2Z';
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0" rx="3" ry="1.2" fill="${ice}" opacity="0.7"/>` +
-    `<ellipse cx="0.5" cy="-0.2" rx="1.2" ry="0.5" fill="#fff" opacity="0.15"/>` +
+    `<path d="${shore}" fill="${c.frozenWater}"/>` +
+    `<path d="M-3.25,-.25 Q-2.65,-1.05 -1.15,-1.1 Q.35,-1.4 2.1,-.7 Q3.5,-.4 2.8,.55 Q.9,1.1 -.7,.8 Q-2.6,.75 -3.25,-.25Z" fill="${c.ice}"/>` +
+    `<path d="M-3.6,-.25 Q-3.3,-1.3 -1.6,-1.45 Q-.6,-1.85 .45,-1.5 L-.25,-1.05 Q-2.4,-1.1 -3,-.1Z M1.25,1.1 Q2.6,.7 3.35,.1 L3.4,.65 Q2.55,1.4 1.25,1.1Z" fill="${c.snowCap}"/>` +
+    (v === 1
+      ? `<path d="M-2.2,-.6 -.7,-.05 -.1,-.45 1,.35 2.4,.1 M-.7,-.05 -1.15,.8 M1,.35 .8,.9 M-.1,-.45 .45,-.95" fill="none" stroke="${c.frozenWater}" stroke-width=".2"/>`
+      : '') +
+    (v === 2
+      ? `<path d="M-1.65,.15 Q-1.05,-.65 .5,-.45 Q1.65,-.65 2.1,.1 Q1.45,.8 .4,.55 Q-.8,.85 -1.65,.15Z" fill="${c.frozenWater}"/><path d="M-.9,-.15 .2,-.4 .8,-.12 -.35,.15Z" fill="${c.icicle}"/>`
+      : `<path d="M-1.8,-.45 -.8,-.65 .9,-.1 -.25,.1Z M.75,.45 1.75,.2 2.2,.32 1.2,.6Z" fill="${c.icicleBlue}"/>`) +
     `</g>`
   );
 }
 
 export function svgIcicle(x: number, y: number, c: AssetColors, v: number): string {
-  const ice = c.icicle;
-  if (v === 1) {
-    // Cluster
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<polygon points="-1.5,-1 -1.2,-1 -1,-3" fill="${ice}" opacity="0.7"/>` +
-      `<polygon points="-0.3,-1 0,-1 0.2,-3.5" fill="${ice}" opacity="0.8"/>` +
-      `<polygon points="0.8,-1 1.1,-1 1.2,-2.5" fill="${ice}" opacity="0.7"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Thick
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<polygon points="-0.5,-1 0.5,-1 0.2,-3.5 -0.2,-3.5" fill="${ice}" opacity="0.8"/>` +
-      `<ellipse cx="0" cy="-1" rx="0.6" ry="0.2" fill="${ice}" opacity="0.5"/>` +
-      `</g>`
-    );
-  }
-  // Single
+  const shards =
+    v === 1
+      ? 'M-2,-3.65 -.95,-3.45 -1.4,-.65Z M-.7,-3.55 .6,-3.7 .1,.05Z M1,-3.6 2,-3.85 1.55,-1.15Z'
+      : v === 2
+        ? 'M-1.15,-4 .9,-3.9 .65,-1.8 .1,-.15 -.65,-1.3Z'
+        : 'M-.65,-3.55 .65,-3.65 .1,-.35Z';
+  const facets =
+    v === 1
+      ? 'M-1.65,-3.6 -.95,-3.45 -1.4,-.65Z M-.05,-3.65 .6,-3.7 .1,.05Z M1.55,-3.75 2,-3.85 1.55,-1.15Z'
+      : v === 2
+        ? 'M-.1,-3.95 .9,-3.9 .65,-1.8 .1,-.15 -.1,-1.75Z'
+        : 'M.08,-3.65 .65,-3.65 .1,-.35Z';
+  const ledge =
+    v === 1
+      ? 'M-2.4,-3.95 Q-1.35,-4.35 -.55,-4.05 L1.85,-4.3 2.35,-3.85 Q1.05,-3.45 .2,-3.75 Q-1.45,-3.35 -2.4,-3.65Z'
+      : v === 2
+        ? 'M-1.5,-4.15 -.3,-4.6 1.2,-4.2 1.05,-3.8 -.3,-3.7 -1.5,-3.9Z'
+        : 'M-1,-3.8 -.25,-4 .95,-3.85 .9,-3.45 -.05,-3.35 -1,-3.55Z';
   return (
-    `<g transform="translate(${x},${y})">` +
-    `<polygon points="-0.2,-1 0.2,-1 0,-3" fill="${ice}" opacity="0.8"/>` +
-    `</g>`
+    `<g transform="translate(${x},${y})"><path d="${shards}" fill="${c.icicle}"/>` +
+    `<path d="${facets}" fill="${c.frozenWater}"/>` +
+    `<path d="${ledge}" fill="${c.snowCap}"/></g>`
   );
 }
 
 export function svgSled(x: number, y: number, c: AssetColors, v: number): string {
-  const wood = c.sledWood;
-  const runner = c.sledRunner;
-  if (v === 1) {
-    // With gifts
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-2.5" y="-1" width="5" height="0.5" rx="0.2" fill="${wood}"/>` +
-      `<path d="M-2.5,-0.5 Q-3,-0.5 -3,0 L-2.5,0.2" fill="none" stroke="${runner}" stroke-width="0.4"/>` +
-      `<path d="M2.5,-0.5 Q3,-0.5 3,0 L2.5,0.2" fill="none" stroke="${runner}" stroke-width="0.4"/>` +
-      `<rect x="-1.5" y="-2.2" width="1.5" height="1.2" fill="${c.scarfRed}" rx="0.2"/>` +
-      /* v8 ignore start */
-      `<rect x="0.3" y="-1.8" width="1" height="0.8" fill="${c.sproutGreen || '#4a8828'}" rx="0.2"/>` +
-      /* v8 ignore stop */
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // With runner marks
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-2.5" y="-1" width="5" height="0.5" rx="0.2" fill="${wood}"/>` +
-      `<path d="M-2.5,-0.5 Q-3,-0.5 -3,0 L-2.5,0.2" fill="none" stroke="${runner}" stroke-width="0.4"/>` +
-      `<path d="M2.5,-0.5 Q3,-0.5 3,0 L2.5,0.2" fill="none" stroke="${runner}" stroke-width="0.4"/>` +
-      `<line x1="-3" y1="0.3" x2="3" y2="0.3" stroke="${runner}" stroke-width="0.15" opacity="0.3"/>` +
-      `<line x1="-3" y1="0.5" x2="3" y2="0.5" stroke="${runner}" stroke-width="0.15" opacity="0.2"/>` +
-      `</g>`
-    );
-  }
-  // Empty
+  const gifts =
+    v === 1
+      ? `<path d="M-1.7,-1.1 -1.65,-2.7 -.25,-2.1 -.25,-.5Z" fill="${c.christmasRed}"/><path d="M-.25,-2.1 .75,-2.65 .7,-1 -.25,-.5Z" fill="${c.scarfRed}"/><path d="M-1.65,-2.7 -.65,-3.25 .75,-2.65 -.25,-2.1Z" fill="${c.christmasGold}"/><path d="M-.95,-2.4 -.6,-2.25 -.6,-.65 -.95,-.8Z" fill="${c.christmasGold}"/><path d="M.7,-1.2 .7,-2.1 1.5,-2.5 2.2,-2.15 2.2,-1.2 1.5,-.85Z" fill="${c.christmasGreen}"/><path d="M.7,-2.1 1.5,-2.5 2.2,-2.15 1.5,-1.8Z M1.3,-1.9 1.55,-1.8 1.55,-.9 1.3,-1Z" fill="${c.snowCap}"/>`
+      : '';
   return (
     `<g transform="translate(${x},${y})">` +
-    `<rect x="-2.5" y="-1" width="5" height="0.5" rx="0.2" fill="${wood}"/>` +
-    `<path d="M-2.5,-0.5 Q-3,-0.5 -3,0 L-2.5,0.2" fill="none" stroke="${runner}" stroke-width="0.4"/>` +
-    `<path d="M2.5,-0.5 Q3,-0.5 3,0 L2.5,0.2" fill="none" stroke="${runner}" stroke-width="0.4"/>` +
-    `<line x1="-2" y1="-1" x2="-2" y2="-0.5" stroke="${wood}" stroke-width="0.3"/>` +
-    `<line x1="2" y1="-1" x2="2" y2="-0.5" stroke="${wood}" stroke-width="0.3"/>` +
+    (v === 2
+      ? `<path d="M-4.2,.05 2.25,1.55 M-3.5,.6 3.4,1.6" stroke="${c.ice}" stroke-width=".24"/>`
+      : '') +
+    `<path d="M-3.15,-1.55 Q-3.55,-.3 -2.3,-.1 L2.85,1.1 Q3.7,1.25 3.75,.5 M-3.7,-.7 Q-4,.5 -2.75,.65 L2.4,1.55 Q3.15,1.65 3.3,1" fill="none" stroke="${c.sledRunner}" stroke-width=".28" stroke-linecap="round"/>` +
+    `<path d="M-2.35,-.85 -2.3,.15 M.3,-.2 .4,1 M2.4,.15 2.4,1.45" stroke="${c.sledWood}" stroke-width=".3"/>` +
+    `<path d="M-3,-1.65 -1.95,-2.2 3.15,-.75 2.1,-.15Z" fill="${c.roofB}"/>` +
+    `<path d="M-3,-1.65 2.1,-.15 3.15,-.75 3.15,-.3 2.1,.32 -3,-1.2Z" fill="${c.sledWood}"/>` +
+    `<path d="M-2.6,-1.85 2.6,-.43 M-1.5,-1.8 -1.55,-1.25 M.2,-1.3 .2,-.72 M1.8,-.84 1.8,-.28" fill="none" stroke="${c.firewoodLog}" stroke-width=".14"/>` +
+    gifts +
+    (v === 2
+      ? `<path d="M-2.8,-1.6 Q-4.3,-3.5 -4.5,-1.7 Q-4.55,-.7 -3.7,-.7" fill="none" stroke="${c.bareBranch}" stroke-width=".18"/>`
+      : '') +
     `</g>`
   );
 }
 
 export function svgSnowCoveredRock(x: number, y: number, c: AssetColors, v: number): string {
-  const rock = c.rock;
-  const snow = c.snowCap;
-  if (v === 1) {
-    // Large
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="0" rx="2.5" ry="1.2" fill="${rock}"/>` +
-      `<ellipse cx="0" cy="-0.8" rx="2" ry="0.6" fill="${snow}" opacity="0.7"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Boulder
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="0" rx="3" ry="1.5" fill="${c.boulder}"/>` +
-      `<ellipse cx="-0.5" cy="-0.5" rx="2" ry="1" fill="${rock}"/>` +
-      `<ellipse cx="-0.3" cy="-1" rx="2" ry="0.7" fill="${snow}" opacity="0.6"/>` +
-      `</g>`
-    );
-  }
-  // Small
+  const outline =
+    v === 1
+      ? 'M-3.1,.5 -2.65,-1.3 -.9,-2.1 1.45,-1.6 2.95,-.1 2.25,1.2 -.25,1.4Z'
+      : v === 2
+        ? 'M-3.6,.3 -2.75,-1.55 -.8,-2.35 1.8,-1.8 3.45,.1 2.45,1.55 -.8,1.7Z'
+        : 'M-2,.3 -1.3,-1 .3,-1.3 1.75,-.15 1.35,.95 -.65,1.05Z';
+  const face =
+    v === 1
+      ? 'M-.9,-2.1 1.45,-1.6 2.95,-.1 2.25,1.2 -.25,1.4 .25,-.55Z'
+      : v === 2
+        ? 'M-.8,-2.35 1.8,-1.8 3.45,.1 2.45,1.55 -.8,1.7 .1,-.65Z'
+        : 'M.3,-1.3 1.75,-.15 1.35,.95 -.65,1.05 .45,-.15Z';
+  const cap =
+    v === 1
+      ? 'M-2.85,-1.15 Q-2.5,-2.1 -.95,-2.25 L1.25,-1.95 2.5,-.9 Q1.5,-.5 .65,-.85 L-.1,-.25 Q-.75,-.1 -1.1,-.75 L-2.3,-.5Z'
+      : v === 2
+        ? 'M-2.95,-1.4 Q-2.1,-2.55 -.7,-2.55 L1.9,-1.95 2.55,-1.1 Q1.6,-.65 .9,-.85 L.4,-.05 -.25,-.35 -.45,-.95 Q-1.5,-.55 -2.95,-1.4Z'
+        : 'M-1.7,-.8 Q-1.05,-1.7 .4,-1.55 L1.4,-.65 Q.75,-.15 .2,-.4 L-.5,-.1 -.75,-.55Z';
   return (
-    `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="0" rx="1.5" ry="0.8" fill="${rock}"/>` +
-    `<ellipse cx="0" cy="-0.5" rx="1.2" ry="0.4" fill="${snow}" opacity="0.6"/>` +
-    `</g>`
+    `<g transform="translate(${x},${y})"><path d="${outline}" fill="${c.rock}"/>` +
+    `<path d="${face}" fill="${c.boulder}"/><path d="${cap}" fill="${c.snowCap}"/>` +
+    `<path d="M.25,.75 1.25,.45 1.05,.8Z" fill="${c.ice}"/></g>`
   );
 }

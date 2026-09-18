@@ -1,50 +1,37 @@
 import type { ColorMode } from '../../../core/types.js';
-import type { SeasonalTint } from '../seasons.js';
-import { applyTint, applyTintToHex, applyTintToRgb } from '../seasons.js';
+import type { SeasonalTint, getTransitionBlend } from '../seasons.js';
+import { applyTint } from '../seasons.js';
 import { DARK_COLOR_ANCHORS, DARK_HEIGHT_ANCHORS, LIGHT_COLOR_ANCHORS } from './anchors.js';
 import type { ColorAnchor } from './anchors.js';
 import { DARK_ASSETS } from './dark-assets.js';
 import { LIGHT_ASSETS } from './light-assets.js';
 import { interpolateHeight, interpolateRGB, makeElevation } from './interpolation.js';
 import type { ElevationColors, TerrainPalette100 } from './types.js';
+import { seasonalMaterials } from './season-materials.js';
+import { seasonalGround } from './season-ground.js';
 
 const SAMPLE_LEVELS = [0, 5, 12, 25, 40, 55, 70, 82, 92, 99] as const;
 
-function elevationGetter(anchors: readonly ColorAnchor[], tint?: SeasonalTint) {
+function elevationGetter(
+  anchors: readonly ColorAnchor[],
+  tint?: SeasonalTint,
+  transition?: ReturnType<typeof getTransitionBlend>,
+) {
   const elevations: (ElevationColors | undefined)[] = Array.from({ length: 100 });
   return (level: number): ElevationColors => {
     const cached = Number.isInteger(level) ? elevations[level] : undefined;
     if (cached) return { ...cached };
     const rgb = interpolateRGB(anchors, level);
-    const elevation = makeElevation(tint ? applyTint(...rgb, tint) : rgb);
+    const color =
+      tint && transition
+        ? seasonalGround(rgb, tint, transition)
+        : tint
+          ? applyTint(...rgb, tint)
+          : rgb;
+    const elevation = makeElevation(color);
     if (Number.isInteger(level) && level >= 0 && level < 100) elevations[level] = elevation;
     return { ...elevation };
   };
-}
-
-function tintAssetColors<T extends Record<keyof T, string>>(
-  assets: T,
-  tint: SeasonalTint,
-): { [Key in keyof T]: string } {
-  const result: { [Key in keyof T]: string } = { ...assets };
-  const colors = new Map<string, string>();
-  for (const key in result) {
-    const value = result[key];
-    const cached = colors.get(value);
-    if (cached !== undefined) {
-      result[key] = cached;
-      continue;
-    }
-    const tinted =
-      value.startsWith('#') && value.length === 7
-        ? applyTintToHex(value, tint)
-        : value.startsWith('rgb')
-          ? applyTintToRgb(value, tint)
-          : value;
-    colors.set(value, tinted);
-    result[key] = tinted;
-  }
-  return result;
 }
 
 export function createTerrainPalette100(mode: ColorMode): TerrainPalette100 {
@@ -72,6 +59,7 @@ export function createSeasonalPalette100(
   mode: ColorMode,
   tint: SeasonalTint,
   base: TerrainPalette100,
+  transition: ReturnType<typeof getTransitionBlend>,
 ): TerrainPalette100 {
   if (
     tint.colorShift === 0 &&
@@ -84,11 +72,12 @@ export function createSeasonalPalette100(
   const getElevation = elevationGetter(
     mode === 'dark' ? DARK_COLOR_ANCHORS : LIGHT_COLOR_ANCHORS,
     tint,
+    transition,
   );
   return {
     ...base,
     getElevation,
     elevations: SAMPLE_LEVELS.map(getElevation),
-    assets: tintAssetColors(base.assets, tint),
+    assets: seasonalMaterials(base.assets, transition),
   };
 }

@@ -31,6 +31,7 @@ export function workflowDocument(document: SettingsV1): WorkflowResult {
     motion: settings.motion,
     layout: settings.layout,
     village_style: settings.style,
+    art_style: settings.artStyle,
     normalization: settings.normalization.kind,
     output_dir: './maeul-output',
   };
@@ -59,7 +60,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v7
-      - uses: t1seo/maeul-in-the-sky@v1
+      - uses: t1seo/maeul-in-the-sky@main
         with:
           github_token: \${{ secrets.GITHUB_TOKEN }}
 ${inputs}

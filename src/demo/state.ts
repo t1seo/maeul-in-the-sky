@@ -9,7 +9,15 @@ export function parseDemoQuery(search: string, light = false): DemoSettings {
   const query = new URLSearchParams(search);
   if (query.has('v')) z.literal('1').parse(query.get('v'));
   const settings: Record<string, unknown> = {};
-  for (const key of ['preset', 'title', 'hemisphere', 'motion', 'layout', 'layoutSeed']) {
+  for (const key of [
+    'preset',
+    'title',
+    'hemisphere',
+    'motion',
+    'layout',
+    'layoutSeed',
+    'artStyle',
+  ]) {
     if (query.has(key)) settings[key] = query.get(key);
   }
   if (query.has('style') || query.has('villageStyle')) {
@@ -47,6 +55,7 @@ export function demoQuery({ document, mode }: DemoSettings): string {
     motion: settings.motion,
     layout: settings.layout,
     style: settings.style,
+    artStyle: settings.artStyle,
   });
   if (document.year !== undefined) query.set('year', String(document.year));
   if (settings.layoutSeed !== undefined) query.set('layoutSeed', settings.layoutSeed);

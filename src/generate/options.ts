@@ -55,6 +55,7 @@ export function parseGenerationSettings(
     motion: request.motion || undefined,
     layout: request.layout || undefined,
     style: request.style || request.villageStyle || undefined,
+    artStyle: request.artStyle || undefined,
     layoutSeed: request.layoutSeed,
     normalization:
       normalization === 'fixed'

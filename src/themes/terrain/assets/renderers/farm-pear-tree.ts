@@ -1,91 +1,102 @@
 import type { AssetColors } from '../../palette.js';
+import { farmFruitTree, farmMaterial } from './farm-art-material.js';
 
 export function svgPearTree(x: number, y: number, c: AssetColors, v: number): string {
-  // Pear tree with pear-shaped fruits
-  const leaf = c.orchard;
-  /* v8 ignore start */
-  const pear = c.pearGreen || '#d1e231';
-  /* v8 ignore stop */
-  const trunk = c.trunk;
-  if (v === 1) {
-    // Ripe pears
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-      `<circle cx="0" cy="-4.5" r="2.5" fill="${leaf}"/>` +
-      `<circle cx="-1.5" cy="-3.5" r="1.5" fill="${leaf}" opacity="0.9"/>` +
-      `<circle cx="1.5" cy="-3.5" r="1.5" fill="${leaf}" opacity="0.85"/>` +
-      `<path d="M-0.8,-4.3 Q-0.8,-4.8 -0.6,-4.8 Q-0.4,-4.8 -0.4,-4.3 Q-0.4,-3.8 -0.6,-3.6 Q-0.8,-3.8 -0.8,-4.3" fill="${pear}"/>` +
-      `<path d="M0.6,-4.8 Q0.6,-5.3 0.8,-5.3 Q1,-5.3 1,-4.8 Q1,-4.3 0.8,-4.1 Q0.6,-4.3 0.6,-4.8" fill="${pear}"/>` +
-      `<path d="M0.3,-3.5 Q0.3,-4 0.5,-4 Q0.7,-4 0.7,-3.5 Q0.7,-3 0.5,-2.8 Q0.3,-3 0.3,-3.5" fill="${pear}"/>` +
-      `</g>`
-    );
-  }
-  // Standard pear tree
-  return (
-    `<g transform="translate(${x},${y})">` +
-    `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-    `<circle cx="0" cy="-4.5" r="2.5" fill="${leaf}"/>` +
-    `<circle cx="-1.5" cy="-3.5" r="1.5" fill="${leaf}" opacity="0.9"/>` +
-    `<circle cx="1.5" cy="-3.5" r="1.5" fill="${leaf}" opacity="0.85"/>` +
-    `<path d="M-0.6,-4.5 Q-0.6,-5 -0.4,-5 Q-0.2,-5 -0.2,-4.5 Q-0.2,-4 -0.4,-3.8 Q-0.6,-4 -0.6,-4.5" fill="${pear}"/>` +
-    `<path d="M0.7,-4 Q0.7,-4.5 0.9,-4.5 Q1.1,-4.5 1.1,-4 Q1.1,-3.5 0.9,-3.3 Q0.7,-3.5 0.7,-4" fill="${pear}"/>` +
-    `</g>`
-  );
+  const ripe = v === 1;
+  const fruit = ripe
+    ? [
+        [-1.8, -4.15],
+        [-0.2, -5.55],
+        [1.55, -4.1],
+        [0.15, -3.1],
+      ]
+    : [
+        [-0.9, -5],
+        [1.1, -3.9],
+      ];
+  return farmFruitTree(x, y, c, {
+    leaf: c.orchard,
+    fruit: c.pearGreen,
+    silhouette: ripe
+      ? 'M-3,-3.7Q-3.55,-5.25-1.85,-5.9-1.8,-7.35-.4,-7.5 1.1,-7.55 1.55,-6.15 3,-5.7 2.75,-4.3 3.45,-3 1.8,-2.5 .55,-1.85-.4,-2.65-2.4,-2.1-3,-3.7Z'
+      : 'M-2.65,-3.8Q-3.25,-5.1-1.6,-5.9-1.8,-7.35-.4,-7.5 1.1,-7.55 1.45,-6.15 2.7,-5.65 2.45,-4.25 3.15,-3.05 1.55,-2.75 .45,-2.1-.5,-2.9-2.6,-2.45-2.65,-3.8Z',
+    light:
+      'M-2.65,-3.8Q-3.25,-5.1-1.6,-5.9-1.8,-7.35-.4,-7.5 1.1,-7.55 1.45,-6.15 .15,-6.6-.3,-5.45-1.95,-5.15-1.7,-4.2Z',
+    shade: ripe
+      ? 'M2.75,-4.3Q3.45,-3 1.8,-2.5 .55,-1.85-.4,-2.65-2.4,-2.1-3,-3.7-1.5,-3.05-.55,-3.45 .3,-2.8 1,-3.9Z'
+      : 'M2.45,-4.25Q3.15,-3.05 1.55,-2.75 .45,-2.1-.5,-2.9-2.6,-2.45-2.65,-3.8-1.2,-3.15-.4,-3.65 .45,-3 .9,-4.15Z',
+    fruitPath: fruit
+      .map(
+        ([px, py]) =>
+          `M${px - 0.12},${py - 0.6}q.2,-.2 .3,.05l.12,.37q.6,.55 .12,.9-.55,.3-.82,-.2-.15,-.3 .17,-.66Z`,
+      )
+      .join(''),
+  });
 }
 
 export function svgPeachTree(x: number, y: number, c: AssetColors, v: number): string {
-  // Peach tree with peach fruits
-  const leaf = c.orchard;
-  /* v8 ignore start */
-  const peach = c.peachFruit || '#ffcba4';
-  /* v8 ignore stop */
-  const trunk = c.trunk;
-  if (v === 1) {
-    // Ripe peaches
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-      `<circle cx="0" cy="-4" r="2.2" fill="${leaf}"/>` +
-      `<circle cx="-1.2" cy="-3.2" r="1.3" fill="${leaf}" opacity="0.9"/>` +
-      `<circle cx="1.2" cy="-3.2" r="1.3" fill="${leaf}" opacity="0.85"/>` +
-      `<circle cx="-0.6" cy="-4" r="0.4" fill="${peach}"/>` +
-      `<circle cx="0.5" cy="-4.3" r="0.35" fill="${peach}"/>` +
-      `<circle cx="0.8" cy="-3.3" r="0.35" fill="${peach}"/>` +
-      `</g>`
-    );
-  }
-  // Standard peach tree
-  return (
-    `<g transform="translate(${x},${y})">` +
-    `<rect x="-0.5" y="-1" width="1" height="3" fill="${trunk}"/>` +
-    `<circle cx="0" cy="-4" r="2.2" fill="${leaf}"/>` +
-    `<circle cx="-1.2" cy="-3.2" r="1.3" fill="${leaf}" opacity="0.9"/>` +
-    `<circle cx="1.2" cy="-3.2" r="1.3" fill="${leaf}" opacity="0.85"/>` +
-    `<circle cx="-0.5" cy="-4" r="0.35" fill="${peach}"/>` +
-    `<circle cx="0.6" cy="-4.2" r="0.35" fill="${peach}"/>` +
-    `</g>`
-  );
+  const ripe = v === 1;
+  const fruit = ripe
+    ? [
+        [-2, -4.2],
+        [-0.5, -5.5],
+        [1.5, -4.8],
+        [0.65, -3.25],
+      ]
+    : [
+        [-1.35, -4.65],
+        [1.15, -3.9],
+      ];
+  return farmFruitTree(x, y, c, {
+    leaf: c.orchard,
+    fruit: c.peachFruit,
+    silhouette: ripe
+      ? 'M-3.15,-3.8Q-3.65,-5.3-2.1,-5.65-1.9,-6.85-.55,-6.4 .4,-7.3 1.45,-6.3 3.2,-6.35 3.25,-4.8 3.9,-3.4 2.4,-2.95 1.1,-2.1 .05,-2.95-1.5,-2.4-2.05,-3.2-3,-2.9-3.15,-3.8Z'
+      : 'M-2.9,-4Q-3.5,-5.25-1.9,-5.65-1.7,-6.75-.4,-6.25 .4,-7.15 1.5,-6.1 2.95,-6.15 2.9,-4.7 3.5,-3.5 2.15,-3.05 .9,-2.6 .15,-3.2-1.2,-2.65-1.95,-3.5-2.95,-3.1-2.9,-4Z',
+    light:
+      'M-2.9,-4Q-3.5,-5.25-1.9,-5.65-1.7,-6.75-.4,-6.25 .4,-7.15 1.5,-6.1 .15,-6.1 .1,-5.15-1.45,-5.65-1.8,-4.3Z',
+    shade: ripe
+      ? 'M3.25,-4.8Q3.9,-3.4 2.4,-2.95 1.1,-2.1 .05,-2.95-1.5,-2.4-2.05,-3.2-.7,-3.6 .25,-3.4 1.7,-3.8 2.15,-4.65Z'
+      : 'M2.9,-4.7Q3.5,-3.5 2.15,-3.05 .9,-2.6 .15,-3.2-1.2,-2.65-1.95,-3.5-.85,-3.95 .2,-3.75 1.65,-3.8 2.05,-4.7Z',
+    fruitPath: fruit
+      .map(
+        ([px, py]) =>
+          `M${px},${py - 0.3}q.65,-.4 .62,.2-.1,.65-.6,.6-.58,-.12-.62,-.65 .08,-.48 .6,-.15Z`,
+      )
+      .join(''),
+    branch: 'M-.7,.2-.4,-2.4-1.9,-3.8-1.65,-4.1 .05,-3.1 1.1,-4.1 1.45,-3.85 .5,-2.45 .6,.15Z',
+  });
 }
 
 export function svgBeeFarm(x: number, y: number, c: AssetColors, _v: number): string {
+  const box = farmMaterial(c.beeFarm, c);
+  const roof = farmMaterial(c.roofB, c);
   return (
     `<g transform="translate(${x},${y})">` +
-    `<rect x="-1.5" y="-2.5" width="3" height="2.5" fill="${c.beeFarm}"/>` +
-    `<rect x="-1.5" y="-2.5" width="3" height="0.8" fill="${c.beeFarm}" stroke="${c.trunk}" stroke-width="0.2"/>` +
-    `<rect x="-1.5" y="-1.7" width="3" height="0.8" fill="${c.beeFarm}" stroke="${c.trunk}" stroke-width="0.2"/>` +
-    `<polygon points="-1.5,-2.5 0,-3.5 1.5,-2.5" fill="${c.roofB}"/>` +
-    `</g>`
+    `<ellipse cx=".3" cy=".4" rx="2.4" ry=".4" fill="${c.shadow}" opacity=".13"/>` +
+    `<path d="M-1.7,-.5h.4v1h-.4ZM1.45,-.65h.4v.85h-.4Z" fill="${c.trunk}"/>` +
+    `<path d="M-1.9,-3.2 .1,-2.6 .1,.2-1.9,-.4Z" fill="${box.base}"/>` +
+    `<path d="M.1,-2.6 2.05,-3.25v2.85L.1,.2Z" fill="${box.shade}"/>` +
+    `<path d="M-2.3,-3.25-.25,-4.55 2.4,-3.55 .1,-2.5Z" fill="${roof.base}"/>` +
+    `<path d="M-2.3,-3.25-.25,-4.55 .1,-2.5Z" fill="${roof.light}"/>` +
+    `<path d="M.1,-2.5 2.4,-3.55v.3L.1,-2.2-2.3,-3v-.25Z" fill="${roof.shade}"/>` +
+    `<path d="M-1.9,-2.3 .1,-1.65 2.05,-2.3M-1.9,-1.35 .1,-.7 2.05,-1.35" stroke="${c.trunk}" stroke-width=".15" fill="none"/>` +
+    `<path d="M-1.65,-2.95-.2,-2.5v.23l-1.45,-.45ZM-1.65,-2-.2,-1.55v.23l-1.45,-.45Z" fill="${box.light}"/>` +
+    `<path d="M-.95,-.95-.3,-.75v.4l-.65,-.2Z" fill="${c.trunk}"/>` +
+    `<path d="M-1.45,-.6-.15,-.2-.55,.1-1.85,-.3Z" fill="${box.light}"/></g>`
   );
 }
 
 export function svgPumpkin(x: number, y: number, c: AssetColors, _v: number): string {
+  const rind = farmMaterial(c.pumpkin, c);
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="-0.8" rx="1.5" ry="1" fill="${c.pumpkin}"/>` +
-    `<ellipse cx="-0.5" cy="-0.8" rx="0.8" ry="1" fill="${c.pumpkin}" opacity="0.6"/>` +
-    `<ellipse cx="0.5" cy="-0.8" rx="0.8" ry="1" fill="${c.pumpkin}" opacity="0.6"/>` +
-    `<line x1="0" y1="-1.8" x2="0.3" y2="-2.3" stroke="${c.pine}" stroke-width="0.3"/>` +
-    `</g>`
+    `<ellipse cx=".3" cy=".35" rx="2.2" ry=".45" fill="${c.shadow}" opacity=".13"/>` +
+    `<path d="M-1.7,-.1Q-2.75,-.8-2,-1.85-1.55,-2.55-.7,-2.2 .05,-2.65 .7,-2.2 1.7,-2.6 2.15,-1.7 2.9,-.35 1.5,.2 .5,.65-.05,.35-.85,.7-1.7,-.1Z" fill="${rind.base}"/>` +
+    `<path d="M.7,-2.2Q2,-1.45 1.5,.2 2.9,-.35 2.15,-1.7 1.7,-2.6 .7,-2.2Z" fill="${rind.shade}"/>` +
+    `<path d="M-.7,-2.2Q-1.7,-2.3-1.8,-1.1-1.95,-.55-1.35,-.15-1.5,-1.5-.4,-2.15ZM-.05,-2.25Q-.75,-1.25-.35,.3 .2,.5 .5,.25 .05,-1.15 .35,-2.25Z" fill="${rind.light}"/>` +
+    `<path d="M-.05,-2.1-.15,-2.9 .3,-3.25 .55,-3.1 .25,-2.8 .35,-2.15Z" fill="${c.trunk}"/>` +
+    `<path d="M.25,-2.8Q1.15,-3.5 1.7,-2.65 .95,-2.35 .25,-2.8Z" fill="${c.pine}"/>` +
+    `<path d="M.4,-2.85q1.7,-.8 1.8,.05" stroke="${c.pine}" stroke-width=".15" fill="none"/></g>`
   );
 }

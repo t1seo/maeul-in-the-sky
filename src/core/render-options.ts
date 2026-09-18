@@ -3,6 +3,7 @@ import type { VillagePreset } from './presets.js';
 export type MotionMode = 'full' | 'subtle' | 'off';
 export type TerrainLayout = 'banner' | 'card';
 export type VillageStyle = 'classic' | 'korean';
+export type ArtStyle = 'miniature' | 'pixel';
 export type Hemisphere = 'north' | 'south';
 export type NormalizationOptions =
   { readonly kind: 'relative' } | { readonly kind: 'fixed'; readonly maxCount: number };
@@ -15,6 +16,7 @@ export type ResolvedRenderSettings = {
   readonly motion: MotionMode;
   readonly layout: TerrainLayout;
   readonly style: VillageStyle;
+  readonly artStyle: ArtStyle;
   readonly normalization: NormalizationOptions;
   readonly layoutSeed?: string;
 };

@@ -195,4 +195,13 @@ export const ASSET_BOUNDS: Readonly<Record<AssetType, AssetBounds>> = {
   pavilion: { x: -9, y: -15, width: 18, height: 19 },
   stoneWall: { x: -9, y: -8, width: 18, height: 15 },
   onggi: { x: -7, y: -8, width: 14, height: 12 },
+  choga: { x: -10, y: -13, width: 20, height: 17 },
+  jangseung: { x: -7, y: -16, width: 14, height: 19 },
+  sotdae: { x: -8, y: -17, width: 16, height: 20 },
+  riceTerrace: { x: -10, y: -8, width: 20, height: 15 },
+  koreanWatermill: { x: -12, y: -15, width: 24, height: 21 },
+  hanokGate: { x: -11, y: -17, width: 22, height: 22 },
+  kimchiGarden: { x: -9, y: -8, width: 18, height: 13 },
+  stoneBridge: { x: -11, y: -11, width: 22, height: 17 },
+  hanokEstate: { x: -12, y: -20, width: 24, height: 25 },
 };

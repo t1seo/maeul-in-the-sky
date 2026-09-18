@@ -13,13 +13,14 @@ export function terrainMetadata(scene: TerrainScene): TerrainMetadata {
   };
   const assets = byDate(scene.placements);
   const wonders = byDate(scene.wonders);
+  const rewards = byDate(scene.rewards ?? []);
   const span =
     scene.fromDate && scene.toDate
       ? Math.round((Date.parse(scene.toDate) - Date.parse(scene.fromDate)) / 86400000) + 1
       : 0;
   return {
     schemaVersion: 1,
-    layoutVersion: 1,
+    layoutVersion: scene.layoutVersion,
     username: scene.username,
     year: scene.year,
     fromDate: scene.fromDate,
@@ -36,6 +37,7 @@ export function terrainMetadata(scene: TerrainScene): TerrainMetadata {
       week: cell.week,
       day: cell.day,
       level100: cell.level100,
+      ...(cell.rewardTier === undefined ? {} : { rewardTier: cell.rewardTier }),
       biome: biomes.get(`${cell.week},${cell.day}`) ?? {
         isRiver: false,
         isPond: false,
@@ -44,9 +46,11 @@ export function terrainMetadata(scene: TerrainScene): TerrainMetadata {
       },
       assetIds: assets.get(cell.date) ?? [],
       wonderIds: wonders.get(cell.date) ?? [],
+      rewardIds: rewards.get(cell.date) ?? [],
     })),
     placements: scene.placements,
     wonders: scene.wonders,
+    rewards: scene.rewards ?? [],
     neighborhoodPaths: scene.neighborhoodPaths,
   };
 }

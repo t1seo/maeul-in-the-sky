@@ -3,6 +3,29 @@ import { readmeDocument, workflowDocument } from '../../src/demo/setup.js';
 import { settingsFixture } from './fixtures.js';
 
 describe('C06 secure setup exports', () => {
+  it.each([
+    ['classic', 'miniature'],
+    ['classic', 'pixel'],
+    ['korean', 'miniature'],
+    ['korean', 'pixel'],
+  ] as const)('exports %s culture and %s art as separate workflow inputs', (style, artStyle) => {
+    // Given: independently chosen culture and art settings.
+    const document = settingsFixture();
+
+    // When: the setup workflow is generated.
+    const result = workflowDocument({
+      ...document,
+      settings: { ...document.settings, style, artStyle },
+    });
+
+    // Then: the action receives both choices under their supported input names.
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.content).toContain(`village_style: "${style}"`);
+    expect(result.content).toContain(`art_style: "${artStyle}"`);
+    expect(result.content).toContain('uses: t1seo/maeul-in-the-sky@main');
+  });
+
   it('quotes exact scalar content when a title contains YAML and HTML syntax', () => {
     const document = settingsFixture('A: "B" & <C>\nnext: \'line\'');
     const result = workflowDocument(document);

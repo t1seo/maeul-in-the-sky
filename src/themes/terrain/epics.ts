@@ -2,7 +2,12 @@ export type { EpicTier, EpicBuildingType, PlacedEpicBuilding } from './epics/typ
 export { TIER_CONFIG, EPIC_BUILDINGS } from './epics/definitions.js';
 export { EPIC_RENDERERS } from './epics/renderers.js';
 export { selectEpicBuildings } from './epics/selection.js';
-export { renderEpicBuildings, renderEpicGlowDefs, renderEpicCSS } from './epics/rendering.js';
+export {
+  renderCatalogEpic,
+  renderEpicBuildings,
+  renderEpicGlowDefs,
+  renderEpicCSS,
+} from './epics/rendering.js';
 export {
   EPIC_CATALOG,
   EPIC_CATALOG_COUNTS,

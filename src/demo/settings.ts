@@ -18,6 +18,7 @@ export function readForm(preset: string): SettingsV1 {
       motion: select('motion').value,
       layout: select('layout').value,
       style: select('style').value,
+      artStyle: select('art-style').value,
       normalization:
         select('normalization').value === 'fixed'
           ? { kind: 'fixed', maxCount: Number(input('max-count').value) }
@@ -38,6 +39,7 @@ export function writeForm(document: SettingsV1): void {
   select('motion').value = settings.motion;
   select('layout').value = settings.layout;
   select('style').value = settings.style;
+  select('art-style').value = settings.artStyle;
   select('normalization').value = settings.normalization.kind;
   if (settings.normalization.kind === 'fixed') {
     input('max-count').value = String(settings.normalization.maxCount);

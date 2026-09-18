@@ -25,6 +25,7 @@
     "action.yml"
   ],
   "scripts": {
+    "prebuild": "npm run check:pixel",
     "build": "tsup && npm run build:demo && tsx scripts/package-runtime-assets.ts",
     "build:demo": "tsx scripts/build-demo.ts",
     "dev": "tsup --watch",
@@ -33,7 +34,9 @@
     "test:artifact": "npm run build && tsx scripts/smoke-package.ts",
     "test:browser": "playwright test",
     "test:browser:update": "MAEUL_VISUAL_BASELINE=1 playwright test tests/visual/static.spec.ts --project=chromium-desktop --update-snapshots",
-    "generate:demo": "tsx scripts/generate-demo.ts && npm run build:demo",
+    "generate:demo": "npm run check:pixel && tsx scripts/generate-demo.ts && npm run build:demo",
+    "generate:pixel": "tsx scripts/pixel/generate.ts",
+    "check:pixel": "tsx scripts/pixel/generate.ts --check",
     "generate:catalog": "tsx scripts/generate-catalog.ts docs/demo/catalog",
     "check:catalog": "tsx scripts/catalog/check-generated.ts docs/demo/catalog",
     "benchmark": "tsx scripts/benchmark/render.ts",

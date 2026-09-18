@@ -100,7 +100,7 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
   <h1>Density Comparison (1-10)</h1>
-  <p class="subtitle">Same contribution data (${data.stats.total} contributions), only density changes. Buildings appear at level 79+.</p>
+  <p class="subtitle">Same contribution data (${data.stats.total} contributions), only density changes. Daily growth follows contribution counts; density varies extra scenery where space allows.</p>
   ${htmlParts.join('\n')}
 </body>
 </html>`;

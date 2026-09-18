@@ -5,6 +5,7 @@ import { buildCatalogRecords, countCatalogFamilies } from '../../scripts/catalog
 import { renderCatalogPage } from '../../scripts/catalog/page.js';
 import { renderCatalogSprite } from '../../scripts/catalog/sprite.js';
 import { createGalleryItems } from '../../scripts/catalog/gallery-items.js';
+import { KOREAN_CATALOG_IDS } from './fixtures.js';
 
 describe('interactive catalog document', () => {
   it('C04-page: renders accessible controls and one card per registry entry', () => {
@@ -19,8 +20,11 @@ describe('interactive catalog document', () => {
     expect(html).toMatch(/<button type="button" data-mode="light"[^>]*>Light<\/button>/);
     expect(html).toContain('<label for="family-filter">Family</label>');
     expect(html).toContain('<label for="style-filter">Style</label>');
+    expect(html).toContain('<label for="art-style-filter">Art style</label>');
     expect(html).toContain('id="empty-state"');
-    expect(html.match(/data-catalog-card/g)).toHaveLength(223);
+    expect(html).toContain('<option value="miniature">Miniature</option>');
+    expect(html).toContain('<option value="pixel">Pixel village</option>');
+    expect(html.match(/data-catalog-card/g)).toHaveLength(232);
     expect(html.match(/<img\b/g)).toBeNull();
   });
 
@@ -32,9 +36,10 @@ describe('interactive catalog document', () => {
     const html = renderCatalogPage(records, countCatalogFamilies(records));
 
     // Then
-    expect(html).toContain('<dt>Ordinary</dt><dd><strong>193</strong>');
+    expect(html).toContain('<dt>Ordinary</dt><dd><strong>202</strong>');
     expect(html).toContain('<dt>Wonders</dt><dd><strong>30</strong>');
-    for (const id of ['hanok', 'pavilion', 'stoneWall', 'onggi']) {
+    expect(html).toContain('<dt>Korean originals</dt><dd><strong>13</strong>');
+    for (const id of KOREAN_CATALOG_IDS) {
       expect(html).toContain(`data-catalog-id="${id}"`);
     }
   });
@@ -50,8 +55,8 @@ describe('catalog artwork sprite', () => {
     const light = renderCatalogSprite(items, 'light');
 
     // Then
-    expect(dark.match(/<g id="(?:asset|wonder)-/g)).toHaveLength(223);
-    expect(light.match(/<g id="(?:asset|wonder)-/g)).toHaveLength(223);
+    expect(dark.match(/<g id="(?:asset|wonder)-/g)).toHaveLength(232);
+    expect(light.match(/<g id="(?:asset|wonder)-/g)).toHaveLength(232);
     expect(dark).not.toMatch(/<animate(?:Transform|Motion)?\b/);
     expect(light).not.toMatch(/<animate(?:Transform|Motion)?\b/);
     expect(dark).toContain('id="asset-hanok"');

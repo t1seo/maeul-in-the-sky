@@ -1,5 +1,6 @@
 import { ASSET_CATALOG, EPIC_CATALOG } from '../browser.js';
 import type { TerrainCellMetadata, TerrainMetadata } from '../core/scene-types.js';
+import { DAILY_REWARD_MINIMUMS } from '../themes/terrain/assets/progression.js';
 
 export function describeDay(cell: TerrainCellMetadata, metadata: TerrainMetadata): string {
   const biome = cell.biome.isRiver
@@ -26,7 +27,13 @@ export function describeDay(cell: TerrainCellMetadata, metadata: TerrainMetadata
       }),
     ),
   ];
-  return `${cell.date} · ${cell.count.toLocaleString()} contribution${cell.count === 1 ? '' : 's'} ${biome}${names.length ? ` · ${names.join(', ')}` : ''}.`;
+  const reward =
+    cell.rewardTier === undefined
+      ? ''
+      : cell.rewardTier === 0
+        ? ' · No daily reward'
+        : ` · Daily reward ${cell.rewardTier}/5 (${DAILY_REWARD_MINIMUMS[cell.rewardTier]}+ contributions)`;
+  return `${cell.date} · ${cell.count.toLocaleString()} contribution${cell.count === 1 ? '' : 's'} ${biome}${reward}${names.length ? ` · ${names.join(', ')}` : ''}.`;
 }
 
 export function showDay(
@@ -39,4 +46,6 @@ export function showDay(
   target.dataset.week = String(cell.week);
   target.dataset.day = String(cell.day);
   target.dataset.count = String(cell.count);
+  if (cell.rewardTier === undefined) delete target.dataset.rewardTier;
+  else target.dataset.rewardTier = String(cell.rewardTier);
 }

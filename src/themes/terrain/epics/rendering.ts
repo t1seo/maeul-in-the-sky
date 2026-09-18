@@ -1,9 +1,21 @@
 import { escapeXml } from '../../../core/svg.js';
 import { motionMarkup, motionId } from '../../../core/animation.js';
 import type { ColorMode } from '../../../core/types.js';
-import type { TerrainPalette100 } from '../palette.js';
-import type { PlacedEpicBuilding } from './types.js';
+import type { AssetColors, TerrainPalette100 } from '../palette.js';
+import type { EpicBuildingType, PlacedEpicBuilding } from './types.js';
 import { EPIC_RENDERERS } from './renderers.js';
+import type { ArtStyle } from '../../../core/render-options.js';
+import { renderPixelAsset } from '../pixel/render.js';
+
+export function renderCatalogEpic(
+  type: EpicBuildingType,
+  colors: AssetColors,
+  artStyle: ArtStyle = 'miniature',
+): string {
+  return artStyle === 'pixel'
+    ? renderPixelAsset(type, 0, 0, colors)
+    : EPIC_RENDERERS[type](0, 0, colors);
+}
 
 export function renderEpicGlowDefs(mode: ColorMode): string {
   const tiers: { id: string; color: string; darkOuter: number; lightOuter: number }[] = [
@@ -37,6 +49,7 @@ export function renderEpicCSS(): string {
 export function renderEpicBuildings(
   placed: PlacedEpicBuilding[],
   weekPalettes: TerrainPalette100[],
+  artStyle: ArtStyle = 'miniature',
 ): string {
   if (placed.length === 0) return '';
 
@@ -47,9 +60,15 @@ export function renderEpicBuildings(
     const renderer = EPIC_RENDERERS[epic.type];
 
     const glowId = `epic-glow-${epic.tier}`;
-    const glow = `<ellipse cx="${epic.cx}" cy="${epic.cy}" rx="8" ry="4" fill="url(#${motionId(glowId)})" opacity="0.6"/>`;
+    const glow =
+      artStyle === 'pixel'
+        ? ''
+        : `<ellipse cx="${epic.cx}" cy="${epic.cy}" rx="8" ry="4" fill="url(#${motionId(glowId)})" opacity="0.6"/>`;
 
-    const building = renderer(epic.cx, epic.cy, c);
+    const building =
+      artStyle === 'pixel'
+        ? renderPixelAsset(epic.type, epic.cx, epic.cy, c)
+        : renderer(epic.cx, epic.cy, c);
     return `<g data-catalog-id="${epic.type}" data-date="${escapeXml(epic.date ?? '')}" data-wonder-id="${escapeXml(epic.id ?? `wonder:${epic.week},${epic.day}`)}">${glow}${building}</g>`;
   });
 

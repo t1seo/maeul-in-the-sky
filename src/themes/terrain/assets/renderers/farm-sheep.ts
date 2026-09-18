@@ -1,150 +1,65 @@
 import type { AssetColors } from '../../palette.js';
+import { farmMaterial } from './farm-art-material.js';
 
 export function svgSheep(x: number, y: number, c: AssetColors, v: number): string {
-  // Fluffy sheep with clear wool body and dark face/legs
-  if (v === 1) {
-    // Grazing variant
-    return (
-      `<g transform="translate(${x},${y})">` +
-      // Shadow
-      `<ellipse cx="0" cy="-0.2" rx="2" ry="0.5" fill="${c.shadow}" opacity="0.15"/>` +
-      // Wool body (fluffy cloud shape)
-      `<ellipse cx="0" cy="-2" rx="2.2" ry="1.4" fill="${c.sheep}"/>` +
-      `<circle cx="-1.3" cy="-2.3" r="1" fill="${c.sheep}"/>` +
-      `<circle cx="1.3" cy="-2.3" r="1" fill="${c.sheep}"/>` +
-      `<circle cx="0" cy="-2.8" r="0.9" fill="${c.sheep}"/>` +
-      // Dark face (bent down grazing)
-      `<ellipse cx="-1.8" cy="-1.2" rx="0.7" ry="0.5" fill="${c.sheepHead}"/>` +
-      // Ears
-      `<ellipse cx="-1.3" cy="-1.8" rx="0.25" ry="0.4" fill="${c.sheepHead}"/>` +
-      // Legs (dark, sturdy)
-      `<rect x="-1.1" y="-0.8" width="0.5" height="1" fill="${c.sheepHead}"/>` +
-      `<rect x="0.6" y="-0.8" width="0.5" height="1" fill="${c.sheepHead}"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Lying down
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-1" rx="2.5" ry="1" fill="${c.sheep}"/>` +
-      `<circle cx="-1.5" cy="-1.3" r="0.8" fill="${c.sheep}"/>` +
-      `<circle cx="1.2" cy="-1.2" r="0.7" fill="${c.sheep}"/>` +
-      `<circle cx="-2.2" cy="-1.5" r="0.6" fill="${c.sheepHead}"/>` +
-      `<circle cx="-2.4" cy="-1.6" r="0.1" fill="#222"/>` +
-      `</g>`
-    );
-  }
-  // Standing sheep - clear profile
+  const wool = farmMaterial(c.sheep, c);
+  const resting = v === 2;
+  const grazing = v === 1;
+  const body = resting
+    ? 'M-2.1,-.25Q-2.8,-.7 -2,-1.45Q-2.1,-2.2 -1.1,-2.3Q-.5,-2.95 .3,-2.4Q1.3,-2.7 1.75,-1.95Q2.8,-1.9 2.6,-.95Q3,-.25 2.1,.15L-1.7,.15Z'
+    : 'M-2.1,-1.3Q-2.7,-1.7 -2.3,-2.5Q-2.65,-3.5 -1.6,-3.7Q-1.2,-4.55 -.2,-4.1Q.7,-4.5 1.25,-3.75Q2.5,-3.8 2.5,-2.65Q3.15,-1.6 2.2,-1.2Q1.9,-.65 1,-.85Q.35,-.4 -.4,-.95Q-1.5,-.65 -2.1,-1.3Z';
+  const highlight = resting
+    ? 'M-2,-1.45Q-2.1,-2.2 -1.1,-2.3Q-.5,-2.95 .3,-2.4Q1.3,-2.7 1.75,-1.95Q.8,-1.2 -.1,-1.6Q-1.3,-1 -2,-1.45Z'
+    : 'M-2.3,-2.5Q-2.65,-3.5 -1.6,-3.7Q-1.2,-4.55 -.2,-4.1Q.7,-4.5 1.25,-3.75Q1.5,-2.8 .6,-2.7Q-.1,-2.3 -.7,-2.8Q-1.7,-2.2 -2.3,-2.5Z';
+  const head = grazing
+    ? 'M-2,-2.4Q-3,-2.5 -3.3,-1.8L-3.15,-.55Q-2.9,-.2 -2.45,-.55L-1.9,-1.6Z'
+    : resting
+      ? 'M-2,-2Q-2.5,-2.7 -3,-2.35L-3.2,-1.55Q-2.9,-1.1 -2.3,-1.45Z'
+      : 'M-1.95,-3.65Q-2.75,-4.15 -3.25,-3.65L-3.35,-2.65Q-3.15,-2.1 -2.5,-2.35L-1.95,-3.1Z';
   return (
     `<g transform="translate(${x},${y})">` +
-    // Shadow
-    `<ellipse cx="0" cy="-0.2" rx="1.8" ry="0.4" fill="${c.shadow}" opacity="0.15"/>` +
-    // Wool body
-    `<ellipse cx="0" cy="-2.2" rx="2" ry="1.3" fill="${c.sheep}"/>` +
-    `<circle cx="-1.2" cy="-2.5" r="0.9" fill="${c.sheep}"/>` +
-    `<circle cx="1" cy="-2.4" r="0.85" fill="${c.sheep}"/>` +
-    `<circle cx="0" cy="-3" r="0.8" fill="${c.sheep}"/>` +
-    // Dark head
-    `<ellipse cx="-2" cy="-2.8" rx="0.7" ry="0.55" fill="${c.sheepHead}"/>` +
-    // Eye
-    `<circle cx="-2.1" cy="-2.9" r="0.12" fill="#222"/>` +
-    // Ears
-    `<ellipse cx="-1.5" cy="-3.3" rx="0.2" ry="0.35" fill="${c.sheepHead}" transform="rotate(-15 -1.5 -3.3)"/>` +
-    // Four dark legs
-    `<rect x="-1.2" y="-1" width="0.45" height="1.2" fill="${c.sheepHead}"/>` +
-    `<rect x="-0.4" y="-1" width="0.45" height="1.2" fill="${c.sheepHead}"/>` +
-    `<rect x="0.4" y="-1" width="0.45" height="1.2" fill="${c.sheepHead}"/>` +
-    `<rect x="1" y="-1" width="0.45" height="1.2" fill="${c.sheepHead}"/>` +
-    `</g>`
+    `<ellipse cx=".35" cy=".35" rx="2.6" ry=".5" fill="${c.shadow}" opacity=".14"/>` +
+    (resting
+      ? ''
+      : `<path d="M-1.6,-1.65h.45V.15h-.55ZM.8,-1.6h.45V.1H.65Z" fill="${c.sheepHead}"/>`) +
+    `<path d="${body}" fill="${wool.base}"/>` +
+    `<path d="${resting ? 'M-.5,-.4Q1.3,-.5 2.6,-.95Q3,-.25 2.1,.15H-1.7Z' : 'M.7,-1.6Q2.1,-1.6 2.5,-2.65Q3.15,-1.6 2.2,-1.2Q1.9,-.65 1,-.85Q.35,-.4 -.4,-.95Z'}" fill="${wool.shade}"/>` +
+    `<path d="${highlight}" fill="${wool.light}"/>` +
+    (resting
+      ? ''
+      : `<path d="M-1.05,-1.2h.5V.45h-.6ZM1.6,-1.15h.5V.45h-.6Z" fill="${c.sheepHead}"/>`) +
+    `<path d="${head}" fill="${c.sheepHead}"/>` +
+    `<path d="${grazing ? 'M-2.5,-2.2Q-3,-2.8 -3.55,-2.4L-2.8,-1.85Z' : resting ? 'M-2.4,-2.1Q-1.6,-2.65 -1.55,-1.95L-2.2,-1.85Z' : 'M-2.6,-3.75Q-2,-4.5 -1.7,-3.9L-2.2,-3.4Z'}" fill="${c.sheepHead}"/>` +
+    `<circle cx="${grazing ? -2.95 : -2.9}" cy="${grazing ? -1.65 : resting ? -2 : -3.25}" r=".12" fill="${wool.light}"/></g>`
   );
 }
 
 export function svgCow(x: number, y: number, c: AssetColors, v: number): string {
-  // Large cow with distinct body, spots, head with horns, and 4 legs
-  if (v === 1) {
-    // Right-facing grazing
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-0.2" rx="2.5" ry="0.5" fill="${c.shadow}" opacity="0.15"/>` +
-      // Body
-      `<ellipse cx="0" cy="-2.2" rx="2.8" ry="1.6" fill="${c.cow}"/>` +
-      // Spots
-      `<ellipse cx="-0.5" cy="-2.5" rx="0.9" ry="0.7" fill="${c.cowSpot}"/>` +
-      `<ellipse cx="1" cy="-1.8" rx="0.7" ry="0.5" fill="${c.cowSpot}"/>` +
-      // Head (facing right, down)
-      `<ellipse cx="2.5" cy="-1.5" rx="0.9" ry="0.7" fill="${c.cow}"/>` +
-      `<ellipse cx="3" cy="-1.3" rx="0.5" ry="0.4" fill="${c.cowSpot}" opacity="0.6"/>` +
-      // Horns
-      `<line x1="2.2" y1="-2.1" x2="1.8" y2="-2.8" stroke="${c.fence}" stroke-width="0.3"/>` +
-      `<line x1="2.8" y1="-2.1" x2="3.2" y2="-2.7" stroke="${c.fence}" stroke-width="0.3"/>` +
-      // Eye
-      `<circle cx="2.8" cy="-1.6" r="0.12" fill="#222"/>` +
-      // Legs
-      `<rect x="-1.5" y="-0.8" width="0.5" height="1" fill="${c.cow}"/>` +
-      `<rect x="-0.5" y="-0.8" width="0.5" height="1" fill="${c.cow}"/>` +
-      `<rect x="0.5" y="-0.8" width="0.5" height="1" fill="${c.cow}"/>` +
-      `<rect x="1.3" y="-0.8" width="0.5" height="1" fill="${c.cow}"/>` +
-      // Tail
-      `<path d="M-2.8,-2.5 Q-3.5,-2 -3.2,-1" stroke="${c.cowSpot}" fill="none" stroke-width="0.25"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Side profile
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-0.2" rx="2.5" ry="0.5" fill="${c.shadow}" opacity="0.15"/>` +
-      // Body
-      `<ellipse cx="0" cy="-2.2" rx="2.8" ry="1.6" fill="${c.cow}"/>` +
-      // Large spot
-      `<ellipse cx="0.3" cy="-2.3" rx="1.2" ry="0.9" fill="${c.cowSpot}"/>` +
-      // Head
-      `<ellipse cx="-2.5" cy="-2.8" rx="0.9" ry="0.7" fill="${c.cow}"/>` +
-      // Muzzle
-      `<ellipse cx="-3.2" cy="-2.6" rx="0.5" ry="0.4" fill="${c.cowSpot}" opacity="0.5"/>` +
-      // Horns
-      `<line x1="-2.8" y1="-3.4" x2="-3.2" y2="-4" stroke="${c.fence}" stroke-width="0.3"/>` +
-      `<line x1="-2.2" y1="-3.4" x2="-1.8" y2="-4" stroke="${c.fence}" stroke-width="0.3"/>` +
-      // Eye
-      `<circle cx="-2.3" cy="-3" r="0.12" fill="#222"/>` +
-      // Legs
-      `<rect x="-1.3" y="-0.8" width="0.5" height="1" fill="${c.cow}"/>` +
-      `<rect x="-0.3" y="-0.8" width="0.5" height="1" fill="${c.cow}"/>` +
-      `<rect x="0.7" y="-0.8" width="0.5" height="1" fill="${c.cow}"/>` +
-      `<rect x="1.5" y="-0.8" width="0.5" height="1" fill="${c.cow}"/>` +
-      `</g>`
-    );
-  }
-  // Default: classic left-facing cow
+  const coat = farmMaterial(c.cow, c);
+  const grazing = v === 1;
+  const profile = v === 2;
+  const body = profile
+    ? 'M-2.9,-2.5Q-2.6,-4.3 -.9,-4L1.8,-3.8Q3.1,-3.3 2.8,-1.8L2,-.95 -.9,-1.15 -2.5,-1.5Z'
+    : 'M-2.65,-2.6Q-2.8,-4 -.8,-4.15L1.8,-3.95Q3.1,-3.65 2.9,-2L2.2,-1.05 -.4,-.95 -2.1,-1.4Z';
+  const head = grazing
+    ? 'M2.15,-2.9Q3,-3 3.3,-2.15L4,-1.25Q4.15,-.55 3.35,-.4L2.65,-.85 2.2,-1.9Z'
+    : 'M-2,-3.75Q-2.55,-4.7 -3.3,-4.05L-3.8,-3.15 -4,-2.8Q-4.05,-2.2 -3.2,-2.2L-2.4,-2.8Z';
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="-0.2" rx="2.5" ry="0.5" fill="${c.shadow}" opacity="0.15"/>` +
-    // Body
-    `<ellipse cx="0" cy="-2.2" rx="2.8" ry="1.6" fill="${c.cow}"/>` +
-    // Spots
-    `<ellipse cx="0.8" cy="-2.5" rx="1" ry="0.7" fill="${c.cowSpot}"/>` +
-    `<ellipse cx="-0.8" cy="-1.7" rx="0.6" ry="0.5" fill="${c.cowSpot}"/>` +
-    // Head
-    `<ellipse cx="-2.5" cy="-2.8" rx="0.9" ry="0.7" fill="${c.cow}"/>` +
-    `<ellipse cx="-3" cy="-2.6" rx="0.45" ry="0.35" fill="${c.cowSpot}" opacity="0.5"/>` +
-    // Horns
-    `<line x1="-2.8" y1="-3.4" x2="-3.3" y2="-4" stroke="${c.fence}" stroke-width="0.3"/>` +
-    `<line x1="-2.2" y1="-3.4" x2="-1.7" y2="-4" stroke="${c.fence}" stroke-width="0.3"/>` +
-    // Ear
-    `<ellipse cx="-2" cy="-3.3" rx="0.25" ry="0.4" fill="${c.cow}"/>` +
-    // Eye
-    `<circle cx="-2.4" cy="-3" r="0.12" fill="#222"/>` +
-    // Udder hint
-    `<ellipse cx="0.5" cy="-0.9" rx="0.6" ry="0.3" fill="${c.cowSpot}" opacity="0.4"/>` +
-    // Four legs
-    `<rect x="-1.5" y="-0.8" width="0.55" height="1" fill="${c.cow}"/>` +
-    `<rect x="-0.5" y="-0.8" width="0.55" height="1" fill="${c.cow}"/>` +
-    `<rect x="0.5" y="-0.8" width="0.55" height="1" fill="${c.cow}"/>` +
-    `<rect x="1.4" y="-0.8" width="0.55" height="1" fill="${c.cow}"/>` +
-    // Tail
-    `<path d="M2.8,-2.5 Q3.5,-2 3.2,-1" stroke="${c.cowSpot}" fill="none" stroke-width="0.3"/>` +
-    `<ellipse cx="3.2" cy="-0.9" rx="0.3" ry="0.2" fill="${c.cowSpot}"/>` +
-    `</g>`
+    `<ellipse cx=".35" cy=".45" rx="3" ry=".55" fill="${c.shadow}" opacity=".15"/>` +
+    `<path d="M-1.75,-1.8h.5L-1.1,.2h-.7ZM1.05,-1.7h.5L1.9,.15h-.7Z" fill="${coat.shade}"/>` +
+    `<path d="${grazing ? 'M-2.7,-3.3Q-3.6,-2.8 -3.4,-1.6L-3.75,-.9 -3.15,-1.1Q-3,-2.75 -2.5,-2.9Z' : 'M2.6,-3.4Q3.8,-2.9 3.45,-1.6L3.9,-.8 3.15,-1Q3.2,-2.5 2.65,-2.8Z'}" fill="${c.cowSpot}"/>` +
+    `<path d="${body}" fill="${coat.base}"/>` +
+    `<path d="M-2.6,-2.7Q-2.8,-4 -.8,-4.15L1.8,-3.95Q.8,-3.15 -.45,-3.2L-1.8,-2.7Z" fill="${coat.light}"/>` +
+    `<path d="M-.1,-1.6Q2,-1.5 2.9,-2L2.2,-1.05 -.4,-.95 -2.1,-1.4Z" fill="${coat.shade}"/>` +
+    `<path d="${profile ? 'M-.8,-3.75Q1.4,-4.2 1.75,-2.9 1.55,-1.65 .15,-1.8 -.7,-2 -.8,-3.75Z' : 'M-.4,-3.8Q.3,-4.15 .65,-3.65L1.2,-3.3Q1.1,-2.35 .3,-2.45 -.4,-2.1 -.75,-2.85ZM-1.5,-2.15Q-.65,-2.15 -.8,-1.3L-1.75,-1.4Z'}" fill="${c.cowSpot}"/>` +
+    `<path d="M.5,-1.25Q1,-.4 1.55,-1.2" fill="${c.pig}"/>` +
+    `<path d="M-2.2,-1.55h.6L-1.9,.35h-.65ZM1.8,-1.4h.65L2.3,.4h-.65Z" fill="${coat.base}"/>` +
+    `<path d="M-2.6,.05h.72v.4h-.72ZM1.6,.1h.75v.35H1.6Z" fill="${c.trunk}"/>` +
+    `<path d="${head}" fill="${coat.base}"/>` +
+    `<path d="${grazing ? 'M2.45,-2.6 1.9,-3.6 2.4,-3.35 2.75,-2.7M3,-2.5 3.6,-3.3 3.55,-2.8 3.3,-2.3' : 'M-3.2,-4.05 -3.6,-4.9 -3.05,-4.6 -2.8,-4.05M-2.4,-4.05 -1.95,-4.8 -1.95,-4.2 -2.15,-3.85'}" fill="${c.fence}"/>` +
+    `<path d="${grazing ? 'M2.6,-2.3 1.95,-2.45 2.2,-1.95ZM3.1,-2.4 3.8,-2.65 3.6,-2.1Z' : 'M-2.2,-3.8 -1.4,-4 -1.8,-3.35ZM-3.3,-3.7 -3.9,-4.1 -3.8,-3.5Z'}" fill="${coat.light}"/>` +
+    `<path d="${grazing ? 'M3.2,-1.2Q4.1,-1.35 4,-.65 3.8,-.15 3.15,-.65Z' : 'M-3.7,-3Q-4.5,-2.85 -4.15,-2.35 -3.6,-1.95 -3.1,-2.5Z'}" fill="${c.pig}"/>` +
+    `<circle cx="${grazing ? 3.03 : -3.15}" cy="${grazing ? -1.9 : -3.4}" r=".14" fill="${c.trunk}"/></g>`
   );
 }

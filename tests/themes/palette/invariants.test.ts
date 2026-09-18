@@ -5,19 +5,19 @@ import {
 } from '../../../src/themes/terrain/palette.js';
 import { modes, paletteChecksum, paletteSnapshot } from './snapshot.js';
 
-const originalChecksums = {
-  dark: 'e8c27932deca2537676af29569f5e8e18b580e0eca5d648f87692947a33a5966',
-  light: 'befe26e6e219ea51baac06ef585fcd4a729c6352b5a0e75c0421a9a9bff138e2',
+const approvedChecksums = {
+  dark: 'd8621213e35fc58bdc2f55430abede071180a2ff8db2917e6cc2e0cf3897ac20',
+  light: '3698bff63e357945a2b100e78599a4a91b394700aa99314716e0e56d974d03fd',
 } as const;
 
 describe('palette compatibility', () => {
-  it.each(modes)('preserves every original %s color and height across rotations', (mode) => {
-    // Given: original output for integer, fractional, clamped, and rotated inputs.
-    // When: every supported elevation and palette field is serialized.
-    const actual = paletteChecksum(mode);
-    // Then: memoization and module extraction preserve byte-for-byte color output.
-    expect(actual).toBe(originalChecksums[mode]);
-  });
+  it.each(modes)(
+    'preserves approved %s seasonal materials and heights across rotations',
+    (mode) => {
+      const actual = paletteChecksum(mode);
+      expect(actual).toBe(approvedChecksums[mode]);
+    },
+  );
 
   it.each(modes)('isolates mutable %s base assets between callers', (mode) => {
     // Given: independently requested base palettes.

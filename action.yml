@@ -32,7 +32,7 @@ inputs:
     description: 'Village preset (nature, balanced, or civilization; defaults to balanced)'
     required: false
   density:
-    description: 'Advanced building density override from 1-10'
+    description: 'Extra decoration mix override from 1-10'
     required: false
   config:
     description: 'Path to a versioned Maeul settings JSON file'
@@ -51,6 +51,9 @@ inputs:
     required: false
   village_style:
     description: 'Village architecture: classic or korean'
+    required: false
+  art_style:
+    description: 'Asset artwork: miniature or pixel'
     required: false
   layout_seed:
     description: 'Optional reproducible layout seed override'

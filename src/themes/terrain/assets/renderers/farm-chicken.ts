@@ -1,171 +1,61 @@
 import type { AssetColors } from '../../palette.js';
+import { farmMaterial } from './farm-art-material.js';
 
 export function svgChicken(x: number, y: number, c: AssetColors, v: number): string {
-  // Recognizable chicken with red comb, round body, and yellow beak/legs
-  if (v === 1) {
-    // Pecking (head down)
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-0.1" rx="1" ry="0.25" fill="${c.shadow}" opacity="0.1"/>` +
-      // Body
-      `<ellipse cx="0" cy="-1.3" rx="1.3" ry="1" fill="${c.chicken}"/>` +
-      // Tail feathers
-      `<path d="M1.2,-1.5 Q2,-2 1.8,-2.8 Q1.5,-2.5 1.3,-1.8" fill="${c.chicken}"/>` +
-      // Wing
-      `<ellipse cx="0.2" cy="-1.4" rx="0.7" ry="0.5" fill="${c.trunk}" opacity="0.3"/>` +
-      // Head (down, pecking)
-      `<circle cx="-1.2" cy="-0.8" r="0.55" fill="${c.chicken}"/>` +
-      // Red comb
-      `<path d="M-1.2,-1.3 Q-1,-1.7 -0.9,-1.3 Q-0.7,-1.6 -0.6,-1.2" fill="${c.flag}"/>` +
-      // Eye
-      `<circle cx="-1.1" cy="-0.85" r="0.1" fill="#222"/>` +
-      // Beak
-      `<polygon points="-1.5,-0.7 -1.9,-0.6 -1.5,-0.5" fill="${c.wheat}"/>` +
-      // Wattle
-      `<ellipse cx="-1.3" cy="-0.5" rx="0.12" ry="0.2" fill="${c.flag}"/>` +
-      // Legs
-      `<line x1="-0.3" y1="-0.3" x2="-0.4" y2="0.3" stroke="${c.wheat}" stroke-width="0.2"/>` +
-      `<line x1="0.4" y1="-0.3" x2="0.5" y2="0.3" stroke="${c.wheat}" stroke-width="0.2"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // With chicks
-    return (
-      `<g transform="translate(${x},${y})">` +
-      // Mother hen
-      `<ellipse cx="0" cy="-1.5" rx="1.4" ry="1.1" fill="${c.chicken}"/>` +
-      `<path d="M1.3,-1.8 Q2,-2.5 1.8,-3.2" fill="${c.chicken}"/>` +
-      `<circle cx="-1.2" cy="-2.2" r="0.6" fill="${c.chicken}"/>` +
-      `<path d="M-1.2,-2.8 Q-1,-3.2 -0.85,-2.8 Q-0.7,-3.1 -0.6,-2.7" fill="${c.flag}"/>` +
-      `<circle cx="-1" cy="-2.25" r="0.1" fill="#222"/>` +
-      `<polygon points="-1.7,-2.1 -2.1,-2 -1.7,-1.9" fill="${c.wheat}"/>` +
-      // Chicks (small yellow balls)
-      `<circle cx="2.2" cy="-0.5" r="0.4" fill="${c.wheat}"/>` +
-      `<circle cx="2.4" cy="-0.55" r="0.08" fill="#222"/>` +
-      `<polygon points="2.5,-0.5 2.7,-0.45 2.5,-0.4" fill="${c.flag}" opacity="0.8"/>` +
-      `<circle cx="3" cy="-0.6" r="0.35" fill="${c.wheat}"/>` +
-      `<circle cx="3.15" cy="-0.65" r="0.07" fill="#222"/>` +
-      `</g>`
-    );
-  }
-  // Default: standing chicken
+  const feather = farmMaterial(c.chicken, c);
+  const pecking = v === 1;
+  const family = v === 2;
+  const body = pecking
+    ? 'M-1.1,-1.45Q-.7,-2.8 .6,-2.55L1.5,-2.15Q2.4,-2.9 2.5,-3.6L2.8,-2.85 2.5,-2.35 2.95,-2.55Q2.5,-1 1.2,-.65 -.05,.15 -1.1,-1.45Z'
+    : 'M-1.6,-2.7Q-1.9,-3.65 -1.1,-3.9 -.25,-4.15 -.15,-3.1L.4,-2.6Q1,-2.8 1.8,-3.9L2.05,-3.15 2.65,-3.65 2.55,-2.75 2.95,-2.85Q2.5,-1.5 1.75,-.9 .4,-.2 -.65,-.85 -1.65,-1.45 -1.6,-2.7Z';
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="-0.1" rx="1" ry="0.25" fill="${c.shadow}" opacity="0.1"/>` +
-    // Body
-    `<ellipse cx="0" cy="-1.5" rx="1.3" ry="1.1" fill="${c.chicken}"/>` +
-    // Tail feathers (upward curve)
-    `<path d="M1.2,-1.8 Q1.8,-2.5 1.6,-3.3 Q1.3,-2.8 1.1,-2" fill="${c.chicken}"/>` +
-    // Wing detail
-    `<ellipse cx="0.3" cy="-1.6" rx="0.6" ry="0.45" fill="${c.trunk}" opacity="0.25"/>` +
-    // Head
-    `<circle cx="-1" cy="-2.4" r="0.65" fill="${c.chicken}"/>` +
-    // Red comb (distinctive)
-    `<path d="M-1,-3.1 Q-0.8,-3.5 -0.7,-3 Q-0.5,-3.4 -0.4,-2.9 Q-0.2,-3.2 -0.1,-2.8" fill="${c.flag}"/>` +
-    // Eye
-    `<circle cx="-0.85" cy="-2.45" r="0.12" fill="#222"/>` +
-    // Beak (yellow triangle)
-    `<polygon points="-1.6,-2.3 -2,-2.2 -1.6,-2.1" fill="${c.wheat}"/>` +
-    // Wattle (red)
-    `<ellipse cx="-1.15" cy="-2" rx="0.15" ry="0.25" fill="${c.flag}"/>` +
-    // Legs (yellow)
-    `<line x1="-0.4" y1="-0.4" x2="-0.5" y2="0.3" stroke="${c.wheat}" stroke-width="0.25"/>` +
-    `<line x1="0.4" y1="-0.4" x2="0.5" y2="0.3" stroke="${c.wheat}" stroke-width="0.25"/>` +
-    // Feet
-    `<path d="M-0.7,0.3 L-0.5,0.3 L-0.3,0.3" stroke="${c.wheat}" stroke-width="0.15" fill="none"/>` +
-    `<path d="M0.3,0.3 L0.5,0.3 L0.7,0.3" stroke="${c.wheat}" stroke-width="0.15" fill="none"/>` +
+    `<ellipse cx=".45" cy=".3" rx="1.85" ry=".4" fill="${c.shadow}" opacity=".13"/>` +
+    `<path d="M-.3,-.8-.25,.35-.8,.4M.8,-.8 1,.3 .5,.45M-.25,.35 .05,.55M1,.3 1.3,.5" stroke="${c.wheat}" stroke-width=".23" stroke-linecap="round" fill="none"/>` +
+    `<path d="${body}" fill="${feather.base}"/>` +
+    `<path d="${pecking ? 'M-.85,-1.65Q-.5,-2.7 .6,-2.55L1.5,-2.15Q.45,-1.55 -.4,-1.9Z' : 'M-1.6,-2.7Q-1.9,-3.65 -1.1,-3.9 -.25,-4.15 -.15,-3.1L.4,-2.6 -.2,-2.15Q-1.1,-2.05 -1.6,-2.7Z'}" fill="${feather.light}"/>` +
+    `<path d="M-.2,-1.95Q.9,-2.5 1.65,-1.7 1.1,-.55 -.1,-1.15L.5,-1.35Z" fill="${feather.shade}"/>` +
+    (pecking
+      ? `<path d="M-1.2,-1.8Q-2.25,-1.8 -2.2,-.85L-1.5,-.6 -.8,-1.15Z" fill="${feather.light}"/>`
+      : '') +
+    `<path d="${pecking ? 'M-2.1,-1.65l-.05,-.45 .35,.15 .15,-.35 .3,.25 .3,-.15 .2,.55Z' : 'M-1.7,-3.65l-.05,-.5 .4,.18 .2,-.55 .3,.3 .3,-.3 .3,.6 -.1,.35Z'}" fill="${c.flag}"/>` +
+    `<path d="${pecking ? 'M-2.15,-.95 -2.7,-.3 -1.85,-.65Z' : 'M-1.65,-3.25 -2.55,-2.95 -1.6,-2.75Z'}" fill="${c.wheat}"/>` +
+    `<path d="${pecking ? 'M-1.85,-.65q.45,-.1 .35,.3-.35,.2-.35,-.3Z' : 'M-1.55,-2.7q.6,-.1 .4,.5-.4,.2-.4,-.5Z'}" fill="${c.flag}"/>` +
+    `<circle cx="${pecking ? -1.85 : -1.28}" cy="${pecking ? -1.25 : -3.2}" r=".14" fill="${c.trunk}"/>` +
+    (family
+      ? `<path d="M2.2,.45l.15,-.5M3.5,.6l.15,-.45" stroke="${c.wheat}" stroke-width=".16"/><path d="M1.9,-.4Q1.85,-1 2.35,-1 2.8,-.9 2.8,-.4L3.05,-.25 2.75,-.15Q2.4,.4 1.85,.1Z M3.25,-.2Q3.1,-.8 3.65,-.75 4.15,-.7 4.1,-.2L4.35,-.05 4.05,.05Q3.75,.5 3.2,.25Z" fill="${c.wheat}"/><path d="M2.55,-.65h.14v.14h-.14ZM3.85,-.4h.14v.14h-.14Z" fill="${c.trunk}"/>`
+      : '') +
     `</g>`
   );
 }
 
 export function svgHorse(x: number, y: number, c: AssetColors, v: number): string {
-  // Elegant horse with distinct neck, mane, and four legs
-  if (v === 1) {
-    // Galloping variant
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-0.2" rx="2.5" ry="0.5" fill="${c.shadow}" opacity="0.15"/>` +
-      // Body
-      `<ellipse cx="0" cy="-2.5" rx="2.5" ry="1.4" fill="${c.horse}"/>` +
-      // Neck (arched)
-      `<path d="M-2,-2.5 Q-2.5,-3.5 -2.2,-4.5 Q-2,-5 -1.5,-5.5" fill="${c.horse}" stroke="${c.horse}" stroke-width="1.2"/>` +
-      // Head
-      `<ellipse cx="-1.2" cy="-5.8" rx="0.9" ry="0.5" fill="${c.horse}"/>` +
-      // Mane
-      `<path d="M-2,-3.5 Q-2.5,-4 -2.3,-4.5 Q-2,-5 -1.5,-5.3" stroke="${c.trunk}" fill="none" stroke-width="0.5"/>` +
-      // Ear
-      `<polygon points="-1.4,-6.3 -1.2,-6.8 -1,-6.3" fill="${c.horse}"/>` +
-      // Eye
-      `<circle cx="-1" cy="-5.8" r="0.12" fill="#222"/>` +
-      // Front legs (extended)
-      `<rect x="-1.5" y="-1.3" width="0.5" height="1.8" fill="${c.horse}" transform="rotate(-20 -1.5 -1.3)"/>` +
-      `<rect x="-0.5" y="-1.3" width="0.5" height="1.5" fill="${c.horse}" transform="rotate(15 -0.5 -1.3)"/>` +
-      // Back legs
-      `<rect x="1" y="-1.3" width="0.5" height="1.5" fill="${c.horse}"/>` +
-      `<rect x="1.8" y="-1.3" width="0.5" height="1.8" fill="${c.horse}" transform="rotate(-10 1.8 -1.3)"/>` +
-      // Tail
-      `<path d="M2.5,-2.8 Q3.5,-2.5 3.8,-1.5 Q4,-0.5 3.5,0" stroke="${c.trunk}" fill="none" stroke-width="0.5"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Rearing
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0.5" cy="-0.2" rx="1.5" ry="0.4" fill="${c.shadow}" opacity="0.15"/>` +
-      // Body (tilted)
-      `<ellipse cx="0" cy="-3" rx="2.2" ry="1.3" fill="${c.horse}" transform="rotate(-25 0 -3)"/>` +
-      // Neck
-      `<path d="M-1.5,-3.5 Q-2,-5 -1.5,-6" fill="${c.horse}" stroke="${c.horse}" stroke-width="1.1"/>` +
-      // Head
-      `<ellipse cx="-1.2" cy="-6.5" rx="0.85" ry="0.5" fill="${c.horse}"/>` +
-      // Mane
-      `<path d="M-1.8,-4.5 Q-2.3,-5 -2,-5.8" stroke="${c.trunk}" fill="none" stroke-width="0.5"/>` +
-      // Ear
-      `<polygon points="-1.4,-7 -1.2,-7.5 -1,-7" fill="${c.horse}"/>` +
-      // Front legs (raised)
-      `<rect x="-1.2" y="-2.5" width="0.45" height="1.8" fill="${c.horse}" transform="rotate(-60 -1.2 -2.5)"/>` +
-      `<rect x="-0.3" y="-2.5" width="0.45" height="1.6" fill="${c.horse}" transform="rotate(-45 -0.3 -2.5)"/>` +
-      // Back legs
-      `<rect x="0.8" y="-1.5" width="0.5" height="1.7" fill="${c.horse}"/>` +
-      `<rect x="1.5" y="-1.5" width="0.5" height="1.7" fill="${c.horse}"/>` +
-      `</g>`
-    );
-  }
-  // Default: standing horse profile
+  const coat = farmMaterial(c.horse, c);
+  const galloping = v === 1;
+  const rearing = v === 2;
+  const body = rearing
+    ? 'M-1.55,-6.7Q-.9,-7.05 -.55,-5.95L.6,-4.2Q2.3,-3.8 2.1,-2.1L1.45,-1.25 .1,-1.6 -1.35,-3.25 -1.8,-4.8Z'
+    : 'M-2.25,-3.4 -2.2,-5.3 -1.35,-5.65Q-.85,-4.5 -.5,-4L1.65,-3.75Q2.9,-3.4 2.6,-2.1L1.85,-1.3 -.3,-1.55Q-1.6,-1.2 -2.2,-2.3Z';
+  const legs = rearing
+    ? 'M.8,-2.2 1.35,-1.4 1,.35h.7l.6,-1.85-.65,-1.2ZM-.8,-3.4-2.1,-3.6-2.9,-2.65l.5,.35 .9,-.6 1.4,.5Z'
+    : galloping
+      ? 'M-1.8,-2.1-2.7,-.75-3.65,-.3-3.4,.15-2.15,-.35-.8,-1.5ZM1.5,-2 2.6,-.85 3.6,-.35 3.85,-.7 2.9,-1.35 2,-2.7Z'
+      : 'M-1.95,-2h.65L-1.65,.35h-.65ZM1.4,-2.1l.75,.2-.3,2.25h-.65Z';
+  const headY = rearing ? -6.9 : -5.6;
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="-0.2" rx="2.2" ry="0.5" fill="${c.shadow}" opacity="0.15"/>` +
-    // Body
-    `<ellipse cx="0" cy="-2.5" rx="2.5" ry="1.4" fill="${c.horse}"/>` +
-    // Neck
-    `<path d="M-2,-2.8 Q-2.3,-4 -2,-5" fill="${c.horse}" stroke="${c.horse}" stroke-width="1.2"/>` +
-    // Head
-    `<ellipse cx="-1.6" cy="-5.5" rx="1" ry="0.55" fill="${c.horse}"/>` +
-    // Muzzle
-    `<ellipse cx="-2.4" cy="-5.3" rx="0.4" ry="0.3" fill="${c.horse}"/>` +
-    // Mane
-    `<path d="M-1.8,-3.5 Q-2.5,-4 -2.2,-4.8 Q-2,-5.3 -1.5,-5.5" stroke="${c.trunk}" fill="none" stroke-width="0.6"/>` +
-    // Ears
-    `<polygon points="-1.8,-6 -1.6,-6.5 -1.4,-6" fill="${c.horse}"/>` +
-    `<polygon points="-1.3,-6 -1.1,-6.4 -0.9,-6" fill="${c.horse}"/>` +
-    // Eye
-    `<circle cx="-1.4" cy="-5.5" r="0.12" fill="#222"/>` +
-    // Nostril
-    `<circle cx="-2.5" cy="-5.2" r="0.08" fill="#333"/>` +
-    // Four legs
-    `<rect x="-1.4" y="-1.2" width="0.5" height="1.4" fill="${c.horse}"/>` +
-    `<rect x="-0.5" y="-1.2" width="0.5" height="1.4" fill="${c.horse}"/>` +
-    `<rect x="0.6" y="-1.2" width="0.5" height="1.4" fill="${c.horse}"/>` +
-    `<rect x="1.5" y="-1.2" width="0.5" height="1.4" fill="${c.horse}"/>` +
-    // Hooves
-    `<rect x="-1.45" y="0" width="0.55" height="0.25" fill="${c.trunk}"/>` +
-    `<rect x="-0.55" y="0" width="0.55" height="0.25" fill="${c.trunk}"/>` +
-    `<rect x="0.55" y="0" width="0.55" height="0.25" fill="${c.trunk}"/>` +
-    `<rect x="1.45" y="0" width="0.55" height="0.25" fill="${c.trunk}"/>` +
-    // Tail
-    `<path d="M2.5,-2.8 Q3.2,-2.5 3,-1.5 Q2.8,-0.5 3.2,0" stroke="${c.trunk}" fill="none" stroke-width="0.6"/>` +
-    `</g>`
+    `<ellipse cx=".45" cy=".5" rx="${rearing ? 1.65 : 2.8}" ry=".45" fill="${c.shadow}" opacity=".14"/>` +
+    `<path d="${rearing ? 'M1.3,-2.5 2.5,-.15 2.1,.45 1.7,.3 1.85,-.15 .7,-1.4ZM-1,-3.1 -1.8,-2.45 -2.5,-2.1 -2.6,-2.55 -1.85,-3.35Z' : galloping ? 'M-1,-2.1 -.8,-.6 .2,.3 .55,0 -.2,-.9 -.1,-2.05ZM1,-2 1.9,-.25 2.8,-.05 2.9,-.45 2.3,-.7 1.8,-2.3Z' : 'M-.85,-2h.5L-.2,.1h-.55ZM2,-2h.45L2.7,.15h-.6Z'}" fill="${coat.shade}"/>` +
+    `<path d="${rearing ? 'M1.85,-3.1Q3,-2.7 3.45,-1.35L2.9,-1.6Q2.95,-.9 3.2,-.5 1.9,-1.1 1.65,-2.5Z' : galloping ? 'M2.15,-3.65Q3.35,-3.8 4.35,-2.8L3.6,-2.85 4.6,-2.1Q3.05,-2.1 2.3,-2.8Z' : 'M2.2,-3.6Q3.4,-3.45 3.05,-1.45L3.4,-.2Q2.15,-.7 2.6,-2.3L2.1,-2.7Z'}" fill="${c.trunk}"/>` +
+    `<path d="${body}" fill="${coat.base}"/>` +
+    `<path d="${rearing ? 'M-1.55,-6.7Q-.9,-7.05 -.55,-5.95L.6,-4.2 .15,-3.9Q-.85,-4.35 -1.55,-6.7Z' : 'M-2.25,-3.4-2.2,-5.3-1.35,-5.65Q-.85,-4.5 -.5,-4L1.65,-3.75Q1.1,-3.1 -.4,-3.2L-1.35,-2.9Z'}" fill="${coat.light}"/>` +
+    `<path d="${legs}" fill="${coat.base}"/>` +
+    `<path d="${rearing ? 'M-.95,-6.9Q-1.9,-6.25 -1.8,-4.8l.35,1.2 .4,-.75 .1,-1.15 .05,-.75 .3,-.7Z' : 'M-1.3,-5.75Q-2.4,-5.5 -2.65,-4.2L-2.5,-2.95 -2.1,-3.35 -2,-4.5 -1.7,-4.7Z'}" fill="${c.trunk}"/>` +
+    `<path d="M-1.9,${headY - 0.5}Q-1.15,${headY - 0.8}-.9,${headY - 0.1}L-2.1,${headY + 0.65}Q-3.05,${headY + 0.85}-3.1,${headY + 0.3}L-2.5,${headY - 0.1}Z" fill="${coat.base}"/>` +
+    `<path d="M-2.15,${headY - 0.45}l-.1,-.9 .5,.65M-1.55,${headY - 0.5}l.2,-.8 .2,.9" fill="${coat.light}"/>` +
+    `<path d="M-2.15,${headY - 0.35}l.3,.2-.55,.75-.3,-.15Z" fill="${c.fence}"/>` +
+    `<circle cx="-1.75" cy="${headY - 0.05}" r=".14" fill="${c.trunk}"/>` +
+    `<path d="M-2.95,${headY + 0.35}l.35,-.05" stroke="${c.trunk}" stroke-width=".16"/>` +
+    `<path d="${rearing ? 'M.95,.05h.8v.4h-.8Z' : galloping ? 'M-3.65,-.3l.35,-.15 .15,.35-.25,.25ZM3.6,-.35l.25,-.35 .25,.15-.2,.4Z' : 'M-2.35,.05h.8v.4h-.8ZM1.15,.05h.75v.4h-.75Z'}" fill="${c.trunk}"/></g>`
   );
 }

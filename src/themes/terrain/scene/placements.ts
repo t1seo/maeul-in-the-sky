@@ -5,11 +5,13 @@ import { hash, seededRandom } from '../../../utils/math.js';
 import { dateSeasonZone } from './season.js';
 import type { ResolvedRenderSettings } from '../../../core/render-options.js';
 import type { BiomeContext } from '../biomes.js';
+import { getDailyRewardTier } from '../assets/progression.js';
 
 export function assetScenePlacement(placed: PlacedAsset): ScenePlacement {
   const bounds = getAssetCatalogEntry(placed.type).bounds;
   const cx = placed.cx + placed.ox;
   const cy = placed.cy + placed.oy;
+  const rewardTier = getDailyRewardTier(placed.cell.count ?? 0);
   return {
     id: placed.id,
     catalogId: placed.catalogId,
@@ -22,6 +24,7 @@ export function assetScenePlacement(placed: PlacedAsset): ScenePlacement {
     drawOrder: placed.cell.week + placed.cell.day,
     variant: placed.variant,
     animated: placed.animated,
+    ...(rewardTier !== 0 && placed.id.endsWith(':0') ? { primary: true, rewardTier } : {}),
   };
 }
 

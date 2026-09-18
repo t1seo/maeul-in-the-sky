@@ -1,199 +1,129 @@
 import type { AssetColors } from '../../palette.js';
 
 export function svgPine(x: number, y: number, c: AssetColors, v: number): string {
-  if (v === 1) {
-    // Short/bushy variant with layered foliage
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-0.2" rx="1" ry="0.3" fill="${c.shadow}" opacity="0.15"/>` +
-      `<rect x="-0.4" y="-1.8" width="0.8" height="1.8" fill="${c.trunk}"/>` +
-      `<polygon points="0,-5.5 -3.2,-1.5 3.2,-1.5" fill="${c.bushDark}"/>` +
-      `<polygon points="0,-5.5 -2.8,-2 2.8,-2" fill="${c.pine}"/>` +
-      `<polygon points="0,-7 -2.4,-3.5 2.4,-3.5" fill="${c.bushDark}" opacity="0.9"/>` +
-      `<polygon points="0,-7 -2,-4 2,-4" fill="${c.pine}"/>` +
-      `<polygon points="0,-8 -1.2,-5.5 1.2,-5.5" fill="${c.leafLight}" opacity="0.8"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Wind-bent variant with depth
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0.5" cy="-0.2" rx="1" ry="0.3" fill="${c.shadow}" opacity="0.15"/>` +
-      `<path d="M0,0 Q0.4,-1.5 0.8,-3" stroke="${c.trunk}" fill="none" stroke-width="0.7"/>` +
-      `<polygon points="1,-8.5 -1.8,-3 3.8,-3" fill="${c.bushDark}"/>` +
-      `<polygon points="1,-8.5 -1.4,-3.5 3.4,-3.5" fill="${c.pine}"/>` +
-      `<polygon points="1.2,-10 -0.8,-6 3.2,-6" fill="${c.bushDark}" opacity="0.9"/>` +
-      `<polygon points="1.2,-10 -0.4,-6.5 2.8,-6.5" fill="${c.pine}"/>` +
-      `<polygon points="1.2,-10.8 0,-7.5 2.4,-7.5" fill="${c.leafLight}" opacity="0.7"/>` +
-      `</g>`
-    );
-  }
-  // Default: tall pine with layered foliage and shadow
+  const crown =
+    v === 1
+      ? 'M-.4,-8.4 Q-1,-6.8 -2.1,-5.6 L-1.5,-5.7 Q-2.2,-4.1 -3.2,-3.7 L-2.3,-3.8 -3.8,-1.8 Q-1.6,-1.2 -.2,-1.8 Q1.8,-1 3.6,-1.8 L2.3,-3.9 3,-3.7 Q1.9,-5 1.5,-5.8 L2,-5.5 Q.5,-7 -.4,-8.4Z'
+      : v === 2
+        ? 'M1.6,-11.5 Q.7,-9.5 -.5,-8.1 L.3,-8.2 Q-.7,-6.7 -1.7,-6 L-.6,-6.2 Q-1.8,-4.2 -2.6,-3.1 Q-.5,-2.7 .7,-3.1 Q2.4,-2.3 4.1,-3 L2.7,-5.3 3.6,-5 Q2.9,-6.5 2.5,-7.5 L3.2,-7.2 Q2.1,-9.5 1.6,-11.5Z'
+        : 'M-.2,-12 Q-1,-9.5 -2,-8 L-1.2,-8.2 Q-2,-6.2 -3,-5.3 L-2,-5.5 Q-2.8,-3.6 -3.7,-2.6 Q-1.8,-2 -.3,-2.5 Q1.6,-1.7 3.4,-2.6 L2,-5.3 2.8,-5 Q1.6,-6.6 1.3,-8 L2,-7.8 Q.7,-10.2 -.2,-12Z';
+  const face =
+    v === 1
+      ? 'M-.4,-8.4 Q-1,-6.8 -2.1,-5.6 L-1.5,-5.7 -3.2,-3.7 -2.3,-3.8 -3.8,-1.8 Q-1.9,-1.3 -.2,-2.1 L.3,-3.9 -.2,-3.6 .2,-5.8Z'
+      : v === 2
+        ? 'M1.6,-11.5 -.5,-8.1 .3,-8.2 -1.7,-6 -.6,-6.2 -2.6,-3.1 Q-.7,-2.9 .7,-3.6 L1.4,-5.7 .6,-5.4 1.8,-8.1Z'
+        : 'M-.2,-12 -2,-8 -1.2,-8.2 -3,-5.3 -2,-5.5 -3.7,-2.6 Q-1.9,-2.2 -.5,-3.1 L.2,-5.9 -.5,-5.5 .3,-8.5Z';
+  const light =
+    v === 1
+      ? 'M-.4,-8.4 -1.9,-5.7 -.6,-6.1Z M-1.5,-5.2 -2.8,-3.8 -.7,-4.5Z'
+      : v === 2
+        ? 'M1.6,-11.5 -.3,-8.4 1,-8.9Z M.1,-7.7 -1.2,-6.3 .7,-6.9Z'
+        : 'M-.2,-12 -1.8,-8.3 -.5,-8.9Z M-1.3,-7.5 -2.6,-5.6 -.9,-6.3Z';
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="-0.2" rx="0.8" ry="0.25" fill="${c.shadow}" opacity="0.15"/>` +
-    `<rect x="-0.35" y="-2.5" width="0.7" height="2.5" fill="${c.trunk}"/>` +
-    `<polygon points="0,-8.5 -2.8,-2 2.8,-2" fill="${c.bushDark}"/>` +
-    `<polygon points="0,-8.5 -2.4,-2.5 2.4,-2.5" fill="${c.pine}"/>` +
-    `<polygon points="0,-10.5 -2,-5.5 2,-5.5" fill="${c.bushDark}" opacity="0.9"/>` +
-    `<polygon points="0,-10.5 -1.6,-6 1.6,-6" fill="${c.pine}"/>` +
-    `<polygon points="0,-11.5 -0.9,-8 0.9,-8" fill="${c.leafLight}" opacity="0.7"/>` +
-    `</g>`
+    `<ellipse cx=".4" cy=".1" rx="1.4" ry=".38" fill="${c.shadow}" opacity=".17"/>` +
+    `<path d="${v === 2 ? 'M-.5,0 Q.15,-1.8 .55,-4 L1.15,-4 Q.6,-1.65 .45,-.1 L1,.2Z M.4,-2.3 -.6,-3.5 .6,-2.9Z' : 'M-.5,0 -.35,-4 .15,-4 .45,-.1 1,.2Z M0,-2.3 -1.1,-3.3 -.1,-2.8Z'}" fill="${c.trunk}"/>` +
+    `<path d="${crown}" fill="${c.evergreenDark}"/>` +
+    `<path d="${face}" fill="${c.pine}"/>` +
+    `<path d="${light}" fill="${c.evergreenLight}"/></g>`
   );
 }
 
 export function svgDeciduous(x: number, y: number, c: AssetColors, v: number): string {
-  if (v === 1) {
-    // Oval tall variant with layered canopy
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-0.2" rx="0.8" ry="0.25" fill="${c.shadow}" opacity="0.15"/>` +
-      `<rect x="-0.35" y="-4.5" width="0.7" height="4.5" fill="${c.trunk}"/>` +
-      `<line x1="-0.3" y1="-3.5" x2="-1" y2="-4.5" stroke="${c.trunk}" stroke-width="0.3"/>` +
-      `<line x1="0.3" y1="-4" x2="0.8" y2="-5" stroke="${c.trunk}" stroke-width="0.25"/>` +
-      `<ellipse cx="0" cy="-7.5" rx="2.3" ry="3.8" fill="${c.bushDark}"/>` +
-      `<ellipse cx="-0.3" cy="-7" rx="1.8" ry="3" fill="${c.leaf}"/>` +
-      `<ellipse cx="0.5" cy="-7.8" rx="1.4" ry="2.5" fill="${c.bush}" opacity="0.8"/>` +
-      `<ellipse cx="-0.2" cy="-8.5" rx="1" ry="1.5" fill="${c.leafLight}" opacity="0.6"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Multi-branch spread variant with depth
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-0.2" rx="1.5" ry="0.4" fill="${c.shadow}" opacity="0.15"/>` +
-      `<rect x="-0.4" y="-3" width="0.8" height="3" fill="${c.trunk}"/>` +
-      `<line x1="0" y1="-2.5" x2="-2" y2="-4" stroke="${c.trunk}" stroke-width="0.45"/>` +
-      `<line x1="0" y1="-2.5" x2="2" y2="-4" stroke="${c.trunk}" stroke-width="0.45"/>` +
-      `<circle cx="-2" cy="-5.5" r="2.3" fill="${c.bushDark}"/>` +
-      `<circle cx="-2" cy="-5.5" r="2" fill="${c.leaf}"/>` +
-      `<circle cx="-2.5" cy="-6" r="1.2" fill="${c.leafLight}" opacity="0.6"/>` +
-      `<circle cx="2" cy="-5.5" r="2.3" fill="${c.bushDark}"/>` +
-      `<circle cx="2" cy="-5.5" r="2" fill="${c.leaf}"/>` +
-      `<circle cx="1.5" cy="-6" r="1.2" fill="${c.leafLight}" opacity="0.6"/>` +
-      `<circle cx="0" cy="-6" r="2" fill="${c.bush}" opacity="0.8"/>` +
-      `</g>`
-    );
-  }
-  // Default: round canopy with layered depth
+  const crown =
+    v === 1
+      ? 'M-1,-3.8 C-3,-4.4 -3.1,-7 -2.2,-8.1 C-2.7,-10 -.9,-11.9 .4,-11.4 C2,-11.5 2.9,-9.6 2.2,-8.4 C3.5,-6.5 2.2,-3.5 .7,-3.8 Q0,-3.3 -1,-3.8Z'
+      : v === 2
+        ? 'M-4.5,-4.6 C-5.8,-6.2 -4.5,-8 -3,-7.9 C-2.4,-9.1 -.6,-9.2 .2,-8.2 C1.8,-9 3.6,-8.2 3.5,-7.1 C5.3,-6.8 5.4,-4.5 3.5,-4 Q2.2,-3.3 .8,-4 Q-.3,-3.1 -1.9,-4 Q-3.3,-3.4 -4.5,-4.6Z'
+        : 'M-2.7,-3.7 C-4.2,-4.3 -4.4,-6.5 -3.1,-7.1 C-3.5,-8.7 -1.8,-10 -.4,-9.4 C1,-10.1 2.8,-9 2.7,-7.7 C4.6,-7.2 4.3,-5 3,-4.4 C2.5,-3 .4,-3 .1,-3.6 Q-1.4,-2.6 -2.7,-3.7Z';
+  const leaf =
+    v === 1
+      ? 'M-1.1,-4.5 C-2.8,-5.4 -2.5,-7.2 -1.8,-8 C-2.4,-10 -.8,-11.7 .4,-11.4 C1.6,-11.2 1.9,-9.7 1,-8.8 Q2.5,-6.7 .8,-5.5 Q.3,-4.2 -1.1,-4.5Z'
+      : v === 2
+        ? 'M-4.5,-4.6 C-5.8,-6.2 -4.5,-8 -3,-7.9 C-2.4,-9.1 -.6,-9.2 .2,-8.2 C1.4,-8.8 3.1,-8.2 3.1,-7.2 Q2.8,-5.7 1.1,-5.9 Q.1,-4.1 -1.5,-5.1 Q-3.6,-3.6 -4.5,-4.6Z'
+        : 'M-2.7,-3.7 C-4.2,-4.3 -4.4,-6.5 -3.1,-7.1 C-3.5,-8.7 -1.8,-10 -.4,-9.4 C1,-10.1 2.8,-9 2.7,-7.7 Q2.2,-6.3 .7,-6.7 Q.6,-4.6 -1,-4.9 Q-1.8,-3.4 -2.7,-3.7Z';
+  const highlight =
+    v === 1
+      ? 'M-1.8,-8.5 C-2.1,-10 -.8,-11.3 .2,-11 Q1.2,-10.3 .3,-9.6 Q-1,-9.9 -1.8,-8.5Z'
+      : v === 2
+        ? 'M-4.4,-6.6 Q-4.1,-8 -2.8,-7.7 Q-1.5,-9.3 -.2,-8.2 Q-.7,-7.3 -2,-7.2Z'
+        : 'M-3,-7.1 Q-3.4,-8.6 -1.8,-9.2 Q-.9,-9.6 -.4,-8.7 Q.5,-9.4 1.5,-8.5 Q.5,-7.6 -.9,-7.9 Q-2,-6.7 -3,-7.1Z';
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="-0.2" rx="1" ry="0.3" fill="${c.shadow}" opacity="0.15"/>` +
-    `<rect x="-0.35" y="-3.5" width="0.7" height="3.5" fill="${c.trunk}"/>` +
-    `<line x1="-0.2" y1="-3" x2="-1.2" y2="-4" stroke="${c.trunk}" stroke-width="0.3"/>` +
-    `<line x1="0.2" y1="-2.8" x2="1" y2="-3.8" stroke="${c.trunk}" stroke-width="0.25"/>` +
-    `<circle cx="0" cy="-6" r="3.2" fill="${c.bushDark}"/>` +
-    `<circle cx="0" cy="-6" r="2.9" fill="${c.leaf}"/>` +
-    `<circle cx="-1" cy="-5.5" r="2" fill="${c.bush}" opacity="0.75"/>` +
-    `<circle cx="0.8" cy="-6.5" r="1.5" fill="${c.leafLight}" opacity="0.6"/>` +
-    `</g>`
+    `<ellipse cx=".4" cy=".15" rx="1.5" ry=".4" fill="${c.shadow}" opacity=".17"/>` +
+    `<path d="M-.7,.1 -.35,-2.5 -2,-4.2 -1.6,-4.5 .05,-3.1 .1,-5 .55,-4.9 .45,-2.9 2,-4.4 2.4,-4.1 .5,-2 .6,-.2 1,.2Z" fill="${c.trunk}"/>` +
+    `<path d="M-.35,-.2 -.25,-2.6 .03,-3.1 .12,-.1Z" fill="${c.stump}"/>` +
+    `<path d="${crown}" fill="${c.bushDark}"/><path d="${leaf}" fill="${c.leaf}"/>` +
+    `<path d="${highlight}" fill="${c.leafLight}"/></g>`
+  );
+}
+
+function mushroom(c: AssetColors, cap: string, tall: boolean): string {
+  const rim = tall ? -2.7 : -1.6;
+  const width = tall ? 1.05 : 1.65;
+  const capPath = tall
+    ? 'M-1.05,-2.7 Q-.85,-3.7 -.2,-3.7 Q.75,-3.7 1.05,-2.7 Q0,-2.48 -1.05,-2.7Z'
+    : 'M-1.65,-1.6 Q-1.45,-2.8 -.2,-2.8 Q1.35,-2.8 1.65,-1.6 Q0,-1.38 -1.65,-1.6Z';
+  const highlight = tall
+    ? 'M-.74,-3 Q-.63,-3.55 -.1,-3.5 L.15,-3.25 Q-.53,-3.3 -.74,-3Z'
+    : 'M-1.16,-1.9 Q-.99,-2.65 -.1,-2.6 L.15,-2.35 Q-.83,-2.4 -1.16,-1.9Z';
+  return (
+    `<path d="M-.45,.1 Q-.12,-1 -.3,${rim} L.3,${rim} Q.25,-.7 .6,0Z" fill="${c.mushroom}"/>` +
+    `<path d="M.1,${rim} .33,${rim} Q.3,-.5 .6,0 L.15,-.08Z" fill="${c.stump}" opacity=".3"/>` +
+    `<ellipse cx="0" cy="${rim}" rx="${width}" ry=".35" fill="${c.stump}"/>` +
+    `<path d="${capPath}" fill="${cap}"/>` +
+    `<path d="${highlight}" fill="${c.mushroom}" opacity=".55"/>`
   );
 }
 
 export function svgMushroom(x: number, y: number, c: AssetColors, v: number): string {
-  if (v === 1) {
-    // Brown cluster variant
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-1.2" y="-1.5" width="0.6" height="1.5" fill="${c.mushroom}"/>` +
-      `<ellipse cx="-0.9" cy="-1.7" rx="1" ry="0.7" fill="${c.trunk}"/>` +
-      `<rect x="0.5" y="-1.8" width="0.5" height="1.8" fill="${c.mushroom}"/>` +
-      `<ellipse cx="0.75" cy="-2" rx="0.8" ry="0.6" fill="${c.trunk}"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Tall/thin variant
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<rect x="-0.3" y="-3" width="0.6" height="3" fill="${c.mushroom}"/>` +
-      `<ellipse cx="0" cy="-3.2" rx="1" ry="0.6" fill="${c.mushroomCap}"/>` +
-      `</g>`
-    );
-  }
-  return (
-    `<g transform="translate(${x},${y})">` +
-    `<rect x="-0.4" y="-2" width="0.8" height="2" fill="${c.mushroom}"/>` +
-    `<ellipse cx="0" cy="-2.2" rx="1.5" ry="1" fill="${c.mushroomCap}"/>` +
-    `<circle cx="-0.5" cy="-2.5" r="0.3" fill="${c.mushroom}" opacity="0.7"/>` +
-    `</g>`
-  );
+  const caps =
+    v === 1
+      ? `<g transform="translate(.85,-.2) scale(.7)">${mushroom(c, c.trunk, true)}</g><g transform="translate(-.9,0) scale(.8)">${mushroom(c, c.trunk, false)}</g>`
+      : mushroom(c, c.mushroomCap, v === 2) +
+        `<path d="${v === 2 ? 'M-.4,-3.25a.18,.14 0 1 0 .36,0a.18,.14 0 1 0 -.36,0 M.35,-3.05a.14,.12 0 1 0 .28,0a.14,.12 0 1 0 -.28,0' : 'M-.55,-2.35a.2,.16 0 1 0 .4,0a.2,.16 0 1 0 -.4,0 M.35,-1.98a.17,.13 0 1 0 .34,0a.17,.13 0 1 0 -.34,0'}" fill="${c.mushroom}"/>`;
+  return `<g transform="translate(${x},${y})">${caps}</g>`;
 }
 
 export function svgStump(x: number, y: number, c: AssetColors, v: number): string {
-  if (v === 1) {
-    // With mushrooms variant
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-1.5" rx="1.5" ry="0.8" fill="${c.stump}"/>` +
-      `<rect x="-1.5" y="-1.5" width="3" height="1.5" fill="${c.trunk}"/>` +
-      `<ellipse cx="0" cy="-1.5" rx="1.5" ry="0.6" fill="${c.stump}" opacity="0.7"/>` +
-      `<circle cx="1.2" cy="-1.2" r="0.4" fill="${c.mushroom}"/>` +
-      `<circle cx="1.5" cy="-0.8" r="0.3" fill="${c.mushroom}" opacity="0.8"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Mossy variant
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-1.5" rx="1.5" ry="0.8" fill="${c.stump}"/>` +
-      `<rect x="-1.5" y="-1.5" width="3" height="1.5" fill="${c.trunk}"/>` +
-      `<ellipse cx="0" cy="-1.5" rx="1.5" ry="0.6" fill="${c.moss}" opacity="0.6"/>` +
-      `<ellipse cx="-0.5" cy="-1" rx="0.8" ry="0.3" fill="${c.moss}" opacity="0.4"/>` +
-      `</g>`
-    );
-  }
+  const detail =
+    v === 1
+      ? `<path d="M.9,-.7 Q1.9,-1.1 2.3,-.65 Q2.1,-.2 1.1,-.3Z M.8,-1.25 Q1.8,-1.75 2,-1.25 Q1.6,-.8 .9,-.95Z" fill="${c.mushroom}"/>`
+      : v === 2
+        ? `<path d="M-1.6,-1.5 Q-1.8,-2.3 -.6,-2.4 Q.4,-2.6 .8,-2.05 L.1,-1.6 -.3,-1.65 -.6,-.8 -1,-1 -1.25,-.5 -1.5,-.7Z" fill="${c.moss}"/><path d="M-1.4,-1.9 Q-.7,-2.5 .2,-2.1 L-.4,-1.8Z" fill="${c.leafLight}"/>`
+        : '';
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="-1.5" rx="1.5" ry="0.8" fill="${c.stump}"/>` +
-    `<rect x="-1.5" y="-1.5" width="3" height="1.5" fill="${c.trunk}"/>` +
-    `<ellipse cx="0" cy="-1.5" rx="1.5" ry="0.6" fill="${c.stump}" opacity="0.7"/>` +
-    `</g>`
+    `<path d="M-1.6,-1.8 L1.6,-1.8 1.55,-.6 2,.2 .8,0 0,.3 -.8,0 -2,.2 -1.6,-.6Z" fill="${c.trunk}"/>` +
+    `<path d="M.5,-1.65 1.6,-1.8 1.55,-.6 2,.2 .8,0Z" fill="${c.shadow}" opacity=".25"/>` +
+    `<ellipse cx="0" cy="-1.85" rx="1.65" ry=".65" fill="${c.stump}"/>` +
+    `<ellipse cx="-.15" cy="-1.95" rx="1.3" ry=".46" fill="${c.fence}"/>` +
+    `<path d="M-.9,-1.95 Q0,-2.45 .85,-1.97 Q.25,-1.5 -.6,-1.8 M-.9,-1.35 -1,-.25 M-.2,-1.3 -.15,-.3 M1.1,-1.35 1.05,-.5" fill="none" stroke="${c.stump}" stroke-width=".18"/>${detail}</g>`
   );
 }
 
 export function svgDeer(x: number, y: number, c: AssetColors, v: number): string {
-  if (v === 1) {
-    // Grazing variant — head down
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-2" rx="2.2" ry="1.2" fill="${c.deer}"/>` +
-      `<circle cx="-2.2" cy="-1.8" r="0.6" fill="${c.deer}"/>` +
-      `<line x1="-2.5" y1="-2.4" x2="-2.8" y2="-3.2" stroke="${c.trunk}" stroke-width="0.25"/>` +
-      `<line x1="-1.9" y1="-2.4" x2="-1.5" y2="-3.2" stroke="${c.trunk}" stroke-width="0.25"/>` +
-      `<line x1="-1" y1="-0.8" x2="-1" y2="0" stroke="${c.deer}" stroke-width="0.4"/>` +
-      `<line x1="1" y1="-0.8" x2="1" y2="0" stroke="${c.deer}" stroke-width="0.4"/>` +
-      `</g>`
-    );
-  }
-  if (v === 2) {
-    // Walking variant — legs spread
-    return (
-      `<g transform="translate(${x},${y})">` +
-      `<ellipse cx="0" cy="-2" rx="2.2" ry="1.2" fill="${c.deer}"/>` +
-      `<circle cx="-2" cy="-3" r="0.7" fill="${c.deer}"/>` +
-      `<line x1="-2.3" y1="-3.7" x2="-3" y2="-4.8" stroke="${c.trunk}" stroke-width="0.3"/>` +
-      `<line x1="-1.7" y1="-3.7" x2="-1" y2="-4.8" stroke="${c.trunk}" stroke-width="0.3"/>` +
-      `<line x1="-1.2" y1="-0.8" x2="-1.8" y2="0.3" stroke="${c.deer}" stroke-width="0.4"/>` +
-      `<line x1="0.8" y1="-0.8" x2="1.5" y2="0.3" stroke="${c.deer}" stroke-width="0.4"/>` +
-      `</g>`
-    );
-  }
+  const grazing = v === 1;
+  const legs =
+    v === 2
+      ? 'M-1.1,-1.5 -1.55,-.3 -2,.3 -1.55,.4 -.9,-.3 -.45,-1.4Z M.9,-1.4 1.65,-.15 2,.2 1.65,.4 1.2,.15 .35,-1.25Z'
+      : 'M-1.25,-1.5 -1.35,.1 -.85,.1 -.75,-1.4Z M.9,-1.4 1.1,.1 1.6,.1 1.35,-1.5Z';
+  const neck = grazing
+    ? 'M-1.4,-2.6 Q-2.1,-2.7 -2.5,-1.5 L-3.15,-.9 Q-3.65,-.5 -3.3,-.25 L-2.5,-.3 Q-1.9,-.65 -1.7,-1.55 L-.9,-1.8Z'
+    : 'M-1.35,-1.9 -2,-3.15 -2.85,-3.25 Q-3.5,-3.4 -3.45,-3.8 L-2.65,-4.05 -2.6,-4.6 -2.15,-4.25 -1.55,-4.55 -1.6,-3.8 -.7,-2.45Z';
+  const antlers = grazing
+    ? 'M-2.55,-1.3 -2.65,-2.8 -3.2,-3.2 M-2.65,-2.6 -2.2,-3.15 M-2.85,-1 -3.3,-2.1 -3.8,-2.25'
+    : 'M-2.5,-4.1 -3,-5.6 -3.6,-5.9 M-3,-5.3 -3.55,-5.15 M-2.1,-4.2 -1.7,-5.7 -1.1,-6 M-1.85,-5.15 -2.2,-5.65';
   return (
     `<g transform="translate(${x},${y})">` +
-    `<ellipse cx="0" cy="-2" rx="2.2" ry="1.2" fill="${c.deer}"/>` +
-    `<circle cx="-2" cy="-3" r="0.7" fill="${c.deer}"/>` +
-    // Antlers (key identifier)
-    `<line x1="-2.3" y1="-3.7" x2="-3" y2="-5" stroke="${c.trunk}" stroke-width="0.3"/>` +
-    `<line x1="-3" y1="-5" x2="-3.5" y2="-5.3" stroke="${c.trunk}" stroke-width="0.25"/>` +
-    `<line x1="-1.7" y1="-3.7" x2="-1" y2="-5" stroke="${c.trunk}" stroke-width="0.3"/>` +
-    `<line x1="-1" y1="-5" x2="-0.5" y2="-5.3" stroke="${c.trunk}" stroke-width="0.25"/>` +
-    // Legs
-    `<line x1="-1" y1="-0.8" x2="-1" y2="0" stroke="${c.deer}" stroke-width="0.4"/>` +
-    `<line x1="1" y1="-0.8" x2="1" y2="0" stroke="${c.deer}" stroke-width="0.4"/>` +
-    `</g>`
+    `<ellipse cx=".2" cy=".2" rx="2.25" ry=".35" fill="${c.shadow}" opacity=".16"/>` +
+    `<path d="M-.6,-1.6 -.4,0 0,0 -.05,-1.6 M1.25,-1.6 1.8,-.05 2.1,-.05 1.8,-1.8Z" fill="${c.trunk}"/>` +
+    `<path d="${legs}" fill="${c.deer}"/>` +
+    `<path d="M-1.8,-2.2 Q-1.8,-3.25 -.15,-3.15 Q1.4,-3.35 2.15,-2.5 L2.8,-2.8 2.65,-2.25 2.05,-2 Q1.8,-.95 .5,-1 Q-1.2,-.95 -1.8,-2.2Z" fill="${c.deer}"/>` +
+    `<path d="M-1.5,-2.55 Q-.2,-3.45 1.3,-2.85 Q.1,-2.45 -1.25,-2.15Z" fill="${c.fence}"/>` +
+    `<path d="M-.7,-1.35 Q.8,-1.05 1.8,-1.6 L1.3,-1 -.5,-1Z" fill="${c.mushroom}"/>` +
+    `<path d="${antlers}" stroke="${c.trunk}" stroke-width=".24" stroke-linecap="round" fill="none"/>` +
+    `<path d="${neck}" fill="${c.deer}"/>` +
+    `<circle cx="${grazing ? -2.95 : -2.75}" cy="${grazing ? -0.65 : -3.72}" r=".12" fill="${c.bird}"/></g>`
   );
 }

@@ -8,5 +8,5 @@ export type TerrainRenderOptions = Partial<ThemeOptions> & {
 
 export type TerrainSceneRenderOptions = Pick<
   TerrainRenderOptions,
-  'width' | 'height' | 'title' | 'motion' | 'layout' | 'namespace'
+  'width' | 'height' | 'title' | 'motion' | 'layout' | 'namespace' | 'artStyle'
 >;

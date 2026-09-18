@@ -4,10 +4,11 @@ const searchFilter = document.querySelector('#search-filter');
 const seasonFilter = document.querySelector('#season-filter');
 const familyFilter = document.querySelector('#family-filter');
 const styleFilter = document.querySelector('#style-filter');
+const artStyleFilter = document.querySelector('#art-style-filter');
 const resultCount = document.querySelector('#result-count');
 const emptyState = document.querySelector('#empty-state');
 const clearFilters = document.querySelector('#clear-filters');
-const modeButtons = [...document.querySelectorAll('[data-mode]')];
+const modeButtons = [...document.querySelectorAll('button[data-mode]')];
 const cards = [...document.querySelectorAll('[data-catalog-card]')];
 
 function selectedValue(control) {
@@ -41,16 +42,23 @@ function updateResults() {
 }
 
 function setMode(mode) {
+  const artStyle = artStyleFilter?.value === 'pixel' ? 'pixel' : 'miniature';
+  const sprite = `catalog-sprite-${artStyle === 'pixel' ? 'pixel-' : ''}${mode}.svg`;
   document.documentElement.dataset.mode = mode;
+  document.documentElement.dataset.artStyle = artStyle;
   for (const button of modeButtons) {
     button.setAttribute('aria-pressed', String(button.dataset.mode === mode));
   }
   for (const card of cards) {
     const use = card.querySelector('use');
     const key = card.dataset.key;
-    if (use && key) use.setAttribute('href', `catalog-sprite-${mode}.svg#${key}`);
+    if (use && key) use.setAttribute('href', `${sprite}#${key}`);
   }
 }
+
+artStyleFilter?.addEventListener('change', () => {
+  setMode(document.documentElement.dataset.mode ?? 'dark');
+});
 
 for (const control of [searchFilter, seasonFilter, familyFilter, styleFilter]) {
   control?.addEventListener('input', updateResults);

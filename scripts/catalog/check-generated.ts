@@ -79,19 +79,32 @@ export async function verifyGeneratedCatalog(outputDirectory: string): Promise<{
   readonly wonders: number;
   readonly records: number;
 }> {
-  const [jsonSource, html, darkSprite, lightSprite, outputCss, outputJs, sourceCss, sourceJs] =
-    await Promise.all([
-      readFile(resolve(outputDirectory, 'catalog.json'), 'utf8'),
-      readFile(resolve(outputDirectory, 'index.html'), 'utf8'),
-      readFile(resolve(outputDirectory, 'catalog-sprite-dark.svg'), 'utf8'),
-      readFile(resolve(outputDirectory, 'catalog-sprite-light.svg'), 'utf8'),
-      readFile(resolve(outputDirectory, 'catalog.css'), 'utf8'),
-      readFile(resolve(outputDirectory, 'catalog.js'), 'utf8'),
-      readFile(fileURLToPath(new URL('./client.css', import.meta.url)), 'utf8'),
-      readFile(fileURLToPath(new URL('./client.js', import.meta.url)), 'utf8'),
-    ]);
+  const [
+    jsonSource,
+    html,
+    darkSprite,
+    lightSprite,
+    darkPixelSprite,
+    lightPixelSprite,
+    outputCss,
+    outputJs,
+    sourceCss,
+    sourceJs,
+  ] = await Promise.all([
+    readFile(resolve(outputDirectory, 'catalog.json'), 'utf8'),
+    readFile(resolve(outputDirectory, 'index.html'), 'utf8'),
+    readFile(resolve(outputDirectory, 'catalog-sprite-dark.svg'), 'utf8'),
+    readFile(resolve(outputDirectory, 'catalog-sprite-light.svg'), 'utf8'),
+    readFile(resolve(outputDirectory, 'catalog-sprite-pixel-dark.svg'), 'utf8'),
+    readFile(resolve(outputDirectory, 'catalog-sprite-pixel-light.svg'), 'utf8'),
+    readFile(resolve(outputDirectory, 'catalog.css'), 'utf8'),
+    readFile(resolve(outputDirectory, 'catalog.js'), 'utf8'),
+    readFile(fileURLToPath(new URL('./client.css', import.meta.url)), 'utf8'),
+    readFile(fileURLToPath(new URL('./client.js', import.meta.url)), 'utf8'),
+  ]);
   const generated = CatalogFileSchema.parse(JSON.parse(jsonSource));
   const galleryItems = createGalleryItems();
+  const pixelGalleryItems = createGalleryItems('pixel');
   const records = galleryItems.map((item) => item.record);
   requireMatch('asset counts', generated.assets.counts, ASSET_CATALOG_COUNTS);
   requireMatch('asset entries', generated.assets.entries, ASSET_CATALOG);
@@ -102,6 +115,16 @@ export async function verifyGeneratedCatalog(outputDirectory: string): Promise<{
   requireMatch('index.html', html, renderCatalogPage(records, countCatalogFamilies(records)));
   requireMatch('dark sprite', darkSprite, renderCatalogSprite(galleryItems, 'dark'));
   requireMatch('light sprite', lightSprite, renderCatalogSprite(galleryItems, 'light'));
+  requireMatch(
+    'pixel dark sprite',
+    darkPixelSprite,
+    renderCatalogSprite(pixelGalleryItems, 'dark'),
+  );
+  requireMatch(
+    'pixel light sprite',
+    lightPixelSprite,
+    renderCatalogSprite(pixelGalleryItems, 'light'),
+  );
   requireMatch('catalog.css', outputCss, sourceCss);
   requireMatch('catalog.js', outputJs, sourceJs);
   return { assets: ASSET_CATALOG.length, wonders: EPIC_CATALOG.length, records: records.length };

@@ -24,6 +24,7 @@ export function renderArchiveComparison(
       hemisphere: snapshot.settings.hemisphere,
       density: snapshot.settings.density,
       style: snapshot.settings.style,
+      artStyle: snapshot.settings.artStyle,
       layout: 'card',
       motion: snapshot.settings.motion,
       layoutSeed: snapshot.settings.layoutSeed,

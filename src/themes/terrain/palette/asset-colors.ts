@@ -1,6 +1,10 @@
 export interface AssetColors {
+  giwa: string;
+  thatch: string;
   trunk: string;
   pine: string;
+  evergreenLight: string;
+  evergreenDark: string;
   leaf: string;
   bush: string;
   roofA: string;

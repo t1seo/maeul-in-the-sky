@@ -57,13 +57,22 @@ describe('shared scene asset contract', () => {
       );
     }
   });
-  it('selects all four Korean assets while classic stays the default', () => {
+  it('keeps the four original Korean assets reachable across settlement levels while classic stays the default', () => {
+    const settlementCells = cells.map((cell, index) => ({
+      ...cell,
+      level100: [70, 80, 90][index % 3],
+      count: [1, 5, 10, 25, 50][index % 5],
+    }));
     const korean = new Set(
-      selectAssetPlacements(cells, 42, { villageStyle: 'korean' }).map((item) => item.type),
+      Array.from({ length: 10 }, (_, seed) =>
+        selectAssetPlacements(settlementCells, seed, { villageStyle: 'korean' }).map(
+          (item) => item.type,
+        ),
+      ).flat(),
     );
     expect(
-      (['hanok', 'pavilion', 'stoneWall', 'onggi'] as const).every((type) => korean.has(type)),
-    ).toBe(true);
+      (['hanok', 'pavilion', 'stoneWall', 'onggi'] as const).filter((type) => !korean.has(type)),
+    ).toEqual([]);
     expect(
       selectAssetPlacements(cells, 42).every(
         (item) => getAssetCatalogEntry(item.type).style === 'classic',
@@ -104,7 +113,14 @@ describe('shared scene asset contract', () => {
     expect(relevant(after)).toEqual(relevant(before));
   });
   it('retains geometry under motion budgets and suppresses all motion in off mode', () => {
-    const placed = selectAssetPlacements(cells, 42);
+    const waterCells = cells.map((cell) => ({ ...cell, count: 50 }));
+    const biomeMap = new Map(
+      waterCells.map((cell) => [
+        `${cell.week},${cell.day}`,
+        { isRiver: true, isPond: false, nearWater: true, forestDensity: 0 },
+      ]),
+    );
+    const placed = selectAssetPlacements(waterCells, 42, { biomeMap });
     const full = renderAssetPlacements(placed, palette);
     const off = withMotionContext({ mode: 'off', namespace: 'test' }, () =>
       renderAssetPlacements(placed, palette),

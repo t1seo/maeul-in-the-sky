@@ -15,6 +15,7 @@ export {
   EPIC_CATALOG_COUNTS,
   getEpicCatalogEntry,
   isEpicBuildingType,
+  renderCatalogEpic,
 } from './themes/terrain/epics.js';
 export {
   createSnapshot,
@@ -45,6 +46,7 @@ export type {
   ThemeOptions,
 } from './core/types.js';
 export type {
+  ArtStyle,
   Hemisphere,
   MotionMode,
   NormalizationOptions,
@@ -60,6 +62,9 @@ export type {
   TerrainRenderResult,
   TerrainScene,
   SceneCell,
+  RewardTier,
+  PositiveRewardTier,
+  SceneDailyReward,
   ScenePlacement,
   SceneWonderPlacement,
 } from './core/scene-types.js';

@@ -62,7 +62,6 @@ export function selectEpicBuildings(
 
     const key = `${cell.week},${cell.day}`;
     const identity = assetCellIdentity(cell);
-    const rng = seededRandom(assetDateSeed(seed, identity, 'wonder'));
     if (cell.count === 0 || cell.level100 === 0) continue;
 
     // Skip water/river cells
@@ -93,7 +92,7 @@ export function selectEpicBuildings(
       const richnessExcess = richness - config.minRichness;
       const richnessBonus = 1 + Math.min(richnessExcess * 2, 0.5); // max +50%
       const finalChance = config.baseChance * richnessBonus * streakMultiplier;
-
+      const rng = seededRandom(assetDateSeed(seed, identity, `wonder:${tier}`));
       if (rng() < finalChance) {
         // Pick a random building of this tier
         const tierBuildings = eligibleBuildings.filter((b) => b.tier === tier);
@@ -112,7 +111,6 @@ export function selectEpicBuildings(
         epicCells.add(key);
         break; // Move to next cell
       }
-      break; // Only try the highest eligible tier per cell
     }
   }
 

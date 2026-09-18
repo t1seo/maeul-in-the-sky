@@ -10,6 +10,8 @@ const RESIDENCES = new Set([
   'inn',
   'manor',
   'hanok',
+  'choga',
+  'hanokEstate',
 ]);
 
 function connector(id: string, cells: readonly SceneCell[], catalogId: string): NeighborhoodPath {
