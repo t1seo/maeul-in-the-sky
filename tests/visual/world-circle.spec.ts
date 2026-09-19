@@ -54,7 +54,10 @@ test('a circular sky island opens directly in 3D and exports the same rolling hi
   await page.locator('#export-world').click();
   const saved = parseWorldDocument((await downloadBytes(await pending)).toString('utf8'));
   expect(saved.scene).toEqual(scene);
-  expect(saved.sourceSnapshot).toEqual(source.snapshot);
+  expect(saved.sourceSnapshot).toEqual(world.sourceSnapshot);
+  expect(saved.sourceSnapshot.weeks.flatMap((week) => week.days)).toEqual(
+    source.snapshot.weeks.flatMap((week) => week.days),
+  );
   expect(saved.scene.terrain.waterways.filter((way) => way.kind === 'waterfall')).toHaveLength(4);
   await page.locator('#photo-dialog [data-close]').click();
   await page.locator('#mode-map').click();
