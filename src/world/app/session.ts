@@ -5,12 +5,19 @@ import { createRendererHost, type RendererLoaders, type RendererMode } from './r
 import { html } from './dom.js';
 
 export type SessionChange = 'scene' | 'view' | 'renderer';
+type PendingWorld = {
+  readonly document: WorldDocumentV1;
+  readonly mode: RendererMode;
+  readonly readView: () => WorldView;
+};
 
 export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLoaders) {
   let document = initial;
   let mode: RendererMode = 'map';
   let opening = 0;
   let epoch = 0;
+  let pending: PendingWorld | undefined;
+  let navigationRevision = 0;
   const subscribers = new Set<(change: SessionChange) => void>();
   const notify = (change: SessionChange): void => {
     for (const subscriber of subscribers) subscriber(change);
@@ -18,6 +25,7 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
   const renderer = createRendererHost(html('world-host'), loaders, {
     onSelect: (id) => selectPlace(id),
     onViewChange: (view) => {
+      navigationRevision++;
       document = { ...document, view };
       notify('view');
     },
@@ -40,6 +48,7 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
   }
 
   function update(patch: Partial<WorldView>): void {
+    if ('camera' in patch || 'focus' in patch) navigationRevision++;
     const view = { ...current().view, ...patch };
     document = { ...document, view };
     renderer.current()?.update(view);
@@ -65,25 +74,30 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
     });
   }
 
-  async function open(
-    next: WorldDocumentV1,
-    requested = mode,
-    preservePendingChanges = false,
-  ): Promise<boolean> {
+  async function present(intent: PendingWorld): Promise<boolean> {
+    pending = intent;
     epoch++;
     opening++;
     html('world-fallback').hidden = true;
     try {
-      const readLatestView = preservePendingChanges
-        ? () => (document.scene === next.scene ? current().view : undefined)
-        : undefined;
-      if (!(await renderer.show(next.scene, next.view, requested, readLatestView))) return false;
+      const next = intent.document;
+      if (!(await renderer.show(next.scene, intent.readView(), intent.mode, intent.readView)))
+        return false;
       document = { ...next, view: renderer.current()?.getView() ?? next.view };
       notify('scene');
       return true;
     } finally {
       opening--;
+      if (pending === intent) pending = undefined;
     }
+  }
+
+  function open(next: WorldDocumentV1, requested = mode): Promise<boolean> {
+    return present({ document: next, mode: requested, readView: () => next.view });
+  }
+
+  function intended(): PendingWorld {
+    return pending ?? { document: current(), mode, readView: () => current().view };
   }
 
   return {
@@ -100,13 +114,14 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
       return () => subscribers.delete(listener);
     },
     async switchRenderer(requested: RendererMode): Promise<void> {
-      await open(current(), requested, true);
+      await present({ ...intended(), mode: requested });
     },
     async rebuild(
       settings: Partial<WorldSettings>,
       repositories?: readonly PublicRepoRecord[],
     ): Promise<void> {
-      const before = current();
+      const intent = intended();
+      const before = intent.document;
       const repositoryData = repositories ?? before.repositoryData;
       const scene = buildWorld({
         snapshot: before.sourceSnapshot,
@@ -120,26 +135,38 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
         ...scene.actors.map((actor) => actor.id),
         ...scene.regions.map((region) => region.id),
       ]);
-      const view = {
-        ...before.view,
-        selectedId:
-          before.view.selectedId && selections.has(before.view.selectedId)
-            ? before.view.selectedId
-            : undefined,
-        camera: defaultWorldView(scene).camera,
-        focus: { kind: 'world' } as const,
-        followActorId: undefined,
+      const navigation = navigationRevision;
+      const camera = defaultWorldView(scene).camera;
+      const readView = (): WorldView => {
+        const latest = intent.readView();
+        return {
+          ...latest,
+          selectedId:
+            latest.selectedId && selections.has(latest.selectedId) ? latest.selectedId : undefined,
+          ...(navigation === navigationRevision
+            ? { camera, focus: { kind: 'world' } as const, followActorId: undefined }
+            : {}),
+        };
       };
-      await open(
-        createWorldDocument({ scene, sourceSnapshot: before.sourceSnapshot, repositoryData, view }),
-      );
+      await present({
+        document: createWorldDocument({
+          scene,
+          sourceSnapshot: before.sourceSnapshot,
+          repositoryData,
+          view: readView(),
+        }),
+        mode: intent.mode,
+        readView,
+      });
     },
     reset(): void {
+      navigationRevision++;
       renderer.current()?.reset();
       document = current();
       notify('view');
     },
     dispose(): void {
+      pending = undefined;
       renderer.dispose();
       subscribers.clear();
     },
