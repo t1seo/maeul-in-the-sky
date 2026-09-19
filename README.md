@@ -35,7 +35,7 @@ Prefer the original artwork? Choose **Classic** in the [SVG studio](https://t1se
 
 - Deterministic isometric Terrain with 100 elevation levels
 - Four calendar-aligned seasons with distinct foliage, silhouettes and material colors
-- Procedural rivers, ponds, forests, weather, and ambient animation
+- Procedural rivers, ponds, forests, weather, and ambient animation; miniature ground textures, flowing currents and waterfalls spilling beneath the sky island
 - 210 ordinary asset IDs: 197 classic and 13 Korean, with 68 seasonal and 142 year-round IDs
 - 30 discoverable Epic Wonders across Rare, Epic, and Legendary tiers
 - Refreshed artwork plus 9 Korean rural and 8 nature additions: 240 catalog IDs in total

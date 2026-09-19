@@ -8,6 +8,8 @@ import {
 } from '../../../src/themes/terrain/scene/surface-context.js';
 import { renderSurfaceRipples } from '../../../src/themes/terrain/effects/surface-water.js';
 import { renderSurfaceMotionCSS } from '../../../src/themes/terrain/effects/surface-motion.js';
+import { renderWaterfalls } from '../../../src/themes/terrain/effects/waterfalls.js';
+import { waterfallOutlets } from '../../../src/themes/terrain/effects/water-topology.js';
 import { renderSeasonalWeather } from '../../../src/themes/terrain/effects/seasonal-weather.js';
 import type { IsoCell } from '../../../src/themes/terrain/blocks.js';
 
@@ -60,11 +62,16 @@ describe('miniature surface details and limits', () => {
     const output = withSurfaceContext(miniature, () =>
       withMotionContext(
         { mode, namespace: 'surface:test' },
-        () => renderSurfaceMotionCSS(cells, biomes) + renderSurfaceRipples(cells, palette, biomes),
+        () =>
+          renderSurfaceMotionCSS(cells, biomes) +
+          renderSurfaceRipples(cells, palette, biomes) +
+          renderWaterfalls(waterfallOutlets(cells, biomes), palette),
       ),
     );
     // Then: only the bounded set of small paths receives movement.
-    expect(output.match(/class="[^"]*surface-current-/g) ?? []).toHaveLength(limit);
+    expect(output.match(/class="[^"]*(?:surface-current-|waterfall-flow)/g) ?? []).toHaveLength(
+      limit,
+    );
     expect(output.match(/data-water-current=/g)).toHaveLength(32);
     expect(output).not.toMatch(/<polygon/);
     if (mode === 'off') expect(output).not.toMatch(/@keyframes|animation:/);

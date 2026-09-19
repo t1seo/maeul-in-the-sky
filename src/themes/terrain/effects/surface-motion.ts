@@ -13,11 +13,11 @@ export function renderSurfaceMotionCSS(
   const count = movingSurfaceCells(cells, biomes).length;
   const name = motionId('surface-flow');
   const water = count
-    ? `@keyframes ${name}{from{stroke-dashoffset:6}to{stroke-dashoffset:0}}` +
+    ? `@keyframes ${name}{from{stroke-dashoffset:6.7}to{stroke-dashoffset:0}}` +
       Array.from(
         { length: Math.min(3, count) },
         (_, phase) =>
-          `.${motionId('surface-current-' + phase)}{animation:${name} ${mode === 'subtle' ? 24 + phase * 3 : 10 + phase * 2}s linear -${phase * 3}s infinite}`,
+          `.${motionId('surface-current-' + phase)}{animation:${name} ${mode === 'subtle' ? 14 + phase * 2 : 3.4 + phase * 0.5}s linear -${phase}s infinite}`,
       ).join('')
     : '';
   return water + renderSeasonalWeatherCSS(cells);
