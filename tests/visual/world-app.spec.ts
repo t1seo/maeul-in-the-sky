@@ -150,14 +150,18 @@ test('public repository metadata and releases become a removable real district',
 test('browser Back retains its world', async ({ playwright, baseURL }, info) => {
   test.skip(info.project.name !== 'chromium-desktop', 'Chromium cache restoration');
   if (!baseURL) throw new Error('QA server URL is required');
+  const upstreamPort = new URL(baseURL).port;
   const proxy = await dataHttpFixture((incoming, outgoing) => {
-    const upstream = request(new URL(incoming.url ?? '/', baseURL), (response) => {
-      outgoing.writeHead(response.statusCode ?? 502, {
-        ...response.headers,
-        'cache-control': 'public, max-age=60',
-      });
-      response.pipe(outgoing);
-    });
+    const upstream = request(
+      { hostname: '127.0.0.1', port: upstreamPort, path: incoming.url ?? '/' },
+      (response) => {
+        outgoing.writeHead(response.statusCode ?? 502, {
+          ...response.headers,
+          'cache-control': 'public, max-age=60',
+        });
+        response.pipe(outgoing);
+      },
+    );
     upstream.on('error', (error) => outgoing.writeHead(502).end(error.message));
     upstream.end();
   });

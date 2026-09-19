@@ -1,6 +1,6 @@
 import { readFile, realpath, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import { dirname, extname, isAbsolute, relative, resolve, sep } from 'node:path';
+import { dirname, extname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { ServerResponse } from 'node:http';
 import { PreviewError } from './errors.js';
@@ -24,11 +24,6 @@ export function defaultAssetRoot(): string {
   return existsSync(packaged) ? packaged : resolve(directory, '../../docs/demo');
 }
 
-function inside(root: string, path: string): boolean {
-  const rel = relative(root, path);
-  return rel !== '..' && !rel.startsWith(`..${sep}`) && !isAbsolute(rel);
-}
-
 export async function serveAsset(
   root: string,
   rawPath: string,
@@ -49,11 +44,15 @@ export async function serveAsset(
   ) {
     throw new PreviewError(403, 'path', 'Asset path is not allowed.');
   }
-  const candidate = resolve(root, `.${path.endsWith('/') ? `${path}index.html` : path}`);
-  if (!inside(root, candidate)) throw new PreviewError(403, 'path', 'Asset path is not allowed.');
+  const assetRoot = resolve(root);
+  const rootPrefix = assetRoot.endsWith(sep) ? assetRoot : `${assetRoot}${sep}`;
+  const candidate = resolve(assetRoot, `.${path.endsWith('/') ? `${path}index.html` : path}`);
+  if (!candidate.startsWith(rootPrefix))
+    throw new PreviewError(403, 'path', 'Asset path is not allowed.');
   try {
-    const [realRoot, realFile] = await Promise.all([realpath(root), realpath(candidate)]);
-    if (!inside(realRoot, realFile))
+    const [realRoot, realFile] = await Promise.all([realpath(assetRoot), realpath(candidate)]);
+    const realPrefix = realRoot.endsWith(sep) ? realRoot : `${realRoot}${sep}`;
+    if (!realFile.startsWith(realPrefix))
       throw new PreviewError(403, 'path', 'Asset path is not allowed.');
     const type = MIME[extname(realFile)];
     if (!type || !(await stat(realFile)).isFile())

@@ -1,0 +1,103 @@
+{
+  "baseline": "0df798e3f006ae4210d6ff6058b62ad214971969",
+  "capturedAt": "2026-09-19T05:11:19.372Z",
+  "scope": "Palette input hardening preserves valid-mode SVG output byte-for-byte",
+  "cases": [
+    {
+      "name": "empty",
+      "layout": "banner",
+      "mode": "dark",
+      "bytes": 454827,
+      "sha256": "91b70e06257f8c2458217657dea94c0bc63674f7ff6b2225fa790945f64bd2c2",
+      "equal": true
+    },
+    {
+      "name": "empty",
+      "layout": "banner",
+      "mode": "light",
+      "bytes": 451198,
+      "sha256": "470a98ac899f73643842310123fd5281cd0698d1e79730ff8966f1aa7c086d9e",
+      "equal": true
+    },
+    {
+      "name": "empty",
+      "layout": "card",
+      "mode": "dark",
+      "bytes": 453807,
+      "sha256": "e26d24478b12b311f0e7bf74b4b23b99fef4848448a896059af34183a081d5c8",
+      "equal": true
+    },
+    {
+      "name": "empty",
+      "layout": "card",
+      "mode": "light",
+      "bytes": 450186,
+      "sha256": "7472e90742a41bfc9abaffb3ef9845cbfb230c1bee6e9048afd535fb9dc39cd0",
+      "equal": true
+    },
+    {
+      "name": "mixed",
+      "layout": "banner",
+      "mode": "dark",
+      "bytes": 823424,
+      "sha256": "043456966866b9af551eee880b954e6e3976c66be4e63982d432ce6272fe79a2",
+      "equal": true
+    },
+    {
+      "name": "mixed",
+      "layout": "banner",
+      "mode": "light",
+      "bytes": 820338,
+      "sha256": "c49e144adabf696080a348b0e93d48a91a61ac9d5f420195576aa387bac922cd",
+      "equal": true
+    },
+    {
+      "name": "mixed",
+      "layout": "card",
+      "mode": "dark",
+      "bytes": 821931,
+      "sha256": "18283e4a88215bb8fac5d766a85eabf96da744d089a62e940ad0dc951b175084",
+      "equal": true
+    },
+    {
+      "name": "mixed",
+      "layout": "card",
+      "mode": "light",
+      "bytes": 818853,
+      "sha256": "7de701f5124a2118040cfc7280360c1dc70409ae05b1e8478b089c9563852950",
+      "equal": true
+    },
+    {
+      "name": "full",
+      "layout": "banner",
+      "mode": "dark",
+      "bytes": 1470251,
+      "sha256": "d8f4e05b691c1ca1f9b249a5969a2001b820c510c6658099bdbdd7b63ce2d0b0",
+      "equal": true
+    },
+    {
+      "name": "full",
+      "layout": "banner",
+      "mode": "light",
+      "bytes": 1467979,
+      "sha256": "2dac329a80a3db028358a61d35bdc274c1653f9ed0da93fd111ea04190c15513",
+      "equal": true
+    },
+    {
+      "name": "full",
+      "layout": "card",
+      "mode": "dark",
+      "bytes": 1467870,
+      "sha256": "568fc19491814ac7c97ae7910a5decba458523c8d739aa5f7e2c403d3776c204",
+      "equal": true
+    },
+    {
+      "name": "full",
+      "layout": "card",
+      "mode": "light",
+      "bytes": 1465606,
+      "sha256": "dbf8ed19399ae2853052e7e5241139d14a368abc9380407a4e90a5150210081c",
+      "equal": true
+    }
+  ]
+}

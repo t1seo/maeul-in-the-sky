@@ -1808,6 +1808,15 @@ var init_factory = __esm({
 });
 
 // src/themes/terrain/palette/cache.ts
+function forMode(mode, palettes) {
+  switch (mode) {
+    case "dark":
+      return palettes.dark;
+    case "light":
+      return palettes.light;
+  }
+  throw new TypeError("Unsupported color mode");
+}
 function copyPalette(palette, assets = { ...palette.assets }) {
   return {
     ...palette,
@@ -1820,12 +1829,13 @@ function copyPalette(palette, assets = { ...palette.assets }) {
   };
 }
 function getTerrainPalette100(mode) {
-  return copyPalette(basePalettes[mode]);
+  return copyPalette(forMode(mode, basePalettes));
 }
 function getSeasonalPalette100(mode, week, rotation = 0) {
+  const base = forMode(mode, basePalettes);
+  const cache = forMode(mode, seasonalPalettes);
   const seasonalWeek = clamp((week + rotation) % 52, 0, 51);
   if (!Number.isInteger(seasonalWeek)) {
-    const base = basePalettes[mode];
     const palette2 = createSeasonalPalette100(
       mode,
       getSeasonalTint(week, rotation),
@@ -1834,15 +1844,15 @@ function getSeasonalPalette100(mode, week, rotation = 0) {
     );
     return copyPalette(palette2, palette2 === base ? { ...palette2.assets } : palette2.assets);
   }
-  const cached = seasonalPalettes[mode][seasonalWeek];
+  const cached = cache[seasonalWeek];
   if (cached) return copyPalette(cached);
   const palette = createSeasonalPalette100(
     mode,
     getSeasonalTint(week, rotation),
-    basePalettes[mode],
+    base,
     getTransitionBlend(week, rotation)
   );
-  seasonalPalettes[mode][seasonalWeek] = palette;
+  cache[seasonalWeek] = palette;
   return copyPalette(palette);
 }
 var basePalettes, seasonalPalettes;
@@ -27993,18 +28003,18 @@ function selectorInsertions(selector, boundary, subjectOnly, normalized, xmlEnti
   for (const [index, child] of children.entries()) {
     if (child.type === "Combinator") lastCombinator = index;
   }
-  const relative2 = children[0]?.type === "Combinator";
+  const relative = children[0]?.type === "Combinator";
   const suffixNode = children.slice(lastCombinator + 1).find((child) => child.type === "PseudoElementSelector");
   const encodedBoundary = xmlEntities ? escapeCssXmlText(boundary) : boundary;
   const replacements = [];
-  if (!subjectOnly && !relative2) {
+  if (!subjectOnly && !relative) {
     const leading = children[0];
     const normalizedOffset = leading?.type === "TypeSelector" || leading?.type === "NestingSelector" ? leading.loc?.end.offset ?? location.start.offset : location.start.offset;
     const start = normalized.offsets[normalizedOffset];
     if (start === void 0) throw invalidCss2("CSS selector start position is invalid");
     replacements.push({ start, end: start, value: encodedBoundary });
   }
-  if (subjectOnly || relative2 || lastCombinator >= 0) {
+  if (subjectOnly || relative || lastCombinator >= 0) {
     const normalizedOffset = suffixNode?.loc?.start.offset ?? location.end.offset;
     const end = normalized.offsets[normalizedOffset];
     if (end === void 0) throw invalidCss2("CSS selector subject position is invalid");
@@ -28628,7 +28638,7 @@ import { resolve as resolve2 } from "path";
 init_esm_shims();
 import { readFile as readFile5, realpath, stat } from "fs/promises";
 import { existsSync } from "fs";
-import { dirname as dirname2, extname, isAbsolute, relative, resolve, sep } from "path";
+import { dirname as dirname2, extname, resolve, sep } from "path";
 import { fileURLToPath as fileURLToPath2 } from "url";
 
 // src/preview/errors.ts
@@ -28695,10 +28705,6 @@ function defaultAssetRoot() {
   const packaged = resolve(directory, "demo");
   return existsSync(packaged) ? packaged : resolve(directory, "../../docs/demo");
 }
-function inside(root, path4) {
-  const rel = relative(root, path4);
-  return rel !== ".." && !rel.startsWith(`..${sep}`) && !isAbsolute(rel);
-}
 async function serveAsset(root, rawPath, response) {
   let path4;
   try {
@@ -28710,11 +28716,15 @@ async function serveAsset(root, rawPath, response) {
   if (!path4.startsWith("/") || path4.includes("\\") || path4.includes("\0") || path4.split("/").some((part) => part === ".." || part.startsWith("."))) {
     throw new PreviewError(403, "path", "Asset path is not allowed.");
   }
-  const candidate = resolve(root, `.${path4.endsWith("/") ? `${path4}index.html` : path4}`);
-  if (!inside(root, candidate)) throw new PreviewError(403, "path", "Asset path is not allowed.");
+  const assetRoot = resolve(root);
+  const rootPrefix = assetRoot.endsWith(sep) ? assetRoot : `${assetRoot}${sep}`;
+  const candidate = resolve(assetRoot, `.${path4.endsWith("/") ? `${path4}index.html` : path4}`);
+  if (!candidate.startsWith(rootPrefix))
+    throw new PreviewError(403, "path", "Asset path is not allowed.");
   try {
-    const [realRoot, realFile] = await Promise.all([realpath(root), realpath(candidate)]);
-    if (!inside(realRoot, realFile))
+    const [realRoot, realFile] = await Promise.all([realpath(assetRoot), realpath(candidate)]);
+    const realPrefix = realRoot.endsWith(sep) ? realRoot : `${realRoot}${sep}`;
+    if (!realFile.startsWith(realPrefix))
       throw new PreviewError(403, "path", "Asset path is not allowed.");
     const type = MIME[extname(realFile)];
     if (!type || !(await stat(realFile)).isFile())

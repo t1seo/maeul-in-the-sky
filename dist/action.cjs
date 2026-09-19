@@ -68923,6 +68923,15 @@ var seasonalPalettes = {
   dark: Array.from({ length: 52 }),
   light: Array.from({ length: 52 })
 };
+function forMode(mode, palettes) {
+  switch (mode) {
+    case "dark":
+      return palettes.dark;
+    case "light":
+      return palettes.light;
+  }
+  throw new TypeError("Unsupported color mode");
+}
 function copyPalette(palette, assets = { ...palette.assets }) {
   return {
     ...palette,
@@ -68935,12 +68944,13 @@ function copyPalette(palette, assets = { ...palette.assets }) {
   };
 }
 function getTerrainPalette100(mode) {
-  return copyPalette(basePalettes[mode]);
+  return copyPalette(forMode(mode, basePalettes));
 }
 function getSeasonalPalette100(mode, week, rotation = 0) {
+  const base = forMode(mode, basePalettes);
+  const cache = forMode(mode, seasonalPalettes);
   const seasonalWeek = clamp((week + rotation) % 52, 0, 51);
   if (!Number.isInteger(seasonalWeek)) {
-    const base = basePalettes[mode];
     const palette2 = createSeasonalPalette100(
       mode,
       getSeasonalTint(week, rotation),
@@ -68949,15 +68959,15 @@ function getSeasonalPalette100(mode, week, rotation = 0) {
     );
     return copyPalette(palette2, palette2 === base ? { ...palette2.assets } : palette2.assets);
   }
-  const cached2 = seasonalPalettes[mode][seasonalWeek];
+  const cached2 = cache[seasonalWeek];
   if (cached2) return copyPalette(cached2);
   const palette = createSeasonalPalette100(
     mode,
     getSeasonalTint(week, rotation),
-    basePalettes[mode],
+    base,
     getTransitionBlend(week, rotation)
   );
-  seasonalPalettes[mode][seasonalWeek] = palette;
+  cache[seasonalWeek] = palette;
   return copyPalette(palette);
 }
 

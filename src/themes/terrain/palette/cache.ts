@@ -14,6 +14,16 @@ const seasonalPalettes: Record<ColorMode, (TerrainPalette100 | undefined)[]> = {
   light: Array.from({ length: 52 }),
 };
 
+function forMode<T>(mode: ColorMode, palettes: Readonly<Record<ColorMode, T>>): T {
+  switch (mode) {
+    case 'dark':
+      return palettes.dark;
+    case 'light':
+      return palettes.light;
+  }
+  throw new TypeError('Unsupported color mode');
+}
+
 function copyPalette(
   palette: TerrainPalette100,
   assets: AssetColors = { ...palette.assets },
@@ -30,7 +40,7 @@ function copyPalette(
 }
 
 export function getTerrainPalette100(mode: ColorMode): TerrainPalette100 {
-  return copyPalette(basePalettes[mode]);
+  return copyPalette(forMode(mode, basePalettes));
 }
 
 export function getSeasonalPalette100(
@@ -38,10 +48,11 @@ export function getSeasonalPalette100(
   week: number,
   rotation: number = 0,
 ): TerrainPalette100 {
+  const base = forMode(mode, basePalettes);
+  const cache = forMode(mode, seasonalPalettes);
   // Match seasons.ts exactly: negative remainders clamp; fractional weeks stay fractional.
   const seasonalWeek = clamp((week + rotation) % 52, 0, 51);
   if (!Number.isInteger(seasonalWeek)) {
-    const base = basePalettes[mode];
     const palette = createSeasonalPalette100(
       mode,
       getSeasonalTint(week, rotation),
@@ -50,14 +61,14 @@ export function getSeasonalPalette100(
     );
     return copyPalette(palette, palette === base ? { ...palette.assets } : palette.assets);
   }
-  const cached = seasonalPalettes[mode][seasonalWeek];
+  const cached = cache[seasonalWeek];
   if (cached) return copyPalette(cached);
   const palette = createSeasonalPalette100(
     mode,
     getSeasonalTint(week, rotation),
-    basePalettes[mode],
+    base,
     getTransitionBlend(week, rotation),
   );
-  seasonalPalettes[mode][seasonalWeek] = palette;
+  cache[seasonalWeek] = palette;
   return copyPalette(palette);
 }
