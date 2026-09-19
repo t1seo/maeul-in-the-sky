@@ -1,4 +1,14 @@
-import { Box3, OrthographicCamera, Vector3 } from 'three';
+import { Box3, Mesh, OrthographicCamera, Vector3, type Object3D } from 'three';
+
+export function visibleGeometryBounds(content: Object3D): Box3 {
+  const bounds = new Box3();
+  content.updateWorldMatrix(true, true);
+  content.traverseVisible((object) => {
+    if (object instanceof Mesh && object.userData.exportExclude !== true)
+      bounds.expandByObject(object);
+  });
+  return bounds;
+}
 
 export function worldCameraFrame(bounds: Box3, aspect: number): OrthographicCamera {
   const camera = new OrthographicCamera();

@@ -1,4 +1,4 @@
-import { Box3, Scene, type WebGLRenderer } from 'three';
+import { Scene, type WebGLRenderer } from 'three';
 import { frameWorld } from '../model/index.js';
 import type { WorldRenderer, WorldRendererCallbacks } from '../model/renderer-types.js';
 import type { WorldFocus, WorldScene, WorldView } from '../model/types.js';
@@ -11,6 +11,7 @@ import { capturePng, exportGlb } from './exports.js';
 import { focusBounds, toBounds } from './focus.js';
 import { renderFailure, ThreeRendererError } from './errors.js';
 import { observeShaderTextures } from './shader-textures.js';
+import { visibleGeometryBounds } from './camera-fit.js';
 
 export function createThreeController(
   renderer: WebGLRenderer,
@@ -30,7 +31,7 @@ export function createThreeController(
   const scene = new Scene();
   const geometry = createWorldGeometry(world);
   geometry.update(frame, view);
-  const bounds = toBounds(world.bounds).union(new Box3().setFromObject(geometry.content));
+  const bounds = toBounds(world.bounds).union(visibleGeometryBounds(geometry.content));
   const aspect = Math.max(1, host.clientWidth) / Math.max(1, host.clientHeight);
   const rig = createCameraRig(canvas, bounds, initial.camera, aspect);
   const atmosphere = createAtmosphere(world);
