@@ -3,6 +3,11 @@ import { selectAssetPlacements } from '../../src/themes/terrain/assets/selection
 import { getAssetCatalogEntry } from '../../src/themes/terrain/assets/catalog.js';
 import { getTerrainPalette100 } from '../../src/themes/terrain/palette.js';
 import type { IsoCell } from '../../src/themes/terrain/blocks.js';
+import { prepareTerrainScene } from '../../src/themes/terrain/scene/prepare.js';
+import { snapshotToContributionData } from '../../src/core/settings/parse.js';
+import { sampleSnapshot } from '../../src/demo/sample.js';
+import { isAssetType } from '../../src/themes/terrain/assets/catalog.js';
+import { isNaturalSelection } from './selection-fixtures.js';
 
 const cells: IsoCell[] = Array.from({ length: 364 }, (_, index) => ({
   date: new Date(Date.UTC(2025, 0, index + 1)).toISOString().slice(0, 10),
@@ -17,6 +22,30 @@ const cells: IsoCell[] = Array.from({ length: 364 }, (_, index) => ({
 }));
 
 describe('readable daily reward compositions', () => {
+  it('keeps the real demo nature-led with at most eight sailboat primaries', () => {
+    // Given the reproducible demo calendar and published rendering settings.
+    const data = snapshotToContributionData(sampleSnapshot());
+    // When the complete scene is prepared through the public terrain surface.
+    const scene = prepareTerrainScene(data, { style: 'classic', density: 6, motion: 'off' });
+    // Then the previous 26 repeated sailboats are replaced by varied natural rewards.
+    const primaries = scene.placements.filter((asset) => asset.primary);
+    const nature = primaries.filter(
+      (asset) => isAssetType(asset.catalogId) && isNaturalSelection(asset.catalogId),
+    );
+    const activeDates = data.weeks
+      .flatMap((week) => week.days)
+      .filter((day) => day.count > 0)
+      .map((day) => day.date)
+      .sort();
+    const rewardedDates = [...primaries, ...scene.wonders].map((asset) => asset.anchorDate).sort();
+    expect(rewardedDates).toEqual(activeDates);
+    expect(primaries.filter((asset) => asset.catalogId === 'sailboat').length).toBeLessThanOrEqual(
+      8,
+    );
+    expect(nature.length / primaries.length).toBeGreaterThanOrEqual(0.7);
+    expect(new Set(nature.map((asset) => asset.catalogId)).size).toBeGreaterThan(30);
+  });
+
   it.each(['classic', 'korean'] as const)('keeps tier-three %s scenery varied', (villageStyle) => {
     const assets = selectAssetPlacements(cells, 42, {
       villageStyle,

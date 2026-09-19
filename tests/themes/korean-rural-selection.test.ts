@@ -39,8 +39,8 @@ const cells: IsoCell[] = Array.from({ length: 700 }, (_, index) => ({
 describe('Korean rural catalog and cultural selection', () => {
   it('registers exactly nine additional original Korean IDs', () => {
     // Given the complete registry, when counted by culture, then all original IDs remain.
-    expect(ASSET_CATALOG_COUNTS).toEqual({ total: 202, classic: 189, korean: 13 });
-    expect(new Set(ASSET_CATALOG.map(({ id }) => id)).size).toBe(202);
+    expect(ASSET_CATALOG_COUNTS).toEqual({ total: 210, classic: 197, korean: 13 });
+    expect(new Set(ASSET_CATALOG.map(({ id }) => id)).size).toBe(210);
     const original = z
       .record(z.string(), z.array(z.string()))
       .parse(

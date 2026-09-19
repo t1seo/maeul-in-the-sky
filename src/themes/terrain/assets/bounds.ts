@@ -2,6 +2,14 @@ import type { AssetBounds, AssetType } from './types.js';
 
 /** Union of three variants at 4x raster sampling, rounded outward with motion padding. */
 export const ASSET_BOUNDS: Readonly<Record<AssetType, AssetBounds>> = {
+  cedarGrove: { x: -8, y: -17, width: 16, height: 19 },
+  ancientOak: { x: -8, y: -18, width: 16, height: 20 },
+  wildflowerMeadow: { x: -8, y: -10, width: 16, height: 12 },
+  bambooThicket: { x: -8, y: -17, width: 16, height: 19 },
+  lotusPond: { x: -8, y: -8, width: 16, height: 11 },
+  reedMarsh: { x: -8, y: -13, width: 16, height: 16 },
+  alpineRocks: { x: -8, y: -12, width: 16, height: 14 },
+  willowPond: { x: -8, y: -14, width: 16, height: 17 },
   whale: { x: -5, y: -6, width: 13, height: 9 },
   fish: { x: -4, y: -4, width: 9, height: 6 },
   fishSchool: { x: -3, y: -3, width: 6, height: 5 },

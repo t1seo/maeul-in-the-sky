@@ -1,5 +1,15 @@
 import type { Hemisphere } from '../../../core/render-options.js';
 import { getSeasonZone } from '../seasons.js';
+import type { PeakSeason } from '../seasons.js';
+
+const CALENDAR_SEASONS = ['winter', 'spring', 'summer', 'autumn'] as const;
+
+export function datePeakSeason(date: string, hemisphere: Hemisphere): PeakSeason {
+  if (!date) return hemisphere === 'south' ? 'summer' : 'winter';
+  const month = new Date(`${date}T00:00:00.000Z`).getUTCMonth();
+  const shiftedMonth = (month + 1 + (hemisphere === 'south' ? 6 : 0)) % 12;
+  return CALENDAR_SEASONS[Math.floor(shiftedMonth / 3)];
+}
 
 export function dateSeasonPosition(date: string, hemisphere: Hemisphere): number {
   if (!date) return hemisphere === 'south' ? 26 : 0;

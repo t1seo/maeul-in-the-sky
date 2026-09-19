@@ -27,6 +27,8 @@ import { dateSeasonPosition } from './season.js';
 import { renderDepthLayer } from './depth.js';
 import { renderPresentation } from './presentation.js';
 import { renderDailyRewards } from './rewards.js';
+import { renderConsistencyEffects } from '../effects/consistency.js';
+import { AssetSymbols } from './asset-symbols.js';
 
 export function renderTerrainScene(
   scene: TerrainScene,
@@ -69,6 +71,7 @@ export function renderTerrainScene(
     motionId('svg'),
   );
   const reference = getTerrainPalette100(mode);
+  const symbols = settings.motion === 'off' ? undefined : new AssetSymbols(accessibilityNamespace);
   const weekCount = scene.cells.length ? Math.max(...scene.cells.map((cell) => cell.week)) + 1 : 1;
   const firstSunday = scene.fromDate
     ? Date.parse(scene.fromDate) - new Date(scene.fromDate).getUTCDay() * 86400000
@@ -86,19 +89,22 @@ export function renderTerrainScene(
   const seed = hash(scene.seed.root);
   const rotation = dateSeasonPosition(scene.fromDate, settings.hemisphere);
   const body = renderMotionBranches({ mode: settings.motion, namespace }, () => {
-    const css = renderTerrainCSS(isoCells, biomes) + renderAssetCSS() + renderEpicCSS();
+    const townSparkles = scene.layoutVersion < 3;
+    const css =
+      renderTerrainCSS(isoCells, biomes, townSparkles) + renderAssetCSS() + renderEpicCSS();
     const definitions = scene.wonders.length ? `<defs>${renderEpicGlowDefs(mode)}</defs>` : '';
     const sky = renderCelestials(seed, reference, mode === 'dark') + renderClouds(seed, reference);
     const terrain =
       renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) +
       renderWaterOverlays(isoCells, reference, biomes) +
       renderWaterRipples(isoCells, reference, biomes) +
-      renderDepthLayer(scene, isoCells, palettes, settings.artStyle) +
+      renderDepthLayer(scene, isoCells, palettes, settings.artStyle, symbols) +
       renderDailyRewards(presented, palettes) +
       renderSnowParticles(isoCells, seed, rotation) +
       renderFallingPetals(isoCells, seed, reference, rotation) +
       renderFallingLeaves(isoCells, seed, reference, rotation) +
-      renderAnimatedOverlays(isoCells, reference);
+      renderAnimatedOverlays(isoCells, reference, townSparkles) +
+      renderConsistencyEffects(scene.consistencyEffects ?? [], mode);
     return (
       (css ? svgStyle(css) : '') +
       definitions +
@@ -112,6 +118,7 @@ export function renderTerrainScene(
     `${scene.wonders.length} wonders discovered. ${scene.normalization.kind} normalization, maximum ${scene.normalization.maxCount}.`;
   const content =
     `<rect width="${viewWidth}" height="${viewHeight}" rx="10" fill="${mode === 'dark' ? '#0d1117' : '#ffffff'}"/>` +
+    (symbols?.definitions() ?? '') +
     body +
     renderPresentation(presented, reference);
   return svgRoot(

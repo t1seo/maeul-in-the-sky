@@ -33,9 +33,9 @@ Maeul（마을）は韓国語で「村」という意味です。Contribution Ca
 - 100 段階の標高を持つ決定論的なアイソメトリック Terrain
 - 葉、花、シルエット、素材の色で区別できるカレンダーに沿った四季
 - 自動生成される川、池、森、天候、環境アニメーション
-- 通常アセット ID 202 個: classic 189 個 + korean 13 個（季節型 68 個、通年型 134 個）
+- 通常アセット ID 210 個: classic 197 個 + korean 13 個（季節型 68 個、通年型 142 個）
 - Rare、Epic、Legendary の 30 種類の Epic Wonders
-- 既存 223 ID の絵を刷新し、韓国の農村アセット 9 ID を追加した計 232 ID
+- 既存の絵を刷新し、韓国の農村 9 ID と自然景観 8 ID を追加した計 240 ID
 - 文化と独立した miniature/pixel の画風と、元の貢献数に基づく日別報酬
 - アクセシブルなタイトルと説明、視差効果を減らす設定に対応したダーク・ライト SVG
 - 北半球と南半球の季節配置
@@ -52,7 +52,7 @@ README プレビューと 6 枚のプリセット画像は、固定シードの*
 |                                                            Nature                                                             |                                                              Balanced                                                               |                                                                  Civilization                                                                   |
 | :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------: |
 | [![Nature プリセット](demo/assets/preset-nature-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=nature&mode=dark) | [![Balanced プリセット](demo/assets/preset-balanced-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=balanced&mode=dark) | [![Civilization プリセット](demo/assets/preset-civilization-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=civilization&mode=dark) |
-|                                                     森と開けた土地を多く                                                      |                                                      自然、農場、町のバランス                                                       |                                                           普段の活動日にも建物を多く                                                            |
+|                                                     装飾を抑え、余白を多く                                                      |                                                      毎日の自然景観に程よい装飾                                                       |                                                           同じ日別景観に豊かな装飾                                                            |
 |                                                       `preset: nature`                                                        |                                                         `preset: balanced`                                                          |                                                             `preset: civilization`                                                              |
 
 ## クイックスタート
@@ -263,13 +263,15 @@ GITHUB_TOKEN="$(gh auth token)" node dist/index.js preview --port 4318
 
 ## レイアウト、モーション、安定性
 
-dark/light は同じ準備済み scene を着色します。新しい出力は `layoutVersion: 2` で、正規化ユーザー名、任意の `layoutSeed`、絶対日付を使います。旧バージョン 1 の scene も描画できますが、再生成時はバージョン 2 となり配置が変わり得ます。固定正規化と周辺条件が不変なら、移動した期間の内部重複日は地形と通常配置を維持しますが画面位置は移動します。相対 P90、隣接条件、全体 Wonder 予算による変化や、異なる設定・範囲・バージョン間の pixel 一致は保証しません。
+dark/light は同じ準備済み scene を着色します。新しい出力は `layoutVersion: 3` で、正規化ユーザー名、任意の `layoutSeed`、絶対日付を使います。旧バージョン 1・2 の準備済み scene も描画できます。再生成時はバージョン 3 の seed によりアセット・biome・Wonder の配置が変わります。固定正規化と周辺条件が不変なら、移動した期間の内部重複日は地形と通常配置を維持しますが画面位置は移動します。相対 P90、隣接条件、全体 Wonder 予算による変化や、異なる設定・範囲・バージョン間の pixel 一致は保証しません。
 
-相対正規化は level 1〜99 を作り、0 は 0 のままです。季節は日付と半球に従い、春の花と新芽、夏の緑、秋の紅葉と収穫、冬の雪と裸枝を形と素材色で区別します。韓国風は既存 4 ID に `choga`、`jangseung`、`sotdae`、`riceTerrace`、`koreanWatermill`、`hanokGate`、`kimchiGarden`、`stoneBridge`、`hanokEstate` を追加します。高段階の通常報酬も韓国建築を使い、件数や Wonder 条件は変えません。
+相対正規化は level 1〜99 を作り、0 は 0 のままです。季節は日付と半球に従い、春の花と新芽、夏の緑、秋の紅葉と収穫、冬の雪と裸枝を形と素材色で区別します。韓国風は既存 4 ID に `choga`、`jangseung`、`sotdae`、`riceTerrace`、`koreanWatermill`、`hanokGate`、`kimchiGarden`、`stoneBridge`、`hanokEstate` を追加します。高段階の通常報酬は豊かな自然景観と少数の韓国建築を組み合わせ、件数や Wonder 条件は変えません。
 
 画風を変えても ID・日付・件数・報酬段階は同じです。既定の `miniature` は細かな SVG 原画、`pixel` は **0.5 SVG 単位の論理格子**にコンパイルした SVG path です。限定パレットは季節と dark/light に追従し、ピクセルアセットの実行時描画に Resvg や外部画像は不要です。scene の縮尺調整や外部の非整数倍率では、物理ピクセルへの整列は保証しません。
 
 banner/card はどちらも提供期間全体を保持します。`full` は全 ambient effect、`subtle` は遅い雲と穏やかな水、`off` は CSS animation/keyframe と SMIL を省略します。reduced-motion は完全な静的 fallback を選びます。PNG は常に `motion: off`、不透明背景、倍率 1〜4 (既定 2) で再レンダーした静止画像です。
+
+自然景観を主役とし、建物や船は少数のアクセントとして配置します。新しい自然アセット 8 種には各 3 種の形状があります。直近 28 暦日の活動日が 5・12・20 日に達すると季節の効果が豊かになります。提供された日付のみを数え、観測日数を別に記録します。効果は最大 10 群で、モーションを止めても静止画として残ります。
 
 ## JavaScript とブラウザ API
 
@@ -316,7 +318,7 @@ await generateArchive({
 
 ## カタログと再現可能なプレビュー
 
-[インタラクティブカタログ](https://t1seo.github.io/maeul-in-the-sky/catalog/)は miniature/pixel を切り替えられ、韓国の全 13 ID を含みます。通常 **202 = classic 189 + korean 13**（季節型 68、通年型 134）と Wonder **30 = Rare 14 + Epic 10 + Legendary 6** を別集計し、合計は **232 ID** です。variant・画風・配置数は ID 数を増やしません。
+[インタラクティブカタログ](https://t1seo.github.io/maeul-in-the-sky/catalog/)は miniature/pixel を切り替えられ、韓国の全 13 ID を含みます。通常 **210 = classic 197 + korean 13**（季節型 68、通年型 142）と Wonder **30 = Rare 14 + Epic 10 + Legendary 6** を別集計し、合計は **240 ID** です。variant・画風・配置数は ID 数を増やしません。
 
 原画変更後はピクセルアセットを再生成し、テストやビルド前に `--check` で差分を検出してください。その他の生成コマンドは[貢献ガイド](../CONTRIBUTING.md)を参照してください。
 

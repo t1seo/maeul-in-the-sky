@@ -13,30 +13,29 @@ const LEGEND_BINS = [
 ] as const;
 
 function scaleName(scene: TerrainScene): string {
-  return scene.normalization.kind === 'fixed' ? 'Fixed scale' : 'Relative P90 scale';
+  return scene.normalization.kind === 'fixed' ? 'Fixed scale' : 'Relative scale';
 }
 
-function renderSwatches(palette: TerrainPalette100, layout: TerrainLayout): string {
+function renderHeightBars(palette: TerrainPalette100, layout: TerrainLayout): string {
   const card = layout === 'card';
   const startX = 24;
-  const y = card ? 327 : 69;
-  const width = card ? 64 : 34;
+  const baseline = card ? 340 : 83;
+  const slotWidth = card ? 64 : 34;
+  const width = card ? 32 : 18;
   const gap = card ? 13 : 5;
-  const labelY = card ? 354 : 94;
+  const labelY = card ? 354 : 97;
   return LEGEND_BINS.map((bin, index) => {
-    const x = startX + index * (width + gap);
+    const x = startX + index * (slotWidth + gap) + (slotWidth - width) / 2;
+    const height = 2 + Math.round((bin.level / 99) * 14);
     return (
       svgElement('rect', {
         class: 'height-legend-swatch',
         x,
-        y,
+        y: baseline - height,
         width,
-        height: card ? 11 : 10,
-        rx: 2,
-        fill: palette.getElevation(bin.level).top,
-        stroke: palette.text.secondary,
-        'stroke-opacity': 0.38,
-        'stroke-width': 0.6,
+        height,
+        rx: 1,
+        fill: palette.text.secondary,
         'data-level': bin.level,
         'data-bin': bin.label.toLowerCase(),
         role: 'img',
@@ -59,7 +58,7 @@ export function renderHeightLegend(scene: TerrainScene, palette: TerrainPalette1
   const maximum = formatNumber(scene.normalization.maxCount);
   const ariaLabel =
     `Contribution height legend. ${scale} from 0 to ${maximum} contributions. ` +
-    'Five palette bins from low to high.';
+    'Five increasing bars represent terrain height. Terrain colors follow the seasons.';
   const heading = card
     ? `Height · Low → High · ${scale} 0–${maximum}`
     : 'Contribution height · Low → High';
@@ -73,10 +72,10 @@ export function renderHeightLegend(scene: TerrainScene, palette: TerrainPalette1
       'font-weight': 600,
       fill: palette.text.primary,
     }) +
-      renderSwatches(palette, scene.settings.layout) +
+      renderHeightBars(palette, scene.settings.layout) +
       (card
         ? ''
-        : svgText(24, 111, visibleScale, {
+        : svgText(24, 114, visibleScale, {
             'font-family': FONT,
             'font-size': 9,
             fill: palette.text.secondary,

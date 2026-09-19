@@ -5,7 +5,11 @@ import { THW, THH } from '../blocks.js';
 import { selectEvenly } from './selection.js';
 const MAX_WATER = 15;
 const MAX_SPARKLE = 10;
-export function renderAnimatedOverlays(isoCells: IsoCell[], palette: TerrainPalette100): string {
+export function renderAnimatedOverlays(
+  isoCells: IsoCell[],
+  palette: TerrainPalette100,
+  townSparkles = true,
+): string {
   const overlays: string[] = [];
   const mode = currentMotionContext().mode;
 
@@ -27,7 +31,7 @@ export function renderAnimatedOverlays(isoCells: IsoCell[], palette: TerrainPale
   }
 
   // Town sparkle overlays (level 90+)
-  const townCells = isoCells.filter((c) => c.level100 >= 90);
+  const townCells = townSparkles ? isoCells.filter((c) => c.level100 >= 90) : [];
   const selectedTown = selectEvenly(townCells, MAX_SPARKLE);
   for (let i = 0; i < selectedTown.length; i++) {
     const cell = selectedTown[i];

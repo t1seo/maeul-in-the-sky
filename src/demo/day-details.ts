@@ -33,7 +33,10 @@ export function describeDay(cell: TerrainCellMetadata, metadata: TerrainMetadata
       : cell.rewardTier === 0
         ? ' · No daily reward'
         : ` · Daily reward ${cell.rewardTier}/5 (${DAILY_REWARD_MINIMUMS[cell.rewardTier]}+ contributions)`;
-  return `${cell.date} · ${cell.count.toLocaleString()} contribution${cell.count === 1 ? '' : 's'} ${biome}${reward}${names.length ? ` · ${names.join(', ')}` : ''}.`;
+  const consistency = cell.consistency
+    ? ` · Consistency ${cell.consistency.tier}/3 (${cell.consistency.activeDays} active days in trailing 28 days; ${cell.consistency.observedDays} supplied)`
+    : '';
+  return `${cell.date} · ${cell.count.toLocaleString()} contribution${cell.count === 1 ? '' : 's'} ${biome}${reward}${consistency}${names.length ? ` · ${names.join(', ')}` : ''}.`;
 }
 
 export function showDay(
@@ -48,4 +51,13 @@ export function showDay(
   target.dataset.count = String(cell.count);
   if (cell.rewardTier === undefined) delete target.dataset.rewardTier;
   else target.dataset.rewardTier = String(cell.rewardTier);
+  if (cell.consistency) {
+    target.dataset.consistencyTier = String(cell.consistency.tier);
+    target.dataset.consistencyActiveDays = String(cell.consistency.activeDays);
+    target.dataset.consistencyObservedDays = String(cell.consistency.observedDays);
+  } else {
+    delete target.dataset.consistencyTier;
+    delete target.dataset.consistencyActiveDays;
+    delete target.dataset.consistencyObservedDays;
+  }
 }

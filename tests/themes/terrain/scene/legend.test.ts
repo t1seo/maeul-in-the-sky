@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest';
+import { SaxesParser } from 'saxes';
 import type { SceneCell } from '../../../../src/core/scene-types.js';
 import { renderTerrain, prepareTerrainScene } from '../../../../src/themes/terrain/index.js';
-import { getTerrainPalette100 } from '../../../../src/themes/terrain/palette.js';
+import {
+  getSeasonalPalette100,
+  getTerrainPalette100,
+} from '../../../../src/themes/terrain/palette.js';
+import { renderHeightLegend } from '../../../../src/themes/terrain/scene/legend.js';
 import { renderPresentation } from '../../../../src/themes/terrain/scene/presentation.js';
 import { calendarFixture, sceneOptions } from './fixtures.js';
 
@@ -9,26 +14,62 @@ function occurrences(svg: string, marker: string): number {
   return svg.split(marker).length - 1;
 }
 
+function heightBars(svg: string) {
+  const bars: { readonly height: number; readonly bottom: number; readonly fill: string }[] = [];
+  const parser = new SaxesParser({ xmlns: false });
+  parser.on('opentag', (tag) => {
+    if (tag.name === 'rect' && tag.attributes.class === 'height-legend-swatch') {
+      const height = Number(tag.attributes.height);
+      bars.push({ height, bottom: Number(tag.attributes.y) + height, fill: tag.attributes.fill });
+    }
+  });
+  parser.write(svg).close();
+  return bars;
+}
+
 describe('terrain height legend', () => {
   it.each(['dark', 'light'] as const)(
-    'renders five accessible contribution bins from the %s palette',
+    'explains contribution height with ascending neutral bars in %s mode',
     (mode) => {
       // Given: a fixed normalization scale and the actual mode palette.
       const palette = getTerrainPalette100(mode);
-      const expectedColors = [0, 20, 45, 70, 99].map((level) => palette.getElevation(level).top);
 
       // When: the public banner renderer shades the prepared scene.
       const svg = renderTerrain(calendarFixture(), sceneOptions)[mode];
 
-      // Then: five labeled swatches expose their palette level and count context.
+      // Then: shape encodes height, while one neutral color avoids a seasonal color key.
       expect(occurrences(svg, 'class="height-legend-swatch"')).toBe(5);
+      const bars = heightBars(svg);
+      expect(new Set(bars.map((bar) => bar.fill))).toEqual(new Set([palette.text.secondary]));
+      expect(new Set(bars.map((bar) => bar.bottom)).size).toBe(1);
+      expect(bars.every((bar, index) => index === 0 || bar.height > bars[index - 1].height)).toBe(
+        true,
+      );
       expect(svg).toContain('aria-label="Contribution height legend.');
       expect(svg).toContain('Fixed scale');
       expect(svg).toContain('0–25 contributions');
       for (const bin of ['Empty', 'Low', 'Mid', 'High', 'Max']) {
         expect(svg).toContain(`>${bin}</text>`);
       }
-      for (const color of expectedColors) expect(svg).toContain(`fill="${color}"`);
+      expect(svg).not.toContain('Water and trees are scenery');
+    },
+  );
+
+  it.each(['banner', 'card'] as const)(
+    'keeps the %s height key consistent through all four seasonal palettes',
+    (layout) => {
+      // Given: the same contributions with four different seasonal surface colors.
+      const scene = prepareTerrainScene(calendarFixture(), { ...sceneOptions, layout });
+      const palettes = [0, 14, 28, 42].map((week) => getSeasonalPalette100('light', week));
+
+      // When: each seasonal palette renders the same contribution key.
+      const legends = palettes.map((palette) => heightBars(renderHeightLegend(scene, palette)));
+
+      // Then: changing seasons never changes the key's meaning or geometry.
+      expect(new Set(palettes.map((palette) => palette.getElevation(45).top)).size).toBeGreaterThan(
+        1,
+      );
+      for (const bars of legends) expect(bars).toEqual(legends[0]);
     },
   );
 
@@ -53,7 +94,7 @@ describe('terrain height legend', () => {
     // When: the legend is rendered.
     const content = renderPresentation(scene, getTerrainPalette100('light'));
 
-    // Then: distinct colors are named as elevation bands, never duplicate exact counts.
+    // Then: height bands remain categorical, never duplicate exact counts.
     expect(occurrences(content, 'class="height-legend-swatch"')).toBe(5);
     expect(content).toContain(`0–${maximum} contributions`);
     expect(content).not.toContain('contributions, elevation');

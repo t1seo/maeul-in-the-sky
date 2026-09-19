@@ -213,4 +213,12 @@ export type AssetType =
   | 'hanokGate'
   | 'kimchiGarden'
   | 'stoneBridge'
-  | 'hanokEstate';
+  | 'hanokEstate'
+  | 'cedarGrove'
+  | 'ancientOak'
+  | 'wildflowerMeadow'
+  | 'bambooThicket'
+  | 'lotusPond'
+  | 'reedMarsh'
+  | 'alpineRocks'
+  | 'willowPond';

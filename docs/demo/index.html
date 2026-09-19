@@ -53,7 +53,7 @@
           </div>
           <div class="preset-detail">
             <strong id="preset-name">Balanced</strong>
-            <p id="preset-description">A mix of nature, farms, villages, and cities.</p>
+            <p id="preset-description">Balanced detail around daily natural features.</p>
           </div>
           <form id="settings-form" class="enhanced" hidden novalidate>
             <div class="form-row appearance-fields">
@@ -198,10 +198,10 @@
             <p class="enhanced" id="scale-note" hidden></p>
           </div>
           <div class="legend">
-            <span>Less</span
-            ><span class="swatches" aria-label="Five contribution levels, from low to high"
+            <span>Low</span
+            ><span class="swatches" role="img" aria-label="Five contribution heights, from low to high"
               ><i></i><i></i><i></i><i></i><i></i></span
-            ><span>More</span
+            ><span>High</span
             ><span class="season-note">Height follows activity. Seasons follow dates.</span>
           </div>
           <details id="day-explorer" class="date-inspector enhanced" hidden>
@@ -356,6 +356,15 @@
             At 25 and 50 contributions, the main feature becomes more substantial, even when terrain
             height has reached its limit. Density and other busy days do not lower a day's growth.
             Wonders are extra discoveries alongside this daily growth.
+          </p>
+          <p class="guide-note">
+            Groves, meadows, and waterside gardens lead the landscape. Buildings and boats appear as
+            occasional landmarks among varied natural shapes.
+          </p>
+          <p class="guide-note" id="consistency-guide">
+            Keep returning to see more life: 5, 12, and 20 active days in the past 28 calendar days
+            enrich seasonal petals, fireflies, leaves, or frost. Rest days are welcome. Only
+            supplied activity counts, and the details remain visible with motion turned off.
           </p>
           <p class="guide-note">
             These are playful visual milestones, not a measure of code quality. Open
@@ -518,15 +527,15 @@
       const presets = {
         nature: {
           name: 'Nature',
-          description: 'Fewer buildings, with more forests and open terrain.',
+          description: 'Light decoration with more open space.',
         },
         balanced: {
           name: 'Balanced',
-          description: 'A mix of nature, farms, villages, and cities.',
+          description: 'Balanced detail around daily natural features.',
         },
         civilization: {
           name: 'Civilization',
-          description: 'More buildings across everyday contribution levels.',
+          description: 'Richer decoration around the same daily features.',
         },
       };
       window.maeulInitialSearch = window.location.search;

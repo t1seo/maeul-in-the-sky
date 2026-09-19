@@ -43,9 +43,9 @@ describe('catalog regeneration', { timeout: 30_000 }, () => {
       expect((await readFile(join(outputDirectory, name))).byteLength).toBeGreaterThan(0);
     }
     await expect(verifyGeneratedCatalog(outputDirectory)).resolves.toEqual({
-      assets: 202,
+      assets: 210,
       wonders: 30,
-      records: 232,
+      records: 240,
     });
   });
 

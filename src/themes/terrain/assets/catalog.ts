@@ -62,6 +62,24 @@ const CATEGORIES: readonly AssetCategory[] = [
   'decoration',
 ];
 const SEASONS: readonly Exclude<AssetSeason, 'all'>[] = ['winter', 'spring', 'summer', 'autumn'];
+const NATURE_DESCRIPTIONS: Partial<Record<AssetType, string>> = {
+  cedarGrove:
+    'Layered evergreen cedars with tiered boughs, exposed roots and three distinct grove silhouettes.',
+  ancientOak:
+    'A venerable oak with a broad lobed crown, gnarled roots, a hollow trunk and seasonal foliage.',
+  wildflowerMeadow:
+    'A flowering meadow with leafy banks, tall flower spires or broad petalled blooms.',
+  bambooThicket:
+    'A grove of jointed evergreen bamboo canes with fanned leaves and small grounding stones.',
+  lotusPond:
+    'An irregular pool with veined floating leaves, layered lotus blooms and waterside shoots.',
+  reedMarsh:
+    'A shallow marsh with distinct stands of arching reed blades, cattail heads and reflected ripples.',
+  alpineRocks:
+    'Weathered alpine crags, layered slabs or a natural stone arch with moss and tufted grasses.',
+  willowPond:
+    'A quiet pool shaded by sweeping willow curtains, with floating leaves and a mossy bank.',
+};
 
 export function isAssetType(value: string): value is AssetType {
   return Object.hasOwn(ASSET_RENDERERS, value);
@@ -83,6 +101,7 @@ export function getAssetCatalogEntry(id: AssetType): AssetCatalogEntry {
     bounds: ASSET_BOUNDS[id],
     description:
       KOREAN_DESCRIPTIONS[id] ??
+      NATURE_DESCRIPTIONS[id] ??
       `${displayName}, a ${category} asset${season === 'all' ? ' available throughout the year' : ` for ${season}`}.`,
   };
 }

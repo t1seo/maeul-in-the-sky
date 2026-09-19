@@ -1,17 +1,17 @@
 export const VILLAGE_PRESETS = {
   nature: {
     displayName: 'Nature',
-    description: 'Fewer buildings, with more forests and open terrain',
+    description: 'Light decoration with more open space',
     density: 2,
   },
   balanced: {
     displayName: 'Balanced',
-    description: 'A mix of nature, farms, villages, and cities',
+    description: 'Balanced detail around daily natural features',
     density: 5,
   },
   civilization: {
     displayName: 'Civilization',
-    description: 'More buildings across everyday contribution levels',
+    description: 'Richer decoration around the same daily features',
     density: 9,
   },
 } as const;

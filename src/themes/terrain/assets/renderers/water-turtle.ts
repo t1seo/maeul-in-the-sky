@@ -33,7 +33,28 @@ export function svgBuoy(x: number, y: number, c: AssetColors, _v: number): strin
   );
 }
 
-export function svgSailboat(x: number, y: number, c: AssetColors, _v: number): string {
+export function svgSailboat(x: number, y: number, c: AssetColors, v: number): string {
+  if (v === 1) {
+    return (
+      `<g transform="translate(${x},${y})">` +
+      `<g transform="scale(.92,1)">${waterBoatHull(c)}</g>` +
+      `<path d="M-.8,-1.1V-6.9" stroke="${c.trunk}" stroke-width=".25"/>` +
+      `<path d="M-1.9,-6.1 1.6,-6.6 Q2.8,-4.6 2.3,-2.8 L-1.5,-2.3Z" fill="${c.sail}"/>` +
+      `<path d="M.6,-6.45 1.6,-6.6 Q2.8,-4.6 2.3,-2.8 L1.4,-2.7 Q1.6,-4.8 .6,-6.45Z" fill="${c.whaleBelly}" opacity=".45"/>` +
+      `<path d="M-1.9,-6.1 1.6,-6.6 M-1.5,-2.3 2.3,-2.8" stroke="${c.trunk}" stroke-width=".18"/>` +
+      `<path d="M-.8,-6.9 .5,-6.6 -.8,-6.2Z" fill="${c.flag}"/></g>`
+    );
+  }
+  if (v === 2) {
+    return (
+      `<g transform="translate(${x},${y})">` +
+      `<g transform="scale(1.05,.85)">${waterBoatHull(c)}</g>` +
+      `<path d="M.6,-1.1 .3,-5.9 M-2.8,-2.2 2.9,-6.8" stroke="${c.trunk}" stroke-width=".24"/>` +
+      `<path d="M-2.8,-2.2 2.9,-6.8 Q2.5,-4.1 1.4,-1.8Z" fill="${c.sail}"/>` +
+      `<path d="M2.9,-6.8 Q2.5,-4.1 1.4,-1.8 L.45,-1.9 Q1.9,-3.7 2.9,-6.8Z" fill="${c.whaleBelly}" opacity=".4"/>` +
+      `<path d="M-2.8,-2.2 1.4,-1.8" stroke="${c.trunk}" stroke-width=".18"/></g>`
+    );
+  }
   return (
     `<g transform="translate(${x},${y})">` +
     `<g transform="scale(1.1,1)">${waterBoatHull(c)}</g>` +

@@ -11,8 +11,8 @@ const fingerprints: unknown = JSON.parse(
 
 describe('asset catalog', () => {
   it('exports a complete catalog when classic and Korean assets are registered', () => {
-    expect(assets.ASSET_CATALOG_COUNTS).toEqual({ total: 202, classic: 189, korean: 13 });
-    expect(new Set(assets.ASSET_CATALOG.map((entry) => entry.id)).size).toBe(202);
+    expect(assets.ASSET_CATALOG_COUNTS).toEqual({ total: 210, classic: 197, korean: 13 });
+    expect(new Set(assets.ASSET_CATALOG.map((entry) => entry.id)).size).toBe(210);
   });
 
   it('preserves all approved miniature art variants', () => {

@@ -1,9 +1,11 @@
 import type { PixelSprite } from '../types.js';
 import { sprites as acorn } from './acorn.js';
+import { sprites as ancientOak } from './ancientOak.js';
 import { sprites as autumnBirch } from './autumnBirch.js';
 import { sprites as autumnGinkgo } from './autumnGinkgo.js';
 import { sprites as autumnMaple } from './autumnMaple.js';
 import { sprites as autumnOak } from './autumnOak.js';
+import { sprites as bambooThicket } from './bambooThicket.js';
 import { sprites as bareBush } from './bareBush.js';
 import { sprites as beehive } from './beehive.js';
 import { sprites as berryBush } from './berryBush.js';
@@ -12,6 +14,7 @@ import { sprites as bird } from './bird.js';
 import { sprites as birdhouse } from './birdhouse.js';
 import { sprites as butterfly } from './butterfly.js';
 import { sprites as butterflyGarden } from './butterflyGarden.js';
+import { sprites as cedarGrove } from './cedarGrove.js';
 import { sprites as cherryBlossom } from './cherryBlossom.js';
 import { sprites as cherryBlossomBranch } from './cherryBlossomBranch.js';
 import { sprites as cherryBlossomFull } from './cherryBlossomFull.js';
@@ -39,15 +42,18 @@ import { sprites as spider } from './spider.js';
 import { sprites as squirrel } from './squirrel.js';
 import { sprites as stump } from './stump.js';
 import { sprites as tallGrass } from './tallGrass.js';
+import { sprites as wildflowerMeadow } from './wildflowerMeadow.js';
 import { sprites as wildflowerPatch } from './wildflowerPatch.js';
 import { sprites as willow } from './willow.js';
 import { sprites as winterBird } from './winterBird.js';
 export const sprites: Readonly<Record<string, readonly PixelSprite[]>> = {
   acorn,
+  ancientOak,
   autumnBirch,
   autumnGinkgo,
   autumnMaple,
   autumnOak,
+  bambooThicket,
   bareBush,
   beehive,
   berryBush,
@@ -56,6 +62,7 @@ export const sprites: Readonly<Record<string, readonly PixelSprite[]>> = {
   birdhouse,
   butterfly,
   butterflyGarden,
+  cedarGrove,
   cherryBlossom,
   cherryBlossomBranch,
   cherryBlossomFull,
@@ -83,6 +90,7 @@ export const sprites: Readonly<Record<string, readonly PixelSprite[]>> = {
   squirrel,
   stump,
   tallGrass,
+  wildflowerMeadow,
   wildflowerPatch,
   willow,
   winterBird,

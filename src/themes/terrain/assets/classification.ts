@@ -2,6 +2,9 @@ import type { AssetCategory, AssetType } from './types.js';
 
 export const CATEGORY_MEMBERS: Readonly<Record<AssetCategory, readonly AssetType[]>> = {
   water: [
+    'lotusPond',
+    'reedMarsh',
+    'willowPond',
     'whale',
     'fish',
     'fishSchool',
@@ -23,6 +26,7 @@ export const CATEGORY_MEMBERS: Readonly<Record<AssetCategory, readonly AssetType
     'frozenPond',
   ],
   shore: [
+    'alpineRocks',
     'rock',
     'boulder',
     'flower',
@@ -42,6 +46,10 @@ export const CATEGORY_MEMBERS: Readonly<Record<AssetCategory, readonly AssetType
     'surfboard',
   ],
   woodland: [
+    'cedarGrove',
+    'ancientOak',
+    'wildflowerMeadow',
+    'bambooThicket',
     'pine',
     'deciduous',
     'mushroom',

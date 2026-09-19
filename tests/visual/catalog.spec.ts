@@ -42,7 +42,7 @@ test('C04 catalog filters original artwork and reports an empty combination', as
   await page.goto('/docs/demo/catalog/');
   await expect(page.getByRole('heading', { name: 'Every small thing in the sky.' })).toBeVisible();
   const cards = page.locator('[data-catalog-card]');
-  await expect(cards).toHaveCount(232);
+  await expect(cards).toHaveCount(240);
   await expectVisibleArtworkWithinBounds(cards);
 
   // When
@@ -59,7 +59,7 @@ test('C04 catalog filters original artwork and reports an empty combination', as
   await expect(page.locator('html')).toHaveAttribute('data-mode', 'light');
   await expect(cards.filter({ visible: true })).toHaveCount(expectedWinter.length);
   await expect(page.locator('#result-count')).toHaveText(
-    `Showing ${expectedWinter.length} of 232 entries`,
+    `Showing ${expectedWinter.length} of 240 entries`,
   );
   await expectVisibleArtworkWithinBounds(cards);
 
@@ -78,7 +78,7 @@ test('C04 catalog filters original artwork and reports an empty combination', as
   await expect(page.locator('#empty-state')).toContainText('No catalog entries match');
 
   await page.getByRole('button', { name: 'Clear filters' }).click();
-  await expect(cards.filter({ visible: true })).toHaveCount(232);
+  await expect(cards.filter({ visible: true })).toHaveCount(240);
   await page.getByLabel('Family').selectOption('korean');
   await expect(cards.filter({ visible: true })).toHaveCount(13);
   await testInfo.attach(`catalog-${testInfo.project.name}`, {
@@ -165,7 +165,7 @@ test('C04 every pixel symbol is loaded and unclipped in either lighting mode', a
   const cards = page.locator('[data-catalog-card]');
   for (const lighting of ['Dark', 'Light'] as const) {
     await page.getByRole('button', { name: lighting, exact: true }).click();
-    await expect(cards.filter({ visible: true })).toHaveCount(232);
+    await expect(cards.filter({ visible: true })).toHaveCount(240);
     await expectVisibleArtworkWithinBounds(cards);
   }
   await page.getByLabel('Family').selectOption('wonder');
@@ -174,6 +174,6 @@ test('C04 every pixel symbol is loaded and unclipped in either lighting mode', a
   await page.getByRole('button', { name: 'Clear filters' }).click();
   await expect(page.getByLabel('Art style', { exact: true })).toHaveValue('pixel');
   await expect(page.locator('html')).toHaveAttribute('data-mode', 'light');
-  await expect(cards.filter({ visible: true })).toHaveCount(232);
+  await expect(cards.filter({ visible: true })).toHaveCount(240);
   await expect(page.getByLabel('Find an asset')).toBeFocused();
 });

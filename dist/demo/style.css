@@ -448,25 +448,27 @@ output {
 }
 .swatches {
   display: flex;
+  align-items: flex-end;
   gap: 3px;
+  height: 16px;
 }
 .swatches i {
   width: 12px;
-  height: 10px;
-  background: #58716a;
+  height: 3px;
+  background: var(--muted);
   border-radius: 2px;
 }
 .swatches i:nth-child(2) {
-  background: #78945c;
+  height: 6px;
 }
 .swatches i:nth-child(3) {
-  background: #90ab6c;
+  height: 9px;
 }
 .swatches i:nth-child(4) {
-  background: #b0c78b;
+  height: 12px;
 }
 .swatches i:nth-child(5) {
-  background: #e4edce;
+  height: 16px;
 }
 .season-note {
   margin-left: auto;
