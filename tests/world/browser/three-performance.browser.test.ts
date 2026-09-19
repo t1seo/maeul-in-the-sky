@@ -4,7 +4,7 @@ import { inputFor, sequence } from '../model/helpers.js';
 import { browserFrames, openThree } from '../three/browser-harness.js';
 
 describe('annual Three WebGL workload', () => {
-  it.each(['archipelago', 'island', 'seasonal'] as const)(
+  it.each(['archipelago', 'island', 'seasonal', 'seasonal-circle'] as const)(
     'renders every dated %s scene with bounded GPU submissions',
     async (layout) => {
       const input = inputFor(sequence('2024-01-01', 366, 25));

@@ -77,6 +77,24 @@ jobs:
           git diff --exit-code -- dist docs/demo/app docs/demo/world/app docs/demo/versions
           test -z "$(git ls-files --others --exclude-standard dist docs/demo/app docs/demo/world/app docs/demo/versions)"
 
+  profile:
+    name: 3D Profile Capture
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - name: Capture a complete seasonal circle with the optional Action
+        uses: ./profile
+        with:
+          snapshot_path: tests/fixtures/improvements/mixed-2025.json
+          output_dir: test-results/profile
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: four-season-circle-profile
+          path: test-results/profile/
+          retention-days: 14
+
   browser_projects:
     name: Browser Regression (${{ matrix.project }})
     runs-on: ubuntu-24.04

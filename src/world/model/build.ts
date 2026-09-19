@@ -1,6 +1,9 @@
 import { dayEntities } from './assets.js';
 import { assertSceneComplexity } from './complexity.js';
 import { prepareDays } from './calendar.js';
+import { prepareCircularTerrain } from './circular-terrain.js';
+import { circularSettlement } from './circular-settlement.js';
+import { circularTransit } from './circular-transit.js';
 import { discoveriesFor, prepareRewards } from './events.js';
 import { prepareInput } from './input.js';
 import { boundsOf, digest } from './math.js';
@@ -16,16 +19,33 @@ export function buildWorld(input: WorldInput): WorldScene {
   const { snapshot, settings, range } = prepared;
   const seed = `${snapshot.username}:${settings.layoutSeed}`;
   const days = prepareDays(prepared);
-  const geography = prepareTerrain(days, prepared);
-  const transit = prepareTransit(geography.months, days, seed);
+  const circle = settings.layout === 'seasonal-circle';
+  const geography = circle
+    ? prepareCircularTerrain(days, prepared)
+    : prepareTerrain(days, prepared);
+  const transit = circle
+    ? circularTransit(geography.terrain.tiles, days, settings, seed)
+    : prepareTransit(geography.months, days, seed);
   const rewards = prepareRewards(days, geography.months, settings, seed);
+  const settlement = circle
+    ? circularSettlement(geography, days, settings, seed)
+    : {
+        entities: settlementEntities(geography.months, days, settings, seed),
+        projectTiles: geography.projectTiles,
+      };
   const baseEntities = [
     ...dayEntities(days, geography.terrain.tiles, settings, seed),
-    ...settlementEntities(geography.months, days, settings, seed),
+    ...settlement.entities,
     ...transit.entities,
     ...rewards.entities,
   ];
-  const projects = repositoryEntities(prepared, geography.months, seed, baseEntities);
+  const projects = repositoryEntities(
+    prepared,
+    geography.months,
+    seed,
+    baseEntities,
+    settlement.projectTiles,
+  );
   const entities = [...baseEntities, ...projects.entities].sort((a, b) => a.id.localeCompare(b.id));
   const events = [...rewards.events, ...projects.events].sort(
     (a, b) => a.startsOn.localeCompare(b.startsOn) || a.id.localeCompare(b.id),
@@ -69,6 +89,14 @@ export function buildWorld(input: WorldInput): WorldScene {
         ...geography.terrain.tiles.map((tile) => tile.position),
         ...geography.terrain.waterways.flatMap((water) => water.points),
         ...entities.map((entity) => entity.position),
+        ...(circle
+          ? entities
+              .filter((entity) => entity.id.startsWith('scenery:circle:'))
+              .map((entity) => ({
+                ...entity.position,
+                y: entity.position.y + entity.scale.y * 1.5,
+              }))
+          : []),
       ],
       2,
     ),

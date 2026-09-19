@@ -33,6 +33,10 @@ const PLANTS = [
 ] as const satisfies readonly (readonly [WorldModelFamily, string])[];
 
 export function reservedPlotKeys(month: MonthTerrain): readonly string[] {
+  if (month.reservedTileIds)
+    return month.tiles
+      .filter((tile) => month.reservedTileIds?.has(tile.id))
+      .map((tile) => `${tile.position.x}:${tile.position.z}`);
   return RESERVED.map(([x, z]) => {
     const point = monthPoint(month.origin, month.rotation, x, z);
     return `${point.x}:${point.z}`;

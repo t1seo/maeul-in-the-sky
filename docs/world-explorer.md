@@ -13,6 +13,7 @@ Classic preserves the browser bundle from commit `05a10eff07575acf2c81adcd66a66b
 ## Explore and replay
 
 - Choose a monthly archipelago, one large connected island, or four seasonal islands. The large island joins January–December terrain while keeping each month's seasonal scenery. Seasonal islands group months by spring, summer, autumn and winter; northern winter includes December, January and February, and the southern hemisphere shifts the grouping by six months. Partial ranges show the seasons represented in that range.
+- **Four-season circle** combines all four seasonal landscapes into one round floating island. Spring blossoms, summer greenery, autumn foliage and winter snow occupy distinct quarters. Coastal rivers drop into the sky as waterfalls, with flowing streaks, droplets and mist. Empty seasonal areas are scenery and do not add contribution records.
 - Each supplied date keeps its own identity; scenery is separate from contribution days. A rolling year may include 13 different year-months. Switching layouts keeps the contribution history and chronological timeline intact. World files and local saves retain the selected layout; a season preview changes the scenery without regrouping the islands.
 - Switch between the SVG map and genuine 3D. In 3D, drag to orbit and use the wheel or a two-finger gesture to zoom. Focus on a month, a date or a moving resident, and reset to the whole world at any time.
 - Move the date cursor or start playback to reveal history. Statistics, discoveries and earned effects follow the cursor, so future activity does not unlock rewards in the past.
@@ -52,6 +53,51 @@ Photo exports include PNG and self-contained SVG for the map, plus PNG and GLB f
 
 The map remains available when WebGL 2 is unavailable. The 3D engine loads when you choose 3D. A desktop-sized viewport is best for whole-world detail; mobile controls and reduced-motion preferences are supported.
 
+Published links can add `&view=three` after their `world` parameter to open directly in 3D. Ordinary links still start with the map. The saved world preserves its geometry and camera; switching layouts is an explicit regeneration step.
+
 From a source checkout, run `npm ci`, `npm run build`, then `node dist/index.js preview`. Open the printed local address and choose **Explore your world**. The packaged preview serves the same world application as Pages. The existing CLI, Action and browser rendering APIs still produce SVG without loading Three.js.
 
 The current world explorer is published from `main`. npm `1.4.0` and the older floating `v1` Action tag do not contain it; follow the source-checkout or tested commit instructions in the README.
+
+## Show a 3D island on your profile
+
+GitHub READMEs display images, so the preview is a still frame rendered by the real Three.js engine. Clicking it opens the interactive world, where visitors can orbit, zoom and replay dates. [GitHub removes executable scripts from rendered markup](https://github.com/github/markup).
+
+Add this optional step **after** your existing generation step with `write_snapshot: 'true'`, and **before** committing generated files:
+
+```yaml
+- name: Capture the four-season sky island
+  uses: t1seo/maeul-in-the-sky/profile@main
+  with:
+    snapshot_path: maeul-in-the-sky.snapshot.json
+    output_dir: .
+```
+
+Use the same tested commit SHA for this step and the root generator Action when pinning your workflow. This opt-in action installs Node development dependencies and headless Chromium on the runner; the ordinary SVG Action remains lightweight. Contribution data is fetched once by the original step. Capture consumes that local snapshot without a GitHub token or additional account requests.
+
+Commit these generated files together with the snapshot and existing SVGs:
+
+- `maeul-in-the-sky-world.json` — the exact frozen circle scene and canonical daytime view.
+- `maeul-in-the-sky-world-light.png` — daytime Three preview.
+- `maeul-in-the-sky-world-dark.png` — the same scene and camera in starlight.
+
+Both images are 1600 × 1160, including their source/statistics caption. Capture fails when Three cannot render; it does not publish a fallback map. All three outputs are staged and validated before replacing the previous set. Keep the final commit step conditional on successful generation so a failed scheduled run leaves the last published world and previews together.
+
+Use the PNGs in a theme-aware `<picture>` and link to:
+
+```text
+https://t1seo.github.io/maeul-in-the-sky/world/?world=https%3A%2F%2Fraw.githubusercontent.com%2FYOUR_USERNAME%2FYOUR_USERNAME%2Fmain%2Fmaeul-in-the-sky-world.json&view=three
+```
+
+Replace both `YOUR_USERNAME` segments with your account. The inner JSON URL must be public HTTPS with no credentials or query string. Keep the original SVG files if you also use the strip design elsewhere. Deploy the current explorer before linking a new circle document.
+
+From a source checkout, the same pipeline is available with:
+
+```bash
+npm ci
+npm run build
+npx playwright install chromium
+npm run render:profile -- --input /path/to/snapshot.json --output-dir /path/to/profile
+```
+
+`--evidence /path/to/capture.json` optionally records capture metrics. Manual reruns use the same workflow as scheduled refreshes; the displayed image reflects the last successful published run.

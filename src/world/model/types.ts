@@ -21,7 +21,7 @@ export type * from './geometry-types.js';
 export type * from './repository-types.js';
 
 export type WorldSettings = {
-  readonly layout: 'archipelago' | 'island' | 'seasonal';
+  readonly layout: 'archipelago' | 'island' | 'seasonal' | 'seasonal-circle';
   readonly layoutSeed: string;
   readonly hemisphere: 'north' | 'south';
   readonly culture: 'classic' | 'korean';

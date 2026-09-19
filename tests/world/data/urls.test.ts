@@ -11,6 +11,33 @@ describe('world source URLs', () => {
     expect(parseWorldSourceUrl(link)).toBe(source);
   });
 
+  it('opens the same public JSON when a copied profile link requests 3D', () => {
+    // Given: the profile links directly to the interactive Three view.
+    const link = `https://octocat.github.io/world/?world=${encodeURIComponent(source)}&view=three`;
+    // When / Then: presentation is accepted without changing the source boundary.
+    expect(parseWorldSourceUrl(link)).toBe(source);
+  });
+
+  it.each(['view=invalid', 'view=three&view=map', 'view=three&token=secret'])(
+    'rejects ambiguous or unsupported visit presentation: %s',
+    (query) => {
+      // Given / When / Then: only one explicit supported view can accompany a source.
+      expect(() =>
+        parseWorldSourceUrl(
+          `https://octocat.github.io/world/?world=${encodeURIComponent(source)}&${query}`,
+        ),
+      ).toThrow();
+    },
+  );
+
+  it('shares an explicitly requested 3D view with its exact public source', () => {
+    // Given / When: the visitor is viewing the published world in Three.
+    const link = new URL(createWorldShareUrl('https://octocat.github.io/world/', source, 'three'));
+    // Then: opening or copying the link retains both source and renderer intent.
+    expect(link.searchParams.get('view')).toBe('three');
+    expect(parseWorldSourceUrl(link.href)).toBe(source);
+  });
+
   it.each([
     'http://raw.githubusercontent.com/a/b/main/world.json',
     'https://user:password@octocat.github.io/world.json',

@@ -6,7 +6,7 @@ import { inputFor, sequence } from '../../model/helpers.js';
 import { measureGeometry } from './metrics.js';
 
 describe('complete annual world budget', () => {
-  it.each(['archipelago', 'island', 'seasonal'] as const)(
+  it.each(['archipelago', 'island', 'seasonal', 'seasonal-circle'] as const)(
     'batches a real 366-day %s below 150 visible meshes and 200000 triangles',
     (layout) => {
       // Given

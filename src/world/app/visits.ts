@@ -12,6 +12,7 @@ import type {
   WorldVisit,
 } from '../data/index.js';
 import type { WorldSession } from './session.js';
+import type { RendererMode } from './renderer.js';
 import { prepareIncoming } from './incoming.js';
 import {
   action,
@@ -74,11 +75,11 @@ export function setupVisits(
       );
   }
 
-  async function showImported(incoming: ImportedWorlds): Promise<void> {
+  async function showImported(incoming: ImportedWorlds, mode?: RendererMode): Promise<void> {
     const first = incoming.documents[0];
     if (!first) throw new TypeError('This public file contains no worlds to open.');
     const next = beginVisit(visit?.home ?? session.current(), first, incoming.publicSourceUrl);
-    if (!(await session.open(first))) return;
+    if (!(await session.open(first, mode))) return;
     visit = next;
     showVisit();
     dialog('visits-dialog').close();
@@ -87,10 +88,10 @@ export function setupVisits(
     );
   }
 
-  async function openRemote(url: string): Promise<void> {
+  async function openRemote(url: string, mode?: RendererMode): Promise<void> {
     status('Loading the public world.');
     const incoming = await gate.run((signal) => loadRemoteWorld(url, { pageUrl, signal }));
-    if (!signal.aborted) await showImported(prepareIncoming(incoming));
+    if (!signal.aborted) await showImported(prepareIncoming(incoming), mode);
   }
 
   async function openOwn(document: WorldDocumentV1): Promise<void> {
@@ -139,6 +140,7 @@ export function setupVisits(
       const share = createWorldShareUrl(
         new URL('./', pageUrl).href,
         input('visit-url').value.trim(),
+        session.mode(),
       );
       input('share-link').value = share;
       html('share-link-field').hidden = false;

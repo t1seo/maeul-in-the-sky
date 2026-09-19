@@ -32,6 +32,7 @@ export function connectMonths(
   switch (layout) {
     case 'archipelago':
     case 'island':
+    case 'seasonal-circle':
       return months;
     case 'seasonal': {
       const occupied = new Set(

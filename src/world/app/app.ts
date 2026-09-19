@@ -30,6 +30,9 @@ export type WorldAppOptions = {
 };
 
 export async function startWorldApp(options: WorldAppOptions) {
+  const parameters = new URLSearchParams(options.search ?? window.location.search);
+  const remote = parameters.get('world');
+  const requestedMode = parameters.get('view') === 'three' ? 'three' : 'map';
   const lifetime = new AbortController();
   const { signal } = lifetime;
   const library = createWorldLibrary({ databaseName: options.databaseName });
@@ -136,7 +139,7 @@ export async function startWorldApp(options: WorldAppOptions) {
     { signal },
   );
 
-  await session.open(initial, 'map');
+  await session.open(initial, remote ? 'map' : requestedMode);
   html('world-host').dataset.ready = 'true';
   if (transferred && !warning) window.sessionStorage.removeItem('maeul-world-transfer');
   status(
@@ -147,9 +150,7 @@ export async function startWorldApp(options: WorldAppOptions) {
         : 'Opened your records and saved view.',
   );
   if (warning) reportError(warning);
-  const parameters = new URLSearchParams(options.search ?? window.location.search);
-  const remote = parameters.get('world');
-  if (remote) action(() => visits.openRemote(remote));
+  if (remote) action(() => visits.openRemote(remote, requestedMode));
   if (parameters.get('panel') === 'activity') html('open-analytics').click();
   const dispose = async (): Promise<void> => {
     lifetime.abort();

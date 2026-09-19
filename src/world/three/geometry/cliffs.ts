@@ -23,12 +23,20 @@ export function createCliffs(scene: WorldScene, patches: readonly TerrainPatch[]
   }
   const islands = new Map(scene.islands.map((island) => [island.id, island]));
   const colors = ['#b7a88b', '#b6a08d', '#947f74', '#766969'].map((hex) => new Color(hex));
-  const rings = [
-    { scale: 1, y: -0.22 },
-    { scale: 0.96, y: -0.75 },
-    { scale: 0.77, y: -1.6 },
-    { scale: 0.45, y: -2.25 },
-  ] as const;
+  const circular = scene.settings.layout === 'seasonal-circle';
+  const rings = circular
+    ? [
+        { scale: 1, y: -0.45 },
+        { scale: 0.97, y: -3 },
+        { scale: 0.83, y: -4.4 },
+        { scale: 0.45, y: -5.6 },
+      ]
+    : ([
+        { scale: 1, y: -0.22 },
+        { scale: 0.96, y: -0.75 },
+        { scale: 0.77, y: -1.6 },
+        { scale: 0.45, y: -2.25 },
+      ] as const);
   const buffer = new SurfaceBuffer();
   for (const edge of edges.values()) {
     const island = islands.get(edge.islandId);
@@ -51,7 +59,7 @@ export function createCliffs(scene: WorldScene, patches: readonly TerrainPatch[]
     buffer.triangle(
       b,
       a,
-      { x: center.x, y: scene.terrain.waterLevel - 2.5, z: center.z },
+      { x: center.x, y: scene.terrain.waterLevel - (circular ? 6.3 : 2.5), z: center.z },
       new Color('#69616a'),
     );
   }

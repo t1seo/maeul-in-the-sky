@@ -3,60 +3,14 @@ import type { WorldDocumentV1 } from '../data/index.js';
 import { downloadBlob, downloadText } from '../../demo/downloads.js';
 import type { WorldSession } from './session.js';
 import { click, status } from './dom.js';
-import { atmosphereLabel, dateLabel } from './presentation.js';
 import { WorldAppError } from './errors.js';
-import { sourcePeriod } from './incoming.js';
-
-const WIDTH = 1600;
-const IMAGE_HEIGHT = 1000;
-const FOOTER = 160;
-
-function caption(document: WorldDocumentV1): readonly [string, string, string] {
-  return [
-    `${document.scene.username}’s Sky World`,
-    `${dateLabel(document.view.cursorDate)} · ${atmosphereLabel(document.view, document.scene)}`,
-    `${document.sourceSnapshot.source.kind === 'sample' ? 'Sample records' : document.sourceSnapshot.source.kind === 'github' ? 'GitHub contributions' : 'Imported records'} · ${sourcePeriod(document)} · MAEUL IN THE SKY`,
-  ];
-}
-
-async function postcard(image: Blob, document: WorldDocumentV1): Promise<Blob> {
-  const bitmap = await createImageBitmap(image);
-  try {
-    const canvas = window.document.createElement('canvas');
-    canvas.width = WIDTH;
-    canvas.height = IMAGE_HEIGHT + FOOTER;
-    const context = canvas.getContext('2d');
-    if (!context)
-      throw new WorldAppError(
-        'capture',
-        'Could not create a PNG. Please save the landscape as SVG.',
-      );
-    context.fillStyle = '#f6f4ec';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(bitmap, 0, 0, WIDTH, IMAGE_HEIGHT);
-    context.fillStyle = '#293e39';
-    context.textAlign = 'center';
-    const [title, atmosphere, source] = caption(document);
-    context.font = '30px Georgia, serif';
-    context.fillText(title, WIDTH / 2, IMAGE_HEIGHT + 47, WIDTH - 80);
-    context.font = '18px sans-serif';
-    context.fillText(atmosphere, WIDTH / 2, IMAGE_HEIGHT + 84, WIDTH - 80);
-    context.fillStyle = '#697569';
-    context.font = '14px sans-serif';
-    context.fillText(source, WIDTH / 2, IMAGE_HEIGHT + 119, WIDTH - 80);
-    return await new Promise<Blob>((resolve, reject) => {
-      canvas.toBlob(
-        (blob) =>
-          blob
-            ? resolve(blob)
-            : reject(new WorldAppError('capture', 'Could not save the PNG. Please use SVG.')),
-        'image/png',
-      );
-    });
-  } finally {
-    bitmap.close();
-  }
-}
+import { postcardCaption as caption } from './postcard-copy.js';
+import {
+  postcard,
+  POSTCARD_WIDTH as WIDTH,
+  POSTCARD_IMAGE_HEIGHT as IMAGE_HEIGHT,
+  POSTCARD_FOOTER as FOOTER,
+} from './postcard.js';
 
 async function mapPostcard(current: WorldDocumentV1): Promise<Blob> {
   const { mountMap } = await import('../map/index.js');

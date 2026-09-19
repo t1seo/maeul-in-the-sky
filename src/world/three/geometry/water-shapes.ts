@@ -10,6 +10,7 @@ export function addStream(
   offset = 0,
   bands: readonly number[] = [-0.5, -0.32, 0, 0.32, 0.5],
   fallback: readonly [number, number] = [0, 1],
+  widthScale?: (point: Vec3) => number,
 ): void {
   const distinct = points.filter((point, index) => {
     const previous = points[index - 1];
@@ -29,11 +30,12 @@ export function addStream(
     const distance = Math.hypot(dx, dz);
     const x = distance ? dz / distance : fallback[1];
     const z = distance ? -dx / distance : -fallback[0];
+    const scale = widthScale?.(point) ?? 1;
     const section = bands.map((side): WaterVertex => ({
       point: {
-        x: point.x + x * (side * width + offset),
+        x: point.x + x * (side * width + offset) * scale,
         y: point.y + elevation,
-        z: point.z + z * (side * width + offset),
+        z: point.z + z * (side * width + offset) * scale,
       },
       uv: [side + 0.5, length / 2.8],
       depth: Math.max(0, 1 - Math.abs(side) * 2) ** 0.55,

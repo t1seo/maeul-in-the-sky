@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Four-season circle** — one connected round sky island groups absolute contribution dates into spring, summer, autumn and winter quadrants, with stable positions across rolling ranges and scenery for unrecorded seasons
+- **Sky waterfalls** — coastal rivers fall below the floating island with flowing streaks, droplets, mist and seasonal frost, using the existing motion and reduced-motion controls
+- **3D profile previews** — an optional composite Action captures the actual Three.js world into light/dark PNGs alongside its matching saved world; explicit `view=three` links open the same interactive landscape with map fallback when needed
 - **Activity dashboard** — contribution trends, monthly commit/PR comparisons, weekday totals, exact data tables, period filters and keyboard-accessible chart values are available from both demo menus
 - **Recorded monthly activity** — GitHub fetching now preserves optional monthly commit, PR, issue, review, repository and restricted contribution counts through snapshots, archives and saved worlds; older files clearly show unavailable breakdowns
 - **Selectable classic renderer** — preserve the exact pre-world browser renderer with provenance and integrity checks; switch versions with the same contribution history, share the selection, export with the selected engine, and generate a profile workflow pinned to the original commit

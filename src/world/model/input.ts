@@ -5,7 +5,7 @@ import { WorldModelError } from './errors.js';
 import type { WorldInput, WorldRange } from './types.js';
 
 export const worldSettingsSchema = z.strictObject({
-  layout: z.enum(['archipelago', 'island', 'seasonal']),
+  layout: z.enum(['archipelago', 'island', 'seasonal', 'seasonal-circle']),
   layoutSeed: z.string().max(256),
   hemisphere: z.enum(['north', 'south']),
   culture: z.enum(['classic', 'korean']),

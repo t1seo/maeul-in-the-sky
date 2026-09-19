@@ -104,3 +104,26 @@ test.each(['archipelago', 'island'] as const)(
     expect(months.at(-1)).toBe('2025-01');
   },
 );
+
+test('labels all four circle landscapes without inventing dates for absent seasons', () => {
+  // Given: only February records in a complete four-season landscape.
+  const source = inputFor([['2024-02-28', 3]], 2024, { from: '2024-02-28', to: '2024-02-29' });
+  const scene = buildWorld({
+    ...source,
+    settings: { ...source.settings, layout: 'seasonal-circle' },
+  });
+  // When: the circle map is labelled.
+  const result = labels(scene);
+  const seasons = result.tags.filter((tag) => tag['data-season-label']);
+  // Then: all four geographic seasons appear; month evidence contains only February.
+  expect(seasons.map((tag) => tag['data-season-label']).sort()).toEqual([
+    'autumn',
+    'spring',
+    'summer',
+    'winter',
+  ]);
+  expect(seasons.flatMap((tag) => (tag['data-months'] ?? '').split(' ').filter(Boolean))).toEqual([
+    '2024-02',
+  ]);
+  expect(result.tags.filter((tag) => tag['data-month-label'])).toHaveLength(0);
+});

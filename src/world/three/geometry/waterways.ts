@@ -1,11 +1,14 @@
 import { DoubleSide, Mesh, MeshStandardMaterial, Vector2 } from 'three';
 import type { BufferGeometry, Group } from 'three';
-import type { WorldScene, WorldView } from '../../model/types.js';
+import type { Vec3, WorldScene, WorldView } from '../../model/types.js';
 import type { GeometryResources } from './resources.js';
 import { addBasins } from './water-basins.js';
 import { WaterBuffer } from './water-buffer.js';
 import { addPond, addStream } from './water-shapes.js';
 import { createWaterTextures } from './water-textures.js';
+import { createWaterfallEffects } from './waterfall-effects.js';
+import { createWaterfallFrost } from './waterfall-frost.js';
+import { waterfallDirection, waterfallPath, type WaterfallSurface } from './waterfall-path.js';
 
 function prepareOverlay(geometry: BufferGeometry, distance: number): BufferGeometry {
   geometry.deleteAttribute('color');
@@ -31,6 +34,7 @@ export function createWaterways(
 ): (view: WorldView) => void {
   const water = new WaterBuffer();
   const foam = new WaterBuffer();
+  const waterfalls: WaterfallSurface[] = [];
   addBasins(water, foam, scene);
   for (const waterway of scene.terrain.waterways) {
     switch (waterway.kind) {
@@ -44,29 +48,32 @@ export function createWaterways(
         addStream(foam, waterway.points, 0.045, 0.063, 0, [-0.5, 0.5]);
         break;
       case 'waterfall': {
-        const mouth = waterway.points[0];
-        const river = scene.terrain.waterways.find(
-          (item) =>
-            item.kind === 'river' &&
-            item.islandId === waterway.islandId &&
-            item.points.at(-1)?.x === mouth?.x &&
-            item.points.at(-1)?.z === mouth?.z,
-        );
-        const previous = river?.points.at(-2);
-        const dx = mouth && previous ? mouth.x - previous.x : 0;
-        const dz = mouth && previous ? mouth.z - previous.z : 1;
-        const length = Math.hypot(dx, dz) || 1;
-        const direction: readonly [number, number] = [dx / length, dz / length];
-        addStream(water, waterway.points, waterway.width, 0, 0, undefined, direction);
+        const direction = waterfallDirection(scene, waterway);
+        const path = waterfallPath(scene, waterway, direction);
+        const spread = (point: Vec3) =>
+          path
+            ? 1 +
+              0.55 *
+                Math.min(1, Math.max(0, (path.mouth.y - point.y) / (path.mouth.y - path.end.y)))
+            : 1;
+        const firstVertex = water.surface.positions.length / 3;
+        addStream(water, waterway.points, waterway.width, 0, 0, undefined, direction, spread);
+        if (path)
+          waterfalls.push({
+            path,
+            firstVertex,
+            vertexCount: water.surface.positions.length / 3 - firstVertex,
+          });
         for (const side of [-0.32, -0.1, 0.16, 0.36])
           addStream(
             foam,
             waterway.points,
-            waterway.width * 0.065,
+            waterway.width * 0.12,
             0.003,
             side * waterway.width,
             [-0.5, 0.5],
             direction,
+            spread,
           );
         break;
       }
@@ -79,6 +86,12 @@ export function createWaterways(
   if (!water.surface.positions.length) return () => {};
   const textures = createWaterTextures(resources);
   const geometry = resources.geometry(water.build());
+  const animateFalls = createWaterfallEffects(
+    waterfalls.map((surface) => surface.path),
+    content,
+    resources,
+  );
+  const frost = createWaterfallFrost(scene, waterfalls, geometry, content, resources);
   const mesh = new Mesh(
     geometry,
     resources.material(
@@ -138,5 +151,7 @@ export function createWaterways(
     textures.current.offset.y = -((view.elapsedSeconds * 0.045) % 1);
     textures.shore.offset.y = -((view.elapsedSeconds * 0.072) % 1);
     textures.normal.offset.y = -((view.elapsedSeconds * 0.025) % 1);
+    animateFalls(view.elapsedSeconds);
+    frost(view);
   };
 }

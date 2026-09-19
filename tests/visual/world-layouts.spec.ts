@@ -9,6 +9,7 @@ const choices = [
   ['archipelago', 'Monthly islands'],
   ['island', 'One large island'],
   ['seasonal', 'Seasonal islands'],
+  ['seasonal-circle', 'Four-season circle'],
 ] as const;
 
 function world(source: WorldInput) {
@@ -51,7 +52,7 @@ async function upload(page: Page, value: string): Promise<void> {
   await expect(page.locator('#world-status')).toContainText('world imported');
 }
 
-test('all three landforms preserve selected date, counts and mobile access', async ({
+test('all four landforms preserve selected date, counts and mobile access', async ({
   page,
 }, info) => {
   // Given an annual world and a selected leap day.
