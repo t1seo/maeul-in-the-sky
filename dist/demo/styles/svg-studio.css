@@ -1,0 +1,42 @@
+.site-header nav {
+  align-items: center;
+}
+.site-header #explore-activity {
+  border: 0;
+  background: transparent;
+  padding: 8px 0;
+  font: inherit;
+}
+.site-header #explore-activity:hover {
+  color: var(--green);
+  text-decoration: underline;
+}
+.experiment-archive {
+  margin: 40px 0 0;
+  padding: 24px 0;
+  border-block: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.experiment-archive summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--muted);
+}
+.experiment-archive p {
+  max-width: 70ch;
+}
+#analytics-dialog {
+  --surface: var(--panel);
+  max-width: calc(100vw - 30px);
+}
+#analytics-dialog .field {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+}
+#analytics-dialog .fine-print {
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--muted);
+}

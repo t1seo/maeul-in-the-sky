@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Restore the animated diagonal SVG village as the main studio and profile experience, with Day/Night previews and automatic or fixed Day/Night README exports
+- Preserve 2D/3D island worlds and 3D profile capture tooling as explicitly archived experiments, with existing routes and saved files still supported
+- Open Activity charts directly in the SVG studio using the current source snapshot, without navigating to the archived world explorer
+
 ### Added
 
 - **Four-season circle** — one connected round sky island groups absolute contribution dates into spring, summer, autumn and winter quadrants, with stable positions across rolling ranges and scenery for unrecorded seasons

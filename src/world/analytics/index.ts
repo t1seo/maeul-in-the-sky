@@ -1,6 +1,5 @@
 import type { SnapshotV1 } from '../../core/snapshot-types.js';
 import { dialog, select } from '../app/dom.js';
-import type { WorldSession } from '../app/session.js';
 import { monthText } from './format.js';
 import { setupChartInteraction } from './interaction.js';
 import { buildAnalytics } from './model.js';
@@ -21,7 +20,7 @@ function granularity(value: string): Granularity {
 }
 
 export function setupAnalytics(
-  session: WorldSession,
+  currentSnapshot: () => SnapshotV1,
   signal: AbortSignal,
 ): { readonly refresh: () => void } {
   const month = select('analytics-month');
@@ -36,7 +35,7 @@ export function setupAnalytics(
 
   function refresh(): void {
     if (signal.aborted) return;
-    const current = session.current().sourceSnapshot;
+    const current = currentSnapshot();
     const nextGroup = granularity(grouping.value);
     const dataChanged = current !== source || month.value !== selection || nextGroup !== group;
     if (!dataChanged && width === root.clientWidth) return;

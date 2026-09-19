@@ -1,8 +1,10 @@
 # 하늘 세계 탐험기
 
+> **보관된 실험입니다.** 기본 화면은 대각선 애니메이션 SVG 마을입니다. 낮·밤 미리보기와 프로필 설정은 [SVG 스튜디오](https://t1seo.github.io/maeul-in-the-sky/)를 이용해 주세요. 이 문서는 기존 섬 도구, 저장 파일 호환성과 선택형 3D 캡처 방법을 보존합니다.
+
 [탐험기 열기](https://t1seo.github.io/maeul-in-the-sky/world/) · [English guide](world-explorer.md)
 
-기여 기록의 하루하루가 하늘에 떠 있는 미니어처 세계의 장소가 됩니다. 샘플로 시작하거나 스냅샷·여러 해 아카이브를 가져오실 수 있습니다. 기존 데모의 **Explore your world**를 누르면 현재 보고 계신 기록이 탐험기로 이어집니다.
+기여 기록의 하루하루가 하늘에 떠 있는 미니어처 세계의 장소가 됩니다. 샘플로 시작하거나 스냅샷·여러 해 아카이브를 가져오실 수 있습니다. SVG 스튜디오 하단의 **Archive · 3D & island experiments → Open archived world explorer**를 누르면 현재 보고 계신 기록이 탐험기로 이어집니다.
 
 ## 보기 버전 선택
 

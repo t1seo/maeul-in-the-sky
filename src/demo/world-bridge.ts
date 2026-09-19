@@ -3,21 +3,23 @@ import { serializeSnapshot } from '../core/settings/serialize.js';
 import { element, errorMessage, status } from './dom.js';
 import { parseSnapshot } from '../core/settings/parse.js';
 import type { RendererVersion } from './renderer-version.js';
+import { setupDemoAnalytics } from './analytics.js';
 
 export function setupWorldBridge(
   currentSnapshot: () => SnapshotV1,
   renderer: () => RendererVersion = () => 'current',
-): void {
+  transferSnapshot: () => SnapshotV1 = currentSnapshot,
+): { readonly refresh: () => void; readonly dispose: () => void } {
   const world = element('#explore-world', HTMLAnchorElement);
-  const activity = document.querySelector<HTMLAnchorElement>('#explore-activity');
-  for (const link of activity ? [world, activity] : [world]) {
-    link.addEventListener('click', (event) => {
+  const lifetime = new AbortController();
+  const { signal } = lifetime;
+  const refresh = setupDemoAnalytics(currentSnapshot, signal);
+  world.addEventListener(
+    'click',
+    (event) => {
       try {
-        sessionStorage.setItem('maeul-world-transfer', serializeSnapshot(currentSnapshot()));
-        link.setAttribute(
-          'href',
-          `./world/?renderer=${renderer()}${link === activity ? '&panel=activity' : ''}`,
-        );
+        sessionStorage.setItem('maeul-world-transfer', serializeSnapshot(transferSnapshot()));
+        world.setAttribute('href', `./world/?renderer=${renderer()}`);
       } catch (error) {
         event.preventDefault();
         status(
@@ -25,8 +27,17 @@ export function setupWorldBridge(
           true,
         );
       }
-    });
-  }
+    },
+    { signal },
+  );
+  window.addEventListener(
+    'pagehide',
+    (event) => {
+      if (!event.persisted) lifetime.abort();
+    },
+    { signal },
+  );
+  return { refresh, dispose: () => lifetime.abort() };
 }
 
 export function consumeDemoTransfer(open: (snapshot: SnapshotV1) => void): void {

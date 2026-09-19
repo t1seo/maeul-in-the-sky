@@ -1,8 +1,10 @@
 # Sky world explorer
 
+> **Archived experiment.** The animated diagonal SVG village is the default. [Open the SVG studio](https://t1seo.github.io/maeul-in-the-sky/) for Day/Night previews and profile setup. This guide preserves the earlier island tools, saved-world compatibility and optional 3D capture workflow.
+
 [Open the explorer](https://t1seo.github.io/maeul-in-the-sky/world/) · [한국어 안내](world-explorer.ko.md)
 
-Your contribution dates become places in a floating miniature world. Start from the sample, import a snapshot/archive, or choose **Explore your world** in the original demo to carry the currently displayed history into the explorer.
+Your contribution dates become places in a floating miniature world. Start from the sample, import a snapshot/archive, or open **Archive · 3D & island experiments → Open archived world explorer** at the bottom of the SVG studio to carry the currently displayed history into the explorer.
 
 ## Choose a rendering version
 

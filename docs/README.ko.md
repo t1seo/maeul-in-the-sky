@@ -18,15 +18,15 @@
   <img alt="GitHub Contribution Calendar로 만든 아이소메트릭 마을" src="../.github/assets/preview-dark.svg" width="840">
 </picture>
 
-[**하늘 세계 탐험**](https://t1seo.github.io/maeul-in-the-sky/world/) · [프리셋 데모](https://t1seo.github.io/maeul-in-the-sky/) · [빠른 시작](#빠른-시작) · [npm](https://www.npmjs.com/package/maeul-in-the-sky) · [쇼케이스](../SHOWCASE.md)
+[**SVG 마을 스튜디오**](https://t1seo.github.io/maeul-in-the-sky/) · [낮](https://t1seo.github.io/maeul-in-the-sky/?mode=light) · [밤](https://t1seo.github.io/maeul-in-the-sky/?mode=dark) · [빠른 시작](#빠른-시작) · [쇼케이스](../SHOWCASE.md)
 
 </div>
 
 GitHub Contribution Calendar의 하루가 하늘에 떠 있는 Terrain의 일부가 됩니다. 조용한 날에는 물과 빈 땅이 생기고, 활발한 날에는 숲, 농장, 마을, 도시와 희귀한 Wonder가 자랍니다.
 
-프로필 결과물은 독립 실행형 SVG 두 개입니다. 프로필 README에서 GitHub 색상 모드에 맞춰 전환되며, 클라이언트 JavaScript가 필요하지 않습니다. 별도의 [하늘 세계 탐험기](https://t1seo.github.io/maeul-in-the-sky/world/)에서는 같은 기록을 섬 지도와 실제 3D 미니어처로 둘러보실 수 있습니다.
+기본 화면은 위와 같은 대각선 형태의 애니메이션 SVG 마을입니다. 프로필 결과물은 독립 실행형 SVG 두 개이며, 클라이언트 JavaScript가 필요하지 않습니다. 스튜디오에서 **Day(낮)** 또는 **Night(밤)**를 선택하실 수 있습니다. **README picture**에서는 GitHub 테마 자동 전환이나 낮·밤 고정을 선택하실 수 있습니다. 움직임은 사용자의 모션 축소 설정을 따릅니다.
 
-이전 디자인을 계속 사용하시려면 [SVG 데모의 클래식 버전](https://t1seo.github.io/maeul-in-the-sky/?renderer=classic)을 선택해 주세요. 업데이트 직전의 렌더러를 그대로 사용하며, 설정 화면에서 받는 워크플로도 `05a10eff07575acf2c81adcd66a66bc501507217`에 고정됩니다. 탐험기의 보기 버전 선택으로 같은 원본 기록을 최신 SVG 또는 클래식 SVG로 이어 보실 수 있습니다.
+원래 그림체를 계속 사용하시려면 [SVG 스튜디오의 클래식 버전](https://t1seo.github.io/maeul-in-the-sky/?renderer=classic)을 선택해 주세요. 업데이트 직전의 렌더러를 그대로 사용하며, 설정 화면에서 받는 워크플로도 `05a10eff07575acf2c81adcd66a66bc501507217`에 고정됩니다.
 
 **현재 `main` 기준 문서입니다.** 아래의 에셋·사계절·일별 성장·그림체 개선은 npm `1.4.0`과 현재 `v1` Action 태그에 포함되어 있지 않습니다. 이번 변경은 `main`과 GitHub Pages 데모를 대상으로 하므로 Action은 `@main`, CLI와 라이브러리는 아래 소스 체크아웃 예제를 사용해 주세요.
 
@@ -44,13 +44,13 @@ GitHub Contribution Calendar의 하루가 하늘에 떠 있는 Terrain의 일부
 - 기여 기간, 활동일, 연속 기여, 가장 활발한 달, 발견한 Wonder 수
 - 배너/카드 레이아웃, 전체/은은함/끔 모션, 정적 PNG, 확대 가능한 브라우저 탐색기
 - 버전이 있는 설정·스냅샷, 여러 해 비교, 로컬 인증 미리보기
-- 월별 군도·하나의 큰 섬·사계절 군도를 선택하는 별도의 2D/3D 하늘 세계
+- SVG 스튜디오에서 바로 여는 Activity 그래프: 기여 추이·요일별 활동과 스냅샷에 포함된 월별 커밋·PR 기록
 
 README 미리보기와 프리셋 이미지 6개는 고정 시드의 **합성 데이터**를 사용하며, **2025-01-05부터 2026-01-03까지 제공된 364일**을 표시합니다. 실제 계정을 가져온 결과나 완전한 2025년 달력이 아닙니다. 희소/최대 미리보기는 별도의 고정 패턴이고, 원래 벤치마크 픽스처는 재현 가능한 비교를 위해 그대로 유지합니다.
 
 ## 마을 프리셋 선택
 
-섬 지도와 3D, 시간 재생, 세계 저장·방문 방법은 [하늘 세계 탐험 안내](world-explorer.ko.md)를 참고해 주세요.
+[SVG 스튜디오](https://t1seo.github.io/maeul-in-the-sky/)에서 같은 풍경을 낮과 밤으로 바꿔 보실 수 있습니다.
 
 프리셋은 추가 장식의 구성을 바꿉니다. 기여 수, 고도, 색상, 일별 보상 단계는 바꾸지 않습니다.
 
@@ -59,6 +59,12 @@ README 미리보기와 프리셋 이미지 6개는 고정 시드의 **합성 데
 | [![Nature 프리셋](demo/assets/preset-nature-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=nature&mode=dark) | [![Balanced 프리셋](demo/assets/preset-balanced-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=balanced&mode=dark) | [![Civilization 프리셋](demo/assets/preset-civilization-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=civilization&mode=dark) |
 |                                                  여백을 살린 가벼운 장식                                                   |                                                     균형 잡힌 경관 장식                                                     |                                                       활동일에 더 풍부한 장식                                                        |
 |                                                     `preset: nature`                                                      |                                                       `preset: balanced`                                                        |                                                           `preset: civilization`                                                            |
+
+## 보관된 실험
+
+2D 섬 지도, 3D 세계, 월별 군도, 하나의 큰 섬, 사계절 섬, 원형 섬, 폭포와 3D 프로필 캡처는 **아카이브**로 보존합니다. 기본 SVG 화면과 별도로 제공하며 기존 저장 파일과 공유 링크도 유지합니다.
+
+스튜디오 하단의 **Archive · 3D & island experiments**를 열거나 [보관된 하늘 세계 안내](world-explorer.ko.md)를 참고해 주세요. 기존 연동을 위한 3D 캡처 Action은 남겨 두며, 기본 프로필 설정은 SVG를 생성합니다.
 
 ## 빠른 시작
 

@@ -19,7 +19,7 @@ export function renderAnalytics(model: AnalyticsModel, pages: Pages): void {
     import: 'Imported contribution history',
   } as const;
   html('analytics-source').textContent =
-    `${sourceLabels[model.source.kind]}. Original saved history, independent of replay.${model.source.fetchedAt ? ` Retrieved ${model.source.fetchedAt}.` : ''}`;
+    `${sourceLabels[model.source.kind]}. Original contribution history.${model.source.fetchedAt ? ` Retrieved ${model.source.fetchedAt}.` : ''}`;
   const sumNote = monthlySums
     ? `Sum of ${monthlySums.months} recorded monthly intervals`
     : 'Not available in this snapshot';

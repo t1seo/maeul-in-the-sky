@@ -1,12 +1,21 @@
 import { parseSettings } from '../core/settings/parse.js';
 import { serializeSettings } from '../core/settings/serialize.js';
 import type { SettingsV1 } from '../core/snapshot-types.js';
-import { button, click, html, input, safeAction, status } from './dom.js';
+import { button, click, html, input, safeAction, select, status } from './dom.js';
 import { copyOrDownload, downloadText } from './downloads.js';
 import { readImportFile } from './imports.js';
-import { readmeDocument, workflowDocument } from './setup.js';
+import { readmeDocument, workflowDocument, type ReadmeAppearance } from './setup.js';
 import { demoQuery, type DemoSettings } from './state.js';
 import { RENDERER_VERSIONS, type RendererVersion } from './renderer-version.js';
+
+function readmeAppearance(): ReadmeAppearance {
+  const value = select('readme-appearance').value;
+  return value === 'light' || value === 'dark' ? value : 'auto';
+}
+
+function readme(document: SettingsV1): string {
+  return readmeDocument(document, input('repository').value, readmeAppearance());
+}
 
 export function updateSetup(document: SettingsV1, renderer: RendererVersion = 'current'): void {
   const workflow = workflowDocument(document, renderer);
@@ -21,7 +30,7 @@ export function updateSetup(document: SettingsV1, renderer: RendererVersion = 'c
   }
   button('download-workflow').disabled = !workflow.ok;
   button('copy-workflow').disabled = !workflow.ok;
-  html('readme-preview').textContent = readmeDocument(document, input('repository').value);
+  html('readme-preview').textContent = readme(document);
 }
 
 export function disableSetup(message: string): void {
@@ -55,20 +64,10 @@ export function setupExports(
     if (content) status(await copyOrDownload(content, 'maeul.yml', 'text/yaml'));
   });
   click('download-readme', () =>
-    downloadText(
-      readmeDocument(current().document, input('repository').value),
-      'maeul-readme.html',
-      'text/html',
-    ),
+    downloadText(readme(current().document), 'maeul-readme.html', 'text/html'),
   );
   click('copy-readme', async () =>
-    status(
-      await copyOrDownload(
-        readmeDocument(current().document, input('repository').value),
-        'maeul-readme.html',
-        'text/html',
-      ),
-    ),
+    status(await copyOrDownload(readme(current().document), 'maeul-readme.html', 'text/html')),
   );
   click('download-settings', () =>
     downloadText(serializeSettings(current().document), 'maeul-settings.json'),
@@ -82,6 +81,9 @@ export function setupExports(
     );
   });
   input('repository').addEventListener('input', () =>
+    safeAction(() => updateSetup(current().document, current().renderer)),
+  );
+  select('readme-appearance').addEventListener('change', () =>
     safeAction(() => updateSetup(current().document, current().renderer)),
   );
   input('settings-input').addEventListener('change', (event) =>
