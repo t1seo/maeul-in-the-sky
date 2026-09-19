@@ -191,12 +191,15 @@ test('keeps pending repository additions and removals when another setting chang
   expect(session.current().repositoryData).toEqual(repositories);
   const removing = session.rebuild({}, []);
   const culture = session.rebuild({ culture: 'korean' });
+  session.focus({ kind: 'entity', entityId: 'repo:1' });
   release();
   await removing;
   release();
   await culture;
   expect(session.current().repositoryData).toEqual([]);
   expect(session.current().scene.settings.layout).toBe('island');
+  expect(session.current().view.focus).toEqual({ kind: 'world' });
+  expect(() => createWorldDocument(session.current())).not.toThrow();
 });
 
 test('a late rebuild after disposal cannot replace the last committed document', async () => {

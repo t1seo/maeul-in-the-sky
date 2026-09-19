@@ -1,8 +1,9 @@
-import { buildWorld, defaultWorldView } from '../model/index.js';
+import { buildWorld } from '../model/index.js';
 import type { PublicRepoRecord, WorldFocus, WorldSettings, WorldView } from '../model/types.js';
 import { createWorldDocument, type WorldDocumentV1 } from '../data/index.js';
 import { createRendererHost, type RendererLoaders, type RendererMode } from './renderer.js';
 import { html } from './dom.js';
+import { rebuildView } from './rebuild-view.js';
 
 export type SessionChange = 'scene' | 'view' | 'renderer';
 type PendingWorld = {
@@ -129,25 +130,9 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
         range: before.scene.range,
         repositories: repositoryData,
       });
-      const selections = new Set([
-        ...scene.days.flatMap((day) => [day.id, day.date]),
-        ...scene.entities.map((entity) => entity.id),
-        ...scene.actors.map((actor) => actor.id),
-        ...scene.regions.map((region) => region.id),
-      ]);
       const navigation = navigationRevision;
-      const camera = defaultWorldView(scene).camera;
-      const readView = (): WorldView => {
-        const latest = intent.readView();
-        return {
-          ...latest,
-          selectedId:
-            latest.selectedId && selections.has(latest.selectedId) ? latest.selectedId : undefined,
-          ...(navigation === navigationRevision
-            ? { camera, focus: { kind: 'world' } as const, followActorId: undefined }
-            : {}),
-        };
-      };
+      const readView = (): WorldView =>
+        rebuildView(scene, intent.readView(), navigation === navigationRevision);
       await present({
         document: createWorldDocument({
           scene,
