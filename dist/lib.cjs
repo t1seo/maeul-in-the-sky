@@ -26699,7 +26699,7 @@ function renderVillageCollection(scene, palette) {
     x: 24,
     y: card ? 318 : 50,
     width: card ? 372 : 246,
-    height: card ? 36 : 80,
+    height: card ? 36 : 104,
     rx: card ? 6 : 8,
     fill: palette.bg.subtle,
     stroke: palette.text.secondary,
@@ -26741,19 +26741,34 @@ function renderVillageCollection(scene, palette) {
       scene.settings.artStyle
     )
   ).join("") + renderCollectionRemainder(collection.unseenCount, scene.settings.layout, palette);
-  const auras = svgText(card ? 350 : 32, card ? 328 : 125, "Seasonal auras", {
+  const auras = svgText(card ? 350 : 32, card ? 328 : 126, "Seasonal auras", {
     ...font,
     fill: palette.text.secondary,
     "font-size": card ? 6.5 : 6.8,
     "text-anchor": card ? "middle" : "start"
   }) + collection.seasons.map((season, index) => {
-    const x = card ? 319 + index * 20 : 87 + index * 44;
-    const token = renderCollectionSeason(season, palette, x, card ? 342 : 123, card ? 7 : 4.5);
-    return token + (card ? "" : svgText(x + 7, 125, season.label, {
-      ...font,
-      fill: palette.text.secondary,
-      "font-size": 6.3
-    }));
+    const x = card ? 319 + index * 20 : 40 + index * 58;
+    const token = renderCollectionSeason(season, palette, x, card ? 342 : 140, card ? 7 : 4.5);
+    if (card) return token;
+    return svgElement(
+      "g",
+      { class: "collection-season-item" },
+      svgElement("rect", {
+        x: x - 8,
+        y: 132,
+        width: 54,
+        height: 16,
+        rx: 5,
+        fill: "none",
+        stroke: palette.text.secondary,
+        "stroke-opacity": 0.18,
+        "stroke-width": 0.5
+      }) + token + svgText(x + 8, 142.3, season.label, {
+        ...font,
+        fill: palette.text.secondary,
+        "font-size": 6.8
+      })
+    );
   }).join("");
   return svgElement(
     "g",

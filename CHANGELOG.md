@@ -87,6 +87,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Separate the seasonal collection heading from evenly spaced icon-and-label chips to prevent badge text overlap
 - Keep tall grass and cattails rooted while swaying by separating terrain placement from the animated local transform
 - **Explorer language and controls** — the homepage and world interface use English labels and UTC date formatting, while shared native dropdowns have consistent inset arrows and readable text spacing
 - **Explicit input boundaries** — restrict palette caches to supported color modes, retain canonical containment for preview assets, and pin browser-test proxy requests to the local QA server
