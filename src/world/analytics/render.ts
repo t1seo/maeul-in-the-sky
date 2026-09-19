@@ -57,7 +57,7 @@ export function renderAnalytics(model: AnalyticsModel, pages: Pages): void {
     description: bucketText(point),
     value: point.total,
     position: (dateTime(point.from) + dateTime(point.to)) / 2,
-    partial: point.missingDays > 0,
+    partial: point.partial,
   }));
   html('analytics-trend').replaceChildren(
     chart('analytics-trend', 'Contribution rhythm', trend, 'line', pages.trend, 'trend'),

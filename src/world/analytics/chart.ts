@@ -72,7 +72,13 @@ export function chart(
   }
   const first = visible[0]?.position ?? 0;
   const last = visible.at(-1)?.position ?? first;
-  const barWidth = Math.min(30, (plotWidth / visible.length) * 0.72);
+  let step = last - first || 1;
+  let previous = first;
+  for (const point of visible.slice(1)) {
+    step = Math.min(step, point.position - previous);
+    previous = point.position;
+  }
+  const barWidth = Math.min(30, ((plotWidth * step) / (last - first + step)) * 0.72);
   const inset = kind === 'bar' ? barWidth / 2 : 4;
   const x = (point: PlotPoint): number =>
     last === first
