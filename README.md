@@ -405,6 +405,10 @@ See [Support](SUPPORT.md) or [open an issue](https://github.com/t1seo/maeul-in-t
 - Report vulnerabilities through the [security policy](SECURITY.md)
 - Follow the [code of conduct](CODE_OF_CONDUCT.md)
 
+## Support
+
+[![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=taewonseo&button_colour=e3e7ef&font_colour=262626&font_family=Inter&outline_colour=262626&coffee_colour=a0522d)](https://www.buymeacoffee.com/taewonseo)
+
 ## License
 
 [MIT](LICENSE) © [t1seo](https://github.com/t1seo)
