@@ -33,9 +33,9 @@ Maeul（마을）在韩语中意为“村庄”。Contribution Calendar 中的�
 - 使用 100 级高度的确定性等距 Terrain
 - 通过枝叶、花朵、轮廓和材质颜色区分的日历四季
 - 程序生成的河流、池塘、森林、天气和环境动画
-- 202 个普通资源 ID：189 个 classic + 13 个 korean，其中季节型 68 个、全年型 134 个
+- 210 个普通资源 ID：197 个 classic + 13 个 korean，其中季节型 68 个、全年型 142 个
 - Rare、Epic、Legendary 三个等级的 30 种 Epic Wonders
-- 重绘原有 223 个 ID，新增 9 个韩国乡村 ID，总计 232 个
+- 重绘原有资源，新增 9 个韩国乡村和 8 个自然景观 ID，总计 240 个
 - 独立于文化的 miniature/pixel 画风，以及基于原始贡献数的每日奖励
 - 带无障碍标题、描述和减少动态效果支持的深色与浅色 SVG
 - 北半球与南半球的季节映射
@@ -52,7 +52,7 @@ README 预览和 6 张预设图片使用固定种子的**合成数据**，显示
 |                                                         Nature                                                          |                                                           Balanced                                                            |                                                               Civilization                                                                |
 | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
 | [![Nature 预设](demo/assets/preset-nature-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=nature&mode=dark) | [![Balanced 预设](demo/assets/preset-balanced-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=balanced&mode=dark) | [![Civilization 预设](demo/assets/preset-civilization-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=civilization&mode=dark) |
-|                                                    更多森林和开阔地                                                     |                                                    自然、农场与城镇的平衡                                                     |                                                         日常活跃日也出现更多建筑                                                          |
+|                                                    少量装饰，保留更多空间                                                     |                                                    适量的额外装饰                                                     |                                                         活跃日的装饰更加丰富                                                          |
 |                                                    `preset: nature`                                                     |                                                      `preset: balanced`                                                       |                                                          `preset: civilization`                                                           |
 
 ## 快速开始
@@ -263,13 +263,15 @@ GITHUB_TOKEN="$(gh auth token)" node dist/index.js preview --port 4318
 
 ## 布局、动效与稳定性
 
-dark/light 为同一准备好的 scene 着色。新输出使用 `layoutVersion: 2`，依据标准化用户名、可选 `layoutSeed` 和绝对日期。旧版 1 scene 仍可渲染，但重新生成会使用版本 2，放置可能改变。固定归一化及周围条件不变时，移动窗口的内部重叠日期保留地形和普通放置，屏幕位置会移动。相对 P90、邻接条件和全局 Wonder 预算仍可能带来变化；不同设置、范围和布局版本不保证逐像素一致。
+dark/light 为同一准备好的 scene 着色。新输出使用 `layoutVersion: 3`，依据标准化用户名、可选 `layoutSeed` 和绝对日期。旧版 1、2 的预生成 scene 仍可渲染；重新生成采用版本 3 的 seed，资源、biome 和 Wonder 布局会变化。固定归一化及周围条件不变时，移动窗口的内部重叠日期保留地形和普通放置，屏幕位置会移动。相对 P90、邻接条件和全局 Wonder 预算仍可能带来变化；不同设置、范围和布局版本不保证逐像素一致。
 
-相对归一化得到 level 1 到 99，0 保持 0。季节依据日期和半球，以春花新叶、盛夏绿荫、秋叶收获、冬雪枯枝及材质颜色区分。韩国风格在原有 4 个 ID 上新增 `choga`、`jangseung`、`sotdae`、`riceTerrace`、`koreanWatermill`、`hanokGate`、`kimchiGarden`、`stoneBridge`、`hanokEstate`。高等级普通奖励也使用韩国建筑，不改变贡献数或 Wonder 条件。
+相对归一化得到 level 1 到 99，0 保持 0。季节依据日期和半球，以春花新叶、盛夏绿荫、秋叶收获、冬雪枯枝及材质颜色区分。韩国风格在原有 4 个 ID 上新增 `choga`、`jangseung`、`sotdae`、`riceTerrace`、`koreanWatermill`、`hanokGate`、`kimchiGarden`、`stoneBridge`、`hanokEstate`。高等级普通奖励结合丰富自然景观和少量韩国建筑，不改变贡献数或 Wonder 条件。
 
 切换画风保留 ID、日期、贡献数和奖励等级。默认 `miniature` 使用细致的 SVG 原画；`pixel` 使用编译到 **0.5 SVG 单位逻辑网格**的真实 SVG 路径，有限调色板仍随季节与 dark/light 改变。像素资源渲染无需运行时 Resvg 或外部位图。场景适配缩放或外部非整数缩放时，不保证与物理屏幕像素精确对齐。
 
 banner/card 都保留提供的完整日期范围。`full` 开启全部环境效果，`subtle` 只保留慢云和轻柔水面，`off` 省略 CSS animation/keyframe 与 SMIL。reduced-motion 会选择完整的静态 fallback。PNG 始终以 `motion: off`、不透明背景和 1 到 4 倍（默认 2）重新渲染，因此是静态图片。
+
+布局以自然景观为主，建筑和船只作为少量点缀。新增 8 种自然资源，每种提供 3 种不同轮廓。最近 28 个日历日内的活动日达到 5、12、20 天时，季节效果更加丰富。只统计提供的日期，并单独记录观测天数；效果最多 10 组，关闭动态时仍保留静态奖励形状。
 
 ## JavaScript 与浏览器 API
 
@@ -316,7 +318,7 @@ await generateArchive({
 
 ## 目录与可复现预览
 
-[交互式目录](https://t1seo.github.io/maeul-in-the-sky/catalog/)支持 miniature/pixel 切换，包含全部 13 个韩国 ID。普通资源 **202 = classic 189 + korean 13**（季节型 68、全年型 134）与 Wonder **30 = Rare 14 + Epic 10 + Legendary 6** 分开统计，总计 **232 ID**。变体、画风和放置数量不增加 ID 总数。
+[交互式目录](https://t1seo.github.io/maeul-in-the-sky/catalog/)支持 miniature/pixel 切换，包含全部 13 个韩国 ID。普通资源 **210 = classic 197 + korean 13**（季节型 68、全年型 142）与 Wonder **30 = Rare 14 + Epic 10 + Legendary 6** 分开统计，总计 **240 ID**。变体、画风和放置数量不增加 ID 总数。
 
 修改原画后请重新生成像素资源，并在测试或构建前运行 `--check` 检查漂移。其他生成命令请参阅[贡献指南](../CONTRIBUTING.md)。
 

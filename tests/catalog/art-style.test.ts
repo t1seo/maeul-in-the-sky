@@ -20,8 +20,8 @@ describe('catalog art styles', () => {
 
     // Then
     expect(pixel.map((item) => item.record)).toEqual(miniature.map((item) => item.record));
-    expect(pixel).toHaveLength(232);
-    expect(new Set(pixel.map((item) => item.record.id)).size).toBe(232);
+    expect(pixel).toHaveLength(240);
+    expect(new Set(pixel.map((item) => item.record.id)).size).toBe(240);
   });
 
   it.each(['pine', 'hanok', 'worldTree'])(
@@ -92,7 +92,7 @@ describe('catalog art styles', () => {
     const ids = sprites.map((sprite) =>
       [...sprite.matchAll(/<g id="((?:asset|wonder)-[^"]+)"/g)].map((match) => match[1]),
     );
-    expect(ids[0]).toHaveLength(232);
+    expect(ids[0]).toHaveLength(240);
     for (const symbols of ids) expect(symbols).toEqual(ids[0]);
   });
 });

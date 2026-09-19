@@ -17,11 +17,11 @@ describe('generated catalog data', () => {
     const records = buildCatalogRecords(ASSET_CATALOG, EPIC_CATALOG);
 
     // Then
-    expect(records).toHaveLength(232);
-    expect(new Set(records.map((entry) => entry.id)).size).toBe(232);
+    expect(records).toHaveLength(240);
+    expect(new Set(records.map((entry) => entry.id)).size).toBe(240);
     expect(records.map((entry) => entry.id)).toEqual(expectedIds);
-    expect(records.filter((entry) => entry.kind === 'asset')).toHaveLength(202);
-    expect(records.filter((entry) => entry.style === 'classic')).toHaveLength(189);
+    expect(records.filter((entry) => entry.kind === 'asset')).toHaveLength(210);
+    expect(records.filter((entry) => entry.style === 'classic')).toHaveLength(197);
     expect(records.filter((entry) => entry.kind === 'wonder')).toHaveLength(30);
   });
 
@@ -44,7 +44,7 @@ describe('generated catalog data', () => {
     const counts = countCatalogFamilies(records);
 
     // Then
-    expect(Object.values(counts).reduce((sum, count) => sum + count, 0)).toBe(232);
+    expect(Object.values(counts).reduce((sum, count) => sum + count, 0)).toBe(240);
     expect(counts.wonder).toBe(30);
     expect(counts.korean).toBe(13);
   });

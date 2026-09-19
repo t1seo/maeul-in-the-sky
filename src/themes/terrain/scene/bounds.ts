@@ -23,6 +23,7 @@ export function sceneBounds(
   cells: readonly SceneCell[],
   placements: readonly ScenePlacement[],
   paths: readonly NeighborhoodPath[],
+  effectBounds: readonly SceneBounds[] = [],
 ): SceneBounds {
   return unionBounds([
     ...cells.map((cell) => ({
@@ -33,6 +34,7 @@ export function sceneBounds(
     })),
     ...placements.map((placement) => placement.footprint),
     ...paths.map((path) => path.footprint),
+    ...effectBounds,
   ]);
 }
 

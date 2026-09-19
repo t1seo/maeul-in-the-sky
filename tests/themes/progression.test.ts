@@ -33,9 +33,9 @@ describe('absolute daily contribution rewards', () => {
       expect(metadata.cells[0].rewardTier).toBe(tier);
       expect(scene.cells[0].rewardTier).toBe(tier);
       expect(scene.rewards?.length).toBe(tier === 0 ? 0 : 1);
-      expect(scene.layoutVersion).toBe(2);
-      expect(metadata.layoutVersion).toBe(2);
-      expect(scene.seed.policy).toBe('username-date-v2');
+      expect(scene.layoutVersion).toBe(3);
+      expect(metadata.layoutVersion).toBe(3);
+      expect(scene.seed.policy).toBe('username-date-v3');
       if (count >= 20) expect(scene.cells[0].level100).toBe(99);
       if (count === 0) expect(scene.cells[0].level100).toBe(0);
     },

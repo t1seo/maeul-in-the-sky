@@ -11,13 +11,16 @@ import { sprites as frozenPond } from './frozenPond.js';
 import { sprites as jellyfish } from './jellyfish.js';
 import { sprites as kelp } from './kelp.js';
 import { sprites as lighthouse } from './lighthouse.js';
+import { sprites as lotusPond } from './lotusPond.js';
 import { sprites as pondLily } from './pondLily.js';
+import { sprites as reedMarsh } from './reedMarsh.js';
 import { sprites as reeds } from './reeds.js';
 import { sprites as sailboat } from './sailboat.js';
 import { sprites as seagull } from './seagull.js';
 import { sprites as turtle } from './turtle.js';
 import { sprites as waves } from './waves.js';
 import { sprites as whale } from './whale.js';
+import { sprites as willowPond } from './willowPond.js';
 export const sprites: Readonly<Record<string, readonly PixelSprite[]>> = {
   boat,
   buoy,
@@ -31,11 +34,14 @@ export const sprites: Readonly<Record<string, readonly PixelSprite[]>> = {
   jellyfish,
   kelp,
   lighthouse,
+  lotusPond,
   pondLily,
+  reedMarsh,
   reeds,
   sailboat,
   seagull,
   turtle,
   waves,
   whale,
+  willowPond,
 };

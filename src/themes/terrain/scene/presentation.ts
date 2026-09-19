@@ -40,11 +40,6 @@ export function renderPresentation(scene: TerrainScene, palette: TerrainPalette1
       renderStatsBar(scene.stats, themePalette) +
       renderHeightLegend(scene, palette) +
       renderCalendarTimeline(scene, palette) +
-      svgText(24, 129, 'Water and trees are scenery, not contributions', {
-        ...font,
-        fill: palette.text.secondary,
-        'font-size': 9,
-      }) +
       (sparseNote ? svgText(24, 148, sparseNote, { ...font, 'font-size': 10 }) : '') +
       (!scene.cells.length ? svgText(24, 148, range, { ...font, 'font-size': 10 }) : '')
     );

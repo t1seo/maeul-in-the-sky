@@ -1,17 +1,17 @@
 declare const VILLAGE_PRESETS: {
   readonly nature: {
     readonly displayName: 'Nature';
-    readonly description: 'Fewer buildings, with more forests and open terrain';
+    readonly description: 'Light decoration with more open space';
     readonly density: 2;
   };
   readonly balanced: {
     readonly displayName: 'Balanced';
-    readonly description: 'A mix of nature, farms, villages, and cities';
+    readonly description: 'Balanced detail around daily natural features';
     readonly density: 5;
   };
   readonly civilization: {
     readonly displayName: 'Civilization';
-    readonly description: 'More buildings across everyday contribution levels';
+    readonly description: 'Richer decoration around the same daily features';
     readonly density: 9;
   };
 };
@@ -110,7 +110,7 @@ interface ThemeOptions {
   height: number;
   /** Hemisphere for seasonal terrain (default: 'north') */
   hemisphere?: 'north' | 'south';
-  /** Building density 1-10 (default: 5, higher = buildings at lower activity) */
+  /** Extra decoration density 1-10 (default: 5); daily primary rewards stay unchanged. */
   density?: number;
   motion?: MotionMode;
   layout?: TerrainLayout;
@@ -180,6 +180,31 @@ type SceneBiome = {
 };
 type RewardTier = 0 | 1 | 2 | 3 | 4 | 5;
 type PositiveRewardTier = Exclude<RewardTier, 0>;
+type ConsistencyTier = 0 | 1 | 2 | 3;
+type ConsistencyProgress = {
+  readonly activeDays: number;
+  readonly observedDays: number;
+  readonly tier: ConsistencyTier;
+};
+type ConsistencyEffectKind = 'springPetals' | 'summerFireflies' | 'autumnLeaves' | 'winterFrost';
+type ConsistencyParticle = {
+  readonly x: number;
+  readonly y: number;
+  readonly size: number;
+};
+type SceneConsistencyEffect = {
+  readonly id: string;
+  readonly kind: ConsistencyEffectKind;
+  readonly anchorDate: string;
+  readonly week: number;
+  readonly day: number;
+  readonly cx: number;
+  readonly cy: number;
+  readonly tier: Exclude<ConsistencyTier, 0>;
+  readonly activeDays: number;
+  readonly particles: readonly ConsistencyParticle[];
+  readonly footprint: SceneBounds;
+};
 type SceneCell = {
   readonly date: string;
   readonly week: number;
@@ -188,6 +213,7 @@ type SceneCell = {
   readonly count: number;
   readonly level100: number;
   readonly rewardTier?: RewardTier;
+  readonly consistency?: ConsistencyProgress;
   readonly height: number;
   readonly isoX: number;
   readonly isoY: number;
@@ -244,11 +270,11 @@ type NeighborhoodPath = {
 };
 type LayoutSeedPolicy = {
   readonly root: string;
-  readonly policy: 'username-date-v1' | 'username-date-v2';
+  readonly policy: 'username-date-v1' | 'username-date-v2' | 'username-date-v3';
 };
 type TerrainScene = {
   readonly schemaVersion: 1;
-  readonly layoutVersion: 1 | 2;
+  readonly layoutVersion: 1 | 2 | 3;
   readonly username: string;
   readonly year: number;
   readonly fromDate: string;
@@ -262,6 +288,7 @@ type TerrainScene = {
   readonly placements: readonly ScenePlacement[];
   readonly wonders: readonly SceneWonderPlacement[];
   readonly rewards?: readonly SceneDailyReward[];
+  readonly consistencyEffects?: readonly SceneConsistencyEffect[];
   readonly neighborhoodPaths: readonly NeighborhoodPath[];
   readonly bounds: SceneBounds;
 };
@@ -272,14 +299,16 @@ type TerrainCellMetadata = {
   readonly day: number;
   readonly level100: number;
   readonly rewardTier?: RewardTier;
+  readonly consistency?: ConsistencyProgress;
   readonly biome: SceneBiome;
   readonly assetIds: readonly string[];
   readonly wonderIds: readonly string[];
   readonly rewardIds?: readonly string[];
+  readonly consistencyEffectIds?: readonly string[];
 };
 type TerrainMetadata = {
   readonly schemaVersion: 1;
-  readonly layoutVersion: 1 | 2;
+  readonly layoutVersion: 1 | 2 | 3;
   readonly username: string;
   readonly year: number;
   readonly fromDate: string;
@@ -294,6 +323,7 @@ type TerrainMetadata = {
   readonly placements: readonly ScenePlacement[];
   readonly wonders: readonly SceneWonderPlacement[];
   readonly rewards?: readonly SceneDailyReward[];
+  readonly consistencyEffects?: readonly SceneConsistencyEffect[];
   readonly neighborhoodPaths: readonly NeighborhoodPath[];
 };
 type TerrainRenderResult = {
@@ -783,7 +813,15 @@ type AssetType =
   | 'hanokGate'
   | 'kimchiGarden'
   | 'stoneBridge'
-  | 'hanokEstate';
+  | 'hanokEstate'
+  | 'cedarGrove'
+  | 'ancientOak'
+  | 'wildflowerMeadow'
+  | 'bambooThicket'
+  | 'lotusPond'
+  | 'reedMarsh'
+  | 'alpineRocks'
+  | 'willowPond';
 
 type VillageStyle = 'classic' | 'korean';
 type AssetCategory = 'water' | 'shore' | 'woodland' | 'farm' | 'village' | 'town' | 'decoration';
@@ -993,6 +1031,10 @@ export {
   type ArchiveV1,
   type ArtStyle,
   type ColorMode,
+  type ConsistencyEffectKind,
+  type ConsistencyParticle,
+  type ConsistencyProgress,
+  type ConsistencyTier,
   type ContributionData,
   type ContributionDay,
   type ContributionStats,
@@ -1010,6 +1052,7 @@ export {
   type ResolvedRenderSettings,
   type RewardTier,
   type SceneCell,
+  type SceneConsistencyEffect,
   type SceneDailyReward,
   type ScenePlacement,
   type SceneWonderPlacement,

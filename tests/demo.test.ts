@@ -82,7 +82,7 @@ describe('preset demo', () => {
     presetButtons[0].click();
 
     expect(terrain.src).toBe('assets/preset-nature-light.svg');
-    expect(presetDescription.textContent).toContain('Fewer buildings');
+    expect(presetDescription.textContent).toContain('Light decoration with more open space');
     expect(historyUrls.at(-1)).toBe('/?preset=nature&mode=light');
   });
 });

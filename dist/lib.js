@@ -182,17 +182,17 @@ var init_presets = __esm({
     VILLAGE_PRESETS = {
       nature: {
         displayName: "Nature",
-        description: "Fewer buildings, with more forests and open terrain",
+        description: "Light decoration with more open space",
         density: 2
       },
       balanced: {
         displayName: "Balanced",
-        description: "A mix of nature, farms, villages, and cities",
+        description: "Balanced detail around daily natural features",
         density: 5
       },
       civilization: {
         displayName: "Civilization",
-        description: "More buildings across everyday contribution levels",
+        description: "Richer decoration around the same daily features",
         density: 9
       }
     };
@@ -1875,6 +1875,12 @@ var init_palette = __esm({
 });
 
 // src/themes/terrain/scene/season.ts
+function datePeakSeason(date, hemisphere) {
+  if (!date) return hemisphere === "south" ? "summer" : "winter";
+  const month = (/* @__PURE__ */ new Date(`${date}T00:00:00.000Z`)).getUTCMonth();
+  const shiftedMonth = (month + 1 + (hemisphere === "south" ? 6 : 0)) % 12;
+  return CALENDAR_SEASONS[Math.floor(shiftedMonth / 3)];
+}
 function dateSeasonPosition(date, hemisphere) {
   if (!date) return hemisphere === "south" ? 26 : 0;
   const timestamp = Date.parse(`${date}T00:00:00.000Z`);
@@ -1886,11 +1892,13 @@ function dateSeasonPosition(date, hemisphere) {
 function dateSeasonZone(date, hemisphere) {
   return getSeasonZone(0, dateSeasonPosition(date, hemisphere));
 }
+var CALENDAR_SEASONS;
 var init_season = __esm({
   "src/themes/terrain/scene/season.ts"() {
     "use strict";
     init_esm_shims();
     init_seasons();
+    CALENDAR_SEASONS = ["winter", "spring", "summer", "autumn"];
   }
 });
 
@@ -2790,7 +2798,13 @@ function svgTurtle(x, y, c, _v) {
 function svgBuoy(x, y, c, _v) {
   return `<g transform="translate(${x},${y})"><path d="M-1.9,.05Q-1.1,.9 .9,.5L1.7,.25" stroke="${c.waterLight}" stroke-width=".22" fill="none" opacity=".6"/><path d="M-.45,-3.15Q0,-3.55 .45,-3.15L.9,-.7Q1.1,.15 .1,.35Q-1,.4 -.95,-.4Z" fill="${c.buoy}"/><path d="M-.66,-2L.67,-2.05L.8,-1.2Q0,-.85 -.8,-1.15Z" fill="${c.sail}"/><path d="M.2,-3.25L.45,-3.15L.9,-.7Q1.1,.15 .1,.35L.2,-1.1Z" fill="${c.shadow}" opacity=".2"/><path d="M-.25,-2.8L-.5,-.6" stroke="${c.sail}" stroke-width=".15" opacity=".65"/><path d="M0,-3.2V-4.3L.9,-3.95L0,-3.65" stroke="${c.buoy}" stroke-width=".22" fill="${c.buoy}"/></g>`;
 }
-function svgSailboat(x, y, c, _v) {
+function svgSailboat(x, y, c, v) {
+  if (v === 1) {
+    return `<g transform="translate(${x},${y})"><g transform="scale(.92,1)">${waterBoatHull(c)}</g><path d="M-.8,-1.1V-6.9" stroke="${c.trunk}" stroke-width=".25"/><path d="M-1.9,-6.1 1.6,-6.6 Q2.8,-4.6 2.3,-2.8 L-1.5,-2.3Z" fill="${c.sail}"/><path d="M.6,-6.45 1.6,-6.6 Q2.8,-4.6 2.3,-2.8 L1.4,-2.7 Q1.6,-4.8 .6,-6.45Z" fill="${c.whaleBelly}" opacity=".45"/><path d="M-1.9,-6.1 1.6,-6.6 M-1.5,-2.3 2.3,-2.8" stroke="${c.trunk}" stroke-width=".18"/><path d="M-.8,-6.9 .5,-6.6 -.8,-6.2Z" fill="${c.flag}"/></g>`;
+  }
+  if (v === 2) {
+    return `<g transform="translate(${x},${y})"><g transform="scale(1.05,.85)">${waterBoatHull(c)}</g><path d="M.6,-1.1 .3,-5.9 M-2.8,-2.2 2.9,-6.8" stroke="${c.trunk}" stroke-width=".24"/><path d="M-2.8,-2.2 2.9,-6.8 Q2.5,-4.1 1.4,-1.8Z" fill="${c.sail}"/><path d="M2.9,-6.8 Q2.5,-4.1 1.4,-1.8 L.45,-1.9 Q1.9,-3.7 2.9,-6.8Z" fill="${c.whaleBelly}" opacity=".4"/><path d="M-2.8,-2.2 1.4,-1.8" stroke="${c.trunk}" stroke-width=".18"/></g>`;
+  }
   return `<g transform="translate(${x},${y})"><g transform="scale(1.1,1)">${waterBoatHull(c)}</g>` + waterBoatRig(c, 7.5, true) + `<path d="M-.2,-7.5L1,-7.15L-.2,-6.85Z" fill="${c.flag}"/></g>`;
 }
 function svgLighthouse(x, y, c, _v) {
@@ -5309,6 +5323,424 @@ var init_seasonal_autumn_apple_basket = __esm({
   }
 });
 
+// src/themes/terrain/assets/renderers/nature-cedar.ts
+function svgCedarGrove(x, y, c, v) {
+  const grove = GROVES[v] ?? GROVES[0];
+  const trees = grove.map(([dx, dy, scale, form]) => {
+    const tree = CEDARS[form];
+    return `<g transform="translate(${dx},${dy}) scale(${scale})"><path d="M-1.3,.5 -.55,-.6 -.5,-5.4 .25,-7 .8,-6.8 .35,-4.7 .65,-.5 1.65,.4 .3,.1Z" fill="${c.trunk}"/><path d="M-.4,-.4 -.3,-4.4 .1,-4.5 .15,-.2Z" fill="${c.stump}"/><path d="${tree.crown}" fill="${c.evergreenDark}"/><path d="${tree.face}" fill="${c.pine}"/><path d="${tree.light}" fill="${c.evergreenLight}"/></g>`;
+  }).join("");
+  return `<g transform="translate(${x},${y})"><ellipse cx="0" cy=".45" rx="6.7" ry="1.1" fill="${c.shadow}" opacity=".13"/>${trees}<path d="M-4.2,.2 -4.8,-.3 -4,-.1 -3.7,-1.1 -3.35,-.25 -2.4,-.7 -2.8,.1Z M2,.5 1.4,-.2 2.4,0 2.8,-.9 3.1,-.1 4,-.4 3.7,.45Z" fill="${c.pine}"/></g>`;
+}
+var CEDARS, GROVES;
+var init_nature_cedar = __esm({
+  "src/themes/terrain/assets/renderers/nature-cedar.ts"() {
+    "use strict";
+    init_esm_shims();
+    CEDARS = {
+      spire: {
+        crown: "M0,-16 -1.9,-12.1 -.9,-12.4 -3.2,-8.8 -1.9,-9.1 -4.5,-5.2 Q-2.6,-4.5 -1.2,-5 L-4.8,-2.6 Q-2.3,-1.7 0,-2.4 Q2.9,-1.6 4.6,-2.6 L2,-5 4.1,-5.1 1.6,-9 2.9,-8.7 .8,-12.4 1.6,-12.1Z",
+        face: "M0,-16 -1.9,-12.1 -.9,-12.4 -3.2,-8.8 -1.9,-9.1 -4.5,-5.2 Q-2.5,-4.6 -.3,-5.6 L-4.8,-2.6 Q-2.4,-2.1 .1,-3.2 L.5,-6 -.1,-8.5 .5,-11.2Z",
+        light: "M0,-16 -1.6,-12.4 -.3,-12.9Z M-1,-11.1 -2.6,-9.1 -.4,-9.6Z M-1.7,-7.4 -3.7,-5.5 -.6,-6.2Z M-2.4,-3.7 -4,-2.8 -1,-3.3Z"
+      },
+      fan: {
+        crown: "M-.8,-12 -2.8,-9.6 -.9,-9.7 -4.7,-6.9 -2.2,-7.1 -5.4,-3.8 Q-3.1,-2.9 -.6,-3.5 Q2.5,-2.7 5,-3.8 L2.2,-6.4 4,-6.3 .9,-9 2.3,-8.9Z",
+        face: "M-.8,-12 -2.8,-9.6 -.9,-9.7 -4.7,-6.9 -2.2,-7.1 -5.4,-3.8 Q-3.2,-3.3 -.6,-4.1 L.3,-6 -.1,-8Z",
+        light: "M-.8,-12 -2.5,-9.8 -.6,-10.1Z M-1.9,-8.5 -4,-7.1 -.8,-7.7Z M-2.4,-5.7 -4.7,-4 .1,-4.8Z"
+      },
+      lean: {
+        crown: "M2,-14.5 -.3,-11.8 .8,-11.9 -2.6,-8.7 -.9,-8.9 -4.1,-5.9 -1.7,-6.1 -5.2,-3.4 Q-2.2,-2.9 .2,-3.8 Q2.8,-3.1 4.7,-4.3 L2.6,-7.1 4.1,-6.9 2.6,-10 3.4,-9.9Z",
+        face: "M2,-14.5 -.3,-11.8 .8,-11.9 -2.6,-8.7 -.9,-8.9 -4.1,-5.9 -1.7,-6.1 -5.2,-3.4 Q-2.4,-3.2 .4,-4.7 L1.1,-7 1.2,-10.2Z",
+        light: "M2,-14.5 .1,-12 1.4,-12.3Z M.1,-10.5 -1.9,-9 1,-9.8Z M-1.2,-7.5 -3.4,-6.1 .4,-6.9Z M-2.2,-4.7 -4.3,-3.6 -.3,-4.4Z"
+      }
+    };
+    GROVES = [
+      [
+        [-3.9, 0, 0.59, "fan"],
+        [3.4, -0.2, 0.57, "spire"],
+        [0, 0.2, 1, "spire"]
+      ],
+      [
+        [2.8, -0.7, 0.82, "spire"],
+        [-2, 0.4, 0.9, "fan"]
+      ],
+      [
+        [-4.1, -0.4, 0.49, "spire"],
+        [3.8, 0.3, 0.47, "fan"],
+        [0, 0.3, 0.95, "lean"]
+      ]
+    ];
+  }
+});
+
+// src/themes/terrain/assets/renderers/nature-oak.ts
+function svgAncientOak(x, y, c, v) {
+  const tree = OAKS[v] ?? OAKS[0];
+  return `<g transform="translate(${x},${y})"><ellipse cx=".4" cy=".5" rx="4.8" ry=".9" fill="${c.shadow}" opacity=".15"/><path d="${tree.trunk}" fill="${c.trunk}"/><path d="${tree.bark}" fill="${c.stump}"/><path d="${tree.hollow}" fill="${c.shadow}"/><path d="${tree.crown}" fill="${c.bushDark}"/><path d="${tree.face}" fill="${c.leaf}"/><path d="${tree.light}" fill="${c.leafLight}"/><path d="M-3.5,.4 -4.4,-.4 -3.6,-.2 -3.6,-1.4 -3.1,-.5 -2.1,-.9 -2.6,.1Z M1.8,.7 1.3,-.1 2.2,.15 2.9,-.6 3,.25 3.9,.1 3.6,.6Z" fill="${c.moss}"/><path d="M-2.9,-7.3a.28,.4 0 1 0 .56,0a.28,.4 0 1 0 -.56,0 M3.1,-8.3a.26,.36 0 1 0 .52,0a.26,.36 0 1 0 -.52,0" fill="${c.acornBody}"/></g>`;
+}
+var OAKS;
+var init_nature_oak = __esm({
+  "src/themes/terrain/assets/renderers/nature-oak.ts"() {
+    "use strict";
+    init_esm_shims();
+    OAKS = [
+      {
+        crown: "M-5.7,-6.1 C-7.8,-6.5 -7.8,-9.4 -5.7,-9.8 C-6.4,-12 -4.6,-13.4 -2.8,-12.8 C-2.3,-15.2 .3,-15.7 1.7,-13.9 C3.5,-14.9 5.5,-13.6 5.2,-11.8 C7.9,-11.6 8,-8.8 6.2,-7.9 C6.7,-5.6 4,-4.5 2.3,-5.5 C.8,-3.9 -1.4,-4.7 -2,-5.3 Q-4,-4.1 -5.7,-6.1Z",
+        face: "M-5.7,-6.1 C-7.8,-6.5 -7.8,-9.4 -5.7,-9.8 C-6.4,-12 -4.6,-13.4 -2.8,-12.8 C-2.3,-15.2 .3,-15.7 1.7,-13.9 C3.5,-14.9 5.5,-13.6 5.2,-11.8 Q3.8,-9.8 2.1,-10.8 Q2,-7.8 -.6,-8.4 Q-2.2,-5.3 -3.7,-6.6Z",
+        light: "M-5.6,-9.9 Q-6,-12 -3.8,-12.2 L-3.1,-11.3 Q-2.1,-11.7 -1.7,-10.7 Q-3.9,-11 -5.6,-9.9Z M-2.5,-12.9 Q-1.7,-14.9 .2,-14.5 L1,-13.5 Q-.9,-13.8 -2.5,-12.9Z",
+        trunk: "M-3,.65 -1.3,-.6 -1,-3.4 -3.6,-6.6 -2.9,-7 -.4,-4.9 -.65,-8.1 .4,-8.5 .75,-5.3 3.2,-7.7 3.8,-7.1 1.2,-3.7 1.35,-.6 3.3,.5 1.2,.6 .2,.1 -1,.8Z",
+        bark: "M-1.2,.1 -.5,-1.1 -.5,-3.6 -1.7,-5.9 -.8,-5.1 .2,-3.3 .05,-1.1 .7,.35Z",
+        hollow: "M.25,-2.4 Q-.4,-3.8 .35,-4.4 Q1.05,-3.8 .7,-2.6Z"
+      },
+      {
+        crown: "M-3.9,-6.2 C-6.3,-7.5 -5.9,-10 -4.1,-10.8 C-5.1,-13 -3.8,-15 -2,-14.8 C-1.8,-17.9 .8,-18.3 2,-16.5 C4.4,-16.7 5.4,-14.8 4.5,-13 C6.1,-11.5 5.5,-9.5 3.8,-9.1 C4.1,-6.5 1.9,-5.5 .4,-6.7 Q-1.7,-4.7 -3.9,-6.2Z",
+        face: "M-3.9,-6.2 C-6.3,-7.5 -5.9,-10 -4.1,-10.8 C-5.1,-13 -3.8,-15 -2,-14.8 C-1.8,-17.9 .8,-18.3 2,-16.5 Q3.5,-15.1 1.7,-13.5 Q3.4,-11.2 1.5,-10 Q1.6,-7.7 -.3,-8 Q-1.8,-6 -3.9,-6.2Z",
+        light: "M-3.9,-11.2 Q-4.5,-13.5 -2.4,-14 L-1.6,-13 Q-3.3,-13 -3.9,-11.2Z M-1.7,-15 Q-1.6,-17.6 .5,-17.2 L1.1,-16.2 Q-.7,-16.6 -1.7,-15Z",
+        trunk: "M-2.7,.5 -1.5,-1.1 -1.7,-3.5 -3.1,-6.8 -2.3,-7.2 -.6,-4.5 .1,-7.6 1,-7.6 .6,-4 2.9,-6.6 3.5,-6.1 1.2,-2.8 1.3,-.8 2.6,.7 .5,.4 -.8,.8Z",
+        bark: "M-1.7,-.1 -1,-1.2 -1.2,-3.6 -2.2,-5.6 -1.4,-4.9 -.2,-2.9 -.25,-.2Z",
+        hollow: "M-.65,-.8 Q-1.2,-2.8 -.25,-3.7 Q.8,-2.6 .35,-.8Z"
+      },
+      {
+        crown: "M-6.5,-8 C-7.6,-9.8 -5.9,-11.6 -4.4,-11.1 C-4.7,-13.1 -2.5,-14.3 -.9,-13.4 C.6,-15.2 2.8,-14.6 3.4,-13.1 C5.7,-13.6 7.4,-12.1 6.7,-10.4 C8,-8.7 6.4,-7 4.9,-7.2 C3.8,-5.5 1.9,-6.3 1.3,-7.1 Q-1,-5.6 -2.1,-7.1 Q-4.9,-6.3 -6.5,-8Z",
+        face: "M-6.5,-8 C-7.6,-9.8 -5.9,-11.6 -4.4,-11.1 C-4.7,-13.1 -2.5,-14.3 -.9,-13.4 C.6,-15.2 2.8,-14.6 3.4,-13.1 Q4.8,-13.3 5.3,-12 Q4,-10 2.5,-10.8 Q1.2,-8.5 -.3,-9.4 Q-2.5,-7.1 -3.3,-8.4Z",
+        light: "M-4.2,-11.3 Q-4.1,-13 -2.6,-13 L-1.5,-12.1 Q-3.3,-12.4 -4.2,-11.3Z M-.7,-13.5 Q.8,-14.7 2.2,-13.7 L2.7,-12.8 Q.6,-13.3 -.7,-13.5Z",
+        trunk: "M-4,.5 Q-.5,-1.6 -.6,-4.2 L-3.4,-8.1 -2.4,-8.5 .4,-5.5 1.5,-8.6 2.4,-8.4 1.2,-4.7 4.4,-7.5 5,-7 1.4,-3.2 Q.5,-1.1 1.1,.35 L2,.75 -.3,.65 -1.1,0 -2.5,.6Z",
+        bark: "M-3,.25 Q.2,-1.5 -.3,-4.3 L-1.5,-6.8 -.6,-5.7 .7,-3.6 Q.8,-1.4 -.8,-.1Z",
+        hollow: "M.15,-3.5 Q.4,-4.6 1.1,-4.7 L.7,-3.6Z"
+      }
+    ];
+  }
+});
+
+// src/themes/terrain/assets/renderers/nature-bamboo.ts
+function svgBambooThicket(x, y, c, v) {
+  const canes = BAMBOO[v] ?? BAMBOO[0];
+  const stalks = canes.map(([dx, dy, height, bend]) => {
+    const nodes = [0.23, 0.47, 0.71].map((part) => {
+      const nx = bend * part;
+      return `M${nx - 0.32},${-height * part}h.64`;
+    }).join(" ");
+    return `<g transform="translate(${dx},${dy})"><path d="M-.35,0 Q${bend * 0.4 - 0.35},${-height * 0.5} ${bend - 0.24},${-height} L${bend + 0.2},${-height} Q${bend * 0.4 + 0.3},${-height * 0.5} .3,0Z" fill="${c.pine}"/><path d="M-.21,0 Q${bend * 0.4 - 0.2},${-height * 0.5} ${bend - 0.12},${-height}" fill="none" stroke="${c.evergreenLight}" stroke-width=".16"/><path d="${nodes}" stroke="${c.evergreenDark}" stroke-width=".22"/><g transform="translate(${bend * 0.8},${-height * 0.77}) scale(.8)"><path d="M0,0 Q-1.6,-2.8 -3.3,-2.5 Q-2.2,-.5 0,0Z M-.2,.1 Q-2.6,-1 -3.6,.3 Q-1.8,1 -.2,.1Z M0,0 Q1.9,-2.2 3.1,-1.7 Q2.5,-.2 0,0Z M.2,.1 Q2,-.2 2.8,1.2 Q1.3,1 .2,.1Z" fill="${c.evergreenDark}"/><path d="M0,-.2 Q-1.6,-2.8 -3.3,-2.5 L-1.5,-1Z M.15,-.2 Q1.9,-2.2 3.1,-1.7 L1.9,-1Z" fill="${c.evergreenLight}"/></g></g>`;
+  }).join("");
+  return `<g transform="translate(${x},${y})"><ellipse cx=".2" cy=".45" rx="6.6" ry="1.05" fill="${c.shadow}" opacity=".13"/>${stalks}<path d="M-3,.6 -2.1,-.15 -.7,.1 .1,.8 -1.5,1Z M2.4,.65 3.2,-.25 4.2,.15 4.6,.8 3.4,1Z" fill="${c.rock}"/><path d="M-3,.6 -2.1,-.15 -.7,.1 -1.6,.6Z M2.4,.65 3.2,-.25 4.2,.15 3.4,.55Z" fill="${c.boulder}"/></g>`;
+}
+var BAMBOO;
+var init_nature_bamboo = __esm({
+  "src/themes/terrain/assets/renderers/nature-bamboo.ts"() {
+    "use strict";
+    init_esm_shims();
+    BAMBOO = [
+      [
+        [-3.8, -0.6, 10, -0.7],
+        [-1.6, 0, 15.7, 0.3],
+        [1, 0.6, 13.5, -0.5],
+        [3.5, 0, 11.7, 0.8]
+      ],
+      [
+        [-3.7, 0.1, 9.5, 2.5],
+        [-0.7, 0.5, 12.5, 2.2],
+        [2.5, -0.1, 10.5, -0.1]
+      ],
+      [
+        [-3.9, 0, 12.8, -0.7],
+        [-1.6, 0.5, 8.2, 0.4],
+        [1.1, 0, 15.4, 1],
+        [3.7, 0.6, 9.3, 0.4],
+        [5, -0.4, 6.5, 0.4]
+      ]
+    ];
+  }
+});
+
+// src/themes/terrain/assets/renderers/nature-meadow.ts
+function svgWildflowerMeadow(x, y, c, v) {
+  const meadow = MEADOWS[v] ?? MEADOWS[0];
+  const colors = [c.flower, c.wildflower, c.flowerAlt];
+  const flowers = meadow.blooms.map(
+    ([dx, dy, scale], index) => `<g transform="translate(${dx},${dy}) scale(${scale})"><path d="M0,0 Q.2,-1.7 0,${meadow.centerY} M0,-1 Q-1.2,-2.8 -1.2,-1.7 Q-.8,-.9 0,-1 M.1,-1.7 Q1,-3.1 1.2,-2.3 Q.8,-1.4 .1,-1.7" fill="${c.leaf}" stroke="${c.bushDark}" stroke-width=".15"/><path d="${meadow.petals}" fill="${colors[index % colors.length]}"/><ellipse cx="0" cy="${meadow.centerY}" rx=".4" ry=".32" fill="${c.flowerCenter}"/></g>`
+  ).join("");
+  return `<g transform="translate(${x},${y})"><path d="${meadow.bank}" fill="${c.moss}"/><path d="${meadow.grass}" fill="${c.tallGrass}"/>${flowers}<path d="M-4.8,.5 -3.4,.1 -2.8,.5 -4,1Z M1.5,.8 2.5,.2 3.9,.65 2.8,1.15Z" fill="${c.leafLight}"/></g>`;
+}
+var MEADOWS;
+var init_nature_meadow = __esm({
+  "src/themes/terrain/assets/renderers/nature-meadow.ts"() {
+    "use strict";
+    init_esm_shims();
+    MEADOWS = [
+      {
+        bank: "M-6.9,-.3 Q-6.1,-2.1 -3.4,-2.7 Q-.8,-2.8 1.1,-1.9 Q3,-1.3 6.7,-.3 Q7.4,.8 5.1,1.2 Q2.5,1.5 -.4,.3 Q-3.8,1.6 -6.9,-.3Z",
+        grass: "M-6,-.4 -6.2,-2.5 -5.4,-1.2 -4.9,-2.5 -4.5,-.8 M-.7,0 -.8,-2.6 .1,-1.1 .9,-2.8 1.1,-.6 M4.1,.5 4.7,-1.9 4.8,-.1 6.2,-1.1 5.6,.7",
+        blooms: [
+          [-5, -1, 0.8],
+          [-3.2, -1.8, 1],
+          [-1.3, -1.1, 0.75],
+          [1.5, -0.6, 0.9],
+          [3.5, 0, 0.7],
+          [5.2, 0.4, 0.72]
+        ],
+        petals: "M0,-2.6 Q-1.7,-2.3 -1.2,-3.6 Q-1.5,-4.7 -.35,-4.35 Q.3,-5.4 .9,-4.2 Q2.1,-4 1.1,-3.1 Q1.2,-2.1 0,-2.6Z",
+        centerY: -3.6
+      },
+      {
+        bank: "M-5.7,.2 Q-6.1,-1.5 -3.4,-1.8 Q-2,-3.2 .2,-2.5 Q3.4,-3.2 4.8,-1.2 Q6.3,.1 4.5,1 Q2.3,1.4 .1,.8 Q-3.2,1.5 -5.7,.2Z",
+        grass: "M-5,.2 -5.4,-3.3 -4.4,-1.1 -3.6,-3.5 -3.8,.2 M-.5,.3 -1.1,-4.4 .1,-2 .9,-4.1 1.1,-.2 M3.4,.5 3.2,-2.7 3.9,-1.5 5.2,-2.6 4.4,.8",
+        blooms: [
+          [-4.1, -0.2, 0.85],
+          [-2.1, -0.8, 1.2],
+          [0.2, -1.4, 1.3],
+          [2.4, -0.6, 1.05],
+          [4, 0.4, 0.75]
+        ],
+        petals: "M-.7,-2.8 Q-1.4,-3.4 -.5,-3.6 Q-1.3,-4.3 -.45,-4.5 Q-1,-5.1 -.25,-5.4 L0,-6.3 .35,-5.4 Q1.1,-5 .5,-4.5 Q1.4,-4 .55,-3.6 Q1.4,-3 -.7,-2.8Z",
+        centerY: -4.4
+      },
+      {
+        bank: "M-6.8,.1 Q-7.4,-1.6 -4.2,-2 Q-2.6,-1.9 -1,-2.7 Q1,-3.3 3,-2.4 Q4.5,-2.8 6.1,-1.5 Q7.8,-.2 5.7,.9 Q3.5,1.6 1.5,.8 Q-1.5,1.9 -3.2,.8 Q-5.4,1.5 -6.8,.1Z",
+        grass: "M-6,.2 -6.4,-2.4 -5.5,-1.1 -4.5,-2.1 -4.8,.4 M-2.1,.7 -2.9,-2 -1.6,-1 -1,-2.9 -.5,.3 M4.4,.8 4.4,-1.7 5,-.6 6.4,-1.1 5.7,.7",
+        blooms: [
+          [-5.4, -0.2, 0.75],
+          [-3.2, -0.8, 0.95],
+          [-0.8, -1.2, 0.85],
+          [1.4, -1, 1.1],
+          [3.7, -0.8, 0.9],
+          [5.4, 0.2, 0.75],
+          [0.2, 0.6, 0.7]
+        ],
+        petals: "M-.45,-3.35 Q-1.9,-3.5 -1.5,-4.15 Q-1.1,-4.6 -.45,-4 L-.55,-4.7 Q.1,-5.4 .55,-4.6 L.45,-4 Q1.2,-4.6 1.55,-4 Q1.8,-3.35 .5,-3.35 Q1.25,-2.3 .5,-2.1 Q-.1,-2.1 -.1,-3 Q-.8,-2.1 -1.15,-2.7 Q-1.4,-3.2 -.45,-3.35Z",
+        centerY: -3.55
+      }
+    ];
+  }
+});
+
+// src/themes/terrain/assets/renderers/nature-water-shapes.ts
+function naturePool(c, v) {
+  return `<path d="${NATURE_POOLS[v] ?? NATURE_POOLS[0]}" fill="${c.water}"/><path d="M-5.5,.2 Q-3.8,.8 -2.5,.4 M.9,.8 Q2.8,1.3 4.6,.5 M2.7,-1.9 Q4,-1.4 5.4,-1.7" fill="none" stroke="${c.waterLight}" stroke-width=".24" stroke-linecap="round"/>`;
+}
+function lotusLeaf(c, x, y, size) {
+  return `<g transform="translate(${x},${y}) scale(${size})"><path d="M0,0 1.7,-.9 C.8,-1.6 -2.7,-1.1 -2.5,.1 C-2.2,1.3 1.5,1.4 2.1,.2Z" fill="${c.leaf}"/><path d="M0,0 -1.8,-.65 M0,0 -2,.4 M0,0 .3,.8" fill="none" stroke="${c.leafLight}" stroke-width=".13"/></g>`;
+}
+function lotusBloom(c, x, y, size) {
+  return `<g transform="translate(${x},${y}) scale(${size})"><path d="M0,0 Q.55,-1.5 .1,-2.1" stroke="${c.reeds}" stroke-width=".2" fill="none"/><path d="M0,-1 Q-2.5,-1.2 -2,-2.8 L-.8,-2.1 Q-1,-3.5 .1,-4 Q1,-3.4 1,-2.3 L2.3,-3 Q2.6,-1.4 0,-1Z" fill="${c.flower}"/><path d="M0,-1 Q-1.6,-1.6 -1.2,-2.7 L0,-1.9 Q.3,-3.3 1,-3 Q1.1,-1.8 0,-1Z" fill="${c.cherryPetalWhite}"/><path d="M-.4,-1.3 0,-1.8 .5,-1.3Z" fill="${c.flowerCenter}"/></g>`;
+}
+var NATURE_POOLS;
+var init_nature_water_shapes = __esm({
+  "src/themes/terrain/assets/renderers/nature-water-shapes.ts"() {
+    "use strict";
+    init_esm_shims();
+    NATURE_POOLS = [
+      "M-6.9,-.1 Q-7.6,-1.8 -4.2,-2.6 Q-2.3,-3.2 -.3,-2.5 Q1,-1.4 3.4,-1.8 Q6.8,-2 7,-.3 Q6.9,1.4 3.2,1.7 Q.1,1.2 -2.8,1.6 Q-5.8,1.5 -6.9,-.1Z",
+      "M-6.8,.8 Q-7.7,-.6 -5.2,-1.6 Q-3.4,-2.5 -.9,-2 Q1.5,-1.6 2.1,-3 Q3,-4 5.3,-3.2 Q7.8,-2.4 6.7,-.7 Q5.2,.9 2.5,.1 Q1.3,-.2 .1,.9 Q-2.8,3 -6.8,.8Z",
+      "M-6.7,-1 Q-5.7,-3.2 -2.6,-2.8 Q-.5,-3.9 2.1,-2.6 Q6.7,-2.7 7,-.5 Q6.4,.7 4.5,.9 Q2.9,2.5 -.1,1.7 Q-2.1,2.3 -4.2,1 Q-7.9,.9 -6.7,-1Z"
+    ];
+  }
+});
+
+// src/themes/terrain/assets/renderers/nature-lotus.ts
+function svgLotusPond(x, y, c, v) {
+  const pond = LOTUS[v] ?? LOTUS[0];
+  return `<g transform="translate(${x},${y})">${naturePool(c, v)}<path d="${pond.reeds}" fill="${c.reeds}"/>` + pond.leaves.map(([dx, dy, size]) => lotusLeaf(c, dx, dy, size)).join("") + pond.blooms.map(([dx, dy, size]) => lotusBloom(c, dx, dy, size)).join("") + "</g>";
+}
+var LOTUS;
+var init_nature_lotus = __esm({
+  "src/themes/terrain/assets/renderers/nature-lotus.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_nature_water_shapes();
+    LOTUS = [
+      {
+        leaves: [
+          [-4.4, -0.6, 0.7],
+          [1.5, -0.8, 0.9],
+          [-1.2, 0.7, 0.85],
+          [4.5, 0.3, 0.6]
+        ],
+        blooms: [
+          [-3.4, -0.7, 0.8],
+          [2.2, -0.6, 1.1],
+          [0, 0.9, 0.62]
+        ],
+        reeds: "M-5.8,-1 Q-6,-3.8 -5.4,-4.6 L-5.4,-1.4 Q-4.7,-3.9 -4.4,-3.4 L-4.9,-1.1Z"
+      },
+      {
+        leaves: [
+          [-4.5, 0.5, 0.8],
+          [-1.7, -0.3, 0.95],
+          [3.9, -1.8, 0.9]
+        ],
+        blooms: [
+          [-2.5, -0.2, 1.25],
+          [4.1, -1.9, 0.8]
+        ],
+        reeds: "M1.9,-1.9 Q1,-4 1.3,-4.8 L2.3,-2.2 Q2.6,-5.1 3,-5.2 L2.8,-2.1Z M-6,.6 Q-6.7,-1.3 -6.1,-2.5 L-5.5,.3Z"
+      },
+      {
+        leaves: [
+          [-4.6, -0.2, 0.75],
+          [-1.8, -1.7, 0.9],
+          [2.2, -1.4, 0.75],
+          [4.7, 0, 0.8],
+          [0.2, 1.1, 0.95]
+        ],
+        blooms: [
+          [-4, -0.3, 0.75],
+          [-0.7, -1.6, 1.4],
+          [4.2, -0.1, 0.85],
+          [0.5, 1, 0.75]
+        ],
+        reeds: "M-5.8,-.8 Q-6.9,-3.4 -6.1,-3.8 L-5.5,-1.5 -5.1,-4.1 -4.9,-1.2Z"
+      }
+    ];
+  }
+});
+
+// src/themes/terrain/assets/renderers/nature-reeds.ts
+function svgReedMarsh(x, y, c, v) {
+  const marsh = MARSHES[v] ?? MARSHES[0];
+  const clumps = marsh.map(
+    ([dx, dy, size, lean]) => `<g transform="translate(${dx},${dy}) scale(${size})"><path d="M-.7,.2 Q-2,-3.5 -2,-5.1 Q-.5,-3.1 -.3,-.3 Q-.4,-5.5 .8,-6.2 Q.3,-2.8 .4,.1 Q1.4,-3.8 2.4,-4.5 Q1.9,-1 .9,.25Z" fill="${c.reeds}"/><path d="M-.25,.2 Q${lean - 0.25},-4 ${lean},-7.3 M.6,0 Q${lean + 1},-3.3 ${lean + 1.2},-5.8" fill="none" stroke="${c.cattail}" stroke-width=".2"/><path d="M${lean},-6.1v-1.6 M${lean + 1.2},-4.9v-1.25" stroke="${c.trunk}" stroke-width=".58" stroke-linecap="round"/><path d="M-.6,0 Q-1.5,-3.2 -2,-5.1 Q-.6,-3.4 -.2,-.8Z M.45,0 Q1.4,-3.8 2.4,-4.5 Q1.3,-2.2 1,.1Z" fill="${c.leafLight}"/></g>`
+  ).join("");
+  return `<g transform="translate(${x},${y})">${naturePool(c, v)}${clumps}<path d="M-2.8,1 Q-2.1,.1 -.7,.6 L-.1,1.2 -1.5,1.5Z M4,.9 4.7,.25 5.8,.6 5.5,1.1Z" fill="${c.moss}"/></g>`;
+}
+var MARSHES;
+var init_nature_reeds = __esm({
+  "src/themes/terrain/assets/renderers/nature-reeds.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_nature_water_shapes();
+    MARSHES = [
+      [
+        [-5, -0.5, 0.7, -0.5],
+        [-2.5, -1, 1.1, 0],
+        [0.5, -1.5, 0.85, 0.5],
+        [4.4, 0.3, 0.6, 0.2]
+      ],
+      [
+        [-4.6, 0.3, 0.9, 0.8],
+        [-1.8, 0.2, 0.72, 1.5],
+        [3.8, -2, 1.2, 0.8]
+      ],
+      [
+        [-4.2, -0.4, 0.9, -1],
+        [-0.6, -1.4, 1.35, 0],
+        [3.3, -0.1, 1.05, 0.8]
+      ]
+    ];
+  }
+});
+
+// src/themes/terrain/assets/renderers/nature-rocks.ts
+function svgAlpineRocks(x, y, c, v) {
+  const rocks = OUTCROPS[v] ?? OUTCROPS[0];
+  return `<g transform="translate(${x},${y})"><ellipse cx="0" cy=".5" rx="7.1" ry="1.1" fill="${c.shadow}" opacity=".13"/><path d="${rocks.shadow}" fill="${c.rock}"/><path d="${rocks.face}" fill="${c.boulder}"/><path d="${rocks.light}" fill="${c.cobble}"/><path d="${rocks.cracks}" fill="none" stroke="${c.shadow}" stroke-width=".2" opacity=".48"/><path d="${rocks.moss}" fill="${c.moss}"/><path d="${rocks.sprigs}" fill="${c.tallGrass}"/></g>`;
+}
+var OUTCROPS;
+var init_nature_rocks = __esm({
+  "src/themes/terrain/assets/renderers/nature-rocks.ts"() {
+    "use strict";
+    init_esm_shims();
+    OUTCROPS = [
+      {
+        shadow: "M-6.8,.3 -5,-5.6 -1.6,-7.2 -.4,-4.6 1.2,-11.9 4.5,-10.8 6.4,-6.3 6.8,.3 2.8,1.2 -1.9,.8Z",
+        face: "M-6.8,.3 -5,-5.6 -1.6,-7.2 -2.5,-2.4 -.9,.7Z M-.4,-4.6 1.2,-11.9 2.9,-8 2.3,-3.5 3.2,.8 -.1,.8Z",
+        light: "M-5,-5.6 -1.6,-7.2 -.4,-4.6 -2.5,-2.4Z M1.2,-11.9 4.5,-10.8 5.1,-7.4 2.9,-8Z",
+        cracks: "M2.9,-8 3.7,-5.9 2.7,-4.6 M-2.5,-2.4 -3.7,-1.9 -3.9,-.6 M5.1,-7.4 4.6,-4.8 5.3,-3.4",
+        moss: "M-6.8,.3 -5.5,-1.4 -4.1,-1.3 -3.4,-.2 -1.6,-.3 -1,.6 -3.8,1Z M2.3,-3.5 3.1,-4 4.1,-3.3 3.6,-2.4 2.8,-2.5Z M4.7,.4 5,-.8 6.4,-1.1 6.8,.3 5.7,.7Z",
+        sprigs: "M-5,-.1 -5.2,-2.9 -4.6,-1.4 -3.8,-2.2 -4.1,-.3Z M4.9,.3 4.5,-1.8 5.1,-.9 5.7,-2.2 5.6,0Z"
+      },
+      {
+        shadow: "M-7,.2 -6.5,-3.5 -3.2,-4.8 -1.5,-4.1 -.7,-6.9 2.5,-7.9 5.2,-6.2 4.5,-3.2 6.7,-1.4 6.2,.5 2.4,1.2 -.4,.8 -3.3,1.1Z",
+        face: "M-7,.2 -6.5,-3.5 -4.7,-2.4 -4.4,.6Z M-1.5,-4.1 -.7,-6.9 1.4,-5.2 .6,-2.1 2.4,-.8 2.4,1.2 -.4,.8 -1,-1.4Z",
+        light: "M-6.5,-3.5 -3.2,-4.8 -1.5,-4.1 -2.3,-2.1 -4.7,-2.4Z M-.7,-6.9 2.5,-7.9 5.2,-6.2 3.3,-4.8 1.4,-5.2Z M.6,-2.1 4.5,-3.2 6.7,-1.4 2.4,-.8Z",
+        cracks: "M1.4,-5.2 2.3,-3.9 1.7,-2.5 M-4.7,-2.4 -4,-1.1 -4.4,.2 M4.1,-1.4 4,.5",
+        moss: "M-6.4,-3.5 -4.9,-4.1 -3.5,-3.5 -3.9,-2.6 -5.1,-2.5Z M-.5,-6.8 .8,-7.2 1.9,-6.7 1.1,-5.5 -.2,-5.9Z M-3.3,1.1 -2.5,-.1 -.9,-.3 -.4,.8Z M2.4,-.8 3.6,-1.2 5.3,-.4 4.5,.7 2.4,1.2Z",
+        sprigs: "M-1.8,-.3 -2.2,-3 -1.4,-1.8 -.7,-3 -.9,-.6Z M3.1,-5.8 2.6,-8.6 3.3,-7.3 4,-8.1 3.8,-6.1Z"
+      },
+      {
+        shadow: "M-6.5,.5 -5.5,-6.8 -3.8,-9.6 .8,-10.3 4.2,-8.1 6.7,-1.4 5.6,.7 3.6,.7 2.3,-4.5 .5,-6 -1.7,-5.5 -2.5,-3.7 -2.9,.4Z",
+        face: "M-6.5,.5 -5.5,-6.8 -3.8,-9.6 -2.6,-7.1 -3.6,-3.9 -3.8,.6Z M.8,-10.3 2.4,-7.2 4.1,-5.6 5.6,.7 3.6,.7 2.3,-4.5 .5,-6Z",
+        light: "M-5.5,-6.8 -3.8,-9.6 .8,-10.3 2.4,-7.2 .5,-6 -1.7,-5.5 -2.6,-7.1Z M2.4,-7.2 4.2,-8.1 5.1,-5.7 4.1,-5.6Z",
+        cracks: "M-2.6,-7.1 -.9,-7.7 -.4,-9.4 M-4.4,-4.7 -5,-3.2 -4.5,-1.8 M4.1,-5.6 3.7,-4.4 4.6,-3",
+        moss: "M-6.5,.5 -5.6,-1 -4.4,-.9 -3.8,.6 -5.2,1.1Z M-3.8,-9.6 -2.1,-9.9 -1.3,-9.2 -2,-8.4 -3.2,-8.3Z M3.6,.7 3.5,-.4 4.8,-1 5.7,-.3 5.6,.7Z",
+        sprigs: "M-5,.1 -5.2,-2.4 -4.6,-1.2 -4.1,-2.7 -4,.1Z M4.5,.4 4.1,-1.6 4.7,-.7 5.4,-1.4 5.1,.4Z"
+      }
+    ];
+  }
+});
+
+// src/themes/terrain/assets/renderers/nature-willow.ts
+function svgWillowPond(x, y, c, v) {
+  const pond = PONDS[v] ?? PONDS[0];
+  const trees = pond.map(([dx, dy, size, form]) => {
+    const tree = WILLOWS[form];
+    return `<g transform="translate(${dx},${dy}) scale(${size})"><path d="${tree.trunk}" fill="${c.trunk}"/><path d="${tree.crown}" fill="${c.bushDark}"/><path d="${tree.light}" fill="${c.willow}"/><path d="${tree.veins}" stroke="${c.leafLight}" stroke-width=".3" fill="none" stroke-linecap="round"/></g>`;
+  }).join("");
+  return `<g transform="translate(${x},${y})">${naturePool(c, v)}` + lotusLeaf(c, 4.5, 0.2, 0.7) + lotusLeaf(c, 1.5, 1, 0.55) + trees + `<path d="M-5.6,.2 -4.8,-.7 -3.7,-.6 -3,.3 -4.6,.7Z" fill="${c.rock}"/><path d="M-5.6,.2 -4.8,-.7 -3.7,-.6 -4.2,.1Z" fill="${c.moss}"/></g>`;
+}
+var WILLOWS, PONDS;
+var init_nature_willow = __esm({
+  "src/themes/terrain/assets/renderers/nature-willow.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_nature_water_shapes();
+    WILLOWS = {
+      arch: {
+        trunk: "M-3,.2 Q.2,-1.7 -.7,-5.5 L-2.6,-8.1 -1.8,-8.6 .3,-6.5 1.5,-9.4 2.1,-9.1 1.1,-5.8 Q2.1,-2.5 -.1,-.3 L.8,.3 -1,.5Z",
+        crown: "M-4.9,-2.9 Q-6.6,-7.5 -3.6,-9.4 Q-3.7,-12.1 -1.4,-12.2 Q.6,-14 2.2,-12.5 Q5,-12.4 5.4,-9.4 Q6.4,-7.6 5.6,-3.4 L4.7,-4.9 4.2,-2.5 Q2.8,-4.2 3.2,-7.5 L2.1,-5.1 1.6,-7.8 Q.2,-6.9 -1.1,-8.2 L-2,-4.8 -2.7,-6.3 -3.5,-2.5 -4.2,-4Z",
+        light: "M-4.9,-3.6 Q-5.8,-7.6 -3.1,-9.4 Q-3.3,-11.8 -1.2,-11.9 Q.8,-13.6 2.2,-12.5 Q3.7,-12.4 4.2,-11.1 Q1.6,-11.5 .2,-10.3 Q-1.9,-10.7 -2.8,-8.1 L-3.9,-4.8 -3.8,-7.9Z",
+        veins: "M-2.2,-9.8 Q-3.8,-7.2 -3.5,-4.2 M1,-10.7 Q2.1,-9.1 1.9,-7.4 M3.7,-10.2 Q5.1,-8.8 4.7,-5.2"
+      },
+      upright: {
+        trunk: "M-1.8,.3 -.5,-1.2 -.8,-4.4 -2.1,-6.4 -1.6,-6.8 .1,-5 .6,-8.5 1.3,-8.4 .9,-4.8 2.8,-6.1 3,-5.6 .7,-3.6 .7,-.8 1.8,.4Z",
+        crown: "M-4,-1.9 Q-5.1,-6 -3,-8.3 Q-3.2,-10.7 -1,-11.1 Q.7,-12.5 2.3,-10.7 Q4.1,-10.2 4,-8.1 Q5.2,-6 4.1,-1.9 L3.4,-3.6 2.9,-2.2 Q1.7,-4.1 2,-6.9 L1.1,-5.3 .5,-7.3 -.6,-6.6 -1.5,-3 -2.1,-4.5 -3,-1.5 -3.2,-3.4Z",
+        light: "M-3.8,-3.2 Q-4.3,-6.6 -2.4,-8.4 Q-2.9,-10.7 -.8,-10.8 Q.6,-12 2.3,-10.7 L1.9,-9.5 Q-.1,-10.6 -1.1,-8.2 L-2.3,-4.2 -2.2,-7Z",
+        veins: "M-.9,-9.7 Q-2.1,-7.1 -2,-5 M1.6,-9.4 Q3.4,-7.1 3.4,-4"
+      },
+      swept: {
+        trunk: "M-3.8,.3 Q-.6,-1.5 -.1,-4.7 L-1.8,-7.4 -1.1,-7.7 .8,-6 2,-8 2.6,-7.6 1.4,-5.3 3.3,-6.7 3.7,-6.1 1.2,-4.2 Q.8,-1.7 -.5,-.3 L.5,.3 -1.4,.6Z",
+        crown: "M-4.9,-3.3 Q-5.9,-7.6 -3.2,-8.9 Q-2.8,-11.1 -.7,-11.1 Q1.2,-12.8 3,-11.2 Q5.9,-11.4 6.4,-8.8 Q7.8,-6.6 6.5,-3.1 L5.6,-4.7 5,-2.6 Q3.8,-4.4 4,-7.2 L2.9,-5.1 2.1,-7.6 Q.6,-6.5 -.8,-7.1 L-1.9,-3.9 -2.5,-5.2 -3.7,-2.8 -3.7,-4.5Z",
+        light: "M-4.7,-4.1 Q-5.2,-7.7 -2.8,-8.9 Q-2.4,-10.9 -.5,-10.8 Q1.5,-12.4 3,-11.2 Q4.2,-11.2 4.8,-10.3 Q1.8,-10.7 .7,-9.1 Q-2,-9.6 -3,-6.8 L-3.8,-4.1 -3.5,-6.6Z",
+        veins: "M-1.8,-9.1 Q-3.6,-7.6 -3.5,-4.8 M1.9,-9.7 Q3.3,-8.1 2.8,-6.7 M4.7,-9.8 Q6.2,-8.1 5.8,-5"
+      }
+    };
+    PONDS = [
+      [[-1.7, -0.8, 0.85, "arch"]],
+      [
+        [3.5, -1.9, 0.68, "upright"],
+        [-3.6, 0, 0.7, "upright"]
+      ],
+      [[-1.8, -0.8, 1, "swept"]]
+    ];
+  }
+});
+
+// src/themes/terrain/assets/renderers/nature.ts
+var NATURE_RENDERERS;
+var init_nature = __esm({
+  "src/themes/terrain/assets/renderers/nature.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_nature_cedar();
+    init_nature_oak();
+    init_nature_bamboo();
+    init_nature_meadow();
+    init_nature_lotus();
+    init_nature_reeds();
+    init_nature_rocks();
+    init_nature_willow();
+    NATURE_RENDERERS = {
+      cedarGrove: svgCedarGrove,
+      ancientOak: svgAncientOak,
+      wildflowerMeadow: svgWildflowerMeadow,
+      bambooThicket: svgBambooThicket,
+      lotusPond: svgLotusPond,
+      reedMarsh: svgReedMarsh,
+      alpineRocks: svgAlpineRocks,
+      willowPond: svgWillowPond
+    };
+  }
+});
+
 // src/themes/terrain/assets/renderers/korean-rural-shapes.ts
 function path3(d, fill, attributes = "") {
   return `<path d="${d}" fill="${fill}"${attributes ? ` ${attributes}` : ""}/>`;
@@ -5766,6 +6198,7 @@ var init_renderers = __esm({
     init_seasonal_autumn_autumn_maple();
     init_seasonal_autumn_corn_stalk();
     init_seasonal_autumn_apple_basket();
+    init_nature();
     init_korean_village();
     init_korean_rural_buildings();
     init_korean_rural_props();
@@ -5972,7 +6405,8 @@ var init_renderers = __esm({
       hanokGate: svgHanokGate,
       kimchiGarden: svgKimchiGarden,
       stoneBridge: svgStoneBridge,
-      hanokEstate: svgHanokEstate
+      hanokEstate: svgHanokEstate,
+      ...NATURE_RENDERERS
     };
   }
 });
@@ -5984,6 +6418,14 @@ var init_bounds = __esm({
     "use strict";
     init_esm_shims();
     ASSET_BOUNDS = {
+      cedarGrove: { x: -8, y: -17, width: 16, height: 19 },
+      ancientOak: { x: -8, y: -18, width: 16, height: 20 },
+      wildflowerMeadow: { x: -8, y: -10, width: 16, height: 12 },
+      bambooThicket: { x: -8, y: -17, width: 16, height: 19 },
+      lotusPond: { x: -8, y: -8, width: 16, height: 11 },
+      reedMarsh: { x: -8, y: -13, width: 16, height: 16 },
+      alpineRocks: { x: -8, y: -12, width: 16, height: 14 },
+      willowPond: { x: -8, y: -14, width: 16, height: 17 },
       whale: { x: -5, y: -6, width: 13, height: 9 },
       fish: { x: -4, y: -4, width: 9, height: 6 },
       fishSchool: { x: -3, y: -3, width: 6, height: 5 },
@@ -6198,6 +6640,9 @@ var init_classification = __esm({
     init_esm_shims();
     CATEGORY_MEMBERS = {
       water: [
+        "lotusPond",
+        "reedMarsh",
+        "willowPond",
         "whale",
         "fish",
         "fishSchool",
@@ -6219,6 +6664,7 @@ var init_classification = __esm({
         "frozenPond"
       ],
       shore: [
+        "alpineRocks",
         "rock",
         "boulder",
         "flower",
@@ -6238,6 +6684,10 @@ var init_classification = __esm({
         "surfboard"
       ],
       woodland: [
+        "cedarGrove",
+        "ancientOak",
+        "wildflowerMeadow",
+        "bambooThicket",
         "pine",
         "deciduous",
         "mushroom",
@@ -6520,10 +6970,10 @@ function getAssetCatalogEntry(id) {
     season,
     style,
     bounds: ASSET_BOUNDS[id],
-    description: KOREAN_DESCRIPTIONS[id] ?? `${displayName}, a ${category} asset${season === "all" ? " available throughout the year" : ` for ${season}`}.`
+    description: KOREAN_DESCRIPTIONS[id] ?? NATURE_DESCRIPTIONS[id] ?? `${displayName}, a ${category} asset${season === "all" ? " available throughout the year" : ` for ${season}`}.`
   };
 }
-var LABELS, KOREAN_DESCRIPTIONS, CATEGORIES, SEASONS, ASSET_CATALOG, ASSET_CATALOG_COUNTS;
+var LABELS, KOREAN_DESCRIPTIONS, CATEGORIES, SEASONS, NATURE_DESCRIPTIONS, ASSET_CATALOG, ASSET_CATALOG_COUNTS;
 var init_catalog = __esm({
   "src/themes/terrain/assets/catalog.ts"() {
     "use strict";
@@ -6579,6 +7029,16 @@ var init_catalog = __esm({
       "decoration"
     ];
     SEASONS = ["winter", "spring", "summer", "autumn"];
+    NATURE_DESCRIPTIONS = {
+      cedarGrove: "Layered evergreen cedars with tiered boughs, exposed roots and three distinct grove silhouettes.",
+      ancientOak: "A venerable oak with a broad lobed crown, gnarled roots, a hollow trunk and seasonal foliage.",
+      wildflowerMeadow: "A flowering meadow with leafy banks, tall flower spires or broad petalled blooms.",
+      bambooThicket: "A grove of jointed evergreen bamboo canes with fanned leaves and small grounding stones.",
+      lotusPond: "An irregular pool with veined floating leaves, layered lotus blooms and waterside shoots.",
+      reedMarsh: "A shallow marsh with distinct stands of arching reed blades, cattail heads and reflected ripples.",
+      alpineRocks: "Weathered alpine crags, layered slabs or a natural stone arch with moss and tufted grasses.",
+      willowPond: "A quiet pool shaded by sweeping willow curtains, with floating leaves and a mossy bank."
+    };
     ASSET_CATALOG = Object.keys(ASSET_RENDERERS).filter(isAssetType).map(getAssetCatalogEntry);
     ASSET_CATALOG_COUNTS = Object.freeze({
       total: ASSET_CATALOG.length,
@@ -6620,6 +7080,67 @@ var init_progression = __esm({
   }
 });
 
+// src/themes/terrain/assets/primary-nature.ts
+function isNaturePrimary(type) {
+  return NATURE.has(type);
+}
+var BUILT_LANDSCAPE, NATURAL_DETAILS, NATURE;
+var init_primary_nature = __esm({
+  "src/themes/terrain/assets/primary-nature.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_catalog();
+    BUILT_LANDSCAPE = /* @__PURE__ */ new Set([
+      "boat",
+      "sailboat",
+      "dock",
+      "buoy",
+      "lighthouse",
+      "canal",
+      "sandcastle",
+      "sandcastleSummer",
+      "parasol",
+      "beachTowel",
+      "surfboard",
+      "birdhouse",
+      "haybale",
+      "beehive",
+      "fence",
+      "scarecrow",
+      "barn",
+      "barnWinter",
+      "silo",
+      "pigpen",
+      "trough",
+      "haystack",
+      "beeFarm",
+      "scarecrowAutumn",
+      "harvestBasket",
+      "hayMaze",
+      "appleBasket"
+    ]);
+    NATURAL_DETAILS = /* @__PURE__ */ new Set([
+      "puddle",
+      "snowdrift",
+      "icicle",
+      "cherryPetals",
+      "tulip",
+      "tulipField",
+      "crocus",
+      "rainPuddle",
+      "flowerBed",
+      "fireflies",
+      "fallenLeaves",
+      "leafSwirl"
+    ]);
+    NATURE = new Set(
+      ASSET_CATALOG.filter(
+        (entry) => NATURAL_DETAILS.has(entry.id) || ["water", "shore", "woodland", "farm"].includes(entry.category) && !BUILT_LANDSCAPE.has(entry.id)
+      ).map((entry) => entry.id)
+    );
+  }
+});
+
 // src/themes/terrain/assets/progression-pool.ts
 function primaryBand(entry) {
   if (GRAND.has(entry.id)) return 5;
@@ -6631,31 +7152,54 @@ function primaryBand(entry) {
   if (entry.category === "village" || entry.category === "farm") return 3;
   return 2;
 }
-function dailyPrimaryPool(tier, season, biome) {
+function dailyPrimaryPool(tier, season, biome, style = "classic") {
   const water = Boolean(biome?.isPond || biome?.isRiver);
-  const key = `${tier}:${season}:${water}`;
+  const forest = (biome?.forestDensity ?? 0) > 0.55;
+  const shore = Boolean(biome?.nearWater);
+  const key = `${tier}:${season}:${water}:${forest}:${shore}:${style}`;
   const cached = PRIMARY_POOLS.get(key);
   if (cached) return cached;
   const removed = getSeasonalPoolOverrides(SEASON_POSITION[season], 0, 99).remove;
   const eligible = ASSET_CATALOG.filter((entry) => {
     if (entry.style !== "classic" || removed.has(entry.id)) return false;
     if (entry.season !== "all" && entry.season !== season) return false;
-    if (water ? entry.category !== "water" : entry.category === "water") return false;
-    const band = primaryBand(entry);
-    return band === tier || tier === 3 && GROVE.has(entry.id);
+    if (season === "winter" && WINTER_FLOWERS.has(entry.id)) return false;
+    if (water) {
+      return (tier >= 4 ? WATER_GRAND : tier === 3 ? WATER_LANDMARKS : WATER_SMALL).has(entry.id) || WATER_FOCAL[tier].includes(entry.id);
+    }
+    if (entry.category === "water") {
+      return shore && tier >= 3 && (tier >= 4 ? WATER_GRAND : WATER_LANDMARKS).has(entry.id);
+    }
+    if (isNaturePrimary(entry.id)) {
+      if (forest && entry.category === "farm") return false;
+      if (tier === 5) return LANDMARK_NATURE.has(entry.id);
+      if (tier === 4) return LANDMARK_NATURE.has(entry.id) || GROVE.has(entry.id);
+      if (tier === 3 && (LANDMARK_NATURE.has(entry.id) || GROVE.has(entry.id))) return true;
+    } else if (tier === 5) {
+      return GRAND.has(entry.id) || HOMES.has(entry.id) || entry.category === "town";
+    }
+    return primaryBand(entry) === tier;
   });
-  const seasonal = eligible.filter((entry) => entry.season === season);
-  const pool = [...eligible, ...seasonal, ...seasonal].map((entry) => entry.id);
+  const pool = [
+    ...new Set(
+      eligible.map((entry) => {
+        const mapped = mapVillageAsset(entry.id, style);
+        return tier < 5 && mapped === "hanokEstate" ? "hanok" : mapped;
+      })
+    )
+  ];
   PRIMARY_POOLS.set(key, pool);
   return pool;
 }
-var GRAND, HOMES, GROVE, SMALL_NATURE, RURAL_NATURE, SEASON_POSITION, PRIMARY_POOLS;
+var GRAND, HOMES, GROVE, LANDMARK_NATURE, SMALL_NATURE, RURAL_NATURE, WATER_SMALL, WATER_LANDMARKS, WATER_GRAND, WATER_FOCAL, SEASON_POSITION, PRIMARY_POOLS, WINTER_FLOWERS;
 var init_progression_pool = __esm({
   "src/themes/terrain/assets/progression-pool.ts"() {
     "use strict";
     init_esm_shims();
     init_catalog();
     init_seasons();
+    init_style_pool();
+    init_primary_nature();
     GRAND = /* @__PURE__ */ new Set(["castle", "cathedral", "manor"]);
     HOMES = /* @__PURE__ */ new Set([
       "house",
@@ -6684,6 +7228,21 @@ var init_progression_pool = __esm({
       "autumnMaple",
       "autumnOak",
       "autumnBirch",
+      "autumnGinkgo"
+    ]);
+    LANDMARK_NATURE = /* @__PURE__ */ new Set([
+      "cedarGrove",
+      "ancientOak",
+      "wildflowerMeadow",
+      "bambooThicket",
+      "alpineRocks",
+      "orchard",
+      "gardenTree",
+      "snowPine",
+      "snowDeciduous",
+      "cherryBlossomFull",
+      "peachBlossom",
+      "autumnOak",
       "autumnGinkgo"
     ]);
     SMALL_NATURE = /* @__PURE__ */ new Set([
@@ -6723,6 +7282,53 @@ var init_progression_pool = __esm({
       "pearTree",
       "peachTree"
     ]);
+    WATER_SMALL = /* @__PURE__ */ new Set([
+      "fish",
+      "fishSchool",
+      "reeds",
+      "pondLily",
+      "cattail",
+      "lily",
+      "frog",
+      "turtle",
+      "heron",
+      "shellfish",
+      "tidePools",
+      "frozenPond",
+      "driftwood",
+      "rock",
+      "snowCoveredRock",
+      "waves"
+    ]);
+    WATER_LANDMARKS = /* @__PURE__ */ new Set([
+      "lotusPond",
+      "reedMarsh",
+      "willowPond",
+      "fishSchool",
+      "reeds",
+      "pondLily",
+      "tidePools",
+      "cattail",
+      "willow",
+      "frozenPond",
+      "lily"
+    ]);
+    WATER_GRAND = /* @__PURE__ */ new Set([
+      "lotusPond",
+      "reedMarsh",
+      "willowPond",
+      "willow",
+      "alpineRocks",
+      "turtle",
+      "frozenPond"
+    ]);
+    WATER_FOCAL = {
+      1: ["buoy"],
+      2: ["boat", "dock"],
+      3: ["boat", "sailboat", "dock"],
+      4: ["sailboat", "bridge", "watermill", "lighthouse"],
+      5: ["sailboat", "bridge", "watermill", "lighthouse"]
+    };
     SEASON_POSITION = {
       winter: 0,
       spring: 14,
@@ -6730,40 +7336,63 @@ var init_progression_pool = __esm({
       autumn: 42
     };
     PRIMARY_POOLS = /* @__PURE__ */ new Map();
+    WINTER_FLOWERS = /* @__PURE__ */ new Set(["lotusPond", "wildflowerMeadow", "pondLily", "lily"]);
+  }
+});
+
+// src/themes/terrain/assets/primary-spatial.ts
+function modulo(value, divisor) {
+  return (value % divisor + divisor) % divisor;
+}
+function absolutePosition(cell) {
+  if (!cell.date) return cell;
+  const ordinal = Math.floor(Date.parse(`${cell.date}T00:00:00Z`) / 864e5) + 4;
+  return { week: Math.floor(ordinal / 7), day: modulo(ordinal, 7) };
+}
+function primaryFocalSite(cell, seed) {
+  const { week, day } = absolutePosition(cell);
+  const rank = (w, d) => assetDateSeed(seed, `${w},${d}`, "primary-focal");
+  const value = rank(week, day);
+  for (let w = -1; w <= 1; w++) {
+    for (let d = -1; d <= 1; d++) {
+      if (w === 0 && d === 0) continue;
+      if (rank(week + w, day + d) <= value) return false;
+    }
+  }
+  return true;
+}
+function spatialPrimaryType(pool, cell, key, seed) {
+  const { week, day } = absolutePosition(cell);
+  const colors = Math.max(1, Math.min(4, Math.floor(pool.length / 2)));
+  const color = colors === 4 ? modulo(week, 2) * 2 + modulo(day, 2) : modulo(week + day * (colors === 3 ? 2 : 1), colors);
+  const ranked = pool.map((type) => ({
+    type,
+    rank: assetDateSeed(seed, type, "primary-order")
+  })).sort((a, b) => a.rank - b.rank || a.type.localeCompare(b.type));
+  const candidates = ranked.filter((_, index) => index % colors === color);
+  const choice = seededRandom(assetDateSeed(seed, key, "primary-catalog"))();
+  return candidates[Math.floor(choice * candidates.length)].type;
+}
+var init_primary_spatial = __esm({
+  "src/themes/terrain/assets/primary-spatial.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_math();
+    init_date_seed();
   }
 });
 
 // src/themes/terrain/assets/progression-primary.ts
-function seasonalPrimary(type, tier, cell, options) {
-  const zone = cell.date && options.hemisphere ? dateSeasonZone(cell.date, options.hemisphere) : getSeasonZone(cell.week, options.seasonRotation ?? 0);
-  const season = getZonePeakSeason(zone);
-  if (tier === 1) {
-    if (season === "winter") return "bareBush";
-    if (season === "spring") return "crocus";
-    if (season === "autumn") return "harvestBasket";
-  }
-  if (tier === 2) {
-    if (season === "winter") return type === "pine" ? "snowPine" : "snowDeciduous";
-    if (season === "spring") return "cherryBlossomSmall";
-    if (season === "autumn") return type === "birch" ? "autumnBirch" : "autumnMaple";
-  }
-  if (season === "winter" && type === "house") return "houseWinter";
-  if (season === "winter" && type === "houseB") return "houseBWinter";
-  return type;
-}
 function dailyPrimaryPlacement(cell, key, seed, options) {
   const tier = getDailyRewardTier(cell.count ?? 0);
   if (tier === 0) return void 0;
   const biome = options.biomeMap?.get(`${cell.week},${cell.day}`);
-  const water = biome?.isPond || biome?.isRiver;
-  const familyDraw = seededRandom(assetDateSeed(seed, key, "primary-family"))();
-  const family = water ? WATER_FAMILY : biome && biome.forestDensity > 0.55 ? FOREST_FAMILY : MEADOW_FAMILIES[Math.floor(familyDraw * MEADOW_FAMILIES.length)];
-  const zone = cell.date && options.hemisphere ? dateSeasonZone(cell.date, options.hemisphere) : getSeasonZone(cell.week, options.seasonRotation ?? 0);
-  const pool = dailyPrimaryPool(tier, getZonePeakSeason(zone), biome);
-  const choice = seededRandom(assetDateSeed(seed, key, "primary-catalog"));
-  const base = tier < 5 && pool.length > 0 && choice() < 0.75 ? pool[Math.floor(choice() * pool.length)] : water ? family[tier] : seasonalPrimary(family[tier], tier, cell, options);
-  const mapped = mapVillageAsset(base, options.villageStyle ?? "classic");
-  const type = tier < 5 && mapped === "hanokEstate" ? "hanok" : mapped;
+  const season = cell.date ? datePeakSeason(cell.date, options.hemisphere ?? "north") : getZonePeakSeason(getSeasonZone(cell.week, options.seasonRotation ?? 0));
+  const pool = dailyPrimaryPool(tier, season, biome, options.villageStyle);
+  const nature = pool.filter(isNaturePrimary);
+  const focal = pool.filter((type2) => !isNaturePrimary(type2));
+  const candidates = focal.length > 0 && primaryFocalSite(cell, seed) ? focal : nature;
+  const type = spatialPrimaryType(candidates, cell, key, seed);
   const variant = Math.floor(
     seededRandom(assetDateSeed(options.variantSeed ?? seed, key, "primary-variant"))() * 3
   );
@@ -6781,7 +7410,6 @@ function dailyPrimaryPlacement(cell, key, seed, options) {
     animated: false
   };
 }
-var MEADOW_FAMILIES, FOREST_FAMILY, WATER_FAMILY;
 var init_progression_primary = __esm({
   "src/themes/terrain/assets/progression-primary.ts"() {
     "use strict";
@@ -6790,28 +7418,10 @@ var init_progression_primary = __esm({
     init_seasons();
     init_season();
     init_date_seed();
-    init_style_pool();
     init_progression();
     init_progression_pool();
-    MEADOW_FAMILIES = [
-      { 1: "flower", 2: "appleTree", 3: "hut", 4: "house", 5: "castle" },
-      { 1: "bush", 2: "deciduous", 3: "hut", 4: "houseB", 5: "manor" },
-      { 1: "flower", 2: "birch", 3: "hut", 4: "house", 5: "cathedral" }
-    ];
-    FOREST_FAMILY = {
-      1: "fern",
-      2: "pine",
-      3: "hut",
-      4: "houseB",
-      5: "manor"
-    };
-    WATER_FAMILY = {
-      1: "pondLily",
-      2: "boat",
-      3: "sailboat",
-      4: "bridge",
-      5: "watermill"
-    };
+    init_primary_nature();
+    init_primary_spatial();
   }
 });
 
@@ -13180,13 +13790,107 @@ var init_group_farm = __esm({
   }
 });
 
-// src/themes/terrain/pixel/generated/beachTowel.ts
+// src/themes/terrain/pixel/generated/alpineRocks.ts
 var variant078, variant161, variant251, sprites80;
+var init_alpineRocks = __esm({
+  "src/themes/terrain/pixel/generated/alpineRocks.ts"() {
+    "use strict";
+    init_esm_shims();
+    variant078 = {
+      layers: [
+        { paint: "shadow", d: "M-6.5,0.5h1v0.5h-1zM6,0.5h0.5v0.5h-0.5zM-3.5,1h4.5v0.5h-4.5z" },
+        {
+          paint: "rock",
+          d: "M4.5,-10.5h0.5v1h-0.5zM5,-9.5h0.5v1h-0.5zM5,-8.5h1v1h-1zM3,-8h1v0.5h-1zM3,-7.5h3v0.5h-3zM3,-7h3.5v0.5h-3.5zM2.5,-6.5h4v2.5h-4zM-1,-4h0.5v0.5h-0.5zM3.5,-4h3v0.5h-3zM-1.5,-3.5h1v0.5h-1zM4,-3.5h3v1h-3zM-2,-3h1.5v0.5h-1.5zM-2.5,-2.5h2v0.5h-2zM2.5,-2.5h4.5v1h-4.5zM-2,-2h1.5v1h-1.5zM3,-1.5h1.5v2h-1.5zM5.5,-1.5h1.5v0.5h-1.5zM-1.5,-1h1.5v1h-1.5zM6.5,-1h0.5v0.5h-0.5zM-1,0h1v1h-1zM3,0.5h2.5v0.5h-2.5zM1,1h2.5v0.5h-2.5z"
+        },
+        {
+          paint: "boulder",
+          d: "M1,-12h0.5v1h-0.5zM2,-12h0.5v0.5h-0.5zM3.5,-11.5h0.5v0.5h-0.5zM0.5,-11h1v0.5h-1zM0.5,-10.5h1.5v1h-1.5zM0.5,-9.5h2v1h-2zM4.5,-9.5h0.5v0.5h-0.5zM0,-8.5h3v2h-3zM-2,-7.5h0.5v0.5h-0.5zM-3,-7h0.5v0.5h-0.5zM-4,-6.5h0.5v0.5h-0.5zM0,-6.5h2.5v0.5h-2.5zM-1,-6h3.5v0.5h-3.5zM-5.5,-5.5h1v1h-1zM-0.5,-5.5h3v1.5h-3zM-5.5,-4.5h1.5v0.5h-1.5zM-6,-4h2.5v0.5h-2.5zM-0.5,-4h3.5v0.5h-3.5zM-6,-3.5h3v1h-3zM-0.5,-3.5h3v2h-3zM-6,-2.5h3.5v0.5h-3.5zM-6.5,-2h1.5v0.5h-1.5zM-4,-2h2v1h-2zM-6.5,-1.5h1v0.5h-1zM-0.5,-1.5h3.5v0.5h-3.5zM-6.5,-1h0.5v0.5h-0.5zM-3.5,-1h2v1h-2zM0,-1h3v2h-3zM-7,-0.5h0.5v1h-0.5zM6.5,-0.5h0.5v0.5h-0.5zM-1.5,0h0.5v0.5h-0.5zM-2,0.5h1v0.5h-1z"
+        },
+        {
+          paint: "cobble",
+          d: "M1.5,-12h0.5v0.5h-0.5zM1.5,-11.5h2v0.5h-2zM1.5,-11h3v0.5h-3zM2,-10.5h2.5v1h-2.5zM2.5,-9.5h2v0.5h-2zM2.5,-9h2.5v0.5h-2.5zM3,-8.5h2v0.5h-2zM4,-8h1v0.5h-1zM-2.5,-7h1.5v0.5h-1.5zM-3.5,-6.5h2.5v0.5h-2.5zM-5,-6h4v0.5h-4zM-4.5,-5.5h4v1h-4zM-4,-4.5h3.5v0.5h-3.5zM-3.5,-4h2.5v0.5h-2.5zM-3,-3.5h1.5v0.5h-1.5zM-3,-3h1v0.5h-1z"
+        },
+        {
+          paint: "moss",
+          d: "M3,-4h0.5v0.5h-0.5zM2.5,-3.5h1.5v1h-1.5zM-5.5,-1.5h0.5v0.5h-0.5zM-6,-1h1v0.5h-1zM-4,-1h0.5v0.5h-0.5zM5.5,-1h1v1h-1zM-6.5,-0.5h1.5v0.5h-1.5zM-4.5,-0.5h1v0.5h-1zM-6.5,0h5v0.5h-5zM5,0h1.5v0.5h-1.5zM-5.5,0.5h3.5v0.5h-3.5zM5.5,0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "tallGrass",
+          d: "M-5,-2h1v1.5h-1zM4.5,-1.5h1v1.5h-1zM-5,-0.5h0.5v0.5h-0.5zM4.5,0h0.5v0.5h-0.5zM6.5,0h0.5v0.5h-0.5z"
+        }
+      ],
+      pixels: 503
+    };
+    variant161 = {
+      layers: [
+        {
+          paint: "shadow",
+          d: "M-6.5,0.5h1v0.5h-1zM6,0.5h0.5v0.5h-0.5zM-3,1h4.5v0.5h-4.5zM3,1h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "rock",
+          d: "M5,-6.5h0.5v0.5h-0.5zM4.5,-6h1v0.5h-1zM4,-5.5h1v0.5h-1zM1.5,-5h3.5v0.5h-3.5zM1,-4.5h4v1h-4zM-2,-3.5h0.5v1h-0.5zM1,-3.5h3.5v0.5h-3.5zM1,-3h2v0.5h-2zM-4.5,-2.5h0.5v0.5h-0.5zM-2.5,-2.5h0.5v0.5h-0.5zM-1.5,-2.5h0.5v0.5h-0.5zM0.5,-2.5h0.5v0.5h-0.5zM-4.5,-2h2.5v2h-2.5zM6,-1.5h1v0.5h-1zM5,-1h1.5v1.5h-1.5zM-4.5,0h1.5v0.5h-1.5zM-5.5,0.5h2.5v0.5h-2.5zM4.5,0.5h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "boulder",
+          d: "M-1,-7h0.5v1h-0.5zM-1,-6h1.5v0.5h-1.5zM-1.5,-5.5h3v1h-3zM-4,-5h0.5v0.5h-0.5zM-1.5,-4.5h2.5v2h-2.5zM-6.5,-3.5h0.5v0.5h-0.5zM-7,-3h1.5v0.5h-1.5zM-7,-2.5h2.5v3h-2.5zM-4,-2.5h1v0.5h-1zM-0.5,-2.5h1v0.5h-1zM1,-2.5h0.5v0.5h-0.5zM-1,-2h2v0.5h-2zM-1,-1.5h3v0.5h-3zM5.5,-1.5h0.5v0.5h-0.5zM-1,-1h3.5v1h-3.5zM4.5,-1h0.5v0.5h-0.5zM-3,0h0.5v0.5h-0.5zM-0.5,0h3v1h-3zM4,0.5h0.5v0.5h-0.5zM-3.5,1h0.5v0.5h-0.5zM1.5,1h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "cobble",
+          d: "M1.5,-8h1v0.5h-1zM0,-7.5h3v0.5h-3zM1.5,-7h1.5v1h-1.5zM4,-7h0.5v0.5h-0.5zM4,-6.5h1v0.5h-1zM1.5,-6h3v0.5h-3zM1.5,-5.5h2.5v0.5h-2.5zM-3.5,-5h1v0.5h-1zM-5,-4.5h3.5v0.5h-3.5zM-6.5,-4h0.5v0.5h-0.5zM-4,-4h2.5v0.5h-2.5zM-3.5,-3.5h1.5v0.5h-1.5zM-4,-3h2v0.5h-2zM3,-3h2.5v0.5h-2.5zM-3,-2.5h0.5v0.5h-0.5zM1.5,-2.5h4.5v0.5h-4.5zM1,-2h5.5v0.5h-5.5zM2,-1.5h3.5v0.5h-3.5z"
+        },
+        {
+          paint: "moss",
+          d: "M-0.5,-7h2v1h-2zM0.5,-6h1v0.5h-1zM-6,-4h2v0.5h-2zM-6,-3.5h2.5v0.5h-2.5zM-5.5,-3h1.5v0.5h-1.5zM2.5,-1h2v0.5h-2zM2.5,-0.5h2.5v1h-2.5zM-2.5,0h2v0.5h-2zM-3,0.5h2.5v0.5h-2.5zM2.5,0.5h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "tallGrass",
+          d: "M2.5,-8.5h0.5v0.5h-0.5zM2.5,-8h1.5v0.5h-1.5zM3,-7.5h1v1.5h-1zM-2,-2.5h0.5v0.5h-0.5zM-1,-2.5h0.5v0.5h-0.5zM-2,-2h1v2h-1z"
+        }
+      ],
+      pixels: 372
+    };
+    variant251 = {
+      layers: [
+        {
+          paint: "shadow",
+          d: "M-2.5,-0.5h5.5v0.5h-5.5zM-2.5,0h6v0.5h-6zM6,0h0.5v1h-0.5zM-3.5,0.5h7v1h-7z"
+        },
+        {
+          paint: "rock",
+          d: "M1,-10h1v0.5h-1zM1.5,-9.5h1.5v0.5h-1.5zM1.5,-9h2v0.5h-2zM2,-8.5h2.5v0.5h-2.5zM2,-8h1.5v0.5h-1.5zM-3,-6.5h1v1h-1zM5,-6h0.5v0.5h-0.5zM-3,-5.5h1.5v0.5h-1.5zM4,-5.5h1.5v0.5h-1.5zM-3.5,-5h1.5v1h-1.5zM4.5,-5h1v0.5h-1zM4.5,-4.5h1.5v1.5h-1.5zM-3.5,-4h1v4.5h-1zM5,-3h1.5v1h-1.5zM5,-2h2v1h-2zM5.5,-1h1v1h-1z"
+        },
+        {
+          paint: "boulder",
+          d: "M-1,-10.5h0.5v0.5h-0.5zM0.5,-10.5h0.5v0.5h-0.5zM-4.5,-9.5h0.5v0.5h-0.5zM-5,-8.5h0.5v0.5h-0.5zM-5.5,-7h3v0.5h-3zM1.5,-7h1.5v0.5h-1.5zM-6,-6.5h3v1.5h-3zM1,-6.5h2.5v0.5h-2.5zM0,-6h4v0.5h-4zM1,-5.5h3v0.5h-3zM-6,-5h2.5v2h-2.5zM1.5,-5h3v0.5h-3zM2,-4.5h2.5v0.5h-2.5zM2.5,-4h2v1h-2zM-6.5,-3h3v1h-3zM2.5,-3h2.5v1h-2.5zM-6.5,-2h2v0.5h-2zM-4,-2h0.5v3h-0.5zM3,-2h2v1h-2zM-6.5,-1.5h1.5v0.5h-1.5zM-6.5,-1h0.5v1h-0.5zM3,-1h1v0.5h-1zM3,-0.5h0.5v0.5h-0.5zM5.5,0h0.5v1h-0.5zM3.5,0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "cobble",
+          d: "M-0.5,-10.5h1v0.5h-1zM-4,-10h1v0.5h-1zM-2,-10h3v0.5h-3zM-4,-9.5h0.5v0.5h-0.5zM-1.5,-9.5h3v1h-3zM-4.5,-9h1v0.5h-1zM-4.5,-8.5h6.5v0.5h-6.5zM-5,-8h7v0.5h-7zM3.5,-8h1v0.5h-1zM-5.5,-7.5h10v0.5h-10zM-2.5,-7h4v0.5h-4zM3,-7h2v0.5h-2zM-2,-6.5h3v0.5h-3zM3.5,-6.5h1.5v0.5h-1.5zM-2,-6h2v0.5h-2zM4,-6h1v0.5h-1z"
+        },
+        {
+          paint: "moss",
+          d: "M-3,-10h1v0.5h-1zM-3.5,-9.5h2v1h-2zM-6,-1h1v1h-1zM3.5,-0.5h1v1h-1zM5,-0.5h0.5v1h-0.5zM-6.5,0h2.5v1h-2.5zM4,0.5h1.5v0.5h-1.5zM-5.5,1h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "tallGrass",
+          d: "M-4.5,-2h0.5v0.5h-0.5zM-5,-1.5h1v1.5h-1zM4,-1h1.5v0.5h-1.5zM4.5,-0.5h0.5v1h-0.5z"
+        }
+      ],
+      pixels: 421
+    };
+    sprites80 = [variant078, variant161, variant251];
+  }
+});
+
+// src/themes/terrain/pixel/generated/beachTowel.ts
+var variant079, variant162, variant252, sprites81;
 var init_beachTowel = __esm({
   "src/themes/terrain/pixel/generated/beachTowel.ts"() {
     "use strict";
     init_esm_shims();
-    variant078 = {
+    variant079 = {
       layers: [
         {
           paint: "beachTowelA",
@@ -13206,7 +13910,7 @@ var init_beachTowel = __esm({
       ],
       pixels: 53
     };
-    variant161 = {
+    variant162 = {
       layers: [
         {
           paint: "beachTowelB",
@@ -13223,7 +13927,7 @@ var init_beachTowel = __esm({
       ],
       pixels: 60
     };
-    variant251 = {
+    variant252 = {
       layers: [
         {
           paint: "parasolYellow",
@@ -13241,17 +13945,17 @@ var init_beachTowel = __esm({
       ],
       pixels: 57
     };
-    sprites80 = [variant078, variant161, variant251];
+    sprites81 = [variant079, variant162, variant252];
   }
 });
 
 // src/themes/terrain/pixel/generated/boulder.ts
-var variant079, sprites81;
+var variant080, sprites82;
 var init_boulder = __esm({
   "src/themes/terrain/pixel/generated/boulder.ts"() {
     "use strict";
     init_esm_shims();
-    variant079 = {
+    variant080 = {
       layers: [
         {
           paint: "boulder",
@@ -13264,17 +13968,17 @@ var init_boulder = __esm({
       ],
       pixels: 88
     };
-    sprites81 = [variant079, variant079, variant079];
+    sprites82 = [variant080, variant080, variant080];
   }
 });
 
 // src/themes/terrain/pixel/generated/bush.ts
-var variant080, variant162, variant252, sprites82;
+var variant081, variant163, variant253, sprites83;
 var init_bush = __esm({
   "src/themes/terrain/pixel/generated/bush.ts"() {
     "use strict";
     init_esm_shims();
-    variant080 = {
+    variant081 = {
       layers: [
         {
           paint: "bushDark",
@@ -13288,7 +13992,7 @@ var init_bush = __esm({
       ],
       pixels: 67
     };
-    variant162 = {
+    variant163 = {
       layers: [
         {
           paint: "bushDark",
@@ -13302,7 +14006,7 @@ var init_bush = __esm({
       ],
       pixels: 74
     };
-    variant252 = {
+    variant253 = {
       layers: [
         {
           paint: "bushDark",
@@ -13320,17 +14024,17 @@ var init_bush = __esm({
       ],
       pixels: 72
     };
-    sprites82 = [variant080, variant162, variant252];
+    sprites83 = [variant081, variant163, variant253];
   }
 });
 
 // src/themes/terrain/pixel/generated/cattail.ts
-var variant081, sprites83;
+var variant082, sprites84;
 var init_cattail = __esm({
   "src/themes/terrain/pixel/generated/cattail.ts"() {
     "use strict";
     init_esm_shims();
-    variant081 = {
+    variant082 = {
       layers: [
         {
           paint: "cattail",
@@ -13344,17 +14048,17 @@ var init_cattail = __esm({
       ],
       pixels: 77
     };
-    sprites83 = [variant081, variant081, variant081];
+    sprites84 = [variant082, variant082, variant082];
   }
 });
 
 // src/themes/terrain/pixel/generated/driftwood.ts
-var variant082, sprites84;
+var variant083, sprites85;
 var init_driftwood = __esm({
   "src/themes/terrain/pixel/generated/driftwood.ts"() {
     "use strict";
     init_esm_shims();
-    variant082 = {
+    variant083 = {
       layers: [
         {
           paint: "driftwood",
@@ -13364,17 +14068,17 @@ var init_driftwood = __esm({
       ],
       pixels: 49
     };
-    sprites84 = [variant082, variant082, variant082];
+    sprites85 = [variant083, variant083, variant083];
   }
 });
 
 // src/themes/terrain/pixel/generated/flower.ts
-var variant083, variant163, variant253, sprites85;
+var variant084, variant164, variant254, sprites86;
 var init_flower = __esm({
   "src/themes/terrain/pixel/generated/flower.ts"() {
     "use strict";
     init_esm_shims();
-    variant083 = {
+    variant084 = {
       layers: [
         {
           paint: "pine",
@@ -13389,7 +14093,7 @@ var init_flower = __esm({
       ],
       pixels: 41
     };
-    variant163 = {
+    variant164 = {
       layers: [
         {
           paint: "pine",
@@ -13403,7 +14107,7 @@ var init_flower = __esm({
       ],
       pixels: 44
     };
-    variant253 = {
+    variant254 = {
       layers: [
         {
           paint: "pine",
@@ -13416,17 +14120,17 @@ var init_flower = __esm({
       ],
       pixels: 46
     };
-    sprites85 = [variant083, variant163, variant253];
+    sprites86 = [variant084, variant164, variant254];
   }
 });
 
 // src/themes/terrain/pixel/generated/frog.ts
-var variant084, sprites86;
+var variant085, sprites87;
 var init_frog = __esm({
   "src/themes/terrain/pixel/generated/frog.ts"() {
     "use strict";
     init_esm_shims();
-    variant084 = {
+    variant085 = {
       layers: [
         { paint: "pine", d: "M-2,-1h1v1.5h-1zM1,-1h1v1.5h-1z" },
         {
@@ -13437,17 +14141,17 @@ var init_frog = __esm({
       ],
       pixels: 38
     };
-    sprites86 = [variant084, variant084, variant084];
+    sprites87 = [variant085, variant085, variant085];
   }
 });
 
 // src/themes/terrain/pixel/generated/heron.ts
-var variant085, sprites87;
+var variant086, sprites88;
 var init_heron = __esm({
   "src/themes/terrain/pixel/generated/heron.ts"() {
     "use strict";
     init_esm_shims();
-    variant085 = {
+    variant086 = {
       layers: [
         {
           paint: "wheat",
@@ -13461,17 +14165,17 @@ var init_heron = __esm({
       ],
       pixels: 59
     };
-    sprites87 = [variant085, variant085, variant085];
+    sprites88 = [variant086, variant086, variant086];
   }
 });
 
 // src/themes/terrain/pixel/generated/lily.ts
-var variant086, sprites88;
+var variant087, sprites89;
 var init_lily = __esm({
   "src/themes/terrain/pixel/generated/lily.ts"() {
     "use strict";
     init_esm_shims();
-    variant086 = {
+    variant087 = {
       layers: [
         {
           paint: "pine",
@@ -13487,17 +14191,17 @@ var init_lily = __esm({
       ],
       pixels: 40
     };
-    sprites88 = [variant086, variant086, variant086];
+    sprites89 = [variant087, variant087, variant087];
   }
 });
 
 // src/themes/terrain/pixel/generated/parasol.ts
-var variant087, variant164, variant254, sprites89;
+var variant088, variant165, variant255, sprites90;
 var init_parasol = __esm({
   "src/themes/terrain/pixel/generated/parasol.ts"() {
     "use strict";
     init_esm_shims();
-    variant087 = {
+    variant088 = {
       layers: [
         { paint: "trunk", d: "M-1.5,0.5h1.5v0.5h-1.5zM0.5,0.5h2v0.5h-2z" },
         { paint: "bareBranch", d: "M-0.5,-3h1v3.5h-1zM0,0.5h0.5v0.5h-0.5z" },
@@ -13523,7 +14227,7 @@ var init_parasol = __esm({
       ],
       pixels: 73
     };
-    variant164 = {
+    variant165 = {
       layers: [
         { paint: "trunk", d: "M-1.5,0.5h1.5v0.5h-1.5zM0.5,0.5h2v0.5h-2z" },
         { paint: "bareBranch", d: "M-0.5,-3h1v3.5h-1zM0,0.5h0.5v0.5h-0.5z" },
@@ -13549,7 +14253,7 @@ var init_parasol = __esm({
       ],
       pixels: 82
     };
-    variant254 = {
+    variant255 = {
       layers: [
         { paint: "trunk", d: "M-1.5,0.5h1.5v0.5h-1.5zM0.5,0.5h2v0.5h-2z" },
         { paint: "bareBranch", d: "M-0.5,-3h1v3.5h-1zM0,0.5h0.5v0.5h-0.5z" },
@@ -13575,17 +14279,17 @@ var init_parasol = __esm({
       ],
       pixels: 64
     };
-    sprites89 = [variant087, variant164, variant254];
+    sprites90 = [variant088, variant165, variant255];
   }
 });
 
 // src/themes/terrain/pixel/generated/rock.ts
-var variant088, variant165, variant255, sprites90;
+var variant089, variant166, variant256, sprites91;
 var init_rock = __esm({
   "src/themes/terrain/pixel/generated/rock.ts"() {
     "use strict";
     init_esm_shims();
-    variant088 = {
+    variant089 = {
       layers: [
         {
           paint: "boulder",
@@ -13598,7 +14302,7 @@ var init_rock = __esm({
       ],
       pixels: 48
     };
-    variant165 = {
+    variant166 = {
       layers: [
         {
           paint: "boulder",
@@ -13611,7 +14315,7 @@ var init_rock = __esm({
       ],
       pixels: 56
     };
-    variant255 = {
+    variant256 = {
       layers: [
         {
           paint: "boulder",
@@ -13624,17 +14328,17 @@ var init_rock = __esm({
       ],
       pixels: 52
     };
-    sprites90 = [variant088, variant165, variant255];
+    sprites91 = [variant089, variant166, variant256];
   }
 });
 
 // src/themes/terrain/pixel/generated/sandcastle.ts
-var variant089, sprites91;
+var variant090, sprites92;
 var init_sandcastle = __esm({
   "src/themes/terrain/pixel/generated/sandcastle.ts"() {
     "use strict";
     init_esm_shims();
-    variant089 = {
+    variant090 = {
       layers: [
         {
           paint: "sandcastle",
@@ -13645,17 +14349,17 @@ var init_sandcastle = __esm({
       ],
       pixels: 86
     };
-    sprites91 = [variant089, variant089, variant089];
+    sprites92 = [variant090, variant090, variant090];
   }
 });
 
 // src/themes/terrain/pixel/generated/sandcastleSummer.ts
-var variant090, variant166, variant256, sprites92;
+var variant091, variant167, variant257, sprites93;
 var init_sandcastleSummer = __esm({
   "src/themes/terrain/pixel/generated/sandcastleSummer.ts"() {
     "use strict";
     init_esm_shims();
-    variant090 = {
+    variant091 = {
       layers: [
         {
           paint: "sandcastleWall",
@@ -13678,7 +14382,7 @@ var init_sandcastleSummer = __esm({
       ],
       pixels: 40
     };
-    variant166 = {
+    variant167 = {
       layers: [
         {
           paint: "sandcastleWall",
@@ -13703,7 +14407,7 @@ var init_sandcastleSummer = __esm({
       ],
       pixels: 61
     };
-    variant256 = {
+    variant257 = {
       layers: [
         {
           paint: "sandcastleWall",
@@ -13726,17 +14430,17 @@ var init_sandcastleSummer = __esm({
       ],
       pixels: 74
     };
-    sprites92 = [variant090, variant166, variant256];
+    sprites93 = [variant091, variant167, variant257];
   }
 });
 
 // src/themes/terrain/pixel/generated/shellfish.ts
-var variant091, sprites93;
+var variant092, sprites94;
 var init_shellfish = __esm({
   "src/themes/terrain/pixel/generated/shellfish.ts"() {
     "use strict";
     init_esm_shims();
-    variant091 = {
+    variant092 = {
       layers: [
         {
           paint: "shellfish",
@@ -13746,17 +14450,17 @@ var init_shellfish = __esm({
       ],
       pixels: 32
     };
-    sprites93 = [variant091, variant091, variant091];
+    sprites94 = [variant092, variant092, variant092];
   }
 });
 
 // src/themes/terrain/pixel/generated/snowCoveredRock.ts
-var variant092, variant167, variant257, sprites94;
+var variant093, variant168, variant258, sprites95;
 var init_snowCoveredRock = __esm({
   "src/themes/terrain/pixel/generated/snowCoveredRock.ts"() {
     "use strict";
     init_esm_shims();
-    variant092 = {
+    variant093 = {
       layers: [
         {
           paint: "rock",
@@ -13770,7 +14474,7 @@ var init_snowCoveredRock = __esm({
       ],
       pixels: 35
     };
-    variant167 = {
+    variant168 = {
       layers: [
         {
           paint: "rock",
@@ -13785,7 +14489,7 @@ var init_snowCoveredRock = __esm({
       ],
       pixels: 78
     };
-    variant257 = {
+    variant258 = {
       layers: [
         {
           paint: "rock",
@@ -13803,17 +14507,17 @@ var init_snowCoveredRock = __esm({
       ],
       pixels: 99
     };
-    sprites94 = [variant092, variant167, variant257];
+    sprites95 = [variant093, variant168, variant258];
   }
 });
 
 // src/themes/terrain/pixel/generated/surfboard.ts
-var variant093, variant168, variant258, sprites95;
+var variant094, variant169, variant259, sprites96;
 var init_surfboard = __esm({
   "src/themes/terrain/pixel/generated/surfboard.ts"() {
     "use strict";
     init_esm_shims();
-    variant093 = {
+    variant094 = {
       layers: [
         {
           paint: "surfboardBody",
@@ -13831,7 +14535,7 @@ var init_surfboard = __esm({
       ],
       pixels: 47
     };
-    variant168 = {
+    variant169 = {
       layers: [
         { paint: "trunk", d: "M0,0.5h0.5v0.5h-0.5z" },
         {
@@ -13849,7 +14553,7 @@ var init_surfboard = __esm({
       ],
       pixels: 43
     };
-    variant258 = {
+    variant259 = {
       layers: [
         {
           paint: "surfboardBody",
@@ -13866,17 +14570,17 @@ var init_surfboard = __esm({
       ],
       pixels: 44
     };
-    sprites95 = [variant093, variant168, variant258];
+    sprites96 = [variant094, variant169, variant259];
   }
 });
 
 // src/themes/terrain/pixel/generated/tidePools.ts
-var variant094, sprites96;
+var variant095, sprites97;
 var init_tidePools = __esm({
   "src/themes/terrain/pixel/generated/tidePools.ts"() {
     "use strict";
     init_esm_shims();
-    variant094 = {
+    variant095 = {
       layers: [
         {
           paint: "rock",
@@ -13893,16 +14597,17 @@ var init_tidePools = __esm({
       ],
       pixels: 49
     };
-    sprites96 = [variant094, variant094, variant094];
+    sprites97 = [variant095, variant095, variant095];
   }
 });
 
 // src/themes/terrain/pixel/generated/group-shore.ts
-var sprites97;
+var sprites98;
 var init_group_shore = __esm({
   "src/themes/terrain/pixel/generated/group-shore.ts"() {
     "use strict";
     init_esm_shims();
+    init_alpineRocks();
     init_beachTowel();
     init_boulder();
     init_bush();
@@ -13920,35 +14625,36 @@ var init_group_shore = __esm({
     init_snowCoveredRock();
     init_surfboard();
     init_tidePools();
-    sprites97 = {
-      beachTowel: sprites80,
-      boulder: sprites81,
-      bush: sprites82,
-      cattail: sprites83,
-      driftwood: sprites84,
-      flower: sprites85,
-      frog: sprites86,
-      heron: sprites87,
-      lily: sprites88,
-      parasol: sprites89,
-      rock: sprites90,
-      sandcastle: sprites91,
-      sandcastleSummer: sprites92,
-      shellfish: sprites93,
-      snowCoveredRock: sprites94,
-      surfboard: sprites95,
-      tidePools: sprites96
+    sprites98 = {
+      alpineRocks: sprites80,
+      beachTowel: sprites81,
+      boulder: sprites82,
+      bush: sprites83,
+      cattail: sprites84,
+      driftwood: sprites85,
+      flower: sprites86,
+      frog: sprites87,
+      heron: sprites88,
+      lily: sprites89,
+      parasol: sprites90,
+      rock: sprites91,
+      sandcastle: sprites92,
+      sandcastleSummer: sprites93,
+      shellfish: sprites94,
+      snowCoveredRock: sprites95,
+      surfboard: sprites96,
+      tidePools: sprites97
     };
   }
 });
 
 // src/themes/terrain/pixel/generated/blacksmith.ts
-var variant095, sprites98;
+var variant096, sprites99;
 var init_blacksmith = __esm({
   "src/themes/terrain/pixel/generated/blacksmith.ts"() {
     "use strict";
     init_esm_shims();
-    variant095 = {
+    variant096 = {
       layers: [
         {
           paint: [
@@ -13986,17 +14692,17 @@ var init_blacksmith = __esm({
       ],
       pixels: 153
     };
-    sprites98 = [variant095, variant095, variant095];
+    sprites99 = [variant096, variant096, variant096];
   }
 });
 
 // src/themes/terrain/pixel/generated/bridge.ts
-var variant096, sprites99;
+var variant097, sprites100;
 var init_bridge = __esm({
   "src/themes/terrain/pixel/generated/bridge.ts"() {
     "use strict";
     init_esm_shims();
-    variant096 = {
+    variant097 = {
       layers: [
         {
           paint: [
@@ -14023,17 +14729,17 @@ var init_bridge = __esm({
       ],
       pixels: 141
     };
-    sprites99 = [variant096, variant096, variant096];
+    sprites100 = [variant097, variant097, variant097];
   }
 });
 
 // src/themes/terrain/pixel/generated/castle.ts
-var variant097, sprites100;
+var variant098, sprites101;
 var init_castle = __esm({
   "src/themes/terrain/pixel/generated/castle.ts"() {
     "use strict";
     init_esm_shims();
-    variant097 = {
+    variant098 = {
       layers: [
         {
           paint: [
@@ -14078,17 +14784,17 @@ var init_castle = __esm({
       ],
       pixels: 255
     };
-    sprites100 = [variant097, variant097, variant097];
+    sprites101 = [variant098, variant098, variant098];
   }
 });
 
 // src/themes/terrain/pixel/generated/cathedral.ts
-var variant098, sprites101;
+var variant099, sprites102;
 var init_cathedral = __esm({
   "src/themes/terrain/pixel/generated/cathedral.ts"() {
     "use strict";
     init_esm_shims();
-    variant098 = {
+    variant099 = {
       layers: [
         {
           paint: [
@@ -14146,17 +14852,17 @@ var init_cathedral = __esm({
       ],
       pixels: 346
     };
-    sprites101 = [variant098, variant098, variant098];
+    sprites102 = [variant099, variant099, variant099];
   }
 });
 
 // src/themes/terrain/pixel/generated/clocktower.ts
-var variant099, sprites102;
+var variant0100, sprites103;
 var init_clocktower = __esm({
   "src/themes/terrain/pixel/generated/clocktower.ts"() {
     "use strict";
     init_esm_shims();
-    variant099 = {
+    variant0100 = {
       layers: [
         {
           paint: [
@@ -14196,17 +14902,17 @@ var init_clocktower = __esm({
       ],
       pixels: 205
     };
-    sprites102 = [variant099, variant099, variant099];
+    sprites103 = [variant0100, variant0100, variant0100];
   }
 });
 
 // src/themes/terrain/pixel/generated/fountain.ts
-var variant0100, sprites103;
+var variant0101, sprites104;
 var init_fountain = __esm({
   "src/themes/terrain/pixel/generated/fountain.ts"() {
     "use strict";
     init_esm_shims();
-    variant0100 = {
+    variant0101 = {
       layers: [
         {
           paint: "boulder",
@@ -14224,17 +14930,17 @@ var init_fountain = __esm({
       ],
       pixels: 96
     };
-    sprites103 = [variant0100, variant0100, variant0100];
+    sprites104 = [variant0101, variant0101, variant0101];
   }
 });
 
 // src/themes/terrain/pixel/generated/frozenFountain.ts
-var variant0101, variant169, sprites104;
+var variant0102, variant170, sprites105;
 var init_frozenFountain = __esm({
   "src/themes/terrain/pixel/generated/frozenFountain.ts"() {
     "use strict";
     init_esm_shims();
-    variant0101 = {
+    variant0102 = {
       layers: [
         {
           paint: "fountain",
@@ -14263,7 +14969,7 @@ var init_frozenFountain = __esm({
       ],
       pixels: 100
     };
-    variant169 = {
+    variant170 = {
       layers: [
         {
           paint: "fountain",
@@ -14293,17 +14999,17 @@ var init_frozenFountain = __esm({
       ],
       pixels: 107
     };
-    sprites104 = [variant0101, variant169, variant0101];
+    sprites105 = [variant0102, variant170, variant0102];
   }
 });
 
 // src/themes/terrain/pixel/generated/gatehouse.ts
-var variant0102, sprites105;
+var variant0103, sprites106;
 var init_gatehouse = __esm({
   "src/themes/terrain/pixel/generated/gatehouse.ts"() {
     "use strict";
     init_esm_shims();
-    variant0102 = {
+    variant0103 = {
       layers: [
         {
           paint: "gatehouse",
@@ -14332,17 +15038,17 @@ var init_gatehouse = __esm({
       ],
       pixels: 201
     };
-    sprites105 = [variant0102, variant0102, variant0102];
+    sprites106 = [variant0103, variant0103, variant0103];
   }
 });
 
 // src/themes/terrain/pixel/generated/hanokEstate.ts
-var variant0103, variant170, variant259, sprites106;
+var variant0104, variant171, variant260, sprites107;
 var init_hanokEstate = __esm({
   "src/themes/terrain/pixel/generated/hanokEstate.ts"() {
     "use strict";
     init_esm_shims();
-    variant0103 = {
+    variant0104 = {
       layers: [
         {
           paint: [
@@ -14425,7 +15131,7 @@ var init_hanokEstate = __esm({
       ],
       pixels: 1200
     };
-    variant170 = {
+    variant171 = {
       layers: [
         {
           paint: [
@@ -14485,7 +15191,7 @@ var init_hanokEstate = __esm({
       ],
       pixels: 1225
     };
-    variant259 = {
+    variant260 = {
       layers: [
         {
           paint: [
@@ -14572,17 +15278,17 @@ var init_hanokEstate = __esm({
       ],
       pixels: 1209
     };
-    sprites106 = [variant0103, variant170, variant259];
+    sprites107 = [variant0104, variant171, variant260];
   }
 });
 
 // src/themes/terrain/pixel/generated/inn.ts
-var variant0104, variant171, variant260, sprites107;
+var variant0105, variant172, variant261, sprites108;
 var init_inn = __esm({
   "src/themes/terrain/pixel/generated/inn.ts"() {
     "use strict";
     init_esm_shims();
-    variant0104 = {
+    variant0105 = {
       layers: [
         {
           paint: [
@@ -14621,7 +15327,7 @@ var init_inn = __esm({
       ],
       pixels: 241
     };
-    variant171 = {
+    variant172 = {
       layers: [
         {
           paint: [
@@ -14668,7 +15374,7 @@ var init_inn = __esm({
       ],
       pixels: 241
     };
-    variant260 = {
+    variant261 = {
       layers: [
         {
           paint: [
@@ -14712,17 +15418,17 @@ var init_inn = __esm({
       ],
       pixels: 267
     };
-    sprites107 = [variant0104, variant171, variant260];
+    sprites108 = [variant0105, variant172, variant261];
   }
 });
 
 // src/themes/terrain/pixel/generated/library.ts
-var variant0105, sprites108;
+var variant0106, sprites109;
 var init_library = __esm({
   "src/themes/terrain/pixel/generated/library.ts"() {
     "use strict";
     init_esm_shims();
-    variant0105 = {
+    variant0106 = {
       layers: [
         {
           paint: [
@@ -14761,17 +15467,17 @@ var init_library = __esm({
       ],
       pixels: 163
     };
-    sprites108 = [variant0105, variant0105, variant0105];
+    sprites109 = [variant0106, variant0106, variant0106];
   }
 });
 
 // src/themes/terrain/pixel/generated/manor.ts
-var variant0106, sprites109;
+var variant0107, sprites110;
 var init_manor = __esm({
   "src/themes/terrain/pixel/generated/manor.ts"() {
     "use strict";
     init_esm_shims();
-    variant0106 = {
+    variant0107 = {
       layers: [
         {
           paint: [
@@ -14819,17 +15525,17 @@ var init_manor = __esm({
       ],
       pixels: 308
     };
-    sprites109 = [variant0106, variant0106, variant0106];
+    sprites110 = [variant0107, variant0107, variant0107];
   }
 });
 
 // src/themes/terrain/pixel/generated/market.ts
-var variant0107, variant172, variant261, sprites110;
+var variant0108, variant173, variant262, sprites111;
 var init_market = __esm({
   "src/themes/terrain/pixel/generated/market.ts"() {
     "use strict";
     init_esm_shims();
-    variant0107 = {
+    variant0108 = {
       layers: [
         {
           paint: [
@@ -14880,7 +15586,7 @@ var init_market = __esm({
       ],
       pixels: 191
     };
-    variant172 = {
+    variant173 = {
       layers: [
         {
           paint: [
@@ -14935,7 +15641,7 @@ var init_market = __esm({
       ],
       pixels: 227
     };
-    variant261 = {
+    variant262 = {
       layers: [
         {
           paint: "trunk",
@@ -14986,17 +15692,17 @@ var init_market = __esm({
       ],
       pixels: 185
     };
-    sprites110 = [variant0107, variant172, variant261];
+    sprites111 = [variant0108, variant173, variant262];
   }
 });
 
 // src/themes/terrain/pixel/generated/park.ts
-var variant0108, sprites111;
+var variant0109, sprites112;
 var init_park = __esm({
   "src/themes/terrain/pixel/generated/park.ts"() {
     "use strict";
     init_esm_shims();
-    variant0108 = {
+    variant0109 = {
       layers: [
         {
           paint: "trunk",
@@ -15027,17 +15733,17 @@ var init_park = __esm({
       ],
       pixels: 115
     };
-    sprites111 = [variant0108, variant0108, variant0108];
+    sprites112 = [variant0109, variant0109, variant0109];
   }
 });
 
 // src/themes/terrain/pixel/generated/statue.ts
-var variant0109, sprites112;
+var variant0110, sprites113;
 var init_statue = __esm({
   "src/themes/terrain/pixel/generated/statue.ts"() {
     "use strict";
     init_esm_shims();
-    variant0109 = {
+    variant0110 = {
       layers: [
         { paint: "rock", d: "M-1.5,-1h3v0.5h-3zM-0.5,-0.5h1.5v0.5h-1.5z" },
         {
@@ -15065,17 +15771,17 @@ var init_statue = __esm({
       ],
       pixels: 66
     };
-    sprites112 = [variant0109, variant0109, variant0109];
+    sprites113 = [variant0110, variant0110, variant0110];
   }
 });
 
 // src/themes/terrain/pixel/generated/stoneBridge.ts
-var variant0110, variant173, variant262, sprites113;
+var variant0111, variant174, variant263, sprites114;
 var init_stoneBridge = __esm({
   "src/themes/terrain/pixel/generated/stoneBridge.ts"() {
     "use strict";
     init_esm_shims();
-    variant0110 = {
+    variant0111 = {
       layers: [
         {
           paint: [
@@ -15098,7 +15804,7 @@ var init_stoneBridge = __esm({
       ],
       pixels: 452
     };
-    variant173 = {
+    variant174 = {
       layers: [
         {
           paint: [
@@ -15121,7 +15827,7 @@ var init_stoneBridge = __esm({
       ],
       pixels: 465
     };
-    variant262 = {
+    variant263 = {
       layers: [
         {
           paint: [
@@ -15144,17 +15850,17 @@ var init_stoneBridge = __esm({
       ],
       pixels: 464
     };
-    sprites113 = [variant0110, variant173, variant262];
+    sprites114 = [variant0111, variant174, variant263];
   }
 });
 
 // src/themes/terrain/pixel/generated/swimmingPool.ts
-var variant0111, variant174, variant263, sprites114;
+var variant0112, variant175, variant264, sprites115;
 var init_swimmingPool = __esm({
   "src/themes/terrain/pixel/generated/swimmingPool.ts"() {
     "use strict";
     init_esm_shims();
-    variant0111 = {
+    variant0112 = {
       layers: [
         {
           paint: [
@@ -15178,7 +15884,7 @@ var init_swimmingPool = __esm({
       ],
       pixels: 89
     };
-    variant174 = {
+    variant175 = {
       layers: [
         {
           paint: [
@@ -15203,7 +15909,7 @@ var init_swimmingPool = __esm({
       ],
       pixels: 90
     };
-    variant263 = {
+    variant264 = {
       layers: [
         {
           paint: [
@@ -15228,17 +15934,17 @@ var init_swimmingPool = __esm({
       ],
       pixels: 98
     };
-    sprites114 = [variant0111, variant174, variant263];
+    sprites115 = [variant0112, variant175, variant264];
   }
 });
 
 // src/themes/terrain/pixel/generated/tower.ts
-var variant0112, sprites115;
+var variant0113, sprites116;
 var init_tower = __esm({
   "src/themes/terrain/pixel/generated/tower.ts"() {
     "use strict";
     init_esm_shims();
-    variant0112 = {
+    variant0113 = {
       layers: [
         {
           paint: [
@@ -15279,17 +15985,17 @@ var init_tower = __esm({
       ],
       pixels: 178
     };
-    sprites115 = [variant0112, variant0112, variant0112];
+    sprites116 = [variant0113, variant0113, variant0113];
   }
 });
 
 // src/themes/terrain/pixel/generated/warehouse.ts
-var variant0113, sprites116;
+var variant0114, sprites117;
 var init_warehouse = __esm({
   "src/themes/terrain/pixel/generated/warehouse.ts"() {
     "use strict";
     init_esm_shims();
-    variant0113 = {
+    variant0114 = {
       layers: [
         {
           paint: [
@@ -15329,12 +16035,12 @@ var init_warehouse = __esm({
       ],
       pixels: 186
     };
-    sprites116 = [variant0113, variant0113, variant0113];
+    sprites117 = [variant0114, variant0114, variant0114];
   }
 });
 
 // src/themes/terrain/pixel/generated/group-town.ts
-var sprites117;
+var sprites118;
 var init_group_town = __esm({
   "src/themes/terrain/pixel/generated/group-town.ts"() {
     "use strict";
@@ -15358,37 +16064,37 @@ var init_group_town = __esm({
     init_swimmingPool();
     init_tower();
     init_warehouse();
-    sprites117 = {
-      blacksmith: sprites98,
-      bridge: sprites99,
-      castle: sprites100,
-      cathedral: sprites101,
-      clocktower: sprites102,
-      fountain: sprites103,
-      frozenFountain: sprites104,
-      gatehouse: sprites105,
-      hanokEstate: sprites106,
-      inn: sprites107,
-      library: sprites108,
-      manor: sprites109,
-      market: sprites110,
-      park: sprites111,
-      statue: sprites112,
-      stoneBridge: sprites113,
-      swimmingPool: sprites114,
-      tower: sprites115,
-      warehouse: sprites116
+    sprites118 = {
+      blacksmith: sprites99,
+      bridge: sprites100,
+      castle: sprites101,
+      cathedral: sprites102,
+      clocktower: sprites103,
+      fountain: sprites104,
+      frozenFountain: sprites105,
+      gatehouse: sprites106,
+      hanokEstate: sprites107,
+      inn: sprites108,
+      library: sprites109,
+      manor: sprites110,
+      market: sprites111,
+      park: sprites112,
+      statue: sprites113,
+      stoneBridge: sprites114,
+      swimmingPool: sprites115,
+      tower: sprites116,
+      warehouse: sprites117
     };
   }
 });
 
 // src/themes/terrain/pixel/generated/bakery.ts
-var variant0114, sprites118;
+var variant0115, sprites119;
 var init_bakery = __esm({
   "src/themes/terrain/pixel/generated/bakery.ts"() {
     "use strict";
     init_esm_shims();
-    variant0114 = {
+    variant0115 = {
       layers: [
         {
           paint: [
@@ -15429,17 +16135,17 @@ var init_bakery = __esm({
       ],
       pixels: 150
     };
-    sprites118 = [variant0114, variant0114, variant0114];
+    sprites119 = [variant0115, variant0115, variant0115];
   }
 });
 
 // src/themes/terrain/pixel/generated/choga.ts
-var variant0115, variant175, variant264, sprites119;
+var variant0116, variant176, variant265, sprites120;
 var init_choga = __esm({
   "src/themes/terrain/pixel/generated/choga.ts"() {
     "use strict";
     init_esm_shims();
-    variant0115 = {
+    variant0116 = {
       layers: [
         {
           paint: "path",
@@ -15515,7 +16221,7 @@ var init_choga = __esm({
       ],
       pixels: 586
     };
-    variant175 = {
+    variant176 = {
       layers: [
         {
           paint: "path",
@@ -15572,7 +16278,7 @@ var init_choga = __esm({
       ],
       pixels: 594
     };
-    variant264 = {
+    variant265 = {
       layers: [
         {
           paint: "path",
@@ -15649,17 +16355,17 @@ var init_choga = __esm({
       ],
       pixels: 606
     };
-    sprites119 = [variant0115, variant175, variant264];
+    sprites120 = [variant0116, variant176, variant265];
   }
 });
 
 // src/themes/terrain/pixel/generated/church.ts
-var variant0116, variant176, variant265, sprites120;
+var variant0117, variant177, variant266, sprites121;
 var init_church = __esm({
   "src/themes/terrain/pixel/generated/church.ts"() {
     "use strict";
     init_esm_shims();
-    variant0116 = {
+    variant0117 = {
       layers: [
         {
           paint: "church",
@@ -15698,7 +16404,7 @@ var init_church = __esm({
       ],
       pixels: 217
     };
-    variant176 = {
+    variant177 = {
       layers: [
         { paint: "church", d: "M-3,-3.5h1.5v3.5h-1.5zM-2,0h1v0.5h-1zM-1,0.5h1v0.5h-1z" },
         {
@@ -15733,7 +16439,7 @@ var init_church = __esm({
       ],
       pixels: 202
     };
-    variant265 = {
+    variant266 = {
       layers: [
         {
           paint: [
@@ -15769,17 +16475,17 @@ var init_church = __esm({
       ],
       pixels: 121
     };
-    sprites120 = [variant0116, variant176, variant265];
+    sprites121 = [variant0117, variant177, variant266];
   }
 });
 
 // src/themes/terrain/pixel/generated/churchWinter.ts
-var variant0117, variant177, sprites121;
+var variant0118, variant178, sprites122;
 var init_churchWinter = __esm({
   "src/themes/terrain/pixel/generated/churchWinter.ts"() {
     "use strict";
     init_esm_shims();
-    variant0117 = {
+    variant0118 = {
       layers: [
         {
           paint: "church",
@@ -15810,7 +16516,7 @@ var init_churchWinter = __esm({
       ],
       pixels: 254
     };
-    variant177 = {
+    variant178 = {
       layers: [
         {
           paint: "church",
@@ -15837,17 +16543,17 @@ var init_churchWinter = __esm({
       ],
       pixels: 230
     };
-    sprites121 = [variant0117, variant177, variant0117];
+    sprites122 = [variant0118, variant178, variant0118];
   }
 });
 
 // src/themes/terrain/pixel/generated/doghouse.ts
-var variant0118, sprites122;
+var variant0119, sprites123;
 var init_doghouse = __esm({
   "src/themes/terrain/pixel/generated/doghouse.ts"() {
     "use strict";
     init_esm_shims();
-    variant0118 = {
+    variant0119 = {
       layers: [
         {
           paint: [
@@ -15879,17 +16585,17 @@ var init_doghouse = __esm({
       ],
       pixels: 86
     };
-    sprites122 = [variant0118, variant0118, variant0118];
+    sprites123 = [variant0119, variant0119, variant0119];
   }
 });
 
 // src/themes/terrain/pixel/generated/garden.ts
-var variant0119, sprites123;
+var variant0120, sprites124;
 var init_garden = __esm({
   "src/themes/terrain/pixel/generated/garden.ts"() {
     "use strict";
     init_esm_shims();
-    variant0119 = {
+    variant0120 = {
       layers: [
         {
           paint: "gardenSoil",
@@ -15910,17 +16616,17 @@ var init_garden = __esm({
       ],
       pixels: 74
     };
-    sprites123 = [variant0119, variant0119, variant0119];
+    sprites124 = [variant0120, variant0120, variant0120];
   }
 });
 
 // src/themes/terrain/pixel/generated/hanok.ts
-var variant0120, variant178, variant266, sprites124;
+var variant0121, variant179, variant267, sprites125;
 var init_hanok = __esm({
   "src/themes/terrain/pixel/generated/hanok.ts"() {
     "use strict";
     init_esm_shims();
-    variant0120 = {
+    variant0121 = {
       layers: [
         {
           paint: "shadow",
@@ -15985,7 +16691,7 @@ var init_hanok = __esm({
       ],
       pixels: 749
     };
-    variant178 = {
+    variant179 = {
       layers: [
         {
           paint: "shadow",
@@ -16050,7 +16756,7 @@ var init_hanok = __esm({
       ],
       pixels: 758
     };
-    variant266 = {
+    variant267 = {
       layers: [
         {
           paint: "shadow",
@@ -16138,17 +16844,17 @@ var init_hanok = __esm({
       ],
       pixels: 775
     };
-    sprites124 = [variant0120, variant178, variant266];
+    sprites125 = [variant0121, variant179, variant267];
   }
 });
 
 // src/themes/terrain/pixel/generated/hanokGate.ts
-var variant0121, variant179, variant267, sprites125;
+var variant0122, variant180, variant268, sprites126;
 var init_hanokGate = __esm({
   "src/themes/terrain/pixel/generated/hanokGate.ts"() {
     "use strict";
     init_esm_shims();
-    variant0121 = {
+    variant0122 = {
       layers: [
         {
           paint: "rock",
@@ -16211,7 +16917,7 @@ var init_hanokGate = __esm({
       ],
       pixels: 725
     };
-    variant179 = {
+    variant180 = {
       layers: [
         {
           paint: "rock",
@@ -16274,7 +16980,7 @@ var init_hanokGate = __esm({
       ],
       pixels: 732
     };
-    variant267 = {
+    variant268 = {
       layers: [
         {
           paint: "rock",
@@ -16341,17 +17047,17 @@ var init_hanokGate = __esm({
       ],
       pixels: 783
     };
-    sprites125 = [variant0121, variant179, variant267];
+    sprites126 = [variant0122, variant180, variant268];
   }
 });
 
 // src/themes/terrain/pixel/generated/house.ts
-var variant0122, variant180, variant268, sprites126;
+var variant0123, variant181, variant269, sprites127;
 var init_house = __esm({
   "src/themes/terrain/pixel/generated/house.ts"() {
     "use strict";
     init_esm_shims();
-    variant0122 = {
+    variant0123 = {
       layers: [
         {
           paint: "wall",
@@ -16388,7 +17094,7 @@ var init_house = __esm({
       ],
       pixels: 201
     };
-    variant180 = {
+    variant181 = {
       layers: [
         {
           paint: "wall",
@@ -16425,7 +17131,7 @@ var init_house = __esm({
       ],
       pixels: 201
     };
-    variant268 = {
+    variant269 = {
       layers: [
         {
           paint: "wall",
@@ -16466,17 +17172,17 @@ var init_house = __esm({
       ],
       pixels: 218
     };
-    sprites126 = [variant0122, variant180, variant268];
+    sprites127 = [variant0123, variant181, variant269];
   }
 });
 
 // src/themes/terrain/pixel/generated/houseB.ts
-var variant0123, variant181, variant269, sprites127;
+var variant0124, variant182, variant270, sprites128;
 var init_houseB = __esm({
   "src/themes/terrain/pixel/generated/houseB.ts"() {
     "use strict";
     init_esm_shims();
-    variant0123 = {
+    variant0124 = {
       layers: [
         {
           paint: "wall",
@@ -16513,7 +17219,7 @@ var init_houseB = __esm({
       ],
       pixels: 193
     };
-    variant181 = {
+    variant182 = {
       layers: [
         {
           paint: "wall",
@@ -16548,7 +17254,7 @@ var init_houseB = __esm({
       ],
       pixels: 193
     };
-    variant269 = {
+    variant270 = {
       layers: [
         {
           paint: "wall",
@@ -16587,17 +17293,17 @@ var init_houseB = __esm({
       ],
       pixels: 207
     };
-    sprites127 = [variant0123, variant181, variant269];
+    sprites128 = [variant0124, variant182, variant270];
   }
 });
 
 // src/themes/terrain/pixel/generated/houseBWinter.ts
-var variant0124, variant182, variant270, sprites128;
+var variant0125, variant183, variant271, sprites129;
 var init_houseBWinter = __esm({
   "src/themes/terrain/pixel/generated/houseBWinter.ts"() {
     "use strict";
     init_esm_shims();
-    variant0124 = {
+    variant0125 = {
       layers: [
         {
           paint: "sledWood",
@@ -16632,7 +17338,7 @@ var init_houseBWinter = __esm({
       ],
       pixels: 254
     };
-    variant182 = {
+    variant183 = {
       layers: [
         {
           paint: "sledWood",
@@ -16665,7 +17371,7 @@ var init_houseBWinter = __esm({
       ],
       pixels: 254
     };
-    variant270 = {
+    variant271 = {
       layers: [
         {
           paint: "sledWood",
@@ -16700,17 +17406,17 @@ var init_houseBWinter = __esm({
       ],
       pixels: 257
     };
-    sprites128 = [variant0124, variant182, variant270];
+    sprites129 = [variant0125, variant183, variant271];
   }
 });
 
 // src/themes/terrain/pixel/generated/houseWinter.ts
-var variant0125, variant183, variant271, sprites129;
+var variant0126, variant184, variant272, sprites130;
 var init_houseWinter = __esm({
   "src/themes/terrain/pixel/generated/houseWinter.ts"() {
     "use strict";
     init_esm_shims();
-    variant0125 = {
+    variant0126 = {
       layers: [
         {
           paint: "wall",
@@ -16748,7 +17454,7 @@ var init_houseWinter = __esm({
       ],
       pixels: 222
     };
-    variant183 = {
+    variant184 = {
       layers: [
         {
           paint: "wall",
@@ -16787,7 +17493,7 @@ var init_houseWinter = __esm({
       ],
       pixels: 222
     };
-    variant271 = {
+    variant272 = {
       layers: [
         {
           paint: "wall",
@@ -16820,17 +17526,17 @@ var init_houseWinter = __esm({
       ],
       pixels: 234
     };
-    sprites129 = [variant0125, variant183, variant271];
+    sprites130 = [variant0126, variant184, variant272];
   }
 });
 
 // src/themes/terrain/pixel/generated/hut.ts
-var variant0126, variant184, variant272, sprites130;
+var variant0127, variant185, variant273, sprites131;
 var init_hut = __esm({
   "src/themes/terrain/pixel/generated/hut.ts"() {
     "use strict";
     init_esm_shims();
-    variant0126 = {
+    variant0127 = {
       layers: [
         {
           paint: [
@@ -16868,7 +17574,7 @@ var init_hut = __esm({
       ],
       pixels: 120
     };
-    variant184 = {
+    variant185 = {
       layers: [
         {
           paint: "hut",
@@ -16903,7 +17609,7 @@ var init_hut = __esm({
       ],
       pixels: 103
     };
-    variant272 = {
+    variant273 = {
       layers: [
         {
           paint: [
@@ -16941,17 +17647,17 @@ var init_hut = __esm({
       ],
       pixels: 139
     };
-    sprites130 = [variant0126, variant184, variant272];
+    sprites131 = [variant0127, variant185, variant273];
   }
 });
 
 // src/themes/terrain/pixel/generated/igloo.ts
-var variant0127, variant185, variant273, sprites131;
+var variant0128, variant186, variant274, sprites132;
 var init_igloo = __esm({
   "src/themes/terrain/pixel/generated/igloo.ts"() {
     "use strict";
     init_esm_shims();
-    variant0127 = {
+    variant0128 = {
       layers: [
         {
           paint: "igloo",
@@ -16969,7 +17675,7 @@ var init_igloo = __esm({
       ],
       pixels: 142
     };
-    variant185 = {
+    variant186 = {
       layers: [
         {
           paint: "igloo",
@@ -16987,7 +17693,7 @@ var init_igloo = __esm({
       ],
       pixels: 154
     };
-    variant273 = {
+    variant274 = {
       layers: [
         {
           paint: "ice",
@@ -17005,17 +17711,17 @@ var init_igloo = __esm({
       ],
       pixels: 117
     };
-    sprites131 = [variant0127, variant185, variant273];
+    sprites132 = [variant0128, variant186, variant274];
   }
 });
 
 // src/themes/terrain/pixel/generated/koreanWatermill.ts
-var variant0128, variant186, variant274, sprites132;
+var variant0129, variant187, variant275, sprites133;
 var init_koreanWatermill = __esm({
   "src/themes/terrain/pixel/generated/koreanWatermill.ts"() {
     "use strict";
     init_esm_shims();
-    variant0128 = {
+    variant0129 = {
       layers: [
         {
           paint: "rock",
@@ -17091,7 +17797,7 @@ var init_koreanWatermill = __esm({
       ],
       pixels: 790
     };
-    variant186 = {
+    variant187 = {
       layers: [
         {
           paint: "rock",
@@ -17167,7 +17873,7 @@ var init_koreanWatermill = __esm({
       ],
       pixels: 806
     };
-    variant274 = {
+    variant275 = {
       layers: [
         {
           paint: "rock",
@@ -17243,17 +17949,17 @@ var init_koreanWatermill = __esm({
       ],
       pixels: 811
     };
-    sprites132 = [variant0128, variant186, variant274];
+    sprites133 = [variant0129, variant187, variant275];
   }
 });
 
 // src/themes/terrain/pixel/generated/laundry.ts
-var variant0129, sprites133;
+var variant0130, sprites134;
 var init_laundry = __esm({
   "src/themes/terrain/pixel/generated/laundry.ts"() {
     "use strict";
     init_esm_shims();
-    variant0129 = {
+    variant0130 = {
       layers: [
         { paint: "trunk", d: "M-4,-4.5h0.5v5h-0.5zM3.5,-4.5h0.5v5h-0.5z" },
         { paint: "fence", d: "M3,-4.5h0.5v1h-0.5zM-3.5,-4h5.5v0.5h-5.5z" },
@@ -17266,17 +17972,17 @@ var init_laundry = __esm({
       ],
       pixels: 80
     };
-    sprites133 = [variant0129, variant0129, variant0129];
+    sprites134 = [variant0130, variant0130, variant0130];
   }
 });
 
 // src/themes/terrain/pixel/generated/onggi.ts
-var variant0130, variant187, variant275, sprites134;
+var variant0131, variant188, variant276, sprites135;
 var init_onggi = __esm({
   "src/themes/terrain/pixel/generated/onggi.ts"() {
     "use strict";
     init_esm_shims();
-    variant0130 = {
+    variant0131 = {
       layers: [
         {
           paint: "rock",
@@ -17312,7 +18018,7 @@ var init_onggi = __esm({
       ],
       pixels: 328
     };
-    variant187 = {
+    variant188 = {
       layers: [
         {
           paint: "rock",
@@ -17348,7 +18054,7 @@ var init_onggi = __esm({
       ],
       pixels: 316
     };
-    variant275 = {
+    variant276 = {
       layers: [
         {
           paint: "rock",
@@ -17384,17 +18090,17 @@ var init_onggi = __esm({
       ],
       pixels: 367
     };
-    sprites134 = [variant0130, variant187, variant275];
+    sprites135 = [variant0131, variant188, variant276];
   }
 });
 
 // src/themes/terrain/pixel/generated/pavilion.ts
-var variant0131, variant188, variant276, sprites135;
+var variant0132, variant189, variant277, sprites136;
 var init_pavilion = __esm({
   "src/themes/terrain/pixel/generated/pavilion.ts"() {
     "use strict";
     init_esm_shims();
-    variant0131 = {
+    variant0132 = {
       layers: [
         {
           paint: "shadow",
@@ -17451,7 +18157,7 @@ var init_pavilion = __esm({
       ],
       pixels: 606
     };
-    variant188 = {
+    variant189 = {
       layers: [
         {
           paint: "shadow",
@@ -17508,7 +18214,7 @@ var init_pavilion = __esm({
       ],
       pixels: 630
     };
-    variant276 = {
+    variant277 = {
       layers: [
         {
           paint: "shadow",
@@ -17565,17 +18271,17 @@ var init_pavilion = __esm({
       ],
       pixels: 606
     };
-    sprites135 = [variant0131, variant188, variant276];
+    sprites136 = [variant0132, variant189, variant277];
   }
 });
 
 // src/themes/terrain/pixel/generated/shrine.ts
-var variant0132, sprites136;
+var variant0133, sprites137;
 var init_shrine = __esm({
   "src/themes/terrain/pixel/generated/shrine.ts"() {
     "use strict";
     init_esm_shims();
-    variant0132 = {
+    variant0133 = {
       layers: [
         {
           paint: [
@@ -17600,17 +18306,17 @@ var init_shrine = __esm({
       ],
       pixels: 78
     };
-    sprites136 = [variant0132, variant0132, variant0132];
+    sprites137 = [variant0133, variant0133, variant0133];
   }
 });
 
 // src/themes/terrain/pixel/generated/stable.ts
-var variant0133, sprites137;
+var variant0134, sprites138;
 var init_stable = __esm({
   "src/themes/terrain/pixel/generated/stable.ts"() {
     "use strict";
     init_esm_shims();
-    variant0133 = {
+    variant0134 = {
       layers: [
         {
           paint: "stable",
@@ -17647,17 +18353,17 @@ var init_stable = __esm({
       ],
       pixels: 162
     };
-    sprites137 = [variant0133, variant0133, variant0133];
+    sprites138 = [variant0134, variant0134, variant0134];
   }
 });
 
 // src/themes/terrain/pixel/generated/stoneWall.ts
-var variant0134, variant189, variant277, sprites138;
+var variant0135, variant190, variant278, sprites139;
 var init_stoneWall = __esm({
   "src/themes/terrain/pixel/generated/stoneWall.ts"() {
     "use strict";
     init_esm_shims();
-    variant0134 = {
+    variant0135 = {
       layers: [
         {
           paint: [
@@ -17684,7 +18390,7 @@ var init_stoneWall = __esm({
       ],
       pixels: 390
     };
-    variant189 = {
+    variant190 = {
       layers: [
         {
           paint: [
@@ -17711,7 +18417,7 @@ var init_stoneWall = __esm({
       ],
       pixels: 459
     };
-    variant277 = {
+    variant278 = {
       layers: [
         {
           paint: [
@@ -17739,17 +18445,17 @@ var init_stoneWall = __esm({
       ],
       pixels: 409
     };
-    sprites138 = [variant0134, variant189, variant277];
+    sprites139 = [variant0135, variant190, variant278];
   }
 });
 
 // src/themes/terrain/pixel/generated/tavern.ts
-var variant0135, sprites139;
+var variant0136, sprites140;
 var init_tavern = __esm({
   "src/themes/terrain/pixel/generated/tavern.ts"() {
     "use strict";
     init_esm_shims();
-    variant0135 = {
+    variant0136 = {
       layers: [
         {
           paint: [
@@ -17789,17 +18495,17 @@ var init_tavern = __esm({
       ],
       pixels: 186
     };
-    sprites139 = [variant0135, variant0135, variant0135];
+    sprites140 = [variant0136, variant0136, variant0136];
   }
 });
 
 // src/themes/terrain/pixel/generated/tent.ts
-var variant0136, sprites140;
+var variant0137, sprites141;
 var init_tent = __esm({
   "src/themes/terrain/pixel/generated/tent.ts"() {
     "use strict";
     init_esm_shims();
-    variant0136 = {
+    variant0137 = {
       layers: [
         {
           paint: "tentStripe",
@@ -17831,17 +18537,17 @@ var init_tent = __esm({
       ],
       pixels: 175
     };
-    sprites140 = [variant0136, variant0136, variant0136];
+    sprites141 = [variant0137, variant0137, variant0137];
   }
 });
 
 // src/themes/terrain/pixel/generated/wagon.ts
-var variant0137, sprites141;
+var variant0138, sprites142;
 var init_wagon = __esm({
   "src/themes/terrain/pixel/generated/wagon.ts"() {
     "use strict";
     init_esm_shims();
-    variant0137 = {
+    variant0138 = {
       layers: [
         {
           paint: "trunk",
@@ -17880,17 +18586,17 @@ var init_wagon = __esm({
       ],
       pixels: 142
     };
-    sprites141 = [variant0137, variant0137, variant0137];
+    sprites142 = [variant0138, variant0138, variant0138];
   }
 });
 
 // src/themes/terrain/pixel/generated/watermill.ts
-var variant0138, sprites142;
+var variant0139, sprites143;
 var init_watermill = __esm({
   "src/themes/terrain/pixel/generated/watermill.ts"() {
     "use strict";
     init_esm_shims();
-    variant0138 = {
+    variant0139 = {
       layers: [
         {
           paint: "wall",
@@ -17922,17 +18628,17 @@ var init_watermill = __esm({
       ],
       pixels: 196
     };
-    sprites142 = [variant0138, variant0138, variant0138];
+    sprites143 = [variant0139, variant0139, variant0139];
   }
 });
 
 // src/themes/terrain/pixel/generated/well.ts
-var variant0139, sprites143;
+var variant0140, sprites144;
 var init_well = __esm({
   "src/themes/terrain/pixel/generated/well.ts"() {
     "use strict";
     init_esm_shims();
-    variant0139 = {
+    variant0140 = {
       layers: [
         {
           paint: [
@@ -17977,17 +18683,17 @@ var init_well = __esm({
       ],
       pixels: 124
     };
-    sprites143 = [variant0139, variant0139, variant0139];
+    sprites144 = [variant0140, variant0140, variant0140];
   }
 });
 
 // src/themes/terrain/pixel/generated/windmill.ts
-var variant0140, sprites144;
+var variant0141, sprites145;
 var init_windmill = __esm({
   "src/themes/terrain/pixel/generated/windmill.ts"() {
     "use strict";
     init_esm_shims();
-    variant0140 = {
+    variant0141 = {
       layers: [
         {
           paint: "windmill",
@@ -18010,12 +18716,12 @@ var init_windmill = __esm({
       ],
       pixels: 183
     };
-    sprites144 = [variant0140, variant0140, variant0140];
+    sprites145 = [variant0141, variant0141, variant0141];
   }
 });
 
 // src/themes/terrain/pixel/generated/group-village.ts
-var sprites145;
+var sprites146;
 var init_group_village = __esm({
   "src/themes/terrain/pixel/generated/group-village.ts"() {
     "use strict";
@@ -18047,45 +18753,45 @@ var init_group_village = __esm({
     init_watermill();
     init_well();
     init_windmill();
-    sprites145 = {
-      bakery: sprites118,
-      choga: sprites119,
-      church: sprites120,
-      churchWinter: sprites121,
-      doghouse: sprites122,
-      garden: sprites123,
-      hanok: sprites124,
-      hanokGate: sprites125,
-      house: sprites126,
-      houseB: sprites127,
-      houseBWinter: sprites128,
-      houseWinter: sprites129,
-      hut: sprites130,
-      igloo: sprites131,
-      koreanWatermill: sprites132,
-      laundry: sprites133,
-      onggi: sprites134,
-      pavilion: sprites135,
-      shrine: sprites136,
-      stable: sprites137,
-      stoneWall: sprites138,
-      tavern: sprites139,
-      tent: sprites140,
-      wagon: sprites141,
-      watermill: sprites142,
-      well: sprites143,
-      windmill: sprites144
+    sprites146 = {
+      bakery: sprites119,
+      choga: sprites120,
+      church: sprites121,
+      churchWinter: sprites122,
+      doghouse: sprites123,
+      garden: sprites124,
+      hanok: sprites125,
+      hanokGate: sprites126,
+      house: sprites127,
+      houseB: sprites128,
+      houseBWinter: sprites129,
+      houseWinter: sprites130,
+      hut: sprites131,
+      igloo: sprites132,
+      koreanWatermill: sprites133,
+      laundry: sprites134,
+      onggi: sprites135,
+      pavilion: sprites136,
+      shrine: sprites137,
+      stable: sprites138,
+      stoneWall: sprites139,
+      tavern: sprites140,
+      tent: sprites141,
+      wagon: sprites142,
+      watermill: sprites143,
+      well: sprites144,
+      windmill: sprites145
     };
   }
 });
 
 // src/themes/terrain/pixel/generated/boat.ts
-var variant0141, variant190, variant278, sprites146;
+var variant0142, variant191, variant279, sprites147;
 var init_boat = __esm({
   "src/themes/terrain/pixel/generated/boat.ts"() {
     "use strict";
     init_esm_shims();
-    variant0141 = {
+    variant0142 = {
       layers: [
         {
           paint: "boat",
@@ -18107,7 +18813,7 @@ var init_boat = __esm({
       ],
       pixels: 93
     };
-    variant190 = {
+    variant191 = {
       layers: [
         {
           paint: "boat",
@@ -18129,7 +18835,7 @@ var init_boat = __esm({
       ],
       pixels: 120
     };
-    variant278 = {
+    variant279 = {
       layers: [
         {
           paint: "boat",
@@ -18148,17 +18854,17 @@ var init_boat = __esm({
       ],
       pixels: 73
     };
-    sprites146 = [variant0141, variant190, variant278];
+    sprites147 = [variant0142, variant191, variant279];
   }
 });
 
 // src/themes/terrain/pixel/generated/buoy.ts
-var variant0142, sprites147;
+var variant0143, sprites148;
 var init_buoy = __esm({
   "src/themes/terrain/pixel/generated/buoy.ts"() {
     "use strict";
     init_esm_shims();
-    variant0142 = {
+    variant0143 = {
       layers: [
         { paint: "waterLight", d: "M-2,0h1v0.5h-1zM0.5,0h1v0.5h-1zM-1,0.5h2v0.5h-2z" },
         {
@@ -18169,17 +18875,17 @@ var init_buoy = __esm({
       ],
       pixels: 41
     };
-    sprites147 = [variant0142, variant0142, variant0142];
+    sprites148 = [variant0143, variant0143, variant0143];
   }
 });
 
 // src/themes/terrain/pixel/generated/canal.ts
-var variant0143, sprites148;
+var variant0144, sprites149;
 var init_canal = __esm({
   "src/themes/terrain/pixel/generated/canal.ts"() {
     "use strict";
     init_esm_shims();
-    variant0143 = {
+    variant0144 = {
       layers: [
         {
           paint: "canal",
@@ -18194,17 +18900,17 @@ var init_canal = __esm({
       ],
       pixels: 55
     };
-    sprites148 = [variant0143, variant0143, variant0143];
+    sprites149 = [variant0144, variant0144, variant0144];
   }
 });
 
 // src/themes/terrain/pixel/generated/coral.ts
-var variant0144, sprites149;
+var variant0145, sprites150;
 var init_coral = __esm({
   "src/themes/terrain/pixel/generated/coral.ts"() {
     "use strict";
     init_esm_shims();
-    variant0144 = {
+    variant0145 = {
       layers: [
         {
           paint: "coral",
@@ -18213,17 +18919,17 @@ var init_coral = __esm({
       ],
       pixels: 83
     };
-    sprites149 = [variant0144, variant0144, variant0144];
+    sprites150 = [variant0145, variant0145, variant0145];
   }
 });
 
 // src/themes/terrain/pixel/generated/crab.ts
-var variant0145, sprites150;
+var variant0146, sprites151;
 var init_crab = __esm({
   "src/themes/terrain/pixel/generated/crab.ts"() {
     "use strict";
     init_esm_shims();
-    variant0145 = {
+    variant0146 = {
       layers: [
         {
           paint: "crab",
@@ -18233,17 +18939,17 @@ var init_crab = __esm({
       ],
       pixels: 76
     };
-    sprites150 = [variant0145, variant0145, variant0145];
+    sprites151 = [variant0146, variant0146, variant0146];
   }
 });
 
 // src/themes/terrain/pixel/generated/dock.ts
-var variant0146, sprites151;
+var variant0147, sprites152;
 var init_dock = __esm({
   "src/themes/terrain/pixel/generated/dock.ts"() {
     "use strict";
     init_esm_shims();
-    variant0146 = {
+    variant0147 = {
       layers: [
         {
           paint: "trunk",
@@ -18257,17 +18963,17 @@ var init_dock = __esm({
       ],
       pixels: 62
     };
-    sprites151 = [variant0146, variant0146, variant0146];
+    sprites152 = [variant0147, variant0147, variant0147];
   }
 });
 
 // src/themes/terrain/pixel/generated/fish.ts
-var variant0147, variant191, variant279, sprites152;
+var variant0148, variant192, variant280, sprites153;
 var init_fish = __esm({
   "src/themes/terrain/pixel/generated/fish.ts"() {
     "use strict";
     init_esm_shims();
-    variant0147 = {
+    variant0148 = {
       layers: [
         {
           paint: "fish",
@@ -18277,7 +18983,7 @@ var init_fish = __esm({
       ],
       pixels: 37
     };
-    variant191 = {
+    variant192 = {
       layers: [
         {
           paint: "fish",
@@ -18286,7 +18992,7 @@ var init_fish = __esm({
       ],
       pixels: 24
     };
-    variant279 = {
+    variant280 = {
       layers: [
         {
           paint: "fish",
@@ -18296,17 +19002,17 @@ var init_fish = __esm({
       ],
       pixels: 53
     };
-    sprites152 = [variant0147, variant191, variant279];
+    sprites153 = [variant0148, variant192, variant280];
   }
 });
 
 // src/themes/terrain/pixel/generated/fishSchool.ts
-var variant0148, sprites153;
+var variant0149, sprites154;
 var init_fishSchool = __esm({
   "src/themes/terrain/pixel/generated/fishSchool.ts"() {
     "use strict";
     init_esm_shims();
-    variant0148 = {
+    variant0149 = {
       layers: [
         {
           paint: "fish",
@@ -18315,17 +19021,17 @@ var init_fishSchool = __esm({
       ],
       pixels: 28
     };
-    sprites153 = [variant0148, variant0148, variant0148];
+    sprites154 = [variant0149, variant0149, variant0149];
   }
 });
 
 // src/themes/terrain/pixel/generated/frozenPond.ts
-var variant0149, variant192, variant280, sprites154;
+var variant0150, variant193, variant281, sprites155;
 var init_frozenPond = __esm({
   "src/themes/terrain/pixel/generated/frozenPond.ts"() {
     "use strict";
     init_esm_shims();
-    variant0149 = {
+    variant0150 = {
       layers: [
         {
           paint: "frozenWater",
@@ -18343,7 +19049,7 @@ var init_frozenPond = __esm({
       ],
       pixels: 79
     };
-    variant192 = {
+    variant193 = {
       layers: [
         {
           paint: "frozenWater",
@@ -18361,7 +19067,7 @@ var init_frozenPond = __esm({
       ],
       pixels: 79
     };
-    variant280 = {
+    variant281 = {
       layers: [
         {
           paint: "frozenWater",
@@ -18379,17 +19085,17 @@ var init_frozenPond = __esm({
       ],
       pixels: 76
     };
-    sprites154 = [variant0149, variant192, variant280];
+    sprites155 = [variant0150, variant193, variant281];
   }
 });
 
 // src/themes/terrain/pixel/generated/jellyfish.ts
-var variant0150, sprites155;
+var variant0151, sprites156;
 var init_jellyfish = __esm({
   "src/themes/terrain/pixel/generated/jellyfish.ts"() {
     "use strict";
     init_esm_shims();
-    variant0150 = {
+    variant0151 = {
       layers: [
         {
           paint: "jellyfish",
@@ -18399,17 +19105,17 @@ var init_jellyfish = __esm({
       ],
       pixels: 68
     };
-    sprites155 = [variant0150, variant0150, variant0150];
+    sprites156 = [variant0151, variant0151, variant0151];
   }
 });
 
 // src/themes/terrain/pixel/generated/kelp.ts
-var variant0151, sprites156;
+var variant0152, sprites157;
 var init_kelp = __esm({
   "src/themes/terrain/pixel/generated/kelp.ts"() {
     "use strict";
     init_esm_shims();
-    variant0151 = {
+    variant0152 = {
       layers: [
         {
           paint: "fern",
@@ -18422,17 +19128,17 @@ var init_kelp = __esm({
       ],
       pixels: 87
     };
-    sprites156 = [variant0151, variant0151, variant0151];
+    sprites157 = [variant0152, variant0152, variant0152];
   }
 });
 
 // src/themes/terrain/pixel/generated/lighthouse.ts
-var variant0152, sprites157;
+var variant0153, sprites158;
 var init_lighthouse = __esm({
   "src/themes/terrain/pixel/generated/lighthouse.ts"() {
     "use strict";
     init_esm_shims();
-    variant0152 = {
+    variant0153 = {
       layers: [
         {
           paint: "rock",
@@ -18456,17 +19162,106 @@ var init_lighthouse = __esm({
       ],
       pixels: 136
     };
-    sprites157 = [variant0152, variant0152, variant0152];
+    sprites158 = [variant0153, variant0153, variant0153];
+  }
+});
+
+// src/themes/terrain/pixel/generated/lotusPond.ts
+var variant0154, variant194, variant282, sprites159;
+var init_lotusPond = __esm({
+  "src/themes/terrain/pixel/generated/lotusPond.ts"() {
+    "use strict";
+    init_esm_shims();
+    variant0154 = {
+      layers: [
+        {
+          paint: "water",
+          d: "M-1.5,-3h1v0.5h-1zM-2,-2.5h2.5v0.5h-2.5zM-6.5,-2h0.5v0.5h-0.5zM-5,-2h0.5v0.5h-0.5zM-2.5,-2h3v0.5h-3zM4,-2h0.5v0.5h-0.5zM5.5,-2h0.5v0.5h-0.5zM-7,-1.5h1v1.5h-1zM-3.5,-1.5h3v0.5h-3zM2.5,-1.5h4v0.5h-4zM-4,-1h3.5v0.5h-3.5zM2.5,-1h4.5v0.5h-4.5zM-3,-0.5h1.5v0.5h-1.5zM3,-0.5h0.5v0.5h-0.5zM5,-0.5h2v1h-2zM-7,0h4v0.5h-4zM0.5,0h2.5v0.5h-2.5zM-6.5,0.5h3v0.5h-3zM0,0.5h3v0.5h-3zM5.5,0.5h1v0.5h-1zM-5.5,1h2.5v0.5h-2.5zM0,1h6v0.5h-6zM-3,1.5h0.5v0.5h-0.5zM2,1.5h2v0.5h-2z"
+        },
+        { paint: "waterLight", d: "M3,-2h1v0.5h-1zM4.5,-2h1v0.5h-1z" },
+        {
+          paint: "reeds",
+          d: "M-6,-4.5h1v1h-1zM-6,-3.5h2v0.5h-2zM-6,-3h1v1.5h-1zM-6,-1.5h0.5v0.5h-0.5zM2,-1h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "leaf",
+          d: "M0.5,-2h1v0.5h-1zM2.5,-2h0.5v0.5h-0.5zM-5.5,-1.5h2v0.5h-2zM0.5,-1.5h2v0.5h-2zM-6,-1h2v0.5h-2zM1.5,-1h0.5v0.5h-0.5zM-6,-0.5h3v0.5h-3zM-1.5,-0.5h0.5v0.5h-0.5zM1,-0.5h2v0.5h-2zM3.5,-0.5h1.5v0.5h-1.5zM-3,0h2.5v0.5h-2.5zM3,0h2v0.5h-2zM-3.5,0.5h3.5v0.5h-3.5zM3,0.5h2.5v0.5h-2.5zM-3,1h3v0.5h-3zM-2,1.5h1v0.5h-1z"
+        },
+        {
+          paint: "flower",
+          d: "M1.5,-5h1.5v1h-1.5zM-3.5,-4h0.5v0.5h-0.5zM0,-4h0.5v0.5h-0.5zM1,-4h1.5v0.5h-1.5zM4,-4h1v0.5h-1zM-4,-3.5h1.5v0.5h-1.5zM0,-3.5h1v1h-1zM1.5,-3.5h1v0.5h-1zM3,-3.5h2v0.5h-2zM-5,-3h0.5v1h-0.5zM-4,-3h1v0.5h-1zM-2.5,-3h1v0.5h-1zM3,-3h1.5v0.5h-1.5zM-3,-2.5h1v0.5h-1zM0.5,-2.5h1v0.5h-1zM2.5,-2.5h2v0.5h-2zM-4.5,-2h0.5v0.5h-0.5zM-3,-2h0.5v0.5h-0.5zM1.5,-2h1v0.5h-1zM-0.5,-1.5h1v0.5h-1zM-0.5,-1h0.5v0.5h-0.5zM0.5,-1h1v0.5h-1zM-1,-0.5h0.5v0.5h-0.5zM0.5,-0.5h0.5v0.5h-0.5zM-0.5,0h1v0.5h-1z"
+        },
+        {
+          paint: "cherryPetalWhite",
+          d: "M2.5,-4h1v0.5h-1zM1,-3.5h0.5v0.5h-0.5zM2.5,-3.5h0.5v0.5h-0.5zM-4.5,-3h0.5v0.5h-0.5zM-3,-3h0.5v0.5h-0.5zM1,-3h2v0.5h-2zM-4.5,-2.5h1.5v0.5h-1.5zM1.5,-2.5h0.5v0.5h-0.5zM-4,-2h1v0.5h-1zM0,-1h0.5v0.5h-0.5zM-0.5,-0.5h1v0.5h-1z"
+        },
+        { paint: "flowerCenter", d: "M2,-2.5h0.5v0.5h-0.5z" }
+      ],
+      pixels: 269
+    };
+    variant194 = {
+      layers: [
+        {
+          paint: "water",
+          d: "M2,-3h0.5v0.5h-0.5zM5,-3h1.5v0.5h-1.5zM0.5,-2.5h1v0.5h-1zM5,-2.5h2v0.5h-2zM-5.5,-2h1.5v0.5h-1.5zM-1.5,-2h3v0.5h-3zM5.5,-2h1.5v1h-1.5zM-6,-1.5h3v0.5h-3zM-0.5,-1.5h2.5v0.5h-2.5zM-7,-1h0.5v0.5h-0.5zM-5.5,-1h1.5v0.5h-1.5zM-1,-1h8v0.5h-8zM-7,-0.5h1v0.5h-1zM-1,-0.5h7.5v0.5h-7.5zM-7,0h0.5v1h-0.5zM0,0h5.5v0.5h-5.5zM-3,0.5h3.5v0.5h-3.5zM-4,1h4v0.5h-4zM-5,1.5h4v0.5h-4z"
+        },
+        { paint: "waterLight", d: "M0.5,0.5h4v0.5h-4zM2,1h1v0.5h-1z" },
+        {
+          paint: "reeds",
+          d: "M1,-5h0.5v1h-0.5zM2.5,-5h0.5v1h-0.5zM1,-4h1v0.5h-1zM1,-3.5h1.5v0.5h-1.5zM1.5,-3h0.5v1h-0.5zM2.5,-3h0.5v0.5h-0.5zM-6.5,-2.5h0.5v0.5h-0.5zM-6.5,-2h1v0.5h-1zM-6.5,-1.5h0.5v0.5h-0.5zM-2.5,-1.5h0.5v0.5h-0.5zM-6.5,-1h1v0.5h-1zM-6,-0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "leaf",
+          d: "M3,-3h0.5v0.5h-0.5zM4.5,-3h0.5v0.5h-0.5zM2,-2.5h3v0.5h-3zM1.5,-2h4v0.5h-4zM-3,-1.5h0.5v0.5h-0.5zM-2,-1.5h1.5v0.5h-1.5zM2,-1.5h3.5v0.5h-3.5zM-4,-1h3v0.5h-3zM-5.5,-0.5h4.5v0.5h-4.5zM-6.5,0h6.5v0.5h-6.5zM-6.5,0.5h3.5v0.5h-3.5zM-6,1h2v0.5h-2z"
+        },
+        {
+          paint: "flower",
+          d: "M-2.5,-5.5h0.5v0.5h-0.5zM-3,-5h1.5v0.5h-1.5zM3.5,-5h1.5v0.5h-1.5zM-3.5,-4.5h2v0.5h-2zM3.5,-4.5h1v0.5h-1zM5.5,-4.5h0.5v0.5h-0.5zM-5,-4h0.5v0.5h-0.5zM-3.5,-4h1.5v0.5h-1.5zM-0.5,-4h1v0.5h-1zM2.5,-4h0.5v0.5h-0.5zM3.5,-4h0.5v0.5h-0.5zM5,-4h1v0.5h-1zM-5,-3.5h1v0.5h-1zM-3.5,-3.5h1v0.5h-1zM-1.5,-3.5h2v1h-2zM2.5,-3.5h1v0.5h-1zM4.5,-3.5h1.5v0.5h-1.5zM-5.5,-3h1.5v0.5h-1.5zM-3,-3h0.5v0.5h-0.5zM3.5,-3h1v0.5h-1zM-5,-2.5h1.5v0.5h-1.5zM-2,-2.5h2v0.5h-2zM-4,-2h1v0.5h-1zM-2,-2h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "cherryPetalWhite",
+          d: "M4.5,-4.5h0.5v0.5h-0.5zM-2,-4h1v0.5h-1zM3,-4h0.5v0.5h-0.5zM4,-4h1v0.5h-1zM-4,-3.5h0.5v0.5h-0.5zM-2.5,-3.5h1v1h-1zM3.5,-3.5h1v0.5h-1zM-4,-3h1v0.5h-1zM-3.5,-2.5h1.5v0.5h-1.5zM-3,-2h1v0.5h-1z"
+        }
+      ],
+      pixels: 282
+    };
+    variant282 = {
+      layers: [
+        {
+          paint: "water",
+          d: "M-5,-3h0.5v1h-0.5zM-3.5,-3h1v0.5h-1zM-2,-3h5v0.5h-5zM-0.5,-2.5h2.5v0.5h-2.5zM3,-2.5h0.5v0.5h-0.5zM-1.5,-2h2v0.5h-2zM6,-2h0.5v0.5h-0.5zM-7,-1.5h1v1h-1zM5.5,-1.5h1.5v0.5h-1.5zM-3.5,-1h1v0.5h-1zM-1.5,-1h0.5v0.5h-0.5zM6,-1h1v0.5h-1zM-7,-0.5h0.5v0.5h-0.5zM-4,-0.5h3v0.5h-3zM2,-0.5h1v0.5h-1zM5,-0.5h2v0.5h-2zM-7,0h1v0.5h-1zM-3.5,0h2v0.5h-2zM1.5,0h1.5v0.5h-1.5zM6,0h0.5v0.5h-0.5zM-6.5,0.5h4.5v0.5h-4.5zM1,0.5h2.5v0.5h-2.5zM-4,1h2v0.5h-2zM2,1h2.5v0.5h-2.5zM-3,1.5h1.5v0.5h-1.5zM1.5,1.5h2v0.5h-2z"
+        },
+        {
+          paint: "reeds",
+          d: "M-6.5,-4h0.5v1h-0.5zM-5.5,-3.5h0.5v0.5h-0.5zM-6.5,-3h1.5v0.5h-1.5zM-6.5,-2.5h1v1h-1zM-1,-2.5h0.5v0.5h-0.5zM-6,-1.5h1v0.5h-1z"
+        },
+        {
+          paint: "leaf",
+          d: "M-2.5,-3h0.5v0.5h-0.5zM-2,-2.5h1v0.5h-1zM2,-2.5h0.5v0.5h-0.5zM-2.5,-2h1v0.5h-1zM1,-2h1.5v0.5h-1.5zM-3.5,-1.5h3.5v0.5h-3.5zM1,-1.5h2v0.5h-2zM-6,-1h2.5v0.5h-2.5zM-2.5,-1h1v0.5h-1zM2,-1h4v0.5h-4zM-6.5,-0.5h2.5v0.5h-2.5zM3,-0.5h2v0.5h-2zM-6,0h2.5v0.5h-2.5zM-1.5,0h1.5v0.5h-1.5zM0.5,0h1v0.5h-1zM3,0h3v0.5h-3zM-2,0.5h3v0.5h-3zM3.5,0.5h2.5v0.5h-2.5zM-2,1h4v0.5h-4zM-1.5,1.5h3v0.5h-3zM-0.5,2h1v0.5h-1z"
+        },
+        {
+          paint: "flower",
+          d: "M-1,-7.5h0.5v0.5h-0.5zM-1.5,-7h1.5v0.5h-1.5zM-2,-6.5h2.5v0.5h-2.5zM-2,-6h2v0.5h-2zM2,-6h0.5v0.5h-0.5zM-3.5,-5.5h1v0.5h-1zM-2,-5.5h1.5v0.5h-1.5zM1,-5.5h1.5v0.5h-1.5zM-4,-5h1.5v0.5h-1.5zM-1.5,-5h1v0.5h-1zM0.5,-5h2v1h-2zM-3.5,-4.5h1v0.5h-1zM-3.5,-4h1.5v0.5h-1.5zM0,-4h2v0.5h-2zM-4,-3.5h0.5v0.5h-0.5zM-2.5,-3.5h1v0.5h-1zM-0.5,-3.5h1.5v0.5h-1.5zM3.5,-3.5h1.5v1h-1.5zM-4.5,-3h1v0.5h-1zM-5.5,-2.5h0.5v1h-0.5zM-4.5,-2.5h0.5v0.5h-0.5zM-3.5,-2.5h1.5v0.5h-1.5zM2.5,-2.5h0.5v1h-0.5zM3.5,-2.5h1v0.5h-1zM5,-2.5h1.5v0.5h-1.5zM-3.5,-2h1v0.5h-1zM0.5,-2h0.5v0.5h-0.5zM5,-2h1v0.5h-1zM-5,-1.5h0.5v0.5h-0.5zM0,-1.5h1v0.5h-1zM3,-1.5h0.5v0.5h-0.5zM4.5,-1.5h1v0.5h-1zM-1,-1h0.5v0.5h-0.5zM0,-1h0.5v0.5h-0.5zM1,-1h1v1h-1zM-1,-0.5h1v0.5h-1zM0,0h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "cherryPetalWhite",
+          d: "M0,-6h1v0.5h-1zM-2.5,-5.5h0.5v0.5h-0.5zM-0.5,-5.5h1.5v0.5h-1.5zM-2.5,-5h1v0.5h-1zM-0.5,-5h1v0.5h-1zM-2.5,-4.5h3v0.5h-3zM-2,-4h1v0.5h-1zM-0.5,-4h0.5v0.5h-0.5zM-1.5,-3.5h1v0.5h-1zM-4,-2.5h0.5v0.5h-0.5zM4.5,-2.5h0.5v0.5h-0.5zM-5,-2h1.5v0.5h-1.5zM3,-2h2v0.5h-2zM-4.5,-1.5h0.5v0.5h-0.5zM3.5,-1.5h0.5v0.5h-0.5zM-0.5,-1h0.5v0.5h-0.5zM0.5,-1h0.5v0.5h-0.5zM0,-0.5h1v0.5h-1z"
+        },
+        { paint: "flowerCenter", d: "M-1,-4h0.5v0.5h-0.5zM-4,-1.5h0.5v0.5h-0.5zM4,-1.5h0.5v0.5h-0.5z" }
+      ],
+      pixels: 320
+    };
+    sprites159 = [variant0154, variant194, variant282];
   }
 });
 
 // src/themes/terrain/pixel/generated/pondLily.ts
-var variant0153, sprites158;
+var variant0155, sprites160;
 var init_pondLily = __esm({
   "src/themes/terrain/pixel/generated/pondLily.ts"() {
     "use strict";
     init_esm_shims();
-    variant0153 = {
+    variant0155 = {
       layers: [
         {
           paint: "pine",
@@ -18478,17 +19273,113 @@ var init_pondLily = __esm({
       ],
       pixels: 30
     };
-    sprites158 = [variant0153, variant0153, variant0153];
+    sprites160 = [variant0155, variant0155, variant0155];
+  }
+});
+
+// src/themes/terrain/pixel/generated/reedMarsh.ts
+var variant0156, variant195, variant283, sprites161;
+var init_reedMarsh = __esm({
+  "src/themes/terrain/pixel/generated/reedMarsh.ts"() {
+    "use strict";
+    init_esm_shims();
+    variant0156 = {
+      layers: [
+        {
+          paint: "water",
+          d: "M-4.5,-3h0.5v1h-0.5zM-6.5,-2h0.5v0.5h-0.5zM-1,-2h1v0.5h-1zM1.5,-2h1.5v0.5h-1.5zM-7,-1.5h1v0.5h-1zM-4,-1.5h0.5v0.5h-0.5zM-1,-1.5h1.5v0.5h-1.5zM1,-1.5h2.5v0.5h-2.5zM4.5,-1.5h0.5v1h-0.5zM5.5,-1.5h1v0.5h-1zM-7,-1h1.5v0.5h-1.5zM-4,-1h1v0.5h-1zM-1.5,-1h5v0.5h-5zM5.5,-1h1.5v1h-1.5zM-7,-0.5h11v1h-11zM5,0h2v0.5h-2zM-6.5,0.5h4v0.5h-4zM-0.5,0.5h4.5v0.5h-4.5zM5.5,0.5h1v0.5h-1zM-5.5,1h3.5v0.5h-3.5zM-0.5,1h6.5v0.5h-6.5zM-3,1.5h0.5v0.5h-0.5zM2,1.5h2v0.5h-2z"
+        },
+        { paint: "waterLight", d: "M2.5,-2.5h0.5v0.5h-0.5z" },
+        {
+          paint: "reeds",
+          d: "M-2,-8h0.5v1h-0.5zM-2.5,-7h1v1.5h-1zM-5,-6.5h0.5v1h-0.5zM0.5,-6.5h1v0.5h-1zM0,-6h1.5v0.5h-1.5zM-2.5,-5.5h1.5v0.5h-1.5zM0,-5.5h1v0.5h-1zM2,-5.5h0.5v0.5h-0.5zM-4.5,-5h0.5v1h-0.5zM-2.5,-5h0.5v2.5h-0.5zM-0.5,-5h1.5v0.5h-1.5zM0,-4.5h1v1h-1zM2,-4.5h0.5v1.5h-0.5zM-6.5,-4h0.5v0.5h-0.5zM-5,-4h1v0.5h-1zM-1,-4h0.5v1.5h-0.5zM-5.5,-3.5h1.5v0.5h-1.5zM0,-3.5h1.5v0.5h-1.5zM-6.5,-3h0.5v1h-0.5zM-5,-3h0.5v0.5h-0.5zM-4,-3h0.5v1.5h-0.5zM0.5,-3h0.5v1h-0.5zM1.5,-3h0.5v1h-0.5zM4.5,-3h0.5v0.5h-0.5zM-5.5,-2.5h1v1h-1zM-3,-2.5h1v1h-1zM-1,-2.5h1v0.5h-1zM3,-2.5h0.5v1h-0.5zM4,-2.5h1v1h-1zM5.5,-2.5h0.5v1h-0.5zM0,-2h1v0.5h-1zM-6,-1.5h0.5v0.5h-0.5zM-5,-1.5h0.5v0.5h-0.5zM-3.5,-1.5h1.5v0.5h-1.5zM-1.5,-1.5h0.5v0.5h-0.5zM0.5,-1.5h0.5v0.5h-0.5zM4,-1.5h0.5v1h-0.5zM-5.5,-1h1v0.5h-1zM-3,-1h1.5v0.5h-1.5zM4.5,-0.5h1v0.5h-1zM4,0h1v0.5h-1zM-1,0.5h0.5v1h-0.5zM4,0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "cattail",
+          d: "M-3,-7.5h1v0.5h-1zM-3,-7h0.5v4.5h-0.5zM-1.5,-6h0.5v0.5h-0.5zM1.5,-5.5h0.5v1h-0.5zM-2,-5h1v1h-1zM-5.5,-4.5h0.5v1h-0.5zM-2,-4h0.5v2h-0.5zM1,-4h0.5v0.5h-0.5zM4.5,-3.5h0.5v0.5h-0.5zM-5.5,-3h0.5v0.5h-0.5zM4,-3h0.5v0.5h-0.5zM5,-2.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "trunk",
+          d: "M-3,-10h1v2.5h-1zM-1.5,-8.5h0.5v0.5h-0.5zM0.5,-8.5h1v1.5h-1zM-1.5,-8h1v2h-1zM0.5,-7h2v0.5h-2zM1.5,-6.5h1v1h-1zM-6,-6h1v1h-1zM-6,-5h1.5v0.5h-1.5zM-5,-4.5h0.5v0.5h-0.5zM4,-4.5h1v0.5h-1zM4,-4h1.5v0.5h-1.5zM4,-3.5h0.5v0.5h-0.5zM5,-3.5h0.5v1h-0.5z"
+        },
+        {
+          paint: "leafLight",
+          d: "M-4.5,-6h0.5v0.5h-0.5zM-0.5,-6h0.5v0.5h-0.5zM-4.5,-5.5h1v0.5h-1zM-1,-5.5h1v0.5h-1zM-4,-5h0.5v0.5h-0.5zM-1,-5h0.5v0.5h-0.5zM2,-5h0.5v0.5h-0.5zM-4,-4.5h1v1.5h-1zM-1,-4.5h1v0.5h-1zM1.5,-4.5h0.5v1.5h-0.5zM-1.5,-4h0.5v2h-0.5zM-0.5,-4h0.5v1h-0.5zM-6.5,-3.5h1v0.5h-1zM-6,-3h0.5v1.5h-0.5zM-3.5,-3h0.5v1.5h-0.5zM-0.5,-3h1v0.5h-1zM1,-3h0.5v1.5h-0.5zM0,-2.5h0.5v0.5h-0.5zM-4.5,-2h0.5v1.5h-0.5zM-2,-2h1v0.5h-1zM3.5,-2h0.5v1.5h-0.5zM5,-2h0.5v1.5h-0.5zM-5.5,-1.5h0.5v0.5h-0.5zM-2,-1.5h0.5v0.5h-0.5zM4,-0.5h0.5v0.5h-0.5z"
+        },
+        { paint: "moss", d: "M-2.5,0.5h1.5v0.5h-1.5zM4.5,0.5h1v0.5h-1zM-2,1h1v0.5h-1z" }
+      ],
+      pixels: 378
+    };
+    variant195 = {
+      layers: [
+        {
+          paint: "water",
+          d: "M2,-3.5h0.5v0.5h-0.5zM1.5,-3h1v0.5h-1zM5.5,-3h1v0.5h-1zM-4,-2.5h0.5v1h-0.5zM-2.5,-2.5h0.5v1h-0.5zM0.5,-2.5h2.5v0.5h-2.5zM5,-2.5h2v1h-2zM-1.5,-2h0.5v1h-0.5zM-0.5,-2h3.5v0.5h-3.5zM-6.5,-1.5h0.5v0.5h-0.5zM-0.5,-1.5h7.5v1h-7.5zM-7,-1h1.5v1.5h-1.5zM-3,-1h0.5v0.5h-0.5zM-3.5,-0.5h1v1h-1zM-1,-0.5h7.5v0.5h-7.5zM-1,0h5.5v0.5h-5.5zM5,0h0.5v0.5h-0.5zM-7,0.5h4.5v0.5h-4.5zM-0.5,0.5h1v0.5h-1zM-6,1h4v0.5h-4zM-5,1.5h4v0.5h-4z"
+        },
+        { paint: "waterLight", d: "M0.5,0.5h3.5v0.5h-3.5zM2,1h1v0.5h-1z" },
+        {
+          paint: "reeds",
+          d: "M4,-9h1v0.5h-1zM4,-8.5h0.5v0.5h-0.5zM1,-8h0.5v0.5h-0.5zM3.5,-8h1v1.5h-1zM6.5,-7.5h0.5v1h-0.5zM1.5,-7h0.5v2h-0.5zM3.5,-6.5h0.5v0.5h-0.5zM6,-6.5h0.5v1.5h-0.5zM3.5,-6h1v1.5h-1zM-4.5,-5h0.5v1h-0.5zM2,-5h0.5v1.5h-0.5zM5.5,-5h1v0.5h-1zM3.5,-4.5h1.5v0.5h-1.5zM5.5,-4.5h0.5v1.5h-0.5zM-6.5,-4h0.5v2h-0.5zM-5,-4h1v4h-1zM-2,-4h1v1.5h-1zM3.5,-4h1v1.5h-1zM-3.5,-3.5h0.5v1h-0.5zM-0.5,-3h0.5v1h-0.5zM2.5,-3h0.5v0.5h-0.5zM5,-3h0.5v0.5h-0.5zM-2,-2.5h0.5v2.5h-0.5zM3,-2.5h1.5v0.5h-1.5zM-6,-2h0.5v1h-0.5zM3,-2h2v0.5h-2zM-3.5,-1.5h1v0.5h-1zM-3.5,-1h0.5v0.5h-0.5zM-1,-1h0.5v0.5h-0.5zM-5.5,0h1.5v0.5h-1.5zM-2.5,0h1.5v0.5h-1.5zM4.5,0h0.5v0.5h-0.5zM-1,0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "cattail",
+          d: "M4.5,-8.5h0.5v1h-0.5zM5.5,-8h0.5v0.5h-0.5zM5.5,-7.5h1v0.5h-1zM5.5,-7h0.5v0.5h-0.5zM4,-6.5h0.5v0.5h-0.5zM-4,-5h0.5v0.5h-0.5zM-3.5,-4h1v0.5h-1zM-1,-4h0.5v0.5h-0.5zM-1,-3.5h1v0.5h-1zM-1.5,-2.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "trunk",
+          d: "M4.5,-12h0.5v0.5h-0.5zM4,-11.5h1.5v2h-1.5zM6,-10h0.5v0.5h-0.5zM4,-9.5h2.5v0.5h-2.5zM5.5,-9h1v1h-1zM6,-8h0.5v0.5h-0.5zM-4.5,-7h1v2h-1zM-3,-5.5h0.5v1.5h-0.5zM-1,-5.5h0.5v1h-0.5zM-1,-4.5h1.5v0.5h-1.5zM-0.5,-4h1v0.5h-1zM0,-3.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "leafLight",
+          d: "M1.5,-8h0.5v1h-0.5zM2,-7h0.5v1h-0.5zM6,-7h0.5v0.5h-0.5zM5.5,-6.5h0.5v1h-0.5zM2,-6h1v1h-1zM5,-5.5h1v0.5h-1zM2.5,-5h1v2h-1zM5,-5h0.5v1h-0.5zM4.5,-4h1v1h-1zM-6,-3.5h0.5v1h-0.5zM-3,-3.5h0.5v1h-0.5zM3,-3h0.5v0.5h-0.5zM4.5,-3h0.5v1h-0.5zM-6,-2.5h1v0.5h-1zM-3.5,-2.5h1v1h-1zM-1,-2.5h0.5v1.5h-0.5zM-5.5,-2h0.5v2h-0.5zM-4,-1.5h0.5v2h-0.5zM-2.5,-1.5h0.5v1.5h-0.5zM-1.5,-1h0.5v1h-0.5z"
+        },
+        {
+          paint: "moss",
+          d: "M-2.5,0.5h1.5v0.5h-1.5zM4,0.5h2v0.5h-2zM-2,1h2v0.5h-2zM5,1h0.5v0.5h-0.5z"
+        }
+      ],
+      pixels: 367
+    };
+    variant283 = {
+      layers: [
+        {
+          paint: "water",
+          d: "M-3.5,-3h0.5v0.5h-0.5zM-2.5,-3h0.5v1.5h-0.5zM2.5,-3h0.5v0.5h-0.5zM-6,-2.5h0.5v0.5h-0.5zM1.5,-2.5h0.5v0.5h-0.5zM4,-2.5h0.5v0.5h-0.5zM5.5,-2.5h0.5v0.5h-0.5zM-6.5,-2h1v0.5h-1zM-4,-2h0.5v0.5h-0.5zM1,-2h1v1h-1zM5.5,-2h1v0.5h-1zM-7,-1.5h2v1h-2zM-3,-1.5h1.5v0.5h-1.5zM5,-1.5h2v1h-2zM-3,-1h5.5v0.5h-5.5zM-7,-0.5h2.5v0.5h-2.5zM-3.5,-0.5h6v0.5h-6zM4.5,-0.5h2.5v0.5h-2.5zM-7,0h13.5v0.5h-13.5zM-6.5,0.5h4v0.5h-4zM-0.5,0.5h4.5v0.5h-4.5zM-4,1h2v0.5h-2zM-0.5,1h5v0.5h-5zM-3,1.5h6.5v0.5h-6.5z"
+        },
+        {
+          paint: "reeds",
+          d: "M0,-10h0.5v1h-0.5zM-0.5,-9h1v3h-1zM-3.5,-7.5h0.5v1h-0.5zM2.5,-7.5h0.5v0.5h-0.5zM2,-6.5h0.5v1.5h-0.5zM-3,-6h0.5v1.5h-0.5zM-1,-6h1v4.5h-1zM3.5,-6h0.5v0.5h-0.5zM3,-5.5h1v5h-1zM-6,-5h0.5v0.5h-0.5zM1.5,-5h1v0.5h-1zM-4.5,-4.5h1v2.5h-1zM-2.5,-4.5h0.5v1.5h-0.5zM5.5,-4.5h0.5v1h-0.5zM-6,-4h0.5v1.5h-0.5zM1,-4h0.5v0.5h-0.5zM1,-3.5h1v1h-1zM5,-3.5h0.5v1.5h-0.5zM-3,-2.5h0.5v1h-0.5zM-2,-2.5h0.5v1h-0.5zM1,-2.5h0.5v0.5h-0.5zM-5.5,-2h0.5v0.5h-0.5zM-4.5,-2h0.5v1h-0.5zM4.5,-2h1v0.5h-1zM-1.5,-1.5h2.5v0.5h-2.5zM2,-1.5h0.5v0.5h-0.5zM4.5,-1.5h0.5v1h-0.5zM-4.5,-1h1v1h-1zM2.5,-0.5h1.5v0.5h-1.5zM-1,0.5h0.5v1h-0.5zM4,0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "cattail",
+          d: "M-1,-9.5h0.5v3.5h-0.5zM0.5,-7.5h0.5v2.5h-0.5zM3.5,-6.5h0.5v0.5h-0.5zM-5,-6h0.5v0.5h-0.5zM-1.5,-6h0.5v1h-0.5zM4,-6h0.5v0.5h-0.5zM-5.5,-5.5h1v1.5h-1zM0,-5h1v0.5h-1zM5,-5h0.5v0.5h-0.5zM0,-4.5h0.5v2h-0.5zM4.5,-4.5h0.5v1h-0.5zM-5,-4h0.5v1h-0.5zM-4,-1.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "trunk",
+          d: "M-1,-12.5h0.5v0.5h-0.5zM-1,-12h1v2.5h-1zM0.5,-10h1v2.5h-1zM-0.5,-9.5h0.5v0.5h-0.5zM3.5,-8.5h1v2h-1zM-5.5,-8h0.5v0.5h-0.5zM-5.5,-7.5h1v1h-1zM5,-7h1v2h-1zM-5.5,-6.5h2v0.5h-2zM4,-6.5h0.5v0.5h-0.5zM-5.5,-6h0.5v0.5h-0.5zM-4.5,-6h1v1.5h-1z"
+        },
+        {
+          paint: "leafLight",
+          d: "M-3.5,-8h1v0.5h-1zM-3,-7.5h0.5v0.5h-0.5zM2,-7.5h0.5v0.5h-0.5zM-3,-7h1v1h-1zM1.5,-7h1v0.5h-1zM1.5,-6.5h0.5v0.5h-0.5zM-2.5,-6h1v1h-1zM1,-6h1v1h-1zM-2.5,-5h1.5v0.5h-1.5zM1,-5h0.5v0.5h-0.5zM5.5,-5h0.5v0.5h-0.5zM-6,-4.5h0.5v0.5h-0.5zM-2,-4.5h1v2h-1zM0.5,-4.5h1.5v0.5h-1.5zM5,-4.5h0.5v1h-0.5zM-5.5,-4h0.5v1h-0.5zM-3,-4h0.5v1.5h-0.5zM0.5,-4h0.5v1.5h-0.5zM1.5,-4h1v0.5h-1zM2,-3.5h0.5v1h-0.5zM4.5,-3.5h0.5v1.5h-0.5zM-5.5,-3h1v1h-1zM-3.5,-2.5h0.5v2h-0.5zM-1.5,-2.5h0.5v1h-0.5zM0,-2.5h1v1h-1zM2,-2.5h1v1h-1zM-5,-2h0.5v1.5h-0.5zM4,-2h0.5v2h-0.5zM2.5,-1.5h0.5v1h-0.5z"
+        },
+        {
+          paint: "moss",
+          d: "M-2.5,0.5h1.5v0.5h-1.5zM4.5,0.5h1.5v0.5h-1.5zM-2,1h1v0.5h-1zM5,1h0.5v0.5h-0.5z"
+        }
+      ],
+      pixels: 439
+    };
+    sprites161 = [variant0156, variant195, variant283];
   }
 });
 
 // src/themes/terrain/pixel/generated/reeds.ts
-var variant0154, sprites159;
+var variant0157, sprites162;
 var init_reeds = __esm({
   "src/themes/terrain/pixel/generated/reeds.ts"() {
     "use strict";
     init_esm_shims();
-    variant0154 = {
+    variant0157 = {
       layers: [
         {
           paint: "reeds",
@@ -18502,17 +19393,17 @@ var init_reeds = __esm({
       ],
       pixels: 83
     };
-    sprites159 = [variant0154, variant0154, variant0154];
+    sprites162 = [variant0157, variant0157, variant0157];
   }
 });
 
 // src/themes/terrain/pixel/generated/sailboat.ts
-var variant0155, sprites160;
+var variant0158, variant196, variant284, sprites163;
 var init_sailboat = __esm({
   "src/themes/terrain/pixel/generated/sailboat.ts"() {
     "use strict";
     init_esm_shims();
-    variant0155 = {
+    variant0158 = {
       layers: [
         {
           paint: "boat",
@@ -18535,17 +19426,69 @@ var init_sailboat = __esm({
       ],
       pixels: 147
     };
-    sprites160 = [variant0155, variant0155, variant0155];
+    variant196 = {
+      layers: [
+        {
+          paint: "boat",
+          d: "M-3.5,-1.5h0.5v0.5h-0.5zM3,-1.5h0.5v0.5h-0.5zM-3,-1h0.5v0.5h-0.5zM2.5,-1h1v0.5h-1zM-3,-0.5h2v0.5h-2zM0,-0.5h3v0.5h-3zM-2.5,0h5v0.5h-5z"
+        },
+        {
+          paint: "dock",
+          d: "M-1.5,-2h0.5v0.5h-0.5zM-0.5,-2h2v0.5h-2zM-3,-1.5h1.5v0.5h-1.5zM-0.5,-1.5h0.5v0.5h-0.5zM1,-1.5h2v0.5h-2zM-2.5,-1h1.5v0.5h-1.5zM-0.5,-1h3v0.5h-3zM-1,-0.5h1v0.5h-1z"
+        },
+        {
+          paint: "trunk",
+          d: "M0.5,-7h1v0.5h-1zM-1,-6.5h0.5v0.5h-0.5zM-1,-2.5h1.5v0.5h-1.5zM-1,-2h0.5v0.5h-0.5zM-1.5,-1.5h1v0.5h-1zM0,-1.5h1v0.5h-1zM-1,-1h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "wheat",
+          d: "M1.5,-7h0.5v0.5h-0.5zM-2,-6.5h1v0.5h-1zM-0.5,-6.5h0.5v0.5h-0.5zM1.5,-3h1v0.5h-1zM-1.5,-2.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "sail",
+          d: "M0,-6.5h1v0.5h-1zM1.5,-6.5h0.5v0.5h-0.5zM-2,-6h4v0.5h-4zM-2,-5.5h4.5v2.5h-4.5zM-1.5,-3h3v0.5h-3z"
+        },
+        { paint: "whaleBelly", d: "M1,-6.5h0.5v0.5h-0.5z" },
+        { paint: "flag", d: "M-1,-7h1.5v0.5h-1.5z" }
+      ],
+      pixels: 134
+    };
+    variant284 = {
+      layers: [
+        {
+          paint: "boat",
+          d: "M-4,-1h0.5v0.5h-0.5zM3.5,-1h0.5v0.5h-0.5zM-3.5,-0.5h2v0.5h-2zM1,-0.5h2.5v0.5h-2.5zM-2.5,0h5.5v0.5h-5.5z"
+        },
+        {
+          paint: "dock",
+          d: "M-3.5,-1.5h7.5v0.5h-7.5zM-3.5,-1h1.5v0.5h-1.5zM-0.5,-1h0.5v0.5h-0.5zM1,-1h2.5v0.5h-2.5zM-1.5,-0.5h2.5v0.5h-2.5z"
+        },
+        {
+          paint: "trunk",
+          d: "M0,-6h0.5v1h-0.5zM1,-6h0.5v0.5h-0.5zM-1.5,-4h0.5v0.5h-0.5zM-3,-2.5h0.5v0.5h-0.5zM-1.5,-2h2.5v0.5h-2.5zM-2,-1h1.5v0.5h-1.5zM0,-1h1v0.5h-1z"
+        },
+        {
+          paint: "wheat",
+          d: "M2.5,-7h0.5v0.5h-0.5zM0.5,-5.5h0.5v0.5h-0.5zM0,-5h0.5v0.5h-0.5zM-2,-3.5h0.5v0.5h-0.5zM-2.5,-3h0.5v0.5h-0.5zM1,-2h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "sail",
+          d: "M2,-6.5h1v0.5h-1zM1.5,-6h1.5v0.5h-1.5zM1,-5.5h2v0.5h-2zM0.5,-5h2v0.5h-2zM-0.5,-4.5h3v0.5h-3zM-1,-4h3.5v0.5h-3.5zM-1.5,-3.5h3.5v0.5h-3.5zM-2,-3h4v0.5h-4zM-2.5,-2.5h4.5v0.5h-4.5z"
+        }
+      ],
+      pixels: 122
+    };
+    sprites163 = [variant0158, variant196, variant284];
   }
 });
 
 // src/themes/terrain/pixel/generated/seagull.ts
-var variant0156, variant193, variant281, sprites161;
+var variant0159, variant197, variant285, sprites164;
 var init_seagull = __esm({
   "src/themes/terrain/pixel/generated/seagull.ts"() {
     "use strict";
     init_esm_shims();
-    variant0156 = {
+    variant0159 = {
       layers: [
         {
           paint: "seagull",
@@ -18556,7 +19499,7 @@ var init_seagull = __esm({
       ],
       pixels: 23
     };
-    variant193 = {
+    variant197 = {
       layers: [
         {
           paint: "seagull",
@@ -18567,7 +19510,7 @@ var init_seagull = __esm({
       ],
       pixels: 25
     };
-    variant281 = {
+    variant285 = {
       layers: [
         {
           paint: "seagull",
@@ -18581,17 +19524,17 @@ var init_seagull = __esm({
       ],
       pixels: 22
     };
-    sprites161 = [variant0156, variant193, variant281];
+    sprites164 = [variant0159, variant197, variant285];
   }
 });
 
 // src/themes/terrain/pixel/generated/turtle.ts
-var variant0157, sprites162;
+var variant0160, sprites165;
 var init_turtle = __esm({
   "src/themes/terrain/pixel/generated/turtle.ts"() {
     "use strict";
     init_esm_shims();
-    variant0157 = {
+    variant0160 = {
       layers: [
         {
           paint: "turtle",
@@ -18605,17 +19548,17 @@ var init_turtle = __esm({
       ],
       pixels: 82
     };
-    sprites162 = [variant0157, variant0157, variant0157];
+    sprites165 = [variant0160, variant0160, variant0160];
   }
 });
 
 // src/themes/terrain/pixel/generated/waves.ts
-var variant0158, sprites163;
+var variant0161, sprites166;
 var init_waves = __esm({
   "src/themes/terrain/pixel/generated/waves.ts"() {
     "use strict";
     init_esm_shims();
-    variant0158 = {
+    variant0161 = {
       layers: [
         {
           paint: "waterLight",
@@ -18624,17 +19567,17 @@ var init_waves = __esm({
       ],
       pixels: 36
     };
-    sprites163 = [variant0158, variant0158, variant0158];
+    sprites166 = [variant0161, variant0161, variant0161];
   }
 });
 
 // src/themes/terrain/pixel/generated/whale.ts
-var variant0159, variant194, variant282, sprites164;
+var variant0162, variant198, variant286, sprites167;
 var init_whale = __esm({
   "src/themes/terrain/pixel/generated/whale.ts"() {
     "use strict";
     init_esm_shims();
-    variant0159 = {
+    variant0162 = {
       layers: [
         {
           paint: "whale",
@@ -18652,7 +19595,7 @@ var init_whale = __esm({
       ],
       pixels: 165
     };
-    variant194 = {
+    variant198 = {
       layers: [
         {
           paint: "whale",
@@ -18665,7 +19608,7 @@ var init_whale = __esm({
       ],
       pixels: 109
     };
-    variant282 = {
+    variant286 = {
       layers: [
         {
           paint: "whale",
@@ -18679,12 +19622,110 @@ var init_whale = __esm({
       ],
       pixels: 92
     };
-    sprites164 = [variant0159, variant194, variant282];
+    sprites167 = [variant0162, variant198, variant286];
+  }
+});
+
+// src/themes/terrain/pixel/generated/willowPond.ts
+var variant0163, variant199, variant287, sprites168;
+var init_willowPond = __esm({
+  "src/themes/terrain/pixel/generated/willowPond.ts"() {
+    "use strict";
+    init_esm_shims();
+    variant0163 = {
+      layers: [
+        {
+          paint: "water",
+          d: "M-4.5,-3h2v0.5h-2zM-6,-2.5h3.5v0.5h-3.5zM-1,-2.5h1.5v0.5h-1.5zM-6.5,-2h3.5v0.5h-3.5zM-1,-2h4v0.5h-4zM4,-2h0.5v0.5h-0.5zM5.5,-2h0.5v0.5h-0.5zM-7,-1.5h3.5v0.5h-3.5zM-1.5,-1.5h8v0.5h-8zM-7,-1h3v0.5h-3zM-1,-1h8v0.5h-8zM-7,-0.5h1.5v1h-1.5zM-3.5,-0.5h6.5v0.5h-6.5zM5.5,-0.5h1.5v1h-1.5zM-3,0h6v0.5h-6zM-6.5,0.5h7v0.5h-7zM2,0.5h1v0.5h-1zM5.5,0.5h1v0.5h-1zM-5.5,1h6v0.5h-6zM2.5,1h3.5v0.5h-3.5zM-3,1.5h0.5v0.5h-0.5zM2,1.5h2v0.5h-2z"
+        },
+        { paint: "waterLight", d: "M2.5,-2.5h0.5v0.5h-0.5zM3,-2h1v0.5h-1zM4.5,-2h1v0.5h-1z" },
+        {
+          paint: "leaf",
+          d: "M3,-0.5h2.5v0.5h-2.5zM3,0h2v0.5h-2zM0.5,0.5h1.5v0.5h-1.5zM3.5,0.5h2v0.5h-2zM0.5,1h2v0.5h-2zM1,1.5h0.5v0.5h-0.5z"
+        },
+        { paint: "leafLight", d: "M2,-6h0.5v0.5h-0.5z" },
+        {
+          paint: "trunk",
+          d: "M-3,-7.5h1v0.5h-1zM-3,-7h2.5v1h-2.5zM-2.5,-6h2v3.5h-2zM-2.5,-2.5h1.5v0.5h-1.5zM-3,-2h1.5v0.5h-1.5zM-3.5,-1.5h2v0.5h-2zM-4,-1h2.5v0.5h-2.5z"
+        },
+        {
+          paint: "bushDark",
+          d: "M-2.5,-12h1.5v0.5h-1.5zM-3.5,-11.5h1.5v0.5h-1.5zM1,-11.5h0.5v0.5h-0.5zM-4.5,-11h1v0.5h-1zM1.5,-11h1v1h-1zM-4.5,-10.5h0.5v0.5h-0.5zM0.5,-10.5h0.5v0.5h-0.5zM-5,-10h0.5v1.5h-0.5zM-1,-10h4v0.5h-4zM-3,-9.5h6v0.5h-6zM-3.5,-9h6.5v0.5h-6.5zM-5.5,-8.5h0.5v0.5h-0.5zM-3.5,-8.5h7v0.5h-7zM-6,-8h0.5v0.5h-0.5zM-4,-8h7.5v0.5h-7.5zM-6.5,-7.5h1v0.5h-1zM-4,-7.5h1v0.5h-1zM-2,-7.5h5.5v0.5h-5.5zM-6.5,-7h0.5v2.5h-0.5zM-4.5,-7h1.5v1.5h-1.5zM-0.5,-7h4v1h-4zM-5.5,-6h0.5v0.5h-0.5zM0,-6h0.5v1h-0.5zM1,-6h1v0.5h-1zM2.5,-6h1v0.5h-1zM-5.5,-5.5h2.5v0.5h-2.5zM1,-5.5h2.5v1.5h-2.5zM-5.5,-5h1.5v0.5h-1.5zM-6.5,-4.5h2.5v0.5h-2.5zM-6,-4h1.5v0.5h-1.5zM1,-4h1v0.5h-1zM3,-4h0.5v0.5h-0.5zM-5,-3.5h0.5v0.5h-0.5zM1.5,-3.5h0.5v0.5h-0.5zM-1.5,-2h0.5v0.5h-0.5zM-1.5,-1h0.5v0.5h-0.5zM-5.5,-0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "willow",
+          d: "M-1,-12h1v0.5h-1zM-2,-11.5h3v0.5h-3zM-3.5,-11h5v0.5h-5zM-4,-10.5h4.5v0.5h-4.5zM1,-10.5h0.5v0.5h-0.5zM-4.5,-10h3.5v0.5h-3.5zM-4.5,-9.5h1.5v0.5h-1.5zM-4.5,-9h1v0.5h-1zM-5,-8.5h1.5v0.5h-1.5zM-5.5,-8h1.5v1h-1.5zM-6,-7h1.5v1h-1.5zM-6,-6h0.5v1.5h-0.5zM-5,-6h0.5v0.5h-0.5zM3,0.5h0.5v0.5h-0.5z"
+        },
+        { paint: "rock", d: "M-4,-0.5h0.5v0.5h-0.5zM-5.5,0h2.5v0.5h-2.5zM5,0h0.5v0.5h-0.5z" },
+        { paint: "moss", d: "M-5,-0.5h1v0.5h-1z" }
+      ],
+      pixels: 479
+    };
+    variant199 = {
+      layers: [
+        {
+          paint: "water",
+          d: "M2,-3.5h1v0.5h-1zM4,-3.5h1.5v0.5h-1.5zM1.5,-3h1.5v0.5h-1.5zM4,-3h2.5v0.5h-2.5zM-3,-2.5h1v0.5h-1zM0.5,-2.5h2v0.5h-2zM4,-2.5h3v0.5h-3zM-5.5,-2h1.5v0.5h-1.5zM-3,-2h2v0.5h-2zM-0.5,-2h3v0.5h-3zM4.5,-2h2.5v0.5h-2.5zM-6.5,-1.5h2.5v0.5h-2.5zM-3,-1.5h10v1h-10zM-7,-1h2.5v0.5h-2.5zM-7,-0.5h1.5v1h-1.5zM-3,-0.5h6v0.5h-6zM5.5,-0.5h1v0.5h-1zM-2.5,0h4v0.5h-4zM-7,0.5h7v0.5h-7zM-6,1h6v0.5h-6zM-5,1.5h4v0.5h-4z"
+        },
+        { paint: "waterLight", d: "M2.5,0.5h0.5v1h-0.5z" },
+        {
+          paint: "leaf",
+          d: "M3,-0.5h2.5v0.5h-2.5zM1.5,0h4.5v0.5h-4.5zM0,0.5h2v0.5h-2zM3.5,0.5h2.5v0.5h-2.5zM0,1h2.5v0.5h-2.5zM1,1.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "trunk",
+          d: "M3.5,-6.5h0.5v0.5h-0.5zM3,-6h1v0.5h-1zM3,-5.5h2v0.5h-2zM-3.5,-5h0.5v1h-0.5zM3,-5h1.5v0.5h-1.5zM3,-4.5h1v2.5h-1zM-4,-4h2v0.5h-2zM-4.5,-3.5h2.5v0.5h-2.5zM-4.5,-3h2v0.5h-2zM-4.5,-2.5h1.5v0.5h-1.5zM-4,-2h1v1.5h-1zM2.5,-2h2v0.5h-2zM-3.5,-0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "bushDark",
+          d: "M3,-10h1.5v0.5h-1.5zM2,-9.5h1v0.5h-1zM5,-9.5h0.5v0.5h-0.5zM1.5,-9h0.5v1.5h-0.5zM5,-9h1v0.5h-1zM-4,-8.5h1.5v0.5h-1.5zM3.5,-8.5h2.5v0.5h-2.5zM-5,-8h1v0.5h-1zM-2.5,-8h0.5v0.5h-0.5zM3,-8h3.5v0.5h-3.5zM-5.5,-7.5h0.5v0.5h-0.5zM-2,-7.5h1v0.5h-1zM1,-7.5h0.5v0.5h-0.5zM2.5,-7.5h4v1h-4zM-6,-7h0.5v1.5h-0.5zM-3.5,-7h2.5v0.5h-2.5zM0.5,-7h0.5v2h-0.5zM-4,-6.5h3.5v0.5h-3.5zM2.5,-6.5h1v0.5h-1zM4,-6.5h3v1h-3zM-4.5,-6h4v1h-4zM1.5,-6h0.5v0.5h-0.5zM2.5,-6h0.5v0.5h-0.5zM-6.5,-5.5h0.5v1.5h-0.5zM1.5,-5.5h1.5v0.5h-1.5zM5,-5.5h2v0.5h-2zM-4.5,-5h1v0.5h-1zM-3,-5h2.5v0.5h-2.5zM0.5,-5h2.5v1h-2.5zM4.5,-5h2.5v0.5h-2.5zM-5.5,-4.5h0.5v0.5h-0.5zM-4.5,-4.5h0.5v0.5h-0.5zM-3,-4.5h3v0.5h-3zM5,-4.5h1.5v1h-1.5zM-7,-4h0.5v1h-0.5zM-5.5,-4h1.5v0.5h-1.5zM-2,-4h2v1h-2zM0.5,-4h1.5v1h-1.5zM-6,-3.5h1.5v0.5h-1.5zM6,-3.5h0.5v0.5h-0.5zM-7,-3h2.5v1h-2.5zM-2.5,-3h2v0.5h-2zM-2,-2.5h1.5v0.5h-1.5zM2.5,-2.5h0.5v0.5h-0.5zM-6.5,-2h1v0.5h-1zM-1,-2h0.5v0.5h-0.5zM-4.5,-1h0.5v0.5h-0.5zM-5.5,-0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "willow",
+          d: "M3,-9.5h2v0.5h-2zM2,-9h3v0.5h-3zM2,-8.5h1.5v0.5h-1.5zM-4,-8h1.5v0.5h-1.5zM2,-8h1v0.5h-1zM-5,-7.5h3v0.5h-3zM1.5,-7.5h1v0.5h-1zM-5.5,-7h2v0.5h-2zM1,-7h1.5v1h-1.5zM-5.5,-6.5h1.5v0.5h-1.5zM-5.5,-6h1v0.5h-1zM1,-6h0.5v1h-0.5zM2,-6h0.5v0.5h-0.5zM-6,-5.5h1.5v1h-1.5zM-6,-4.5h0.5v0.5h-0.5zM-5,-4.5h0.5v0.5h-0.5zM-6.5,-4h1v0.5h-1zM-6.5,-3.5h0.5v0.5h-0.5zM-3,0h0.5v0.5h-0.5zM2,0.5h0.5v0.5h-0.5zM3,0.5h0.5v0.5h-0.5z"
+        },
+        { paint: "rock", d: "M-4,-0.5h0.5v0.5h-0.5zM-5.5,0h2.5v0.5h-2.5z" },
+        { paint: "moss", d: "M-5,-0.5h1v0.5h-1z" }
+      ],
+      pixels: 493
+    };
+    variant287 = {
+      layers: [
+        {
+          paint: "water",
+          d: "M-1,-3.5h2v0.5h-2zM-5,-3h2v0.5h-2zM-1,-3h4v0.5h-4zM-6,-2.5h2.5v0.5h-2.5zM-1.5,-2.5h7.5v0.5h-7.5zM-6.5,-2h2.5v0.5h-2.5zM-2,-2h8.5v0.5h-8.5zM-7,-1.5h2.5v0.5h-2.5zM-2,-1.5h9v0.5h-9zM-7,-1h1.5v1.5h-1.5zM-1.5,-1h8.5v0.5h-8.5zM-2.5,-0.5h5.5v0.5h-5.5zM5.5,-0.5h1.5v0.5h-1.5zM-3,0h6v0.5h-6zM5.5,0h1v0.5h-1zM-6.5,0.5h7v0.5h-7zM2,0.5h1v0.5h-1zM-4,1h4.5v0.5h-4.5zM2.5,1h2v0.5h-2zM-3,1.5h6.5v0.5h-6.5z"
+        },
+        {
+          paint: "leaf",
+          d: "M3,-0.5h2.5v0.5h-2.5zM3,0h2v0.5h-2zM0.5,0.5h1.5v0.5h-1.5zM3.5,0.5h2.5v0.5h-2.5zM0.5,1h2v0.5h-2z"
+        },
+        {
+          paint: "leafLight",
+          d: "M0,-10.5h0.5v0.5h-0.5zM-4,-10h0.5v0.5h-0.5zM0.5,-9.5h0.5v0.5h-0.5zM3.5,-9h0.5v0.5h-0.5zM-5,-8.5h0.5v0.5h-0.5zM-5.5,-7h0.5v1.5h-0.5z"
+        },
+        {
+          paint: "trunk",
+          d: "M-2.5,-8h0.5v0.5h-0.5zM-0.5,-8h1v0.5h-1zM-3,-7.5h3.5v0.5h-3.5zM-3,-7h4v0.5h-4zM1.5,-7h0.5v0.5h-0.5zM-2.5,-6.5h3.5v0.5h-3.5zM-2.5,-6h3v0.5h-3zM-2,-5.5h2v0.5h-2zM-2.5,-5h2v1.5h-2zM-3,-3.5h2v0.5h-2zM-3,-3h1.5v0.5h-1.5zM-3.5,-2.5h2v0.5h-2zM-4,-2h2v0.5h-2zM-4.5,-1.5h2.5v0.5h-2.5zM-5,-1h3v0.5h-3z"
+        },
+        {
+          paint: "bushDark",
+          d: "M-1.5,-13h2v0.5h-2zM-2.5,-12.5h1.5v0.5h-1.5zM-4,-12h2v0.5h-2zM2.5,-12h1v0.5h-1zM-4.5,-11.5h1v0.5h-1zM2.5,-11.5h1.5v0.5h-1.5zM-5,-11h1v0.5h-1zM0,-11h4.5v0.5h-4.5zM-5,-10.5h0.5v0.5h-0.5zM-1,-10.5h1v0.5h-1zM0.5,-10.5h4v0.5h-4zM-5.5,-10h1v0.5h-1zM-3,-10h8v0.5h-8zM-6,-9.5h1v0.5h-1zM-3.5,-9.5h4v0.5h-4zM1,-9.5h4v0.5h-4zM-6.5,-9h0.5v1h-0.5zM-4,-9h7.5v0.5h-7.5zM4,-9h1v0.5h-1zM-4.5,-8.5h10v0.5h-10zM-7,-8h0.5v2.5h-0.5zM-4.5,-8h2v0.5h-2zM-2,-8h1.5v0.5h-1.5zM0.5,-8h5v1h-5zM-5,-7.5h2v2h-2zM1,-7h0.5v1h-0.5zM2,-7h3.5v2h-3.5zM-6,-6.5h0.5v1h-0.5zM-7,-5.5h2.5v0.5h-2.5zM-4,-5.5h0.5v1h-0.5zM-7,-5h1v0.5h-1zM-5.5,-5h1v0.5h-1zM2.5,-5h2.5v0.5h-2.5zM-7,-4.5h0.5v0.5h-0.5zM-5.5,-4.5h0.5v1h-0.5zM2.5,-4.5h1v0.5h-1zM4.5,-4.5h0.5v0.5h-0.5zM3,-4h0.5v0.5h-0.5zM-1.5,-3h0.5v0.5h-0.5zM-5.5,-1h0.5v1h-0.5zM-2,-1h0.5v0.5h-0.5zM-3,-0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "willow",
+          d: "M-1,-12.5h2v0.5h-2zM-2,-12h4.5v0.5h-4.5zM-3.5,-11.5h6v0.5h-6zM-4,-11h4v0.5h-4zM-4.5,-10.5h3.5v0.5h-3.5zM-4.5,-10h0.5v0.5h-0.5zM-3.5,-10h0.5v0.5h-0.5zM-5,-9.5h1.5v0.5h-1.5zM-6,-9h2v0.5h-2zM-6,-8.5h1v0.5h-1zM-6.5,-8h2v0.5h-2zM-6.5,-7.5h1.5v0.5h-1.5zM-6.5,-7h1v0.5h-1zM-6.5,-6.5h0.5v1h-0.5zM3,0.5h0.5v0.5h-0.5z"
+        },
+        { paint: "rock", d: "M-4,-0.5h1v0.5h-1zM-5.5,0h2.5v0.5h-2.5zM5,0h0.5v0.5h-0.5z" },
+        { paint: "moss", d: "M-5,-0.5h1v0.5h-1z" }
+      ],
+      pixels: 576
+    };
+    sprites168 = [variant0163, variant199, variant287];
   }
 });
 
 // src/themes/terrain/pixel/generated/group-water.ts
-var sprites165;
+var sprites169;
 var init_group_water = __esm({
   "src/themes/terrain/pixel/generated/group-water.ts"() {
     "use strict";
@@ -18701,44 +19742,50 @@ var init_group_water = __esm({
     init_jellyfish();
     init_kelp();
     init_lighthouse();
+    init_lotusPond();
     init_pondLily();
+    init_reedMarsh();
     init_reeds();
     init_sailboat();
     init_seagull();
     init_turtle();
     init_waves();
     init_whale();
-    sprites165 = {
-      boat: sprites146,
-      buoy: sprites147,
-      canal: sprites148,
-      coral: sprites149,
-      crab: sprites150,
-      dock: sprites151,
-      fish: sprites152,
-      fishSchool: sprites153,
-      frozenPond: sprites154,
-      jellyfish: sprites155,
-      kelp: sprites156,
-      lighthouse: sprites157,
-      pondLily: sprites158,
-      reeds: sprites159,
-      sailboat: sprites160,
-      seagull: sprites161,
-      turtle: sprites162,
-      waves: sprites163,
-      whale: sprites164
+    init_willowPond();
+    sprites169 = {
+      boat: sprites147,
+      buoy: sprites148,
+      canal: sprites149,
+      coral: sprites150,
+      crab: sprites151,
+      dock: sprites152,
+      fish: sprites153,
+      fishSchool: sprites154,
+      frozenPond: sprites155,
+      jellyfish: sprites156,
+      kelp: sprites157,
+      lighthouse: sprites158,
+      lotusPond: sprites159,
+      pondLily: sprites160,
+      reedMarsh: sprites161,
+      reeds: sprites162,
+      sailboat: sprites163,
+      seagull: sprites164,
+      turtle: sprites165,
+      waves: sprites166,
+      whale: sprites167,
+      willowPond: sprites168
     };
   }
 });
 
 // src/themes/terrain/pixel/generated/ancientPortal.ts
-var variant0160, sprites166;
+var variant0164, sprites170;
 var init_ancientPortal = __esm({
   "src/themes/terrain/pixel/generated/ancientPortal.ts"() {
     "use strict";
     init_esm_shims();
-    variant0160 = {
+    variant0164 = {
       layers: [
         {
           paint: "boulder",
@@ -18768,17 +19815,17 @@ var init_ancientPortal = __esm({
       ],
       pixels: 501
     };
-    sprites166 = [variant0160];
+    sprites170 = [variant0164];
   }
 });
 
 // src/themes/terrain/pixel/generated/aurora.ts
-var variant0161, sprites167;
+var variant0165, sprites171;
 var init_aurora = __esm({
   "src/themes/terrain/pixel/generated/aurora.ts"() {
     "use strict";
     init_esm_shims();
-    variant0161 = {
+    variant0165 = {
       layers: [
         {
           paint: "ice",
@@ -18811,17 +19858,17 @@ var init_aurora = __esm({
       ],
       pixels: 498
     };
-    sprites167 = [variant0161];
+    sprites171 = [variant0165];
   }
 });
 
 // src/themes/terrain/pixel/generated/bambooGrove.ts
-var variant0162, sprites168;
+var variant0166, sprites172;
 var init_bambooGrove = __esm({
   "src/themes/terrain/pixel/generated/bambooGrove.ts"() {
     "use strict";
     init_esm_shims();
-    variant0162 = {
+    variant0166 = {
       layers: [
         {
           paint: "moss",
@@ -18843,17 +19890,17 @@ var init_bambooGrove = __esm({
       ],
       pixels: 400
     };
-    sprites168 = [variant0162];
+    sprites172 = [variant0166];
   }
 });
 
 // src/themes/terrain/pixel/generated/bioluminescentPool.ts
-var variant0163, sprites169;
+var variant0167, sprites173;
 var init_bioluminescentPool = __esm({
   "src/themes/terrain/pixel/generated/bioluminescentPool.ts"() {
     "use strict";
     init_esm_shims();
-    variant0163 = {
+    variant0167 = {
       layers: [
         {
           paint: "boulder",
@@ -18879,17 +19926,17 @@ var init_bioluminescentPool = __esm({
       ],
       pixels: 238
     };
-    sprites169 = [variant0163];
+    sprites173 = [variant0167];
   }
 });
 
 // src/themes/terrain/pixel/generated/bonsaiGiant.ts
-var variant0164, sprites170;
+var variant0168, sprites174;
 var init_bonsaiGiant = __esm({
   "src/themes/terrain/pixel/generated/bonsaiGiant.ts"() {
     "use strict";
     init_esm_shims();
-    variant0164 = {
+    variant0168 = {
       layers: [
         {
           paint: "boulder",
@@ -18919,17 +19966,17 @@ var init_bonsaiGiant = __esm({
       ],
       pixels: 255
     };
-    sprites170 = [variant0164];
+    sprites174 = [variant0168];
   }
 });
 
 // src/themes/terrain/pixel/generated/colosseum.ts
-var variant0165, sprites171;
+var variant0169, sprites175;
 var init_colosseum = __esm({
   "src/themes/terrain/pixel/generated/colosseum.ts"() {
     "use strict";
     init_esm_shims();
-    variant0165 = {
+    variant0169 = {
       layers: [
         {
           paint: "shadow",
@@ -18962,17 +20009,17 @@ var init_colosseum = __esm({
       ],
       pixels: 329
     };
-    sprites171 = [variant0165];
+    sprites175 = [variant0169];
   }
 });
 
 // src/themes/terrain/pixel/generated/coralReef.ts
-var variant0166, sprites172;
+var variant0170, sprites176;
 var init_coralReef = __esm({
   "src/themes/terrain/pixel/generated/coralReef.ts"() {
     "use strict";
     init_esm_shims();
-    variant0166 = {
+    variant0170 = {
       layers: [
         {
           paint: "boulder",
@@ -19010,17 +20057,17 @@ var init_coralReef = __esm({
       ],
       pixels: 360
     };
-    sprites172 = [variant0166];
+    sprites176 = [variant0170];
   }
 });
 
 // src/themes/terrain/pixel/generated/crystalSpire.ts
-var variant0167, sprites173;
+var variant0171, sprites177;
 var init_crystalSpire = __esm({
   "src/themes/terrain/pixel/generated/crystalSpire.ts"() {
     "use strict";
     init_esm_shims();
-    variant0167 = {
+    variant0171 = {
       layers: [
         {
           paint: "rock",
@@ -19045,17 +20092,17 @@ var init_crystalSpire = __esm({
       ],
       pixels: 349
     };
-    sprites173 = [variant0167];
+    sprites177 = [variant0171];
   }
 });
 
 // src/themes/terrain/pixel/generated/dragonNest.ts
-var variant0168, sprites174;
+var variant0172, sprites178;
 var init_dragonNest = __esm({
   "src/themes/terrain/pixel/generated/dragonNest.ts"() {
     "use strict";
     init_esm_shims();
-    variant0168 = {
+    variant0172 = {
       layers: [
         {
           paint: "trunk",
@@ -19090,17 +20137,17 @@ var init_dragonNest = __esm({
       ],
       pixels: 296
     };
-    sprites174 = [variant0168];
+    sprites178 = [variant0172];
   }
 });
 
 // src/themes/terrain/pixel/generated/eiffelTower.ts
-var variant0169, sprites175;
+var variant0173, sprites179;
 var init_eiffelTower = __esm({
   "src/themes/terrain/pixel/generated/eiffelTower.ts"() {
     "use strict";
     init_esm_shims();
-    variant0169 = {
+    variant0173 = {
       layers: [
         {
           paint: "wallShade",
@@ -19122,17 +20169,17 @@ var init_eiffelTower = __esm({
       ],
       pixels: 187
     };
-    sprites175 = [variant0169];
+    sprites179 = [variant0173];
   }
 });
 
 // src/themes/terrain/pixel/generated/floatingIsland.ts
-var variant0170, sprites176;
+var variant0174, sprites180;
 var init_floatingIsland = __esm({
   "src/themes/terrain/pixel/generated/floatingIsland.ts"() {
     "use strict";
     init_esm_shims();
-    variant0170 = {
+    variant0174 = {
       layers: [
         {
           paint: "boulder",
@@ -19165,17 +20212,17 @@ var init_floatingIsland = __esm({
       ],
       pixels: 348
     };
-    sprites176 = [variant0170];
+    sprites180 = [variant0174];
   }
 });
 
 // src/themes/terrain/pixel/generated/geyser.ts
-var variant0171, sprites177;
+var variant0175, sprites181;
 var init_geyser = __esm({
   "src/themes/terrain/pixel/generated/geyser.ts"() {
     "use strict";
     init_esm_shims();
-    variant0171 = {
+    variant0175 = {
       layers: [
         {
           paint: "boulder",
@@ -19202,17 +20249,17 @@ var init_geyser = __esm({
       ],
       pixels: 254
     };
-    sprites177 = [variant0171];
+    sprites181 = [variant0175];
   }
 });
 
 // src/themes/terrain/pixel/generated/giantMushroom.ts
-var variant0172, sprites178;
+var variant0176, sprites182;
 var init_giantMushroom = __esm({
   "src/themes/terrain/pixel/generated/giantMushroom.ts"() {
     "use strict";
     init_esm_shims();
-    variant0172 = {
+    variant0176 = {
       layers: [
         { paint: "shadow", d: "M-3,0h1v0.5h-1zM2,0h1v0.5h-1zM-2.5,0.5h2v0.5h-2zM0,0.5h2.5v0.5h-2.5z" },
         {
@@ -19234,17 +20281,17 @@ var init_giantMushroom = __esm({
       ],
       pixels: 286
     };
-    sprites178 = [variant0172];
+    sprites182 = [variant0176];
   }
 });
 
 // src/themes/terrain/pixel/generated/giantSequoia.ts
-var variant0173, sprites179;
+var variant0177, sprites183;
 var init_giantSequoia = __esm({
   "src/themes/terrain/pixel/generated/giantSequoia.ts"() {
     "use strict";
     init_esm_shims();
-    variant0173 = {
+    variant0177 = {
       layers: [
         {
           paint: "shadow",
@@ -19273,17 +20320,17 @@ var init_giantSequoia = __esm({
       ],
       pixels: 408
     };
-    sprites179 = [variant0173];
+    sprites183 = [variant0177];
   }
 });
 
 // src/themes/terrain/pixel/generated/giantWaterfall.ts
-var variant0174, sprites180;
+var variant0178, sprites184;
 var init_giantWaterfall = __esm({
   "src/themes/terrain/pixel/generated/giantWaterfall.ts"() {
     "use strict";
     init_esm_shims();
-    variant0174 = {
+    variant0178 = {
       layers: [
         {
           paint: "boulder",
@@ -19312,17 +20359,17 @@ var init_giantWaterfall = __esm({
       ],
       pixels: 597
     };
-    sprites180 = [variant0174];
+    sprites184 = [variant0178];
   }
 });
 
 // src/themes/terrain/pixel/generated/glacierPeak.ts
-var variant0175, sprites181;
+var variant0179, sprites185;
 var init_glacierPeak = __esm({
   "src/themes/terrain/pixel/generated/glacierPeak.ts"() {
     "use strict";
     init_esm_shims();
-    variant0175 = {
+    variant0179 = {
       layers: [
         {
           paint: "ice",
@@ -19351,17 +20398,17 @@ var init_glacierPeak = __esm({
       ],
       pixels: 509
     };
-    sprites181 = [variant0175];
+    sprites185 = [variant0179];
   }
 });
 
 // src/themes/terrain/pixel/generated/grandCanyon.ts
-var variant0176, sprites182;
+var variant0180, sprites186;
 var init_grandCanyon = __esm({
   "src/themes/terrain/pixel/generated/grandCanyon.ts"() {
     "use strict";
     init_esm_shims();
-    variant0176 = {
+    variant0180 = {
       layers: [
         {
           paint: "autumnRust",
@@ -19387,17 +20434,17 @@ var init_grandCanyon = __esm({
       ],
       pixels: 407
     };
-    sprites182 = [variant0176];
+    sprites186 = [variant0180];
   }
 });
 
 // src/themes/terrain/pixel/generated/hotSpring.ts
-var variant0177, sprites183;
+var variant0181, sprites187;
 var init_hotSpring = __esm({
   "src/themes/terrain/pixel/generated/hotSpring.ts"() {
     "use strict";
     init_esm_shims();
-    variant0177 = {
+    variant0181 = {
       layers: [
         {
           paint: "boulder",
@@ -19426,17 +20473,17 @@ var init_hotSpring = __esm({
       ],
       pixels: 214
     };
-    sprites183 = [variant0177];
+    sprites187 = [variant0181];
   }
 });
 
 // src/themes/terrain/pixel/generated/meteorCrater.ts
-var variant0178, sprites184;
+var variant0182, sprites188;
 var init_meteorCrater = __esm({
   "src/themes/terrain/pixel/generated/meteorCrater.ts"() {
     "use strict";
     init_esm_shims();
-    variant0178 = {
+    variant0182 = {
       layers: [
         {
           paint: "boulder",
@@ -19462,17 +20509,17 @@ var init_meteorCrater = __esm({
       ],
       pixels: 251
     };
-    sprites184 = [variant0178];
+    sprites188 = [variant0182];
   }
 });
 
 // src/themes/terrain/pixel/generated/mountFuji.ts
-var variant0179, sprites185;
+var variant0183, sprites189;
 var init_mountFuji = __esm({
   "src/themes/terrain/pixel/generated/mountFuji.ts"() {
     "use strict";
     init_esm_shims();
-    variant0179 = {
+    variant0183 = {
       layers: [
         { paint: "shadow", d: "M5.5,0.5h0.5v0.5h-0.5zM-4,1h2.5v0.5h-2.5zM3,1h1v0.5h-1z" },
         {
@@ -19503,17 +20550,17 @@ var init_mountFuji = __esm({
       ],
       pixels: 453
     };
-    sprites185 = [variant0179];
+    sprites189 = [variant0183];
   }
 });
 
 // src/themes/terrain/pixel/generated/oasis.ts
-var variant0180, sprites186;
+var variant0184, sprites190;
 var init_oasis = __esm({
   "src/themes/terrain/pixel/generated/oasis.ts"() {
     "use strict";
     init_esm_shims();
-    variant0180 = {
+    variant0184 = {
       layers: [
         {
           paint: "sandcastleWall",
@@ -19540,17 +20587,17 @@ var init_oasis = __esm({
       ],
       pixels: 335
     };
-    sprites186 = [variant0180];
+    sprites190 = [variant0184];
   }
 });
 
 // src/themes/terrain/pixel/generated/operaHouse.ts
-var variant0181, sprites187;
+var variant0185, sprites191;
 var init_operaHouse = __esm({
   "src/themes/terrain/pixel/generated/operaHouse.ts"() {
     "use strict";
     init_esm_shims();
-    variant0181 = {
+    variant0185 = {
       layers: [
         {
           paint: "path",
@@ -19576,17 +20623,17 @@ var init_operaHouse = __esm({
       ],
       pixels: 300
     };
-    sprites187 = [variant0181];
+    sprites191 = [variant0185];
   }
 });
 
 // src/themes/terrain/pixel/generated/pagoda.ts
-var variant0182, sprites188;
+var variant0186, sprites192;
 var init_pagoda = __esm({
   "src/themes/terrain/pixel/generated/pagoda.ts"() {
     "use strict";
     init_esm_shims();
-    variant0182 = {
+    variant0186 = {
       layers: [
         {
           paint: "wallShade",
@@ -19612,17 +20659,17 @@ var init_pagoda = __esm({
       ],
       pixels: 339
     };
-    sprites188 = [variant0182];
+    sprites192 = [variant0186];
   }
 });
 
 // src/themes/terrain/pixel/generated/sakuraEternal.ts
-var variant0183, sprites189;
+var variant0187, sprites193;
 var init_sakuraEternal = __esm({
   "src/themes/terrain/pixel/generated/sakuraEternal.ts"() {
     "use strict";
     init_esm_shims();
-    variant0183 = {
+    variant0187 = {
       layers: [
         {
           paint: "shadow",
@@ -19651,17 +20698,17 @@ var init_sakuraEternal = __esm({
       ],
       pixels: 465
     };
-    sprites189 = [variant0183];
+    sprites193 = [variant0187];
   }
 });
 
 // src/themes/terrain/pixel/generated/stBasils.ts
-var variant0184, sprites190;
+var variant0188, sprites194;
 var init_stBasils = __esm({
   "src/themes/terrain/pixel/generated/stBasils.ts"() {
     "use strict";
     init_esm_shims();
-    variant0184 = {
+    variant0188 = {
       layers: [
         {
           paint: "wallShade",
@@ -19696,17 +20743,17 @@ var init_stBasils = __esm({
       ],
       pixels: 372
     };
-    sprites190 = [variant0184];
+    sprites194 = [variant0188];
   }
 });
 
 // src/themes/terrain/pixel/generated/tajMahal.ts
-var variant0185, sprites191;
+var variant0189, sprites195;
 var init_tajMahal = __esm({
   "src/themes/terrain/pixel/generated/tajMahal.ts"() {
     "use strict";
     init_esm_shims();
-    variant0185 = {
+    variant0189 = {
       layers: [
         {
           paint: "wallShade",
@@ -19728,17 +20775,17 @@ var init_tajMahal = __esm({
       ],
       pixels: 519
     };
-    sprites191 = [variant0185];
+    sprites195 = [variant0189];
   }
 });
 
 // src/themes/terrain/pixel/generated/torii.ts
-var variant0186, sprites192;
+var variant0190, sprites196;
 var init_torii = __esm({
   "src/themes/terrain/pixel/generated/torii.ts"() {
     "use strict";
     init_esm_shims();
-    variant0186 = {
+    variant0190 = {
       layers: [
         {
           paint: "boulder",
@@ -19765,17 +20812,17 @@ var init_torii = __esm({
       ],
       pixels: 273
     };
-    sprites192 = [variant0186];
+    sprites196 = [variant0190];
   }
 });
 
 // src/themes/terrain/pixel/generated/volcano.ts
-var variant0187, sprites193;
+var variant0191, sprites197;
 var init_volcano = __esm({
   "src/themes/terrain/pixel/generated/volcano.ts"() {
     "use strict";
     init_esm_shims();
-    variant0187 = {
+    variant0191 = {
       layers: [
         { paint: "shadow", d: "M-5.5,0.5h1.5v0.5h-1.5zM-2,1h1.5v0.5h-1.5zM3,1h0.5v0.5h-0.5z" },
         {
@@ -19801,17 +20848,17 @@ var init_volcano = __esm({
       ],
       pixels: 409
     };
-    sprites193 = [variant0187];
+    sprites197 = [variant0191];
   }
 });
 
 // src/themes/terrain/pixel/generated/windmillGrand.ts
-var variant0188, sprites194;
+var variant0192, sprites198;
 var init_windmillGrand = __esm({
   "src/themes/terrain/pixel/generated/windmillGrand.ts"() {
     "use strict";
     init_esm_shims();
-    variant0188 = {
+    variant0192 = {
       layers: [
         {
           paint: "boulder",
@@ -19849,17 +20896,17 @@ var init_windmillGrand = __esm({
       ],
       pixels: 314
     };
-    sprites194 = [variant0188];
+    sprites198 = [variant0192];
   }
 });
 
 // src/themes/terrain/pixel/generated/worldTree.ts
-var variant0189, sprites195;
+var variant0193, sprites199;
 var init_worldTree = __esm({
   "src/themes/terrain/pixel/generated/worldTree.ts"() {
     "use strict";
     init_esm_shims();
-    variant0189 = {
+    variant0193 = {
       layers: [
         {
           paint: "shadow",
@@ -19889,12 +20936,12 @@ var init_worldTree = __esm({
       ],
       pixels: 565
     };
-    sprites195 = [variant0189];
+    sprites199 = [variant0193];
   }
 });
 
 // src/themes/terrain/pixel/generated/group-wonders.ts
-var sprites196;
+var sprites200;
 var init_group_wonders = __esm({
   "src/themes/terrain/pixel/generated/group-wonders.ts"() {
     "use strict";
@@ -19929,48 +20976,48 @@ var init_group_wonders = __esm({
     init_volcano();
     init_windmillGrand();
     init_worldTree();
-    sprites196 = {
-      ancientPortal: sprites166,
-      aurora: sprites167,
-      bambooGrove: sprites168,
-      bioluminescentPool: sprites169,
-      bonsaiGiant: sprites170,
-      colosseum: sprites171,
-      coralReef: sprites172,
-      crystalSpire: sprites173,
-      dragonNest: sprites174,
-      eiffelTower: sprites175,
-      floatingIsland: sprites176,
-      geyser: sprites177,
-      giantMushroom: sprites178,
-      giantSequoia: sprites179,
-      giantWaterfall: sprites180,
-      glacierPeak: sprites181,
-      grandCanyon: sprites182,
-      hotSpring: sprites183,
-      meteorCrater: sprites184,
-      mountFuji: sprites185,
-      oasis: sprites186,
-      operaHouse: sprites187,
-      pagoda: sprites188,
-      sakuraEternal: sprites189,
-      stBasils: sprites190,
-      tajMahal: sprites191,
-      torii: sprites192,
-      volcano: sprites193,
-      windmillGrand: sprites194,
-      worldTree: sprites195
+    sprites200 = {
+      ancientPortal: sprites170,
+      aurora: sprites171,
+      bambooGrove: sprites172,
+      bioluminescentPool: sprites173,
+      bonsaiGiant: sprites174,
+      colosseum: sprites175,
+      coralReef: sprites176,
+      crystalSpire: sprites177,
+      dragonNest: sprites178,
+      eiffelTower: sprites179,
+      floatingIsland: sprites180,
+      geyser: sprites181,
+      giantMushroom: sprites182,
+      giantSequoia: sprites183,
+      giantWaterfall: sprites184,
+      glacierPeak: sprites185,
+      grandCanyon: sprites186,
+      hotSpring: sprites187,
+      meteorCrater: sprites188,
+      mountFuji: sprites189,
+      oasis: sprites190,
+      operaHouse: sprites191,
+      pagoda: sprites192,
+      sakuraEternal: sprites193,
+      stBasils: sprites194,
+      tajMahal: sprites195,
+      torii: sprites196,
+      volcano: sprites197,
+      windmillGrand: sprites198,
+      worldTree: sprites199
     };
   }
 });
 
 // src/themes/terrain/pixel/generated/acorn.ts
-var variant0190, variant195, variant283, sprites197;
+var variant0194, variant1100, variant288, sprites201;
 var init_acorn = __esm({
   "src/themes/terrain/pixel/generated/acorn.ts"() {
     "use strict";
     init_esm_shims();
-    variant0190 = {
+    variant0194 = {
       layers: [
         { paint: "acornBody", d: "M-0.5,0h0.5v1h-0.5z" },
         {
@@ -19984,7 +21031,7 @@ var init_acorn = __esm({
       ],
       pixels: 9
     };
-    variant195 = {
+    variant1100 = {
       layers: [
         {
           paint: "acornBody",
@@ -20005,7 +21052,7 @@ var init_acorn = __esm({
       ],
       pixels: 21
     };
-    variant283 = {
+    variant288 = {
       layers: [
         { paint: "acornBody", d: "M-1,-0.5h0.5v0.5h-0.5zM-1,0h1v0.5h-1zM-0.5,0.5h0.5v0.5h-0.5z" },
         {
@@ -20020,17 +21067,129 @@ var init_acorn = __esm({
       ],
       pixels: 12
     };
-    sprites197 = [variant0190, variant195, variant283];
+    sprites201 = [variant0194, variant1100, variant288];
+  }
+});
+
+// src/themes/terrain/pixel/generated/ancientOak.ts
+var variant0195, variant1101, variant289, sprites202;
+var init_ancientOak = __esm({
+  "src/themes/terrain/pixel/generated/ancientOak.ts"() {
+    "use strict";
+    init_esm_shims();
+    variant0195 = {
+      layers: [
+        {
+          paint: "shadow",
+          d: "M0,-4h0.5v1.5h-0.5zM4,0h0.5v0.5h-0.5zM-4,0.5h1v0.5h-1zM-0.5,0.5h1.5v0.5h-1.5zM3.5,0.5h1v0.5h-1z"
+        },
+        {
+          paint: "trunk",
+          d: "M2,-5.5h0.5v0.5h-0.5zM-2.5,-5h1.5v0.5h-1.5zM1,-5h1v0.5h-1zM-2,-4.5h1v0.5h-1zM-0.5,-4.5h2.5v0.5h-2.5zM-1.5,-4h1v0.5h-1zM0.5,-4h1v1.5h-1zM-1,-3.5h0.5v0.5h-0.5zM-1.5,-3h1v2.5h-1zM0,-2.5h1.5v2h-1.5zM-2,-0.5h1v0.5h-1zM0.5,-0.5h2v0.5h-2zM-2.5,0h2v0.5h-2zM0.5,0h1v0.5h-1zM-3,0.5h2.5v0.5h-2.5zM1,0.5h1v0.5h-1z"
+        },
+        {
+          paint: "stump",
+          d: "M-1,-4.5h0.5v0.5h-0.5zM-0.5,-4h0.5v3.5h-0.5zM-1,-0.5h1.5v0.5h-1.5zM-0.5,0h1v0.5h-1z"
+        },
+        {
+          paint: "bushDark",
+          d: "M5,-12h1v0.5h-1zM4.5,-11.5h2.5v0.5h-2.5zM4,-11h3.5v0.5h-3.5zM2,-10.5h5.5v1h-5.5zM1.5,-9.5h6v1h-6zM-0.5,-8.5h3.5v0.5h-3.5zM3.5,-8.5h3.5v0.5h-3.5zM-1,-8h7.5v0.5h-7.5zM-1.5,-7.5h8v0.5h-8zM-2,-7h8.5v0.5h-8.5zM-5,-6.5h11v0.5h-11zM-5.5,-6h11.5v0.5h-11.5zM-5,-5.5h7v0.5h-7zM2.5,-5.5h2.5v0.5h-2.5zM-4,-5h1v0.5h-1zM-1,-5h2v0.5h-2z"
+        },
+        {
+          paint: "leaf",
+          d: "M-1.5,-15h2.5v0.5h-2.5zM-2.5,-14.5h1v0.5h-1zM0.5,-14.5h1v0.5h-1zM2,-14.5h2v0.5h-2zM-2.5,-14h0.5v0.5h-0.5zM1,-14h3.5v0.5h-3.5zM-3,-13.5h0.5v0.5h-0.5zM-1.5,-13.5h6.5v0.5h-6.5zM-5,-13h10.5v0.5h-10.5zM-5.5,-12.5h11v0.5h-11zM-6,-12h1v0.5h-1zM-3.5,-12h8.5v0.5h-8.5zM-6,-11.5h0.5v1.5h-0.5zM-2,-11.5h6.5v0.5h-6.5zM-2,-11h6v0.5h-6zM-5,-10.5h7v0.5h-7zM-6.5,-10h8.5v0.5h-8.5zM-7,-9.5h8.5v0.5h-8.5zM-7.5,-9h9v0.5h-9zM-7.5,-8.5h7v0.5h-7zM-7.5,-8h6.5v0.5h-6.5zM-7.5,-7.5h4.5v0.5h-4.5zM-2.5,-7.5h1v0.5h-1zM-7,-7h5v0.5h-5zM-6.5,-6.5h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "leafLight",
+          d: "M-1.5,-14.5h2v0.5h-2zM-2,-14h3v0.5h-3zM-2.5,-13.5h1v0.5h-1zM-5,-12h1.5v0.5h-1.5zM-5.5,-11.5h3.5v1h-3.5zM-5.5,-10.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "moss",
+          d: "M-4,-1.5h0.5v0.5h-0.5zM-4,-1h2v0.5h-2zM-4.5,-0.5h2.5v0.5h-2.5zM2.5,-0.5h0.5v0.5h-0.5zM-4,0h1.5v0.5h-1.5zM1.5,0h2.5v0.5h-2.5zM2,0.5h1.5v0.5h-1.5z"
+        },
+        { paint: "acornBody", d: "M3,-8.5h0.5v0.5h-0.5zM-3,-7.5h0.5v0.5h-0.5z" }
+      ],
+      pixels: 575
+    };
+    variant1101 = {
+      layers: [
+        {
+          paint: "shadow",
+          d: "M-0.5,-3.5h0.5v0.5h-0.5zM-1,-3h1v0.5h-1zM-1,-2.5h1.5v1h-1.5zM-0.5,-1.5h1v0.5h-1zM-0.5,-1h0.5v0.5h-0.5zM2,-0.5h0.5v0.5h-0.5zM4,0h0.5v0.5h-0.5zM-4,0.5h2v0.5h-2zM0,0.5h1.5v0.5h-1.5zM3.5,0.5h1v0.5h-1z"
+        },
+        {
+          paint: "trunk",
+          d: "M0,-6.5h1v0.5h-1zM2.5,-6.5h1v0.5h-1zM-0.5,-6h1.5v1h-1.5zM2,-6h1.5v0.5h-1.5zM-2.5,-5.5h1.5v0.5h-1.5zM1.5,-5.5h1.5v0.5h-1.5zM-2.5,-5h0.5v0.5h-0.5zM-1.5,-5h4.5v0.5h-4.5zM-2,-4.5h0.5v1h-0.5zM-1,-4.5h3.5v0.5h-3.5zM-0.5,-4h2.5v0.5h-2.5zM-2,-3.5h1v1.5h-1zM0,-3.5h1.5v1h-1.5zM0.5,-2.5h1v1.5h-1zM-1.5,-2h0.5v1h-0.5zM-2,-1h0.5v0.5h-0.5zM0,-1h1.5v0.5h-1.5zM-2.5,-0.5h1v0.5h-1zM-0.5,-0.5h2.5v0.5h-2.5zM-2.5,0h4v0.5h-4zM-2,0.5h2v0.5h-2zM2,0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "stump",
+          d: "M-2,-5h0.5v0.5h-0.5zM-1.5,-4.5h0.5v0.5h-0.5zM-1.5,-4h1v0.5h-1zM-1,-3.5h0.5v0.5h-0.5zM-1,-1.5h0.5v0.5h-0.5zM-1.5,-1h1v1h-1z"
+        },
+        {
+          paint: "bushDark",
+          d: "M2,-16.5h2v0.5h-2zM2.5,-16h2v0.5h-2zM2.5,-15.5h2.5v1.5h-2.5zM2,-14h3v1.5h-3zM2.5,-12.5h3v1.5h-3zM2,-11h3.5v1h-3.5zM1.5,-10h3.5v0.5h-3.5zM1.5,-9.5h3v0.5h-3zM1.5,-9h2.5v0.5h-2.5zM1,-8.5h2v0.5h-2zM3.5,-8.5h0.5v0.5h-0.5zM-0.5,-8h4.5v0.5h-4.5zM-1,-7.5h4.5v0.5h-4.5zM-1.5,-7h5v0.5h-5zM-3.5,-6.5h3.5v0.5h-3.5zM1,-6.5h1.5v0.5h-1.5zM-3.5,-6h3v0.5h-3z"
+        },
+        {
+          paint: "leaf",
+          d: "M-1,-17.5h2.5v0.5h-2.5zM-1.5,-17h0.5v0.5h-0.5zM1,-17h1v1h-1zM-2,-16.5h0.5v1h-0.5zM-1,-16h3.5v0.5h-3.5zM-2,-15.5h4.5v0.5h-4.5zM-3.5,-15h6v0.5h-6zM-4,-14.5h6.5v0.5h-6.5zM-4.5,-14h1.5v0.5h-1.5zM-2,-14h4v1h-4zM-4.5,-13.5h1v0.5h-1zM-4.5,-13h0.5v1.5h-0.5zM-2.5,-13h4.5v0.5h-4.5zM-3.5,-12.5h6v1h-6zM-4.5,-11.5h7v0.5h-7zM-4.5,-11h6.5v0.5h-6.5zM-5,-10.5h7v0.5h-7zM-5.5,-10h7v1.5h-7zM-5.5,-8.5h6.5v0.5h-6.5zM-5.5,-8h5v0.5h-5zM-5.5,-7.5h2.5v0.5h-2.5zM-2.5,-7.5h1.5v0.5h-1.5zM-5,-7h3.5v0.5h-3.5zM-4.5,-6.5h1v0.5h-1z"
+        },
+        {
+          paint: "leafLight",
+          d: "M-1,-17h2v0.5h-2zM-1.5,-16.5h2.5v0.5h-2.5zM-1.5,-16h0.5v0.5h-0.5zM-3,-14h1v0.5h-1zM-3.5,-13.5h1.5v0.5h-1.5zM-4,-13h1.5v0.5h-1.5zM-4,-12.5h0.5v1h-0.5z"
+        },
+        {
+          paint: "moss",
+          d: "M-4,-1.5h0.5v0.5h-0.5zM-4,-1h2v0.5h-2zM-4.5,-0.5h2v0.5h-2zM2.5,-0.5h0.5v0.5h-0.5zM-4,0h1.5v0.5h-1.5zM1.5,0h2.5v0.5h-2.5zM1.5,0.5h0.5v0.5h-0.5zM2.5,0.5h1v0.5h-1z"
+        },
+        { paint: "acornBody", d: "M3,-8.5h0.5v0.5h-0.5zM-3,-7.5h0.5v0.5h-0.5z" }
+      ],
+      pixels: 536
+    };
+    variant289 = {
+      layers: [
+        {
+          paint: "shadow",
+          d: "M0.5,-4.5h0.5v1h-0.5zM1,-0.5h0.5v0.5h-0.5zM2,-0.5h0.5v0.5h-0.5zM-1.5,0h0.5v0.5h-0.5zM4,0h0.5v0.5h-0.5zM-4,0.5h1v0.5h-1zM-2.5,0.5h2v0.5h-2zM3.5,0.5h1v0.5h-1z"
+        },
+        {
+          paint: "trunk",
+          d: "M-2.5,-7h1v0.5h-1zM1,-7h0.5v0.5h-0.5zM4.5,-7h0.5v0.5h-0.5zM-2.5,-6.5h2.5v0.5h-2.5zM0.5,-6.5h1.5v0.5h-1.5zM3.5,-6.5h1v0.5h-1zM-2,-6h1v0.5h-1zM-0.5,-6h2v0.5h-2zM2,-6h2v0.5h-2zM-1.5,-5.5h0.5v0.5h-0.5zM-0.5,-5.5h4v0.5h-4zM-1,-5h0.5v2.5h-0.5zM0,-5h3v0.5h-3zM1,-4.5h1.5v0.5h-1.5zM1,-4h1v0.5h-1zM0.5,-3.5h1v1.5h-1zM-1.5,-2.5h1v0.5h-1zM-1.5,-2h0.5v0.5h-0.5zM0.5,-2h0.5v0.5h-0.5zM-2,-1.5h1v0.5h-1zM0,-1.5h1v1h-1zM-2.5,-1h1v0.5h-1zM-2.5,-0.5h0.5v0.5h-0.5zM-0.5,-0.5h1.5v0.5h-1.5zM-3,0h1.5v0.5h-1.5zM-1,0h2.5v0.5h-2.5zM-3,0.5h0.5v0.5h-0.5zM-0.5,0.5h2.5v0.5h-2.5z"
+        },
+        {
+          paint: "stump",
+          d: "M-1,-6h0.5v1h-0.5zM-0.5,-5h0.5v0.5h-0.5zM-0.5,-4.5h1v2.5h-1zM-1,-2h1.5v0.5h-1.5zM-1,-1.5h1v0.5h-1zM-1.5,-1h1.5v0.5h-1.5zM-2,-0.5h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "bushDark",
+          d: "M4,-13.5h1.5v0.5h-1.5zM4.5,-13h1.5v0.5h-1.5zM5,-12.5h1.5v0.5h-1.5zM5,-12h2v0.5h-2zM4.5,-11.5h2.5v0.5h-2.5zM4,-11h3v0.5h-3zM2,-10.5h5v0.5h-5zM1.5,-10h6v0.5h-6zM-0.5,-9.5h0.5v0.5h-0.5zM0.5,-9.5h7v0.5h-7zM-1,-9h8.5v0.5h-8.5zM-5,-8.5h2v0.5h-2zM-1.5,-8.5h4.5v0.5h-4.5zM3.5,-8.5h3.5v0.5h-3.5zM-6.5,-8h13.5v0.5h-13.5zM-6,-7.5h3v0.5h-3zM-2.5,-7.5h8.5v0.5h-8.5zM-4.5,-7h1.5v0.5h-1.5zM-1.5,-7h2.5v0.5h-2.5zM1.5,-7h3v0.5h-3zM2,-6.5h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "leaf",
+          d: "M0,-14.5h2.5v0.5h-2.5zM-3,-14h2.5v0.5h-2.5zM2,-14h1v0.5h-1zM-4,-13.5h4.5v0.5h-4.5zM2.5,-13.5h1.5v0.5h-1.5zM-4,-13h0.5v0.5h-0.5zM-2.5,-13h7v0.5h-7zM-4.5,-12.5h0.5v1h-0.5zM-2,-12.5h7v0.5h-7zM-3.5,-12h8.5v0.5h-8.5zM-5.5,-11.5h10v0.5h-10zM-6.5,-11h10.5v0.5h-10.5zM-7,-10.5h9v0.5h-9zM-7,-10h8.5v0.5h-8.5zM-7,-9.5h6.5v0.5h-6.5zM0,-9.5h0.5v0.5h-0.5zM-7,-9h6v0.5h-6zM-7,-8.5h2v0.5h-2zM-3,-8.5h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "leafLight",
+          d: "M-0.5,-14h2.5v0.5h-2.5zM0.5,-13.5h2v0.5h-2zM-3.5,-13h1v0.5h-1zM-4,-12.5h2v0.5h-2zM-4,-12h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "moss",
+          d: "M-4,-1.5h0.5v0.5h-0.5zM-4,-1h1.5v0.5h-1.5zM-4.5,-0.5h2v0.5h-2zM2.5,-0.5h0.5v0.5h-0.5zM-4,0h1v0.5h-1zM1.5,0h2.5v0.5h-2.5zM2,0.5h1.5v0.5h-1.5z"
+        },
+        { paint: "acornBody", d: "M3,-8.5h0.5v0.5h-0.5zM-3,-7.5h0.5v1h-0.5z" }
+      ],
+      pixels: 507
+    };
+    sprites202 = [variant0195, variant1101, variant289];
   }
 });
 
 // src/themes/terrain/pixel/generated/autumnBirch.ts
-var variant0191, variant196, variant284, sprites198;
+var variant0196, variant1102, variant290, sprites203;
 var init_autumnBirch = __esm({
   "src/themes/terrain/pixel/generated/autumnBirch.ts"() {
     "use strict";
     init_esm_shims();
-    variant0191 = {
+    variant0196 = {
       layers: [
         {
           paint: "birchBark",
@@ -20058,7 +21217,7 @@ var init_autumnBirch = __esm({
       ],
       pixels: 93
     };
-    variant196 = {
+    variant1102 = {
       layers: [
         {
           paint: "birchBark",
@@ -20089,7 +21248,7 @@ var init_autumnBirch = __esm({
       ],
       pixels: 85
     };
-    variant284 = {
+    variant290 = {
       layers: [
         {
           paint: "birchBark",
@@ -20123,17 +21282,17 @@ var init_autumnBirch = __esm({
       ],
       pixels: 70
     };
-    sprites198 = [variant0191, variant196, variant284];
+    sprites203 = [variant0196, variant1102, variant290];
   }
 });
 
 // src/themes/terrain/pixel/generated/autumnGinkgo.ts
-var variant0192, variant197, variant285, sprites199;
+var variant0197, variant1103, variant291, sprites204;
 var init_autumnGinkgo = __esm({
   "src/themes/terrain/pixel/generated/autumnGinkgo.ts"() {
     "use strict";
     init_esm_shims();
-    variant0192 = {
+    variant0197 = {
       layers: [
         { paint: "trunk", d: "M-0.5,-2.5h1v0.5h-1zM0,-2h0.5v3h-0.5zM0,1h1v0.5h-1zM-1,1.5h2v0.5h-2z" },
         {
@@ -20161,7 +21320,7 @@ var init_autumnGinkgo = __esm({
       ],
       pixels: 113
     };
-    variant197 = {
+    variant1103 = {
       layers: [
         {
           paint: "autumnGold",
@@ -20192,7 +21351,7 @@ var init_autumnGinkgo = __esm({
       ],
       pixels: 100
     };
-    variant285 = {
+    variant291 = {
       layers: [
         {
           paint: "autumnGold",
@@ -20223,17 +21382,17 @@ var init_autumnGinkgo = __esm({
       ],
       pixels: 92
     };
-    sprites199 = [variant0192, variant197, variant285];
+    sprites204 = [variant0197, variant1103, variant291];
   }
 });
 
 // src/themes/terrain/pixel/generated/autumnMaple.ts
-var variant0193, variant198, variant286, sprites200;
+var variant0198, variant1104, variant292, sprites205;
 var init_autumnMaple = __esm({
   "src/themes/terrain/pixel/generated/autumnMaple.ts"() {
     "use strict";
     init_esm_shims();
-    variant0193 = {
+    variant0198 = {
       layers: [
         {
           paint: "trunk",
@@ -20261,7 +21420,7 @@ var init_autumnMaple = __esm({
       ],
       pixels: 138
     };
-    variant198 = {
+    variant1104 = {
       layers: [
         {
           paint: "trunk",
@@ -20289,7 +21448,7 @@ var init_autumnMaple = __esm({
       ],
       pixels: 132
     };
-    variant286 = {
+    variant292 = {
       layers: [
         {
           paint: "trunk",
@@ -20339,17 +21498,17 @@ var init_autumnMaple = __esm({
       ],
       pixels: 129
     };
-    sprites200 = [variant0193, variant198, variant286];
+    sprites205 = [variant0198, variant1104, variant292];
   }
 });
 
 // src/themes/terrain/pixel/generated/autumnOak.ts
-var variant0194, variant199, variant287, sprites201;
+var variant0199, variant1105, variant293, sprites206;
 var init_autumnOak = __esm({
   "src/themes/terrain/pixel/generated/autumnOak.ts"() {
     "use strict";
     init_esm_shims();
-    variant0194 = {
+    variant0199 = {
       layers: [
         {
           paint: "trunk",
@@ -20374,7 +21533,7 @@ var init_autumnOak = __esm({
       ],
       pixels: 162
     };
-    variant199 = {
+    variant1105 = {
       layers: [
         {
           paint: "trunk",
@@ -20399,7 +21558,7 @@ var init_autumnOak = __esm({
       ],
       pixels: 160
     };
-    variant287 = {
+    variant293 = {
       layers: [
         {
           paint: "trunk",
@@ -20431,17 +21590,114 @@ var init_autumnOak = __esm({
       ],
       pixels: 167
     };
-    sprites201 = [variant0194, variant199, variant287];
+    sprites206 = [variant0199, variant1105, variant293];
+  }
+});
+
+// src/themes/terrain/pixel/generated/bambooThicket.ts
+var variant0200, variant1106, variant294, sprites207;
+var init_bambooThicket = __esm({
+  "src/themes/terrain/pixel/generated/bambooThicket.ts"() {
+    "use strict";
+    init_esm_shims();
+    variant0200 = {
+      layers: [
+        {
+          paint: "shadow",
+          d: "M-3,-0.5h0.5v0.5h-0.5zM-1,-0.5h1.5v0.5h-1.5zM1.5,-0.5h1.5v0.5h-1.5zM-5.5,0h2.5v1h-2.5zM-0.5,0h1v0.5h-1zM1.5,0h1v1h-1zM4.5,0h1.5v1h-1.5zM0,0.5h0.5v0.5h-0.5zM-2,1h4v0.5h-4z"
+        },
+        {
+          paint: "pine",
+          d: "M-1.5,-16h0.5v1h-0.5zM-2,-15h1v1.5h-1zM-1.5,-13.5h0.5v1.5h-0.5zM0.5,-13h0.5v0.5h-0.5zM0,-12.5h1v1.5h-1zM4,-12h0.5v1.5h-0.5zM-5,-11h1v1.5h-1zM-2,-11h0.5v0.5h-0.5zM0.5,-11h0.5v1.5h-0.5zM-2,-10.5h1v0.5h-1zM3.5,-10.5h1v0.5h-1zM4,-10h0.5v1.5h-0.5zM-4.5,-9.5h0.5v1.5h-0.5zM-2,-9.5h1v9h-1zM0,-9.5h1v3h-1zM3.5,-8.5h1v4h-1zM-5,-8h1v0.5h-1zM-4.5,-7.5h0.5v1h-0.5zM-4.5,-6.5h1v6h-1zM0.5,-6.5h0.5v0.5h-0.5zM0.5,-6h1v7h-1zM3,-4.5h1v4h-1zM-1.5,-0.5h0.5v0.5h-0.5zM3.5,-0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "evergreenLight",
+          d: "M-2,-15.5h0.5v0.5h-0.5zM-3.5,-14h1v0.5h-1zM-3,-13.5h1.5v0.5h-1.5zM0,-13.5h0.5v0.5h-0.5zM-2,-13h0.5v0.5h-0.5zM-1.5,-11.5h1v0.5h-1zM-0.5,-11h1v0.5h-1zM2,-11h0.5v0.5h-0.5zM2.5,-10.5h1v0.5h-1zM5.5,-10.5h0.5v0.5h-0.5zM-6,-10h0.5v0.5h-0.5zM3,-10h1v0.5h-1zM5,-10h0.5v0.5h-0.5zM-5.5,-9.5h1v0.5h-1zM-3.5,-9.5h1v0.5h-1z"
+        },
+        {
+          paint: "evergreenDark",
+          d: "M-3.5,-13.5h0.5v0.5h-0.5zM-3,-13h0.5v0.5h-0.5zM-4,-12.5h2.5v0.5h-2.5zM-1,-12.5h1v1h-1zM-4.5,-12h2.5v0.5h-2.5zM-1.5,-11h0.5v0.5h-0.5zM-1,-10.5h1v0.5h-1zM1.5,-10.5h1v0.5h-1zM-7,-10h0.5v0.5h-0.5zM-2,-10h2.5v0.5h-2.5zM1,-10h1v0.5h-1zM2.5,-10h0.5v0.5h-0.5zM5.5,-10h1v0.5h-1zM-6.5,-9.5h0.5v0.5h-0.5zM-2.5,-9.5h0.5v0.5h-0.5zM-1,-9.5h1v0.5h-1zM1,-9.5h2.5v0.5h-2.5zM4.5,-9.5h1.5v1h-1.5zM-6.5,-9h1.5v0.5h-1.5zM-3.5,-9h1v0.5h-1zM1,-9h3v0.5h-3zM-7.5,-8.5h3v0.5h-3zM-4,-8.5h1v0.5h-1zM5,-8.5h1.5v0.5h-1.5zM-7,-8h2v0.5h-2zM-4,-8h1.5v0.5h-1.5zM-2.5,-7.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "rock",
+          d: "M-1,0h0.5v0.5h-0.5zM4,0h0.5v0.5h-0.5zM-2.5,0.5h2.5v0.5h-2.5zM2.5,0.5h2v0.5h-2z"
+        },
+        {
+          paint: "boulder",
+          d: "M-4,-14.5h0.5v1h-0.5zM-0.5,-13.5h0.5v0.5h-0.5zM0.5,-13.5h0.5v0.5h-0.5zM-2.5,-13h0.5v0.5h-0.5zM-1,-13h1.5v0.5h-1.5zM-2,-12h1v0.5h-1zM-2,-11.5h0.5v0.5h-0.5zM-0.5,-11.5h0.5v0.5h-0.5zM2,-11.5h1v0.5h-1zM-1,-11h0.5v0.5h-0.5zM1.5,-11h0.5v0.5h-0.5zM2.5,-11h0.5v0.5h-0.5zM-7,-10.5h1v0.5h-1zM0,-10.5h0.5v0.5h-0.5zM1,-10.5h0.5v0.5h-0.5zM5,-10.5h0.5v0.5h-0.5zM6,-10.5h0.5v0.5h-0.5zM-6.5,-10h0.5v0.5h-0.5zM-5.5,-10h0.5v0.5h-0.5zM-3,-10h1v0.5h-1zM4.5,-10h0.5v0.5h-0.5zM-6,-9.5h0.5v0.5h-0.5zM3.5,-9.5h0.5v0.5h-0.5zM-5,-9h0.5v0.5h-0.5zM-4,-9h0.5v0.5h-0.5zM0,-6h0.5v0.5h-0.5zM-2.5,-0.5h1v0.5h-1zM3,-0.5h0.5v0.5h-0.5zM-3,0h2v0.5h-2zM2.5,0h1.5v0.5h-1.5zM-3,0.5h0.5v0.5h-0.5z"
+        }
+      ],
+      pixels: 374
+    };
+    variant1106 = {
+      layers: [
+        {
+          paint: "shadow",
+          d: "M-4.5,-0.5h0.5v0.5h-0.5zM-3,-0.5h0.5v0.5h-0.5zM-1.5,-0.5h0.5v0.5h-0.5zM0,-0.5h2v0.5h-2zM3.5,-0.5h0.5v0.5h-0.5zM-5.5,0h1.5v0.5h-1.5zM-3.5,0h0.5v0.5h-0.5zM0,0h2.5v1h-2.5zM4.5,0h1.5v1h-1.5zM-5.5,0.5h2.5v0.5h-2.5zM-2,1h4v0.5h-4z"
+        },
+        {
+          paint: "pine",
+          d: "M1,-12h1v1h-1zM1,-11h0.5v1h-0.5zM2,-11h0.5v1.5h-0.5zM2,-9.5h1v0.5h-1zM-2,-9h0.5v0.5h-0.5zM0.5,-9h0.5v0.5h-0.5zM-2,-8.5h1v0.5h-1zM2,-8.5h0.5v1h-0.5zM-2,-8h0.5v1h-0.5zM0,-7.5h1v2h-1zM2,-7.5h1v7.5h-1zM-2.5,-7h1v1h-1zM-2.5,-6h0.5v0.5h-0.5zM-3,-5.5h1v1h-1zM-0.5,-5.5h1v3h-1zM-3,-4.5h0.5v0.5h-0.5zM-3.5,-4h1v2h-1zM-1,-2.5h1v2.5h-1zM-4,-2h1v2h-1zM-4,0h0.5v0.5h-0.5zM-0.5,0h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "evergreenLight",
+          d: "M-1,-11h0.5v0.5h-0.5zM-0.5,-10.5h0.5v0.5h-0.5zM0.5,-10.5h0.5v0.5h-0.5zM2.5,-10.5h0.5v0.5h-0.5zM0.5,-10h1v0.5h-1zM1,-9.5h0.5v0.5h-0.5zM3.5,-9.5h1v0.5h-1zM-3.5,-9h1v0.5h-1zM-3,-8.5h1v0.5h-1zM-1,-8.5h0.5v0.5h-0.5zM-3,-6h0.5v0.5h-0.5zM-0.5,-6h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "evergreenDark",
+          d: "M-1,-10.5h0.5v0.5h-0.5zM-0.5,-10h0.5v0.5h-0.5zM2.5,-10h0.5v0.5h-0.5zM-1.5,-9.5h2.5v0.5h-2.5zM4.5,-9.5h0.5v0.5h-0.5zM-1.5,-9h2v0.5h-2zM1,-9h0.5v0.5h-0.5zM3.5,-9h1v0.5h-1zM-4,-8.5h0.5v0.5h-0.5zM0,-8.5h2v0.5h-2zM2.5,-8.5h1v0.5h-1zM-3.5,-8h1v0.5h-1zM-0.5,-8h2.5v0.5h-2.5zM2.5,-8h2v0.5h-2zM-4.5,-7.5h2.5v0.5h-2.5zM-1.5,-7.5h1v0.5h-1zM4,-7.5h0.5v0.5h-0.5zM-4.5,-7h2v0.5h-2zM-1.5,-7h1.5v0.5h-1.5zM-2.5,-4.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "rock",
+          d: "M-1,0h0.5v0.5h-0.5zM4,0h0.5v0.5h-0.5zM-2.5,0.5h2.5v0.5h-2.5zM2.5,0.5h2v0.5h-2z"
+        },
+        {
+          paint: "boulder",
+          d: "M-1.5,-11.5h0.5v1h-0.5zM-0.5,-11h0.5v0.5h-0.5zM0,-10.5h0.5v1h-0.5zM3,-10.5h0.5v0.5h-0.5zM1.5,-10h0.5v1h-0.5zM4.5,-10h0.5v0.5h-0.5zM-4.5,-9.5h1v0.5h-1zM-4,-9h0.5v0.5h-0.5zM1.5,-9h2v0.5h-2zM-3.5,-8.5h0.5v0.5h-0.5zM-0.5,-8.5h0.5v0.5h-0.5zM-2.5,-8h0.5v0.5h-0.5zM-1.5,-8h1v0.5h-1zM-2.5,-0.5h1v0.5h-1zM3,-0.5h0.5v0.5h-0.5zM-3,0h2v0.5h-2zM2.5,0h1.5v0.5h-1.5zM-3,0.5h0.5v0.5h-0.5z"
+        }
+      ],
+      pixels: 257
+    };
+    variant294 = {
+      layers: [
+        {
+          paint: "shadow",
+          d: "M-3,-0.5h0.5v0.5h-0.5zM-1,-0.5h1.5v0.5h-1.5zM1.5,-0.5h1.5v0.5h-1.5zM-5.5,0h2.5v1h-2.5zM-0.5,0h3v0.5h-3zM4.5,0h1.5v1h-1.5zM0,0.5h2.5v0.5h-2.5zM-2,1h4v0.5h-4z"
+        },
+        {
+          paint: "pine",
+          d: "M1.5,-15.5h1v3h-1zM-5,-13h1v2.5h-1zM1.5,-12h0.5v2h-0.5zM-4.5,-10.5h0.5v0.5h-0.5zM-5,-10h1v0.5h-1zM1,-10h1v1.5h-1zM-4.5,-9.5h0.5v0.5h-0.5zM-5,-9h1v2h-1zM3.5,-9h1v1.5h-1zM1,-8.5h0.5v0.5h-0.5zM-1.5,-8h0.5v2.5h-0.5zM1,-8h1v1h-1zM4,-7.5h0.5v0.5h-0.5zM-4.5,-7h0.5v0.5h-0.5zM1,-7h0.5v1h-0.5zM5,-7h1v0.5h-1zM-4.5,-6.5h1v0.5h-1zM5,-6.5h0.5v2h-0.5zM-4.5,-6h0.5v0.5h-0.5zM1,-6h1v3h-1zM-4.5,-5.5h1v5.5h-1zM-2,-5.5h1v5h-1zM3.5,-5h1v0.5h-1zM3.5,-4.5h2v3h-2zM0.5,-3h1v3h-1zM3,-1.5h1v1h-1zM4.5,-1.5h1v1.5h-1zM-1.5,-0.5h0.5v0.5h-0.5zM3.5,-0.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "evergreenLight",
+          d: "M-0.5,-14h0.5v0.5h-0.5zM0,-13.5h1v0.5h-1zM3,-13.5h0.5v1h-0.5zM0.5,-13h1v0.5h-1zM-6.5,-11.5h1.5v0.5h-1.5zM-5.5,-11h0.5v0.5h-0.5zM-3.5,-11h0.5v0.5h-0.5zM1,-10.5h0.5v0.5h-0.5zM2,-8.5h0.5v0.5h-0.5zM-3,-8h0.5v0.5h-0.5zM2.5,-8h0.5v0.5h-0.5zM5.5,-8h0.5v0.5h-0.5zM-3,-7.5h1v0.5h-1zM0,-7.5h0.5v0.5h-0.5zM3,-7.5h1v0.5h-1zM4.5,-7.5h0.5v0.5h-0.5zM-5,-7h0.5v0.5h-0.5zM-2.5,-7h1v0.5h-1zM-0.5,-7h1v0.5h-1zM3.5,-7h1v0.5h-1zM7,-7h0.5v0.5h-0.5zM4,-6.5h0.5v0.5h-0.5zM6,-6.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "evergreenDark",
+          d: "M-1,-14h0.5v0.5h-0.5zM-0.5,-13.5h0.5v0.5h-0.5zM0,-13h0.5v0.5h-0.5zM3.5,-13h1v0.5h-1zM-0.5,-12.5h2v0.5h-2zM2,-12.5h2v0.5h-2zM-1,-12h2.5v0.5h-2.5zM2,-12h1.5v0.5h-1.5zM-7,-11.5h0.5v0.5h-0.5zM-0.5,-11.5h1.5v0.5h-1.5zM2.5,-11.5h1.5v0.5h-1.5zM-6.5,-11h0.5v0.5h-0.5zM-2.5,-11h0.5v0.5h-0.5zM-7,-10.5h2v0.5h-2zM-4,-10.5h1.5v0.5h-1.5zM-7.5,-10h2.5v0.5h-2.5zM-4,-10h1v0.5h-1zM-7,-9.5h1.5v0.5h-1.5zM-4,-9.5h1.5v0.5h-1.5zM2,-7.5h1v0.5h-1zM5.5,-7.5h1v0.5h-1zM-3.5,-7h0.5v0.5h-0.5zM0.5,-7h0.5v0.5h-0.5zM1.5,-7h2v0.5h-2zM4.5,-7h0.5v0.5h-0.5zM-3.5,-6.5h1.5v0.5h-1.5zM-1,-6.5h1.5v1h-1.5zM1.5,-6.5h2.5v0.5h-2.5zM5.5,-6.5h0.5v0.5h-0.5zM7,-6.5h0.5v0.5h-0.5zM-4,-6h2.5v0.5h-2.5zM3,-6h1.5v0.5h-1.5zM5.5,-6h1.5v1h-1.5zM-3.5,-5.5h1.5v0.5h-1.5zM-0.5,-5.5h1.5v0.5h-1.5zM2.5,-5.5h2.5v0.5h-2.5zM0.5,-5h0.5v0.5h-0.5zM6,-5h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "rock",
+          d: "M-1,0h0.5v0.5h-0.5zM4,0h0.5v0.5h-0.5zM-2.5,0.5h2.5v0.5h-2.5zM2.5,0.5h2v0.5h-2z"
+        },
+        {
+          paint: "boulder",
+          d: "M0,-14h0.5v0.5h-0.5zM3.5,-13.5h1v0.5h-1zM2.5,-13h0.5v0.5h-0.5zM1.5,-12.5h0.5v0.5h-0.5zM-7,-12h1v0.5h-1zM-3,-11.5h1v0.5h-1zM-6,-11h0.5v0.5h-0.5zM-4,-11h0.5v0.5h-0.5zM-3,-11h0.5v0.5h-0.5zM-5,-10.5h0.5v0.5h-0.5zM-5,-9.5h0.5v0.5h-0.5zM1.5,-8.5h0.5v0.5h-0.5zM2.5,-8.5h0.5v0.5h-0.5zM-4,-8h1v0.5h-1zM2,-8h0.5v0.5h-0.5zM3,-8h0.5v0.5h-0.5zM5,-8h0.5v1h-0.5zM6,-8h0.5v0.5h-0.5zM-3.5,-7.5h0.5v0.5h-0.5zM0.5,-7.5h0.5v0.5h-0.5zM-3,-7h0.5v0.5h-0.5zM6.5,-7h0.5v1h-0.5zM7.5,-7h0.5v0.5h-0.5zM-2,-6.5h0.5v0.5h-0.5zM4.5,-6.5h0.5v1h-0.5zM-2.5,-0.5h1v0.5h-1zM3,-0.5h0.5v0.5h-0.5zM-3,0h2v0.5h-2zM2.5,0h1.5v0.5h-1.5zM-3,0.5h0.5v0.5h-0.5z"
+        }
+      ],
+      pixels: 412
+    };
+    sprites207 = [variant0200, variant1106, variant294];
   }
 });
 
 // src/themes/terrain/pixel/generated/bareBush.ts
-var variant0195, variant1100, variant288, sprites202;
+var variant0201, variant1107, variant295, sprites208;
 var init_bareBush = __esm({
   "src/themes/terrain/pixel/generated/bareBush.ts"() {
     "use strict";
     init_esm_shims();
-    variant0195 = {
+    variant0201 = {
       layers: [
         {
           paint: "ice",
@@ -20455,7 +21711,7 @@ var init_bareBush = __esm({
       ],
       pixels: 37
     };
-    variant1100 = {
+    variant1107 = {
       layers: [
         {
           paint: "ice",
@@ -20472,7 +21728,7 @@ var init_bareBush = __esm({
       ],
       pixels: 61
     };
-    variant288 = {
+    variant295 = {
       layers: [
         {
           paint: "ice",
@@ -20490,17 +21746,17 @@ var init_bareBush = __esm({
       ],
       pixels: 53
     };
-    sprites202 = [variant0195, variant1100, variant288];
+    sprites208 = [variant0201, variant1107, variant295];
   }
 });
 
 // src/themes/terrain/pixel/generated/beehive.ts
-var variant0196, sprites203;
+var variant0202, sprites209;
 var init_beehive = __esm({
   "src/themes/terrain/pixel/generated/beehive.ts"() {
     "use strict";
     init_esm_shims();
-    variant0196 = {
+    variant0202 = {
       layers: [
         {
           paint: "trunk",
@@ -20514,17 +21770,17 @@ var init_beehive = __esm({
       ],
       pixels: 79
     };
-    sprites203 = [variant0196, variant0196, variant0196];
+    sprites209 = [variant0202, variant0202, variant0202];
   }
 });
 
 // src/themes/terrain/pixel/generated/berryBush.ts
-var variant0197, sprites204;
+var variant0203, sprites210;
 var init_berryBush = __esm({
   "src/themes/terrain/pixel/generated/berryBush.ts"() {
     "use strict";
     init_esm_shims();
-    variant0197 = {
+    variant0203 = {
       layers: [
         {
           paint: "bushDark",
@@ -20545,17 +21801,17 @@ var init_berryBush = __esm({
       ],
       pixels: 83
     };
-    sprites204 = [variant0197, variant0197, variant0197];
+    sprites210 = [variant0203, variant0203, variant0203];
   }
 });
 
 // src/themes/terrain/pixel/generated/birch.ts
-var variant0198, variant1101, variant289, sprites205;
+var variant0204, variant1108, variant296, sprites211;
 var init_birch = __esm({
   "src/themes/terrain/pixel/generated/birch.ts"() {
     "use strict";
     init_esm_shims();
-    variant0198 = {
+    variant0204 = {
       layers: [
         { paint: "birchBark", d: "M-0.5,-6h1v6.5h-1z" },
         {
@@ -20573,7 +21829,7 @@ var init_birch = __esm({
       ],
       pixels: 117
     };
-    variant1101 = {
+    variant1108 = {
       layers: [
         {
           paint: "birchBark",
@@ -20594,7 +21850,7 @@ var init_birch = __esm({
       ],
       pixels: 196
     };
-    variant289 = {
+    variant296 = {
       layers: [
         {
           paint: "birchBark",
@@ -20616,17 +21872,17 @@ var init_birch = __esm({
       ],
       pixels: 118
     };
-    sprites205 = [variant0198, variant1101, variant289];
+    sprites211 = [variant0204, variant1108, variant296];
   }
 });
 
 // src/themes/terrain/pixel/generated/bird.ts
-var variant0199, variant1102, variant290, sprites206;
+var variant0205, variant1109, variant297, sprites212;
 var init_bird = __esm({
   "src/themes/terrain/pixel/generated/bird.ts"() {
     "use strict";
     init_esm_shims();
-    variant0199 = {
+    variant0205 = {
       layers: [
         {
           paint: "bird",
@@ -20640,7 +21896,7 @@ var init_bird = __esm({
       ],
       pixels: 34
     };
-    variant1102 = {
+    variant1109 = {
       layers: [
         { paint: "trunk", d: "M1,-3h1v1h-1zM-2,-2.5h2.5v0.5h-2.5zM-2,-2h0.5v0.5h-0.5z" },
         { paint: "wheat", d: "M-1.5,-4.5h0.5v0.5h-0.5z" },
@@ -20652,7 +21908,7 @@ var init_bird = __esm({
       ],
       pixels: 30
     };
-    variant290 = {
+    variant297 = {
       layers: [
         {
           paint: "bird",
@@ -20666,17 +21922,17 @@ var init_bird = __esm({
       ],
       pixels: 51
     };
-    sprites206 = [variant0199, variant1102, variant290];
+    sprites212 = [variant0205, variant1109, variant297];
   }
 });
 
 // src/themes/terrain/pixel/generated/birdhouse.ts
-var variant0200, variant1103, variant291, sprites207;
+var variant0206, variant1110, variant298, sprites213;
 var init_birdhouse = __esm({
   "src/themes/terrain/pixel/generated/birdhouse.ts"() {
     "use strict";
     init_esm_shims();
-    variant0200 = {
+    variant0206 = {
       layers: [
         { paint: "birdhouseWood", d: "M-1.5,-2.5h1v0.5h-1zM-1,-2h1v0.5h-1zM-0.5,-1.5h0.5v2.5h-0.5z" },
         {
@@ -20714,7 +21970,7 @@ var init_birdhouse = __esm({
       ],
       pixels: 54
     };
-    variant1103 = {
+    variant1110 = {
       layers: [
         { paint: "birdhouseWood", d: "M-0.5,-1.5h0.5v0.5h-0.5zM-0.5,-1h1v2h-1z" },
         { paint: "cherryTrunk", d: "M0,-1.5h0.5v0.5h-0.5z" },
@@ -20751,7 +22007,7 @@ var init_birdhouse = __esm({
       ],
       pixels: 54
     };
-    variant291 = {
+    variant298 = {
       layers: [
         { paint: "birdhouseWood", d: "M-1.5,-2.5h1v0.5h-1zM-1,-2h1v0.5h-1zM-0.5,-1.5h0.5v2.5h-0.5z" },
         {
@@ -20791,17 +22047,17 @@ var init_birdhouse = __esm({
       ],
       pixels: 57
     };
-    sprites207 = [variant0200, variant1103, variant291];
+    sprites213 = [variant0206, variant1110, variant298];
   }
 });
 
 // src/themes/terrain/pixel/generated/butterfly.ts
-var variant0201, sprites208;
+var variant0207, sprites214;
 var init_butterfly = __esm({
   "src/themes/terrain/pixel/generated/butterfly.ts"() {
     "use strict";
     init_esm_shims();
-    variant0201 = {
+    variant0207 = {
       layers: [
         {
           paint: "butterfly",
@@ -20816,17 +22072,17 @@ var init_butterfly = __esm({
       ],
       pixels: 59
     };
-    sprites208 = [variant0201, variant0201, variant0201];
+    sprites214 = [variant0207, variant0207, variant0207];
   }
 });
 
 // src/themes/terrain/pixel/generated/butterflyGarden.ts
-var variant0202, variant1104, sprites209;
+var variant0208, variant1111, sprites215;
 var init_butterflyGarden = __esm({
   "src/themes/terrain/pixel/generated/butterflyGarden.ts"() {
     "use strict";
     init_esm_shims();
-    variant0202 = {
+    variant0208 = {
       layers: [
         { paint: "butterflyWing", d: "M-2.5,-1.5h1.5v0.5h-1.5zM-2,-1h1v1h-1z" },
         {
@@ -20852,7 +22108,7 @@ var init_butterflyGarden = __esm({
       ],
       pixels: 28
     };
-    variant1104 = {
+    variant1111 = {
       layers: [
         {
           paint: "butterflyWing",
@@ -20866,17 +22122,105 @@ var init_butterflyGarden = __esm({
       ],
       pixels: 28
     };
-    sprites209 = [variant0202, variant1104, variant0202];
+    sprites215 = [variant0208, variant1111, variant0208];
+  }
+});
+
+// src/themes/terrain/pixel/generated/cedarGrove.ts
+var variant0209, variant1112, variant299, sprites216;
+var init_cedarGrove = __esm({
+  "src/themes/terrain/pixel/generated/cedarGrove.ts"() {
+    "use strict";
+    init_esm_shims();
+    variant0209 = {
+      layers: [
+        {
+          paint: "shadow",
+          d: "M-5,-0.5h0.5v0.5h-0.5zM-2.5,-0.5h1.5v1h-1.5zM1,-0.5h0.5v0.5h-0.5zM-6,0h1.5v0.5h-1.5zM4,0h2v0.5h-2zM-6,0.5h4.5v0.5h-4.5zM-0.5,0.5h6.5v0.5h-6.5zM-2.5,1h5v0.5h-5z"
+        },
+        {
+          paint: "trunk",
+          d: "M-4.5,-2h1v1h-1zM0,-2h0.5v0.5h-0.5zM0,-1.5h1v1.5h-1zM3.5,-1.5h0.5v1h-0.5zM-4.5,-1h0.5v1h-0.5zM-1,-0.5h0.5v0.5h-0.5zM3,-0.5h0.5v0.5h-0.5zM4,-0.5h0.5v0.5h-0.5zM-1,0h2.5v0.5h-2.5zM-1.5,0.5h1v0.5h-1z"
+        },
+        { paint: "stump", d: "M-0.5,-2h0.5v2h-0.5zM3,-1.5h0.5v1h-0.5z" },
+        {
+          paint: "evergreenDark",
+          d: "M0,-15.5h0.5v1h-0.5zM0,-14.5h1v0.5h-1zM0.5,-14h0.5v0.5h-0.5zM0.5,-13.5h1v2.5h-1zM0.5,-11h1.5v1h-1.5zM0,-10h2.5v1h-2.5zM3,-9.5h0.5v0.5h-0.5zM0,-9h3v0.5h-3zM3.5,-9h0.5v1h-0.5zM0,-8.5h2v0.5h-2zM0,-8h2.5v1h-2.5zM3.5,-8h1v1.5h-1zM0.5,-7h2.5v0.5h-2.5zM-4,-6.5h0.5v0.5h-0.5zM0.5,-6.5h4v0.5h-4zM0.5,-6h4.5v1h-4.5zM-4,-5h0.5v0.5h-0.5zM-3,-5h1.5v0.5h-1.5zM0.5,-5h2v1h-2zM3.5,-5h1.5v1h-1.5zM-4,-4.5h2v0.5h-2zM-3.5,-4h1v0.5h-1zM0,-4h3v0.5h-3zM3.5,-4h2v0.5h-2zM-4,-3.5h0.5v0.5h-0.5zM0,-3.5h6v0.5h-6zM-0.5,-3h5.5v0.5h-5.5zM-5,-2.5h1v0.5h-1zM-3,-2.5h8.5v0.5h-8.5zM-5.5,-2h0.5v0.5h-0.5zM-3.5,-2h2v0.5h-2zM2.5,-2h3.5v0.5h-3.5zM1.5,-1.5h1.5v0.5h-1.5zM4,-1.5h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "pine",
+          d: "M-0.5,-16h0.5v0.5h-0.5zM-1,-14.5h0.5v0.5h-0.5zM0,-14h0.5v1h-0.5zM-1.5,-13.5h0.5v0.5h-0.5zM-0.5,-13h1v0.5h-1zM-2,-12.5h2.5v0.5h-2.5zM-1.5,-12h2v1h-2zM-2,-11h2.5v0.5h-2.5zM-2.5,-10.5h1v0.5h-1zM-0.5,-10.5h1v0.5h-1zM-2.5,-10h0.5v0.5h-0.5zM-0.5,-10h0.5v0.5h-0.5zM-3,-9.5h0.5v0.5h-0.5zM-1,-9.5h1v0.5h-1zM-3.5,-9h3.5v0.5h-3.5zM-2.5,-8.5h2.5v0.5h-2.5zM2.5,-8.5h0.5v0.5h-0.5zM-3,-8h3v1h-3zM2.5,-7.5h1v0.5h-1zM-5,-7h1v0.5h-1zM-3.5,-7h1.5v0.5h-1.5zM-1.5,-7h2v0.5h-2zM3,-7h0.5v0.5h-0.5zM-5.5,-6.5h0.5v0.5h-0.5zM-3.5,-6.5h1v0.5h-1zM-1,-6.5h1.5v0.5h-1.5zM-5.5,-6h2.5v0.5h-2.5zM-1.5,-6h2v0.5h-2zM-5.5,-5.5h6v0.5h-6zM-6,-5h0.5v0.5h-0.5zM-4.5,-5h0.5v0.5h-0.5zM-3.5,-5h0.5v0.5h-0.5zM-1.5,-5h2v0.5h-2zM2.5,-5h1v1h-1zM-6.5,-4.5h2.5v0.5h-2.5zM-2,-4.5h2.5v0.5h-2.5zM-6,-4h2.5v0.5h-2.5zM-2.5,-4h2.5v0.5h-2.5zM3,-4h0.5v0.5h-0.5zM-6.5,-3.5h1v0.5h-1zM-5,-3.5h1v0.5h-1zM-3.5,-3.5h0.5v0.5h-0.5zM-1.5,-3.5h1.5v0.5h-1.5zM-7,-3h1v0.5h-1zM-4.5,-3h4v0.5h-4zM-7,-2.5h2v0.5h-2zM-4,-2.5h1v0.5h-1zM0.5,-2h2v0.5h-2zM-4,-1h0.5v0.5h-0.5zM-3,-1h0.5v0.5h-0.5zM2.5,-1h0.5v0.5h-0.5zM-4,-0.5h1.5v0.5h-1.5zM1.5,-0.5h1.5v0.5h-1.5zM3.5,-0.5h0.5v0.5h-0.5zM-4.5,0h2v0.5h-2zM1.5,0h2.5v0.5h-2.5z"
+        },
+        {
+          paint: "evergreenLight",
+          d: "M-0.5,-15.5h0.5v1.5h-0.5zM-1,-14h1v1h-1zM-1.5,-13h1v0.5h-1zM-1.5,-10.5h1v0.5h-1zM-2,-10h1.5v0.5h-1.5zM-2.5,-9.5h1.5v0.5h-1.5zM3,-9h0.5v1h-0.5zM2.5,-8h1v0.5h-1zM-2,-7h0.5v0.5h-0.5zM-5,-6.5h1v0.5h-1zM-2.5,-6.5h1.5v0.5h-1.5zM-3,-6h1.5v0.5h-1.5zM-5.5,-5h1v0.5h-1zM-5.5,-3.5h0.5v0.5h-0.5zM-3,-3.5h1.5v0.5h-1.5zM-6,-3h1.5v0.5h-1.5z"
+        }
+      ],
+      pixels: 481
+    };
+    variant1112 = {
+      layers: [
+        {
+          paint: "shadow",
+          d: "M-5,-0.5h0.5v0.5h-0.5zM-1,-0.5h2.5v1h-2.5zM4,-0.5h0.5v0.5h-0.5zM-6,0h1.5v0.5h-1.5zM4,0h2v0.5h-2zM-6,0.5h2.5v0.5h-2.5zM-2,0.5h0.5v0.5h-0.5zM-0.5,0.5h6.5v0.5h-6.5zM-2.5,1h5v0.5h-5z"
+        },
+        {
+          paint: "trunk",
+          d: "M-2,-2.5h0.5v2h-0.5zM2,-2.5h0.5v1.5h-0.5zM3,-2.5h0.5v1.5h-0.5zM2,-1h2v0.5h-2zM-2,-0.5h1v0.5h-1zM2,-0.5h0.5v0.5h-0.5zM-3,0h2v0.5h-2zM-3.5,0.5h1.5v0.5h-1.5zM-1.5,0.5h1v0.5h-1z"
+        },
+        { paint: "stump", d: "M-2.5,-2.5h0.5v2.5h-0.5zM2.5,-2.5h0.5v1.5h-0.5z" },
+        {
+          paint: "evergreenDark",
+          d: "M2.5,-14h0.5v0.5h-0.5zM3,-13h0.5v1h-0.5zM3,-12h1v2h-1zM-2.5,-10h0.5v0.5h-0.5zM3,-10h1.5v1h-1.5zM-2.5,-9.5h1v0.5h-1zM-2.5,-9h1.5v0.5h-1.5zM3,-9h2v2.5h-2zM-2.5,-8.5h2v0.5h-2zM-2,-8h2v0.5h-2zM-2,-7.5h1.5v0.5h-1.5zM-2,-7h2v0.5h-2zM-2,-6.5h2.5v0.5h-2.5zM3,-6.5h2.5v0.5h-2.5zM-2,-6h3v0.5h-3zM3,-6h3v1.5h-3zM-2,-5.5h2v0.5h-2zM-2,-5h3.5v0.5h-3.5zM-2,-4.5h3v0.5h-3zM3,-4.5h2.5v0.5h-2.5zM-2.5,-4h4v0.5h-4zM3,-4h3v0.5h-3zM-2.5,-3.5h9v0.5h-9zM-6.5,-3h13v0.5h-13zM1,-2.5h0.5v0.5h-0.5zM4,-2.5h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "pine",
+          d: "M2.5,-13.5h0.5v0.5h-0.5zM2,-13h1v0.5h-1zM2.5,-12.5h0.5v1.5h-0.5zM1.5,-12h0.5v0.5h-0.5zM1,-11h2v0.5h-2zM-3,-10.5h0.5v0.5h-0.5zM1.5,-10.5h1.5v0.5h-1.5zM1,-10h2v0.5h-2zM-4,-9.5h0.5v0.5h-0.5zM1,-9.5h0.5v0.5h-0.5zM2,-9.5h1v0.5h-1zM-4.5,-9h0.5v0.5h-0.5zM0.5,-9h0.5v0.5h-0.5zM2.5,-9h0.5v0.5h-0.5zM-4.5,-8.5h2v0.5h-2zM0,-8.5h3v0.5h-3zM-4,-8h2v0.5h-2zM0.5,-8h2.5v1h-2.5zM-4.5,-7.5h2.5v0.5h-2.5zM-5.5,-7h1v0.5h-1zM-3,-7h1v0.5h-1zM0,-7h3v0.5h-3zM-6,-6.5h1v0.5h-1zM-4,-6.5h2v0.5h-2zM0.5,-6.5h0.5v0.5h-0.5zM2,-6.5h1v1h-1zM-6,-6h4v0.5h-4zM-5,-5.5h3v0.5h-3zM0,-5.5h3v0.5h-3zM-5.5,-5h3.5v0.5h-3.5zM1.5,-5h1.5v0.5h-1.5zM-6,-4.5h1v0.5h-1zM-3,-4.5h1v0.5h-1zM1,-4.5h2v0.5h-2zM-6.5,-4h1v0.5h-1zM-3,-4h0.5v0.5h-0.5zM1.5,-4h1.5v0.5h-1.5zM-7,-3.5h4.5v0.5h-4.5zM-4,-1h0.5v0.5h-0.5zM-3,-1h0.5v0.5h-0.5zM-4.5,-0.5h2v0.5h-2zM1.5,-0.5h0.5v0.5h-0.5zM2.5,-0.5h1.5v0.5h-1.5zM-4.5,0h1.5v0.5h-1.5zM1.5,0h2.5v0.5h-2.5z"
+        },
+        {
+          paint: "evergreenLight",
+          d: "M2,-12.5h0.5v1h-0.5zM1.5,-11.5h1v0.5h-1zM-3.5,-10h1v1h-1zM1.5,-9.5h0.5v0.5h-0.5zM-4,-9h1.5v0.5h-1.5zM1,-9h1.5v0.5h-1.5zM-4.5,-7h1.5v0.5h-1.5zM-5,-6.5h1v0.5h-1zM1,-6.5h1v1h-1zM-5,-4.5h2v0.5h-2zM-5.5,-4h2.5v0.5h-2.5z"
+        }
+      ],
+      pixels: 438
+    };
+    variant299 = {
+      layers: [
+        {
+          paint: "shadow",
+          d: "M-2.5,-0.5h1.5v1h-1.5zM1,-0.5h0.5v0.5h-0.5zM-6,0h1.5v0.5h-1.5zM4.5,0h1.5v0.5h-1.5zM-6,0.5h4.5v0.5h-4.5zM-0.5,0.5h1.5v0.5h-1.5zM1.5,0.5h4.5v0.5h-4.5zM-2.5,1h5v0.5h-5z"
+        },
+        {
+          paint: "trunk",
+          d: "M0,-3h0.5v2h-0.5zM-4,-1.5h0.5v0.5h-0.5zM0,-1h1v1h-1zM-5,-0.5h1v0.5h-1zM-1,-0.5h0.5v0.5h-0.5zM4,-0.5h0.5v1h-0.5zM-1,0h2.5v0.5h-2.5zM-1.5,0.5h1v0.5h-1zM1,0.5h0.5v0.5h-0.5z"
+        },
+        { paint: "stump", d: "M-0.5,-3h0.5v3h-0.5zM-4.5,-1.5h0.5v1h-0.5zM3.5,-1h0.5v0.5h-0.5z" },
+        {
+          paint: "evergreenDark",
+          d: "M2,-13h0.5v0.5h-0.5zM1.5,-12.5h1v1h-1zM1.5,-11.5h1.5v1.5h-1.5zM1,-10h2v0.5h-2zM1,-9.5h2.5v0.5h-2.5zM1,-9h2v1h-2zM-4.5,-8.5h0.5v0.5h-0.5zM-4,-8h0.5v1.5h-0.5zM1,-8h2.5v1h-2.5zM1,-7h3v1h-3zM-4,-6.5h1v0.5h-1zM-4,-6h0.5v0.5h-0.5zM1,-6h2v0.5h-2zM-4,-5.5h1v0.5h-1zM0.5,-5.5h3.5v0.5h-3.5zM-4,-5h1.5v0.5h-1.5zM0.5,-5h4v0.5h-4zM-4,-4.5h0.5v0.5h-0.5zM0.5,-4.5h4.5v0.5h-4.5zM-0.5,-4h5.5v0.5h-5.5zM-2,-3.5h5v0.5h-5zM4,-3.5h1.5v1.5h-1.5zM-6,-3h1v0.5h-1zM-4,-3h3v0.5h-3zM-4,-2.5h2v0.5h-2zM-4.5,-2h2.5v0.5h-2.5zM3.5,-2h2.5v0.5h-2.5zM-5.5,-1.5h0.5v0.5h-0.5zM-3.5,-1.5h1v0.5h-1zM2,-1.5h4v0.5h-4z"
+        },
+        {
+          paint: "pine",
+          d: "M1.5,-13.5h0.5v0.5h-0.5zM1,-13h1v0.5h-1zM0.5,-12.5h0.5v0.5h-0.5zM0,-12h0.5v1h-0.5zM1,-11.5h0.5v0.5h-0.5zM-0.5,-11h2v1h-2zM-1,-10h2v0.5h-2zM-1.5,-9.5h1v0.5h-1zM0.5,-9.5h0.5v0.5h-0.5zM-2,-9h1v0.5h-1zM0,-9h1v0.5h-1zM-2.5,-8.5h3.5v0.5h-3.5zM-4.5,-8h0.5v0.5h-0.5zM-1.5,-8h2.5v0.5h-2.5zM-5,-7.5h0.5v0.5h-0.5zM-2,-7.5h3v0.5h-3zM-4.5,-7h0.5v0.5h-0.5zM-2.5,-7h3.5v0.5h-3.5zM-5,-6.5h1v1h-1zM-3,-6.5h1v0.5h-1zM0,-6.5h1v0.5h-1zM-3.5,-6h1v0.5h-1zM-2,-6h3v0.5h-3zM-5.5,-5.5h0.5v0.5h-0.5zM-4.5,-5.5h0.5v0.5h-0.5zM-3,-5.5h3.5v0.5h-3.5zM-5.5,-5h1.5v1h-1.5zM-2.5,-5h3v0.5h-3zM-3.5,-4.5h4v0.5h-4zM-6,-4h1v0.5h-1zM-4.5,-4h1.5v0.5h-1.5zM-1,-4h0.5v0.5h-0.5zM-6.5,-3.5h1v0.5h-1zM-5,-3.5h3v0.5h-3zM3,-3.5h1v0.5h-1zM-6.5,-3h0.5v0.5h-0.5zM-5,-3h1v0.5h-1zM2,-3h2v0.5h-2zM-6,-2.5h2v0.5h-2zM2,-2.5h0.5v0.5h-0.5zM3,-2.5h1v0.5h-1zM-6.5,-2h2v0.5h-2zM1.5,-2h0.5v1h-0.5zM3,-2h0.5v0.5h-0.5zM-4,-1h0.5v0.5h-0.5zM-3,-1h0.5v0.5h-0.5zM2.5,-1h0.5v0.5h-0.5zM-4,-0.5h1.5v0.5h-1.5zM1.5,-0.5h2.5v1h-2.5zM-4.5,0h2v0.5h-2z"
+        },
+        {
+          paint: "evergreenLight",
+          d: "M1,-12.5h0.5v0.5h-0.5zM0.5,-12h1v0.5h-1zM0.5,-11.5h0.5v0.5h-0.5zM-0.5,-9.5h1v0.5h-1zM-1,-9h1v0.5h-1zM-4.5,-7.5h0.5v0.5h-0.5zM-5,-7h0.5v0.5h-0.5zM-2,-6.5h2v0.5h-2zM-2.5,-6h0.5v0.5h-0.5zM-5,-5.5h0.5v0.5h-0.5zM-5,-4h0.5v0.5h-0.5zM-3,-4h2v0.5h-2zM-5.5,-3.5h0.5v0.5h-0.5zM2.5,-2.5h0.5v0.5h-0.5zM2,-2h1v0.5h-1z"
+        }
+      ],
+      pixels: 413
+    };
+    sprites216 = [variant0209, variant1112, variant299];
   }
 });
 
 // src/themes/terrain/pixel/generated/cherryBlossom.ts
-var variant0203, variant1105, variant292, sprites210;
+var variant0210, variant1113, variant2100, sprites217;
 var init_cherryBlossom = __esm({
   "src/themes/terrain/pixel/generated/cherryBlossom.ts"() {
     "use strict";
     init_esm_shims();
-    variant0203 = {
+    variant0210 = {
       layers: [
         { paint: "cherryTrunk", d: "M0,-2h0.5v1.5h-0.5zM0,-0.5h1v2.5h-1zM-1,1.5h0.5v0.5h-0.5z" },
         { paint: "cherryBranch", d: "M-0.5,-1.5h0.5v2.5h-0.5zM-1,1h1v0.5h-1zM-0.5,1.5h0.5v0.5h-0.5z" },
@@ -20901,7 +22245,7 @@ var init_cherryBlossom = __esm({
       ],
       pixels: 151
     };
-    variant1105 = {
+    variant1113 = {
       layers: [
         {
           paint: "cherryTrunk",
@@ -20932,7 +22276,7 @@ var init_cherryBlossom = __esm({
       ],
       pixels: 106
     };
-    variant292 = {
+    variant2100 = {
       layers: [
         {
           paint: "cherryTrunk",
@@ -20960,17 +22304,17 @@ var init_cherryBlossom = __esm({
       ],
       pixels: 152
     };
-    sprites210 = [variant0203, variant1105, variant292];
+    sprites217 = [variant0210, variant1113, variant2100];
   }
 });
 
 // src/themes/terrain/pixel/generated/cherryBlossomBranch.ts
-var variant0204, variant1106, sprites211;
+var variant0211, variant1114, sprites218;
 var init_cherryBlossomBranch = __esm({
   "src/themes/terrain/pixel/generated/cherryBlossomBranch.ts"() {
     "use strict";
     init_esm_shims();
-    variant0204 = {
+    variant0211 = {
       layers: [
         { paint: "cherryBranch", d: "M1,-2h0.5v0.5h-0.5zM0,-1h0.5v0.5h-0.5zM-0.5,-0.5h1v1h-1z" },
         {
@@ -20998,7 +22342,7 @@ var init_cherryBlossomBranch = __esm({
       ],
       pixels: 30
     };
-    variant1106 = {
+    variant1114 = {
       layers: [
         {
           paint: "cherryBranch",
@@ -21023,17 +22367,17 @@ var init_cherryBlossomBranch = __esm({
       ],
       pixels: 33
     };
-    sprites211 = [variant0204, variant1106, variant0204];
+    sprites218 = [variant0211, variant1114, variant0211];
   }
 });
 
 // src/themes/terrain/pixel/generated/cherryBlossomFull.ts
-var variant0205, variant1107, variant293, sprites212;
+var variant0212, variant1115, variant2101, sprites219;
 var init_cherryBlossomFull = __esm({
   "src/themes/terrain/pixel/generated/cherryBlossomFull.ts"() {
     "use strict";
     init_esm_shims();
-    variant0205 = {
+    variant0212 = {
       layers: [
         {
           paint: "cherryTrunk",
@@ -21061,7 +22405,7 @@ var init_cherryBlossomFull = __esm({
       ],
       pixels: 210
     };
-    variant1107 = {
+    variant1115 = {
       layers: [
         { paint: "cherryTrunk", d: "M0,-2.5h1v4h-1zM0.5,1.5h0.5v0.5h-0.5zM0,2h1.5v0.5h-1.5z" },
         { paint: "cherryBranch", d: "M-0.5,-2h0.5v3.5h-0.5zM-1,1.5h1.5v0.5h-1.5zM-1,2h1v0.5h-1z" },
@@ -21083,7 +22427,7 @@ var init_cherryBlossomFull = __esm({
       ],
       pixels: 194
     };
-    variant293 = {
+    variant2101 = {
       layers: [
         {
           paint: "cherryTrunk",
@@ -21114,17 +22458,17 @@ var init_cherryBlossomFull = __esm({
       ],
       pixels: 197
     };
-    sprites212 = [variant0205, variant1107, variant293];
+    sprites219 = [variant0212, variant1115, variant2101];
   }
 });
 
 // src/themes/terrain/pixel/generated/cherryBlossomSmall.ts
-var variant0206, variant1108, variant294, sprites213;
+var variant0213, variant1116, variant2102, sprites220;
 var init_cherryBlossomSmall = __esm({
   "src/themes/terrain/pixel/generated/cherryBlossomSmall.ts"() {
     "use strict";
     init_esm_shims();
-    variant0206 = {
+    variant0213 = {
       layers: [
         { paint: "cherryTrunk", d: "M-0.5,-1h1v2.5h-1z" },
         {
@@ -21148,7 +22492,7 @@ var init_cherryBlossomSmall = __esm({
       ],
       pixels: 52
     };
-    variant1108 = {
+    variant1116 = {
       layers: [
         { paint: "cherryTrunk", d: "M-0.5,-0.5h1v2h-1z" },
         {
@@ -21165,7 +22509,7 @@ var init_cherryBlossomSmall = __esm({
       ],
       pixels: 57
     };
-    variant294 = {
+    variant2102 = {
       layers: [
         { paint: "cherryTrunk", d: "M-1,-2h0.5v0.5h-0.5zM-0.5,-1.5h0.5v0.5h-0.5zM-0.5,-1h1v2.5h-1z" },
         {
@@ -21182,17 +22526,17 @@ var init_cherryBlossomSmall = __esm({
       ],
       pixels: 68
     };
-    sprites213 = [variant0206, variant1108, variant294];
+    sprites220 = [variant0213, variant1116, variant2102];
   }
 });
 
 // src/themes/terrain/pixel/generated/deadTree.ts
-var variant0207, sprites214;
+var variant0214, sprites221;
 var init_deadTree = __esm({
   "src/themes/terrain/pixel/generated/deadTree.ts"() {
     "use strict";
     init_esm_shims();
-    variant0207 = {
+    variant0214 = {
       layers: [
         {
           paint: "deadTree",
@@ -21205,17 +22549,17 @@ var init_deadTree = __esm({
       ],
       pixels: 56
     };
-    sprites214 = [variant0207, variant0207, variant0207];
+    sprites221 = [variant0214, variant0214, variant0214];
   }
 });
 
 // src/themes/terrain/pixel/generated/deciduous.ts
-var variant0208, variant1109, variant295, sprites215;
+var variant0215, variant1117, variant2103, sprites222;
 var init_deciduous = __esm({
   "src/themes/terrain/pixel/generated/deciduous.ts"() {
     "use strict";
     init_esm_shims();
-    variant0208 = {
+    variant0215 = {
       layers: [
         { paint: "shadow", d: "M1,0h0.5v0.5h-0.5z" },
         {
@@ -21238,7 +22582,7 @@ var init_deciduous = __esm({
       ],
       pixels: 200
     };
-    variant1109 = {
+    variant1117 = {
       layers: [
         { paint: "shadow", d: "M1,0h0.5v0.5h-0.5z" },
         {
@@ -21261,7 +22605,7 @@ var init_deciduous = __esm({
       ],
       pixels: 189
     };
-    variant295 = {
+    variant2103 = {
       layers: [
         { paint: "shadow", d: "M1,0h0.5v0.5h-0.5z" },
         {
@@ -21284,17 +22628,17 @@ var init_deciduous = __esm({
       ],
       pixels: 212
     };
-    sprites215 = [variant0208, variant1109, variant295];
+    sprites222 = [variant0215, variant1117, variant2103];
   }
 });
 
 // src/themes/terrain/pixel/generated/deer.ts
-var variant0209, variant1110, variant296, sprites216;
+var variant0216, variant1118, variant2104, sprites223;
 var init_deer = __esm({
   "src/themes/terrain/pixel/generated/deer.ts"() {
     "use strict";
     init_esm_shims();
-    variant0209 = {
+    variant0216 = {
       layers: [
         { paint: "shadow", d: "M-1,0h2v0.5h-2zM1.5,0h0.5v0.5h-0.5z" },
         {
@@ -21310,7 +22654,7 @@ var init_deer = __esm({
       ],
       pixels: 82
     };
-    variant1110 = {
+    variant1118 = {
       layers: [
         { paint: "shadow", d: "M-1,0h2v0.5h-2zM1.5,0h0.5v0.5h-0.5z" },
         {
@@ -21326,7 +22670,7 @@ var init_deer = __esm({
       ],
       pixels: 77
     };
-    variant296 = {
+    variant2104 = {
       layers: [
         { paint: "shadow", d: "M-1,0h2v0.5h-2z" },
         {
@@ -21342,17 +22686,17 @@ var init_deer = __esm({
       ],
       pixels: 86
     };
-    sprites216 = [variant0209, variant1110, variant296];
+    sprites223 = [variant0216, variant1118, variant2104];
   }
 });
 
 // src/themes/terrain/pixel/generated/fern.ts
-var variant0210, sprites217;
+var variant0217, sprites224;
 var init_fern = __esm({
   "src/themes/terrain/pixel/generated/fern.ts"() {
     "use strict";
     init_esm_shims();
-    variant0210 = {
+    variant0217 = {
       layers: [
         {
           paint: "fern",
@@ -21369,17 +22713,17 @@ var init_fern = __esm({
       ],
       pixels: 59
     };
-    sprites217 = [variant0210, variant0210, variant0210];
+    sprites224 = [variant0217, variant0217, variant0217];
   }
 });
 
 // src/themes/terrain/pixel/generated/fox.ts
-var variant0211, variant1111, variant297, sprites218;
+var variant0218, variant1119, variant2105, sprites225;
 var init_fox = __esm({
   "src/themes/terrain/pixel/generated/fox.ts"() {
     "use strict";
     init_esm_shims();
-    variant0211 = {
+    variant0218 = {
       layers: [
         {
           paint: "trunk",
@@ -21397,7 +22741,7 @@ var init_fox = __esm({
       ],
       pixels: 77
     };
-    variant1111 = {
+    variant1119 = {
       layers: [
         {
           paint: "fox",
@@ -21411,7 +22755,7 @@ var init_fox = __esm({
       ],
       pixels: 55
     };
-    variant297 = {
+    variant2105 = {
       layers: [
         {
           paint: "trunk",
@@ -21429,17 +22773,17 @@ var init_fox = __esm({
       ],
       pixels: 74
     };
-    sprites218 = [variant0211, variant1111, variant297];
+    sprites225 = [variant0218, variant1119, variant2105];
   }
 });
 
 // src/themes/terrain/pixel/generated/gardenTree.ts
-var variant0212, variant1112, variant298, sprites219;
+var variant0219, variant1120, variant2106, sprites226;
 var init_gardenTree = __esm({
   "src/themes/terrain/pixel/generated/gardenTree.ts"() {
     "use strict";
     init_esm_shims();
-    variant0212 = {
+    variant0219 = {
       layers: [
         { paint: "trunk", d: "M0,-2.5h0.5v0.5h-0.5zM-0.5,-2h1v2.5h-1z" },
         {
@@ -21454,7 +22798,7 @@ var init_gardenTree = __esm({
       ],
       pixels: 76
     };
-    variant1112 = {
+    variant1120 = {
       layers: [
         { paint: "trunk", d: "M-0.5,-2h1v2.5h-1z" },
         {
@@ -21469,7 +22813,7 @@ var init_gardenTree = __esm({
       ],
       pixels: 58
     };
-    variant298 = {
+    variant2106 = {
       layers: [
         { paint: "trunk", d: "M-0.5,-2.5h1v3h-1z" },
         {
@@ -21487,17 +22831,17 @@ var init_gardenTree = __esm({
       ],
       pixels: 74
     };
-    sprites219 = [variant0212, variant1112, variant298];
+    sprites226 = [variant0219, variant1120, variant2106];
   }
 });
 
 // src/themes/terrain/pixel/generated/haybale.ts
-var variant0213, sprites220;
+var variant0220, sprites227;
 var init_haybale = __esm({
   "src/themes/terrain/pixel/generated/haybale.ts"() {
     "use strict";
     init_esm_shims();
-    variant0213 = {
+    variant0220 = {
       layers: [
         {
           paint: "haybale",
@@ -21507,17 +22851,17 @@ var init_haybale = __esm({
       ],
       pixels: 55
     };
-    sprites220 = [variant0213, variant0213, variant0213];
+    sprites227 = [variant0220, variant0220, variant0220];
   }
 });
 
 // src/themes/terrain/pixel/generated/log.ts
-var variant0214, sprites221;
+var variant0221, sprites228;
 var init_log = __esm({
   "src/themes/terrain/pixel/generated/log.ts"() {
     "use strict";
     init_esm_shims();
-    variant0214 = {
+    variant0221 = {
       layers: [
         {
           paint: "log",
@@ -21535,17 +22879,17 @@ var init_log = __esm({
       ],
       pixels: 63
     };
-    sprites221 = [variant0214, variant0214, variant0214];
+    sprites228 = [variant0221, variant0221, variant0221];
   }
 });
 
 // src/themes/terrain/pixel/generated/moss.ts
-var variant0215, sprites222;
+var variant0222, sprites229;
 var init_moss = __esm({
   "src/themes/terrain/pixel/generated/moss.ts"() {
     "use strict";
     init_esm_shims();
-    variant0215 = {
+    variant0222 = {
       layers: [
         {
           paint: "bushDark",
@@ -21559,17 +22903,17 @@ var init_moss = __esm({
       ],
       pixels: 46
     };
-    sprites222 = [variant0215, variant0215, variant0215];
+    sprites229 = [variant0222, variant0222, variant0222];
   }
 });
 
 // src/themes/terrain/pixel/generated/mushroom.ts
-var variant0216, variant1113, variant299, sprites223;
+var variant0223, variant1121, variant2107, sprites230;
 var init_mushroom = __esm({
   "src/themes/terrain/pixel/generated/mushroom.ts"() {
     "use strict";
     init_esm_shims();
-    variant0216 = {
+    variant0223 = {
       layers: [
         { paint: "mushroom", d: "M-0.5,-1h1v1h-1zM-0.5,0h0.5v0.5h-0.5z" },
         { paint: "stump", d: "M-2,-2h0.5v0.5h-0.5zM1.5,-2h0.5v0.5h-0.5zM-1.5,-1.5h3v0.5h-3z" },
@@ -21577,7 +22921,7 @@ var init_mushroom = __esm({
       ],
       pixels: 29
     };
-    variant1113 = {
+    variant1121 = {
       layers: [
         { paint: "mushroom", d: "M0.5,-2h0.5v0.5h-0.5zM0.5,-1.5h1v1.5h-1zM-1.5,-1h1v1h-1z" },
         { paint: "stump", d: "M1,-2h0.5v0.5h-0.5z" },
@@ -21588,24 +22932,24 @@ var init_mushroom = __esm({
       ],
       pixels: 31
     };
-    variant299 = {
+    variant2107 = {
       layers: [
         { paint: "mushroom", d: "M-0.5,-2.5h1v2.5h-1zM-0.5,0h0.5v0.5h-0.5z" },
         { paint: "mushroomCap", d: "M-0.5,-4h1v0.5h-1zM-1,-3.5h2v1h-2z" }
       ],
       pixels: 21
     };
-    sprites223 = [variant0216, variant1113, variant299];
+    sprites230 = [variant0223, variant1121, variant2107];
   }
 });
 
 // src/themes/terrain/pixel/generated/nest.ts
-var variant0217, variant1114, variant2100, sprites224;
+var variant0224, variant1122, variant2108, sprites231;
 var init_nest = __esm({
   "src/themes/terrain/pixel/generated/nest.ts"() {
     "use strict";
     init_esm_shims();
-    variant0217 = {
+    variant0224 = {
       layers: [
         {
           paint: [
@@ -21637,7 +22981,7 @@ var init_nest = __esm({
       ],
       pixels: 40
     };
-    variant1114 = {
+    variant1122 = {
       layers: [
         {
           paint: [
@@ -21669,7 +23013,7 @@ var init_nest = __esm({
       ],
       pixels: 40
     };
-    variant2100 = {
+    variant2108 = {
       layers: [
         {
           paint: [
@@ -21702,17 +23046,17 @@ var init_nest = __esm({
       ],
       pixels: 44
     };
-    sprites224 = [variant0217, variant1114, variant2100];
+    sprites231 = [variant0224, variant1122, variant2108];
   }
 });
 
 // src/themes/terrain/pixel/generated/owl.ts
-var variant0218, sprites225;
+var variant0225, sprites232;
 var init_owl = __esm({
   "src/themes/terrain/pixel/generated/owl.ts"() {
     "use strict";
     init_esm_shims();
-    variant0218 = {
+    variant0225 = {
       layers: [
         {
           paint: "wheat",
@@ -21728,17 +23072,17 @@ var init_owl = __esm({
       ],
       pixels: 49
     };
-    sprites225 = [variant0218, variant0218, variant0218];
+    sprites232 = [variant0225, variant0225, variant0225];
   }
 });
 
 // src/themes/terrain/pixel/generated/palm.ts
-var variant0219, variant1115, variant2101, sprites226;
+var variant0226, variant1123, variant2109, sprites233;
 var init_palm = __esm({
   "src/themes/terrain/pixel/generated/palm.ts"() {
     "use strict";
     init_esm_shims();
-    variant0219 = {
+    variant0226 = {
       layers: [
         { paint: "trunk", d: "M0,-7.5h0.5v7.5h-0.5zM-0.5,0h0.5v0.5h-0.5z" },
         { paint: "fence", d: "M-0.5,-7h0.5v7h-0.5z" },
@@ -21761,7 +23105,7 @@ var init_palm = __esm({
       ],
       pixels: 107
     };
-    variant1115 = {
+    variant1123 = {
       layers: [
         {
           paint: "trunk",
@@ -21787,7 +23131,7 @@ var init_palm = __esm({
       ],
       pixels: 111
     };
-    variant2101 = {
+    variant2109 = {
       layers: [
         {
           paint: "trunk",
@@ -21816,17 +23160,17 @@ var init_palm = __esm({
       ],
       pixels: 128
     };
-    sprites226 = [variant0219, variant1115, variant2101];
+    sprites233 = [variant0226, variant1123, variant2109];
   }
 });
 
 // src/themes/terrain/pixel/generated/peachBlossom.ts
-var variant0220, variant1116, sprites227;
+var variant0227, variant1124, sprites234;
 var init_peachBlossom = __esm({
   "src/themes/terrain/pixel/generated/peachBlossom.ts"() {
     "use strict";
     init_esm_shims();
-    variant0220 = {
+    variant0227 = {
       layers: [
         {
           paint: "cherryTrunk",
@@ -21856,7 +23200,7 @@ var init_peachBlossom = __esm({
       ],
       pixels: 145
     };
-    variant1116 = {
+    variant1124 = {
       layers: [
         { paint: "cherryTrunk", d: "M0,-2h1v0.5h-1zM0,-1.5h0.5v1.5h-0.5zM0,0h1v2.5h-1z" },
         { paint: "cherryBranch", d: "M-0.5,-2h0.5v3.5h-0.5zM-1,1.5h1v1h-1z" },
@@ -21879,17 +23223,17 @@ var init_peachBlossom = __esm({
       ],
       pixels: 89
     };
-    sprites227 = [variant0220, variant1116, variant0220];
+    sprites234 = [variant0227, variant1124, variant0227];
   }
 });
 
 // src/themes/terrain/pixel/generated/pine.ts
-var variant0221, variant1117, variant2102, sprites228;
+var variant0228, variant1125, variant2110, sprites235;
 var init_pine = __esm({
   "src/themes/terrain/pixel/generated/pine.ts"() {
     "use strict";
     init_esm_shims();
-    variant0221 = {
+    variant0228 = {
       layers: [
         { paint: "shadow", d: "M-0.5,0h0.5v0.5h-0.5zM1,0h0.5v0.5h-0.5z" },
         { paint: "trunk", d: "M-0.5,-2.5h0.5v0.5h-0.5zM-0.5,-2h1v2h-1zM0,0h1v0.5h-1z" },
@@ -21908,7 +23252,7 @@ var init_pine = __esm({
       ],
       pixels: 181
     };
-    variant1117 = {
+    variant1125 = {
       layers: [
         { paint: "shadow", d: "M-0.5,0h0.5v0.5h-0.5zM1,0h0.5v0.5h-0.5z" },
         { paint: "trunk", d: "M-0.5,-1.5h1v1.5h-1zM0,0h1v0.5h-1z" },
@@ -21927,7 +23271,7 @@ var init_pine = __esm({
       ],
       pixels: 136
     };
-    variant2102 = {
+    variant2110 = {
       layers: [
         { paint: "shadow", d: "M-0.5,0h0.5v0.5h-0.5zM1,0h0.5v0.5h-0.5z" },
         { paint: "trunk", d: "M0,-3h1v1.5h-1zM-0.5,-1.5h1.5v0.5h-1.5zM-0.5,-1h1v1h-1zM0,0h1v0.5h-1z" },
@@ -21946,17 +23290,17 @@ var init_pine = __esm({
       ],
       pixels: 156
     };
-    sprites228 = [variant0221, variant1117, variant2102];
+    sprites235 = [variant0228, variant1125, variant2110];
   }
 });
 
 // src/themes/terrain/pixel/generated/rabbit.ts
-var variant0222, variant1118, variant2103, sprites229;
+var variant0229, variant1126, variant2111, sprites236;
 var init_rabbit = __esm({
   "src/themes/terrain/pixel/generated/rabbit.ts"() {
     "use strict";
     init_esm_shims();
-    variant0222 = {
+    variant0229 = {
       layers: [
         {
           paint: "rabbit",
@@ -21966,7 +23310,7 @@ var init_rabbit = __esm({
       ],
       pixels: 36
     };
-    variant1118 = {
+    variant1126 = {
       layers: [
         {
           paint: "rabbit",
@@ -21976,7 +23320,7 @@ var init_rabbit = __esm({
       ],
       pixels: 38
     };
-    variant2103 = {
+    variant2111 = {
       layers: [
         {
           paint: "rabbit",
@@ -21989,17 +23333,17 @@ var init_rabbit = __esm({
       ],
       pixels: 53
     };
-    sprites229 = [variant0222, variant1118, variant2103];
+    sprites236 = [variant0229, variant1126, variant2111];
   }
 });
 
 // src/themes/terrain/pixel/generated/robinBird.ts
-var variant0223, variant1119, sprites230;
+var variant0230, variant1127, sprites237;
 var init_robinBird = __esm({
   "src/themes/terrain/pixel/generated/robinBird.ts"() {
     "use strict";
     init_esm_shims();
-    variant0223 = {
+    variant0230 = {
       layers: [
         {
           paint: [
@@ -22029,7 +23373,7 @@ var init_robinBird = __esm({
       ],
       pixels: 25
     };
-    variant1119 = {
+    variant1127 = {
       layers: [
         {
           paint: [
@@ -22055,17 +23399,17 @@ var init_robinBird = __esm({
       ],
       pixels: 28
     };
-    sprites230 = [variant0223, variant1119, variant0223];
+    sprites237 = [variant0230, variant1127, variant0230];
   }
 });
 
 // src/themes/terrain/pixel/generated/snowDeciduous.ts
-var variant0224, variant1120, variant2104, sprites231;
+var variant0231, variant1128, variant2112, sprites238;
 var init_snowDeciduous = __esm({
   "src/themes/terrain/pixel/generated/snowDeciduous.ts"() {
     "use strict";
     init_esm_shims();
-    variant0224 = {
+    variant0231 = {
       layers: [
         {
           paint: "ice",
@@ -22083,7 +23427,7 @@ var init_snowDeciduous = __esm({
       ],
       pixels: 88
     };
-    variant1120 = {
+    variant1128 = {
       layers: [
         { paint: "ice", d: "M-2,-4h0.5v0.5h-0.5zM2,-4h1v0.5h-1zM0.5,1.5h1.5v1h-1.5z" },
         {
@@ -22098,7 +23442,7 @@ var init_snowDeciduous = __esm({
       ],
       pixels: 78
     };
-    variant2104 = {
+    variant2112 = {
       layers: [
         {
           paint: "ice",
@@ -22116,17 +23460,17 @@ var init_snowDeciduous = __esm({
       ],
       pixels: 123
     };
-    sprites231 = [variant0224, variant1120, variant2104];
+    sprites238 = [variant0231, variant1128, variant2112];
   }
 });
 
 // src/themes/terrain/pixel/generated/snowPine.ts
-var variant0225, variant1121, variant2105, sprites232;
+var variant0232, variant1129, variant2113, sprites239;
 var init_snowPine = __esm({
   "src/themes/terrain/pixel/generated/snowPine.ts"() {
     "use strict";
     init_esm_shims();
-    variant0225 = {
+    variant0232 = {
       layers: [
         { paint: "shadow", d: "M-1.5,1.5h1v0.5h-1zM0.5,1.5h1.5v0.5h-1.5z" },
         { paint: "trunk", d: "M0,-0.5h0.5v2.5h-0.5z" },
@@ -22146,7 +23490,7 @@ var init_snowPine = __esm({
       ],
       pixels: 128
     };
-    variant1121 = {
+    variant1129 = {
       layers: [
         { paint: "shadow", d: "M-1.5,1.5h1v0.5h-1zM0.5,1.5h1.5v0.5h-1.5z" },
         { paint: "trunk", d: "M0,0h0.5v2h-0.5z" },
@@ -22167,7 +23511,7 @@ var init_snowPine = __esm({
       ],
       pixels: 170
     };
-    variant2105 = {
+    variant2113 = {
       layers: [
         { paint: "shadow", d: "M-1.5,1.5h1v0.5h-1zM0.5,1.5h1.5v0.5h-1.5z" },
         { paint: "trunk", d: "M0,-0.5h0.5v2.5h-0.5z" },
@@ -22187,17 +23531,17 @@ var init_snowPine = __esm({
       ],
       pixels: 141
     };
-    sprites232 = [variant0225, variant1121, variant2105];
+    sprites239 = [variant0232, variant1129, variant2113];
   }
 });
 
 // src/themes/terrain/pixel/generated/spider.ts
-var variant0226, sprites233;
+var variant0233, sprites240;
 var init_spider = __esm({
   "src/themes/terrain/pixel/generated/spider.ts"() {
     "use strict";
     init_esm_shims();
-    variant0226 = {
+    variant0233 = {
       layers: [
         {
           paint: "spiderWeb",
@@ -22210,17 +23554,17 @@ var init_spider = __esm({
       ],
       pixels: 42
     };
-    sprites233 = [variant0226, variant0226, variant0226];
+    sprites240 = [variant0233, variant0233, variant0233];
   }
 });
 
 // src/themes/terrain/pixel/generated/squirrel.ts
-var variant0227, sprites234;
+var variant0234, sprites241;
 var init_squirrel = __esm({
   "src/themes/terrain/pixel/generated/squirrel.ts"() {
     "use strict";
     init_esm_shims();
-    variant0227 = {
+    variant0234 = {
       layers: [
         {
           paint: "squirrel",
@@ -22234,17 +23578,17 @@ var init_squirrel = __esm({
       ],
       pixels: 46
     };
-    sprites234 = [variant0227, variant0227, variant0227];
+    sprites241 = [variant0234, variant0234, variant0234];
   }
 });
 
 // src/themes/terrain/pixel/generated/stump.ts
-var variant0228, variant1122, variant2106, sprites235;
+var variant0235, variant1130, variant2114, sprites242;
 var init_stump = __esm({
   "src/themes/terrain/pixel/generated/stump.ts"() {
     "use strict";
     init_esm_shims();
-    variant0228 = {
+    variant0235 = {
       layers: [
         {
           paint: "trunk",
@@ -22258,7 +23602,7 @@ var init_stump = __esm({
       ],
       pixels: 43
     };
-    variant1122 = {
+    variant1130 = {
       layers: [
         {
           paint: "trunk",
@@ -22273,7 +23617,7 @@ var init_stump = __esm({
       ],
       pixels: 45
     };
-    variant2106 = {
+    variant2114 = {
       layers: [
         {
           paint: "trunk",
@@ -22291,17 +23635,17 @@ var init_stump = __esm({
       ],
       pixels: 43
     };
-    sprites235 = [variant0228, variant1122, variant2106];
+    sprites242 = [variant0235, variant1130, variant2114];
   }
 });
 
 // src/themes/terrain/pixel/generated/tallGrass.ts
-var variant0229, sprites236;
+var variant0236, sprites243;
 var init_tallGrass = __esm({
   "src/themes/terrain/pixel/generated/tallGrass.ts"() {
     "use strict";
     init_esm_shims();
-    variant0229 = {
+    variant0236 = {
       layers: [
         {
           paint: "bushDark",
@@ -22315,17 +23659,150 @@ var init_tallGrass = __esm({
       ],
       pixels: 53
     };
-    sprites236 = [variant0229, variant0229, variant0229];
+    sprites243 = [variant0236, variant0236, variant0236];
+  }
+});
+
+// src/themes/terrain/pixel/generated/wildflowerMeadow.ts
+var variant0237, variant1131, variant2115, sprites244;
+var init_wildflowerMeadow = __esm({
+  "src/themes/terrain/pixel/generated/wildflowerMeadow.ts"() {
+    "use strict";
+    init_esm_shims();
+    variant0237 = {
+      layers: [
+        {
+          paint: "moss",
+          d: "M-3,-3h1.5v0.5h-1.5zM-4.5,-2.5h2.5v0.5h-2.5zM-1.5,-2.5h2v0.5h-2zM-5.5,-2h4.5v0.5h-4.5zM-0.5,-2h1v0.5h-1zM1.5,-2h1v0.5h-1zM-6.5,-1.5h0.5v0.5h-0.5zM-4.5,-1.5h3.5v1h-3.5zM1,-1.5h1.5v0.5h-1.5zM3,-1.5h0.5v0.5h-0.5zM-7,-1h1v0.5h-1zM1,-1h3.5v0.5h-3.5zM-7,-0.5h6v0.5h-6zM0,-0.5h4.5v0.5h-4.5zM6,-0.5h1v0.5h-1zM-6,0h2v0.5h-2zM-3,0h7v0.5h-7zM5.5,0h1.5v0.5h-1.5zM-5,0.5h0.5v0.5h-0.5zM-3,0.5h1.5v0.5h-1.5zM0.5,0.5h1v0.5h-1zM3.5,0.5h3v0.5h-3zM2,1h0.5v0.5h-0.5zM3,1h2.5v0.5h-2.5z"
+        },
+        {
+          paint: "tallGrass",
+          d: "M0.5,-3h0.5v0.5h-0.5zM-6.5,-2.5h0.5v0.5h-0.5zM-6.5,-2h1v0.5h-1zM-1,-2h0.5v0.5h-0.5zM-6,-1.5h1.5v1h-1.5zM-1,-1.5h2v1h-2zM2.5,-1.5h0.5v0.5h-0.5zM4.5,-1.5h0.5v0.5h-0.5zM5.5,-1.5h0.5v0.5h-0.5zM5.5,-1h1v0.5h-1zM-1,-0.5h1v0.5h-1zM4.5,-0.5h1.5v0.5h-1.5zM4,0h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "leaf",
+          d: "M-4.5,-4h1v1h-1zM-3,-4h0.5v0.5h-0.5zM-6,-3h0.5v1h-0.5zM-4.5,-3h0.5v0.5h-0.5zM-1,-3h0.5v0.5h-0.5zM2,-3h0.5v1h-0.5zM-5,-2.5h0.5v0.5h-0.5zM-2,-2.5h0.5v0.5h-0.5zM0.5,-2.5h0.5v1h-0.5zM4,-1.5h0.5v0.5h-0.5zM4.5,-1h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "bushDark",
+          d: "M-3.5,-4.5h0.5v1h-0.5zM-3.5,-3.5h1v0.5h-1zM-5,-3h0.5v0.5h-0.5zM-4,-3h1v0.5h-1zM-1.5,-3h0.5v0.5h-0.5zM-0.5,-3h0.5v0.5h-0.5zM-5.5,-2.5h0.5v0.5h-0.5zM1,-2.5h1v0.5h-1zM1,-2h0.5v0.5h-0.5zM3.5,-1.5h0.5v0.5h-0.5zM5,-1.5h0.5v1h-0.5z"
+        },
+        {
+          paint: "flower",
+          d: "M-5.5,-5h1v0.5h-1zM0.5,-5h2v0.5h-2zM-6,-4.5h2v0.5h-2zM0,-4.5h3v1h-3zM-6,-4h1.5v1h-1.5zM0,-3.5h2.5v0.5h-2.5zM1,-3h1v0.5h-1z"
+        },
+        {
+          paint: "flowerCenter",
+          d: "M-3.5,-5.5h0.5v0.5h-0.5zM-1.5,-4h0.5v0.5h-0.5zM5,-2.5h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "wildflower",
+          d: "M-3,-7h0.5v0.5h-0.5zM-4.5,-6.5h2.5v0.5h-2.5zM-4.5,-6h1v1h-1zM-3,-6h1.5v1h-1.5zM-4.5,-5h2.5v0.5h-2.5zM-4,-4.5h0.5v0.5h-0.5zM-3,-4.5h0.5v0.5h-0.5zM3,-3.5h1v0.5h-1zM2.5,-3h2v1h-2zM2.5,-2h1.5v0.5h-1.5z"
+        },
+        {
+          paint: "flowerAlt",
+          d: "M-3.5,-6h0.5v0.5h-0.5zM-1.5,-5h0.5v0.5h-0.5zM-2.5,-4.5h2.5v0.5h-2.5zM-2.5,-4h1v0.5h-1zM-1,-4h1v0.5h-1zM-2.5,-3.5h2v0.5h-2zM4.5,-3h1.5v0.5h-1.5zM4.5,-2.5h0.5v0.5h-0.5zM5.5,-2.5h1v0.5h-1zM4,-2h2v0.5h-2z"
+        },
+        {
+          paint: "leafLight",
+          d: "M-4,0h1v0.5h-1zM-4.5,0.5h1.5v0.5h-1.5zM1.5,0.5h2v0.5h-2zM2.5,1h0.5v0.5h-0.5z"
+        }
+      ],
+      pixels: 289
+    };
+    variant1131 = {
+      layers: [
+        {
+          paint: "moss",
+          d: "M-1.5,-3h0.5v0.5h-0.5zM1.5,-3h0.5v0.5h-0.5zM-2,-2.5h1v0.5h-1zM0,-2.5h0.5v0.5h-0.5zM1,-2.5h0.5v0.5h-0.5zM2,-2.5h1v0.5h-1zM-3.5,-2h2.5v0.5h-2.5zM1,-2h1v0.5h-1zM2.5,-2h0.5v0.5h-0.5zM-4,-1.5h3.5v1.5h-3.5zM1,-1.5h2v1h-2zM-6,-1h1v1.5h-1zM5,-1h0.5v0.5h-0.5zM1,-0.5h2.5v0.5h-2.5zM4.5,-0.5h1v1h-1zM-3,0h6.5v0.5h-6.5zM-3.5,0.5h5v0.5h-5zM3.5,0.5h1.5v0.5h-1.5zM1.5,1h1v0.5h-1zM3,1h1v0.5h-1z"
+        },
+        {
+          paint: "tallGrass",
+          d: "M0.5,-3.5h0.5v1.5h-0.5zM-5.5,-3h0.5v0.5h-0.5zM-1,-3h0.5v0.5h-0.5zM2,-3h0.5v0.5h-0.5zM-5.5,-2.5h1v0.5h-1zM-4,-2.5h0.5v0.5h-0.5zM-1,-2.5h1v0.5h-1zM3,-2.5h0.5v1h-0.5zM4.5,-2.5h1v0.5h-1zM-5.5,-2h0.5v1h-0.5zM-4.5,-2h0.5v0.5h-0.5zM-1,-2h2v0.5h-2zM4,-2h1v0.5h-1zM-0.5,-1.5h1.5v1.5h-1.5zM3,-1.5h1v0.5h-1zM-5,-1h1v1.5h-1zM3,-1h2v0.5h-2zM3.5,-0.5h1v1h-1z"
+        },
+        {
+          paint: "leaf",
+          d: "M1,-4.5h0.5v0.5h-0.5zM-2.5,-4h0.5v1h-0.5zM-1.5,-4h1v0.5h-1zM0.5,-4h1v0.5h-1zM-1.5,-3.5h1.5v0.5h-1.5zM2,-3.5h0.5v0.5h-0.5zM3,-3.5h0.5v1h-0.5zM-3.5,-3h1v1h-1zM-0.5,-3h0.5v0.5h-0.5zM-4.5,-2.5h0.5v0.5h-0.5zM1.5,-2.5h0.5v0.5h-0.5zM-5,-2h0.5v0.5h-0.5zM-4,-2h0.5v0.5h-0.5zM-5,-1.5h1v0.5h-1zM4,-1.5h1v0.5h-1z"
+        },
+        {
+          paint: "bushDark",
+          d: "M0,-5h0.5v0.5h-0.5zM1,-5h0.5v0.5h-0.5zM-1.5,-4.5h1v0.5h-1zM0,-4.5h1v0.5h-1zM-2,-4h0.5v1h-0.5zM0,-4h0.5v1.5h-0.5zM-3.5,-3.5h0.5v0.5h-0.5zM2.5,-3.5h0.5v1h-0.5zM-2.5,-3h1v0.5h-1zM1,-3h0.5v0.5h-0.5zM-2.5,-2.5h0.5v0.5h-0.5zM2,-2h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "flower",
+          d: "M2,-7h1v1h-1zM1.5,-6h2v0.5h-2zM-4.5,-5.5h0.5v0.5h-0.5zM1.5,-5.5h0.5v0.5h-0.5zM3,-5.5h0.5v0.5h-0.5zM-4.5,-5h1v0.5h-1zM1.5,-5h2v1h-2zM-5,-4.5h1.5v0.5h-1.5zM-5,-4h0.5v0.5h-0.5zM-4,-4h1v0.5h-1zM1.5,-4h1.5v0.5h-1.5zM-5,-3.5h1.5v1h-1.5z"
+        },
+        {
+          paint: "flowerCenter",
+          d: "M0,-7.5h0.5v0.5h-0.5zM-2.5,-6.5h0.5v0.5h-0.5zM2,-5.5h1v0.5h-1zM-4.5,-4h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "wildflower",
+          d: "M-2.5,-8.5h0.5v0.5h-0.5zM-2.5,-8h1v1h-1zM-3,-7h2v0.5h-2zM-3,-6.5h0.5v0.5h-0.5zM-1.5,-6.5h0.5v1h-0.5zM-3.5,-6h1v0.5h-1zM-3,-5.5h2v0.5h-2zM-3.5,-5h2.5v0.5h-2.5zM-3.5,-4.5h2v0.5h-2zM3.5,-4h1v1h-1zM4.5,-3h0.5v0.5h-0.5zM3.5,-2.5h1v0.5h-1z"
+        },
+        {
+          paint: "flowerAlt",
+          d: "M0,-9.5h0.5v1h-0.5zM-0.5,-8.5h1.5v0.5h-1.5zM-1,-8h2.5v0.5h-2.5zM-1,-7.5h1v0.5h-1zM0.5,-7.5h0.5v0.5h-0.5zM-1,-7h2.5v1.5h-2.5zM-2,-6.5h0.5v0.5h-0.5zM-2.5,-6h1v0.5h-1zM-1,-5.5h2v0.5h-2zM3.5,-3h1v0.5h-1zM3.5,-2h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "leafLight",
+          d: "M-4,0h1v0.5h-1zM-5,0.5h1.5v0.5h-1.5zM1.5,0.5h2v0.5h-2zM2.5,1h0.5v0.5h-0.5z"
+        }
+      ],
+      pixels: 308
+    };
+    variant2115 = {
+      layers: [
+        {
+          paint: "moss",
+          d: "M1,-3h0.5v0.5h-0.5zM2,-3h0.5v0.5h-0.5zM-2.5,-2.5h1v0.5h-1zM1.5,-2.5h1v0.5h-1zM3.5,-2.5h1v0.5h-1zM-6,-2h0.5v0.5h-0.5zM-4.5,-2h1v0.5h-1zM-3,-2h1.5v0.5h-1.5zM1,-2h3.5v1.5h-3.5zM-4.5,-1.5h2v1.5h-2zM-2,-1.5h0.5v0.5h-0.5zM5,-1.5h0.5v0.5h-0.5zM6,-1.5h0.5v0.5h-0.5zM-7,-1h1v1.5h-1zM-0.5,-1h1v0.5h-1zM6.5,-1h0.5v0.5h-0.5zM0,-0.5h4.5v0.5h-4.5zM6,-0.5h1v1h-1zM-5,0h1v0.5h-1zM-3,0h1v0.5h-1zM-0.5,0h5v0.5h-5zM-6,0.5h1.5v0.5h-1.5zM-3.5,0.5h5v0.5h-5zM3.5,0.5h1v0.5h-1zM5.5,0.5h0.5v0.5h-0.5zM-2.5,1h3v0.5h-3zM3,1h2v0.5h-2z"
+        },
+        {
+          paint: "tallGrass",
+          d: "M-3,-3h0.5v0.5h-0.5zM2.5,-2.5h1v0.5h-1zM-6.5,-2h0.5v1h-0.5zM-5.5,-2h0.5v0.5h-0.5zM-1.5,-2h1v1h-1zM0.5,-2h0.5v1h-0.5zM5,-2h0.5v0.5h-0.5zM-5.5,-1.5h1v0.5h-1zM-2.5,-1.5h0.5v0.5h-0.5zM4.5,-1.5h0.5v1h-0.5zM5.5,-1.5h0.5v0.5h-0.5zM-6,-1h1.5v1h-1.5zM-2.5,-1h2v0.5h-2zM5.5,-1h1v0.5h-1zM-2.5,-0.5h2.5v0.5h-2.5zM4.5,-0.5h1.5v1h-1.5zM-6,0h1v0.5h-1zM-2,0h1.5v0.5h-1.5zM4.5,0.5h1v0.5h-1z"
+        },
+        {
+          paint: "leaf",
+          d: "M1,-4h0.5v1h-0.5zM0,-3.5h0.5v0.5h-0.5zM2,-3.5h0.5v0.5h-0.5zM4.5,-3.5h0.5v0.5h-0.5zM-4.5,-3h0.5v0.5h-0.5zM-2.5,-3h1.5v0.5h-1.5zM-0.5,-3h0.5v0.5h-0.5zM0.5,-3h0.5v0.5h-0.5zM-4.5,-2.5h1v0.5h-1zM-1.5,-2.5h0.5v0.5h-0.5zM1,-2.5h0.5v0.5h-0.5zM-5,-2h0.5v0.5h-0.5zM6,-2h0.5v0.5h-0.5zM-6,-1.5h0.5v0.5h-0.5zM0.5,-1h0.5v0.5h-0.5zM5,-1h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "bushDark",
+          d: "M-2.5,-3.5h0.5v0.5h-0.5zM0.5,-3.5h0.5v0.5h-0.5zM1.5,-3.5h0.5v1h-0.5zM-4,-3h1v0.5h-1zM-1,-3h0.5v0.5h-0.5zM2.5,-3h0.5v0.5h-0.5zM3.5,-3h0.5v0.5h-0.5zM-3.5,-2.5h1v0.5h-1zM-3.5,-2h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "flower",
+          d: "M0.5,-6.5h1.5v0.5h-1.5zM-0.5,-6h3.5v0.5h-3.5zM-0.5,-5.5h4v0.5h-4zM0.5,-5h0.5v0.5h-0.5zM1.5,-5h1v0.5h-1zM0,-4.5h2v0.5h-2zM-6,-4h1v0.5h-1zM0,-4h1v0.5h-1zM1.5,-4h1v0.5h-1zM-6.5,-3.5h2v0.5h-2zM-6.5,-3h1v0.5h-1zM-5,-3h0.5v0.5h-0.5zM0,-3h0.5v0.5h-0.5zM-6.5,-2.5h2v0.5h-2zM-1,-2.5h2v0.5h-2zM-0.5,-2h0.5v0.5h-0.5zM-0.5,-1.5h1v0.5h-1z"
+        },
+        {
+          paint: "flowerCenter",
+          d: "M1,-5h0.5v0.5h-0.5zM-3.5,-4.5h0.5v0.5h-0.5zM-1,-4.5h0.5v0.5h-0.5zM-5.5,-3h0.5v0.5h-0.5zM0,-2h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "wildflower",
+          d: "M-4,-5.5h1.5v0.5h-1.5zM3.5,-5.5h0.5v0.5h-0.5zM-5,-5h3v0.5h-3zM2.5,-5h2.5v0.5h-2.5zM-5,-4.5h1.5v0.5h-1.5zM-3,-4.5h1v0.5h-1zM2,-4.5h1.5v0.5h-1.5zM4,-4.5h1v1h-1zM-4.5,-4h2v1h-2zM2.5,-4h1v0.5h-1zM2.5,-3.5h2v0.5h-2z"
+        },
+        {
+          paint: "flowerAlt",
+          d: "M-1.5,-5.5h1v0.5h-1zM-2,-5h2.5v0.5h-2.5zM-2,-4.5h1v0.5h-1zM-0.5,-4.5h0.5v0.5h-0.5zM3.5,-4.5h0.5v1h-0.5zM-2,-4h2v1h-2zM5,-3.5h1v0.5h-1zM4,-3h2.5v0.5h-2.5zM4.5,-2.5h2v0.5h-2zM4.5,-2h0.5v0.5h-0.5zM5.5,-2h0.5v0.5h-0.5z"
+        },
+        {
+          paint: "leafLight",
+          d: "M-4,0h1v0.5h-1zM-4.5,0.5h1v0.5h-1zM1.5,0.5h2v0.5h-2zM2.5,1h0.5v0.5h-0.5z"
+        }
+      ],
+      pixels: 331
+    };
+    sprites244 = [variant0237, variant1131, variant2115];
   }
 });
 
 // src/themes/terrain/pixel/generated/wildflowerPatch.ts
-var variant0230, sprites237;
+var variant0238, sprites245;
 var init_wildflowerPatch = __esm({
   "src/themes/terrain/pixel/generated/wildflowerPatch.ts"() {
     "use strict";
     init_esm_shims();
-    variant0230 = {
+    variant0238 = {
       layers: [
         { paint: "bushDark", d: "M0,-1h0.5v0.5h-0.5zM-2,-0.5h4.5v0.5h-4.5zM-2,0h3v0.5h-3z" },
         {
@@ -22351,17 +23828,17 @@ var init_wildflowerPatch = __esm({
       ],
       pixels: 63
     };
-    sprites237 = [variant0230, variant0230, variant0230];
+    sprites245 = [variant0238, variant0238, variant0238];
   }
 });
 
 // src/themes/terrain/pixel/generated/willow.ts
-var variant0231, variant1123, variant2107, sprites238;
+var variant0239, variant1132, variant2116, sprites246;
 var init_willow = __esm({
   "src/themes/terrain/pixel/generated/willow.ts"() {
     "use strict";
     init_esm_shims();
-    variant0231 = {
+    variant0239 = {
       layers: [
         { paint: "shadow", d: "M-1.5,0h1v0.5h-1zM1,0h1v0.5h-1z" },
         {
@@ -22384,7 +23861,7 @@ var init_willow = __esm({
       ],
       pixels: 207
     };
-    variant1123 = {
+    variant1132 = {
       layers: [
         { paint: "shadow", d: "M-1.5,0h1v0.5h-1zM1,0h1v0.5h-1z" },
         {
@@ -22410,7 +23887,7 @@ var init_willow = __esm({
       ],
       pixels: 186
     };
-    variant2107 = {
+    variant2116 = {
       layers: [
         { paint: "shadow", d: "M-1.5,0h0.5v0.5h-0.5zM-0.5,0h1v0.5h-1zM1,0h1v0.5h-1z" },
         {
@@ -22436,17 +23913,17 @@ var init_willow = __esm({
       ],
       pixels: 172
     };
-    sprites238 = [variant0231, variant1123, variant2107];
+    sprites246 = [variant0239, variant1132, variant2116];
   }
 });
 
 // src/themes/terrain/pixel/generated/winterBird.ts
-var variant0232, variant1124, variant2108, sprites239;
+var variant0240, variant1133, variant2117, sprites247;
 var init_winterBird = __esm({
   "src/themes/terrain/pixel/generated/winterBird.ts"() {
     "use strict";
     init_esm_shims();
-    variant0232 = {
+    variant0240 = {
       layers: [
         {
           paint: "bareBranch",
@@ -22462,7 +23939,7 @@ var init_winterBird = __esm({
       ],
       pixels: 45
     };
-    variant1124 = {
+    variant1133 = {
       layers: [
         { paint: "bareBranch", d: "M-1.5,0h1v0.5h-1zM0,0h1v0.5h-1z" },
         {
@@ -22476,7 +23953,7 @@ var init_winterBird = __esm({
       ],
       pixels: 46
     };
-    variant2108 = {
+    variant2117 = {
       layers: [
         { paint: "bareBranch", d: "M-1,-0.5h0.5v0.5h-0.5zM-1.5,0h1v0.5h-1zM0,0h1v0.5h-1z" },
         {
@@ -22489,21 +23966,23 @@ var init_winterBird = __esm({
       ],
       pixels: 40
     };
-    sprites239 = [variant0232, variant1124, variant2108];
+    sprites247 = [variant0240, variant1133, variant2117];
   }
 });
 
 // src/themes/terrain/pixel/generated/group-woodland.ts
-var sprites240;
+var sprites248;
 var init_group_woodland = __esm({
   "src/themes/terrain/pixel/generated/group-woodland.ts"() {
     "use strict";
     init_esm_shims();
     init_acorn();
+    init_ancientOak();
     init_autumnBirch();
     init_autumnGinkgo();
     init_autumnMaple();
     init_autumnOak();
+    init_bambooThicket();
     init_bareBush();
     init_beehive();
     init_berryBush();
@@ -22512,6 +23991,7 @@ var init_group_woodland = __esm({
     init_birdhouse();
     init_butterfly();
     init_butterflyGarden();
+    init_cedarGrove();
     init_cherryBlossom();
     init_cherryBlossomBranch();
     init_cherryBlossomFull();
@@ -22539,53 +24019,58 @@ var init_group_woodland = __esm({
     init_squirrel();
     init_stump();
     init_tallGrass();
+    init_wildflowerMeadow();
     init_wildflowerPatch();
     init_willow();
     init_winterBird();
-    sprites240 = {
-      acorn: sprites197,
-      autumnBirch: sprites198,
-      autumnGinkgo: sprites199,
-      autumnMaple: sprites200,
-      autumnOak: sprites201,
-      bareBush: sprites202,
-      beehive: sprites203,
-      berryBush: sprites204,
-      birch: sprites205,
-      bird: sprites206,
-      birdhouse: sprites207,
-      butterfly: sprites208,
-      butterflyGarden: sprites209,
-      cherryBlossom: sprites210,
-      cherryBlossomBranch: sprites211,
-      cherryBlossomFull: sprites212,
-      cherryBlossomSmall: sprites213,
-      deadTree: sprites214,
-      deciduous: sprites215,
-      deer: sprites216,
-      fern: sprites217,
-      fox: sprites218,
-      gardenTree: sprites219,
-      haybale: sprites220,
-      log: sprites221,
-      moss: sprites222,
-      mushroom: sprites223,
-      nest: sprites224,
-      owl: sprites225,
-      palm: sprites226,
-      peachBlossom: sprites227,
-      pine: sprites228,
-      rabbit: sprites229,
-      robinBird: sprites230,
-      snowDeciduous: sprites231,
-      snowPine: sprites232,
-      spider: sprites233,
-      squirrel: sprites234,
-      stump: sprites235,
-      tallGrass: sprites236,
-      wildflowerPatch: sprites237,
-      willow: sprites238,
-      winterBird: sprites239
+    sprites248 = {
+      acorn: sprites201,
+      ancientOak: sprites202,
+      autumnBirch: sprites203,
+      autumnGinkgo: sprites204,
+      autumnMaple: sprites205,
+      autumnOak: sprites206,
+      bambooThicket: sprites207,
+      bareBush: sprites208,
+      beehive: sprites209,
+      berryBush: sprites210,
+      birch: sprites211,
+      bird: sprites212,
+      birdhouse: sprites213,
+      butterfly: sprites214,
+      butterflyGarden: sprites215,
+      cedarGrove: sprites216,
+      cherryBlossom: sprites217,
+      cherryBlossomBranch: sprites218,
+      cherryBlossomFull: sprites219,
+      cherryBlossomSmall: sprites220,
+      deadTree: sprites221,
+      deciduous: sprites222,
+      deer: sprites223,
+      fern: sprites224,
+      fox: sprites225,
+      gardenTree: sprites226,
+      haybale: sprites227,
+      log: sprites228,
+      moss: sprites229,
+      mushroom: sprites230,
+      nest: sprites231,
+      owl: sprites232,
+      palm: sprites233,
+      peachBlossom: sprites234,
+      pine: sprites235,
+      rabbit: sprites236,
+      robinBird: sprites237,
+      snowDeciduous: sprites238,
+      snowPine: sprites239,
+      spider: sprites240,
+      squirrel: sprites241,
+      stump: sprites242,
+      tallGrass: sprites243,
+      wildflowerMeadow: sprites244,
+      wildflowerPatch: sprites245,
+      willow: sprites246,
+      winterBird: sprites247
     };
   }
 });
@@ -22607,12 +24092,12 @@ var init_generated = __esm({
     PIXEL_SPRITES = {
       ...sprites39,
       ...sprites79,
-      ...sprites97,
-      ...sprites117,
-      ...sprites145,
-      ...sprites165,
-      ...sprites196,
-      ...sprites240
+      ...sprites98,
+      ...sprites118,
+      ...sprites146,
+      ...sprites169,
+      ...sprites200,
+      ...sprites248
     };
   }
 });
@@ -23030,7 +24515,7 @@ function renderCatalogAsset(type, colors, variant = 0, artStyle = "miniature") {
   if (artStyle === "pixel") return renderPixelAsset(type, 0, 0, colors, variant);
   return ASSET_RENDERERS[type](0, 0, colors, variant);
 }
-function renderAssetPlacements(placed, palettes, artStyle = "miniature") {
+function renderAssetPlacements(placed, palettes, artStyle = "miniature", symbols) {
   const paletteFor = (week) => {
     if ("assets" in palettes) return palettes;
     return palettes[Math.min(week, palettes.length - 1)];
@@ -23038,7 +24523,14 @@ function renderAssetPlacements(placed, palettes, artStyle = "miniature") {
   const context = currentMotionContext();
   const parts = placed.map((asset) => {
     const palette = paletteFor(asset.cell.week);
-    const art = artStyle === "pixel" ? renderPixelAsset(
+    const art = symbols && !asset.animated ? symbols.render(
+      asset.type,
+      palette.assets,
+      asset.variant,
+      asset.cx + asset.ox,
+      asset.cy + asset.oy,
+      artStyle
+    ) : artStyle === "pixel" ? renderPixelAsset(
       asset.type,
       asset.cx + asset.ox,
       asset.cy + asset.oy,
@@ -23261,7 +24753,7 @@ function unionBounds(bounds) {
     height: Math.max(...bounds.map((item) => item.y + item.height)) - y
   };
 }
-function sceneBounds(cells, placements, paths) {
+function sceneBounds(cells, placements, paths, effectBounds = []) {
   return unionBounds([
     ...cells.map((cell) => ({
       x: cell.isoX - THW - 1,
@@ -23270,7 +24762,8 @@ function sceneBounds(cells, placements, paths) {
       height: THH * 2 + cell.height + 2
     })),
     ...placements.map((placement) => placement.footprint),
-    ...paths.map((path4) => path4.footprint)
+    ...paths.map((path4) => path4.footprint),
+    ...effectBounds
   ]);
 }
 function sceneViewport(layout) {
@@ -23364,6 +24857,145 @@ var init_rewards = __esm({
   }
 });
 
+// src/core/consistency.ts
+function consistencyTier(activeDays) {
+  if (activeDays >= CONSISTENCY_MINIMUMS[3]) return 3;
+  if (activeDays >= CONSISTENCY_MINIMUMS[2]) return 2;
+  if (activeDays >= CONSISTENCY_MINIMUMS[1]) return 1;
+  return 0;
+}
+function consistencyByDate(cells) {
+  const days = [...cells].sort((a, b) => a.date.localeCompare(b.date)).map((cell) => ({ ...cell, timestamp: Date.parse(`${cell.date}T00:00:00.000Z`) }));
+  const result = /* @__PURE__ */ new Map();
+  let first = 0;
+  let activeDays = 0;
+  for (const [index, day] of days.entries()) {
+    const cutoff = day.timestamp - (CONSISTENCY_WINDOW_DAYS - 1) * DAY_MS4;
+    while (days[first].timestamp < cutoff) {
+      if (days[first].count > 0) activeDays--;
+      first++;
+    }
+    if (day.count > 0) activeDays++;
+    result.set(day.date, {
+      activeDays,
+      observedDays: index - first + 1,
+      tier: day.count > 0 ? consistencyTier(activeDays) : 0
+    });
+  }
+  return result;
+}
+var DAY_MS4, CONSISTENCY_WINDOW_DAYS, CONSISTENCY_MINIMUMS;
+var init_consistency = __esm({
+  "src/core/consistency.ts"() {
+    "use strict";
+    init_esm_shims();
+    DAY_MS4 = 864e5;
+    CONSISTENCY_WINDOW_DAYS = 28;
+    CONSISTENCY_MINIMUMS = [0, 5, 12, 20];
+  }
+});
+
+// src/themes/terrain/effects/consistency-geometry.ts
+var CONSISTENCY_DRIFT, CONSISTENCY_STROKE, CONSISTENCY_GLYPHS;
+var init_consistency_geometry = __esm({
+  "src/themes/terrain/effects/consistency-geometry.ts"() {
+    "use strict";
+    init_esm_shims();
+    CONSISTENCY_DRIFT = { x: 1.2, y: 0.8 };
+    CONSISTENCY_STROKE = 0.18;
+    CONSISTENCY_GLYPHS = {
+      springPetals: {
+        body: "M-1.4 0Q-1.1-1.1 0-.5Q1.1-1.1 1.4 0Q.8 1.1 0 1.4Q-.8 1.1-1.4 0Z",
+        detail: "M0-.3Q.2.6 0 1.1",
+        bounds: { x: -1.4, y: -1.1, width: 2.8, height: 2.5 }
+      },
+      summerFireflies: {
+        body: "M0-1.5Q1.5-1.5 1.5 0Q1.5 1.5 0 1.5Q-1.5 1.5-1.5 0Q-1.5-1.5 0-1.5Z",
+        detail: "M0-.5L.5 0L0 .5L-.5 0Z",
+        bounds: { x: -1.5, y: -1.5, width: 3, height: 3 }
+      },
+      autumnLeaves: {
+        body: "M-1.7.8Q-1.4-1.2.4-.8L1.7-1.3Q1.5.9-.6 1.2Z",
+        detail: "M-1.4 1L1.2-.8M-.4.4L-.6-.5M.3-.1L1 .3",
+        bounds: { x: -1.7, y: -1.3, width: 3.4, height: 2.5 }
+      },
+      winterFrost: {
+        body: "M0-.6L.6 0L0 .6L-.6 0Z",
+        detail: "M-1.6 0H1.6M0-1.6V1.6M-1.1-1.1L1.1 1.1M-1.1 1.1L1.1-1.1M-1.3-.4L-.9 0L-1.3.4M1.3-.4L.9 0L1.3.4M-.4-1.3L0-.9L.4-1.3M-.4 1.3L0 .9L.4 1.3",
+        bounds: { x: -1.6, y: -1.6, width: 3.2, height: 3.2 }
+      }
+    };
+  }
+});
+
+// src/themes/terrain/scene/consistency.ts
+function consistencyEffectPlacements(cells, root, hemisphere) {
+  const candidates = cells.flatMap((cell) => {
+    const progress = cell.consistency;
+    if (cell.count <= 0 || !progress || progress.tier === 0) return [];
+    return [
+      {
+        cell,
+        tier: progress.tier,
+        activeDays: progress.activeDays,
+        rank: hash(`${root}:${cell.date}:consistency-rank`)
+      }
+    ];
+  });
+  return candidates.sort((a, b) => a.rank - b.rank || a.cell.date.localeCompare(b.cell.date)).slice(0, MAX_CONSISTENCY_GROUPS).map(({ cell, tier, activeDays }) => {
+    const kind = SEASON_EFFECTS[datePeakSeason(cell.date, hemisphere)];
+    const rng = seededRandom(hash(`${root}:${cell.date}:consistency-shape`));
+    const phase = rng() * Math.PI * 2;
+    const particles = Array.from({ length: 1 + tier * 2 }, (_, index) => ({
+      x: Math.cos(phase + index * 2.4) * (4 + rng() * 3),
+      y: -4 - rng() * 10,
+      size: 0.65 + rng() * 0.4
+    }));
+    const cx = cell.isoX;
+    const cy = cell.isoY - cell.height - 1;
+    const glyph = CONSISTENCY_GLYPHS[kind].bounds;
+    const footprint = unionBounds(
+      particles.map(({ x, y, size }) => ({
+        x: cx + x + (glyph.x - CONSISTENCY_STROKE / 2) * size - CONSISTENCY_DRIFT.x,
+        y: cy + y + (glyph.y - CONSISTENCY_STROKE / 2) * size - CONSISTENCY_DRIFT.y,
+        width: (glyph.width + CONSISTENCY_STROKE) * size + CONSISTENCY_DRIFT.x * 2,
+        height: (glyph.height + CONSISTENCY_STROKE) * size + CONSISTENCY_DRIFT.y * 2
+      }))
+    );
+    return {
+      id: `consistency:${cell.date}`,
+      kind,
+      anchorDate: cell.date,
+      week: cell.week,
+      day: cell.day,
+      cx,
+      cy,
+      tier,
+      activeDays,
+      particles,
+      footprint
+    };
+  }).sort((a, b) => a.anchorDate.localeCompare(b.anchorDate));
+}
+var MAX_CONSISTENCY_GROUPS, SEASON_EFFECTS;
+var init_consistency2 = __esm({
+  "src/themes/terrain/scene/consistency.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_math();
+    init_consistency_geometry();
+    init_season();
+    init_bounds3();
+    MAX_CONSISTENCY_GROUPS = 10;
+    SEASON_EFFECTS = {
+      spring: "springPetals",
+      summer: "summerFireflies",
+      autumn: "autumnLeaves",
+      winter: "winterFrost"
+    };
+  }
+});
+
 // src/themes/terrain/scene/prepare.ts
 function prepareTerrainScene(data, options = {}) {
   const { width: _width, height: _height, namespace: _namespace, ...inputSettings } = options;
@@ -23383,6 +25015,7 @@ function prepareTerrainScene(data, options = {}) {
   const maxCount = settings.normalization.kind === "fixed" ? settings.normalization.maxCount : computeP90Max(grid.map((cell) => cell.count));
   const enriched = enrichGridCells100(grid, data, { kind: "fixed", maxCount });
   const isoCells = toIsoCells(enriched, getTerrainPalette100("light"), 0, 0);
+  const consistency = consistencyByDate(grid);
   const cells = isoCells.map((cell) => {
     if (cell.date === void 0 || cell.count === void 0 || cell.absoluteWeek === void 0) {
       throw new InputValidationError([
@@ -23397,12 +25030,13 @@ function prepareTerrainScene(data, options = {}) {
       absoluteWeek: cell.absoluteWeek,
       level100: cell.level100,
       rewardTier: getDailyRewardTier(cell.count),
+      consistency: consistency.get(cell.date),
       height: cell.height,
       isoX: cell.isoX,
       isoY: cell.isoY
     };
   });
-  const root = `layout-v2:${data.username.trim().toLowerCase()}:${settings.layoutSeed ?? ""}`;
+  const root = `layout-v3:${data.username.trim().toLowerCase()}:${settings.layoutSeed ?? ""}`;
   const seed = hash(root);
   const firstAbsoluteWeek = Math.min(...cells.map((cell) => cell.absoluteWeek));
   const weekCount = cells.length ? Math.max(...cells.map((cell) => cell.week)) + 1 : 0;
@@ -23423,9 +25057,10 @@ function prepareTerrainScene(data, options = {}) {
   ].sort((a, b) => a.id.localeCompare(b.id));
   const paths = neighborhoodPaths(cells, placements, biomeMap);
   const rewards = dailyRewardPlacements(cells);
+  const consistencyEffects = consistencyEffectPlacements(cells, root, settings.hemisphere);
   return {
     schemaVersion: 1,
-    layoutVersion: 2,
+    layoutVersion: 3,
     username: data.username,
     year: data.year,
     fromDate: stats.fromDate,
@@ -23437,7 +25072,7 @@ function prepareTerrainScene(data, options = {}) {
       source: settings.normalization.kind === "fixed" ? "explicit-fixed" : "relative-p90"
     },
     stats,
-    seed: { root, policy: "username-date-v2" },
+    seed: { root, policy: "username-date-v3" },
     cells,
     biomes: cells.flatMap((cell) => {
       const biome = biomeMap.get(`${cell.week},${cell.day}`);
@@ -23446,8 +25081,14 @@ function prepareTerrainScene(data, options = {}) {
     placements,
     wonders,
     rewards,
+    consistencyEffects,
     neighborhoodPaths: paths,
-    bounds: sceneBounds(cells, [...placements, ...wonders, ...rewards], paths)
+    bounds: sceneBounds(
+      cells,
+      [...placements, ...wonders, ...rewards],
+      paths,
+      consistencyEffects.map((effect) => effect.footprint)
+    )
   };
 }
 var init_prepare = __esm({
@@ -23471,6 +25112,8 @@ var init_prepare = __esm({
     init_bounds3();
     init_rewards();
     init_progression();
+    init_consistency();
+    init_consistency2();
   }
 });
 
@@ -23517,7 +25160,7 @@ var init_selection3 = __esm({
 });
 
 // src/themes/terrain/effects/css.ts
-function renderTerrainCSS(isoCells, biomeMap) {
+function renderTerrainCSS(isoCells, biomeMap, townSparkles = true) {
   const mode = currentMotionContext().mode;
   if (mode === "off") return "";
   const blocks = [];
@@ -23546,7 +25189,7 @@ function renderTerrainCSS(isoCells, biomeMap) {
     return blocks.join("\n");
   }
   const hasWater = isoCells.some((c) => c.level100 >= 10 && c.level100 <= 22);
-  const hasTown = isoCells.some((c) => c.level100 >= 90);
+  const hasTown = townSparkles && isoCells.some((c) => c.level100 >= 90);
   if (hasWater) {
     blocks.push(
       `@keyframes water-shimmer { 0% { opacity: 0.7; } 50% { opacity: 1; } 100% { opacity: 0.7; } }`
@@ -23626,7 +25269,7 @@ var init_css = __esm({
 });
 
 // src/themes/terrain/effects/overlays.ts
-function renderAnimatedOverlays(isoCells, palette) {
+function renderAnimatedOverlays(isoCells, palette, townSparkles = true) {
   const overlays = [];
   const mode = currentMotionContext().mode;
   const waterCells = isoCells.filter((c) => c.level100 >= 10 && c.level100 <= 22);
@@ -23644,7 +25287,7 @@ function renderAnimatedOverlays(isoCells, palette) {
       `<polygon points="${points}" fill="${palette.text.accent}" opacity="0.15" class="${motionId("water-" + i)}"/>`
     );
   }
-  const townCells = isoCells.filter((c) => c.level100 >= 90);
+  const townCells = townSparkles ? isoCells.filter((c) => c.level100 >= 90) : [];
   const selectedTown = selectEvenly(townCells, MAX_SPARKLE2);
   for (let i = 0; i < selectedTown.length; i++) {
     const cell = selectedTown[i];
@@ -23971,7 +25614,7 @@ function sceneDrawList(scene) {
     (a, b) => a.value.drawOrder - b.value.drawOrder || a.value.week - b.value.week || a.value.day - b.value.day || (a.kind === "path" ? 0 : 1) - (b.kind === "path" ? 0 : 1) || a.value.id.localeCompare(b.value.id)
   );
 }
-function renderDrawable(item, cells, palettes, artStyle) {
+function renderDrawable(item, cells, palettes, artStyle, symbols) {
   const value = item.value;
   const palette = palettes[value.week];
   switch (item.kind) {
@@ -24007,7 +25650,8 @@ function renderDrawable(item, cells, palettes, artStyle) {
           }
         ],
         palettes,
-        artStyle
+        artStyle,
+        symbols
       );
     }
     case "wonder":
@@ -24035,12 +25679,12 @@ function renderDrawable(item, cells, palettes, artStyle) {
     }
   }
 }
-function renderDepthLayer(scene, isoCells, palettes, artStyle = scene.settings.artStyle) {
+function renderDepthLayer(scene, isoCells, palettes, artStyle = scene.settings.artStyle, symbols) {
   const cells = new Map(
     isoCells.flatMap((cell) => cell.date ? [[cell.date, cell]] : [])
   );
   return `<g class="terrain-assets terrain-drawables">${sceneDrawList(scene).map(
-    (item) => `<g data-placement-id="${escapeXml(item.value.id)}" data-catalog-id="${escapeXml(item.value.catalogId)}" data-anchor-date="${item.value.anchorDate}" data-draw-order="${item.value.drawOrder}"` + (item.kind === "asset" && item.value.decorative ? ' data-decorative="true"' : "") + `>${renderDrawable(item, cells, palettes, artStyle)}</g>`
+    (item) => `<g data-placement-id="${escapeXml(item.value.id)}" data-catalog-id="${escapeXml(item.value.catalogId)}" data-anchor-date="${item.value.anchorDate}" data-draw-order="${item.value.drawOrder}"` + (item.kind === "asset" && item.value.decorative ? ' data-decorative="true"' : "") + `>${renderDrawable(item, cells, palettes, artStyle, symbols)}</g>`
   ).join("")}</g>`;
 }
 var init_depth = __esm({
@@ -24226,28 +25870,27 @@ var init_calendar_timeline = __esm({
 
 // src/themes/terrain/scene/legend.ts
 function scaleName(scene) {
-  return scene.normalization.kind === "fixed" ? "Fixed scale" : "Relative P90 scale";
+  return scene.normalization.kind === "fixed" ? "Fixed scale" : "Relative scale";
 }
-function renderSwatches(palette, layout) {
+function renderHeightBars(palette, layout) {
   const card = layout === "card";
   const startX = 24;
-  const y = card ? 327 : 69;
-  const width = card ? 64 : 34;
+  const baseline = card ? 340 : 83;
+  const slotWidth = card ? 64 : 34;
+  const width = card ? 32 : 18;
   const gap = card ? 13 : 5;
-  const labelY = card ? 354 : 94;
+  const labelY = card ? 354 : 97;
   return LEGEND_BINS.map((bin, index) => {
-    const x = startX + index * (width + gap);
+    const x = startX + index * (slotWidth + gap) + (slotWidth - width) / 2;
+    const height = 2 + Math.round(bin.level / 99 * 14);
     return svgElement("rect", {
       class: "height-legend-swatch",
       x,
-      y,
+      y: baseline - height,
       width,
-      height: card ? 11 : 10,
-      rx: 2,
-      fill: palette.getElevation(bin.level).top,
-      stroke: palette.text.secondary,
-      "stroke-opacity": 0.38,
-      "stroke-width": 0.6,
+      height,
+      rx: 1,
+      fill: palette.text.secondary,
       "data-level": bin.level,
       "data-bin": bin.label.toLowerCase(),
       role: "img",
@@ -24264,7 +25907,7 @@ function renderHeightLegend(scene, palette) {
   const card = scene.settings.layout === "card";
   const scale = scaleName(scene);
   const maximum = formatNumber(scene.normalization.maxCount);
-  const ariaLabel = `Contribution height legend. ${scale} from 0 to ${maximum} contributions. Five palette bins from low to high.`;
+  const ariaLabel = `Contribution height legend. ${scale} from 0 to ${maximum} contributions. Five increasing bars represent terrain height. Terrain colors follow the seasons.`;
   const heading = card ? `Height \xB7 Low \u2192 High \xB7 ${scale} 0\u2013${maximum}` : "Contribution height \xB7 Low \u2192 High";
   const visibleScale = `${scale} \xB7 0\u2013${maximum} contributions`;
   return svgElement(
@@ -24275,7 +25918,7 @@ function renderHeightLegend(scene, palette) {
       "font-size": card ? 10 : 11,
       "font-weight": 600,
       fill: palette.text.primary
-    }) + renderSwatches(palette, scene.settings.layout) + (card ? "" : svgText(24, 111, visibleScale, {
+    }) + renderHeightBars(palette, scene.settings.layout) + (card ? "" : svgText(24, 114, visibleScale, {
       "font-family": FONT2,
       "font-size": 9,
       fill: palette.text.secondary
@@ -24319,11 +25962,7 @@ function renderPresentation(scene, palette) {
   const range = scene.fromDate ? `${scene.fromDate} to ${scene.toDate}` : "No contribution dates supplied";
   const sparseNote = scene.stats.total === 0 && scene.cells.length ? "Garden decorations \xB7 0 contributions" : "";
   if (!card) {
-    return renderTitle(compactTitle, themePalette) + renderSubtitle(scene.stats, scene.wonders.length, themePalette) + renderStatsBar(scene.stats, themePalette) + renderHeightLegend(scene, palette) + renderCalendarTimeline(scene, palette) + svgText(24, 129, "Water and trees are scenery, not contributions", {
-      ...font,
-      fill: palette.text.secondary,
-      "font-size": 9
-    }) + (sparseNote ? svgText(24, 148, sparseNote, { ...font, "font-size": 10 }) : "") + (!scene.cells.length ? svgText(24, 148, range, { ...font, "font-size": 10 }) : "");
+    return renderTitle(compactTitle, themePalette) + renderSubtitle(scene.stats, scene.wonders.length, themePalette) + renderStatsBar(scene.stats, themePalette) + renderHeightLegend(scene, palette) + renderCalendarTimeline(scene, palette) + (sparseNote ? svgText(24, 148, sparseNote, { ...font, "font-size": 10 }) : "") + (!scene.cells.length ? svgText(24, 148, range, { ...font, "font-size": 10 }) : "");
   }
   const stats = [
     { value: formatNumber(scene.stats.total), label: "Contributions", x: 24 },
@@ -24348,6 +25987,88 @@ var init_presentation = __esm({
     init_calendar_timeline();
     init_legend();
     FONT3 = "'Segoe UI', system-ui, sans-serif";
+  }
+});
+
+// src/themes/terrain/effects/consistency.ts
+function renderConsistencyEffects(effects, mode) {
+  if (effects.length === 0) return "";
+  const animated = currentMotionContext().mode === "full";
+  const animation = motionId("consistency-drift");
+  const css = animated ? svgStyle(
+    `@keyframes ${animation} { 0%,100% { transform: translate(0,0); opacity: 0.9; } 50% { transform: translate(${CONSISTENCY_DRIFT.x}px,-${CONSISTENCY_DRIFT.y}px); opacity: 0.65; } }` + effects.map(
+      (effect, index) => `.${motionId(effect.id)} { animation: ${animation} ${12 + index % 5}s ease-in-out -${index}s infinite; }`
+    ).join("")
+  ) : "";
+  const groups = effects.map((effect) => {
+    const glyph = CONSISTENCY_GLYPHS[effect.kind];
+    const [body, detail] = COLORS[effect.kind][mode];
+    const particles = effect.particles.map(
+      (particle) => `<g transform="translate(${svgNumber(particle.x)} ${svgNumber(particle.y)}) scale(${svgNumber(particle.size)})"><path d="${glyph.body}" fill="${body}"${effect.kind === "summerFireflies" ? ' opacity="0.45"' : ""}/><path d="${glyph.detail}" fill="${effect.kind === "summerFireflies" ? detail : "none"}" stroke="${detail}" stroke-width="${CONSISTENCY_STROKE}" stroke-linecap="round" stroke-linejoin="round"/></g>`
+    ).join("");
+    const motion = animated ? ` class="${motionId(effect.id)}" data-consistency-motion="true"` : "";
+    return `<g data-consistency-id="${escapeXml(effect.id)}" data-anchor-date="${escapeXml(effect.anchorDate)}" data-consistency-kind="${effect.kind}" data-consistency-tier="${effect.tier}" data-consistency-active-days="${effect.activeDays}" transform="translate(${svgNumber(effect.cx)} ${svgNumber(effect.cy)})"><g${motion}>${particles}</g></g>`;
+  }).join("");
+  return `<g class="consistency-effects" aria-hidden="true">${css}${groups}</g>`;
+}
+var COLORS;
+var init_consistency3 = __esm({
+  "src/themes/terrain/effects/consistency.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_animation();
+    init_svg();
+    init_consistency_geometry();
+    COLORS = {
+      springPetals: { dark: ["#f3a9c1", "#fff0f5"], light: ["#d77b9a", "#8f4469"] },
+      summerFireflies: { dark: ["#a7b951", "#fff1a3"], light: ["#91a644", "#f8eb97"] },
+      autumnLeaves: { dark: ["#ddad5c", "#8f542f"], light: ["#bc7940", "#794b31"] },
+      winterFrost: { dark: ["#ddebf0", "#b8d6e2"], light: ["#dcebf0", "#639ab0"] }
+    };
+  }
+});
+
+// src/themes/terrain/scene/asset-symbols.ts
+var AssetSymbols;
+var init_asset_symbols = __esm({
+  "src/themes/terrain/scene/asset-symbols.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_rendering2();
+    init_animation();
+    AssetSymbols = class {
+      constructor(namespace) {
+        this.namespace = namespace;
+      }
+      shapes = /* @__PURE__ */ new Map();
+      paletteKeys = /* @__PURE__ */ new WeakMap();
+      render(type, colors, variant, x, y, artStyle) {
+        let paletteKey = this.paletteKeys.get(colors);
+        if (paletteKey === void 0) {
+          paletteKey = JSON.stringify(colors);
+          this.paletteKeys.set(colors, paletteKey);
+        }
+        const key = `${type}:${variant}:${artStyle}:${paletteKey}`;
+        let shape = this.shapes.get(key);
+        if (!shape) {
+          const id = `${this.namespace}-asset-${this.shapes.size}`;
+          const art = withMotionContext(
+            { mode: "off", namespace: id },
+            () => renderCatalogAsset(type, colors, variant, artStyle)
+          );
+          shape = { id, art };
+          this.shapes.set(key, shape);
+        }
+        return `<use href="#${shape.id}" x="${x}" y="${y}"/>`;
+      }
+      definitions() {
+        if (!this.shapes.size) return "";
+        return `<defs>${Array.from(
+          this.shapes.values(),
+          ({ id, art }) => `<symbol id="${id}" data-asset-symbol="true" overflow="visible">${art}</symbol>`
+        ).join("")}</defs>`;
+      }
+    };
   }
 });
 
@@ -24390,6 +26111,7 @@ function renderTerrainScene(scene, mode, options = {}) {
     () => motionId("svg")
   );
   const reference = getTerrainPalette100(mode);
+  const symbols = settings.motion === "off" ? void 0 : new AssetSymbols(accessibilityNamespace);
   const weekCount = scene.cells.length ? Math.max(...scene.cells.map((cell) => cell.week)) + 1 : 1;
   const firstSunday = scene.fromDate ? Date.parse(scene.fromDate) - new Date(scene.fromDate).getUTCDay() * 864e5 : 0;
   const palettes = Array.from({ length: weekCount }, (_, week) => {
@@ -24405,14 +26127,15 @@ function renderTerrainScene(scene, mode, options = {}) {
   const seed = hash(scene.seed.root);
   const rotation = dateSeasonPosition(scene.fromDate, settings.hemisphere);
   const body = renderMotionBranches({ mode: settings.motion, namespace }, () => {
-    const css = renderTerrainCSS(isoCells, biomes) + renderAssetCSS() + renderEpicCSS();
+    const townSparkles = scene.layoutVersion < 3;
+    const css = renderTerrainCSS(isoCells, biomes, townSparkles) + renderAssetCSS() + renderEpicCSS();
     const definitions = scene.wonders.length ? `<defs>${renderEpicGlowDefs(mode)}</defs>` : "";
     const sky = renderCelestials(seed, reference, mode === "dark") + renderClouds(seed, reference);
-    const terrain = renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) + renderWaterOverlays(isoCells, reference, biomes) + renderWaterRipples(isoCells, reference, biomes) + renderDepthLayer(scene, isoCells, palettes, settings.artStyle) + renderDailyRewards(presented, palettes) + renderSnowParticles(isoCells, seed, rotation) + renderFallingPetals(isoCells, seed, reference, rotation) + renderFallingLeaves(isoCells, seed, reference, rotation) + renderAnimatedOverlays(isoCells, reference);
+    const terrain = renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) + renderWaterOverlays(isoCells, reference, biomes) + renderWaterRipples(isoCells, reference, biomes) + renderDepthLayer(scene, isoCells, palettes, settings.artStyle, symbols) + renderDailyRewards(presented, palettes) + renderSnowParticles(isoCells, seed, rotation) + renderFallingPetals(isoCells, seed, reference, rotation) + renderFallingLeaves(isoCells, seed, reference, rotation) + renderAnimatedOverlays(isoCells, reference, townSparkles) + renderConsistencyEffects(scene.consistencyEffects ?? [], mode);
     return (css ? svgStyle(css) : "") + definitions + `<svg x="0" y="0" width="${viewWidth}" height="${card ? 240 : viewHeight}" viewBox="0 0 840 240" aria-hidden="true">${sky}</svg><g class="terrain-fit" transform="translate(${svgNumber(transform.x)} ${svgNumber(transform.y)}) scale(${transform.scale.toFixed(6)})">${terrain}</g>`;
   });
   const description = `Isometric contribution terrain for @${scene.username} ${scene.fromDate ? `from ${scene.fromDate} to ${scene.toDate}` : "with no supplied contribution dates"}. ${formatNumber(scene.stats.total)} contributions across ${formatNumber(scene.stats.activeDays)} active days. ${scene.wonders.length} wonders discovered. ${scene.normalization.kind} normalization, maximum ${scene.normalization.maxCount}.`;
-  const content = `<rect width="${viewWidth}" height="${viewHeight}" rx="10" fill="${mode === "dark" ? "#0d1117" : "#ffffff"}"/>` + body + renderPresentation(presented, reference);
+  const content = `<rect width="${viewWidth}" height="${viewHeight}" rx="10" fill="${mode === "dark" ? "#0d1117" : "#ffffff"}"/>` + (symbols?.definitions() ?? "") + body + renderPresentation(presented, reference);
   return svgRoot(
     {
       width: width ?? viewWidth,
@@ -24447,6 +26170,8 @@ var init_render2 = __esm({
     init_depth();
     init_presentation();
     init_rewards();
+    init_consistency3();
+    init_asset_symbols();
   }
 });
 
@@ -24465,6 +26190,7 @@ function terrainMetadata(scene) {
   const assets = byDate(scene.placements);
   const wonders = byDate(scene.wonders);
   const rewards = byDate(scene.rewards ?? []);
+  const consistencyEffects = byDate(scene.consistencyEffects ?? []);
   const span = scene.fromDate && scene.toDate ? Math.round((Date.parse(scene.toDate) - Date.parse(scene.fromDate)) / 864e5) + 1 : 0;
   return {
     schemaVersion: 1,
@@ -24486,6 +26212,7 @@ function terrainMetadata(scene) {
       day: cell.day,
       level100: cell.level100,
       ...cell.rewardTier === void 0 ? {} : { rewardTier: cell.rewardTier },
+      ...cell.consistency === void 0 ? {} : { consistency: cell.consistency },
       biome: biomes.get(`${cell.week},${cell.day}`) ?? {
         isRiver: false,
         isPond: false,
@@ -24494,11 +26221,13 @@ function terrainMetadata(scene) {
       },
       assetIds: assets.get(cell.date) ?? [],
       wonderIds: wonders.get(cell.date) ?? [],
-      rewardIds: rewards.get(cell.date) ?? []
+      rewardIds: rewards.get(cell.date) ?? [],
+      consistencyEffectIds: consistencyEffects.get(cell.date) ?? []
     })),
     placements: scene.placements,
     wonders: scene.wonders,
     rewards: scene.rewards ?? [],
+    consistencyEffects: scene.consistencyEffects ?? [],
     neighborhoodPaths: scene.neighborhoodPaths
   };
 }

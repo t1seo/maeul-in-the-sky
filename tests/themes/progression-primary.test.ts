@@ -4,6 +4,9 @@ import { ASSET_CATALOG, getAssetCatalogEntry } from '../../src/themes/terrain/as
 import { getTerrainPalette100 } from '../../src/themes/terrain/palette.js';
 import type { IsoCell } from '../../src/themes/terrain/blocks.js';
 import type { BiomeContext } from '../../src/themes/terrain/biomes.js';
+import { dailyPrimaryPool } from '../../src/themes/terrain/assets/progression-pool.js';
+import { getDailyRewardTier } from '../../src/themes/terrain/assets/progression.js';
+import { isNaturalSelection } from './selection-fixtures.js';
 
 const palette = getTerrainPalette100('light');
 const cell: IsoCell = {
@@ -40,16 +43,11 @@ describe('guaranteed primary asset families', () => {
               identities.add(
                 JSON.stringify([primary?.catalogId, primary?.variant, primary?.ox, primary?.oy]),
               );
-              if (count >= 50) {
-                expect([
-                  'castle',
-                  'manor',
-                  'cathedral',
-                  'watermill',
-                  'hanokEstate',
-                  'koreanWatermill',
-                ]).toContain(primary?.type);
-              }
+              const tier = getDailyRewardTier(count);
+              if (tier !== 0)
+                expect(dailyPrimaryPool(tier, 'summer', biome, villageStyle)).toContain(
+                  primary?.type,
+                );
             }
           }
           expect(identities.size).toBe(1);
@@ -58,8 +56,8 @@ describe('guaranteed primary asset families', () => {
     },
   );
 
-  it('retains the distinct Korean home progression among its farm and woodland families', () => {
-    const chains = Array.from({ length: 100 }, (_, seed) =>
+  it('retains rare Korean homes among substantial high-tier natural landscapes', () => {
+    const chains = Array.from({ length: 400 }, (_, seed) =>
       [10, 25, 50].map(
         (count) =>
           selectAssetPlacements([{ ...cell, count }], seed, {
@@ -69,8 +67,13 @@ describe('guaranteed primary asset families', () => {
           })[0].type,
       ),
     );
-    expect(chains).toContainEqual(['choga', 'hanok', 'hanokEstate']);
-    expect(chains.every((chain) => chain[2] === 'hanokEstate')).toBe(true);
+    const top = chains.map((chain) => chain[2]);
+    expect(top.filter(isNaturalSelection).length).toBeGreaterThanOrEqual(280);
+    expect(new Set(top.filter(isNaturalSelection)).size).toBeGreaterThanOrEqual(6);
+    expect(new Set(top.filter((type) => !isNaturalSelection(type))).size).toBeGreaterThanOrEqual(3);
+    expect(top).toContain('hanokEstate');
+    expect(chains.some((chain) => chain[0] === 'choga')).toBe(true);
+    expect(chains.some((chain) => chain[1] === 'hanok')).toBe(true);
   });
 
   it('retains distinctive seasonal primaries without lowering the reward stage', () => {
@@ -115,11 +118,11 @@ describe('guaranteed primary asset families', () => {
     );
   });
 
-  it('keeps the entire catalog reachable through staged primaries and bounded decorations', () => {
+  it('keeps the entire catalog reachable through daily rewards and absent-count legacy selection', () => {
     const seen = new Set<string>();
     const dates = ['2025-12-15', '2025-03-15', '2025-07-15', '2025-10-15'];
     const candidates = dates.flatMap((date, day) =>
-      [1, 5, 10, 25, 50].flatMap((count, stage) =>
+      [undefined, 1, 5, 10, 25, 50].flatMap((count, stage) =>
         [12, 26, 40, 58, 70, 85, 99].map((level100, index) => ({
           ...cell,
           date,

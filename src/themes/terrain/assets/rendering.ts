@@ -8,6 +8,7 @@ import { ASSET_RENDERERS } from './renderers.js';
 import { selectAssets } from './selection.js';
 import type { ArtStyle } from '../../../core/render-options.js';
 import { renderPixelAsset } from '../pixel/render.js';
+import type { AssetSymbols } from '../scene/asset-symbols.js';
 
 export function renderCatalogAsset(
   type: AssetType,
@@ -23,6 +24,7 @@ export function renderAssetPlacements(
   placed: readonly PlacedAsset[],
   palettes: TerrainPalette100 | readonly TerrainPalette100[],
   artStyle: ArtStyle = 'miniature',
+  symbols?: AssetSymbols,
 ): string {
   const paletteFor = (week: number): TerrainPalette100 => {
     if ('assets' in palettes) return palettes;
@@ -32,22 +34,31 @@ export function renderAssetPlacements(
   const parts = placed.map((asset) => {
     const palette = paletteFor(asset.cell.week);
     const art =
-      artStyle === 'pixel'
-        ? renderPixelAsset(
+      symbols && !asset.animated
+        ? symbols.render(
             asset.type,
-            asset.cx + asset.ox,
-            asset.cy + asset.oy,
             palette.assets,
             asset.variant,
+            asset.cx + asset.ox,
+            asset.cy + asset.oy,
+            artStyle,
           )
-        : withMotionContext({ ...context, mode: asset.animated ? context.mode : 'off' }, () =>
-            ASSET_RENDERERS[asset.type](
+        : artStyle === 'pixel'
+          ? renderPixelAsset(
+              asset.type,
               asset.cx + asset.ox,
               asset.cy + asset.oy,
               palette.assets,
               asset.variant,
-            ),
-          );
+            )
+          : withMotionContext({ ...context, mode: asset.animated ? context.mode : 'off' }, () =>
+              ASSET_RENDERERS[asset.type](
+                asset.cx + asset.ox,
+                asset.cy + asset.oy,
+                palette.assets,
+                asset.variant,
+              ),
+            );
     return `<g data-asset-id="${escapeXml(asset.id)}" data-catalog-id="${asset.catalogId}" data-date="${escapeXml(asset.date ?? '')}">${art}</g>`;
   });
   return `<g class="terrain-assets">${parts.join('')}</g>`;

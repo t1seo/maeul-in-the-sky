@@ -12,6 +12,7 @@ import { renderAssetPlacements } from '../assets/rendering.js';
 import { isEpicBuildingType } from '../epics/catalog.js';
 import { renderEpicBuildings } from '../epics.js';
 import type { ArtStyle } from '../../../core/render-options.js';
+import type { AssetSymbols } from './asset-symbols.js';
 
 export type SceneDrawable =
   | { readonly kind: 'path'; readonly value: NeighborhoodPath }
@@ -41,6 +42,7 @@ function renderDrawable(
   cells: ReadonlyMap<string, IsoCell>,
   palettes: TerrainPalette100[],
   artStyle: ArtStyle,
+  symbols?: AssetSymbols,
 ): string {
   const value = item.value;
   const palette = palettes[value.week];
@@ -78,6 +80,7 @@ function renderDrawable(
         ],
         palettes,
         artStyle,
+        symbols,
       );
     }
     case 'wonder':
@@ -111,6 +114,7 @@ export function renderDepthLayer(
   isoCells: readonly IsoCell[],
   palettes: TerrainPalette100[],
   artStyle: ArtStyle = scene.settings.artStyle,
+  symbols?: AssetSymbols,
 ): string {
   const cells = new Map(
     isoCells.flatMap((cell) => (cell.date ? [[cell.date, cell] as const] : [])),
@@ -121,7 +125,7 @@ export function renderDepthLayer(
         `<g data-placement-id="${escapeXml(item.value.id)}" data-catalog-id="${escapeXml(item.value.catalogId)}"` +
         ` data-anchor-date="${item.value.anchorDate}" data-draw-order="${item.value.drawOrder}"` +
         (item.kind === 'asset' && item.value.decorative ? ' data-decorative="true"' : '') +
-        `>${renderDrawable(item, cells, palettes, artStyle)}</g>`,
+        `>${renderDrawable(item, cells, palettes, artStyle, symbols)}</g>`,
     )
     .join('')}</g>`;
 }

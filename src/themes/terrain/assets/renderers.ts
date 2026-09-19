@@ -30,6 +30,7 @@ import * as seasonalSummerLemonade from './renderers/seasonal-summer-lemonade.js
 import * as seasonalAutumnAutumnMaple from './renderers/seasonal-autumn-autumn-maple.js';
 import * as seasonalAutumnCornStalk from './renderers/seasonal-autumn-corn-stalk.js';
 import * as seasonalAutumnAppleBasket from './renderers/seasonal-autumn-apple-basket.js';
+import { NATURE_RENDERERS } from './renderers/nature.js';
 
 import { svgHanok, svgPavilion, svgStoneWall, svgOnggi } from './renderers/korean-village.js';
 import {
@@ -244,4 +245,5 @@ export const ASSET_RENDERERS: Record<AssetType, AssetRenderer> = {
   kimchiGarden: svgKimchiGarden,
   stoneBridge: svgStoneBridge,
   hanokEstate: svgHanokEstate,
+  ...NATURE_RENDERERS,
 };

@@ -87,8 +87,8 @@ describe('Wonder miniature rendering contract', () => {
     const lit = EPIC_RENDERERS[id](0, 0, dark);
     const relocated = `<g transform="translate(-13,8)">${EPIC_RENDERERS[id](13, -8, light)}</g>`;
     // Then: paint and coordinate changes never alter the object geometry.
-    expect(alpha(raster(lit))).toEqual(alpha(raster(original)));
-    expect(raster(relocated)).toEqual(raster(original));
+    expect(alpha(raster(lit)).equals(alpha(raster(original)))).toBe(true);
+    expect(raster(relocated).equals(raster(original))).toBe(true);
     expect(EPIC_RENDERERS[id](0, 0, light)).toBe(original);
   });
 
@@ -105,7 +105,7 @@ describe('Wonder miniature rendering contract', () => {
     // Then: only motion disappears, with the entire shape and material preserved.
     expect(full).toMatch(/<animateTransform|epic-glow-pulse|epic-portal-swirl/);
     expect(off).not.toMatch(/<animate|epic-glow-pulse|epic-portal-swirl/);
-    expect(raster(full)).toEqual(raster(off));
+    expect(raster(full).equals(raster(off))).toBe(true);
   });
 
   it.each(ids)('renders a visible native-size %s without external resources', (id) => {

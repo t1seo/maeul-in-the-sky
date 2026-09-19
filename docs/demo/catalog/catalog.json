@@ -1,8 +1,8 @@
 {
   "assets": {
     "counts": {
-      "total": 202,
-      "classic": 189,
+      "total": 210,
+      "classic": 197,
       "korean": 13
     },
     "entries": [
@@ -2833,6 +2833,118 @@
           "height": 25
         },
         "description": "A substantial hanok compound with a main giwa-roofed hall, side wings, timber latticework and an open stone courtyard."
+      },
+      {
+        "id": "cedarGrove",
+        "displayName": "Cedar Grove",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -8,
+          "y": -17,
+          "width": 16,
+          "height": 19
+        },
+        "description": "Layered evergreen cedars with tiered boughs, exposed roots and three distinct grove silhouettes."
+      },
+      {
+        "id": "ancientOak",
+        "displayName": "Ancient Oak",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -8,
+          "y": -18,
+          "width": 16,
+          "height": 20
+        },
+        "description": "A venerable oak with a broad lobed crown, gnarled roots, a hollow trunk and seasonal foliage."
+      },
+      {
+        "id": "wildflowerMeadow",
+        "displayName": "Wildflower Meadow",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -8,
+          "y": -10,
+          "width": 16,
+          "height": 12
+        },
+        "description": "A flowering meadow with leafy banks, tall flower spires or broad petalled blooms."
+      },
+      {
+        "id": "bambooThicket",
+        "displayName": "Bamboo Thicket",
+        "category": "woodland",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -8,
+          "y": -17,
+          "width": 16,
+          "height": 19
+        },
+        "description": "A grove of jointed evergreen bamboo canes with fanned leaves and small grounding stones."
+      },
+      {
+        "id": "lotusPond",
+        "displayName": "Lotus Pond",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -8,
+          "y": -8,
+          "width": 16,
+          "height": 11
+        },
+        "description": "An irregular pool with veined floating leaves, layered lotus blooms and waterside shoots."
+      },
+      {
+        "id": "reedMarsh",
+        "displayName": "Reed Marsh",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -8,
+          "y": -13,
+          "width": 16,
+          "height": 16
+        },
+        "description": "A shallow marsh with distinct stands of arching reed blades, cattail heads and reflected ripples."
+      },
+      {
+        "id": "alpineRocks",
+        "displayName": "Alpine Rocks",
+        "category": "shore",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -8,
+          "y": -12,
+          "width": 16,
+          "height": 14
+        },
+        "description": "Weathered alpine crags, layered slabs or a natural stone arch with moss and tufted grasses."
+      },
+      {
+        "id": "willowPond",
+        "displayName": "Willow Pond",
+        "category": "water",
+        "season": "all",
+        "style": "classic",
+        "bounds": {
+          "x": -8,
+          "y": -14,
+          "width": 16,
+          "height": 17
+        },
+        "description": "A quiet pool shaded by sweeping willow curtains, with floating leaves and a mossy bank."
       }
     ]
   },
@@ -3658,7 +3770,7 @@
   },
   "gallery": {
     "familyCounts": {
-      "nature": 116,
+      "nature": 124,
       "building": 37,
       "decoration": 36,
       "wonder": 30,
@@ -6895,6 +7007,134 @@
           "y": -20,
           "width": 24,
           "height": 25
+        }
+      },
+      {
+        "id": "cedarGrove",
+        "kind": "asset",
+        "displayName": "Cedar Grove",
+        "description": "Layered evergreen cedars with tiered boughs, exposed roots and three distinct grove silhouettes.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -8,
+          "y": -17,
+          "width": 16,
+          "height": 19
+        }
+      },
+      {
+        "id": "ancientOak",
+        "kind": "asset",
+        "displayName": "Ancient Oak",
+        "description": "A venerable oak with a broad lobed crown, gnarled roots, a hollow trunk and seasonal foliage.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -8,
+          "y": -18,
+          "width": 16,
+          "height": 20
+        }
+      },
+      {
+        "id": "wildflowerMeadow",
+        "kind": "asset",
+        "displayName": "Wildflower Meadow",
+        "description": "A flowering meadow with leafy banks, tall flower spires or broad petalled blooms.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -8,
+          "y": -10,
+          "width": 16,
+          "height": 12
+        }
+      },
+      {
+        "id": "bambooThicket",
+        "kind": "asset",
+        "displayName": "Bamboo Thicket",
+        "description": "A grove of jointed evergreen bamboo canes with fanned leaves and small grounding stones.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "woodland",
+        "bounds": {
+          "x": -8,
+          "y": -17,
+          "width": 16,
+          "height": 19
+        }
+      },
+      {
+        "id": "lotusPond",
+        "kind": "asset",
+        "displayName": "Lotus Pond",
+        "description": "An irregular pool with veined floating leaves, layered lotus blooms and waterside shoots.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -8,
+          "y": -8,
+          "width": 16,
+          "height": 11
+        }
+      },
+      {
+        "id": "reedMarsh",
+        "kind": "asset",
+        "displayName": "Reed Marsh",
+        "description": "A shallow marsh with distinct stands of arching reed blades, cattail heads and reflected ripples.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -8,
+          "y": -13,
+          "width": 16,
+          "height": 16
+        }
+      },
+      {
+        "id": "alpineRocks",
+        "kind": "asset",
+        "displayName": "Alpine Rocks",
+        "description": "Weathered alpine crags, layered slabs or a natural stone arch with moss and tufted grasses.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "shore",
+        "bounds": {
+          "x": -8,
+          "y": -12,
+          "width": 16,
+          "height": 14
+        }
+      },
+      {
+        "id": "willowPond",
+        "kind": "asset",
+        "displayName": "Willow Pond",
+        "description": "A quiet pool shaded by sweeping willow curtains, with floating leaves and a mossy bank.",
+        "family": "nature",
+        "style": "classic",
+        "season": "all",
+        "category": "water",
+        "bounds": {
+          "x": -8,
+          "y": -14,
+          "width": 16,
+          "height": 17
         }
       },
       {

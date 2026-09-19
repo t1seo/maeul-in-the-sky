@@ -52,6 +52,7 @@ const variants = [
   'whale',
   'fish',
   'boat',
+  'sailboat',
   'seagull',
 ] as const;
 const moving = [

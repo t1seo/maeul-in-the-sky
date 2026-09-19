@@ -18,6 +18,37 @@ export type SceneBiome = {
 export type RewardTier = 0 | 1 | 2 | 3 | 4 | 5;
 export type PositiveRewardTier = Exclude<RewardTier, 0>;
 
+export type ConsistencyTier = 0 | 1 | 2 | 3;
+
+export type ConsistencyProgress = {
+  readonly activeDays: number;
+  readonly observedDays: number;
+  readonly tier: ConsistencyTier;
+};
+
+export type ConsistencyEffectKind =
+  'springPetals' | 'summerFireflies' | 'autumnLeaves' | 'winterFrost';
+
+export type ConsistencyParticle = {
+  readonly x: number;
+  readonly y: number;
+  readonly size: number;
+};
+
+export type SceneConsistencyEffect = {
+  readonly id: string;
+  readonly kind: ConsistencyEffectKind;
+  readonly anchorDate: string;
+  readonly week: number;
+  readonly day: number;
+  readonly cx: number;
+  readonly cy: number;
+  readonly tier: Exclude<ConsistencyTier, 0>;
+  readonly activeDays: number;
+  readonly particles: readonly ConsistencyParticle[];
+  readonly footprint: SceneBounds;
+};
+
 export type SceneCell = {
   readonly date: string;
   readonly week: number;
@@ -26,6 +57,7 @@ export type SceneCell = {
   readonly count: number;
   readonly level100: number;
   readonly rewardTier?: RewardTier;
+  readonly consistency?: ConsistencyProgress;
   readonly height: number;
   readonly isoX: number;
   readonly isoY: number;
@@ -86,12 +118,12 @@ export type NeighborhoodPath = {
 
 export type LayoutSeedPolicy = {
   readonly root: string;
-  readonly policy: 'username-date-v1' | 'username-date-v2';
+  readonly policy: 'username-date-v1' | 'username-date-v2' | 'username-date-v3';
 };
 
 export type TerrainScene = {
   readonly schemaVersion: 1;
-  readonly layoutVersion: 1 | 2;
+  readonly layoutVersion: 1 | 2 | 3;
   readonly username: string;
   readonly year: number;
   readonly fromDate: string;
@@ -105,6 +137,7 @@ export type TerrainScene = {
   readonly placements: readonly ScenePlacement[];
   readonly wonders: readonly SceneWonderPlacement[];
   readonly rewards?: readonly SceneDailyReward[];
+  readonly consistencyEffects?: readonly SceneConsistencyEffect[];
   readonly neighborhoodPaths: readonly NeighborhoodPath[];
   readonly bounds: SceneBounds;
 };
@@ -116,15 +149,17 @@ export type TerrainCellMetadata = {
   readonly day: number;
   readonly level100: number;
   readonly rewardTier?: RewardTier;
+  readonly consistency?: ConsistencyProgress;
   readonly biome: SceneBiome;
   readonly assetIds: readonly string[];
   readonly wonderIds: readonly string[];
   readonly rewardIds?: readonly string[];
+  readonly consistencyEffectIds?: readonly string[];
 };
 
 export type TerrainMetadata = {
   readonly schemaVersion: 1;
-  readonly layoutVersion: 1 | 2;
+  readonly layoutVersion: 1 | 2 | 3;
   readonly username: string;
   readonly year: number;
   readonly fromDate: string;
@@ -139,6 +174,7 @@ export type TerrainMetadata = {
   readonly placements: readonly ScenePlacement[];
   readonly wonders: readonly SceneWonderPlacement[];
   readonly rewards?: readonly SceneDailyReward[];
+  readonly consistencyEffects?: readonly SceneConsistencyEffect[];
   readonly neighborhoodPaths: readonly NeighborhoodPath[];
 };
 

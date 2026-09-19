@@ -34,10 +34,12 @@ The output is a pair of standalone SVG files. They work in profile READMEs, swit
 - Deterministic isometric Terrain with 100 elevation levels
 - Four calendar-aligned seasons with distinct foliage, silhouettes and material colors
 - Procedural rivers, ponds, forests, weather, and ambient animation
-- 202 ordinary asset IDs: 189 classic and 13 Korean, with 68 seasonal and 134 year-round IDs
+- 210 ordinary asset IDs: 197 classic and 13 Korean, with 68 seasonal and 142 year-round IDs
 - 30 discoverable Epic Wonders across Rare, Epic, and Legendary tiers
-- Refreshed artwork for all 223 existing IDs plus 9 new Korean rural IDs: 232 in total
+- Refreshed artwork plus 9 Korean rural and 8 nature additions: 240 catalog IDs in total
+- Nature-led compositions with sparse architecture, varied water scenery and three silhouettes per new nature asset
 - Independent miniature/pixel artwork and daily rewards based on raw contribution counts
+- Seasonal consistency effects earned through active days in the trailing 28-day window
 - Dark and light SVGs with accessible titles, descriptions, and reduced-motion support
 - Northern and Southern Hemisphere season mapping
 - Visible contribution range, active days, streaks, busiest month, and Wonder count
@@ -53,7 +55,7 @@ Presets change the mix of extra decorations. They do not change contribution cou
 |                                                             Nature                                                             |                                                               Balanced                                                               |                                                                   Civilization                                                                   |
 | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------: |
 | [![Nature preset](docs/demo/assets/preset-nature-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=nature&mode=dark) | [![Balanced preset](docs/demo/assets/preset-balanced-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=balanced&mode=dark) | [![Civilization preset](docs/demo/assets/preset-civilization-dark.svg)](https://t1seo.github.io/maeul-in-the-sky/?preset=civilization&mode=dark) |
-|                                                   More forests and open land                                                   |                                                       Nature, farms, and towns                                                       |                                                      More buildings on everyday active days                                                      |
+|                                                   Light decoration and open space                                                   |                                                       Balanced scenery details                                                       |                                                      Richer decoration on active days                                                      |
 |                                                        `preset: nature`                                                        |                                                          `preset: balanced`                                                          |                                                              `preset: civilization`                                                              |
 
 ## Quick start
@@ -270,9 +272,15 @@ Settings links contain configuration, including username/title, but no counts, t
 
 ## Layout, motion and stable villages
 
-Dark and light shade one prepared scene with matching geometry, ordinary assets and Wonders. New scenes emit `layoutVersion: 2`, using normalized username, optional `layoutSeed` and absolute dates for deterministic random identities. Existing version-1 scenes remain renderable; regenerating them uses version 2 and can change placements. With fixed normalization and unchanged local context, overlapping interior dates retain terrain and ordinary placements when a rolling range shifts; screen positions move with the window. Relative P90 can change heights, neighbors can change eligibility, and the global Wonder budget can change selections. Different settings/ranges or layout versions need not produce identical pixels. Source timestamps do not affect placement.
+Dark and light shade one prepared scene with matching geometry, ordinary assets and Wonders. New scenes emit `layoutVersion: 3`, using normalized username, optional `layoutSeed` and absolute dates for deterministic random identities. Existing version-1 and version-2 prepared scenes remain renderable; regenerating data uses version 3 and changes asset, biome and Wonder selection seeds. With fixed normalization and unchanged local context, overlapping interior dates retain terrain and ordinary placements when a rolling range shifts; screen positions move with the window. Relative P90 can change heights, neighbors can change eligibility, and the global Wonder budget can change selections. Different settings/ranges or layout versions need not produce identical pixels. Source timestamps do not affect placement.
 
-Seasons follow real dates and hemisphere: spring flowers and new leaves, full summer foliage, autumn color and harvests, winter snow and bare branches. Seasonal material colors reinforce those silhouettes. Korean culture retains `hanok`, `pavilion`, `stoneWall` and `onggi`, adding `choga`, `jangseung`, `sotdae`, `riceTerrace`, `koreanWatermill`, `hanokGate`, `kimchiGarden`, `stoneBridge` and `hanokEstate`. Higher-tier ordinary rewards use Korean rural architecture, with paths between eligible neighborhood buildings. Counts and Wonder gates stay unchanged.
+Seasons follow real dates and hemisphere: spring flowers and new leaves, full summer foliage, autumn color and harvests, winter snow and bare branches. Seasonal material colors reinforce those silhouettes. Korean culture retains `hanok`, `pavilion`, `stoneWall` and `onggi`, adding `choga`, `jangseung`, `sotdae`, `riceTerrace`, `koreanWatermill`, `hanokGate`, `kimchiGarden`, `stoneBridge` and `hanokEstate`. Higher-tier ordinary rewards mix substantial natural scenery with sparse Korean rural architecture, with paths between eligible neighborhood buildings. Counts and Wonder gates stay unchanged.
+
+Nature now appears throughout the reward ladder. New cedar groves, ancient oaks, wildflower meadows, bamboo thickets, lotus ponds, reed marshes, alpine rocks and willow ponds each have three geometric variants. Architecture and vessels remain occasional focal points. Candidate IDs are deduplicated after culture mapping, and absolute-date spatial variation reduces neighboring repeated silhouettes without using neighboring contribution counts.
+
+Daily primary assets and consistency effects follow calendar seasons: December–February winter, March–May spring, June–August summer and September–November autumn in the north, shifted six months in the south. Terrain colors still blend gradually between seasons. Neutral gray bars explain contribution height without reusing seasonal colors.
+
+Consistency rewards count positive-contribution days in the inclusive trailing 28 calendar days. At 5, 12 and 20 active days, seasonal petals, fireflies, leaves or frost gain detail. Only supplied dates count; metadata records observed days separately, so unavailable history is not mistaken for measured inactivity. At most 10 effect groups are displayed, anchored to active days. These are decorative rewards, not additional contributions or a claim of an unbroken streak; ordinary daily tiers remain 0/1/5/10/25/50. Off, subtle and reduced-motion output retain static reward shapes.
 
 `artStyle` changes artwork while preserving selected IDs, dates, counts and reward tiers. The default `miniature` uses detailed SVG artwork; `pixel` uses compiled SVG paths on a logical **0.5 SVG-unit grid**, with a limited palette whose colors still adapt to season and dark/light mode. Pixel asset rendering needs no runtime Resvg or external bitmap. The grid describes asset geometry, not physical screen pixels: scene fitting and external fractional scaling can soften edges or prevent exact pixel alignment.
 
@@ -350,7 +358,7 @@ Local stylesheet selectors are restricted to their annual row so generic rules k
 
 ## Catalog and reproducible previews
 
-The [interactive catalog](https://t1seo.github.io/maeul-in-the-sky/catalog/) groups assets by domain, season and culture, with separate Wonder tiers and a miniature/pixel selector. It includes all 13 Korean IDs. Counts and SVG/PNG sheets come from the renderer registries: **202 ordinary IDs = 189 classic + 13 Korean**; 68 are seasonal and 134 are year-round. **30 Wonders = 14 Rare + 10 Epic + 6 Legendary**, counted separately, for **232 total IDs**. Variants, art styles and instances do not increase ID totals.
+The [interactive catalog](https://t1seo.github.io/maeul-in-the-sky/catalog/) groups assets by domain, season and culture, with separate Wonder tiers and a miniature/pixel selector. It includes all 13 Korean IDs. Counts and SVG/PNG sheets come from the renderer registries: **210 ordinary IDs = 197 classic + 13 Korean**; 68 are seasonal and 142 are year-round. **30 Wonders = 14 Rare + 10 Epic + 6 Legendary**, counted separately, for **240 total IDs**. Variants, art styles and instances do not increase ID totals.
 
 After editing artwork, regenerate the compiled pixel assets. Check for drift before tests or builds, then regenerate the previews/catalog:
 

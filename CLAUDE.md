@@ -32,7 +32,7 @@ src/
 │       ├── seasons.ts     # 4-season system (8 zones, tinting, asset overrides)
 │       ├── biomes.ts      # Procedural biome generation (rivers, ponds, forests)
 │       ├── effects/       # Clouds, celestials, water overlays, and particles
-│       ├── assets/        # 202 ordinary catalog IDs and modular renderers
+│       ├── assets/        # 210 ordinary catalog IDs and modular renderers
 │       └── epics/         # 30 separately counted Wonder gates/renderers
 ├── demo/                  # Portable enhanced demo controllers
 ├── preview/               # Loopback-only authenticated preview service
@@ -57,6 +57,7 @@ src/
 - **Projection**: Prepared scenes fit their complete calendar bounds into banner/card viewports; the legacy block helper retains caller-supplied origins such as x=405
 - **Contribution Calendar**: Sunday-based weeks with date-positioned days; edge weeks may be partial
 - **Season zones**: Prepared scenes derive the 8 zones (0-7) from each absolute UTC date relative to December 1, including supported years 1–9999
+- **Calendar rewards**: Dated primary assets and consistency effects use calendar seasons (December–February winter in the north, shifted six months in the south), independently of gradual terrain color transitions
 - **Season rotation**: Legacy helpers retain `computeSeasonRotation(oldestDate, hemisphere)` for caller-provided week grids
 - **Hemisphere**: Southern hemisphere adds +26 to rotation (6-month shift)
 - **Seeded RNG**: Scene identities derive from layout version, normalized username, optional layout seed, and absolute dates/weeks; lighting mode never changes placements
@@ -117,8 +118,10 @@ npx tsx scripts/generate-catalog.ts docs/demo/catalog # Generate registry catalo
 - SVG viewport: 840 x 240
 - `THW = 8` (tile half-width), `THH = 3.5` (tile half-height)
 - Grid: all supplied Sunday-based weeks and available days, including partial edge weeks
-- Catalog: 202 ordinary IDs (189 classic + 13 Korean), including 68 seasonal IDs; 30 Wonders are counted separately, for 232 total IDs
+- Catalog: 210 ordinary IDs (197 classic + 13 Korean), including 68 seasonal IDs; 30 Wonders are counted separately, for 240 total IDs
 - Culture (`classic`/`korean`) and art style (`miniature`/`pixel`) are independent; existing settings default to miniature
-- Pixel sprites are generated offline for all 232 IDs and 636 variant slots; run `npm run generate:pixel` after artwork changes, then `npm run check:pixel`
-- Layout version 2 derives daily rewards from raw contribution counts at 0/1/5/10/25/50; decoration density does not lower a reward tier or replace its guaranteed primary asset
+- Pixel sprites are generated offline for all 240 IDs and 660 variant slots; run `npm run generate:pixel` after artwork changes, then `npm run check:pixel`
+- Layout version 3 derives daily rewards from raw contribution counts at 0/1/5/10/25/50; decoration density does not lower a reward tier or replace its guaranteed primary asset
+- New nature IDs have three geometric variants; composition remains date-stable and nature-led at high daily tiers
+- Consistency effects use trailing 28 calendar days, active thresholds 5/12/20, observed-day metadata, and at most 10 groups replacing town sparkles; old v1/v2 prepared scenes remain renderable
 - Animation budget: 50 max (water 15, sparkle 10, clouds 2, windmills 4, flags 4)

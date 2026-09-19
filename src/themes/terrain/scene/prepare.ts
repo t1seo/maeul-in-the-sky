@@ -18,6 +18,8 @@ import { neighborhoodPaths } from './neighborhood.js';
 import { sceneBounds } from './bounds.js';
 import { dailyRewardPlacements } from './rewards.js';
 import { getDailyRewardTier } from '../assets/progression.js';
+import { consistencyByDate } from '../../../core/consistency.js';
+import { consistencyEffectPlacements } from './consistency.js';
 
 export function prepareTerrainScene(
   data: ContributionData,
@@ -49,6 +51,7 @@ export function prepareTerrainScene(
       : computeP90Max(grid.map((cell) => cell.count));
   const enriched = enrichGridCells100(grid, data, { kind: 'fixed', maxCount });
   const isoCells = toIsoCells(enriched, getTerrainPalette100('light'), 0, 0);
+  const consistency = consistencyByDate(grid);
   const cells: SceneCell[] = isoCells.map((cell) => {
     if (cell.date === undefined || cell.count === undefined || cell.absoluteWeek === undefined) {
       throw new InputValidationError([
@@ -63,12 +66,13 @@ export function prepareTerrainScene(
       absoluteWeek: cell.absoluteWeek,
       level100: cell.level100,
       rewardTier: getDailyRewardTier(cell.count),
+      consistency: consistency.get(cell.date),
       height: cell.height,
       isoX: cell.isoX,
       isoY: cell.isoY,
     };
   });
-  const root = `layout-v2:${data.username.trim().toLowerCase()}:${settings.layoutSeed ?? ''}`;
+  const root = `layout-v3:${data.username.trim().toLowerCase()}:${settings.layoutSeed ?? ''}`;
   const seed = hash(root);
   const firstAbsoluteWeek = Math.min(...cells.map((cell) => cell.absoluteWeek));
   const weekCount = cells.length ? Math.max(...cells.map((cell) => cell.week)) + 1 : 0;
@@ -89,9 +93,10 @@ export function prepareTerrainScene(
   ].sort((a, b) => a.id.localeCompare(b.id));
   const paths = neighborhoodPaths(cells, placements, biomeMap);
   const rewards = dailyRewardPlacements(cells);
+  const consistencyEffects = consistencyEffectPlacements(cells, root, settings.hemisphere);
   return {
     schemaVersion: 1,
-    layoutVersion: 2,
+    layoutVersion: 3,
     username: data.username,
     year: data.year,
     fromDate: stats.fromDate,
@@ -103,7 +108,7 @@ export function prepareTerrainScene(
       source: settings.normalization.kind === 'fixed' ? 'explicit-fixed' : 'relative-p90',
     },
     stats,
-    seed: { root, policy: 'username-date-v2' },
+    seed: { root, policy: 'username-date-v3' },
     cells,
     biomes: cells.flatMap((cell) => {
       const biome = biomeMap.get(`${cell.week},${cell.day}`);
@@ -112,7 +117,13 @@ export function prepareTerrainScene(
     placements,
     wonders,
     rewards,
+    consistencyEffects,
     neighborhoodPaths: paths,
-    bounds: sceneBounds(cells, [...placements, ...wonders, ...rewards], paths),
+    bounds: sceneBounds(
+      cells,
+      [...placements, ...wonders, ...rewards],
+      paths,
+      consistencyEffects.map((effect) => effect.footprint),
+    ),
   };
 }

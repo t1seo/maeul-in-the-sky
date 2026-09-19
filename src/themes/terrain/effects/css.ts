@@ -7,6 +7,7 @@ const MAX_SPARKLE = 10;
 export function renderTerrainCSS(
   isoCells: IsoCell[],
   biomeMap?: Map<string, BiomeContext>,
+  townSparkles = true,
 ): string {
   const mode = currentMotionContext().mode;
   if (mode === 'off') return '';
@@ -37,7 +38,7 @@ export function renderTerrainCSS(
   }
 
   const hasWater = isoCells.some((c) => c.level100 >= 10 && c.level100 <= 22);
-  const hasTown = isoCells.some((c) => c.level100 >= 90);
+  const hasTown = townSparkles && isoCells.some((c) => c.level100 >= 90);
 
   if (hasWater) {
     blocks.push(
