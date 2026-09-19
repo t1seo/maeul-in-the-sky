@@ -42,9 +42,12 @@ export function parseWorldSourceUrl(input: string, options: WorldUrlOptions = {}
   if (!permitted(url, options.pageUrl))
     throw new WorldDataError('invalid_url', 'Use an HTTPS GitHub Pages or raw GitHub JSON URL.');
   if (url.searchParams.has('world')) {
+    const views = url.searchParams.getAll('view');
     if (
-      [...url.searchParams.keys()].some((key) => key !== 'world') ||
-      url.searchParams.getAll('world').length !== 1
+      [...url.searchParams.keys()].some((key) => key !== 'world' && key !== 'view') ||
+      url.searchParams.getAll('world').length !== 1 ||
+      views.length > 1 ||
+      views.some((view) => view !== 'three' && view !== 'map')
     )
       throw new WorldDataError('invalid_url', 'A visit link must contain one world JSON URL.');
     url = parseUrl(url.searchParams.get('world') ?? '');
@@ -57,7 +60,11 @@ export function parseWorldSourceUrl(input: string, options: WorldUrlOptions = {}
   return url.href;
 }
 
-export function createWorldShareUrl(appUrl: string, publicSourceUrl?: string): string {
+export function createWorldShareUrl(
+  appUrl: string,
+  publicSourceUrl?: string,
+  view?: 'map' | 'three',
+): string {
   if (!publicSourceUrl)
     throw new WorldDataError('unpublished', 'Publish the JSON file before sharing a world link.');
   const source = parseWorldSourceUrl(publicSourceUrl);
@@ -69,5 +76,6 @@ export function createWorldShareUrl(appUrl: string, publicSourceUrl?: string): s
     );
   app.search = '';
   app.searchParams.set('world', source);
+  if (view === 'three') app.searchParams.set('view', view);
   return app.href;
 }

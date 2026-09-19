@@ -12,6 +12,7 @@ export const layoutChoices = [
   ['archipelago', 'Monthly islands'],
   ['island', 'One large island'],
   ['seasonal', 'Seasonal islands'],
+  ['seasonal-circle', 'Four-season circle'],
 ] as const;
 
 export function mountLayoutPage(): void {

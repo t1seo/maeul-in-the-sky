@@ -1,0 +1,74 @@
+name: Maeul Three Profile Capture
+description: Capture a frozen four-season Three.js island from an existing contribution snapshot.
+inputs:
+  snapshot_path:
+    description: Existing maeul-snapshot JSON path, relative to the caller workspace or absolute.
+    required: true
+  output_dir:
+    description: Directory for the canonical world and both PNG postcards, relative to the caller workspace or absolute.
+    required: false
+    default: .
+outputs:
+  world_path:
+    description: Absolute path to maeul-in-the-sky-world.json.
+    value: ${{ steps.paths.outputs.world }}
+  light_png_path:
+    description: Absolute path to maeul-in-the-sky-world-light.png.
+    value: ${{ steps.paths.outputs.light }}
+  dark_png_path:
+    description: Absolute path to maeul-in-the-sky-world-dark.png.
+    value: ${{ steps.paths.outputs.dark }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+    - name: Resolve caller snapshot and output paths
+      id: paths
+      shell: bash
+      env:
+        MAEUL_SNAPSHOT_PATH: ${{ inputs.snapshot_path }}
+        MAEUL_OUTPUT_DIR: ${{ inputs.output_dir }}
+      run: |
+        node --input-type=module <<'NODE'
+        import { appendFileSync } from 'node:fs';
+        import { resolve } from 'node:path';
+        const workspace = process.env.GITHUB_WORKSPACE;
+        const output = process.env.GITHUB_OUTPUT;
+        if (!workspace || !output || !process.env.MAEUL_SNAPSHOT_PATH) throw new Error('Missing capture paths.');
+        const input = resolve(workspace, process.env.MAEUL_SNAPSHOT_PATH);
+        const directory = resolve(workspace, process.env.MAEUL_OUTPUT_DIR || '.');
+        const paths = {
+          input, directory,
+          world: resolve(directory, 'maeul-in-the-sky-world.json'),
+          light: resolve(directory, 'maeul-in-the-sky-world-light.png'),
+          dark: resolve(directory, 'maeul-in-the-sky-world-dark.png'),
+        };
+        for (const [key, value] of Object.entries(paths)) {
+          if (/[\r\n]/.test(value)) throw new Error('Capture paths must not contain newlines.');
+          appendFileSync(output, `${key}=${value}\n`);
+        }
+        NODE
+    - name: Install optional capture tooling from this checkout
+      shell: bash
+      env:
+        MAEUL_ACTION_PATH: ${{ github.action_path }}
+        HUSKY: '0'
+      run: |
+        cd "$MAEUL_ACTION_PATH/.."
+        export PLAYWRIGHT_BROWSERS_PATH="${RUNNER_TEMP:-/tmp}/maeul-profile-browsers"
+        npm ci --include=dev
+        node node_modules/@playwright/test/cli.js install --with-deps chromium
+    - name: Render and validate the complete profile capture
+      shell: bash
+      env:
+        MAEUL_ACTION_PATH: ${{ github.action_path }}
+        MAEUL_SNAPSHOT_PATH: ${{ steps.paths.outputs.input }}
+        MAEUL_OUTPUT_DIR: ${{ steps.paths.outputs.directory }}
+      run: |
+        cd "$MAEUL_ACTION_PATH/.."
+        env -i PATH="$PATH" HOME="$HOME" TMPDIR="${RUNNER_TEMP:-/tmp}" \
+          PLAYWRIGHT_BROWSERS_PATH="${RUNNER_TEMP:-/tmp}/maeul-profile-browsers" \
+          node --import tsx scripts/render-profile.ts \
+          --input "$MAEUL_SNAPSHOT_PATH" --output-dir "$MAEUL_OUTPUT_DIR"

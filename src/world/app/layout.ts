@@ -8,6 +8,7 @@ export const LAYOUT_LABELS = {
   archipelago: 'Monthly islands',
   island: 'One large island',
   seasonal: 'Seasonal islands',
+  'seasonal-circle': 'Four-season circle',
 } as const satisfies Record<WorldSettings['layout'], string>;
 
 const LAYOUT_NOTES = {
@@ -15,6 +16,8 @@ const LAYOUT_NOTES = {
   island: 'All months connect into one island, from January to December.',
   seasonal:
     'Months in the same season share an island. A full year has four islands; shorter ranges show only the seasons included.',
+  'seasonal-circle':
+    'One round sky island with four seasonal landscapes and waterfalls. Dates keep their own month and year; unrecorded areas remain scenery.',
 } as const satisfies Record<WorldSettings['layout'], string>;
 
 export const CALENDAR_SEASON_LABELS = {
@@ -37,21 +40,23 @@ export function paintLayout(session: WorldSession, rebuildNavigation: boolean): 
         const group = months.filter(
           (month) => calendarSeason(`${month}-15`, scene.settings.hemisphere) === season,
         );
-        if (group.length === 0) return [];
+        if (group.length === 0 && scene.settings.layout !== 'seasonal-circle') return [];
         const item = text('li', '');
         item.dataset.season = season;
         item.append(
           text('strong', label),
           text(
             'span',
-            group
-              .map((month, index) => {
-                const year = month.slice(0, 4);
-                const showYear =
-                  multipleYears && (index === 0 || year !== group[index - 1]?.slice(0, 4));
-                return `${monthLabel(month, 'short')}${showYear ? ` ${year}` : ''}`;
-              })
-              .join(' · '),
+            group.length === 0
+              ? 'Landscape only · No records'
+              : group
+                  .map((month, index) => {
+                    const year = month.slice(0, 4);
+                    const showYear =
+                      multipleYears && (index === 0 || year !== group[index - 1]?.slice(0, 4));
+                    return `${monthLabel(month, 'short')}${showYear ? ` ${year}` : ''}`;
+                  })
+                  .join(' · '),
           ),
         );
         return [item];

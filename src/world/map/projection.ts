@@ -117,7 +117,21 @@ export function focusView(
       break;
     case 'month': {
       const regions = scene.regions.filter((region) => region.monthKey === focus.monthKey);
-      const points = regions.flatMap((region) => region.boundary);
+      const ids = new Set(regions.map((region) => region.id));
+      const circular = scene.settings.layout === 'seasonal-circle';
+      const tiles = frame.terrain.tiles.filter((tile) =>
+        circular ? tile.date?.slice(0, 7) === focus.monthKey : ids.has(tile.regionId),
+      );
+      const points = circular
+        ? tiles.flatMap((tile) =>
+            [-0.5, 0.5].flatMap((x) =>
+              [-0.5, 0.5].map((z) => ({
+                x: tile.position.x + x * tile.size,
+                z: tile.position.z + z * tile.size,
+              })),
+            ),
+          )
+        : regions.flatMap((region) => region.boundary);
       if (points.length === 0) return view;
       const bounds = {
         min: {
@@ -132,8 +146,6 @@ export function focusView(
         },
       };
       target = boundsCenter(bounds);
-      const ids = new Set(regions.map((region) => region.id));
-      const tiles = frame.terrain.tiles.filter((tile) => ids.has(tile.regionId));
       zoom = focusZoom(scene, view, viewport, monthSize(tiles, bounds), 8);
       break;
     }

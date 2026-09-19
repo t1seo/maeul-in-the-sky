@@ -17,7 +17,7 @@ afterEach(async () => {
   document.body.replaceChildren();
 });
 
-test('offers three named landforms while keeping the separate Classic selector', async () => {
+test('offers four named landforms while keeping the separate Classic selector', async () => {
   // Given the world explorer.
   app = await openLayoutApp();
   // When its layout choices are read.
@@ -50,7 +50,7 @@ test.each(layoutChoices)(
     expect(html('stat-contributions').textContent).toBe(total);
     expect(html('map-caption').textContent).toContain(label);
     expect(html('layout-note').textContent).toContain(
-      layout === 'island' ? 'connect' : layout === 'seasonal' ? 'season' : 'month',
+      layout === 'island' ? 'connect' : layout === 'archipelago' ? 'month' : 'season',
     );
   },
 );
@@ -72,6 +72,23 @@ test('shows only represented seasons for a partial range', async () => {
   expect(legend.textContent).toContain('Mar');
   expect(legend.textContent).toContain('Winter');
   expect(legend.textContent).toContain('Feb');
+});
+
+test('identifies unrecorded circle quarters as scenery without creating month navigation', async () => {
+  const source = inputFor([['2024-02-28', 3]], 2024, { from: '2024-02-28', to: '2024-02-29' });
+  const running = await openLayoutApp(source);
+  app = running;
+
+  await chooseLayout(running, 'seasonal-circle');
+
+  expect(html('season-legend').querySelectorAll('[data-season]')).toHaveLength(4);
+  expect(html('season-legend').textContent).toContain('Landscape only · No records');
+  expect(
+    [...html('month-nav').querySelectorAll<HTMLButtonElement>('button')].map(
+      (node) => node.dataset.month,
+    ),
+  ).toEqual(['2024-02']);
+  expect(html('stat-contributions').textContent).toBe('3');
 });
 
 test('keeps geographic season labels when a southern scene gets a scenery override', async () => {

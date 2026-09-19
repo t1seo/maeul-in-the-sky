@@ -42,26 +42,41 @@ export function renderMapLabels(
     winter: 'Winter',
   } as const;
   const groups =
-    scene.settings.layout === 'seasonal'
-      ? scene.islands
-          .map((island) => {
-            const first = island.monthKeys[0];
-            if (!first) return undefined;
-            const season = calendarSeason(`${first}-15`, scene.settings.hemisphere);
-            return {
-              keys: island.monthKeys,
-              attribute: `data-season-label="${season}" data-months="${island.monthKeys.join(' ')}"`,
-              label: seasonNames[season],
-              title: `${seasonNames[season]} · ${island.monthKeys.join(' · ')}`,
-            };
-          })
-          .filter((group) => group !== undefined)
-      : [...new Set(scene.regions.map((region) => region.monthKey))].map((monthKey) => ({
-          keys: [monthKey],
-          attribute: `data-month-label="${monthKey}"`,
-          label: monthKey,
-          title: monthKey,
-        }));
+    scene.settings.layout === 'seasonal-circle'
+      ? Object.entries(seasonNames).map(([season, label]) => {
+          const keys = [...new Set(scene.regions.map((region) => region.monthKey))].filter(
+            (key) => calendarSeason(`${key}-15`, scene.settings.hemisphere) === season,
+          );
+          const months = [...new Set(scene.days.map((day) => day.monthKey))].filter((key) =>
+            keys.includes(key),
+          );
+          return {
+            keys,
+            attribute: `data-season-label="${season}" data-months="${months.join(' ')}"`,
+            label,
+            title: `${label} · ${months.length ? months.join(' · ') : 'Landscape'}`,
+          };
+        })
+      : scene.settings.layout === 'seasonal'
+        ? scene.islands
+            .map((island) => {
+              const first = island.monthKeys[0];
+              if (!first) return undefined;
+              const season = calendarSeason(`${first}-15`, scene.settings.hemisphere);
+              return {
+                keys: island.monthKeys,
+                attribute: `data-season-label="${season}" data-months="${island.monthKeys.join(' ')}"`,
+                label: seasonNames[season],
+                title: `${seasonNames[season]} · ${island.monthKeys.join(' · ')}`,
+              };
+            })
+            .filter((group) => group !== undefined)
+        : [...new Set(scene.regions.map((region) => region.monthKey))].map((monthKey) => ({
+            keys: [monthKey],
+            attribute: `data-month-label="${monthKey}"`,
+            label: monthKey,
+            title: monthKey,
+          }));
   const labels = groups.map((group) => {
     const regions = scene.regions.filter((region) => group.keys.includes(region.monthKey));
     const points = regions.flatMap((region) => region.boundary);

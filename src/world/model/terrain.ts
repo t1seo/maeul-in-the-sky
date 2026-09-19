@@ -22,6 +22,16 @@ export type MonthTerrain = {
   readonly tiles: readonly WorldTile[];
   readonly regions: readonly WorldRegion[];
   readonly waterways: readonly WorldWaterway[];
+  readonly plotLookup?: ReadonlyMap<string, WorldTile>;
+  readonly reservedTileIds?: ReadonlySet<string>;
+};
+
+export type WorldGeography = {
+  readonly months: readonly MonthTerrain[];
+  readonly terrain: WorldTerrain;
+  readonly islands: readonly WorldIsland[];
+  readonly regions: readonly WorldRegion[];
+  readonly projectTiles?: readonly WorldTile[];
 };
 
 function prepareMonth(
@@ -106,12 +116,7 @@ function prepareMonth(
 export function prepareTerrain(
   days: readonly WorldDay[],
   input: PreparedWorldInput,
-): {
-  readonly months: readonly MonthTerrain[];
-  readonly terrain: WorldTerrain;
-  readonly islands: readonly WorldIsland[];
-  readonly regions: readonly WorldRegion[];
-} {
+): WorldGeography {
   const keys = [...new Set(days.map((day) => day.monthKey))];
   const months = connectMonths(
     keys.map((key) =>

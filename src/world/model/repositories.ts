@@ -3,7 +3,7 @@ import { hashKey } from './math.js';
 import { reservedPlotKeys } from './scenery.js';
 import type { PreparedWorldInput } from './input.js';
 import type { MonthTerrain } from './terrain.js';
-import type { WorldEntity, WorldEvent } from './types.js';
+import type { WorldEntity, WorldEvent, WorldTile } from './types.js';
 import { WorldModelError } from './errors.js';
 
 export function repositoryEntities(
@@ -11,6 +11,7 @@ export function repositoryEntities(
   months: readonly MonthTerrain[],
   seed: string,
   occupied: readonly WorldEntity[],
+  projectTiles?: readonly WorldTile[],
 ): {
   readonly entities: readonly WorldEntity[];
   readonly events: readonly WorldEvent[];
@@ -23,15 +24,13 @@ export function repositoryEntities(
       .map((entity) => `${entity.position.x}:${entity.position.z}`),
     ...months.flatMap(reservedPlotKeys),
   ]);
-  const candidates = months
-    .flatMap((month) => month.tiles)
-    .filter(
-      (tile) =>
-        tile.source === 'scenery' &&
-        tile.surface !== 'water' &&
-        tile.surface !== 'path' &&
-        !occupiedPositions.has(`${tile.position.x}:${tile.position.z}`),
-    );
+  const candidates = (projectTiles ?? months.flatMap((month) => month.tiles)).filter(
+    (tile) =>
+      tile.source === 'scenery' &&
+      tile.surface !== 'water' &&
+      tile.surface !== 'path' &&
+      !occupiedPositions.has(`${tile.position.x}:${tile.position.z}`),
+  );
   const used = new Set<string>();
   for (const repo of input.repositories) {
     const ranked = candidates

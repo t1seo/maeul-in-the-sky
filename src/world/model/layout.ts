@@ -2,6 +2,7 @@ import { calendarSeason } from './dates.js';
 import { landCells } from './landform.js';
 import type { LandCell } from './landform.js';
 import { hashKey } from './math.js';
+import { WorldModelError } from './errors.js';
 import type { PreparedWorldInput } from './input.js';
 import type { Vec3, WorldSeason } from './types.js';
 
@@ -26,6 +27,8 @@ export function monthLayout(monthKey: string, input: PreparedWorldInput): MonthL
   const seed = hashKey(`${input.snapshot.username}:${input.settings.layoutSeed}:${monthKey}`);
   const layout = input.settings.layout;
   switch (layout) {
+    case 'seasonal-circle':
+      throw new WorldModelError('INVALID_INPUT', 'Circular terrain uses its shared disk layout');
     case 'archipelago':
     case 'island': {
       const pitch = layout === 'island' ? 12 : 20;

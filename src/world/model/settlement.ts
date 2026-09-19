@@ -5,6 +5,11 @@ import type { MonthTerrain } from './terrain.js';
 import type { WorldDay, WorldEntity, WorldSettings, WorldTile } from './types.js';
 
 export function monthTile(month: MonthTerrain, x: number, z: number): WorldTile {
+  if (month.plotLookup) {
+    const tile = month.plotLookup.get(`${x},${z}`);
+    if (!tile) throw new RangeError(`Missing circular plot in ${month.monthKey}: ${x},${z}`);
+    return tile;
+  }
   const target = monthPoint(month.origin, month.rotation, x, z);
   const tile = month.tiles.find(
     (item) => item.position.x === target.x && item.position.z === target.z,

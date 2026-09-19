@@ -26707,6 +26707,7 @@ var package_default = {
     build: "tsup && npm run build:demo && tsx scripts/package-runtime-assets.ts",
     "build:demo": "tsx scripts/build-demo.ts && npm run build:world",
     "build:world": "tsx scripts/build-world.ts",
+    "render:profile": "tsx scripts/render-profile.ts",
     dev: "tsup --watch",
     test: "vitest run",
     "test:watch": "vitest",

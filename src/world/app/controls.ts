@@ -41,7 +41,9 @@ export function setupControls(session: WorldSession, signal: AbortSignal): () =>
     );
   }
   change('world-layout', (value) =>
-    session.rebuild({ layout: z.enum(['archipelago', 'island', 'seasonal']).parse(value) }),
+    session.rebuild({
+      layout: z.enum(['archipelago', 'island', 'seasonal', 'seasonal-circle']).parse(value),
+    }),
   );
   change('world-culture', (value) =>
     session.rebuild({ culture: z.enum(['classic', 'korean']).parse(value) }),
