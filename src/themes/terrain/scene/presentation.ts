@@ -1,10 +1,10 @@
 import type { TerrainScene } from '../../../core/scene-types.js';
 import type { ThemePalette } from '../../../core/types.js';
 import type { TerrainPalette100 } from '../palette.js';
-import { formatNumber, svgText } from '../../../core/svg.js';
+import { escapeXml, formatNumber, svgElement, svgText } from '../../../core/svg.js';
 import { renderTitle, renderSubtitle, renderStatsBar } from '../../shared.js';
 import { renderCalendarTimeline } from './calendar-timeline.js';
-import { renderHeightLegend } from './legend.js';
+import { renderVillageCollection } from './collection.js';
 
 const FONT = "'Segoe UI', system-ui, sans-serif";
 
@@ -33,12 +33,26 @@ export function renderPresentation(scene: TerrainScene, palette: TerrainPalette1
     : 'No contribution dates supplied';
   const sparseNote =
     scene.stats.total === 0 && scene.cells.length ? 'Garden decorations · 0 contributions' : '';
+  const heightDescription =
+    'Terrain height follows daily contributions. ' +
+    `${scene.normalization.kind === 'fixed' ? 'Fixed' : 'Relative'} scale from 0 to ${formatNumber(scene.normalization.maxCount)} contributions. ` +
+    'Terrain colors follow the seasons.';
+  const heightNote = svgElement(
+    'g',
+    {
+      class: 'terrain-height-description',
+      role: 'note',
+      'aria-label': heightDescription,
+    },
+    svgElement('desc', {}, escapeXml(heightDescription)),
+  );
   if (!card) {
     return (
       renderTitle(compactTitle, themePalette) +
       renderSubtitle(scene.stats, scene.wonders.length, themePalette) +
       renderStatsBar(scene.stats, themePalette) +
-      renderHeightLegend(scene, palette) +
+      renderVillageCollection(scene, palette) +
+      heightNote +
       renderCalendarTimeline(scene, palette) +
       (sparseNote ? svgText(24, 148, sparseNote, { ...font, 'font-size': 10 }) : '') +
       (!scene.cells.length ? svgText(24, 148, range, { ...font, 'font-size': 10 }) : '')
@@ -64,6 +78,7 @@ export function renderPresentation(scene: TerrainScene, palette: TerrainPalette1
           }),
       )
       .join('')}</g>` +
-    renderHeightLegend(scene, palette)
+    renderVillageCollection(scene, palette) +
+    heightNote
   );
 }

@@ -147,13 +147,13 @@ export function svgShellfish(x: number, y: number, c: AssetColors, _v: number): 
 
 export function svgCattail(x: number, y: number, c: AssetColors, _v: number): string {
   return (
-    `<g transform="translate(${x},${y})" ${motionMarkup('class="sway-gentle"')}>` +
+    `<g transform="translate(${x},${y})"><g ${motionMarkup('class="sway-gentle"')}>` +
     `<path d="M-.85,.1Q-1.7,-1.75 -1.8,-3.4Q-.55,-2.6 -.2,.05M.4,.1Q.75,-2.75 1.8,-3.8Q1.7,-1.4 1,.2Z" fill="${c.cattail}"/>` +
     `<path d="M-.45,.1L-.75,-6.1M.45,0L.65,-6.8" stroke="${c.cattail}" stroke-width=".34"/>` +
     `<path d="M-.1,.1Q-.85,-2.6 -.45,-4.2Q.3,-2.55 .4,.1Z" fill="${c.leafLight}"/>` +
     `<path d="M-1.1,-6.1Q-.8,-6.55 -.42,-6.1L-.36,-4.55Q-.65,-4.15 -.99,-4.55ZM.3,-6.8Q.6,-7.25 1,-6.8L.9,-5.15Q.5,-4.8 .25,-5.2Z" fill="${c.trunk}"/>` +
     `<path d="M-.94,-6L-.85,-4.85M.48,-6.7L.42,-5.55" stroke="${c.wheat}" stroke-width=".18"/>` +
-    `</g>`
+    `</g></g>`
   );
 }
 

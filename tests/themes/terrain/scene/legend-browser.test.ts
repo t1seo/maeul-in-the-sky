@@ -5,7 +5,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { renderTerrain } from '../../../../src/themes/terrain/index.js';
 import { calendarFixture, sceneOptions } from './fixtures.js';
 
-const evidence = '.orca/maeul-improvements/evidence/legend';
+const evidence = '.orca/seasonal-fix/evidence/collection';
 const cases = [
   { name: 'banner-dark', layout: 'banner', mode: 'dark', displayWidth: 840 },
   { name: 'banner-light', layout: 'banner', mode: 'light', displayWidth: 840 },
@@ -26,12 +26,12 @@ afterAll(async () => {
   await browser?.close();
 }, 45_000);
 
-describe('terrain legend real browser and raster QA', () => {
+describe('Village collection real browser and raster QA', () => {
   it.each(cases)(
     'keeps $name cues legible and separated',
     async (specimen) => {
       // Given: the public renderer produces a complete static leap-year scene.
-      const pair = renderTerrain(calendarFixture('2000-01-01', 366, 4), {
+      const pair = renderTerrain(calendarFixture('2000-01-01', 366, 80), {
         ...sceneOptions,
         layout: specimen.layout,
         width: specimen.layout === 'card' ? 420 : 840,
@@ -57,7 +57,7 @@ describe('terrain legend real browser and raster QA', () => {
         const layout = await svg.evaluate((root) => {
           const rootBounds = root.getBoundingClientRect();
           const selectors = {
-            legend: '.height-legend',
+            collection: '.village-collection',
             timeline: '.calendar-timeline',
             terrain: '.terrain-fit',
             stats: '.stats-bar',
@@ -92,14 +92,22 @@ describe('terrain legend real browser and raster QA', () => {
             root: rootBounds,
             boxes,
             visibleText,
-            swatches: root.querySelectorAll('.height-legend-swatch').length,
+            oldSwatches: root.querySelectorAll('.height-legend-swatch').length,
+            badges: root.querySelectorAll('.collection-badge').length,
+            seasons: root.querySelectorAll('.collection-season').length,
+            collectionTexts: [...root.querySelectorAll('.village-collection text')].map((node) =>
+              node.getBoundingClientRect(),
+            ),
             cues: root.querySelectorAll('.calendar-cue').length,
             timelineOverlap,
           };
         });
 
         // Then: every presentation element stays in bounds and avoids reserved content.
-        expect(layout.swatches).toBe(5);
+        expect(layout.oldSwatches).toBe(0);
+        expect(layout.badges).toBeGreaterThan(0);
+        expect(layout.badges).toBeLessThanOrEqual(3);
+        expect(layout.seasons).toBe(4);
         expect(layout.cues).toBeGreaterThanOrEqual(4);
         expect(layout.timelineOverlap).toBe(false);
         for (const box of Object.values(layout.boxes)) {
@@ -122,13 +130,23 @@ describe('terrain legend real browser and raster QA', () => {
               left.bottom > right.top + 1,
             );
           return [
-            intersects(box('.height-legend'), box('.terrain-fit')),
-            intersects(box('.height-legend'), box('.stats-bar')),
+            intersects(box('.village-collection'), box('.terrain-fit')),
+            intersects(box('.village-collection'), box('.stats-bar')),
             intersects(box('.calendar-timeline'), box('.terrain-fit')),
             intersects(box('.calendar-timeline'), box('.stats-bar')),
           ];
         });
         expect(overlapping).toEqual([false, false, false, false]);
+        const collectionBounds = layout.boxes.collection;
+        expect(collectionBounds).not.toBeNull();
+        if (collectionBounds) {
+          for (const text of layout.collectionTexts) {
+            expect(text.left).toBeGreaterThanOrEqual(collectionBounds.left - 1);
+            expect(text.right).toBeLessThanOrEqual(collectionBounds.right + 1);
+            expect(text.top).toBeGreaterThanOrEqual(collectionBounds.top - 1);
+            expect(text.bottom).toBeLessThanOrEqual(collectionBounds.bottom + 1);
+          }
+        }
         for (const text of layout.visibleText) {
           expect(text.bounds.left).toBeGreaterThanOrEqual(layout.root.left - 1);
           expect(text.bounds.right).toBeLessThanOrEqual(layout.root.right + 1);

@@ -2993,7 +2993,7 @@ function svgShellfish(x, y, c, _v) {
   return `<g transform="translate(${x},${y})"><path d="M-.8,.45L-2.2,-.3Q-2.45,-.8 -1.95,-.95Q-1.9,-1.4 -1.4,-1.2Q-1,-1.65 -.7,-1.2Q-.15,-1.4 -.1,-.95Q.55,-.65 .15,-.2ZM1.45,.45L.35,-.25Q.15,-.8 .65,-.9Q.85,-1.4 1.3,-1.1Q1.9,-1.5 2,-.95Q2.65,-.85 2.5,-.3Z" fill="${c.shellfish}"/><path d="M-.8,.45L-2.2,-.3L-2.25,-.65L-.8,.12L.25,-.45L.15,-.2ZM1.45,.45L.35,-.25L.3,-.6L1.45,.12L2.5,-.55L2.5,-.3Z" fill="${c.trunk}" opacity=".32"/><path d="M-.8,.1L-1.7,-.9M-.8,.1L-1.15,-1.15M-.8,.1L-.55,-1.05M1.45,.1L.75,-.8M1.45,.1L1.25,-1M1.45,.1L1.9,-.95" stroke="${c.sail}" stroke-width=".18" fill="none"/></g>`;
 }
 function svgCattail(x, y, c, _v) {
-  return `<g transform="translate(${x},${y})" ${motionMarkup('class="sway-gentle"')}><path d="M-.85,.1Q-1.7,-1.75 -1.8,-3.4Q-.55,-2.6 -.2,.05M.4,.1Q.75,-2.75 1.8,-3.8Q1.7,-1.4 1,.2Z" fill="${c.cattail}"/><path d="M-.45,.1L-.75,-6.1M.45,0L.65,-6.8" stroke="${c.cattail}" stroke-width=".34"/><path d="M-.1,.1Q-.85,-2.6 -.45,-4.2Q.3,-2.55 .4,.1Z" fill="${c.leafLight}"/><path d="M-1.1,-6.1Q-.8,-6.55 -.42,-6.1L-.36,-4.55Q-.65,-4.15 -.99,-4.55ZM.3,-6.8Q.6,-7.25 1,-6.8L.9,-5.15Q.5,-4.8 .25,-5.2Z" fill="${c.trunk}"/><path d="M-.94,-6L-.85,-4.85M.48,-6.7L.42,-5.55" stroke="${c.wheat}" stroke-width=".18"/></g>`;
+  return `<g transform="translate(${x},${y})"><g ${motionMarkup('class="sway-gentle"')}><path d="M-.85,.1Q-1.7,-1.75 -1.8,-3.4Q-.55,-2.6 -.2,.05M.4,.1Q.75,-2.75 1.8,-3.8Q1.7,-1.4 1,.2Z" fill="${c.cattail}"/><path d="M-.45,.1L-.75,-6.1M.45,0L.65,-6.8" stroke="${c.cattail}" stroke-width=".34"/><path d="M-.1,.1Q-.85,-2.6 -.45,-4.2Q.3,-2.55 .4,.1Z" fill="${c.leafLight}"/><path d="M-1.1,-6.1Q-.8,-6.55 -.42,-6.1L-.36,-4.55Q-.65,-4.15 -.99,-4.55ZM.3,-6.8Q.6,-7.25 1,-6.8L.9,-5.15Q.5,-4.8 .25,-5.2Z" fill="${c.trunk}"/><path d="M-.94,-6L-.85,-4.85M.48,-6.7L.42,-5.55" stroke="${c.wheat}" stroke-width=".18"/></g></g>`;
 }
 function svgFrog(x, y, c, _v) {
   return `<g transform="translate(${x},${y})"><path d="M-.65,-.95Q-1.65,-1.3 -1.8,-.45L-1.3,.1L-1.8,.5L-.65,.4L-.35,-.05M.65,-.95Q1.65,-1.3 1.8,-.45L1.3,.1L1.8,.5L.65,.4L.35,-.05" fill="${c.pine}"/><path d="M-1,-.4Q-1.2,-1 -.85,-1.45Q-1.3,-2.1 -.65,-2.15Q-.25,-2.25 0,-1.75Q.3,-2.25 .7,-2.15Q1.3,-2 .9,-1.45Q1.4,-.15 .45,.05L-.45,.05Z" fill="${c.frog}"/><path d="M-.8,-1.4Q0,-1.85 .85,-1.3L.45,-.65L-.45,-.65Z" fill="${c.leafLight}"/><path d="M-.6,-.45L-.6,.35L-.95,.5M.6,-.45L.6,.35L.95,.5" stroke="${c.frog}" stroke-width=".28" fill="none"/><path d="M-.65,-1.85v.25M.65,-1.85v.25M-.3,-.95Q0,-.75 .3,-.95" stroke="${c.shadow}" stroke-width=".18" stroke-linecap="round" fill="none"/></g>`;
@@ -3080,7 +3080,7 @@ function svgWildflowerPatch(x, y, c, _v) {
   return `<g transform="translate(${x},${y})"><path d="M-2,.2 Q-1.5,-.8 -.8,-.2 Q0,-1.15 .8,-.4 Q1.8,-1 2.2,0Z" fill="${c.bushDark}"/><path d="M-1.45,0 -1.7,-2.1 M.1,0 -.1,-2.8 M1.2,0 1.55,-1.85" stroke="${c.pine}" stroke-width=".22" fill="none"/><path d="M-1.5,-.6 Q-2.6,-1.35 -2.3,-1.65 Q-1.4,-1.35 -1.5,-.6 M.1,-.8 Q.5,-1.85 1,-1.8 Q1.05,-1 .1,-.8" fill="${c.leafLight}"/><path d="M-1.7,-2.1 C-3,-2.15 -2.55,-3 -1.95,-2.8 C-1.9,-3.65 -.8,-3.2 -1.15,-2.7 C-.4,-2.2 -1,-1.6 -1.7,-2.1Z" fill="${c.flower}"/><path d="M-.1,-2.65 C-1.1,-2.8 -.8,-3.6 -.2,-3.3 C.15,-4 .9,-3.4 .5,-3 C1.2,-2.35 .4,-1.95 -.1,-2.65Z" fill="${c.wildflower}"/><path d="M1.4,-1.85 C.55,-2.2 1.1,-2.8 1.55,-2.4 C2,-3 2.6,-2.4 2.15,-2 C2.75,-1.4 1.9,-1 1.4,-1.85Z" fill="${c.butterflyWing}"/><path d="M-1.85,-2.45a.23,.2 0 1 0 .46,0a.23,.2 0 1 0 -.46,0 M-.16,-2.95a.23,.2 0 1 0 .46,0a.23,.2 0 1 0 -.46,0 M1.48,-2.05a.2,.18 0 1 0 .4,0a.2,.18 0 1 0 -.4,0" fill="${c.flowerCenter}"/></g>`;
 }
 function svgTallGrass(x, y, c, _v) {
-  return `<g transform="translate(${x},${y})" ${motionMarkup('class="sway-gentle"')}><path d="M-.8,.1 Q-1.6,-2.6 -2.5,-3 Q-.7,-2.6 -.2,-.4 Q.1,-3.2 1.5,-4.2 Q.5,-2 .65,0Z" fill="${c.bushDark}"/><path d="M-.85,.1 Q-1.6,-3 -.9,-4.5 Q-.85,-2 -.1,-.5 Q-.2,-3.7 .4,-4.6 Q.4,-1.8 .7,-.5 Q1.25,-2.4 2.5,-2.85 Q1.1,-1 .85,.15Z" fill="${c.tallGrass}"/><path d="M-.8,0 Q-1.05,-2.3 -.9,-4.5 Q-.7,-1.9 -.25,-.2Z M.15,-.3 Q.05,-2.7 .4,-4.6 L.5,-1.3Z" fill="${c.leafLight}"/></g>`;
+  return `<g transform="translate(${x},${y})"><g ${motionMarkup('class="sway-gentle"')}><path d="M-.8,.1 Q-1.6,-2.6 -2.5,-3 Q-.7,-2.6 -.2,-.4 Q.1,-3.2 1.5,-4.2 Q.5,-2 .65,0Z" fill="${c.bushDark}"/><path d="M-.85,.1 Q-1.6,-3 -.9,-4.5 Q-.85,-2 -.1,-.5 Q-.2,-3.7 .4,-4.6 Q.4,-1.8 .7,-.5 Q1.25,-2.4 2.5,-2.85 Q1.1,-1 .85,.15Z" fill="${c.tallGrass}"/><path d="M-.8,0 Q-1.05,-2.3 -.9,-4.5 Q-.7,-1.9 -.25,-.2Z M.15,-.3 Q.05,-2.7 .4,-4.6 L.5,-1.3Z" fill="${c.leafLight}"/></g></g>`;
 }
 function birch(c, leaning) {
   const lean = leaning ? -0.7 : 0;
@@ -24252,6 +24252,9 @@ var init_render = __esm({
 });
 
 // src/themes/terrain/epics/rendering.ts
+function renderCatalogEpic(type, colors, artStyle = "miniature") {
+  return artStyle === "pixel" ? renderPixelAsset(type, 0, 0, colors) : EPIC_RENDERERS[type](0, 0, colors);
+}
 function renderEpicGlowDefs(mode) {
   const tiers = [
     { id: "epic-glow-rare", color: "#FFD700", darkOuter: 0, lightOuter: 0 },
@@ -25424,6 +25427,29 @@ var init_surface_water = __esm({
   }
 });
 
+// src/themes/terrain/effects/seasonal-weather-clip.ts
+function clipSeasonalWeather(markup, bounds) {
+  if (!markup) return "";
+  const id = motionId("seasonal-weather-clip");
+  return `<defs><clipPath id="${id}" clipPathUnits="userSpaceOnUse"><rect x="${svgNumber(bounds.x)}" y="${svgNumber(bounds.y)}" width="${svgNumber(bounds.width)}" height="${svgNumber(bounds.height)}"/></clipPath></defs><g data-weather-clip="viewport" clip-path="url(#${id})">${markup}</g>`;
+}
+function clipSeasonalWeatherToCells(markup, cells, kind) {
+  const id = motionId(`seasonal-${kind}-clip`);
+  const airspace = cells.map(
+    (cell) => `M${svgNumber(cell.isoX - THW)},${svgNumber(cell.isoY - 28)}h${THW * 2}v${28 + THH}h${-THW * 2}Z`
+  ).join("");
+  return `<defs><clipPath id="${id}" clipPathUnits="userSpaceOnUse"><path d="${airspace}"/></clipPath></defs><g data-weather-clip="${kind}" clip-path="url(#${id})">${markup}</g>`;
+}
+var init_seasonal_weather_clip = __esm({
+  "src/themes/terrain/effects/seasonal-weather-clip.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_animation();
+    init_svg();
+    init_blocks();
+  }
+});
+
 // src/themes/terrain/effects/seasonal-weather.ts
 function weatherCells(cells, kind) {
   return seasonalSurfaceCells(cells, WEATHER[kind].season);
@@ -25435,19 +25461,21 @@ function seasonalWeatherTargets(cells) {
     )
   );
 }
-function weatherShape(kind, x, y) {
+function weatherShape(kind, x, y, size, flip) {
   const start = `M${x.toFixed(1)},${y.toFixed(1)}`;
+  const n = (value) => (value * size).toFixed(2);
+  const dx = (value) => n(value * flip);
   switch (kind) {
     case "snow":
-      return `${start}a.45,.45 0 1 0 .9,0a.45,.45 0 1 0-.9,0`;
+      return `${start}a${n(0.8)},${n(0.8)} 0 1 0 ${n(1.6)},0a${n(0.8)},${n(0.8)} 0 1 0-${n(1.6)},0`;
     case "petals":
-      return `${start}q.8,-.9 1.2,-.2q-.3,.8-1.2,.2Z`;
+      return `${start}q${dx(1.3)},${n(-1.8)} ${dx(2.4)},${n(-0.5)}q${dx(-0.2)},${n(1.9)} ${dx(-2.4)},${n(0.5)}Z`;
     case "butterflies":
       return `${start}c-1.5,-2.1-2.7,.4 0,.8c2.7,-.4 1.5,-2.1 0,-.8Z`;
     case "rain":
-      return `${start}l-.8,2.6`;
+      return `${start}l${n(-1.3)},${n(4.8)}`;
     case "leaves":
-      return `${start}q1.5,-.7 1.8,.3q-1.3,.8-1.8,-.3Z`;
+      return `${start}q${dx(1.6)},${n(-1.8)} ${dx(3.2)},${n(0.2)}q${dx(-1.5)},${n(1.7)} ${dx(-3.2)},${n(-0.2)}Z`;
     default: {
       const exhaustive = kind;
       return exhaustive;
@@ -25457,15 +25485,34 @@ function weatherShape(kind, x, y) {
 function weatherColor(kind, palette, phase) {
   switch (kind) {
     case "snow":
-      return "#fff";
+      return phase ? palette.assets.snowCap : palette.assets.frostWhite;
     case "petals":
-      return palette.assets.cherryPetalPink;
+      return phase ? palette.assets.cherryPetalPink : palette.assets.flower;
     case "butterflies":
       return palette.assets.fallenLeafGold;
     case "rain":
-      return palette.assets.waterLight;
+      return phase ? palette.assets.fountainWater : palette.assets.waterLight;
     case "leaves":
-      return phase ? palette.assets.fallenLeafOrange : palette.assets.fallenLeafRed;
+      return phase ? palette.assets.fallenLeafGold : palette.assets.fallenLeafOrange;
+    default: {
+      const exhaustive = kind;
+      return exhaustive;
+    }
+  }
+}
+function weatherPaint(kind, palette, phase) {
+  const color = weatherColor(kind, palette, phase);
+  switch (kind) {
+    case "rain":
+      return `fill="none" stroke="${color}" stroke-width="${phase ? ".65" : ".8"}" stroke-linecap="round"`;
+    case "snow":
+      return `fill="${color}" stroke="${palette.assets.frozenWater}" stroke-width=".25"`;
+    case "petals":
+      return `fill="${color}" stroke="${palette.assets.flower}" stroke-width=".25"`;
+    case "leaves":
+      return `fill="${color}" stroke="${palette.assets.fallenLeafBrown}" stroke-width=".25"`;
+    case "butterflies":
+      return `fill="${color}"`;
     default: {
       const exhaustive = kind;
       return exhaustive;
@@ -25477,33 +25524,60 @@ function renderSeasonalWeather(cells, seed, palette) {
     seasonalWeatherTargets(cells).slice(0, currentSurfaceContext()?.weatherMotionLimit ?? 10)
   );
   return KINDS.map((kind) => {
-    const selected = selectEvenly(weatherCells(cells, kind), WEATHER[kind].count);
+    const seasonal = weatherCells(cells, kind);
+    const selected = selectEvenly(seasonal, WEATHER[kind].count);
     if (!selected.length) return "";
     const phases = [0, 1].map((phase) => {
       const shapes = selected.flatMap((cell, index) => {
         if (index % 2 !== phase) return [];
         const rng = seededRandom(hash(`${seed}:${kind}:${cell.date}`));
-        return weatherShape(kind, cell.isoX + (rng() - 0.5) * 6, cell.isoY - 3 - rng() * 12);
+        return weatherShape(
+          kind,
+          cell.isoX + (rng() - 0.5) * 8,
+          cell.isoY - 4 - rng() * 16,
+          0.85 + rng() * 0.65,
+          rng() < 0.5 ? -1 : 1
+        );
       });
       if (!shapes.length) return "";
-      const color = weatherColor(kind, palette, phase);
-      const paint = kind === "rain" ? `fill="none" stroke="${color}" stroke-width=".35" stroke-linecap="round"` : `fill="${color}"`;
+      const paint = weatherPaint(kind, palette, phase);
       const motion = currentMotionContext().mode === "full" && moving.has(`seasonal-${kind}-${phase}`) ? ` class="${motionId(`seasonal-${kind}-${phase}`)}"` : "";
       return `<path data-seasonal="${kind}" d="${shapes.join("")}" ${paint}${motion}/>`;
     }).join("");
-    return `<g class="${WEATHER[kind].group}" opacity="${WEATHER[kind].opacity}">${phases}</g>`;
+    return clipSeasonalWeatherToCells(
+      `<g class="${WEATHER[kind].group}" opacity="${WEATHER[kind].opacity}">${phases}</g>`,
+      seasonal,
+      kind
+    );
   }).join("");
+}
+function weatherFrames(kind) {
+  switch (kind) {
+    case "snow":
+      return "0%{transform:translate(-2px,-8px);opacity:0}15%,85%{opacity:1}35%{transform:translate(2px,0)}65%{transform:translate(-1px,7px)}100%{transform:translate(3px,16px);opacity:0}";
+    case "petals":
+      return "0%{transform:translate(-4px,-7px);opacity:0}15%,85%{opacity:1}30%{transform:translate(3px,-1px)}55%{transform:translate(-2px,5px)}80%{transform:translate(4px,10px)}100%{transform:translate(1px,15px);opacity:0}";
+    case "butterflies":
+      return "0%,100%{transform:translate(0,0)}35%{transform:translate(3px,-2px)}70%{transform:translate(-1px,-4px)}";
+    case "rain":
+      return "0%{transform:translate(3px,-12px);opacity:0}12%,88%{opacity:1}100%{transform:translate(-5px,18px);opacity:0}";
+    case "leaves":
+      return "0%{transform:translate(3px,-8px);opacity:0}15%,85%{opacity:1}25%{transform:translate(-3px,-2px)}50%{transform:translate(4px,4px)}75%{transform:translate(-2px,9px)}100%{transform:translate(2px,16px);opacity:0}";
+    default: {
+      const exhaustive = kind;
+      return exhaustive;
+    }
+  }
 }
 function renderSeasonalWeatherCSS(cells) {
   if (currentMotionContext().mode !== "full") return "";
   return KINDS.flatMap((kind) => {
     if (!weatherCells(cells, kind).length) return [];
     const name = motionId(`seasonal-${kind}`);
-    const frames = kind === "butterflies" ? "0%,100%{transform:translate(0,0)}35%{transform:translate(3px,-2px)}70%{transform:translate(-1px,-4px)}" : `0%{transform:translate(-2px,-5px);opacity:0}15%,85%{opacity:1}100%{transform:translate(${kind === "rain" ? -5 : 3}px,7px);opacity:0}`;
     return [
-      `@keyframes ${name}{${frames}}`,
+      `@keyframes ${name}{${weatherFrames(kind)}}`,
       ...[0, 1].map((phase) => {
-        const duration = WEATHER[kind].duration + phase * 2;
+        const duration = WEATHER[kind].duration * (1 + phase * 0.2);
         return `.${motionId(`seasonal-${kind}-${phase}`)}{animation:${name} ${duration}s ${kind === "butterflies" ? "ease-in-out" : "linear"} -${duration * (phase ? 0.7 : 0.3)}s infinite}`;
       })
     ];
@@ -25518,9 +25592,10 @@ var init_seasonal_weather = __esm({
     init_math();
     init_surface_context();
     init_selection3();
+    init_seasonal_weather_clip();
     WEATHER = {
-      snow: { season: "winter", count: 12, group: "snow-particles", opacity: ".55", duration: 14 },
-      petals: { season: "spring", count: 10, group: "falling-petals", opacity: ".6", duration: 12 },
+      snow: { season: "winter", count: 36, group: "snow-particles", opacity: ".82", duration: 12 },
+      petals: { season: "spring", count: 28, group: "falling-petals", opacity: ".8", duration: 8 },
       butterflies: {
         season: "spring",
         count: 3,
@@ -25528,8 +25603,8 @@ var init_seasonal_weather = __esm({
         opacity: ".65",
         duration: 16
       },
-      rain: { season: "summer", count: 12, group: "summer-rain", opacity: ".3", duration: 5 },
-      leaves: { season: "autumn", count: 10, group: "falling-leaves", opacity: ".6", duration: 13 }
+      rain: { season: "summer", count: 40, group: "summer-rain", opacity: ".62", duration: 2 },
+      leaves: { season: "autumn", count: 28, group: "falling-leaves", opacity: ".82", duration: 10 }
     };
     KINDS = ["snow", "petals", "butterflies", "rain", "leaves"];
   }
@@ -25652,7 +25727,7 @@ function renderLegacyTerrainCSS(isoCells, biomeMap, townSparkles = true) {
     `@keyframes sway-gentle { 0% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } 100% { transform: rotate(-2deg); } }`
   );
   blocks.push(
-    `.sway-gentle { animation: sway-gentle 3s ease-in-out infinite; transform-origin: bottom center; }`
+    `.sway-gentle { animation: sway-gentle 3s ease-in-out infinite; transform-origin: 0 0; }`
   );
   blocks.push(
     `@keyframes sway-slow { 0% { transform: rotate(-1deg); } 50% { transform: rotate(1deg); } 100% { transform: rotate(-1deg); } }`
@@ -26346,77 +26421,346 @@ var init_calendar_timeline = __esm({
   }
 });
 
-// src/themes/terrain/scene/legend.ts
-function scaleName(scene) {
-  return scene.normalization.kind === "fixed" ? "Fixed scale" : "Relative scale";
+// src/themes/terrain/scene/collection-data.ts
+function landscapeCollection(scene) {
+  const placed = new Set(scene.wonders.map((wonder) => wonder.catalogId));
+  const wonders = EPIC_CATALOG.filter((entry) => placed.has(entry.id)).sort(
+    (left, right) => TIER_ORDER[left.tier] - TIER_ORDER[right.tier]
+  );
+  const effects = new Set(scene.consistencyEffects?.map((effect) => effect.kind));
+  const seasonsRecorded = scene.consistencyEffects !== void 0;
+  return {
+    wonders,
+    catalogCount: EPIC_CATALOG.length,
+    unseenCount: EPIC_CATALOG.length - wonders.length,
+    seasonsRecorded,
+    seasons: SEASONAL_AURAS.map((season) => ({
+      ...season,
+      state: !seasonsRecorded ? "unrecorded" : effects.has(season.kind) ? "discovered" : "unseen"
+    }))
+  };
 }
-function renderHeightBars(palette, layout) {
-  const card = layout === "card";
-  const startX = 24;
-  const baseline = card ? 340 : 83;
-  const slotWidth = card ? 64 : 34;
-  const width = card ? 32 : 18;
-  const gap = card ? 13 : 5;
-  const labelY = card ? 354 : 97;
-  return LEGEND_BINS.map((bin, index) => {
-    const x = startX + index * (slotWidth + gap) + (slotWidth - width) / 2;
-    const height = 2 + Math.round(bin.level / 99 * 14);
-    return svgElement("rect", {
-      class: "height-legend-swatch",
-      x,
-      y: baseline - height,
-      width,
-      height,
-      rx: 1,
-      fill: palette.text.secondary,
-      "data-level": bin.level,
-      "data-bin": bin.label.toLowerCase(),
-      role: "img",
-      "aria-label": `${bin.label} contribution height; representative elevation ${bin.level} of 99`
-    }) + svgText(x + width / 2, labelY, bin.label, {
-      "font-family": FONT2,
-      "font-size": card ? 9 : 8,
-      "text-anchor": "middle",
-      fill: palette.text.secondary
-    });
-  }).join("");
+function collectionDescription(scene) {
+  const collection = landscapeCollection(scene);
+  const names = collection.wonders.map((entry) => `${entry.displayName} (${COLLECTION_RARITIES[entry.tier]})`).join("; ");
+  const seasons = collection.seasons.filter((season) => season.state === "discovered").map((season) => season.name);
+  const auras = collection.seasonsRecorded ? `Seasonal auras in this landscape: ${seasons.length ? seasons.join("; ") : "none"}.` : "Seasonal auras not recorded in this landscape.";
+  return `Village collection. In this landscape: ${collection.wonders.length} unique Wonders. ${collection.catalogCount} catalog types; ${collection.unseenCount} not seen here. ${names ? `Discovered: ${names}. ` : "No Wonders discovered here. "}${auras}`;
 }
-function renderHeightLegend(scene, palette) {
-  const card = scene.settings.layout === "card";
-  const scale = scaleName(scene);
-  const maximum = formatNumber(scene.normalization.maxCount);
-  const ariaLabel = `Contribution height legend. ${scale} from 0 to ${maximum} contributions. Five increasing bars represent terrain height. Terrain colors follow the seasons.`;
-  const heading = card ? `Height \xB7 Low \u2192 High \xB7 ${scale} 0\u2013${maximum}` : "Contribution height \xB7 Low \u2192 High";
-  const visibleScale = `${scale} \xB7 0\u2013${maximum} contributions`;
+var COLLECTION_BADGE_LIMIT, COLLECTION_RARITIES, TIER_ORDER, SEASONAL_AURAS;
+var init_collection_data = __esm({
+  "src/themes/terrain/scene/collection-data.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_catalog2();
+    COLLECTION_BADGE_LIMIT = 3;
+    COLLECTION_RARITIES = {
+      rare: "Rare",
+      epic: "Epic",
+      legendary: "Legendary"
+    };
+    TIER_ORDER = { legendary: 0, epic: 1, rare: 2 };
+    SEASONAL_AURAS = [
+      { kind: "springPetals", name: "Spring petals", label: "Petals" },
+      { kind: "summerFireflies", name: "Summer fireflies", label: "Fireflies" },
+      { kind: "autumnLeaves", name: "Autumn leaves", label: "Leaves" },
+      { kind: "winterFrost", name: "Winter frost", label: "Frost" }
+    ];
+  }
+});
+
+// src/themes/terrain/scene/collection-icons.ts
+function renderCollectionArtwork(entry, palette, box, artStyle) {
+  const bounds = entry.bounds;
+  const scale = Math.min((box.width - 2) / bounds.width, (box.height - 2) / bounds.height);
+  const x = box.x + (box.width - bounds.width * scale) / 2 - bounds.x * scale;
+  const y = box.y + (box.height - bounds.height * scale) / 2 - bounds.y * scale;
+  const artwork = withMotionContext(
+    { mode: "off", namespace: "" },
+    () => renderCatalogEpic(entry.id, palette.assets, artStyle)
+  );
   return svgElement(
     "g",
-    { class: "height-legend", role: "group", "aria-label": ariaLabel },
-    svgText(24, card ? 318 : 59, heading, {
-      "font-family": FONT2,
-      "font-size": card ? 10 : 11,
-      "font-weight": 600,
-      fill: palette.text.primary
-    }) + renderHeightBars(palette, scene.settings.layout) + (card ? "" : svgText(24, 114, visibleScale, {
-      "font-family": FONT2,
-      "font-size": 9,
-      fill: palette.text.secondary
-    }))
+    {
+      class: "collection-artwork",
+      "aria-hidden": "true",
+      transform: `translate(${svgNumber(x)} ${svgNumber(y)}) scale(${scale.toFixed(6)})`
+    },
+    artwork
   );
 }
-var FONT2, LEGEND_BINS;
-var init_legend = __esm({
-  "src/themes/terrain/scene/legend.ts"() {
+function renderCollectionSeason(season, palette, x, y, radius) {
+  const glyph = CONSISTENCY_GLYPHS[season.kind];
+  const earned = season.state === "discovered";
+  const colors = {
+    springPetals: palette.assets.cherryPetalPink,
+    summerFireflies: palette.assets.epicGold,
+    autumnLeaves: palette.assets.autumnRust,
+    winterFrost: palette.assets.epicCrystal
+  };
+  const color = earned ? colors[season.kind] : palette.text.secondary;
+  const status = {
+    discovered: "discovered in this landscape",
+    unseen: "not seen in this landscape",
+    unrecorded: "not recorded in this landscape"
+  }[season.state];
+  const label = `${season.name}, ${status}`;
+  const ring = svgElement("circle", {
+    cx: x,
+    cy: y,
+    r: radius,
+    fill: earned ? color : "none",
+    "fill-opacity": 0.12,
+    stroke: color,
+    "stroke-opacity": earned ? 0.7 : 0.35,
+    "stroke-width": 0.6,
+    ...!earned ? { "stroke-dasharray": "1.5 1.5" } : {}
+  });
+  const artwork = svgElement(
+    "g",
+    {
+      transform: `translate(${x} ${y}) scale(${radius / 2.8})`,
+      opacity: earned ? 1 : 0.35
+    },
+    svgElement("path", { d: glyph.body, fill: color }) + svgElement("path", {
+      d: glyph.detail,
+      fill: "none",
+      stroke: earned ? palette.text.primary : color,
+      "stroke-width": CONSISTENCY_STROKE,
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    })
+  );
+  return svgElement(
+    "g",
+    {
+      class: "collection-season",
+      "data-kind": season.kind,
+      "data-state": season.state,
+      role: "img",
+      "aria-label": label
+    },
+    svgElement("title", {}, escapeXml(label)) + ring + artwork
+  );
+}
+var init_collection_icons = __esm({
+  "src/themes/terrain/scene/collection-icons.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_animation();
+    init_svg();
+    init_rendering();
+    init_consistency_geometry();
+  }
+});
+
+// src/themes/terrain/scene/collection-badges.ts
+function renderCollectionBadge(entry, index, layout, palette, artStyle) {
+  const card = layout === "card";
+  const x = 32 + index * (card ? 76 : 58);
+  const y = card ? 332 : 78;
+  const width = card ? 72 : 54;
+  const height = card ? 19 : 37;
+  const rarity = entry ? COLLECTION_RARITIES[entry.tier] : "";
+  const color = entry ? {
+    rare: palette.assets.epicGold,
+    epic: palette.assets.epicMagic,
+    legendary: palette.assets.epicJade
+  }[entry.tier] : palette.text.secondary;
+  const label = entry ? `${entry.displayName} (${rarity}), discovered in this landscape` : "Undiscovered Wonder placeholder; not seen in this landscape";
+  const frame = svgElement("rect", {
+    x,
+    y,
+    width,
+    height,
+    rx: card ? 4 : 5,
+    fill: color,
+    "fill-opacity": entry ? 0.06 : 0.02,
+    stroke: color,
+    "stroke-opacity": entry ? 0.45 : 0.18,
+    "stroke-width": 0.6,
+    ...!entry ? { "stroke-dasharray": "2 2" } : {}
+  });
+  const font = { "font-family": FONT2, fill: palette.text.secondary };
+  const name = entry?.displayName ?? "Undiscovered";
+  const limit = card ? 10 : 12;
+  const shortName = name.length > limit ? `${name.slice(0, limit - 1)}\u2026` : name;
+  const artwork = entry ? renderCollectionArtwork(
+    entry,
+    palette,
+    {
+      x: x + (card ? 2 : 16),
+      y: y + 1,
+      width: card ? 19 : 22,
+      height: card ? 17 : 23
+    },
+    artStyle
+  ) : svgText(x + (card ? 11 : 27), y + (card ? 13 : 20), "?", {
+    ...font,
+    "font-size": card ? 12 : 19,
+    "text-anchor": "middle",
+    opacity: 0.38
+  });
+  const nameText = svgText(x + (card ? 24 : 27), y + (card ? 8 : 29), shortName, {
+    ...font,
+    "font-size": card ? 6.8 : 7,
+    "text-anchor": card ? "start" : "middle",
+    fill: entry ? palette.text.primary : palette.text.secondary
+  });
+  const rarityText = entry ? svgText(x + (card ? 24 : 27), y + (card ? 16 : 35), rarity, {
+    ...font,
+    "font-size": 6,
+    "text-anchor": card ? "start" : "middle"
+  }) : "";
+  return svgElement(
+    "g",
+    {
+      class: entry ? "collection-badge" : "collection-placeholder",
+      role: "img",
+      "aria-label": label,
+      ...entry ? { "data-collection-id": entry.id, "data-rarity": entry.tier } : {}
+    },
+    svgElement("title", {}, escapeXml(label)) + frame + artwork + nameText + rarityText
+  );
+}
+function renderCollectionRemainder(unseenCount, layout, palette) {
+  const card = layout === "card";
+  const x = card ? 260 : 206;
+  const y = card ? 332 : 78;
+  const width = card ? 40 : 54;
+  const label = `${unseenCount} not seen here; catalog types absent from this landscape`;
+  const font = { "font-family": FONT2, fill: palette.text.secondary, "text-anchor": "middle" };
+  const shape = svgElement("rect", {
+    x,
+    y,
+    width,
+    height: card ? 19 : 37,
+    rx: card ? 4 : 5,
+    fill: "none",
+    stroke: palette.text.secondary,
+    "stroke-opacity": 0.28,
+    "stroke-width": 0.6,
+    "stroke-dasharray": "2 2"
+  });
+  return svgElement(
+    "g",
+    {
+      class: "collection-unseen",
+      role: "img",
+      "aria-label": label
+    },
+    svgElement("title", {}, escapeXml(label)) + shape + svgText(x + width / 2, y + (card ? 8 : 20), unseenCount ? "?" : "\xB7", {
+      ...font,
+      "font-size": card ? 10 : 19,
+      opacity: 0.5
+    }) + svgText(x + width / 2, y + (card ? 16 : 31), `${unseenCount} not here`, {
+      ...font,
+      "font-size": card ? 6 : 7
+    })
+  );
+}
+var FONT2;
+var init_collection_badges = __esm({
+  "src/themes/terrain/scene/collection-badges.ts"() {
     "use strict";
     init_esm_shims();
     init_svg();
+    init_collection_data();
+    init_collection_icons();
     FONT2 = "'Segoe UI', system-ui, sans-serif";
-    LEGEND_BINS = [
-      { label: "Empty", level: 0 },
-      { label: "Low", level: 20 },
-      { label: "Mid", level: 45 },
-      { label: "High", level: 70 },
-      { label: "Max", level: 99 }
-    ];
+  }
+});
+
+// src/themes/terrain/scene/collection.ts
+function renderVillageCollection(scene, palette) {
+  const collection = landscapeCollection(scene);
+  const card = scene.settings.layout === "card";
+  const description = collectionDescription(scene);
+  const more = Math.max(0, collection.wonders.length - COLLECTION_BADGE_LIMIT);
+  const font = { "font-family": FONT3, fill: palette.text.primary };
+  const frame = svgElement("rect", {
+    class: "collection-panel",
+    x: 24,
+    y: card ? 318 : 50,
+    width: card ? 372 : 246,
+    height: card ? 36 : 80,
+    rx: card ? 6 : 8,
+    fill: palette.bg.subtle,
+    stroke: palette.text.secondary,
+    "stroke-opacity": 0.14,
+    "stroke-width": 0.6
+  });
+  const heading = svgText(32, card ? 328 : 62, "Village collection", {
+    ...font,
+    "font-size": card ? 9 : 10,
+    "font-weight": 600
+  }) + svgText(card ? 166 : 262, card ? 328 : 62, `${collection.wonders.length} unique`, {
+    ...font,
+    "font-size": 9,
+    "font-weight": 600,
+    "text-anchor": "end"
+  });
+  const scope = svgText(card ? 178 : 32, card ? 328 : 72, "In this landscape", {
+    ...font,
+    fill: palette.text.secondary,
+    "font-size": card ? 7 : 7.5
+  }) + svgText(
+    card ? 300 : 262,
+    card ? 328 : 72,
+    `${more ? `+${more} more \xB7 ` : ""}${collection.catalogCount} types`,
+    {
+      ...font,
+      fill: palette.text.secondary,
+      "font-size": card ? 6.5 : 7.5,
+      "text-anchor": "end"
+    }
+  );
+  const badges = Array.from(
+    { length: COLLECTION_BADGE_LIMIT },
+    (_, index) => renderCollectionBadge(
+      collection.wonders[index],
+      index,
+      scene.settings.layout,
+      palette,
+      scene.settings.artStyle
+    )
+  ).join("") + renderCollectionRemainder(collection.unseenCount, scene.settings.layout, palette);
+  const auras = svgText(card ? 350 : 32, card ? 328 : 125, "Seasonal auras", {
+    ...font,
+    fill: palette.text.secondary,
+    "font-size": card ? 6.5 : 6.8,
+    "text-anchor": card ? "middle" : "start"
+  }) + collection.seasons.map((season, index) => {
+    const x = card ? 319 + index * 20 : 87 + index * 44;
+    const token = renderCollectionSeason(season, palette, x, card ? 342 : 123, card ? 7 : 4.5);
+    return token + (card ? "" : svgText(x + 7, 125, season.label, {
+      ...font,
+      fill: palette.text.secondary,
+      "font-size": 6.3
+    }));
+  }).join("");
+  return svgElement(
+    "g",
+    {
+      class: "village-collection",
+      role: "group",
+      "aria-label": description,
+      "data-discovered-count": collection.wonders.length,
+      "data-catalog-count": collection.catalogCount
+    },
+    svgElement("title", {}, escapeXml(description)) + svgElement("desc", {}, escapeXml(description)) + frame + heading + scope + badges + auras
+  );
+}
+var FONT3;
+var init_collection = __esm({
+  "src/themes/terrain/scene/collection.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_svg();
+    init_collection_data();
+    init_collection_badges();
+    init_collection_icons();
+    FONT3 = "'Segoe UI', system-ui, sans-serif";
   }
 });
 
@@ -26435,12 +26779,22 @@ function bridge(palette) {
 function renderPresentation(scene, palette) {
   const themePalette = bridge(palette);
   const card = scene.settings.layout === "card";
-  const font = { "font-family": FONT3, fill: palette.text.primary };
+  const font = { "font-family": FONT4, fill: palette.text.primary };
   const compactTitle = scene.settings.title.length > 44 ? `${scene.settings.title.slice(0, 43)}\u2026` : scene.settings.title;
   const range = scene.fromDate ? `${scene.fromDate} to ${scene.toDate}` : "No contribution dates supplied";
   const sparseNote = scene.stats.total === 0 && scene.cells.length ? "Garden decorations \xB7 0 contributions" : "";
+  const heightDescription = `Terrain height follows daily contributions. ${scene.normalization.kind === "fixed" ? "Fixed" : "Relative"} scale from 0 to ${formatNumber(scene.normalization.maxCount)} contributions. Terrain colors follow the seasons.`;
+  const heightNote = svgElement(
+    "g",
+    {
+      class: "terrain-height-description",
+      role: "note",
+      "aria-label": heightDescription
+    },
+    svgElement("desc", {}, escapeXml(heightDescription))
+  );
   if (!card) {
-    return renderTitle(compactTitle, themePalette) + renderSubtitle(scene.stats, scene.wonders.length, themePalette) + renderStatsBar(scene.stats, themePalette) + renderHeightLegend(scene, palette) + renderCalendarTimeline(scene, palette) + (sparseNote ? svgText(24, 148, sparseNote, { ...font, "font-size": 10 }) : "") + (!scene.cells.length ? svgText(24, 148, range, { ...font, "font-size": 10 }) : "");
+    return renderTitle(compactTitle, themePalette) + renderSubtitle(scene.stats, scene.wonders.length, themePalette) + renderStatsBar(scene.stats, themePalette) + renderVillageCollection(scene, palette) + heightNote + renderCalendarTimeline(scene, palette) + (sparseNote ? svgText(24, 148, sparseNote, { ...font, "font-size": 10 }) : "") + (!scene.cells.length ? svgText(24, 148, range, { ...font, "font-size": 10 }) : "");
   }
   const stats = [
     { value: formatNumber(scene.stats.total), label: "Contributions", x: 24 },
@@ -26453,9 +26807,9 @@ function renderPresentation(scene, palette) {
       "font-size": 16,
       fill: palette.text.secondary
     })
-  ).join("")}</g>` + renderHeightLegend(scene, palette);
+  ).join("")}</g>` + renderVillageCollection(scene, palette) + heightNote;
 }
-var FONT3;
+var FONT4;
 var init_presentation = __esm({
   "src/themes/terrain/scene/presentation.ts"() {
     "use strict";
@@ -26463,8 +26817,8 @@ var init_presentation = __esm({
     init_svg();
     init_shared();
     init_calendar_timeline();
-    init_legend();
-    FONT3 = "'Segoe UI', system-ui, sans-serif";
+    init_collection();
+    FONT4 = "'Segoe UI', system-ui, sans-serif";
   }
 });
 
@@ -26639,10 +26993,14 @@ function renderTerrainScene(scene, mode, options = {}) {
   }));
   const biomes = new Map(scene.biomes.map((entry) => [`${entry.week},${entry.day}`, entry.biome]));
   const outlets = settings.artStyle === "miniature" ? waterfallOutlets(isoCells, biomes, settings.hemisphere) : [];
-  const transform = fitScene(
-    unionBounds([scene.bounds, ...waterfallBounds(outlets)]),
-    sceneViewport(settings.layout)
-  );
+  const viewport = sceneViewport(settings.layout);
+  const transform = fitScene(unionBounds([scene.bounds, ...waterfallBounds(outlets)]), viewport);
+  const weatherBounds = {
+    x: (viewport.x - transform.x) / transform.scale,
+    y: (viewport.y - transform.y) / transform.scale,
+    width: viewport.width / transform.scale,
+    height: viewport.height / transform.scale
+  };
   const seed = hash(scene.seed.root);
   const rotation = dateSeasonPosition(scene.fromDate, settings.hemisphere);
   const body = withSurfaceContext(
@@ -26659,11 +27017,12 @@ function renderTerrainScene(scene, mode, options = {}) {
         townSparkles
       ) + renderConsistencyEffects(scene.consistencyEffects ?? [], mode);
       reserveSurfaceMotion(sky + assets + overlays, css, isoCells);
-      const terrain = renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) + renderWaterOverlays(isoCells, reference, biomes) + renderWaterRipples(isoCells, reference, biomes) + renderWaterfalls(outlets, reference) + assets + renderSeasonalParticles(isoCells, seed, reference, rotation) + overlays;
+      const particles = renderSeasonalParticles(isoCells, seed, reference, rotation);
+      const terrain = renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) + renderWaterOverlays(isoCells, reference, biomes) + renderWaterRipples(isoCells, reference, biomes) + renderWaterfalls(outlets, reference) + assets + (settings.artStyle === "miniature" ? clipSeasonalWeather(particles, weatherBounds) : particles) + overlays;
       return (css ? svgStyle(css) : "") + definitions + `<svg x="0" y="0" width="${viewWidth}" height="${card ? 240 : viewHeight}" viewBox="0 0 840 240" aria-hidden="true">${sky}</svg><g class="terrain-fit" transform="translate(${svgNumber(transform.x)} ${svgNumber(transform.y)}) scale(${transform.scale.toFixed(6)})">${terrain}</g>`;
     })
   );
-  const description = `Isometric contribution terrain for @${scene.username} ${scene.fromDate ? `from ${scene.fromDate} to ${scene.toDate}` : "with no supplied contribution dates"}. ${formatNumber(scene.stats.total)} contributions across ${formatNumber(scene.stats.activeDays)} active days. ${scene.wonders.length} wonders discovered. ${scene.normalization.kind} normalization, maximum ${scene.normalization.maxCount}.`;
+  const description = `Isometric contribution terrain for @${scene.username} ${scene.fromDate ? `from ${scene.fromDate} to ${scene.toDate}` : "with no supplied contribution dates"}. ${formatNumber(scene.stats.total)} contributions across ${formatNumber(scene.stats.activeDays)} active days. ${scene.wonders.length} wonders discovered. ${scene.normalization.kind} normalization, maximum ${scene.normalization.maxCount}. Terrain height represents contribution count; terrain colors follow the seasons. ` + collectionDescription(presented);
   const content = `<rect width="${viewWidth}" height="${viewHeight}" rx="10" fill="${mode === "dark" ? "#0d1117" : "#ffffff"}"/>` + (symbols?.definitions() ?? "") + body + renderPresentation(presented, reference);
   return svgRoot(
     {
@@ -26698,6 +27057,7 @@ var init_render2 = __esm({
     init_season();
     init_depth();
     init_presentation();
+    init_collection_data();
     init_rewards();
     init_consistency3();
     init_asset_symbols();
@@ -26705,6 +27065,7 @@ var init_render2 = __esm({
     init_surface_budget();
     init_water_topology();
     init_waterfalls();
+    init_seasonal_weather_clip();
   }
 });
 

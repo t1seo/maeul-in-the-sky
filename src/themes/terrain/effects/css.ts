@@ -146,7 +146,7 @@ function renderLegacyTerrainCSS(
       ` }`,
   );
   blocks.push(
-    `.sway-gentle { animation: sway-gentle 3s ease-in-out infinite; transform-origin: bottom center; }`,
+    `.sway-gentle { animation: sway-gentle 3s ease-in-out infinite; transform-origin: 0 0; }`,
   );
 
   // Slow sway for laundry

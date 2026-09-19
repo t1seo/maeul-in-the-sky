@@ -24,6 +24,7 @@ import { fitScene, sceneViewport, unionBounds } from './bounds.js';
 import { dateSeasonPosition } from './season.js';
 import { renderDepthLayer } from './depth.js';
 import { renderPresentation } from './presentation.js';
+import { collectionDescription } from './collection-data.js';
 import { renderDailyRewards } from './rewards.js';
 import { renderConsistencyEffects } from '../effects/consistency.js';
 import { AssetSymbols } from './asset-symbols.js';
@@ -31,6 +32,7 @@ import { withSurfaceContext } from './surface-context.js';
 import { reserveSurfaceMotion } from '../effects/surface-budget.js';
 import { waterfallOutlets } from '../effects/water-topology.js';
 import { renderWaterfalls, waterfallBounds } from '../effects/waterfalls.js';
+import { clipSeasonalWeather } from '../effects/seasonal-weather-clip.js';
 
 export function renderTerrainScene(
   scene: TerrainScene,
@@ -91,10 +93,14 @@ export function renderTerrainScene(
     settings.artStyle === 'miniature'
       ? waterfallOutlets(isoCells, biomes, settings.hemisphere)
       : [];
-  const transform = fitScene(
-    unionBounds([scene.bounds, ...waterfallBounds(outlets)]),
-    sceneViewport(settings.layout),
-  );
+  const viewport = sceneViewport(settings.layout);
+  const transform = fitScene(unionBounds([scene.bounds, ...waterfallBounds(outlets)]), viewport);
+  const weatherBounds = {
+    x: (viewport.x - transform.x) / transform.scale,
+    y: (viewport.y - transform.y) / transform.scale,
+    width: viewport.width / transform.scale,
+    height: viewport.height / transform.scale,
+  };
   const seed = hash(scene.seed.root);
   const rotation = dateSeasonPosition(scene.fromDate, settings.hemisphere);
   const body = withSurfaceContext(settings, () =>
@@ -117,13 +123,16 @@ export function renderTerrainScene(
           townSparkles,
         ) + renderConsistencyEffects(scene.consistencyEffects ?? [], mode);
       reserveSurfaceMotion(sky + assets + overlays, css, isoCells);
+      const particles = renderSeasonalParticles(isoCells, seed, reference, rotation);
       const terrain =
         renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) +
         renderWaterOverlays(isoCells, reference, biomes) +
         renderWaterRipples(isoCells, reference, biomes) +
         renderWaterfalls(outlets, reference) +
         assets +
-        renderSeasonalParticles(isoCells, seed, reference, rotation) +
+        (settings.artStyle === 'miniature'
+          ? clipSeasonalWeather(particles, weatherBounds)
+          : particles) +
         overlays;
       return (
         (css ? svgStyle(css) : '') +
@@ -136,7 +145,9 @@ export function renderTerrainScene(
   const description =
     `Isometric contribution terrain for @${scene.username} ${scene.fromDate ? `from ${scene.fromDate} to ${scene.toDate}` : 'with no supplied contribution dates'}. ` +
     `${formatNumber(scene.stats.total)} contributions across ${formatNumber(scene.stats.activeDays)} active days. ` +
-    `${scene.wonders.length} wonders discovered. ${scene.normalization.kind} normalization, maximum ${scene.normalization.maxCount}.`;
+    `${scene.wonders.length} wonders discovered. ${scene.normalization.kind} normalization, maximum ${scene.normalization.maxCount}. ` +
+    'Terrain height represents contribution count; terrain colors follow the seasons. ' +
+    collectionDescription(presented);
   const content =
     `<rect width="${viewWidth}" height="${viewHeight}" rx="10" fill="${mode === 'dark' ? '#0d1117' : '#ffffff'}"/>` +
     (symbols?.definitions() ?? '') +
