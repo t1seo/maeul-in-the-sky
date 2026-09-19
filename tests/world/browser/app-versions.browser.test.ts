@@ -53,7 +53,7 @@ test.each(['current', 'classic'])(
   async (version) => {
     const running = await open(`?renderer=${version}`);
     expect(document.querySelector('select#world-version')).not.toBeNull();
-    expect(select('world-version').labels?.[0]?.textContent).toContain('보기 버전');
+    expect(select('world-version').labels?.[0]?.textContent).toContain('View version');
     expect(select('world-version').value).toBe('world');
     const before = running.session.current();
     change('world');
@@ -80,7 +80,7 @@ test('keeps the world interactive and its source intact when version transfer st
   expect(select('world-version').value).toBe('world');
   expect(html('world-version-status').hidden).toBe(false);
   expect(html('world-version-status').getAttribute('role')).toBe('alert');
-  expect(html('world-version-status').textContent).toContain('지금 세계');
+  expect(html('world-version-status').textContent).toContain('Your current world');
   input('world-date').value = '2024-01-07';
   input('world-date').dispatchEvent(new Event('change'));
   expect(running.session.current().view.cursorDate).toBe('2024-01-07');
@@ -126,7 +126,9 @@ test('validates the source before overwriting a pending transfer or navigating, 
   expect(navigate).not.toHaveBeenCalled();
   expect(sessionStorage.getItem('maeul-demo-transfer')).toBe('previous transfer');
   expect(html('world-version-status').hidden).toBe(false);
-  expect(html('world-version-status').textContent).toContain('기여 기록을 전달할 수 없습니다');
+  expect(html('world-version-status').textContent).toContain(
+    'Could not transfer the contribution records',
+  );
   expect(select('world-version').value).toBe('world');
   snapshot = historySnapshot();
   change('classic');
@@ -144,7 +146,7 @@ test('recovers locally if the browser refuses navigation', () => {
   expect(navigate).toHaveBeenCalledOnce();
   expect(select('world-version').value).toBe('world');
   expect(html('world-version-status').hidden).toBe(false);
-  expect(html('world-version-status').textContent).toContain('지금 세계는 그대로 유지됩니다');
+  expect(html('world-version-status').textContent).toContain('Your current world is unchanged');
   change('world');
   expect(html('world-version-status').hidden).toBe(true);
 });

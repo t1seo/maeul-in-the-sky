@@ -9,9 +9,9 @@ import type { WorldInput } from '../../../src/world/model/types.js';
 import { mountMap } from '../../../src/world/map/index.js';
 
 export const layoutChoices = [
-  ['archipelago', '월별 군도'],
-  ['island', '하나의 큰 섬'],
-  ['seasonal', '사계절 군도'],
+  ['archipelago', 'Monthly islands'],
+  ['island', 'One large island'],
+  ['seasonal', 'Seasonal islands'],
 ] as const;
 
 export function mountLayoutPage(): void {

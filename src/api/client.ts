@@ -1,7 +1,8 @@
 import type { ContributionData, ContributionWeek, ContributionDay } from '../core/types.js';
 import { normalizeContributionWeeks } from '../core/calendar.js';
 import { computeStats } from '../core/stats.js';
-import { CONTRIBUTIONS_QUERY } from './queries.js';
+import { contributionsQuery } from './queries.js';
+import { activityAlias, createActivityRequest } from './activity.js';
 import { makeGraphQLRequest, type FetchContributionsOptions } from './request.js';
 
 export { GitHubApiError, type GitHubApiErrorCode } from './errors.js';
@@ -41,8 +42,8 @@ export async function fetchContributions(
 
   if (year != null) {
     // Fixed calendar year
-    from = `${year}-01-01T00:00:00Z`;
-    to = `${year}-12-31T23:59:59Z`;
+    from = `${String(year).padStart(4, '0')}-01-01T00:00:00Z`;
+    to = `${String(year).padStart(4, '0')}-12-31T23:59:59Z`;
     effectiveYear = year;
   } else {
     // Rolling 52-week window ending today
@@ -55,11 +56,19 @@ export async function fetchContributions(
   }
 
   // Make the GraphQL request
+  const activity = createActivityRequest(from, to);
+  const monthVariables = Object.fromEntries(
+    activity.months.flatMap((month, index) => [
+      [`${activityAlias(index)}From`, month.from],
+      [`${activityAlias(index)}To`, month.to],
+    ]),
+  );
   const calendar = await makeGraphQLRequest(
-    CONTRIBUTIONS_QUERY,
-    { username, from, to },
+    contributionsQuery(activity),
+    { username, from, to, ...monthVariables },
     token,
     options,
+    activity,
   );
 
   // Transform GitHub API response to ContributionWeek format
@@ -87,5 +96,6 @@ export async function fetchContributions(
     },
     year: effectiveYear,
     username,
+    ...(calendar.activity === undefined ? {} : { activity: calendar.activity }),
   };
 }

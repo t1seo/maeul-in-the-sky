@@ -46,11 +46,11 @@ test.each(layoutChoices)(
     // Then dates, zero observations and counts remain identical.
     expect(running.session.current().scene.days).toEqual(days);
     expect(input('world-date').value).toBe('2024-02-29');
-    expect(html('day-details').textContent).toContain('0번의 기여');
+    expect(html('day-details').textContent).toContain('0 contributions');
     expect(html('stat-contributions').textContent).toBe(total);
     expect(html('map-caption').textContent).toContain(label);
     expect(html('layout-note').textContent).toContain(
-      layout === 'island' ? '이어' : layout === 'seasonal' ? '계절' : '달',
+      layout === 'island' ? 'connect' : layout === 'seasonal' ? 'season' : 'month',
     );
   },
 );
@@ -68,10 +68,10 @@ test('shows only represented seasons for a partial range', async () => {
   expect(
     [...legend.querySelectorAll('[data-season]')].map((node) => node.getAttribute('data-season')),
   ).toEqual(['spring', 'winter']);
-  expect(legend.textContent).toContain('봄');
-  expect(legend.textContent).toContain('3월');
-  expect(legend.textContent).toContain('겨울');
-  expect(legend.textContent).toContain('2월');
+  expect(legend.textContent).toContain('Spring');
+  expect(legend.textContent).toContain('Mar');
+  expect(legend.textContent).toContain('Winter');
+  expect(legend.textContent).toContain('Feb');
 });
 
 test('keeps geographic season labels when a southern scene gets a scenery override', async () => {
@@ -91,10 +91,10 @@ test('keeps geographic season labels when a southern scene gets a scenery overri
   changeLayoutControl('world-season', 'spring');
   // Then calendar summer/autumn geography remains clearly labelled.
   expect(html('season-legend').textContent).toBe(before);
-  expect(before).toContain('여름');
-  expect(before).toContain('가을');
-  expect(before).not.toContain('봄');
-  expect(html('season-note').textContent).toContain('섬의 계절 구분');
+  expect(before).toContain('Summer');
+  expect(before).toContain('Autumn');
+  expect(before).not.toContain('Spring');
+  expect(html('season-note').textContent).toContain('island seasons');
 });
 
 test('keeps all 13 year-month targets chronological when the same month appears twice', async () => {
@@ -118,8 +118,8 @@ test('keeps all 13 year-month targets chronological when the same month appears 
     ...Array.from({ length: 12 }, (_, index) => `2024-${String(index + 1).padStart(2, '0')}`),
     '2025-01',
   ]);
-  expect(buttons[0]?.getAttribute('aria-label')).toContain('2024년 1월');
-  expect(buttons.at(-1)?.getAttribute('aria-label')).toContain('2025년 1월');
-  expect(html('season-legend').textContent).toContain('2024년');
-  expect(html('season-legend').textContent).toContain('2025년');
+  expect(buttons[0]?.getAttribute('aria-label')).toContain('January 2024');
+  expect(buttons.at(-1)?.getAttribute('aria-label')).toContain('January 2025');
+  expect(html('season-legend').textContent).toContain('2024');
+  expect(html('season-legend').textContent).toContain('2025');
 });

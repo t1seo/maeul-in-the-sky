@@ -74,3 +74,4 @@ export type {
   SceneWonderPlacement,
 } from './core/scene-types.js';
 export type { ArchiveV1, SettingsV1, SnapshotSource, SnapshotV1 } from './core/snapshot-types.js';
+export type { ActivityBreakdown, ActivityMonth } from './core/activity-types.js';

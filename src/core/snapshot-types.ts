@@ -1,5 +1,6 @@
 import type { ResolvedRenderSettings } from './render-options.js';
 import type { ContributionDay } from './types.js';
+import type { ActivityBreakdown } from './activity-types.js';
 
 export type SettingsV1 = {
   readonly schemaVersion: 1;
@@ -27,6 +28,7 @@ export type SnapshotV1 = {
   readonly weeks: readonly SnapshotWeek[];
   readonly settings: ResolvedRenderSettings;
   readonly source: SnapshotSource;
+  readonly activity?: ActivityBreakdown;
 };
 
 export type ArchiveComparison = {

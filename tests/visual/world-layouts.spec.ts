@@ -6,9 +6,9 @@ import { inputFor } from '../world/model/helpers.js';
 import { downloadBytes } from './helpers.js';
 
 const choices = [
-  ['archipelago', '월별 군도'],
-  ['island', '하나의 큰 섬'],
-  ['seasonal', '사계절 군도'],
+  ['archipelago', 'Monthly islands'],
+  ['island', 'One large island'],
+  ['seasonal', 'Seasonal islands'],
 ] as const;
 
 function world(source: WorldInput) {
@@ -48,7 +48,7 @@ async function upload(page: Page, value: string): Promise<void> {
     mimeType: 'application/json',
     buffer: Buffer.from(value),
   });
-  await expect(page.locator('#world-status')).toContainText('세계를 가져왔습니다');
+  await expect(page.locator('#world-status')).toContainText('world imported');
 }
 
 test('all three landforms preserve selected date, counts and mobile access', async ({
@@ -69,7 +69,7 @@ test('all three landforms preserve selected date, counts and mobile access', asy
     // Then the dated evidence remains unchanged and all controls fit the viewport.
     await expect(page.locator('#map-caption')).toContainText(label);
     await expect(page.locator('#world-date')).toHaveValue('2024-02-29');
-    await expect(page.locator('#day-details')).toContainText('0번의 기여');
+    await expect(page.locator('#day-details')).toContainText('0 contributions');
     await expect(page.locator('#stat-contributions')).toHaveText('5');
     expect(
       await page
@@ -101,7 +101,7 @@ test('seasonal layout and date survive local reload and exported JSON import', a
   await page.locator('#world-date').fill('2024-02-29');
   await page.locator('#world-date').dispatchEvent('change');
   await page.locator('#save-world').click();
-  await expect(page.locator('#world-status')).toContainText('보관했습니다');
+  await expect(page.locator('#world-status')).toContainText('Saved the');
   await page.locator('[data-dialog="photo-dialog"]').click();
   const pending = page.waitForEvent('download');
   await page.locator('#export-world').click();
@@ -113,7 +113,7 @@ test('seasonal layout and date survive local reload and exported JSON import', a
   await page.locator('[data-dialog="library-dialog"]').click();
   await page
     .locator('#library-list')
-    .getByRole('button', { name: '세계 열기', exact: true })
+    .getByRole('button', { name: 'Open world', exact: true })
     .click();
   await expect(page.locator('#world-layout')).toHaveValue('seasonal');
   await expect(page.locator('#world-date')).toHaveValue('2024-02-29');
@@ -125,7 +125,7 @@ test('seasonal layout and date survive local reload and exported JSON import', a
   await expect(page.locator('#world-layout')).toHaveValue('seasonal');
   await expect(page.locator('#world-date')).toHaveValue('2024-02-29');
   await expect(page.locator('#stat-contributions')).toHaveText('5');
-  await expect(page.locator('#day-details')).toContainText('0번의 기여');
+  await expect(page.locator('#day-details')).toContainText('0 contributions');
 });
 
 test('rolling 13-month navigation remains chronological across seasonal geography', async ({
@@ -152,12 +152,12 @@ test('rolling 13-month navigation remains chronological across seasonal geograph
     ...Array.from({ length: 12 }, (_, index) => `2024-${String(index + 1).padStart(2, '0')}`),
     '2025-01',
   ]);
-  await page.getByRole('button', { name: '2024년 1월 · 겨울 풍경', exact: true }).click();
+  await page.getByRole('button', { name: 'January 2024 · Winter scenery', exact: true }).click();
   await expect(page.locator('#world-date')).toHaveValue('2024-01-31');
-  await page.getByRole('button', { name: '2025년 1월 · 겨울 풍경', exact: true }).click();
+  await page.getByRole('button', { name: 'January 2025 · Winter scenery', exact: true }).click();
   await expect(page.locator('#world-date')).toHaveValue('2025-01-31');
-  await expect(page.locator('#season-legend')).toContainText('2024년');
-  await expect(page.locator('#season-legend')).toContainText('2025년');
+  await expect(page.locator('#season-legend')).toContainText('2024');
+  await expect(page.locator('#season-legend')).toContainText('2025');
 });
 
 test('partial southern worlds keep their actual season labels during a scenery override', async ({
@@ -183,8 +183,8 @@ test('partial southern worlds keep their actual season labels during a scenery o
   await expect(page.locator('#season-legend [data-season]')).toHaveCount(2);
   await expect(page.locator('#world-host [data-season-label]')).toHaveCount(2);
   expect(await page.locator('#season-legend').textContent()).toBe(labels);
-  await expect(page.locator('#season-legend')).toContainText('여름');
-  await expect(page.locator('#season-legend')).toContainText('가을');
-  await expect(page.locator('#season-note')).toContainText('섬의 계절 구분');
+  await expect(page.locator('#season-legend')).toContainText('Summer');
+  await expect(page.locator('#season-legend')).toContainText('Autumn');
+  await expect(page.locator('#season-note')).toContainText('island seasons are unchanged');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

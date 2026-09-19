@@ -67,7 +67,7 @@ export function renderEntity(
   return `<g data-entity-id="${escapeXml(entity.id)}" data-entity-kind="${entity.kind}"${entity.catalogId ? ` data-catalog-id="${escapeXml(entity.catalogId)}"` : ''} transform="translate(${svgNumber(point.x)} ${svgNumber(point.y)}) scale(${scale * entity.scale.x} ${scale * entity.scale.y})"><title>${escapeXml(entityTitle(scene, entity))}</title>${art}${glow}</g>`;
 }
 
-export function renderEvents(scene: WorldScene, frame: WorldFrame, palette: MapPalette): string {
+export function renderEvents(_scene: WorldScene, frame: WorldFrame, palette: MapPalette): string {
   return frame.events
     .map((event) => {
       const anchor = frame.entities.find((entity) => entity.id === event.anchorId);
@@ -89,7 +89,7 @@ export function renderEvents(scene: WorldScene, frame: WorldFrame, palette: MapP
             : frame.season === 'autumn'
               ? '<ellipse cx="18" cy="-2" rx="5" ry="4" fill="#d99855"/>'
               : '<path d="M15,0v-12m-8,2q8,-12 16,0Z" fill="#d89075"/>';
-      return `<g data-event-id="${escapeXml(event.id)}" transform="translate(${center.x} ${center.y})"><path d="M-20,0v-21h40v21" fill="none" stroke="${palette.cliff[0]}"/>${flags}${seasonal}<title>${escapeXml(event.kind)} · ${scene.settings.culture === 'korean' ? '마을 축제' : 'Village gathering'}</title></g>`;
+      return `<g data-event-id="${escapeXml(event.id)}" transform="translate(${center.x} ${center.y})"><path d="M-20,0v-21h40v21" fill="none" stroke="${palette.cliff[0]}"/>${flags}${seasonal}<title>${escapeXml(event.kind)} · Village gathering</title></g>`;
     })
     .join('');
 }

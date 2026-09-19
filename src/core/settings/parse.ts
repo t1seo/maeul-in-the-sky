@@ -26,7 +26,13 @@ export function snapshotToContributionData(snapshot: SnapshotV1): ContributionDa
     firstDay: week.firstDay,
     days: week.days.map((day) => ({ ...day })),
   }));
-  return { username: snapshot.username, year: snapshot.year, weeks, stats: computeStats(weeks) };
+  return {
+    username: snapshot.username,
+    year: snapshot.year,
+    weeks,
+    stats: computeStats(weeks),
+    ...(snapshot.activity === undefined ? {} : { activity: snapshot.activity }),
+  };
 }
 
 export function createSnapshot(
@@ -42,5 +48,6 @@ export function createSnapshot(
     weeks: data.weeks,
     settings,
     source,
+    ...(data.activity === undefined ? {} : { activity: data.activity }),
   });
 }

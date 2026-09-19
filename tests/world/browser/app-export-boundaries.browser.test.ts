@@ -49,7 +49,7 @@ test('offers a usable SVG after the browser cannot allocate the postcard canvas'
     return ++allocated === 2 ? null : original.call(this, kind, options);
   });
   button('export-png').click();
-  await expect.poll(() => html('world-status').textContent).toContain('SVG로 풍경을');
+  await expect.poll(() => html('world-status').textContent).toContain('save the landscape as SVG');
   expect(captured.downloads).toHaveLength(0);
   expect(running.session.current().scene.worldId).toBe(TINY_WORLD_SCENE.worldId);
   context.mockRestore();
@@ -72,7 +72,7 @@ test('reports a failed browser PNG encoding and leaves the scene available for r
     else original.call(this, callback, type, quality);
   });
   button('export-png').click();
-  await expect.poll(() => html('world-status').textContent).toContain('PNG 저장에 실패');
+  await expect.poll(() => html('world-status').textContent).toContain('Could not save the PNG');
   expect(running.session.current().scene.worldId).toBe(TINY_WORLD_SCENE.worldId);
   encoder.mockRestore();
 });
@@ -95,7 +95,9 @@ test('explains a photo request made while the initial renderer is still loading'
     search: '',
   });
   button('export-png').click();
-  await expect.poll(() => html('world-status').textContent).toContain('풍경이 준비되면');
+  await expect
+    .poll(() => html('world-status').textContent)
+    .toContain('once the landscape is ready');
   ready();
   app = await starting;
   expect(html('world-host').querySelector('svg')).not.toBeNull();

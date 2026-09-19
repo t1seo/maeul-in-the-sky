@@ -4,6 +4,7 @@ import { renderSettingsInputSchema, usernameSchema, yearSchema } from './schema.
 import { resolveRenderSettings } from './resolve.js';
 import { normalizeContributionWeeks } from '../calendar.js';
 import type { SnapshotV1 } from '../snapshot-types.js';
+import { activityMatchesCalendar, activitySchema } from './activity-schema.js';
 
 export const contributionDateSchema = z
   .string()
@@ -84,6 +85,21 @@ export const snapshotSchema = z
     weeks: contributionWeeksSchema,
     settings: renderSettingsInputSchema,
     source: sourceSchema,
+    activity: activitySchema.optional(),
+  })
+  .superRefine((snapshot, context) => {
+    if (
+      snapshot.activity &&
+      !activityMatchesCalendar(
+        snapshot.activity,
+        snapshot.weeks.flatMap((week) => week.days.map((day) => day.date)),
+      )
+    )
+      context.addIssue({
+        code: 'custom',
+        path: ['activity'],
+        message: 'Activity evidence requires observed calendar dates throughout its range',
+      });
   })
   .transform((parsed): SnapshotV1 => ({
     schemaVersion: 1,
@@ -96,4 +112,5 @@ export const snapshotSchema = z
       kind: parsed.source.kind,
       ...(parsed.source.fetchedAt === undefined ? {} : { fetchedAt: parsed.source.fetchedAt }),
     },
+    ...(parsed.activity === undefined ? {} : { activity: parsed.activity }),
   }));

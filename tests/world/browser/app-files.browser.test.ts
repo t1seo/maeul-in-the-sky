@@ -49,7 +49,7 @@ test('imports all annual archive worlds and switches years through the actual li
     comparison: { years: [2023, 2024], normalization: { kind: 'fixed', maxCount: 50 } },
   });
   await expect.poll(() => running.session.current().scene.year).toBe(2023);
-  await expect.poll(() => html('world-status').textContent).toContain('2개의 세계');
+  await expect.poll(() => html('world-status').textContent).toContain('2 worlds');
   openDialog('library-dialog');
   await expect.poll(() => select('library-year').options.length).toBe(3);
   select('library-year').value = '2024';
@@ -63,13 +63,13 @@ test('imports all annual archive worlds and switches years through the actual li
   expect(running.session.current().scene.year).toBe(2024);
   expect(dialog('library-dialog').open).toBe(false);
   button('save-world').click();
-  await expect.poll(() => html('world-status').textContent).toContain('보관했습니다');
+  await expect.poll(() => html('world-status').textContent).toContain('Saved the');
   openDialog('library-dialog');
-  await expect.poll(() => html('library-list').textContent).toContain('보관본 삭제');
+  await expect.poll(() => html('library-list').textContent).toContain('Delete saved world');
   [...html('library-list').querySelectorAll('button')]
-    .find((node) => node.textContent === '보관본 삭제')
+    .find((node) => node.textContent === 'Delete saved world')
     ?.click();
-  await expect.poll(() => html('world-status').textContent).toContain('삭제했습니다');
+  await expect.poll(() => html('world-status').textContent).toContain('Deleted the saved world');
   expect(running.session.current().scene.username).toBe('octocat');
 });
 
@@ -82,7 +82,7 @@ test('keeps camera and world after malformed or unsupported imports, then accept
   await expect.poll(() => html('world-status').dataset.error).toBe('true');
   expect(running.session.current()).toEqual(before);
   upload('world-file', { ...frozen(), schemaVersion: 99 });
-  await expect.poll(() => html('world-status').textContent).toContain('지원하지 않는');
+  await expect.poll(() => html('world-status').textContent).toContain('unsupported');
   expect(running.session.current()).toEqual(before);
   upload('world-file', historySnapshot());
   await expect.poll(() => running.session.current().scene.username).toBe('octocat');
@@ -107,7 +107,7 @@ test('exports parseable world JSON and self-contained SVG/PNG postcards with rea
   const parsed = new DOMParser().parseFromString(svg ?? '', 'image/svg+xml');
   expect(parsed.querySelector('parsererror')).toBeNull();
   expect(parsed.documentElement.getAttribute('height')).toBe('1160');
-  expect(parsed.documentElement.textContent).toContain('해 질 녘 · 비');
+  expect(parsed.documentElement.textContent).toContain('Sunset · Rain');
   expect(parsed.querySelectorAll('script, image[href^="http"]')).toHaveLength(0);
   button('export-png').click();
   await expect.poll(() => captured.downloads.length, { timeout: 10000 }).toBe(3);
@@ -141,7 +141,7 @@ test('consumes the legacy demo transfer without losing its source or contributio
   expect(app.session.current().sourceSnapshot.weeks[0]?.days[0]?.count).toBe(19);
   expect(app.session.current().sourceSnapshot.source.kind).toBe('github');
   expect(sessionStorage.getItem('maeul-world-transfer')).toBeNull();
-  expect(html('world-status').textContent).toContain('기존 데모');
+  expect(html('world-status').textContent).toContain('previous demo');
 });
 
 test('starts an imported snapshot at its latest supplied day and labels its observed period', async () => {
@@ -149,13 +149,13 @@ test('starts an imported snapshot at its latest supplied day and labels its obse
   expect(running.session.current().view.cursorDate).toBe('2024-01-09');
   expect(html('world-period').textContent).toContain('2024-01-07 — 2024-01-09');
   expect(html('replay-end').textContent).toBe('2024-12-31');
-  expect(html('day-details').textContent).toContain('0번의 기여');
+  expect(html('day-details').textContent).toContain('0 contributions');
   const captured = captureDownloads();
   stopDownloads = captured.stop;
   button('export-svg').click();
   await expect.poll(() => captured.downloads.length).toBe(1);
   const postcard = await captured.downloads[0]?.blob.text();
-  expect(postcard).toContain('GitHub 기여 기록');
+  expect(postcard).toContain('GitHub contributions');
   expect(postcard).toContain('2024-01-07 — 2024-01-09');
 });
 
@@ -166,8 +166,8 @@ test('opens a usable, explicitly labelled sample when no world or demo transfer 
     search: '',
   });
   expect(app.session.current().sourceSnapshot.source.kind).toBe('sample');
-  expect(html('world-status').textContent).toContain('샘플 세계를 둘러보고 있습니다');
-  expect(html('world-provenance').textContent).toContain('실제 계정을 조회한 데이터가 아닙니다');
+  expect(html('world-status').textContent).toContain('You are exploring a sample world');
+  expect(html('world-provenance').textContent).toContain('Sample data, not a real account');
   expect(html('world-host').querySelector('svg')).not.toBeNull();
   expect(html('world-host').getAttribute('aria-busy')).toBe('false');
 });

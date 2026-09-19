@@ -8,19 +8,25 @@ export function setupWorldBridge(
   currentSnapshot: () => SnapshotV1,
   renderer: () => RendererVersion = () => 'current',
 ): void {
-  const link = element('#explore-world', HTMLAnchorElement);
-  link.addEventListener('click', (event) => {
-    try {
-      sessionStorage.setItem('maeul-world-transfer', serializeSnapshot(currentSnapshot()));
-      link.setAttribute('href', `./world/?renderer=${renderer()}`);
-    } catch (error) {
-      event.preventDefault();
-      status(
-        `Could not open this world: ${errorMessage(error)}. Download a snapshot and import it in the world explorer.`,
-        true,
-      );
-    }
-  });
+  const world = element('#explore-world', HTMLAnchorElement);
+  const activity = document.querySelector<HTMLAnchorElement>('#explore-activity');
+  for (const link of activity ? [world, activity] : [world]) {
+    link.addEventListener('click', (event) => {
+      try {
+        sessionStorage.setItem('maeul-world-transfer', serializeSnapshot(currentSnapshot()));
+        link.setAttribute(
+          'href',
+          `./world/?renderer=${renderer()}${link === activity ? '&panel=activity' : ''}`,
+        );
+      } catch (error) {
+        event.preventDefault();
+        status(
+          `Could not open this world: ${errorMessage(error)}. Download a snapshot and import it in the world explorer.`,
+          true,
+        );
+      }
+    });
+  }
 }
 
 export function consumeDemoTransfer(open: (snapshot: SnapshotV1) => void): void {

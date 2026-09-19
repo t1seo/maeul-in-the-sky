@@ -13,9 +13,9 @@ const FOOTER = 160;
 
 function caption(document: WorldDocumentV1): readonly [string, string, string] {
   return [
-    `${document.scene.username}님의 하늘 마을`,
+    `${document.scene.username}’s Sky World`,
     `${dateLabel(document.view.cursorDate)} · ${atmosphereLabel(document.view, document.scene)}`,
-    `${document.sourceSnapshot.source.kind === 'sample' ? '샘플 기록' : document.sourceSnapshot.source.kind === 'github' ? 'GitHub 기여 기록' : '가져온 기록'} · ${sourcePeriod(document)} · MAEUL IN THE SKY`,
+    `${document.sourceSnapshot.source.kind === 'sample' ? 'Sample records' : document.sourceSnapshot.source.kind === 'github' ? 'GitHub contributions' : 'Imported records'} · ${sourcePeriod(document)} · MAEUL IN THE SKY`,
   ];
 }
 
@@ -27,7 +27,10 @@ async function postcard(image: Blob, document: WorldDocumentV1): Promise<Blob> {
     canvas.height = IMAGE_HEIGHT + FOOTER;
     const context = canvas.getContext('2d');
     if (!context)
-      throw new WorldAppError('capture', 'PNG를 만들 수 없습니다. SVG로 풍경을 간직해 주세요.');
+      throw new WorldAppError(
+        'capture',
+        'Could not create a PNG. Please save the landscape as SVG.',
+      );
     context.fillStyle = '#f6f4ec';
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.drawImage(bitmap, 0, 0, WIDTH, IMAGE_HEIGHT);
@@ -46,7 +49,7 @@ async function postcard(image: Blob, document: WorldDocumentV1): Promise<Blob> {
         (blob) =>
           blob
             ? resolve(blob)
-            : reject(new WorldAppError('capture', 'PNG 저장에 실패했습니다. SVG를 이용해 주세요.')),
+            : reject(new WorldAppError('capture', 'Could not save the PNG. Please use SVG.')),
         'image/png',
       );
     });
@@ -75,7 +78,7 @@ async function mapPostcard(current: WorldDocumentV1): Promise<Blob> {
     const parsed = new DOMParser().parseFromString(await image.text(), 'image/svg+xml');
     const source = parsed.documentElement;
     if (parsed.querySelector('parsererror'))
-      throw new WorldAppError('capture', '지도를 SVG로 저장하지 못했습니다.');
+      throw new WorldAppError('capture', 'Could not save the map as SVG.');
     const namespace = 'http://www.w3.org/2000/svg';
     const root = document.createElementNS(namespace, 'svg');
     root.setAttribute('xmlns', namespace);
@@ -132,7 +135,7 @@ export function setupExports(session: WorldSession, signal: AbortSignal): void {
         view: current.view,
       });
       downloadText(serializeWorldDocument(document), `${filename()}.json`);
-      status('기록과 배치, 지금의 시점을 세계 파일로 저장했습니다.');
+      status('Saved the records, layout and current view as a world file.');
     },
     signal,
   );
@@ -144,7 +147,7 @@ export function setupExports(session: WorldSession, signal: AbortSignal): void {
       await deliver(
         mapPostcard(current),
         `${name}.svg`,
-        '선택한 날짜의 지도를 SVG 엽서로 저장했습니다.',
+        'Saved the selected date’s map as an SVG postcard.',
       );
     },
     signal,
@@ -154,13 +157,20 @@ export function setupExports(session: WorldSession, signal: AbortSignal): void {
     async () => {
       const renderer = session.renderer.current();
       if (!renderer)
-        throw new WorldAppError('initializing', '풍경이 준비되면 사진을 찍을 수 있습니다.');
+        throw new WorldAppError(
+          'initializing',
+          'You can take a photo once the landscape is ready.',
+        );
       const current = session.current();
       const name = filename();
       const image = renderer
         .capture({ format: 'png', width: WIDTH, height: IMAGE_HEIGHT })
         .then((image) => postcard(image, current));
-      await deliver(image, `${name}.png`, '지금의 시점과 날짜, 연출을 PNG 엽서로 저장했습니다.');
+      await deliver(
+        image,
+        `${name}.png`,
+        'Saved the current view, date and atmosphere as a PNG postcard.',
+      );
     },
     signal,
   );
@@ -169,12 +179,12 @@ export function setupExports(session: WorldSession, signal: AbortSignal): void {
     async () => {
       const renderer = session.renderer.current();
       if (!renderer?.exportModel)
-        throw new WorldAppError('unsupported', '3D 산책으로 이동한 뒤 모델을 저장해 주세요.');
+        throw new WorldAppError('unsupported', 'Switch to 3D walk to save the model.');
       const name = filename();
       await deliver(
         renderer.exportModel(),
         `${name}.glb`,
-        '현재 풍경을 GLB 모델로 저장했습니다. 세계 파일에는 기록과 재생 정보도 담을 수 있습니다.',
+        'Saved this landscape as a GLB model. A world file also includes records and replay settings.',
       );
     },
     signal,

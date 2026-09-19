@@ -22,16 +22,25 @@ function labels(scene: WorldScene) {
   return { svg, tags };
 }
 
-function seasonal(source: WorldInput, hemisphere: 'north' | 'south' = 'north') {
+function seasonal(
+  source: WorldInput,
+  hemisphere: 'north' | 'south' = 'north',
+  culture: 'classic' | 'korean' = 'korean',
+) {
   return buildWorld({
     ...source,
-    settings: { ...source.settings, layout: 'seasonal', hemisphere },
+    settings: { ...source.settings, layout: 'seasonal', hemisphere, culture },
   });
 }
 
-test.each(['north', 'south'] as const)(
-  'labels four seasonal landmasses without twelve competing month labels in %s',
-  (hemisphere) => {
+test.each([
+  ['north', 'classic'],
+  ['north', 'korean'],
+  ['south', 'classic'],
+  ['south', 'korean'],
+] as const)(
+  'labels four seasonal landmasses in English without competing month labels in %s with %s architecture',
+  (hemisphere, culture) => {
     // Given an annual seasonal world.
     const scene = seasonal(
       inputFor([
@@ -39,6 +48,7 @@ test.each(['north', 'south'] as const)(
         ['2024-12-31', 2],
       ]),
       hemisphere,
+      culture,
     );
     // When its map labels are generated.
     const result = labels(scene);
@@ -49,6 +59,10 @@ test.each(['north', 'south'] as const)(
         .map((tag) => tag['data-season-label'])
         .sort(),
     ).toEqual(['autumn', 'spring', 'summer', 'winter']);
+    for (const season of ['Spring', 'Summer', 'Autumn', 'Winter']) {
+      expect(result.svg).toContain(`</title>${season}</text>`);
+      expect(result.svg).toContain(`<title>${season} · `);
+    }
     expect(result.tags.filter((tag) => tag['data-month-label'])).toHaveLength(0);
     for (const month of scene.islands.flatMap((island) => island.monthKeys))
       expect(result.svg).toContain(month);
@@ -67,7 +81,7 @@ test('uses the actual southern season for a partial February map', () => {
   expect(
     result.tags.filter((tag) => tag['data-season-label']).map((tag) => tag['data-season-label']),
   ).toEqual(['summer']);
-  expect(result.svg).toContain('여름');
+  expect(result.svg).toContain('Summer');
 });
 
 test.each(['archipelago', 'island'] as const)(

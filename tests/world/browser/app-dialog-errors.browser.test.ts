@@ -44,11 +44,11 @@ test('shows a visible local visit error and clears it when retrying or reopening
   );
   open('visits-dialog');
   submit();
-  await expect.poll(() => notice('visits-dialog')?.textContent).toContain('찾지 못했습니다');
+  await expect.poll(() => notice('visits-dialog')?.textContent).toContain('could not be found');
   expect(dialog('visits-dialog').firstElementChild).toBe(notice('visits-dialog'));
   submit();
   expect(notice('visits-dialog')).toBeNull();
-  await expect.poll(() => notice('visits-dialog')?.textContent).toContain('찾지 못했습니다');
+  await expect.poll(() => notice('visits-dialog')?.textContent).toContain('could not be found');
   dialog('visits-dialog').close();
   open('photo-dialog');
   expect(notice('photo-dialog')).toBeNull();
@@ -73,7 +73,7 @@ test('a late failure from a closed visit does not become an unrelated photo dial
   dialog('visits-dialog').close();
   open('photo-dialog');
   finish(new Response('Missing', { status: 404 }));
-  await expect.poll(() => html('world-status').textContent).toContain('찾지 못했습니다');
+  await expect.poll(() => html('world-status').textContent).toContain('could not be found');
   expect(notice('photo-dialog')).toBeNull();
   expect(notice('visits-dialog')).toBeNull();
   expect(app?.session.current().scene.worldId).toBe(TINY_WORLD_SCENE.worldId);

@@ -48,3 +48,23 @@ it('keeps the demo open with a useful error when storage is unavailable', () => 
   expect(document.getElementById('app-status')?.textContent).toContain('snapshot');
   expect(sessionStorage.getItem('maeul-world-transfer')).toBeNull();
 });
+
+it('opens activity with the current history and renderer selection', () => {
+  mountLink();
+  const activity = document.createElement('a');
+  activity.id = 'explore-activity';
+  activity.href = './world/?panel=activity';
+  document.body.append(activity);
+  let snapshot = historySnapshot();
+  setupWorldBridge(
+    () => snapshot,
+    () => 'classic',
+  );
+  snapshot = historySnapshot(2025, 40);
+  activity.addEventListener('click', (event) => event.preventDefault());
+
+  activity.click();
+
+  expect(parseSnapshot(sessionStorage.getItem('maeul-world-transfer') ?? '')).toEqual(snapshot);
+  expect(activity.getAttribute('href')).toBe('./world/?renderer=classic&panel=activity');
+});

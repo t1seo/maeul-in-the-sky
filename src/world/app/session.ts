@@ -31,7 +31,7 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
     },
     onError: () => {
       html('world-fallback').hidden = false;
-      html('world-fallback').textContent = '3D 화면을 열지 못했습니다. 2D 지도를 이용해 주세요.';
+      html('world-fallback').textContent = 'Could not open the 3D walk. Please use the 2D map.';
     },
     onModeChange: (next) => {
       mode = next;

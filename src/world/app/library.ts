@@ -40,8 +40,8 @@ export function setupLibrary(
     ].sort((a, b) => b - a);
     const chosen = select('library-year').value;
     select('library-year').replaceChildren(
-      new Option('모든 해', 'all'),
-      ...years.map((year) => new Option(`${year}년`, String(year))),
+      new Option('All years', 'all'),
+      ...years.map((year) => new Option(String(year), String(year))),
     );
     select('library-year').value = years.some((year) => String(year) === chosen) ? chosen : 'all';
     const year = select('library-year').value;
@@ -50,22 +50,22 @@ export function setupLibrary(
     for (const entry of saved.filter((item) => year === 'all' || String(item.year) === year)) {
       const node = card(
         `${entry.year} · @${entry.username}`,
-        `${entry.savedAt.slice(0, 10)} 보관 · 기록과 시점이 함께 저장되어 있습니다.`,
+        `Saved ${entry.savedAt.slice(0, 10)} · Includes records and view.`,
       );
       const actions = text('div', '', 'card-actions');
       actions.append(
-        cardButton('세계 열기', async () => {
+        cardButton('Open world', async () => {
           const epoch = session.epoch();
           const document = await loads.run(() => library.load(entry.key));
           if (!document || signal.aborted || session.epoch() !== epoch) return;
           await open(document);
           dialog('library-dialog').close();
-          status(`${entry.year}년의 보관된 세계를 열었습니다.`);
+          status(`Opened the saved world for ${entry.year}.`);
         }),
-        cardButton('보관본 삭제', async () => {
+        cardButton('Delete saved world', async () => {
           await library.delete(entry.key);
           await refresh();
-          status('이 보관본을 삭제했습니다. 지금 열린 풍경은 유지됩니다.');
+          status('Deleted the saved world. Your current landscape is unchanged.');
         }),
       );
       node.append(actions);
@@ -76,23 +76,20 @@ export function setupLibrary(
     )) {
       const node = card(
         `${document.scene.year} · @${document.scene.username}`,
-        `${sourcePeriod(document)} 관측 · 가져온 파일, 아직 보관하지 않았습니다.`,
+        `Observed ${sourcePeriod(document)} · Imported file, not yet saved.`,
       );
       node.append(
-        cardButton('불러온 세계 열기', async () => {
+        cardButton('Open imported world', async () => {
           loads.cancel();
           await open(document);
           dialog('library-dialog').close();
-          status('가져온 기록을 열었습니다. 내 세계 보관으로 브라우저에 남길 수 있습니다.');
+          status('Opened the imported records. Choose Save my world to keep them in this browser.');
         }),
       );
       target.append(node);
     }
     if (!target.childElementCount)
-      empty(
-        target,
-        '아직 보관한 세계가 없습니다. 지금의 풍경을 보관하거나 이전 기록 파일을 가져와 보세요.',
-      );
+      empty(target, 'No saved worlds yet. Save this landscape or import an earlier file.');
   }
 
   click(
@@ -106,7 +103,7 @@ export function setupLibrary(
         view: before.view,
       });
       await library.save(document, { replace: true });
-      status(`${document.scene.year}년 세계와 지금의 시점을 보관했습니다.`);
+      status(`Saved the ${document.scene.year} world and current view.`);
       if (dialog('library-dialog').open) await refresh();
     },
     signal,

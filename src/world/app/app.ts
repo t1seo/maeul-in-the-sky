@@ -20,6 +20,7 @@ import { WorldAppError } from './errors.js';
 import type { RendererLoaders } from './renderer.js';
 import { prepareIncoming } from './incoming.js';
 import { setupVersionSelection } from './versions.js';
+import { setupAnalytics } from '../analytics/index.js';
 
 export type WorldAppOptions = {
   readonly initialData?: unknown;
@@ -53,7 +54,7 @@ export async function startWorldApp(options: WorldAppOptions) {
   }
   const first = incoming.documents[0];
   if (!first)
-    throw new WorldAppError('empty', '열 수 있는 기록이 없습니다. 다른 세계 파일을 가져와 주세요.');
+    throw new WorldAppError('empty', 'No records are available. Please import another world file.');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const initial = reduce ? { ...first, view: { ...first.view, motion: 'off' as const } } : first;
   const session = createWorldSession(initial, options.loaders);
@@ -70,15 +71,22 @@ export async function startWorldApp(options: WorldAppOptions) {
   collection.remember(incoming.documents);
   const projects = setupProjects(session, signal);
   const discoveries = setupDiscoveries(session, records, signal);
+  const analytics = setupAnalytics(session, signal);
   const stopControls = setupControls(session, signal);
   setupExports(session, signal);
   setupVersionSelection(() => session.current().sourceSnapshot, signal);
   const unsubscribe = session.subscribe((change) => {
     paintWorld(session, change === 'scene');
-    if (change === 'scene') imports.cancel();
+    if (change === 'scene') {
+      imports.cancel();
+      if (dialog('analytics-dialog').open) analytics.refresh();
+    }
   });
   setupDialogs(signal, async (id) => {
     switch (id) {
+      case 'analytics-dialog':
+        analytics.refresh();
+        break;
       case 'library-dialog':
         await collection.refresh();
         break;
@@ -96,7 +104,7 @@ export async function startWorldApp(options: WorldAppOptions) {
         paintWorld(session);
         break;
       default:
-        throw new WorldAppError('element', '이 창을 열 수 없습니다.');
+        throw new WorldAppError('element', 'Could not open this dialog.');
     }
   });
   const chooseFile = (): void => {
@@ -115,11 +123,11 @@ export async function startWorldApp(options: WorldAppOptions) {
           const loaded = prepareIncoming(await imports.run(() => readWorldFile(file)));
           if (signal.aborted) return;
           const next = loaded.documents[0];
-          if (!next) throw new WorldAppError('empty', '파일 안에 열 수 있는 세계가 없습니다.');
+          if (!next) throw new WorldAppError('empty', 'This file contains no worlds to open.');
           await openOwn(next);
           collection.remember(loaded.documents);
           status(
-            `${loaded.documents.length}개의 세계를 가져왔습니다.${loaded.documents.length > 1 ? ' 보관한 세계에서 연도를 골라 오갈 수 있습니다.' : ' 현재 기록의 출처와 날짜를 확인해 보세요.'}`,
+            `${loaded.documents.length} ${loaded.documents.length === 1 ? 'world imported' : 'worlds imported'}.${loaded.documents.length > 1 ? ' Choose a year in Saved worlds to switch between them.' : ' Check the source and dates of these records.'}`,
           );
         } finally {
           if (!signal.aborted) input('world-file').value = '';
@@ -133,14 +141,16 @@ export async function startWorldApp(options: WorldAppOptions) {
   if (transferred && !warning) window.sessionStorage.removeItem('maeul-world-transfer');
   status(
     transferred && !warning
-      ? '기존 데모에서 보고 계시던 기록을 그대로 펼쳤습니다.'
+      ? 'Opened the records you were viewing in the previous demo.'
       : initial.sourceSnapshot.source.kind === 'sample'
-        ? '샘플 세계를 둘러보고 있습니다. 내 기록 파일을 가져와 나만의 풍경을 만나 보세요.'
-        : '기록과 저장된 시점을 펼쳤습니다.',
+        ? 'You are exploring a sample world. Import your records to see your own landscape.'
+        : 'Opened your records and saved view.',
   );
   if (warning) reportError(warning);
-  const remote = new URLSearchParams(options.search ?? window.location.search).get('world');
+  const parameters = new URLSearchParams(options.search ?? window.location.search);
+  const remote = parameters.get('world');
   if (remote) action(() => visits.openRemote(remote));
+  if (parameters.get('panel') === 'activity') html('open-analytics').click();
   const dispose = async (): Promise<void> => {
     lifetime.abort();
     imports.cancel();

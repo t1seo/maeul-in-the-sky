@@ -97,9 +97,9 @@ test('an empty library updates when a pending save finishes while its dialog is 
   button('save-world').click();
   dialog('library-dialog').showModal();
   await collection.refresh();
-  expect(html('library-list').textContent).toContain('아직 보관한 세계가 없습니다');
+  expect(html('library-list').textContent).toContain('No saved worlds yet');
   finish();
-  await expect.poll(() => html('library-list').textContent).toContain('세계 열기');
+  await expect.poll(() => html('library-list').textContent).toContain('Open world');
   expect(html('library-list').textContent).toContain('@home');
 });
 

@@ -16,7 +16,7 @@ export function setupVersionSelection(
   };
   const fail = (reason: string): void => {
     message.hidden = false;
-    message.textContent = `${reason} 지금 세계는 그대로 유지됩니다.`;
+    message.textContent = `${reason} Your current world is unchanged.`;
   };
   reset();
   picker.addEventListener(
@@ -26,21 +26,23 @@ export function setupVersionSelection(
       reset();
       if (version === 'world') return;
       if (version !== 'current' && version !== 'classic') {
-        fail('보기 버전을 다시 선택해 주세요.');
+        fail('Please select a view version again.');
         return;
       }
       let serialized: string;
       try {
         serialized = serializeSnapshot(currentSnapshot());
       } catch {
-        fail('기여 기록을 전달할 수 없습니다. 올바른 기록을 가져온 뒤 다시 선택해 주세요.');
+        fail(
+          'Could not transfer the contribution records. Import valid records, then choose again.',
+        );
         return;
       }
       try {
         window.sessionStorage.setItem('maeul-demo-transfer', serialized);
         navigate(`../?renderer=${version}`);
       } catch {
-        fail('SVG 버전을 열지 못했습니다. 브라우저 저장 공간을 확인한 뒤 다시 선택해 주세요.');
+        fail('Could not open the SVG version. Check browser storage, then choose again.');
       }
     },
     { signal },

@@ -54,6 +54,24 @@ type NormalizationSummary = {
     readonly source: 'relative-p90' | 'explicit-fixed' | 'shared-p90';
 };
 
+type ActivityMonth = {
+    readonly month: string;
+    readonly from: string;
+    readonly to: string;
+    readonly commits: number;
+    readonly pullRequests: number;
+    readonly issues: number;
+    readonly reviews: number;
+    readonly repositories: number;
+    readonly restricted: number;
+};
+type ActivityBreakdown = {
+    readonly source: 'github-contributions';
+    readonly from: string;
+    readonly to: string;
+    readonly months: readonly ActivityMonth[];
+};
+
 /** A single day's contribution data */
 interface ContributionDay {
     /** ISO date string (YYYY-MM-DD) */
@@ -99,6 +117,7 @@ interface ContributionData {
     year: number;
     /** GitHub username */
     username: string;
+    readonly activity?: ActivityBreakdown;
 }
 /** Options passed to theme renderers */
 interface ThemeOptions {
@@ -692,6 +711,7 @@ type SnapshotV1 = {
     readonly weeks: readonly SnapshotWeek[];
     readonly settings: ResolvedRenderSettings;
     readonly source: SnapshotSource;
+    readonly activity?: ActivityBreakdown;
 };
 type ArchiveComparison = {
     readonly normalization: {
@@ -896,4 +916,4 @@ type StartedPreviewServer = PreviewServerHandle & PreviewAddress;
 declare function createPreviewServer(options?: PreviewServerOptions): PreviewServerHandle;
 declare function startPreviewServer(options?: PreviewServerOptions): Promise<StartedPreviewServer>;
 
-export { ASSET_CATALOG, ASSET_CATALOG_COUNTS, type ArchiveV1, type ArtStyle, type ColorMode, type ConsistencyEffectKind, type ConsistencyParticle, type ConsistencyProgress, type ConsistencyTier, type ContributionData, type ContributionDay, type ContributionStats, type ContributionWeek, DEFAULT_VILLAGE_PRESET, EPIC_CATALOG, EPIC_CATALOG_COUNTS, type FetchContributionsOptions, GitHubApiError, type GitHubApiErrorCode, type Hemisphere, InputValidationError, type MotionMode, type NormalizationOptions, type NormalizationSummary, type PositiveRewardTier, type RenderSettingsInput, type ResolvedRenderSettings, type RewardTier, type SceneCell, type SceneConsistencyEffect, type SceneDailyReward, type ScenePlacement, type SceneWonderPlacement, type SettingsV1, type SnapshotSource, type SnapshotV1, type TerrainArchiveRequest, type TerrainArchiveResult, type TerrainCellMetadata, type TerrainGenerationRequest, type TerrainGenerationResult, type TerrainLayout, type TerrainMetadata, type TerrainRenderOptions, type TerrainRenderResult, type TerrainScene, type TerrainSceneRenderOptions, type Theme, type ThemeOptions, type ThemeOutput, VILLAGE_PRESETS, type ValidationIssue, type VillagePreset, type VillageStyle$1 as VillageStyle, computeSharedNormalization, computeStats, createArchive, createArchiveGenerator, createPreviewServer, createSnapshot, createTerrainGenerator, fetchContributions, generateArchive, generateTerrain, getAssetCatalogEntry, getEpicCatalogEntry, getTheme, isAssetType, isEpicBuildingType, isVillagePreset, listThemes, parseArchive, parseSettings, parseSnapshot, prepareTerrainScene, registerTheme, renderCatalogAsset, renderCatalogEpic, renderPng, renderTerrain, renderTerrainScene, resolveRenderSettings, selectComparisonSnapshots, serializeArchive, serializeSettings, serializeSnapshot, snapshotToContributionData, startPreviewServer, upsertArchiveSnapshot };
+export { ASSET_CATALOG, ASSET_CATALOG_COUNTS, type ActivityBreakdown, type ActivityMonth, type ArchiveV1, type ArtStyle, type ColorMode, type ConsistencyEffectKind, type ConsistencyParticle, type ConsistencyProgress, type ConsistencyTier, type ContributionData, type ContributionDay, type ContributionStats, type ContributionWeek, DEFAULT_VILLAGE_PRESET, EPIC_CATALOG, EPIC_CATALOG_COUNTS, type FetchContributionsOptions, GitHubApiError, type GitHubApiErrorCode, type Hemisphere, InputValidationError, type MotionMode, type NormalizationOptions, type NormalizationSummary, type PositiveRewardTier, type RenderSettingsInput, type ResolvedRenderSettings, type RewardTier, type SceneCell, type SceneConsistencyEffect, type SceneDailyReward, type ScenePlacement, type SceneWonderPlacement, type SettingsV1, type SnapshotSource, type SnapshotV1, type TerrainArchiveRequest, type TerrainArchiveResult, type TerrainCellMetadata, type TerrainGenerationRequest, type TerrainGenerationResult, type TerrainLayout, type TerrainMetadata, type TerrainRenderOptions, type TerrainRenderResult, type TerrainScene, type TerrainSceneRenderOptions, type Theme, type ThemeOptions, type ThemeOutput, VILLAGE_PRESETS, type ValidationIssue, type VillagePreset, type VillageStyle$1 as VillageStyle, computeSharedNormalization, computeStats, createArchive, createArchiveGenerator, createPreviewServer, createSnapshot, createTerrainGenerator, fetchContributions, generateArchive, generateTerrain, getAssetCatalogEntry, getEpicCatalogEntry, getTheme, isAssetType, isEpicBuildingType, isVillagePreset, listThemes, parseArchive, parseSettings, parseSnapshot, prepareTerrainScene, registerTheme, renderCatalogAsset, renderCatalogEpic, renderPng, renderTerrain, renderTerrainScene, resolveRenderSettings, selectComparisonSnapshots, serializeArchive, serializeSettings, serializeSnapshot, snapshotToContributionData, startPreviewServer, upsertArchiveSnapshot };

@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { fetchContributions } from '../../src/api/client.js';
-import { CONTRIBUTIONS_QUERY } from '../../src/api/queries.js';
 import { createMockApiResponse } from '../fixtures/contribution-data.js';
 
 // ── Helpers ─────────────────────────────────────────────────────
@@ -113,7 +112,7 @@ describe('fetchContributions', () => {
     expect(body.variables.username).toBe('testuser');
     expect(body.variables.from).toBe('2023-01-01T00:00:00Z');
     expect(body.variables.to).toBe('2023-12-31T23:59:59Z');
-    expect(body.query).toBe(CONTRIBUTIONS_QUERY);
+    expect(body.query).toContain('contributionCalendar {');
   });
 
   // ── Level parsing ───────────────────────────────────────────

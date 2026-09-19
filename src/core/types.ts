@@ -5,6 +5,7 @@ import type {
   TerrainLayout,
   VillageStyle,
 } from './render-options.js';
+import type { ActivityBreakdown } from './activity-types.js';
 
 // ── Contribution Data ──────────────────────────────────────────
 
@@ -56,6 +57,7 @@ export interface ContributionData {
   year: number;
   /** GitHub username */
   username: string;
+  readonly activity?: ActivityBreakdown;
 }
 
 // ── Theme System ───────────────────────────────────────────────

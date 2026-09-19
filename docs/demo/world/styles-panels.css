@@ -74,7 +74,7 @@
 .field input,
 .field select {
   width: 100%;
-  background: #fffdf7;
+  background-color: #fffdf7;
   font-size: 12px;
 }
 .day-details {

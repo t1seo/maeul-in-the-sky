@@ -77,13 +77,13 @@ test('shows partial public release coverage and seeks forward to a district with
   search('octocat');
   await expect.poll(() => html('project-results').textContent).toContain('<b>A garden</b>');
   expect(html('project-results').querySelector('b')).toBeNull();
-  expect(html('project-results').textContent).toContain('언어 정보 없음');
-  choose('project-results', '내 세계에 더하기');
+  expect(html('project-results').textContent).toContain('Language not listed');
+  choose('project-results', 'Add to my world');
   await expect.poll(() => running.session.current().repositoryData.length).toBe(1);
-  expect(html('project-selected').textContent).toContain('일부 공개 정보');
-  expect(html('project-status').textContent).toContain('일부만 수집');
+  expect(html('project-selected').textContent).toContain('Partial public data');
+  expect(html('project-status').textContent).toContain('partial data');
   expect(html('project-selected').textContent).not.toContain('spring');
-  choose('project-selected', '동네로 가기');
+  choose('project-selected', 'Visit neighborhood');
   expect(running.session.current().view.cursorDate).toBe('2024-02-29');
   document.querySelector<HTMLButtonElement>('[data-dialog="projects-dialog"]')?.click();
   expect(html('project-selected').textContent).toContain('spring');
@@ -106,8 +106,8 @@ test('keeps the twelve chosen districts when a thirteenth public repository is r
   await running.session.rebuild({}, repositories);
   search('octocat');
   await expect.poll(() => html('project-results').textContent).toContain('octocat/garden');
-  choose('project-results', '내 세계에 더하기');
-  expect(html('world-status').textContent).toContain('최대 12개');
+  choose('project-results', 'Add to my world');
+  expect(html('world-status').textContent).toContain('up to 12');
   expect(running.session.current().repositoryData).toHaveLength(12);
 });
 
@@ -128,6 +128,6 @@ test('ignores a cancelled old search when a newer public search succeeds', async
   finish(Response.json([]));
   await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
   expect(html('project-results').textContent).toContain('octocat/garden');
-  expect(html('project-status').textContent).toContain('1개의 공개 저장소');
+  expect(html('project-status').textContent).toContain('1 public repository');
   expect(button('project-more').disabled).toBe(false);
 });

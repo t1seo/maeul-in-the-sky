@@ -22,6 +22,16 @@ The default seasonal weather follows each month's season: petals and butterflies
 
 Nature remains the main landscape, with villages and city districts in smaller regions. Daily activity grows local details; consistent activity adds seasonal gatherings, lights and life. Different tree, building and landscape shapes keep the world varied.
 
+## Read your activity
+
+Choose **Activity** in the explorer or the SVG demo to see the history behind the landscape. The dashboard shows contribution totals, active days, a daily/weekly/monthly trend, weekday activity, and monthly commit/PR comparison. Choose a month to narrow the period, focus or tap chart points for values, or expand **View the numbers** for the underlying tables.
+
+Charts use the original source snapshot, independently of the replay slider. Missing dates remain missing; an observed zero is a quiet day. The source label identifies sample or imported records and their observed dates.
+
+New snapshots fetched by the current CLI or Action include monthly GitHub contribution breakdowns. **Commits** means commits that qualify for GitHub profile contributions; **PRs opened** does not mean merged PRs. The table also includes issue, review, repository and restricted contribution counts. Categories follow GitHub visibility rules and are not a decomposition of the daily calendar total. Partial first and last months retain their actual requested ranges.
+
+Older snapshots and the built-in sample still show contribution charts, with unavailable commit/PR counts clearly marked. Regenerate a snapshot with the current source build or merged Action commit to collect those counts. Importing an older file cannot reconstruct them. Charts render locally without a browser token, telemetry or additional network requests.
+
 ## Save, visit and make keepsakes
 
 Save worlds in this browser or download a world JSON document. World files preserve the generated scene, source snapshot and current view, including the camera. Existing snapshots and multi-year archives are also accepted. World files allow up to 8 MiB; original snapshot/archive limits remain 2 MiB. The local collection holds up to 20 saved revisions.

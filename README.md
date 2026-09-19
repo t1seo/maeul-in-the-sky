@@ -48,6 +48,7 @@ Prefer the previous design? Choose **Classic** in the [SVG demo](https://t1seo.g
 - Banner/card layouts, full/subtle/off motion, static PNG, and a zoomable browser explorer
 - Versioned settings, contribution snapshots, multi-year comparisons, and local authenticated preview
 - A separate 2D/3D world with monthly islands, one connected annual island, or four seasonal islands
+- An Activity dashboard with contribution trends, weekday activity and monthly commit/PR charts from newly fetched snapshots
 
 The README previews and six preset images use seeded **synthetic data**, with 364 supplied days from **2025-01-05 to 2026-01-03**. They are examples, not a fetched account or a complete 2025 calendar. Sparse and maximum previews use separate seeded patterns; the original benchmark fixtures remain frozen for reproducible comparisons.
 
@@ -267,13 +268,13 @@ Open `http://127.0.0.1:4318/` and select **Fetch contributions**. The service bi
 
 ## Saved data, comparisons and privacy
 
-Settings (`kind: maeul-settings`), snapshots (`maeul-snapshot`) and archives (`maeul-archive`) use `schemaVersion: 1`. Settings contain username, optional year and render settings. Snapshots add year, date/count/level weeks and `source.kind` (`github`, `import`, `sample`), with optional `fetchedAt`. Parsers recompute statistics, reject unsupported versions, duplicate/invalid dates and invalid counts/options, and limit imports to 2 MiB and 20,000 days across at most 20 snapshots.
+Settings (`kind: maeul-settings`), snapshots (`maeul-snapshot`) and archives (`maeul-archive`) use `schemaVersion: 1`. Settings contain username, optional year and render settings. Snapshots add year, date/count/level weeks and `source.kind` (`github`, `import`, `sample`), with optional `fetchedAt`. Newly fetched snapshots also include optional `activity` metadata with validated monthly GitHub contribution breakdowns. Older snapshots remain valid without this metadata. Parsers recompute statistics, reject unsupported versions, duplicate/invalid dates and invalid counts/options, and limit imports to 2 MiB and 20,000 days across at most 20 snapshots.
 
 The envelope stays at version 1. Settings save culture as `style: classic | korean` and artwork as `artStyle: miniature | pixel`; older settings without `artStyle` load as `miniature`. Both choices survive settings/snapshot imports, share links and archive generation.
 
 **Save current year** stores a snapshot in this browser's local storage. Replacing a saved username/year requires confirmation. Compare 2–5 years of one account: the default pools positive counts across selected snapshots, takes their P90 and stores that common maximum as fixed normalization in the archive manifest. Equal counts then have equal levels/heights. An explicit fixed maximum overrides it; individual relative views remain available outside comparisons. CLI archives contain year directories with images/snapshots, `archive.json` and two vertically stacked `maeul-in-the-sky-comparison-{dark,light}.svg` files. Replay with `--input archive.json`; `--normalization shared` recomputes the pooled scale.
 
-Settings links contain configuration, including username/title, but no counts, token or snapshot payload. They do not fetch the named account. Snapshots/archives contain daily counts and dates and may reveal private activity totals visible to your token; review them before sharing. Source labels record provenance, not cryptographic proof of GitHub origin. There is no analytics, account database or telemetry endpoint. Network generation contacts GitHub directly; imports work offline. SVGs contain dates/counts, not repository names or contribution details, and no executable scripts or external resources.
+Settings links contain configuration, including username/title, but no counts, token or snapshot payload. They do not fetch the named account. Snapshots/archives contain daily counts and dates, may include monthly contribution categories, and may reveal private activity totals visible to your token; review them before sharing. Source labels record provenance, not cryptographic proof of GitHub origin. There is no tracking, account database or telemetry endpoint; the Activity dashboard reads your local snapshot. Network generation contacts GitHub directly; imports work offline. SVGs contain dates/counts, not repository names or contribution details, and no executable scripts or external resources.
 
 ## Layout, motion and stable villages
 

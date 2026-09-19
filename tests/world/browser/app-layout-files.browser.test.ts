@@ -26,23 +26,23 @@ test.each(layoutChoices)(
     app.session.update({ selectedId: 'day:2024-02-29', cursorDate: '2024-02-29' });
     const saved = app.session.current();
     button('save-world').click();
-    await expect.poll(() => html('world-status').textContent).toContain('보관했습니다');
+    await expect.poll(() => html('world-status').textContent).toContain('Saved the');
     await app.dispose();
     mountLayoutPage();
     const running = await openLayoutApp(undefined, database);
     app = running;
     document.querySelector<HTMLButtonElement>('[data-dialog="library-dialog"]')?.click();
-    await expect.poll(() => html('library-list').textContent).toContain('세계 열기');
+    await expect.poll(() => html('library-list').textContent).toContain('Open world');
     // When the saved world is opened after restarting the app.
     [...html('library-list').querySelectorAll('button')]
-      .find((node) => node.textContent === '세계 열기')
+      .find((node) => node.textContent === 'Open world')
       ?.click();
-    await expect.poll(() => html('world-status').textContent).toContain('보관된 세계를 열었습니다');
+    await expect.poll(() => html('world-status').textContent).toContain('Opened the saved world');
     // Then its frozen scene, layout control and selected date are restored.
     expect(running.session.current().scene).toEqual(saved.scene);
     expect(select('world-layout').value).toBe(layout);
     expect(input('world-date').value).toBe('2024-02-29');
-    expect(html('day-details').textContent).toContain('0번의 기여');
+    expect(html('day-details').textContent).toContain('0 contributions');
   },
 );
 
@@ -64,13 +64,13 @@ test.each(layoutChoices)(
     await chooseLayout(running, layout === 'archipelago' ? 'island' : 'archipelago');
     // When the exported JSON is imported through the file input.
     upload('world-file', serialized);
-    await expect.poll(() => html('world-status').textContent).toContain('세계를 가져왔습니다');
+    await expect.poll(() => html('world-status').textContent).toContain('world imported');
     // Then every record and the selected dated view survive the round trip.
     expect(saved.scene.settings.layout).toBe(layout);
     expect(running.session.current().scene).toEqual(before.scene);
     expect(select('world-layout').value).toBe(layout);
     expect(input('world-date').value).toBe('2024-02-28');
-    expect(html('day-details').textContent).toContain('5번의 기여');
+    expect(html('day-details').textContent).toContain('5 contributions');
     expect(html('stat-contributions').textContent).toBe('5');
   },
 );
