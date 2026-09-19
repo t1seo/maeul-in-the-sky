@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Give miniature SVG rivers blue-green depth shading, tapered natural banks and varied ripples in place of road-like central stripes, while retaining existing flow and waterfall motion limits
 - Replace the SVG height legend with a village collection: static badges for unique discovered Wonders, an undiscovered marker and earned seasonal effects, scoped to the displayed landscape
 - Make seasonal SVG snow, rain, cherry petals and autumn leaves easier to see with distinct movement, bounded airspace and the existing motion budget
 - Enrich miniature SVG ground with varied material textures and cliff strata, clearer directional river currents, and bounded coastal waterfalls with fading mist; retain still geometry for reduced/off motion and PNG exports
