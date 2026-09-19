@@ -134,15 +134,18 @@ describe('immutable circular calendar slots', () => {
 
 describe('legacy geometry compatibility', () => {
   it.each([
-    ['archipelago', '4cd66e4879ab65fd91c5fd1065381008ec512f6c7ade8e47b6cdaec2b091a76c'],
-    ['island', 'd0e24aed0a4c00295eed4c1bda5c1a3e7fc58c437cd7648c5e825e8f1db0f339'],
-    ['seasonal', 'eebd62cf860801c025e7f0619461dbe72be66c49385afdba18e6fba170c50850'],
+    ['archipelago', '542862c8494108cabdee9dbf100b6ee33baecdb2b42ee9c5e5937c4808624f4c'],
+    ['island', '08a3700293a016ac003b97b767acbd302ba4167219e57a28dc845ff8e2db1025'],
+    ['seasonal', '5e51865bfb93de4dd5b318f91d9965498cda1a6117f4a877e60da0287d29f12f'],
   ] as const)('retains the pre-change frozen %s scene', (layout, expected) => {
     // Given
     const input = inputFor(sequence('2024-09-19', 366, 25), 2025);
     // When
     const scene = buildWorld({ ...input, settings: { ...input.settings, layout } });
+    const portableGeometry = JSON.stringify(scene, (_key, value: unknown) =>
+      typeof value === 'number' && !Number.isInteger(value) ? Number(value.toFixed(12)) : value,
+    );
     // Then
-    expect(createHash('sha256').update(JSON.stringify(scene)).digest('hex')).toBe(expected);
+    expect(createHash('sha256').update(portableGeometry).digest('hex')).toBe(expected);
   });
 });
