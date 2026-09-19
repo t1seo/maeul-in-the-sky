@@ -347,6 +347,10 @@ npx tsx scripts/generate-catalog.ts docs/demo/catalog
 - 查看[安全策略](../SECURITY.md)
 - 遵守[行为准则](../CODE_OF_CONDUCT.md)
 
+## 赞助
+
+[![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=taewonseo&button_colour=e3e7ef&font_colour=262626&font_family=Inter&outline_colour=262626&coffee_colour=a0522d)](https://www.buymeacoffee.com/taewonseo)
+
 ## 许可证
 
 [MIT](../LICENSE) © [t1seo](https://github.com/t1seo)

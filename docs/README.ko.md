@@ -366,6 +366,10 @@ npx tsx scripts/generate-catalog.ts docs/demo/catalog
 - [보안 정책](../SECURITY.md)
 - [행동 강령](../CODE_OF_CONDUCT.md)
 
+## 후원
+
+[![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=taewonseo&button_colour=e3e7ef&font_colour=262626&font_family=Inter&outline_colour=262626&coffee_colour=a0522d)](https://www.buymeacoffee.com/taewonseo)
+
 ## 라이선스
 
 [MIT](../LICENSE) © [t1seo](https://github.com/t1seo)
