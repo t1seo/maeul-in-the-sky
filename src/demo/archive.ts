@@ -14,6 +14,7 @@ import {
   type Library,
 } from './archive-store.js';
 import { showArchiveList, showComparison, snapshotKey } from './archive-view.js';
+import { CURRENT_RENDERER, type DemoRenderer } from './renderers.js';
 
 export type ArchiveController = {
   readonly importData: (data: ImportedData) => Promise<boolean>;
@@ -37,6 +38,7 @@ export function setupArchive(
   current: () => SnapshotV1,
   mode: () => ColorMode,
   open: (snapshot: SnapshotV1) => void,
+  renderer: () => DemoRenderer = () => CURRENT_RENDERER,
 ): ArchiveController {
   let library: Library = { snapshots: [] };
   const selected = new Set<string>();
@@ -75,7 +77,7 @@ export function setupArchive(
     return true;
   };
   const refresh = (): void => {
-    showArchiveList(library.snapshots, selected, mode(), open);
+    showArchiveList(library.snapshots, selected, mode(), open, renderer());
     if (library.comparison) {
       const { username, years, maxCount } = library.comparison;
       const archive = createArchive(
@@ -85,7 +87,7 @@ export function setupArchive(
         years,
         { kind: 'fixed', maxCount },
       );
-      showComparison(archive, mode());
+      showComparison(archive, mode(), renderer());
     }
   };
   const selectedArchive = (): ArchiveV1 => {
@@ -127,7 +129,7 @@ export function setupArchive(
   click('compare-years', () => {
     const archive = selectedArchive();
     if (!commit(comparisonLibrary(library, archive))) return;
-    showComparison(archive, mode());
+    showComparison(archive, mode(), renderer());
     report(
       `Compared ${archive.comparison.years.length} years with common maximum ${archive.comparison.normalization.maxCount}. Saved comparison restored on reload.`,
     );

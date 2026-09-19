@@ -2,9 +2,27 @@ import { currentMotionContext, motionId } from '../../../core/animation.js';
 import type { IsoCell } from '../blocks.js';
 import type { BiomeContext } from '../biomes.js';
 import { selectEvenly } from './selection.js';
+import { currentSurfaceContext } from '../scene/surface-context.js';
+import { renderSurfaceMotionCSS } from './surface-motion.js';
 const MAX_WATER = 15;
 const MAX_SPARKLE = 10;
 export function renderTerrainCSS(
+  isoCells: IsoCell[],
+  biomeMap?: Map<string, BiomeContext>,
+  townSparkles = true,
+): string {
+  if (!currentSurfaceContext()) return renderLegacyTerrainCSS(isoCells, biomeMap, townSparkles);
+  return (
+    renderSurfaceMotionCSS(isoCells, biomeMap) +
+    renderLegacyTerrainCSS(
+      isoCells.filter((cell) => cell.level100 < 10 || cell.level100 > 22),
+      undefined,
+      townSparkles,
+    )
+  );
+}
+
+function renderLegacyTerrainCSS(
   isoCells: IsoCell[],
   biomeMap?: Map<string, BiomeContext>,
   townSparkles = true,

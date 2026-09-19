@@ -6,9 +6,11 @@ import { copyOrDownload, downloadText } from './downloads.js';
 import { readImportFile } from './imports.js';
 import { readmeDocument, workflowDocument } from './setup.js';
 import { demoQuery, type DemoSettings } from './state.js';
+import { RENDERER_VERSIONS, type RendererVersion } from './renderer-version.js';
 
-export function updateSetup(document: SettingsV1): void {
-  const workflow = workflowDocument(document);
+export function updateSetup(document: SettingsV1, renderer: RendererVersion = 'current'): void {
+  const workflow = workflowDocument(document, renderer);
+  html('workflow-version').textContent = RENDERER_VERSIONS[renderer].description;
   html('workflow-preview').textContent = workflow.ok ? workflow.content : workflow.message;
   for (const [field, id] of [
     ['title', 'title-error'],
@@ -33,7 +35,8 @@ export function setupExports(
   restore: (document: SettingsV1) => void,
 ): void {
   const workflow = (): string | undefined => {
-    const result = workflowDocument(current().document);
+    const settings = current();
+    const result = workflowDocument(settings.document, settings.renderer);
     if (!result.ok) {
       status(result.message, true);
       return undefined;
@@ -79,7 +82,7 @@ export function setupExports(
     );
   });
   input('repository').addEventListener('input', () =>
-    safeAction(() => updateSetup(current().document)),
+    safeAction(() => updateSetup(current().document, current().renderer)),
   );
   input('settings-input').addEventListener('change', (event) =>
     safeAction(async () => {

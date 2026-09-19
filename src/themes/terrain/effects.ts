@@ -3,6 +3,7 @@ export { renderAnimatedOverlays } from './effects/overlays.js';
 export { renderCelestials, renderClouds } from './effects/sky.js';
 export { renderWaterOverlays, renderWaterRipples } from './effects/water.js';
 export {
+  renderSeasonalParticles,
   renderSnowParticles,
   renderFallingPetals,
   renderFallingLeaves,

@@ -1,0 +1,107 @@
+{
+  "checkedAt": "2026-09-19T04:45:10.233Z",
+  "sourceHashes": {
+    "src/world/model/types.ts": "6fc569105b2c38f75e7f46e28bca32b5cbf738f86b6a19b8fc5707e4fddeb3ba",
+    "src/world/model/input.ts": "6747655d42a0716f699646dd1bf80e4fe36168422dbd493458bdd166781a53ba",
+    "src/world/model/terrain.ts": "60ed08da8f3485d26c3b3c2cdf8e10a4d416ae59595d0e5e0156640481b16d5a",
+    "src/world/model/layout.ts": "cab54314f316bcd61049d6bd4a41739b050a3f8e9fed58b2bad9419ae5eaba0b",
+    "src/world/model/seasonal-joins.ts": "8e45b9312b7242e1dbbdae193fbec806fbc4e5b06c31bd60e969169bd2acd08a"
+  },
+  "annual": [
+    {
+      "layout": "archipelago",
+      "islands": 12,
+      "components": 12,
+      "dryComponents": 28,
+      "observedDays": 366,
+      "monthKeys": [
+        "2024-01",
+        "2024-02",
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-07",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11",
+        "2024-12"
+      ],
+      "terrainTiles": 2043,
+      "uniquePositions": 2043,
+      "terrainTriangles": 14562,
+      "sha256": "f755511601ade8d667c994fe3c499fdf698e8137d3ef9df7466374a59d943b9a",
+      "legacyByteIdentical": true
+    },
+    {
+      "layout": "island",
+      "islands": 1,
+      "components": 1,
+      "dryComponents": 1,
+      "observedDays": 366,
+      "monthKeys": [
+        "2024-01",
+        "2024-02",
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-07",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11",
+        "2024-12"
+      ],
+      "terrainTiles": 1728,
+      "uniquePositions": 1728,
+      "terrainTriangles": 8424,
+      "sha256": "f555a8155bf6c2d67b87e670e815d2f7d3d6ea7764659a2cd106997ac772440a",
+      "legacyByteIdentical": true
+    },
+    {
+      "layout": "seasonal",
+      "islands": 4,
+      "components": 4,
+      "dryComponents": 4,
+      "observedDays": 366,
+      "monthKeys": [
+        "2024-01",
+        "2024-02",
+        "2024-12",
+        "2024-03",
+        "2024-04",
+        "2024-05",
+        "2024-06",
+        "2024-07",
+        "2024-08",
+        "2024-09",
+        "2024-10",
+        "2024-11"
+      ],
+      "terrainTiles": 1308,
+      "uniquePositions": 1308,
+      "terrainTriangles": 8400,
+      "sha256": "2ac19c9b36fc3fdd408d9c0b531b8c7f920af68da621136d39c660d579003f77",
+      "legacyByteIdentical": null
+    }
+  ],
+  "fileRoundtrip": {
+    "schemaVersion": 1,
+    "layout": "seasonal",
+    "bytes": 2822458,
+    "days": 793,
+    "monthCount": 26,
+    "joins": 12,
+    "selectedId": "day:2024-12-31",
+    "replay": {
+      "totalContributions": 19850,
+      "activeDays": 397,
+      "observedDays": 397,
+      "missingDays": 0,
+      "currentStreak": 397,
+      "longestStreak": 397
+    }
+  }
+}

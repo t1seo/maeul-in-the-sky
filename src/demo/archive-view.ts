@@ -4,19 +4,31 @@ import { snapshotToContributionData } from '../core/settings/parse.js';
 import { html, safeAction, textNode } from './dom.js';
 import { downloadBlob, downloadText, pngBlob } from './downloads.js';
 import { renderSnapshot } from './preview.js';
+import { CURRENT_RENDERER, type DemoRenderer } from './renderers.js';
+import { RENDERER_VERSIONS } from './renderer-version.js';
 
 export function snapshotKey(snapshot: SnapshotV1): string {
   return `${snapshot.username.toLowerCase()}:${snapshot.year}`;
 }
 
-export function annualCardSvg(snapshot: SnapshotV1, mode: ColorMode, maxCount?: number): string {
-  return renderSnapshot(snapshot, {
-    ...snapshot.settings,
-    layout: 'card',
-    motion: 'off',
-    title: `@${snapshot.username} · ${snapshot.year}`,
-    ...(maxCount === undefined ? {} : { normalization: { kind: 'fixed', maxCount } }),
-  })[mode];
+export function annualCardSvg(
+  snapshot: SnapshotV1,
+  mode: ColorMode,
+  maxCount?: number,
+  renderer: DemoRenderer = CURRENT_RENDERER,
+): string {
+  return renderSnapshot(
+    snapshot,
+    {
+      ...snapshot.settings,
+      layout: 'card',
+      motion: 'off',
+      title: `@${snapshot.username} · ${snapshot.year}`,
+      ...(maxCount === undefined ? {} : { normalization: { kind: 'fixed', maxCount } }),
+    },
+    'village',
+    renderer,
+  )[mode];
 }
 
 export function showArchiveList(
@@ -24,6 +36,7 @@ export function showArchiveList(
   selected: Set<string>,
   mode: ColorMode,
   open: (snapshot: SnapshotV1) => void,
+  renderer: DemoRenderer = CURRENT_RENDERER,
 ): void {
   const items = snapshots.map((snapshot) => {
     const item = textNode('article', '', 'archive-item');
@@ -54,7 +67,7 @@ export function showArchiveList(
     svgButton.addEventListener('click', () =>
       safeAction(() =>
         downloadText(
-          annualCardSvg(snapshot, mode),
+          annualCardSvg(snapshot, mode, undefined, renderer),
           `maeul-${snapshot.username}-${snapshot.year}-card.svg`,
           'image/svg+xml',
         ),
@@ -67,18 +80,23 @@ export function showArchiveList(
   html('archive-list').replaceChildren(...items);
 }
 
-export function showComparison(archive: ArchiveV1, mode: ColorMode): void {
+export function showComparison(
+  archive: ArchiveV1,
+  mode: ColorMode,
+  renderer: DemoRenderer = CURRENT_RENDERER,
+): void {
   const maxCount = archive.comparison.normalization.maxCount;
   const snapshots = archive.snapshots.filter((snapshot) =>
     archive.comparison.years.includes(snapshot.year),
   );
   html('comparison-note').textContent =
-    `Comparing ${snapshots.length} years for @${snapshots[0]?.username ?? ''}. Common fixed maximum: ${maxCount} contributions. Equal counts share equal terrain heights; all cards use this scale.`;
+    `Comparing ${snapshots.length} years for @${snapshots[0]?.username ?? ''}. Common fixed maximum: ${maxCount} contributions. Equal counts share equal terrain heights; all cards use this scale. Artwork: ${RENDERER_VERSIONS[renderer.version].label}.`;
   const cards = snapshots.map((snapshot) => {
     const card = textNode('article', '', 'annual-card');
     card.dataset.normalizationMax = String(maxCount);
     card.dataset.year = String(snapshot.year);
-    const svg = annualCardSvg(snapshot, mode, maxCount);
+    card.dataset.renderer = renderer.version;
+    const svg = annualCardSvg(snapshot, mode, maxCount, renderer);
     const image = document.createElement('img');
     image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
     image.alt = `${snapshot.year} village for ${snapshot.username}, common maximum ${maxCount}`;

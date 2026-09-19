@@ -301,6 +301,18 @@ h1 {
 .appearance-fields select {
   padding-inline: 8px;
 }
+.renderer-selection {
+  padding-block: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.renderer-selection p {
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+#renderer-status[data-error='true'] {
+  color: #9c2e27;
+}
 .advanced {
   margin-top: 18px;
   border-top: 1px solid var(--line);
@@ -785,7 +797,7 @@ footer p {
   .site-header {
     height: 75px;
   }
-  .site-header nav a:first-child {
+  .site-header nav a:not(#explore-world) {
     display: none;
   }
   .site-header nav {

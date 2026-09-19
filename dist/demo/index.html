@@ -17,6 +17,7 @@
         ><span class="mark" aria-hidden="true">田</span> Maeul in the Sky</a
       >
       <nav aria-label="Main">
+        <a id="explore-world" href="./world/">Explore your world ↗</a>
         <a href="#make-it-yours">Make it yours</a
         ><a href="https://github.com/t1seo/maeul-in-the-sky">GitHub ↗</a>
       </nav>
@@ -54,6 +55,18 @@
           <div class="preset-detail">
             <strong id="preset-name">Balanced</strong>
             <p id="preset-description">Balanced detail around daily natural features.</p>
+          </div>
+          <div id="renderer-selection" class="renderer-selection enhanced" hidden>
+            <label for="renderer-version">Artwork version</label>
+            <select id="renderer-version" aria-describedby="renderer-note renderer-status">
+              <option value="current">Current</option>
+              <option value="classic">Classic · before Sky World</option>
+            </select>
+            <p id="renderer-note" class="muted">
+              Use the latest artwork or the original version from before Sky World. Both keep your
+              dates, counts and settings.
+            </p>
+            <p id="renderer-status" role="status" aria-live="polite" aria-atomic="true"></p>
           </div>
           <form id="settings-form" class="enhanced" hidden novalidate>
             <div class="form-row appearance-fields">
@@ -199,7 +212,10 @@
           </div>
           <div class="legend">
             <span>Low</span
-            ><span class="swatches" role="img" aria-label="Five contribution heights, from low to high"
+            ><span
+              class="swatches"
+              role="img"
+              aria-label="Five contribution heights, from low to high"
               ><i></i><i></i><i></i><i></i><i></i></span
             ><span>High</span
             ><span class="season-note">Height follows activity. Seasons follow dates.</span>
@@ -455,6 +471,11 @@
           ><input id="repository" value="octocat/octocat" />
           <p class="muted">
             Images publish to the <code>output</code> branch. Your token stays in GitHub Secrets.
+          </p>
+          <p id="workflow-version" class="muted"></p>
+          <p class="muted">
+            Settings and snapshot JSON files keep their schema-v1 data and settings. Choose the
+            artwork version separately in a settings link or the generated workflow.
           </p>
           <button type="button" id="share-settings">Copy settings link</button
           ><button type="button" id="download-settings">Download settings JSON</button

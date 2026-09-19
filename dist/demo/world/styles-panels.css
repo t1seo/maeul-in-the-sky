@@ -1,0 +1,332 @@
+.story-panel {
+  padding: 24px 22px;
+  border: 1px solid #dedfd1;
+  border-radius: var(--radius);
+  background: #faf8ef;
+}
+.panel-heading h2 {
+  margin: 0 0 23px;
+  font-size: 23px;
+}
+.panel-heading .eyebrow {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+}
+.world-stats {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 7px;
+  border-block: 1px solid var(--line);
+  padding: 20px 0 18px;
+}
+.world-stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.world-stats strong {
+  font-family: 'Iowan Old Style', Georgia, serif;
+  font-size: 25px;
+  font-weight: 400;
+  color: #3d5542;
+  font-variant-numeric: tabular-nums;
+}
+.world-stats span {
+  font-size: 10px;
+  color: var(--muted);
+}
+.fine-print {
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.story-panel > .fine-print {
+  margin: 13px 0 23px;
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0 13px;
+}
+.section-title h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+.small-mark {
+  color: #96a18e;
+  font-family: Georgia, serif;
+  font-size: 12px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  color: #4d6054;
+  min-width: 0;
+}
+.field > span {
+  font-size: 11px;
+}
+.field input,
+.field select {
+  width: 100%;
+  background: #fffdf7;
+  font-size: 12px;
+}
+.day-details {
+  margin: 15px 0 5px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.day-details strong {
+  display: block;
+  font-size: 20px;
+  font-family: 'Iowan Old Style', Georgia, serif;
+  font-weight: 400;
+  color: var(--ink);
+}
+.day-details p {
+  margin: 7px 0;
+}
+.text-button {
+  border: 0;
+  background: transparent;
+  padding: 7px 0;
+  font-size: 11px;
+  min-height: 32px;
+  text-align: left;
+  color: #4c704d;
+}
+.text-button span {
+  margin-left: 8px;
+}
+.life-story {
+  border-top: 1px solid var(--line);
+  margin-top: 18px;
+}
+.journal-links {
+  display: grid;
+  gap: 0;
+  margin-top: 23px;
+  border-top: 1px solid var(--line);
+}
+.journal-links > button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 16px 0;
+  background: transparent;
+  text-align: left;
+}
+.journal-links strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+}
+.journal-links small {
+  display: block;
+  font-weight: 400;
+  font-size: 10px;
+  margin-top: 6px;
+  color: var(--muted);
+}
+.journal-links > button > span:last-child {
+  font-size: 15px;
+  font-weight: 400;
+  color: #809071;
+}
+.panel-footnote {
+  font-size: 10px;
+  color: #76806f;
+  line-height: 1.8;
+  margin: 19px 0 0;
+}
+dialog {
+  border: 1px solid #dcdccc;
+  border-radius: 20px;
+  background: #fcfaf1;
+  color: var(--ink);
+  width: min(550px, calc(100vw - 30px));
+  max-height: min(85vh, 840px);
+  padding: 29px;
+  box-shadow: 0 25px 120px #132b3540;
+}
+dialog::backdrop {
+  background: #203b4266;
+  backdrop-filter: blur(3px);
+}
+.dialog-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.dialog-heading h2 {
+  font-size: 29px;
+  margin: 0;
+}
+.dialog-heading .eyebrow {
+  font-size: 8px;
+}
+.dialog-heading button {
+  padding: 2px;
+  min-width: 34px;
+  min-height: 34px;
+  border: 0;
+  background: transparent;
+  font-size: 23px;
+  color: #778171;
+}
+.dialog-copy {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 13px;
+  margin: 17px 0 24px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 15px;
+}
+.collection-list {
+  margin-top: 18px;
+  display: grid;
+  gap: 11px;
+}
+.collection-card {
+  border: 1px solid #dedfd0;
+  background: #fffdf6;
+  border-radius: 12px;
+  padding: 17px;
+  overflow-wrap: anywhere;
+}
+.collection-card h3,
+.collection-card h4 {
+  margin: 0 0 7px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.collection-card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 6px 0 12px;
+}
+.collection-card small {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.card-actions button,
+.card-actions a {
+  min-height: 34px;
+  font-size: 11px;
+  padding: 7px 11px;
+}
+.card-actions a {
+  display: inline-flex;
+  align-items: center;
+}
+.collection-empty {
+  padding: 23px 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.collection-heading {
+  font-size: 13px;
+  margin-top: 28px;
+}
+dialog form {
+  display: grid;
+  gap: 14px;
+}
+dialog form .primary-button {
+  justify-self: start;
+}
+.export-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.postcard-note {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 33px 14px;
+  margin: 10px 0 22px;
+  border: 1px solid #d7deca;
+  border-radius: 11px;
+  background: radial-gradient(ellipse at top, #eee9ce, #e9eedc);
+  text-align: center;
+}
+.postcard-note strong {
+  font-family: 'Iowan Old Style', 'AppleMyungjo', 'Batang', serif;
+  font-weight: 400;
+  font-size: 23px;
+}
+.postcard-note span {
+  font-size: 11px;
+  color: #62705a;
+}
+.visit-actions {
+  display: flex;
+  gap: 9px;
+  margin: 18px 0;
+  flex-wrap: wrap;
+}
+.visit-actions button {
+  font-size: 11px;
+}
+#project-status {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #536b4e;
+}
+#project-more {
+  margin-top: 16px;
+}
+@media (max-width: 520px) {
+  .story-panel {
+    padding: 24px 22px;
+  }
+  dialog {
+    padding: 23px 20px;
+    max-height: 88vh;
+  }
+  .dialog-heading h2 {
+    font-size: 25px;
+  }
+  .export-actions {
+    grid-template-columns: 1fr;
+  }
+  .form-grid {
+    gap: 16px 12px;
+  }
+}
+.dialog-status {
+  margin: 0 0 16px;
+  padding: 11px 13px;
+  border: 1px solid #e4c8b9;
+  border-radius: 9px;
+  background: #fff1e5;
+  color: #894332;
+  font-size: 12px;
+  line-height: 1.6;
+}

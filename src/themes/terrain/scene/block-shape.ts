@@ -1,7 +1,10 @@
 import { svgNumber } from '../../../core/svg.js';
 import type { IsoCell } from './projection.js';
 import { THW, THH } from './projection.js';
+import { currentSurfaceContext } from './surface-context.js';
+import { renderSurfaceBlock } from './surface-block.js';
 export function renderBlock(cell: IsoCell, isWater = false): string {
+  if (currentSurfaceContext()) return renderSurfaceBlock(cell, isWater);
   const { isoX: cx, isoY: cy, height: h, colors } = cell;
 
   if (h === 0) {

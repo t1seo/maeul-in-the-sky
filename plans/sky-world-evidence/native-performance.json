@@ -1,0 +1,59 @@
+{
+  "checkedAt": "2026-09-19T03:52:20.940Z",
+  "headed": true,
+  "coverage": false,
+  "taskBrowsersIsolated": true,
+  "quality": "high",
+  "cssViewport": [
+    800,
+    500
+  ],
+  "samplesPerLayout": 24,
+  "caveat": "Observed browser RAF cadence on this Apple M1 device, not GPU timer queries or a universal device guarantee; second layout can benefit from driver shader cache.",
+  "measurements": [
+    {
+      "layout": "archipelago",
+      "dates": 366,
+      "entities": 1001,
+      "startupMs": 424.09999990463257,
+      "overview": {
+        "calls": 148,
+        "triangles": 368078
+      },
+      "month": {
+        "calls": 135,
+        "triangles": 734934
+      },
+      "browserRafP50Ms": 16.799999713897705,
+      "browserRafP95Ms": 17.800000190734863,
+      "renderer": "WebKit WebGL",
+      "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1, Unspecified Version)",
+      "drawingBuffer": [
+        1600,
+        1000
+      ]
+    },
+    {
+      "layout": "island",
+      "dates": 366,
+      "entities": 1001,
+      "startupMs": 285.7000002861023,
+      "overview": {
+        "calls": 148,
+        "triangles": 414530
+      },
+      "month": {
+        "calls": 149,
+        "triangles": 831526
+      },
+      "browserRafP50Ms": 16.699999809265137,
+      "browserRafP95Ms": 18.09999990463257,
+      "renderer": "WebKit WebGL",
+      "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1, Unspecified Version)",
+      "drawingBuffer": [
+        1600,
+        1000
+      ]
+    }
+  ]
+}

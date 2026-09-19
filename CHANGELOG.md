@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Selectable classic renderer** — preserve the exact pre-world browser renderer with provenance and integrity checks; switch versions with the same contribution history, share the selection, export with the selected engine, and generate a profile workflow pinned to the original commit
+- **Living seasons and surfaces** — seasonal petals, butterflies, precipitation and flowing-water motion accompany richer ground and shoreline detail in the explorer and profile SVG
+- **Sky world explorer** — a separate island map and lazy-loaded Three.js view add monthly archipelagos, one connected annual island and four seasonal islands, nature-led districts, route-following life, date replay, discoveries and seasonal photo controls
+- **Portable worlds and visits** — versioned world documents preserve generated geometry and camera state; browser collections, public world links, GitHub repository districts and release memorials connect exploration to actual source data
+- **World keepsakes** — standalone SVG and PNG captures and genuine GLB model export complement the existing profile images
+- **Premium atmosphere** — shaped, shaded clouds, a cratered crescent moon and a layered sun replace the earlier simple sky artwork in profile SVGs
+
 - **Nature scenery expansion** — eight shared nature IDs with three geometric variants each add cedar groves, ancient oaks, wildflower meadows, bamboo thickets, lotus ponds, reed marshes, alpine rocks and willow ponds
 - **Consistency effects** — 5, 12 and 20 active days in a trailing 28-day calendar window earn increasingly detailed seasonal effects, with observed-day metadata, a 10-group cap and static reduced-motion fallback
 
@@ -65,6 +72,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dependencies** — updated the test and Action toolchains; `npm audit` now reports zero vulnerabilities
 
 ### Fixed
+
+- **Explicit input boundaries** — restrict palette caches to supported color modes, retain canonical containment for preview assets, and pin browser-test proxy requests to the local QA server
 
 - Preserve eligible lower-tier Wonder draws when an upper-tier draw fails, retain the daily reward marker at Wonder positions, and keep animated portal geometry within its declared bounds.
 

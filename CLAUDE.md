@@ -35,6 +35,12 @@ src/
 │       ├── assets/        # 210 ordinary catalog IDs and modular renderers
 │       └── epics/         # 30 separately counted Wonder gates/renderers
 ├── demo/                  # Portable enhanced demo controllers
+├── world/                 # Separate 2D/3D world explorer
+│   ├── model/             # Deterministic frozen scenes, dated frames and model recipes
+│   ├── data/              # World files, local library, public metadata and visits
+│   ├── map/               # Interactive SVG map and standalone postcards
+│   ├── three/             # Lazy WebGL renderer, procedural geometry and GLB export
+│   └── app/               # Explorer controls, replay and personal journals
 ├── preview/               # Loopback-only authenticated preview service
 ├── output/                # SVG/snapshot files and static PNG adapter
 ├── archive/               # Node multi-year archive generator
@@ -67,6 +73,7 @@ src/
 
 ```bash
 npm run build        # Build with tsup (outputs dist/)
+npm run build:world  # Bundle the separate explorer into docs/demo/world/app/
 npm run dev          # Watch mode
 npm test             # Run vitest
 npm run lint         # ESLint
@@ -88,6 +95,7 @@ npx tsx scripts/generate-catalog.ts docs/demo/catalog # Generate registry catalo
 
 - Tests in `tests/` mirror `src/` structure
 - Vitest runs Node tests and a real Chromium browser project, merging both into the existing coverage thresholds; install Chromium with `npx playwright install chromium`
+- The additional `world-browser` project covers real map/WebGL behavior. Browser files run serially to avoid competing software GPU contexts; do not overlap separate WebGL test processes.
 - Season tests use specific week numbers mapped to expected zones
 
 ## Conventions
@@ -125,3 +133,13 @@ npx tsx scripts/generate-catalog.ts docs/demo/catalog # Generate registry catalo
 - New nature IDs have three geometric variants; composition remains date-stable and nature-led at high daily tiers
 - Consistency effects use trailing 28 calendar days, active thresholds 5/12/20, observed-day metadata, and at most 10 groups replacing town sparkles; old v1/v2 prepared scenes remain renderable
 - Animation budget: 50 max (water 15, sparkle 10, clouds 2, windmills 4, flags 4)
+
+## World Explorer Contracts
+
+- `/world/` is a separate experience. The existing CLI, Action and public browser entry do not import Three.js; the explorer loads it only when 3D is selected.
+- Preserve full absolute dates and year-month identities, observed zero versus missing days, and fixed dated positions. World replay hides future rewards while retaining the frozen scene.
+- Scene/model/document versions are validated. World files are limited to 8 MiB and 800 reserved calendar days; existing snapshots/archives retain their 2 MiB limit. The local library keeps at most 20 revisions.
+- Public project metadata comes from GitHub; daily totals must never be presented as per-repository contributions. Personal bookmarks and discovery journals stay outside exported documents.
+- `seasonForMonth` and `weatherForMonth` own hemisphere/override rules. Each renderer uses one elapsed clock; off/subtle/reduced/hidden/offscreen modes retain their current pose without advancing it.
+- Renderers implement `src/world/model/renderer-types.ts`, mount replacements before disposing the current view, discard stale asynchronous results, and dispose all owned resources. Water and path geometry retain model route heights of 0 and 0.5 respectively.
+- Frozen primitive recipes support genuine GLB export; the exported model is a keepsake, with no claim of certified 3D-print readiness.

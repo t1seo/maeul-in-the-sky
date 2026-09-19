@@ -1,4 +1,7 @@
 import { build } from 'tsup';
+import { copyClassicRenderer } from './classic-renderer.js';
+
+await copyClassicRenderer();
 
 await build({
   config: false,

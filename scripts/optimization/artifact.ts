@@ -7,10 +7,10 @@ export function optimizeGeneratedArtifact(svg: string): string {
   if (!compareContracts(svg, candidate).preserved) {
     throw new TypeError('SVG optimization changed protected content or references');
   }
-  if (
+  const artifact =
     Buffer.byteLength(candidate) > Buffer.byteLength(svg) ||
     gzipSync(candidate).length >= gzipSync(svg).length
-  )
-    return svg;
-  return candidate;
+      ? svg
+      : candidate;
+  return artifact.replace(/^[ \t]+$/gm, '');
 }

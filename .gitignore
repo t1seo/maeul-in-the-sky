@@ -24,6 +24,7 @@ coverage/
 playwright-report/
 .vitest-attachments/
 tests/demo/browser/__screenshots__/
+tests/world/browser/__screenshots__/
 test-results/
 
 # Local Orca runs, authenticated snapshots, and QA evidence
@@ -35,6 +36,8 @@ docs/*
 !docs/README.ko.md
 !docs/README.ja.md
 !docs/README.zh.md
+!docs/world-explorer.md
+!docs/world-explorer.ko.md
 !docs/demo/
 !docs/demo/**
 examples/

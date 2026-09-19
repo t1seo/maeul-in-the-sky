@@ -28,6 +28,12 @@ try {
     'dist/fonts/NotoSansKR.ttf',
     'dist/fonts/OFL.txt',
     'dist/demo/app/main.js',
+    'dist/demo/versions/classic/browser.js',
+    'dist/demo/versions/classic/metadata.json',
+    'dist/demo/world/index.html',
+    'dist/demo/world/app/main.js',
+    'dist/demo/world/licenses/three-MIT.txt',
+    'dist/demo/world/licenses/ky-MIT.txt',
   ]) {
     assert.ok(statSync(join(packageRoot, path)).size > 0, `Missing runtime asset: ${path}`);
   }

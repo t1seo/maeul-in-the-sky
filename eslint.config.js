@@ -5,7 +5,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ['dist/**', 'node_modules/**', '*.config.*'],
+    ignores: ['dist/**', 'assets/versions/**', 'docs/demo/versions/**', 'node_modules/**', '*.config.*'],
   },
   {
     rules: {

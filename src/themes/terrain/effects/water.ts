@@ -4,11 +4,14 @@ import type { TerrainPalette100 } from '../palette.js';
 import type { BiomeContext } from '../biomes.js';
 import { THW, THH } from '../blocks.js';
 import { seededRandom } from '../../../utils/math.js';
+import { currentSurfaceContext } from '../scene/surface-context.js';
+import { renderSurfaceRipples, renderSurfaceWater } from './surface-water.js';
 export function renderWaterOverlays(
   isoCells: IsoCell[],
   palette: TerrainPalette100,
   biomeMap: Map<string, BiomeContext>,
 ): string {
+  if (currentSurfaceContext()) return renderSurfaceWater(isoCells, palette, biomeMap);
   const overlays: string[] = [];
   let shimmerIdx = 0;
   const mode = currentMotionContext().mode;
@@ -72,6 +75,7 @@ export function renderWaterRipples(
   palette: TerrainPalette100,
   biomeMap: Map<string, BiomeContext>,
 ): string {
+  if (currentSurfaceContext()) return renderSurfaceRipples(isoCells, palette, biomeMap);
   const ripples: string[] = [];
   const color = palette.assets.waterLight;
   const rng = seededRandom(isoCells.length * 7 + 31);

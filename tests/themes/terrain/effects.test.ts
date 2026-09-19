@@ -122,8 +122,8 @@ describe('renderCelestials', () => {
     expect(svg).toContain('<circle');
     // Bright stars have cross shapes (line elements)
     expect(svg).toContain('<line');
-    // Moon: crescent made from overlapping circles
-    expect(svg).toContain(darkPalette.bg.subtle);
+    expect(svg).toContain('class="moon-body"');
+    expect(svg).toContain('class="moon-craters"');
   });
 
   it('light mode renders sun with rays', () => {
@@ -131,10 +131,9 @@ describe('renderCelestials', () => {
     expect(svg).toContain('<g class="celestials">');
     // Sun body
     expect(svg).toContain('<circle');
-    // Sun rays (8 lines)
-    expect(svg).toContain('<line');
-    // Sun colors
-    expect(svg).toContain('#ffe066');
+    expect(svg).toContain('class="sun-corona"');
+    expect(svg).toContain('class="sun-body"');
+    expect(svg).toContain('<radialGradient');
   });
 
   it('is deterministic with same seed', () => {
@@ -160,8 +159,8 @@ describe('renderClouds', () => {
     expect(clouds).toContain('</g>');
   });
 
-  it('contains ellipse elements for cloud shapes', () => {
-    expect(clouds).toContain('<ellipse');
+  it('contains two continuous cloud silhouettes', () => {
+    expect(clouds.match(/class="cloud-body"/g)).toHaveLength(2);
   });
 
   it('contains SMIL animateTransform for drift animation', () => {

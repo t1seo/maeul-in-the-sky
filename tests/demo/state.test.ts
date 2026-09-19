@@ -4,7 +4,11 @@ import { settingsFixture } from './fixtures.js';
 
 describe('C06 restore and validation', () => {
   it('restores all settings when a settings link is reopened', () => {
-    const state = { document: settingsFixture('A: "B" & <C>'), mode: 'light' } as const;
+    const state = {
+      document: settingsFixture('A: "B" & <C>'),
+      mode: 'light',
+      renderer: 'current',
+    } as const;
     const restored = parseDemoQuery(demoQuery(state));
     expect(restored).toEqual(state);
   });
@@ -51,6 +55,7 @@ describe('C06 restore and validation', () => {
       const state = {
         document: { ...document, settings: { ...document.settings, style, artStyle: 'pixel' } },
         mode: 'dark',
+        renderer: 'current',
       } as const;
 
       // When: the settings link is shared and reopened.

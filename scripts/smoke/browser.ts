@@ -7,6 +7,8 @@ import { chromium, type Browser } from '@playwright/test';
 import { z } from 'zod';
 import { startQaServer } from '../qa/server.js';
 import { cleanEnvironment } from './runtime.js';
+import { smokeWorld } from './world.js';
+import { smokeClassic } from './classic.js';
 
 export async function smokeBrowser(packageRoot: string, fixture: string) {
   const manifest = z
@@ -67,6 +69,7 @@ export async function smokeBrowser(packageRoot: string, fixture: string) {
     assert.deepEqual(errors, []);
     assert.ok((await page.locator('main > svg').screenshot()).length > 1000);
     console.log('PASS Chromium: packed browser import, actual render and snapshot roundtrip');
+    await smokeClassic(page, server.url, readFileSync(fixture, 'utf8'));
   } finally {
     await Promise.all([browser?.close(), server.close()]);
   }
@@ -141,6 +144,7 @@ for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => { void se
       data: { username: 'octocat', year: 2025 },
     });
     assert.equal(noToken.status(), 503);
+    await smokeWorld(page);
     assert.deepEqual(errors, []);
     assert.deepEqual(missing, []);
     console.log(

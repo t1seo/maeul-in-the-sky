@@ -72,11 +72,28 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run test:artifact
+      - name: Verify committed runtime bundles
+        run: |
+          git diff --exit-code -- dist docs/demo/app docs/demo/world/app docs/demo/versions
+          test -z "$(git ls-files --others --exclude-standard dist docs/demo/app docs/demo/world/app docs/demo/versions)"
 
-  browser:
-    name: Browser Regression
+  browser_projects:
+    name: Browser Regression (${{ matrix.project }})
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - chromium-desktop
+          - chromium-mobile
+          - chromium-reduced
+          - firefox-desktop
+          - firefox-mobile
+          - firefox-reduced
+          - webkit-desktop
+          - webkit-mobile
+          - webkit-reduced
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -86,15 +103,26 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run build
-      - run: npm run test:browser
+      - run: npm run test:browser -- --project=${{ matrix.project }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: browser-report-traces-and-static-approval-images-linux
+          name: browser-report-traces-and-static-approval-images-linux-${{ matrix.project }}
           path: |
             playwright-report/
             test-results/browser/
           retention-days: 14
+
+  browser:
+    name: Browser Regression
+    needs: browser_projects
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require all nine browser projects
+        env:
+          BROWSER_RESULT: ${{ needs.browser_projects.result }}
+        run: test "$BROWSER_RESULT" = success
 
   pixels:
     name: Approved Static Images
@@ -111,7 +139,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium
       - run: npm run build
-      - run: npx playwright test tests/visual/static.spec.ts --project=chromium-desktop
+      - run: npx playwright test tests/visual/static.spec.ts tests/visual/world-static.spec.ts --project=chromium-desktop
       - uses: actions/upload-artifact@v4
         if: always()
         with:
