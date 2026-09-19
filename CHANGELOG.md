@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Replace the SVG height legend with a village collection: static badges for unique discovered Wonders, an undiscovered marker and earned seasonal effects, scoped to the displayed landscape
+- Make seasonal SVG snow, rain, cherry petals and autumn leaves easier to see with distinct movement, bounded airspace and the existing motion budget
 - Enrich miniature SVG ground with varied material textures and cliff strata, clearer directional river currents, and bounded coastal waterfalls with fading mist; retain still geometry for reduced/off motion and PNG exports
 - Restore the animated diagonal SVG village as the main studio and profile experience, with Day/Night previews and automatic or fixed Day/Night README exports
 - Preserve 2D/3D island worlds and 3D profile capture tooling as explicitly archived experiments, with existing routes and saved files still supported
@@ -85,6 +87,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Keep tall grass and cattails rooted while swaying by separating terrain placement from the animated local transform
 - **Explorer language and controls** — the homepage and world interface use English labels and UTC date formatting, while shared native dropdowns have consistent inset arrows and readable text spacing
 - **Explicit input boundaries** — restrict palette caches to supported color modes, retain canonical containment for preview assets, and pin browser-test proxy requests to the local QA server
 

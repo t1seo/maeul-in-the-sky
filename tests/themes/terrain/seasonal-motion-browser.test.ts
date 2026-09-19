@@ -27,6 +27,12 @@ afterAll(async () => {
   await browser?.close();
 });
 
+async function openSvg(page: Page, svg: string): Promise<void> {
+  const url = 'http://seasonal-motion.test/scene.svg';
+  await page.route(url, (route) => route.fulfill({ contentType: 'image/svg+xml', body: svg }));
+  await page.goto(url);
+}
+
 async function frame(page: Page, time: number) {
   return page.evaluate((milliseconds) => {
     for (const animation of document.getAnimations()) {
@@ -75,13 +81,13 @@ describe('original standalone SVG seasonal and surface motion', () => {
         reducedMotion: 'no-preference',
       });
       try {
-        await page.goto(`data:image/svg+xml,${encodeURIComponent(svg)}`);
+        await openSvg(page, svg);
         await page.locator('[data-motion-branch="active"]').waitFor({ state: 'visible' });
-        // When: real CSS and SVG timelines advance by four seconds.
+        // When: real CSS and SVG timelines advance by 4.35 seconds, avoiding complete rain cycles.
         const before = await frame(page, 2500);
         const first = await page.screenshot({ path: `${evidence}/${layout}-${mode}-2500.png` });
-        const after = await frame(page, 6500);
-        const second = await page.screenshot({ path: `${evidence}/${layout}-${mode}-6500.png` });
+        const after = await frame(page, 6850);
+        const second = await page.screenshot({ path: `${evidence}/${layout}-${mode}-6850.png` });
         // Then: all five seasonal kinds and bounded current lines move; broad surfaces stay still.
         expect([...new Set(before.weather.map((value) => value.kind))].sort()).toEqual([
           'butterflies',
@@ -118,14 +124,12 @@ describe('original standalone SVG seasonal and surface motion', () => {
         reducedMotion: 'reduce',
       });
       try {
-        await page.goto(
-          `data:image/svg+xml,${encodeURIComponent(renderTerrainScene(scene, 'dark', { motion }))}`,
-        );
+        await openSvg(page, renderTerrainScene(scene, 'dark', { motion }));
         // When: both animation clocks advance.
         await frame(page, 2500);
         const first = await page.screenshot({ path: `${evidence}/${motion}-reduced-2500.png` });
-        await frame(page, 6500);
-        const second = await page.screenshot({ path: `${evidence}/${motion}-reduced-6500.png` });
+        await frame(page, 6850);
+        const second = await page.screenshot({ path: `${evidence}/${motion}-reduced-6850.png` });
         // Then: the complete fallback stays pixel-identical and contains no animation sources.
         expect(second.equals(first)).toBe(true);
         const staticBranch =
@@ -145,12 +149,10 @@ describe('original standalone SVG seasonal and surface motion', () => {
     // Given: subtle mode allows only the existing clouds and small water motion policy.
     const page = await browser.newPage({ reducedMotion: 'no-preference' });
     try {
-      await page.goto(
-        `data:image/svg+xml,${encodeURIComponent(renderTerrainScene(scene, 'light', { motion: 'subtle' }))}`,
-      );
+      await openSvg(page, renderTerrainScene(scene, 'light', { motion: 'subtle' }));
       // When: the actual browser animation clock advances.
       const before = await frame(page, 2500);
-      const after = await frame(page, 6500);
+      const after = await frame(page, 6850);
       // Then: seasonal geometry is fixed and just four water paths flow.
       expect(after.weather).toEqual(before.weather);
       expect(before.currents).toHaveLength(4);
@@ -210,7 +212,7 @@ describe('original standalone SVG seasonal and surface motion', () => {
       await page.goto('http://legacy-surfaces.test/archive.svg');
       // When: the archive advances both its dated seasonal layers.
       const before = await frame(page, 2500);
-      const after = await frame(page, 6500);
+      const after = await frame(page, 6850);
       // Then: both rows remain animated and all local references have unique owners.
       expect(before.weather).toHaveLength(20);
       for (let index = 0; index < before.weather.length; index++)
@@ -240,7 +242,7 @@ describe('original standalone SVG seasonal and surface motion', () => {
         `${evidence}/archive-motion.json`,
         JSON.stringify({ before, after, rows }, null, 2),
       );
-      await page.screenshot({ path: `${evidence}/archive-dark-6500.png` });
+      await page.screenshot({ path: `${evidence}/archive-dark-6850.png` });
     } finally {
       await page.close();
     }

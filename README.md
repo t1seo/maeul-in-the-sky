@@ -37,7 +37,7 @@ Prefer the original artwork? Choose **Classic** in the [SVG studio](https://t1se
 - Four calendar-aligned seasons with distinct foliage, silhouettes and material colors
 - Procedural rivers, ponds, forests, weather, and ambient animation; miniature ground textures, flowing currents and waterfalls spilling beneath the sky island
 - 210 ordinary asset IDs: 197 classic and 13 Korean, with 68 seasonal and 142 year-round IDs
-- 30 discoverable Epic Wonders across Rare, Epic, and Legendary tiers
+- 30 discoverable Epic Wonders across Rare, Epic, and Legendary tiers, with collection badges for discoveries in the displayed landscape
 - Refreshed artwork plus 9 Korean rural and 8 nature additions: 240 catalog IDs in total
 - Nature-led compositions with sparse architecture, varied water scenery and three silhouettes per new nature asset
 - Independent miniature/pixel artwork and daily rewards based on raw contribution counts
@@ -199,6 +199,8 @@ High-activity Terrain can reveal one of 30 special landmarks:
 
 Wonder selection considers the cell’s activity, the richness of nearby cells, and overall contribution statistics. Up to three Wonders are placed with spacing rules so they remain meaningful and readable.
 
+The SVG's **Village collection** panel shows badges for unique Wonder types actually present in the displayed landscape, plus earned seasonal effects. Duplicate Wonders count once; uncollected types stay undiscovered. These badges describe the current period, rather than a saved lifetime inventory. Open the Wonder encyclopedia in the demo to browse all 30 types and their eligibility rules. Discovery remains deterministic for the same data and settings; refreshing or switching Day/Night does not reroll it.
+
 ## Explore and set up
 
 Open the [demo](https://t1seo.github.io/maeul-in-the-sky/) to choose a preset, username/year/title and hemisphere. Controls cover density, motion, banner/card, classic/Korean culture, miniature/pixel artwork, height scale and layout seed. Culture and artwork are independent; either culture supports both art styles. Changing sample settings does not fetch an account. Import a snapshot for actual counts, or use the local service below.
@@ -289,7 +291,7 @@ Seasons follow real dates and hemisphere: spring flowers and new leaves, full su
 
 Nature now appears throughout the reward ladder. New cedar groves, ancient oaks, wildflower meadows, bamboo thickets, lotus ponds, reed marshes, alpine rocks and willow ponds each have three geometric variants. Architecture and vessels remain occasional focal points. Candidate IDs are deduplicated after culture mapping, and absolute-date spatial variation reduces neighboring repeated silhouettes without using neighboring contribution counts.
 
-Daily primary assets and consistency effects follow calendar seasons: December–February winter, March–May spring, June–August summer and September–November autumn in the north, shifted six months in the south. Terrain colors still blend gradually between seasons. Neutral gray bars explain contribution height without reusing seasonal colors.
+Daily primary assets and consistency effects follow calendar seasons: December–February winter, March–May spring, June–August summer and September–November autumn in the north, shifted six months in the south. Terrain colors still blend gradually between seasons. Full motion adds drifting cherry petals, summer rain, falling autumn leaves and winter snowfall in their dated regions. These ambient weather effects are separate from earned seasonal collection badges.
 
 Consistency rewards count positive-contribution days in the inclusive trailing 28 calendar days. At 5, 12 and 20 active days, seasonal petals, fireflies, leaves or frost gain detail. Only supplied dates count; metadata records observed days separately, so unavailable history is not mistaken for measured inactivity. At most 10 effect groups are displayed, anchored to active days. These are decorative rewards, not additional contributions or a claim of an unbroken streak; ordinary daily tiers remain 0/1/5/10/25/50. Off, subtle and reduced-motion output retain static reward shapes.
 

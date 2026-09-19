@@ -1,12 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { SaxesParser } from 'saxes';
 import type { SceneCell } from '../../../../src/core/scene-types.js';
 import { renderTerrain, prepareTerrainScene } from '../../../../src/themes/terrain/index.js';
-import {
-  getSeasonalPalette100,
-  getTerrainPalette100,
-} from '../../../../src/themes/terrain/palette.js';
-import { renderHeightLegend } from '../../../../src/themes/terrain/scene/legend.js';
+import { getTerrainPalette100 } from '../../../../src/themes/terrain/palette.js';
 import { renderPresentation } from '../../../../src/themes/terrain/scene/presentation.js';
 import { calendarFixture, sceneOptions } from './fixtures.js';
 
@@ -14,92 +9,47 @@ function occurrences(svg: string, marker: string): number {
   return svg.split(marker).length - 1;
 }
 
-function heightBars(svg: string) {
-  const bars: { readonly height: number; readonly bottom: number; readonly fill: string }[] = [];
-  const parser = new SaxesParser({ xmlns: false });
-  parser.on('opentag', (tag) => {
-    if (tag.name === 'rect' && tag.attributes.class === 'height-legend-swatch') {
-      const height = Number(tag.attributes.height);
-      bars.push({ height, bottom: Number(tag.attributes.y) + height, fill: tag.attributes.fill });
-    }
-  });
-  parser.write(svg).close();
-  return bars;
-}
-
-describe('terrain height legend', () => {
+describe('Village collection presentation', () => {
   it.each(['dark', 'light'] as const)(
-    'explains contribution height with ascending neutral bars in %s mode',
+    'replaces the visible height key with landscape discoveries in %s mode',
     (mode) => {
-      // Given: a fixed normalization scale and the actual mode palette.
-      const palette = getTerrainPalette100(mode);
-
-      // When: the public banner renderer shades the prepared scene.
       const svg = renderTerrain(calendarFixture(), sceneOptions)[mode];
-
-      // Then: shape encodes height, while one neutral color avoids a seasonal color key.
-      expect(occurrences(svg, 'class="height-legend-swatch"')).toBe(5);
-      const bars = heightBars(svg);
-      expect(new Set(bars.map((bar) => bar.fill))).toEqual(new Set([palette.text.secondary]));
-      expect(new Set(bars.map((bar) => bar.bottom)).size).toBe(1);
-      expect(bars.every((bar, index) => index === 0 || bar.height > bars[index - 1].height)).toBe(
-        true,
-      );
-      expect(svg).toContain('aria-label="Contribution height legend.');
-      expect(svg).toContain('Fixed scale');
-      expect(svg).toContain('0–25 contributions');
-      for (const bin of ['Empty', 'Low', 'Mid', 'High', 'Max']) {
-        expect(svg).toContain(`>${bin}</text>`);
-      }
-      expect(svg).not.toContain('Water and trees are scenery');
+      expect(occurrences(svg, 'class="village-collection"')).toBe(1);
+      expect(svg).toContain('>Village collection</text>');
+      expect(svg).toContain('>In this landscape</text>');
+      expect(svg).not.toContain('class="height-legend');
+      expect(svg).not.toContain('>Contribution height');
+      expect(svg).toContain('Terrain height follows daily contributions.');
+      expect(svg).toContain('Fixed scale from 0 to 25 contributions.');
     },
   );
 
-  it.each(['banner', 'card'] as const)(
-    'keeps the %s height key consistent through all four seasonal palettes',
-    (layout) => {
-      // Given: the same contributions with four different seasonal surface colors.
-      const scene = prepareTerrainScene(calendarFixture(), { ...sceneOptions, layout });
-      const palettes = [0, 14, 28, 42].map((week) => getSeasonalPalette100('light', week));
-
-      // When: each seasonal palette renders the same contribution key.
-      const legends = palettes.map((palette) => heightBars(renderHeightLegend(scene, palette)));
-
-      // Then: changing seasons never changes the key's meaning or geometry.
-      expect(new Set(palettes.map((palette) => palette.getElevation(45).top)).size).toBeGreaterThan(
-        1,
-      );
-      for (const bars of legends) expect(bars).toEqual(legends[0]);
-    },
-  );
-
-  it('keeps the card statistics readable while adding the compact legend', () => {
+  it('keeps the card statistics readable above the compact collection', () => {
     // Given: a complete leap-year Contribution Calendar in card layout.
     const data = calendarFixture('2000-01-01', 366, 4);
 
     // When: the card is rendered.
     const svg = renderTerrain(data, { ...sceneOptions, layout: 'card' }).light;
 
-    // Then: the five-bin legend is present and statistics retain the required text size.
-    expect(occurrences(svg, 'class="height-legend-swatch"')).toBe(5);
+    // Then: the collection replaces the key and statistics retain the required text size.
+    expect(occurrences(svg, 'class="village-collection"')).toBe(1);
     expect(svg).toContain('class="stats-bar"');
     expect(svg).toContain('font-size="16"');
+    expect(svg).toContain('>1,464</text>');
   });
 
-  it.each([1, 0.5])('uses truthful categorical bins when the scale maximum is %s', (maximum) => {
+  it.each([1, 0.5])('retains accessible height meaning for a scale maximum of %s', (maximum) => {
     // Given: a valid prepared scene whose presentation scale has a tiny maximum.
     const base = prepareTerrainScene(calendarFixture('2025-01-01', 3), sceneOptions);
     const scene = { ...base, normalization: { ...base.normalization, maxCount: maximum } };
 
-    // When: the legend is rendered.
+    // When: the collection and other presentation content are rendered.
     const content = renderPresentation(scene, getTerrainPalette100('light'));
 
-    // Then: height bands remain categorical, never duplicate exact counts.
-    expect(occurrences(content, 'class="height-legend-swatch"')).toBe(5);
-    expect(content).toContain(`0–${maximum} contributions`);
-    expect(content).not.toContain('contributions, elevation');
-    expect(content).toContain('Low contribution height; representative elevation 20 of 99');
-    expect(content).toContain('Max contribution height; representative elevation 99 of 99');
+    // Then: removing visible height bars preserves their accessible explanation.
+    expect(content).toContain(`Fixed scale from 0 to ${maximum} contributions.`);
+    expect(content).toContain('Terrain colors follow the seasons.');
+    expect(content).not.toContain('class="height-legend');
   });
 });
 

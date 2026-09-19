@@ -100,10 +100,10 @@ export function svgWildflowerPatch(x: number, y: number, c: AssetColors, _v: num
 
 export function svgTallGrass(x: number, y: number, c: AssetColors, _v: number): string {
   return (
-    `<g transform="translate(${x},${y})" ${motionMarkup('class="sway-gentle"')}>` +
+    `<g transform="translate(${x},${y})"><g ${motionMarkup('class="sway-gentle"')}>` +
     `<path d="M-.8,.1 Q-1.6,-2.6 -2.5,-3 Q-.7,-2.6 -.2,-.4 Q.1,-3.2 1.5,-4.2 Q.5,-2 .65,0Z" fill="${c.bushDark}"/>` +
     `<path d="M-.85,.1 Q-1.6,-3 -.9,-4.5 Q-.85,-2 -.1,-.5 Q-.2,-3.7 .4,-4.6 Q.4,-1.8 .7,-.5 Q1.25,-2.4 2.5,-2.85 Q1.1,-1 .85,.15Z" fill="${c.tallGrass}"/>` +
-    `<path d="M-.8,0 Q-1.05,-2.3 -.9,-4.5 Q-.7,-1.9 -.25,-.2Z M.15,-.3 Q.05,-2.7 .4,-4.6 L.5,-1.3Z" fill="${c.leafLight}"/></g>`
+    `<path d="M-.8,0 Q-1.05,-2.3 -.9,-4.5 Q-.7,-1.9 -.25,-.2Z M.15,-.3 Q.05,-2.7 .4,-4.6 L.5,-1.3Z" fill="${c.leafLight}"/></g></g>`
   );
 }
 
