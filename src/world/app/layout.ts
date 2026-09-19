@@ -2,25 +2,26 @@ import { calendarSeason } from '../model/dates.js';
 import type { WorldSettings } from '../model/types.js';
 import type { WorldSession } from './session.js';
 import { cardButton, html, text } from './dom.js';
+import { monthLabel } from './date-labels.js';
 
 export const LAYOUT_LABELS = {
-  archipelago: '월별 군도',
-  island: '하나의 큰 섬',
-  seasonal: '사계절 군도',
+  archipelago: 'Monthly islands',
+  island: 'One large island',
+  seasonal: 'Seasonal islands',
 } as const satisfies Record<WorldSettings['layout'], string>;
 
 const LAYOUT_NOTES = {
-  archipelago: '한 달이 하나의 섬이 됩니다. 월별 풍경을 오가며 기록을 둘러보세요.',
-  island: '월별 땅이 하나로 이어집니다. 한 해의 1월부터 12월까지 한 섬에서 만날 수 있어요.',
+  archipelago: 'Each month becomes an island. Explore your records one month at a time.',
+  island: 'All months connect into one island, from January to December.',
   seasonal:
-    '같은 계절의 달을 한 섬으로 모읍니다. 한 해는 네 섬, 일부 기간은 해당 계절만 펼쳐집니다.',
+    'Months in the same season share an island. A full year has four islands; shorter ranges show only the seasons included.',
 } as const satisfies Record<WorldSettings['layout'], string>;
 
 export const CALENDAR_SEASON_LABELS = {
-  spring: '봄',
-  summer: '여름',
-  autumn: '가을',
-  winter: '겨울',
+  spring: 'Spring',
+  summer: 'Summer',
+  autumn: 'Autumn',
+  winter: 'Winter',
 } as const;
 
 export function paintLayout(session: WorldSession, rebuildNavigation: boolean): void {
@@ -48,7 +49,7 @@ export function paintLayout(session: WorldSession, rebuildNavigation: boolean): 
                 const year = month.slice(0, 4);
                 const showYear =
                   multipleYears && (index === 0 || year !== group[index - 1]?.slice(0, 4));
-                return `${showYear ? `${year}년 ` : ''}${Number(month.slice(5))}월`;
+                return `${monthLabel(month, 'short')}${showYear ? ` ${year}` : ''}`;
               })
               .join(' · '),
           ),
@@ -62,7 +63,7 @@ export function paintLayout(session: WorldSession, rebuildNavigation: boolean): 
         const showYear = index === 0 || year !== months[index - 1]?.slice(0, 4);
         const season = calendarSeason(`${month}-15`, scene.settings.hemisphere);
         const node = cardButton(
-          `${showYear ? `${year.slice(2)}년 ` : ''}${Number(month.slice(5))}월`,
+          `${monthLabel(month, 'short')}${showYear ? ` ${year}` : ''}`,
           () => {
             const last = scene.days.filter((day) => day.monthKey === month).at(-1);
             if (last) session.update({ cursorDate: last.date, selectedId: last.id });
@@ -73,7 +74,7 @@ export function paintLayout(session: WorldSession, rebuildNavigation: boolean): 
         node.dataset.season = season;
         node.setAttribute(
           'aria-label',
-          `${year}년 ${Number(month.slice(5))}월 · ${CALENDAR_SEASON_LABELS[season]} 풍경`,
+          `${monthLabel(month)} ${year} · ${CALENDAR_SEASON_LABELS[season]} scenery`,
         );
         return node;
       }),

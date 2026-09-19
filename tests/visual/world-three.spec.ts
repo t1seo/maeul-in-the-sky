@@ -212,7 +212,7 @@ test('unavailable WebGL preserves an explicit usable map fallback', async ({ pag
   await expect(page.locator('#world-host svg')).toBeVisible();
   await expect(page.locator('#world-host canvas')).toHaveCount(0);
   await page.locator('#month-nav button').nth(1).click();
-  await expect(page.locator('#replay-label')).toContainText('2월');
+  await expect(page.locator('#replay-label')).toContainText('February');
 });
 
 test('context loss restores the map without losing the selected replay date', async ({ page }) => {

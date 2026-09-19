@@ -38,21 +38,31 @@ describe('SVG world map', () => {
     expect(tags.filter((tag) => tag['data-tile-id'])).toHaveLength(2);
   });
 
-  it('escapes user titles and produces standalone static nonblank raster output', () => {
-    // Given an untrusted display name and a stopped frame.
-    const scene = { ...mapScene, username: '<script>&"공중 마을' };
-    // When a postcard is rendered and parsed by an independent SVG engine.
-    const svg = renderMapFrame(scene, mapFrame, mapView, { width: 640, height: 420 });
-    const tags = elements(svg);
-    const raster = new Resvg(svg).render();
-    // Then the document is safe and contains visible painted pixels.
-    expect(
-      tags.some((tag) => /^(script|image|foreignObject|animate|animateTransform)$/.test(tag.name)),
-    ).toBe(false);
-    expect(svg).toContain('&lt;script&gt;&amp;&quot;공중 마을');
-    expect([raster.width, raster.height]).toEqual([640, 420]);
-    expect(new Set(raster.pixels).size).toBeGreaterThan(100);
-  });
+  it.each(['classic', 'korean'] as const)(
+    'escapes user titles in English captions with %s architecture and produces static nonblank output',
+    (culture) => {
+      // Given an untrusted display name and a stopped frame.
+      const scene = {
+        ...mapScene,
+        username: '<script>&"공중 마을',
+        settings: { ...mapScene.settings, culture },
+      };
+      // When a postcard is rendered and parsed by an independent SVG engine.
+      const svg = renderMapFrame(scene, mapFrame, mapView, { width: 640, height: 420 });
+      const tags = elements(svg);
+      const raster = new Resvg(svg).render();
+      // Then the document is safe and contains visible painted pixels.
+      expect(
+        tags.some((tag) =>
+          /^(script|image|foreignObject|animate|animateTransform)$/.test(tag.name),
+        ),
+      ).toBe(false);
+      expect(svg).toContain('&lt;script&gt;&amp;&quot;공중 마을');
+      expect(svg).toContain('&lt;script&gt;&amp;&quot;공중 마을&apos;s sky world</text>');
+      expect([raster.width, raster.height]).toEqual([640, 420]);
+      expect(new Set(raster.pixels).size).toBeGreaterThan(100);
+    },
+  );
 
   it('uses actual catalog art with self-contained namespaced references', () => {
     // Given a pine grove and an independently embedded map namespace.

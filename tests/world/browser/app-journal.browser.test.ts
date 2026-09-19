@@ -37,16 +37,16 @@ async function open(initialData: unknown) {
 test('distinguishes absent dates, observed zero and unreplayed records without inventing activity', async () => {
   const snapshot = { ...historySnapshot(), source: { kind: 'import' } };
   const running = await open(snapshot);
-  expect(html('world-source').textContent).toContain('가져온 기록');
+  expect(html('world-source').textContent).toContain('Imported records');
   input('world-date').value = '2024-01-05';
   input('world-date').dispatchEvent(new Event('change'));
-  expect(html('day-details').textContent).toContain('0회 기여로 계산하지 않습니다');
+  expect(html('day-details').textContent).toContain('does not count as zero contributions');
   expect(html('stat-contributions').textContent).toBe('0');
   running.session.update({ selectedId: 'day:2024-01-07' });
-  expect(html('day-details').textContent).toContain('아직 펼치지 않은 날짜');
+  expect(html('day-details').textContent).toContain('This date has not appeared yet');
   running.session.selectPlace('tile:2024-01-07');
   expect(running.session.current().view.cursorDate).toBe('2024-01-07');
-  expect(html('day-details').textContent).toContain('8번의 기여');
+  expect(html('day-details').textContent).toContain('8 contributions');
   await running.session.rebuild({ layout: 'island' });
   expect(running.session.current().view.selectedId).toBe('day:2024-01-07');
   document.querySelector<HTMLButtonElement>('[data-dialog="photo-dialog"]')?.click();
@@ -55,7 +55,7 @@ test('distinguishes absent dates, observed zero and unreplayed records without i
   stopDownload = captured.stop;
   button('export-svg').click();
   await expect.poll(() => captured.downloads.length).toBe(1);
-  expect(await captured.downloads[0]?.blob.text()).toContain('가져온 기록');
+  expect(await captured.downloads[0]?.blob.text()).toContain('Imported records');
 });
 
 test('pauses replay when the document becomes hidden and ignores nested shortcut events', async () => {

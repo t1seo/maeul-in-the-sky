@@ -41,10 +41,10 @@ export function setupProjects(session: WorldSession, signal: AbortSignal) {
     const epoch = session.epoch();
     if (before.repositoryData.some((item) => item.id === repository.id)) return;
     if (before.repositoryData.length >= 12) {
-      status('프로젝트 동네는 최대 12개까지 고를 수 있습니다.', true);
+      status('You can add up to 12 project neighborhoods.', true);
       return;
     }
-    html('project-status').textContent = `${repository.fullName}의 공개 릴리스를 읽고 있습니다.`;
+    html('project-status').textContent = `Loading public releases for ${repository.fullName}.`;
     const complete = await districtGate.run((signal) =>
       client.getRepository(repository.fullName, { signal }),
     );
@@ -53,7 +53,7 @@ export function setupProjects(session: WorldSession, signal: AbortSignal) {
     renderSelected();
     renderResults();
     html('project-status').textContent =
-      `${complete.fullName} 동네를 더했습니다. 공개 릴리스 ${complete.releases.length}개${complete.coverage.complete ? '' : ' · 일부만 수집됨'}.`;
+      `Added the ${complete.fullName} neighborhood. Public releases: ${complete.releases.length}${complete.coverage.complete ? '' : ' · partial data'}.`;
   }
 
   function renderResults(): void {
@@ -63,19 +63,19 @@ export function setupProjects(session: WorldSession, signal: AbortSignal) {
       ...results.map((repository) => {
         const node = card(
           repository.fullName,
-          repository.description ?? '설명이 없는 공개 저장소입니다.',
+          repository.description ?? 'This public repository has no description.',
         );
         const actions = text('div', '', 'card-actions');
         const choose = cardButton(
-          selected.has(repository.id) ? '동네에 포함됨' : '내 세계에 더하기',
+          selected.has(repository.id) ? 'Already added' : 'Add to my world',
           () => add(repository),
         );
         choose.disabled = selected.has(repository.id);
-        actions.append(choose, link('GitHub에서 보기', repository.url));
+        actions.append(choose, link('View on GitHub', repository.url));
         node.append(
           text(
             'small',
-            `${repository.primaryLanguage ?? '언어 정보 없음'} · ${repository.retrievedAt.slice(0, 10)} 공개 정보`,
+            `${repository.primaryLanguage ?? 'Language not listed'} · Public data retrieved ${repository.retrievedAt.slice(0, 10)}`,
           ),
           actions,
         );
@@ -83,7 +83,7 @@ export function setupProjects(session: WorldSession, signal: AbortSignal) {
       }),
     );
     if (!results.length)
-      empty(target, '찾은 공개 저장소가 없습니다. 사용자 이름이나 저장소 주소를 확인해 보세요.');
+      empty(target, 'No public repositories found. Check the username or repository URL.');
     button('project-more').hidden = nextPage === undefined;
   }
 
@@ -97,14 +97,14 @@ export function setupProjects(session: WorldSession, signal: AbortSignal) {
         );
         const node = card(
           repository.fullName,
-          `${releases.length}개의 공개 릴리스가 현재 재생 날짜 이전에 발행되었습니다.`,
+          `${releases.length} public release${releases.length === 1 ? '' : 's'} published by the replay date.`,
         );
         const place = current.scene.entities.find(
           (entity) => entity.repoId === repository.id && entity.kind === 'repository',
         );
         const actions = text('div', '', 'card-actions');
         if (place) {
-          const go = cardButton('동네로 가기', () => {
+          const go = cardButton('Visit neighborhood', () => {
             if (place.visibleFrom > current.view.cursorDate)
               session.update({ cursorDate: place.visibleFrom });
             session.focus({ kind: 'entity', entityId: place.id });
@@ -116,12 +116,12 @@ export function setupProjects(session: WorldSession, signal: AbortSignal) {
             node.append(
               text(
                 'p',
-                '이 세계의 기간 이후에 만들어진 저장소입니다. 이후 연도에서 동네를 만나실 수 있습니다.',
+                'This repository was created after this world’s date range. Its neighborhood appears in a later year.',
               ),
             );
         }
         actions.append(
-          cardButton('동네에서 빼기', async () => {
+          cardButton('Remove neighborhood', async () => {
             districtGate.cancel();
             await session.rebuild(
               {},
@@ -138,19 +138,17 @@ export function setupProjects(session: WorldSession, signal: AbortSignal) {
             text('br', ''),
           );
         if (!repository.coverage.complete)
-          node.append(
-            text('small', '일부 공개 정보만 수집되었습니다. GitHub에서 전체 기록을 확인해 주세요.'),
-          );
+          node.append(text('small', 'Partial public data. View the full history on GitHub.'));
         return node;
       }),
     );
     if (!current.repositoryData.length)
-      empty(target, '아직 프로젝트 동네가 없습니다. 공개 저장소를 찾아 더해 보세요.');
+      empty(target, 'No project neighborhoods yet. Find a public repository to add.');
   }
 
   async function search(append = false): Promise<void> {
     const query = input('project-query').value.trim();
-    html('project-status').textContent = 'GitHub의 공개 저장소를 찾고 있습니다.';
+    html('project-status').textContent = 'Searching public GitHub repositories.';
     button('project-more').disabled = true;
     try {
       const response = await searchGate.run(async (signal) => {
@@ -168,7 +166,7 @@ export function setupProjects(session: WorldSession, signal: AbortSignal) {
       nextPage = 'nextPage' in response ? response.nextPage : undefined;
       renderResults();
       html('project-status').textContent =
-        `${results.length}개의 공개 저장소를 찾았습니다.${response.coverage.complete ? '' : ' 목록이 일부입니다. 다음 페이지 또는 GitHub에서 확인하실 수 있습니다.'}`;
+        `Found ${results.length} public ${results.length === 1 ? 'repository' : 'repositories'}.${response.coverage.complete ? '' : ' This is a partial list. Load the next page or view it on GitHub.'}`;
     } catch (error) {
       if (!(error instanceof Error)) throw error;
       if (error instanceof WorldDataError && (error.code === 'stale' || error.code === 'cancelled'))

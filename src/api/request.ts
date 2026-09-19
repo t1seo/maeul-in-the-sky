@@ -1,5 +1,6 @@
 import { GitHubApiError } from './errors.js';
 import { parseGitHubResponse, type GitHubCalendar } from './response.js';
+import type { ActivityRequest } from './activity.js';
 
 const GITHUB_API_ENDPOINT = 'https://api.github.com/graphql';
 const RETRY_DELAYS = [1000, 2000] as const;
@@ -56,6 +57,7 @@ async function requestAttempt(
   init: RequestInit,
   timeoutMs: number,
   signal?: AbortSignal,
+  activity?: ActivityRequest,
 ): Promise<GitHubCalendar> {
   if (signal?.aborted) throw new GitHubApiError('aborted');
   const controller = new AbortController();
@@ -68,8 +70,8 @@ async function requestAttempt(
     controller.signal.addEventListener('abort', rejectAbort, { once: true });
   });
   try {
-    const request = fetch(endpoint, { ...init, signal: controller.signal }).then(
-      parseGitHubResponse,
+    const request = fetch(endpoint, { ...init, signal: controller.signal }).then((response) =>
+      parseGitHubResponse(response, activity),
     );
     return await Promise.race([request, interrupted]);
   } catch (error) {
@@ -104,6 +106,7 @@ export async function makeGraphQLRequest(
   variables: Readonly<Record<string, unknown>>,
   token: string | undefined,
   options: FetchContributionsOptions,
+  activity?: ActivityRequest,
 ): Promise<GitHubCalendar> {
   const config = requestConfig(options);
   const deadline = Date.now() + TOTAL_TIMEOUT_MS;
@@ -128,6 +131,7 @@ export async function makeGraphQLRequest(
         init,
         Math.min(config.timeoutMs, remainingMs),
         options.signal,
+        activity,
       );
     } catch (error) {
       if (!(error instanceof GitHubApiError)) throw error;

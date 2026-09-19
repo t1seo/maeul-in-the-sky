@@ -1,59 +1,69 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f5f3eb" />
     <meta
       name="description"
-      content="나의 GitHub 기록으로 자라는 하늘 군도. 작은 숲과 마을을 둘러보고, 시간 속 풍경을 간직하세요."
+      content="A sky world grown from your GitHub contributions. Explore little forests and villages, and keep a moment from your journey."
     />
-    <title>하늘 마을 · 나의 작은 세계</title>
+    <title>Sky World · Maeul in the Sky</title>
     <link rel="stylesheet" href="./styles.css" />
     <script type="module" src="./app/main.js"></script>
   </head>
   <body>
-    <a class="skip-link" href="#world-controls">탐험 도구로 건너뛰기</a>
+    <a class="skip-link" href="#world-controls">Skip to explorer controls</a>
     <header class="site-header">
-      <a class="brand" href="../" aria-label="하늘 마을 기존 데모로 돌아가기">
+      <a class="brand" href="../" aria-label="Maeul in the Sky — back to the SVG demo">
         <svg viewBox="0 0 40 40" aria-hidden="true">
           <path d="m20 4 16 9-16 9L4 13Z" fill="#8ba584" />
           <path d="m4 13 16 9v15L4 28Z" fill="#57735e" />
           <path d="m20 22 16-9v15l-16 9Z" fill="#344d43" />
           <path d="m20 9 7 4-7 4-7-4Z" fill="#f4e5b9" />
         </svg>
-        <span>하늘 마을<small>MAEUL IN THE SKY</small></span>
+        <span>Sky Village<small>MAEUL IN THE SKY</small></span>
       </a>
-      <nav class="header-actions" aria-label="세계 파일">
-        <button type="button" id="open-import" class="quiet-button">기록 가져오기</button>
-        <button type="button" data-dialog="library-dialog" class="quiet-button">보관한 세계</button>
-        <button type="button" id="save-world" class="primary-button">내 세계 보관</button>
+      <nav class="header-actions" aria-label="World tools">
+        <button
+          type="button"
+          id="open-analytics"
+          data-dialog="analytics-dialog"
+          class="quiet-button"
+        >
+          Activity
+        </button>
+        <button type="button" id="open-import" class="quiet-button">Import history</button>
+        <button type="button" data-dialog="library-dialog" class="quiet-button">
+          Saved worlds
+        </button>
+        <button type="button" id="save-world" class="primary-button">Save my world</button>
       </nav>
       <input
         id="world-file"
         class="visually-hidden"
         type="file"
         accept="application/json,.json"
-        aria-label="세계 또는 기여 기록 JSON 파일"
+        aria-label="World or contribution snapshot JSON file"
       />
     </header>
 
     <main>
       <section class="world-intro" aria-labelledby="world-title">
         <div>
-          <p class="eyebrow">작은 기록, 넓은 풍경</p>
-          <h1 id="world-title">나의 하늘 마을</h1>
-          <p class="intro-copy">쌓아 온 시간을 산책해 보세요.</p>
+          <p class="eyebrow">SMALL STEPS, WIDE HORIZONS</p>
+          <h1 id="world-title">My sky world</h1>
+          <p class="intro-copy">Take a walk through the time you have built.</p>
         </div>
         <div class="intro-meta">
-          <span id="world-source" class="source-pill">세계 준비 중</span
-          ><span id="world-period">기록을 불러오고 있습니다.</span>
+          <span id="world-source" class="source-pill">Preparing your world</span
+          ><span id="world-period">Loading your contribution history.</span>
           <div class="version-selection">
-            <label for="world-version">보기 버전</label>
+            <label for="world-version">View version</label>
             <select id="world-version" aria-describedby="world-version-status">
-              <option value="world" selected>새 하늘세계</option>
-              <option value="current">현재 SVG</option>
-              <option value="classic">업그레이드 전 SVG</option>
+              <option value="world" selected>Sky World</option>
+              <option value="current">Current SVG</option>
+              <option value="classic">Classic SVG</option>
             </select>
           </div>
           <p id="world-version-status" class="version-status" role="alert" hidden></p>
@@ -61,30 +71,30 @@
       </section>
 
       <div id="visit-banner" class="visit-banner" hidden>
-        <span id="visit-label">친구의 세계를 둘러보고 있습니다.</span
-        ><button id="return-own" type="button">내 세계로 돌아가기</button>
+        <span id="visit-label">You are exploring a friend's world.</span
+        ><button id="return-own" type="button">Return to my world</button>
       </div>
 
       <div class="explorer-layout">
-        <section class="explorer" aria-label="세계 탐험">
+        <section class="explorer" aria-label="World explorer">
           <div id="world-controls" class="world-toolbar" tabindex="-1">
-            <div class="segmented" role="group" aria-label="탐험 방식">
-              <button id="mode-map" type="button" aria-pressed="true">2D 지도</button>
-              <button id="mode-three" type="button" aria-pressed="false">3D 산책</button>
+            <div class="segmented" role="group" aria-label="Explore mode">
+              <button id="mode-map" type="button" aria-pressed="true">2D map</button>
+              <button id="mode-three" type="button" aria-pressed="false">3D walk</button>
             </div>
             <label class="compact-field"
-              ><span class="visually-hidden">땅의 모습</span
+              ><span class="visually-hidden">Island layout</span
               ><select id="world-layout" aria-describedby="layout-note">
-                <option value="archipelago">월별 군도</option>
-                <option value="island">하나의 큰 섬</option>
-                <option value="seasonal">사계절 군도</option>
+                <option value="archipelago">Monthly islands</option>
+                <option value="island">One large island</option>
+                <option value="seasonal">Seasonal islands</option>
               </select></label
             >
             <div class="toolbar-end">
               <button type="button" data-dialog="atmosphere-dialog" class="quiet-button">
-                풍경 설정</button
+                Atmosphere</button
               ><button type="button" data-dialog="photo-dialog" class="photo-button">
-                풍경 간직하기 <span aria-hidden="true">↗</span>
+                Keep this view <span aria-hidden="true">↗</span>
               </button>
             </div>
           </div>
@@ -94,180 +104,253 @@
           <div class="map-stage">
             <div class="map-caption">
               <span class="live-dot" aria-hidden="true"></span
-              ><span id="map-caption">시간이 자라는 곳</span>
+              ><span id="map-caption">A place where time grows</span>
             </div>
-            <div id="world-host" aria-label="하늘 마을 지도" aria-busy="true"></div>
+            <div id="world-host" aria-label="Sky World map" aria-busy="true"></div>
             <div id="world-loading" class="world-loading" role="status">
-              <span class="loading-island" aria-hidden="true">◇</span>작은 세계를 펼치고 있어요.
+              <span class="loading-island" aria-hidden="true">◇</span>Unfolding your little world.
             </div>
             <div id="world-fallback" class="map-notice" role="status" hidden></div>
-            <div class="map-tools" role="group" aria-label="지도 시점">
-              <button type="button" id="zoom-in" aria-label="지도 확대">+</button
-              ><button type="button" id="zoom-out" aria-label="지도 축소">−</button
-              ><button type="button" id="reset-view" aria-label="세계 전체 보기">⌂</button>
+            <div class="map-tools" role="group" aria-label="Map view">
+              <button type="button" id="zoom-in" aria-label="Zoom in">+</button
+              ><button type="button" id="zoom-out" aria-label="Zoom out">−</button
+              ><button type="button" id="reset-view" aria-label="Fit world to view">⌂</button>
             </div>
-            <p class="map-hint" id="map-hint">날짜를 고르면 그날의 이야기가 열립니다.</p>
+            <p class="map-hint" id="map-hint">Choose a date to discover its story.</p>
           </div>
 
           <div class="timeline">
             <div class="timeline-heading">
               <div>
-                <span class="eyebrow">시간을 따라 걷기</span
-                ><strong id="replay-label">날짜를 선택해 주세요</strong>
+                <span class="eyebrow">A WALK THROUGH TIME</span
+                ><strong id="replay-label">Choose a date</strong>
               </div>
               <button type="button" id="replay-play" class="play-button" aria-pressed="false">
-                재생
+                Play
               </button>
             </div>
-            <label class="visually-hidden" for="replay-range">풍경의 날짜</label
+            <label class="visually-hidden" for="replay-range">Timeline date</label
             ><input id="replay-range" type="range" min="0" max="0" value="0" step="1" />
             <div class="timeline-ends">
               <span id="replay-start"></span><span id="replay-end"></span>
             </div>
-            <nav id="month-nav" class="month-nav" aria-label="날짜순 월별 풍경으로 이동"></nav>
-            <ul id="season-legend" class="season-legend" aria-label="달력 계절 범례"></ul>
+            <nav
+              id="month-nav"
+              class="month-nav"
+              aria-label="Explore months in chronological order"
+            ></nav>
+            <ul id="season-legend" class="season-legend" aria-label="Calendar season legend"></ul>
           </div>
         </section>
 
-        <aside class="story-panel" aria-label="세계의 기록">
+        <aside class="story-panel" aria-label="World journal">
           <div class="panel-heading">
             <span class="eyebrow">WORLD JOURNAL</span>
-            <h2>풍경에 담긴 기록</h2>
+            <h2>Your story, growing</h2>
           </div>
           <div class="world-stats">
-            <div><strong id="stat-contributions">0</strong><span>기여</span></div>
-            <div><strong id="stat-active">0</strong><span>활동한 날</span></div>
-            <div><strong id="stat-streak">0</strong><span>최장 연속</span></div>
+            <div><strong id="stat-contributions">0</strong><span>Contributions</span></div>
+            <div><strong id="stat-active">0</strong><span>Active days</span></div>
+            <div><strong id="stat-streak">0</strong><span>Longest streak</span></div>
           </div>
           <p id="world-provenance" class="fine-print"></p>
           <section class="day-story" aria-labelledby="day-story-title">
             <div class="section-title">
-              <h3 id="day-story-title">어느 날의 이야기</h3>
+              <h3 id="day-story-title">A day in your world</h3>
               <span class="small-mark" aria-hidden="true">01</span>
             </div>
             <label class="field" for="world-date"
-              ><span>찾아갈 날짜</span><input id="world-date" type="date"
+              ><span>Choose a date</span><input id="world-date" type="date"
             /></label>
             <div id="day-details" class="day-details" aria-live="polite">
-              <p>지도에서 날짜를 선택해 보세요.</p>
+              <p>Select a date on the map.</p>
             </div>
             <button type="button" id="focus-date" class="text-button">
-              선택한 날짜로 가까이 <span aria-hidden="true">→</span>
+              Visit this date <span aria-hidden="true">→</span>
             </button>
           </section>
           <section class="life-story" aria-labelledby="life-story-title">
             <div class="section-title">
-              <h3 id="life-story-title">마을의 움직임</h3>
+              <h3 id="life-story-title">Life in the village</h3>
               <span class="small-mark" aria-hidden="true">02</span>
             </div>
             <label class="field" for="actor-follow"
-              ><span>함께 산책하기</span
+              ><span>Follow a wanderer</span
               ><select id="actor-follow">
-                <option value="">자유롭게 둘러보기</option>
+                <option value="">Free exploration</option>
               </select></label
             >
-            <p id="world-events" class="fine-print">계절의 이야기를 기다리고 있어요.</p>
+            <p id="world-events" class="fine-print">Waiting for the next seasonal story.</p>
           </section>
           <div class="journal-links">
             <button type="button" data-dialog="discovery-dialog">
               <span
-                ><strong>발견한 풍경</strong
-                ><small id="discovery-summary">작은 장소들의 이야기</small></span
+                ><strong>Discoveries</strong
+                ><small id="discovery-summary">Stories in the little things</small></span
               ><span aria-hidden="true">↗</span></button
             ><button type="button" data-dialog="projects-dialog">
               <span
-                ><strong>프로젝트 동네</strong
-                ><small id="project-summary">공개 저장소와 릴리스</small></span
+                ><strong>Project neighborhoods</strong
+                ><small id="project-summary">Public repositories and releases</small></span
               ><span aria-hidden="true">↗</span></button
             ><button type="button" data-dialog="visits-dialog">
-              <span><strong>친구의 섬</strong><small>다른 세계로 떠나 보기</small></span
+              <span><strong>Other worlds</strong><small>Take a trip to another world</small></span
               ><span aria-hidden="true">↗</span>
             </button>
           </div>
           <p class="panel-footnote">
-            기여 수는 GitHub 활동의 합계입니다.<br />쉬어 간 날도 풍경의 일부로 남아요.
+            Contributions include different kinds of GitHub activity.<br />Quiet days are part of
+            the landscape, too.
           </p>
         </aside>
       </div>
       <p id="world-status" class="app-status" role="status" aria-live="polite">
-        기록을 준비하고 있습니다.
+        Preparing your contribution history.
       </p>
       <footer class="site-footer">
-        <span>기록으로 자라는 작은 세계</span
-        ><a href="../">기존 SVG 데모로 돌아가기 <span aria-hidden="true">↗</span></a>
+        <span>A little world grown from your history</span
+        ><a href="../">Back to the SVG demo <span aria-hidden="true">↗</span></a>
       </footer>
     </main>
+
+    <dialog id="analytics-dialog" aria-labelledby="analytics-title">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">THE HISTORY BEHIND YOUR WORLD</p>
+          <h2 id="analytics-title">Activity</h2>
+        </div>
+        <button type="button" data-close aria-label="Close activity">×</button>
+      </div>
+      <div class="analytics-intro">
+        <p id="analytics-account"></p>
+        <p id="analytics-period"></p>
+        <p id="analytics-source" class="fine-print"></p>
+      </div>
+      <div class="analytics-filters">
+        <label class="field"
+          ><span>Period</span
+          ><select id="analytics-month">
+            <option value="">All history</option>
+          </select></label
+        >
+        <label class="field"
+          ><span>Group contributions by</span
+          ><select id="analytics-granularity">
+            <option value="day">Day</option>
+            <option value="week" selected>Week</option>
+            <option value="month">Month</option>
+          </select></label
+        >
+      </div>
+      <div id="analytics-metrics" class="analytics-metrics" aria-label="Activity summary"></div>
+      <section class="analytics-card" aria-labelledby="analytics-trend-title">
+        <div class="analytics-chart-heading">
+          <div>
+            <p class="eyebrow">A LITTLE, OVER TIME</p>
+            <h3 id="analytics-trend-title">Contribution rhythm</h3>
+          </div>
+          <span class="analytics-unit">Contributions</span>
+        </div>
+        <div id="analytics-trend" class="analytics-chart"></div>
+        <p id="analytics-coverage" class="fine-print"></p>
+      </section>
+      <div class="analytics-chart-grid">
+        <section class="analytics-card" aria-labelledby="analytics-breakdown-title">
+          <div class="analytics-chart-heading">
+            <h3 id="analytics-breakdown-title">Commits &amp; pull requests</h3>
+          </div>
+          <div id="analytics-breakdown" class="analytics-chart"></div>
+          <p id="analytics-availability" class="fine-print"></p>
+        </section>
+        <section class="analytics-card" aria-labelledby="analytics-weekdays-title">
+          <div class="analytics-chart-heading">
+            <h3 id="analytics-weekdays-title">Days of the week</h3>
+          </div>
+          <div id="analytics-weekdays" class="analytics-chart"></div>
+          <p class="fine-print">Total contributions on each weekday in the selected period.</p>
+        </section>
+      </div>
+      <details class="analytics-data">
+        <summary>View the numbers</summary>
+        <div id="analytics-table" class="analytics-table"></div>
+      </details>
+      <p class="fine-print analytics-footnote">
+        Charts use the original history in this world, independently of the replay slider. GitHub
+        contribution counts follow profile eligibility and visibility rules. PRs represent pull
+        requests opened, not merged.
+      </p>
+    </dialog>
 
     <dialog id="atmosphere-dialog" aria-labelledby="atmosphere-title">
       <div class="dialog-heading">
         <div>
-          <p class="eyebrow">한 장면의 분위기</p>
-          <h2 id="atmosphere-title">풍경 설정</h2>
+          <p class="eyebrow">SET THE SCENE</p>
+          <h2 id="atmosphere-title">Atmosphere</h2>
         </div>
-        <button type="button" data-close aria-label="풍경 설정 닫기">×</button>
+        <button type="button" data-close aria-label="Close atmosphere settings">×</button>
       </div>
-      <p class="dialog-copy">빛과 날씨를 바꾸어도 기록은 그대로입니다.</p>
+      <p class="dialog-copy">Adjust the light and weather while keeping your history intact.</p>
       <div class="form-grid">
         <label class="field"
-          ><span>계절</span
+          ><span>Season</span
           ><select id="world-season">
-            <option value="calendar">기록의 계절</option>
-            <option value="spring">봄</option>
-            <option value="summer">여름</option>
-            <option value="autumn">가을</option>
-            <option value="winter">겨울</option>
+            <option value="calendar">Calendar seasons</option>
+            <option value="spring">Spring</option>
+            <option value="summer">Summer</option>
+            <option value="autumn">Autumn</option>
+            <option value="winter">Winter</option>
           </select></label
         >
         <label class="field"
-          ><span>빛</span
+          ><span>Lighting</span
           ><select id="world-lighting">
-            <option value="day">맑은 낮</option>
-            <option value="sunset">해 질 녘</option>
-            <option value="night">별이 뜬 밤</option>
+            <option value="day">Daylight</option>
+            <option value="sunset">Sunset</option>
+            <option value="night">Starlight</option>
           </select></label
         >
         <label class="field"
-          ><span>날씨</span
+          ><span>Weather</span
           ><select id="world-weather">
-            <option value="seasonal">계절 따라</option>
-            <option value="clear">맑음</option>
-            <option value="rain">비</option>
-            <option value="snow">눈</option>
+            <option value="seasonal">Seasonal weather</option>
+            <option value="clear">Clear</option>
+            <option value="rain">Rain</option>
+            <option value="snow">Snow</option>
           </select></label
         >
         <label class="field"
-          ><span>움직임</span
+          ><span>Motion</span
           ><select id="world-motion">
-            <option value="full">생동감 있게</option>
-            <option value="subtle">잔잔하게</option>
-            <option value="off">고요하게</option>
+            <option value="full">Full motion</option>
+            <option value="subtle">Subtle motion</option>
+            <option value="off">Motion off</option>
           </select></label
         >
         <label class="field"
-          ><span>3D 품질</span
+          ><span>3D quality</span
           ><select id="world-quality">
-            <option value="high">섬세한 풍경</option>
-            <option value="low">가벼운 풍경</option>
+            <option value="high">High detail</option>
+            <option value="low">Lightweight</option>
           </select></label
         >
         <label class="field"
-          ><span>마을의 건축</span
+          ><span>Village architecture</span
           ><select id="world-culture">
-            <option value="classic">클래식 마을</option>
-            <option value="korean">한국의 마을</option>
+            <option value="classic">Classic village</option>
+            <option value="korean">Korean village</option>
           </select></label
         >
         <label class="field"
-          ><span>계절의 기준</span
+          ><span>Hemisphere</span
           ><select id="world-hemisphere">
-            <option value="north">북반구</option>
-            <option value="south">남반구</option>
+            <option value="north">Northern</option>
+            <option value="south">Southern</option>
           </select></label
         >
       </div>
-      <p id="season-note" class="fine-print">기록의 날짜에 맞는 계절을 보여 줍니다.</p>
+      <p id="season-note" class="fine-print">Seasons follow the dates in your history.</p>
       <p id="weather-note" class="fine-print">
-        날씨를 ‘계절 따라’로 고르면 기록의 계절에 맞는 하늘과 작은 움직임을 보여 줍니다.
+        Choose Seasonal weather for skies and small movements that follow each island’s calendar.
       </p>
     </dialog>
 
@@ -275,49 +358,48 @@
       <div class="dialog-heading">
         <div>
           <p class="eyebrow">POSTCARD FROM MY WORLD</p>
-          <h2 id="photo-title">이 풍경을 간직하세요</h2>
+          <h2 id="photo-title">Keep a little of this world</h2>
         </div>
-        <button type="button" data-close aria-label="풍경 간직하기 닫기">×</button>
+        <button type="button" data-close aria-label="Close keepsakes">×</button>
       </div>
-      <p class="dialog-copy">지금의 시점과 빛, 기록의 날짜를 엽서에 담습니다.</p>
+      <p class="dialog-copy">Capture this view, its light, and a date from your history.</p>
       <div class="postcard-note">
-        <span id="photo-period"></span><strong id="photo-caption">나의 하늘 마을</strong
+        <span id="photo-period"></span><strong id="photo-caption">My sky world</strong
         ><span id="photo-atmosphere"></span>
       </div>
       <div class="export-actions">
-        <button type="button" id="export-png" class="primary-button">엽서 PNG 저장</button
-        ><button type="button" id="export-svg">지도 SVG 저장</button
-        ><button type="button" id="export-glb">3D 모델 GLB 저장</button
-        ><button type="button" id="export-world">세계 파일 JSON 저장</button>
+        <button type="button" id="export-png" class="primary-button">Save postcard PNG</button
+        ><button type="button" id="export-svg">Save map SVG</button
+        ><button type="button" id="export-glb">Save 3D model GLB</button
+        ><button type="button" id="export-world">Save world JSON</button>
       </div>
-      <p id="model-export-note" class="fine-print">3D 모델은 3D 산책에서 저장하실 수 있습니다.</p>
-      <p class="fine-print">세계 파일을 가져오면 기록과 배치, 촬영 시점을 다시 열 수 있습니다.</p>
+      <p id="model-export-note" class="fine-print">Switch to 3D walk to save a 3D model.</p>
+      <p class="fine-print">Import a world file to restore its history, layout, and saved view.</p>
     </dialog>
 
     <dialog id="library-dialog" aria-labelledby="library-title">
       <div class="dialog-heading">
         <div>
           <p class="eyebrow">MY WORLD LIBRARY</p>
-          <h2 id="library-title">보관한 세계</h2>
+          <h2 id="library-title">Saved worlds</h2>
         </div>
-        <button type="button" data-close aria-label="보관한 세계 닫기">×</button>
+        <button type="button" data-close aria-label="Close saved worlds">×</button>
       </div>
       <p class="dialog-copy">
-        해마다 쌓인 풍경을 다시 찾아가세요. 보관한 세계는 이 브라우저에 남습니다.
+        Revisit the worlds you have grown. Saved worlds stay in this browser.
       </p>
       <p class="fine-print">
-        기록과 배치가 같은 세계를 다시 보관하면 기존 보관본의 날짜, 풍경 설정과 시점이 지금의
-        선택으로 바뀝니다.
+        Saving the same history and layout again updates its saved date, atmosphere, and view.
       </p>
       <label class="field"
-        ><span>연도</span
+        ><span>Year</span
         ><select id="library-year">
-          <option value="all">모든 해</option>
+          <option value="all">All years</option>
         </select></label
       >
       <div id="library-list" class="collection-list"></div>
       <button type="button" id="library-import" class="text-button">
-        스냅샷·여러 해 archive·세계 파일 가져오기 →
+        Import a snapshot, archive, or world file →
       </button>
     </dialog>
 
@@ -325,17 +407,19 @@
       <div class="dialog-heading">
         <div>
           <p class="eyebrow">LITTLE THINGS TO FIND</p>
-          <h2 id="discovery-title">발견한 풍경</h2>
+          <h2 id="discovery-title">Discoveries</h2>
         </div>
-        <button type="button" data-close aria-label="발견한 풍경 닫기">×</button>
+        <button type="button" data-close aria-label="Close discoveries">×</button>
       </div>
-      <p id="discovery-note" class="dialog-copy">장소를 찾아가면 나의 발견 기록에 남습니다.</p>
+      <p id="discovery-note" class="dialog-copy">
+        Visit a place to add it to your discovery journal.
+      </p>
       <label class="field"
-        ><span>도감 보기</span
+        ><span>Show places</span
         ><select id="discovery-filter">
-          <option value="all">지금 갈 수 있는 모든 장소</option>
-          <option value="visited">내가 찾아간 장소</option>
-          <option value="new">아직 찾아가지 않은 장소</option>
+          <option value="all">All available places</option>
+          <option value="visited">Places visited</option>
+          <option value="new">Places to discover</option>
         </select></label
       >
       <div id="discovery-list" class="collection-list"></div>
@@ -345,29 +429,31 @@
       <div class="dialog-heading">
         <div>
           <p class="eyebrow">NEIGHBORHOODS OF IDEAS</p>
-          <h2 id="projects-title">프로젝트 동네</h2>
+          <h2 id="projects-title">Project neighborhoods</h2>
         </div>
-        <button type="button" data-close aria-label="프로젝트 동네 닫기">×</button>
+        <button type="button" data-close aria-label="Close project neighborhoods">×</button>
       </div>
-      <p class="dialog-copy">공개 저장소를 동네로, 공개 릴리스를 기념 장소로 남겨 보세요.</p>
+      <p class="dialog-copy">
+        Turn public repositories into neighborhoods and releases into landmarks.
+      </p>
       <form id="project-form">
         <label class="field"
-          ><span>GitHub 사용자 또는 owner/repository</span
+          ><span>GitHub username or owner/repository</span
           ><input
             id="project-query"
-            placeholder="octocat 또는 octocat/Hello-World"
+            placeholder="octocat or octocat/Hello-World"
             autocomplete="off"
             required /></label
-        ><button type="submit" class="primary-button">공개 저장소 찾기</button>
+        ><button type="submit" class="primary-button">Find public repositories</button>
       </form>
       <p class="fine-print">
-        기여 합계를 저장소별 기여로 나누지 않습니다. 공개 정보만 불러오며 최대 12개를 선택할 수
-        있습니다.
+        Contribution totals are not attributed to individual repositories. Choose up to 12
+        repositories using public metadata.
       </p>
       <p id="project-status" role="status"></p>
       <div id="project-results" class="collection-list"></div>
-      <button type="button" id="project-more" hidden>다음 저장소 더 보기</button>
-      <h3 class="collection-heading">내 세계의 프로젝트</h3>
+      <button type="button" id="project-more" hidden>Load more repositories</button>
+      <h3 class="collection-heading">Projects in my world</h3>
       <div id="project-selected" class="collection-list"></div>
     </dialog>
 
@@ -375,37 +461,37 @@
       <div class="dialog-heading">
         <div>
           <p class="eyebrow">A JOURNEY BETWEEN WORLDS</p>
-          <h2 id="visits-title">친구의 섬에 놀러 가기</h2>
+          <h2 id="visits-title">Visit another world</h2>
         </div>
-        <button type="button" data-close aria-label="친구의 섬 닫기">×</button>
+        <button type="button" data-close aria-label="Close world visits">×</button>
       </div>
       <form id="visit-form">
         <label class="field"
-          ><span>공개 세계 링크 또는 JSON 주소</span
+          ><span>Public world link or JSON URL</span
           ><input
             id="visit-url"
             type="url"
             placeholder="https://…github.io/…/world.json"
             required /></label
-        ><button type="submit" class="primary-button">세계 방문하기</button>
+        ><button type="submit" class="primary-button">Visit world</button>
       </form>
       <p class="fine-print">
-        GitHub Pages와 raw GitHub의 공개 파일을 열 수 있습니다. 내 세계를 나누려면 JSON 파일을
-        공개한 뒤 그 주소로 링크를 만드세요.
+        Open public files hosted on GitHub Pages or raw GitHub. To share your world, publish its
+        JSON file and create a link to that URL.
       </p>
       <div class="visit-actions">
-        <button type="button" id="bookmark-visit">지금 방문한 세계 기억하기</button
-        ><button type="button" id="share-world">입력한 주소로 공유 링크 만들기</button>
+        <button type="button" id="bookmark-visit">Bookmark this world</button
+        ><button type="button" id="share-world">Create a sharing link</button>
       </div>
       <label id="share-link-field" class="field" hidden
-        ><span>복사해서 나눌 링크</span><input id="share-link" readonly
+        ><span>Copy this link to share</span><input id="share-link" readonly
       /></label>
-      <h3 class="collection-heading">다시 가고 싶은 섬</h3>
+      <h3 class="collection-heading">Places to return to</h3>
       <div id="bookmark-list" class="collection-list"></div>
     </dialog>
     <noscript
       ><p class="no-script">
-        세계 탐험에는 JavaScript가 필요합니다. <a href="../">SVG 데모에서 풍경 보기</a>
+        JavaScript is required to explore a world. <a href="../">View the SVG demo</a>
       </p></noscript
     >
   </body>

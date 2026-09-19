@@ -67067,6 +67067,82 @@ function resolveRenderSettings(explicit = {}, loaded = {}, username = "") {
 
 // src/core/settings/snapshot-schema.ts
 init_cjs_shims();
+
+// src/core/settings/activity-schema.ts
+init_cjs_shims();
+var MAX_ACTIVITY_MONTHS = 13;
+var DAY_MS3 = 864e5;
+var countSchema = external_exports.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
+var countKeys = [
+  "commits",
+  "pullRequests",
+  "issues",
+  "reviews",
+  "repositories",
+  "restricted"
+];
+var activityTimestampSchema = external_exports.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/).refine((value) => {
+  const time3 = Date.parse(value);
+  if (!Number.isFinite(time3) || value < "0001-01-01") return false;
+  const canonical = new Date(time3).toISOString();
+  return value === canonical || value === canonical.replace(".000Z", "Z");
+}, "Expected an exact UTC timestamp in years 1\u20139999").transform((value) => new Date(value).toISOString());
+var activityMonthSchema = external_exports.object({
+  month: external_exports.string().regex(/^\d{4}-(?:0[1-9]|1[0-2])$/),
+  from: activityTimestampSchema,
+  to: activityTimestampSchema,
+  commits: countSchema,
+  pullRequests: countSchema,
+  issues: countSchema,
+  reviews: countSchema,
+  repositories: countSchema,
+  restricted: countSchema
+});
+var activitySchema = external_exports.object({
+  source: external_exports.literal("github-contributions"),
+  from: activityTimestampSchema,
+  to: activityTimestampSchema,
+  months: external_exports.array(activityMonthSchema).min(1).max(MAX_ACTIVITY_MONTHS)
+}).superRefine((activity, context2) => {
+  let cursor = Date.parse(activity.from);
+  const end = Date.parse(activity.to);
+  const seen = /* @__PURE__ */ new Set();
+  for (const [index, month] of activity.months.entries()) {
+    const nextMonth = /* @__PURE__ */ new Date(`${month.from.slice(0, 7)}-01T00:00:00.000Z`);
+    nextMonth.setUTCMonth(nextMonth.getUTCMonth() + 1);
+    const expectedEnd = Math.min(end, nextMonth.getTime() - 1);
+    if (seen.has(month.month) || month.month !== month.from.slice(0, 7) || month.month !== month.to.slice(0, 7) || Date.parse(month.from) !== cursor || Date.parse(month.to) !== expectedEnd || expectedEnd < cursor)
+      context2.addIssue({
+        code: "custom",
+        path: ["months", index],
+        message: "Activity months must exactly partition their UTC range in calendar order"
+      });
+    seen.add(month.month);
+    cursor = Date.parse(month.to) + 1;
+  }
+  if (cursor !== end + 1)
+    context2.addIssue({
+      code: "custom",
+      path: ["months"],
+      message: "Activity evidence must cover the entire requested range"
+    });
+  for (const key of countKeys)
+    if (!Number.isSafeInteger(activity.months.reduce((sum, month) => sum + month[key], 0)))
+      context2.addIssue({
+        code: "custom",
+        path: ["months"],
+        message: `Activity ${key} total exceeds the safe integer limit`
+      });
+});
+function activityMatchesCalendar(activity, dates) {
+  const observed = new Set(dates);
+  const end = Date.parse(activity.to);
+  for (let time3 = Date.parse(`${activity.from.slice(0, 10)}T00:00:00.000Z`); time3 <= end; time3 += DAY_MS3)
+    if (!observed.has(new Date(time3).toISOString().slice(0, 10))) return false;
+  return true;
+}
+
+// src/core/settings/snapshot-schema.ts
 var contributionDateSchema = external_exports.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((date5) => {
   const timestamp = Date.parse(`${date5}T00:00:00.000Z`);
   return Number.isFinite(timestamp) && new Date(timestamp).toISOString().slice(0, 10) === date5;
@@ -67130,7 +67206,18 @@ var snapshotSchema = external_exports.object({
   year: yearSchema,
   weeks: contributionWeeksSchema,
   settings: renderSettingsInputSchema,
-  source: sourceSchema
+  source: sourceSchema,
+  activity: activitySchema.optional()
+}).superRefine((snapshot, context2) => {
+  if (snapshot.activity && !activityMatchesCalendar(
+    snapshot.activity,
+    snapshot.weeks.flatMap((week) => week.days.map((day) => day.date))
+  ))
+    context2.addIssue({
+      code: "custom",
+      path: ["activity"],
+      message: "Activity evidence requires observed calendar dates throughout its range"
+    });
 }).transform((parsed) => ({
   schemaVersion: 1,
   kind: "maeul-snapshot",
@@ -67141,7 +67228,8 @@ var snapshotSchema = external_exports.object({
   source: {
     kind: parsed.source.kind,
     ...parsed.source.fetchedAt === void 0 ? {} : { fetchedAt: parsed.source.fetchedAt }
-  }
+  },
+  ...parsed.activity === void 0 ? {} : { activity: parsed.activity }
 }));
 
 // src/core/settings/parse.ts
@@ -67163,7 +67251,13 @@ function snapshotToContributionData(snapshot) {
     firstDay: week.firstDay,
     days: week.days.map((day) => ({ ...day }))
   }));
-  return { username: snapshot.username, year: snapshot.year, weeks, stats: computeStats(weeks) };
+  return {
+    username: snapshot.username,
+    year: snapshot.year,
+    weeks,
+    stats: computeStats(weeks),
+    ...snapshot.activity === void 0 ? {} : { activity: snapshot.activity }
+  };
 }
 function createSnapshot(data, settings = {}, source = { kind: "import" }) {
   return parseSnapshot({
@@ -67173,7 +67267,8 @@ function createSnapshot(data, settings = {}, source = { kind: "import" }) {
     year: data.year,
     weeks: data.weeks,
     settings,
-    source
+    source,
+    ...data.activity === void 0 ? {} : { activity: data.activity }
   });
 }
 
@@ -67186,26 +67281,8 @@ init_cjs_shims();
 
 // src/api/queries.ts
 init_cjs_shims();
-var CONTRIBUTIONS_QUERY = `
-  query ContributionsCalendar($username: String!, $from: DateTime!, $to: DateTime!) {
-    user(login: $username) {
-      contributionsCollection(from: $from, to: $to) {
-        contributionCalendar {
-          totalContributions
-          weeks {
-            contributionDays {
-              date
-              contributionCount
-              contributionLevel
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 
-// src/api/request.ts
+// src/api/activity.ts
 init_cjs_shims();
 
 // src/api/errors.ts
@@ -67237,17 +67314,117 @@ var GitHubApiError = class extends Error {
   retryAfterMs;
 };
 
+// src/api/activity.ts
+var rangeSchema = external_exports.object({ from: activityTimestampSchema, to: activityTimestampSchema });
+var countSchema2 = external_exports.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
+var totalsSchema = external_exports.object({
+  totalCommitContributions: countSchema2,
+  totalPullRequestContributions: countSchema2,
+  totalIssueContributions: countSchema2,
+  totalPullRequestReviewContributions: countSchema2,
+  totalRepositoryContributions: countSchema2,
+  restrictedContributionsCount: countSchema2
+});
+function activityAlias(index) {
+  return `month${String(index).padStart(2, "0")}`;
+}
+function createActivityRequest(from, to) {
+  const parsed = rangeSchema.safeParse({ from, to });
+  if (!parsed.success || parsed.data.from > parsed.data.to)
+    throw new GitHubApiError("configuration");
+  const range = parsed.data;
+  const months = [];
+  const end = Date.parse(range.to);
+  let cursor = Date.parse(range.from);
+  while (cursor <= end) {
+    if (months.length === MAX_ACTIVITY_MONTHS) throw new GitHubApiError("configuration");
+    const start = new Date(cursor).toISOString();
+    const nextMonth = /* @__PURE__ */ new Date(`${start.slice(0, 7)}-01T00:00:00.000Z`);
+    nextMonth.setUTCMonth(nextMonth.getUTCMonth() + 1);
+    const last = Math.min(end, nextMonth.getTime() - 1);
+    months.push({ month: start.slice(0, 7), from: start, to: new Date(last).toISOString() });
+    cursor = last + 1;
+  }
+  return { ...range, months };
+}
+function parseActivityResponse(user, request, calendarDates) {
+  const aliases = Object.keys(user).filter((key) => /^month\d+$/.test(key));
+  if (aliases.length === 0) return void 0;
+  if (!request || aliases.length !== request.months.length)
+    throw new GitHubApiError("invalidresponse");
+  const months = request.months.map((month, index) => {
+    const parsed2 = totalsSchema.safeParse(user[activityAlias(index)]);
+    if (!parsed2.success) throw new GitHubApiError("invalidresponse");
+    const counts = parsed2.data;
+    return {
+      ...month,
+      commits: counts.totalCommitContributions,
+      pullRequests: counts.totalPullRequestContributions,
+      issues: counts.totalIssueContributions,
+      reviews: counts.totalPullRequestReviewContributions,
+      repositories: counts.totalRepositoryContributions,
+      restricted: counts.restrictedContributionsCount
+    };
+  });
+  const parsed = activitySchema.safeParse({ ...request, source: "github-contributions", months });
+  if (!parsed.success || !activityMatchesCalendar(parsed.data, calendarDates))
+    throw new GitHubApiError("invalidresponse");
+  return parsed.data;
+}
+
+// src/api/queries.ts
+function contributionsQuery(activity) {
+  const declarations = activity?.months.map((_, index) => {
+    const alias = activityAlias(index);
+    return `$${alias}From: DateTime!, $${alias}To: DateTime!`;
+  }) ?? [];
+  const selections = activity?.months.map((_, index) => {
+    const alias = activityAlias(index);
+    return `${alias}: contributionsCollection(from: $${alias}From, to: $${alias}To) {
+      totalCommitContributions
+      totalPullRequestContributions
+      totalIssueContributions
+      totalPullRequestReviewContributions
+      totalRepositoryContributions
+      restrictedContributionsCount
+    }`;
+  }) ?? [];
+  return `
+  query ContributionsCalendar($username: String!, $from: DateTime!, $to: DateTime!${declarations.length ? `, ${declarations.join(", ")}` : ""}) {
+    user(login: $username) {
+      contributionsCollection(from: $from, to: $to) {
+        contributionCalendar {
+          totalContributions
+          weeks {
+            contributionDays {
+              date
+              contributionCount
+              contributionLevel
+            }
+          }
+        }
+      }
+      ${selections.join("\n")}
+    }
+  }
+`;
+}
+var CONTRIBUTIONS_QUERY = contributionsQuery();
+
+// src/api/request.ts
+init_cjs_shims();
+
 // src/api/response.ts
 init_cjs_shims();
-var countSchema = external_exports.number().finite().int().nonnegative();
+var countSchema3 = external_exports.number().finite().int().nonnegative();
 var calendarSchema = external_exports.object({
-  totalContributions: countSchema,
+  totalContributions: countSchema3,
   weeks: external_exports.array(
     external_exports.object({
       contributionDays: external_exports.array(
         external_exports.object({
           date: external_exports.iso.date(),
-          contributionCount: countSchema,
+          contributionCount: countSchema3,
           contributionLevel: external_exports.enum([
             "NONE",
             "FIRST_QUARTILE",
@@ -67270,7 +67447,7 @@ var graphQLErrorSchema = external_exports.object({
 });
 var envelopeSchema = external_exports.object({
   data: external_exports.object({
-    user: external_exports.object({ contributionsCollection: external_exports.object({ contributionCalendar: calendarSchema }) }).nullable()
+    user: external_exports.object({ contributionsCollection: external_exports.object({ contributionCalendar: calendarSchema }) }).catchall(external_exports.unknown()).nullable()
   }).nullish(),
   errors: external_exports.array(graphQLErrorSchema).optional()
 });
@@ -67302,7 +67479,7 @@ function rateLimitError(response) {
     retryAfterMs: retryAfterMs(response.headers) ?? 6e4
   });
 }
-async function parseGitHubResponse(response) {
+async function parseGitHubResponse(response, requestedActivity) {
   const { status } = response;
   if (status === 401) throw new GitHubApiError("auth", { status });
   if (status === 404) throw new GitHubApiError("notfound", { status });
@@ -67350,7 +67527,14 @@ async function parseGitHubResponse(response) {
   }
   if (parsed.data.data?.user === null) throw new GitHubApiError("notfound", { status });
   if (!parsed.data.data) throw new GitHubApiError("invalidresponse", { status });
-  return parsed.data.data.user.contributionsCollection.contributionCalendar;
+  const user = parsed.data.data.user;
+  const calendar = user.contributionsCollection.contributionCalendar;
+  const activity = parseActivityResponse(
+    user,
+    requestedActivity,
+    calendar.weeks.flatMap((week) => week.contributionDays.map((day) => day.date))
+  );
+  return { ...calendar, ...activity === void 0 ? {} : { activity } };
 }
 
 // src/api/request.ts
@@ -67377,7 +67561,7 @@ function requestConfig(options) {
   }
   return { timeoutMs, maxRetryWaitMs, endpoint: endpoint.href, isGitHub };
 }
-async function requestAttempt(endpoint, init, timeoutMs, signal) {
+async function requestAttempt(endpoint, init, timeoutMs, signal, activity) {
   if (signal?.aborted) throw new GitHubApiError("aborted");
   const controller = new AbortController();
   const abort = () => controller.abort(new GitHubApiError("aborted"));
@@ -67391,7 +67575,7 @@ async function requestAttempt(endpoint, init, timeoutMs, signal) {
   });
   try {
     const request = fetch(endpoint, { ...init, signal: controller.signal }).then(
-      parseGitHubResponse
+      (response) => parseGitHubResponse(response, activity)
     );
     return await Promise.race([request, interrupted]);
   } catch (error63) {
@@ -67419,7 +67603,7 @@ async function waitForRetry(delay, signal) {
     signal?.addEventListener("abort", abort, { once: true });
   });
 }
-async function makeGraphQLRequest(query, variables, token, options) {
+async function makeGraphQLRequest(query, variables, token, options, activity) {
   const config2 = requestConfig(options);
   const deadline = Date.now() + TOTAL_TIMEOUT_MS;
   const headers = {
@@ -67442,7 +67626,8 @@ async function makeGraphQLRequest(query, variables, token, options) {
         config2.endpoint,
         init,
         Math.min(config2.timeoutMs, remainingMs),
-        options.signal
+        options.signal,
+        activity
       );
     } catch (error63) {
       if (!(error63 instanceof GitHubApiError)) throw error63;
@@ -67469,8 +67654,8 @@ async function fetchContributions(username, year, token, options = {}) {
   let to;
   let effectiveYear;
   if (year != null) {
-    from = `${year}-01-01T00:00:00Z`;
-    to = `${year}-12-31T23:59:59Z`;
+    from = `${String(year).padStart(4, "0")}-01-01T00:00:00Z`;
+    to = `${String(year).padStart(4, "0")}-12-31T23:59:59Z`;
     effectiveYear = year;
   } else {
     const now = /* @__PURE__ */ new Date();
@@ -67480,11 +67665,19 @@ async function fetchContributions(username, year, token, options = {}) {
     to = now.toISOString();
     effectiveYear = now.getFullYear();
   }
+  const activity = createActivityRequest(from, to);
+  const monthVariables = Object.fromEntries(
+    activity.months.flatMap((month, index) => [
+      [`${activityAlias(index)}From`, month.from],
+      [`${activityAlias(index)}To`, month.to]
+    ])
+  );
   const calendar = await makeGraphQLRequest(
-    CONTRIBUTIONS_QUERY,
-    { username, from, to },
+    contributionsQuery(activity),
+    { username, from, to, ...monthVariables },
     token,
-    options
+    options,
+    activity
   );
   const rawWeeks = calendar.weeks.map((week) => {
     const days = week.contributionDays.map((day) => ({
@@ -67506,7 +67699,8 @@ async function fetchContributions(username, year, token, options = {}) {
       total: calendar.totalContributions
     },
     year: effectiveYear,
-    username
+    username,
+    ...calendar.activity === void 0 ? {} : { activity: calendar.activity }
   };
 }
 
@@ -68999,7 +69193,7 @@ function dateSeasonZone(date5, hemisphere) {
 init_cjs_shims();
 var THW = 8;
 var THH = 3.5;
-var DAY_MS3 = 864e5;
+var DAY_MS4 = 864e5;
 function toIsoCells(cells, palette, originX, originY) {
   const dates = /* @__PURE__ */ new Set();
   for (const cell of cells) {
@@ -69015,17 +69209,17 @@ function toIsoCells(cells, palette, originX, originY) {
     timestamp: Date.parse(cell.date)
   }));
   const firstSunday = calendarCells.reduce(
-    (first, { timestamp, day }) => Math.min(first, timestamp - day * DAY_MS3),
+    (first, { timestamp, day }) => Math.min(first, timestamp - day * DAY_MS4),
     Infinity
   );
   const isoCells = calendarCells.map(({ cell, day, timestamp }) => {
-    const week = cell.week ?? Math.floor((timestamp - firstSunday) / (7 * DAY_MS3));
+    const week = cell.week ?? Math.floor((timestamp - firstSunday) / (7 * DAY_MS4));
     return {
       week,
       day,
       date: cell.date,
       count: cell.count,
-      absoluteWeek: Math.floor((timestamp - day * DAY_MS3 - Date.UTC(1970, 0, 4)) / (7 * DAY_MS3)),
+      absoluteWeek: Math.floor((timestamp - day * DAY_MS4 - Date.UTC(1970, 0, 4)) / (7 * DAY_MS4)),
       level100: cell.level100,
       height: palette.getHeight(cell.level100),
       isoX: originX + (week - day) * THW,
@@ -89581,7 +89775,7 @@ function renderDailyRewards(scene, palettes) {
 
 // src/core/consistency.ts
 init_cjs_shims();
-var DAY_MS4 = 864e5;
+var DAY_MS5 = 864e5;
 var CONSISTENCY_WINDOW_DAYS = 28;
 var CONSISTENCY_MINIMUMS = [0, 5, 12, 20];
 function consistencyTier(activeDays) {
@@ -89596,7 +89790,7 @@ function consistencyByDate(cells) {
   let first = 0;
   let activeDays = 0;
   for (const [index, day] of days.entries()) {
-    const cutoff = day.timestamp - (CONSISTENCY_WINDOW_DAYS - 1) * DAY_MS4;
+    const cutoff = day.timestamp - (CONSISTENCY_WINDOW_DAYS - 1) * DAY_MS5;
     while (days[first].timestamp < cutoff) {
       if (days[first].count > 0) activeDays--;
       first++;

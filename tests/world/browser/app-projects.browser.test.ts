@@ -90,7 +90,7 @@ test('fetches public metadata and releases into an actual district, with paginat
   button('project-more').click();
   await expect.poll(() => html('project-results').querySelectorAll('article').length).toBe(2);
   expect(button('project-more').hidden).toBe(true);
-  action('project-results', '내 세계에 더하기').click();
+  action('project-results', 'Add to my world').click();
   await expect.poll(() => running.session.current().repositoryData.length).toBe(1);
   expect(running.session.current().repositoryData[0]?.releases[0]?.tag).toBe('v1.0');
   expect(
@@ -99,12 +99,12 @@ test('fetches public metadata and releases into an actual district, with paginat
       .scene.entities.some((entity) => entity.kind === 'release' && entity.releaseId === '40'),
   ).toBe(true);
   expect(html('project-selected').textContent).toContain('v1.0');
-  expect(action('project-results', '동네에 포함됨').disabled).toBe(true);
-  action('project-selected', '동네로 가기').click();
+  expect(action('project-results', 'Already added').disabled).toBe(true);
+  action('project-selected', 'Visit neighborhood').click();
   expect(dialog('projects-dialog').open).toBe(false);
   expect(running.session.current().view.focus).toEqual({ kind: 'entity', entityId: 'repo:1' });
   document.querySelector<HTMLButtonElement>('[data-dialog="projects-dialog"]')?.click();
-  action('project-selected', '동네에서 빼기').click();
+  action('project-selected', 'Remove neighborhood').click();
   await expect.poll(() => running.session.current().repositoryData.length).toBe(0);
   expect(calls.some((url) => url.includes('/releases'))).toBe(true);
 });
@@ -119,12 +119,12 @@ test('does not navigate outside an older world for a repository created in a lat
   const running = await open();
   search('octocat/garden2');
   await expect.poll(() => html('project-results').textContent).toContain('octocat/garden2');
-  action('project-results', '내 세계에 더하기').click();
+  action('project-results', 'Add to my world').click();
   await expect.poll(() => running.session.current().repositoryData.length).toBe(1);
-  expect(action('project-selected', '동네로 가기').disabled).toBe(true);
-  expect(html('project-selected').textContent).toContain('이 세계의 기간 이후');
+  expect(action('project-selected', 'Visit neighborhood').disabled).toBe(true);
+  expect(html('project-selected').textContent).toContain('after this world’s date range');
   button('save-world').click();
-  await expect.poll(() => html('world-status').textContent).toContain('보관했습니다');
+  await expect.poll(() => html('world-status').textContent).toContain('Saved the');
 });
 
 test('reports empty results, invalid names and public rate limits without changing the world', async () => {
@@ -135,11 +135,11 @@ test('reports empty results, invalid names and public rate limits without changi
   search('nobody');
   await expect
     .poll(() => html('project-results').textContent)
-    .toContain('찾은 공개 저장소가 없습니다');
+    .toContain('No public repositories found');
   search('wrong name');
-  await expect.poll(() => html('project-status').textContent).toContain('형식이 올바르지 않습니다');
+  await expect.poll(() => html('project-status').textContent).toContain('format is invalid');
   fetch.mockResolvedValueOnce(new Response('', { status: 429, headers: { 'retry-after': '60' } }));
   search('ratelimited');
-  await expect.poll(() => html('project-status').textContent).toContain('요청 한도');
+  await expect.poll(() => html('project-status').textContent).toContain('request limit');
   expect(running.session.current()).toEqual(before);
 });

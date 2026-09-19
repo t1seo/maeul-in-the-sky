@@ -8,13 +8,13 @@ export function setupControls(session: WorldSession, signal: AbortSignal): () =>
   const stop = (): void => {
     if (playback !== undefined) window.clearInterval(playback);
     playback = undefined;
-    button('replay-play').textContent = '재생';
+    button('replay-play').textContent = 'Play';
     button('replay-play').setAttribute('aria-pressed', 'false');
   };
   const seek = (date: string): void => {
     const day = session.current().scene.days.find((item) => item.date === date);
     if (!day) {
-      status('이 세계 안의 날짜를 선택해 주세요.', true);
+      status('Choose a date within this world’s date range.', true);
       return;
     }
     session.update({ cursorDate: date, selectedId: day.id, followActorId: undefined });
@@ -118,7 +118,7 @@ export function setupControls(session: WorldSession, signal: AbortSignal): () =>
       const { scene, view } = session.current();
       if (!scene.days.length) return;
       if (view.cursorDate >= scene.range.to) seek(scene.range.from);
-      button('replay-play').textContent = '일시 정지';
+      button('replay-play').textContent = 'Pause';
       button('replay-play').setAttribute('aria-pressed', 'true');
       playback = window.setInterval(() => {
         action(() => {

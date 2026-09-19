@@ -26776,27 +26776,104 @@ init_resolve();
 
 // src/core/settings/snapshot-schema.ts
 init_cjs_shims();
-var import_zod2 = require("zod");
+var import_zod3 = require("zod");
 init_boundary();
 init_schema();
 init_resolve();
 init_calendar();
-var contributionDateSchema = import_zod2.z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((date) => {
+
+// src/core/settings/activity-schema.ts
+init_cjs_shims();
+var import_zod2 = require("zod");
+var MAX_ACTIVITY_MONTHS = 13;
+var DAY_MS5 = 864e5;
+var countSchema = import_zod2.z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
+var countKeys = [
+  "commits",
+  "pullRequests",
+  "issues",
+  "reviews",
+  "repositories",
+  "restricted"
+];
+var activityTimestampSchema = import_zod2.z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/).refine((value) => {
+  const time = Date.parse(value);
+  if (!Number.isFinite(time) || value < "0001-01-01") return false;
+  const canonical = new Date(time).toISOString();
+  return value === canonical || value === canonical.replace(".000Z", "Z");
+}, "Expected an exact UTC timestamp in years 1\u20139999").transform((value) => new Date(value).toISOString());
+var activityMonthSchema = import_zod2.z.object({
+  month: import_zod2.z.string().regex(/^\d{4}-(?:0[1-9]|1[0-2])$/),
+  from: activityTimestampSchema,
+  to: activityTimestampSchema,
+  commits: countSchema,
+  pullRequests: countSchema,
+  issues: countSchema,
+  reviews: countSchema,
+  repositories: countSchema,
+  restricted: countSchema
+});
+var activitySchema = import_zod2.z.object({
+  source: import_zod2.z.literal("github-contributions"),
+  from: activityTimestampSchema,
+  to: activityTimestampSchema,
+  months: import_zod2.z.array(activityMonthSchema).min(1).max(MAX_ACTIVITY_MONTHS)
+}).superRefine((activity, context2) => {
+  let cursor = Date.parse(activity.from);
+  const end = Date.parse(activity.to);
+  const seen = /* @__PURE__ */ new Set();
+  for (const [index, month] of activity.months.entries()) {
+    const nextMonth = /* @__PURE__ */ new Date(`${month.from.slice(0, 7)}-01T00:00:00.000Z`);
+    nextMonth.setUTCMonth(nextMonth.getUTCMonth() + 1);
+    const expectedEnd = Math.min(end, nextMonth.getTime() - 1);
+    if (seen.has(month.month) || month.month !== month.from.slice(0, 7) || month.month !== month.to.slice(0, 7) || Date.parse(month.from) !== cursor || Date.parse(month.to) !== expectedEnd || expectedEnd < cursor)
+      context2.addIssue({
+        code: "custom",
+        path: ["months", index],
+        message: "Activity months must exactly partition their UTC range in calendar order"
+      });
+    seen.add(month.month);
+    cursor = Date.parse(month.to) + 1;
+  }
+  if (cursor !== end + 1)
+    context2.addIssue({
+      code: "custom",
+      path: ["months"],
+      message: "Activity evidence must cover the entire requested range"
+    });
+  for (const key of countKeys)
+    if (!Number.isSafeInteger(activity.months.reduce((sum, month) => sum + month[key], 0)))
+      context2.addIssue({
+        code: "custom",
+        path: ["months"],
+        message: `Activity ${key} total exceeds the safe integer limit`
+      });
+});
+function activityMatchesCalendar(activity, dates) {
+  const observed = new Set(dates);
+  const end = Date.parse(activity.to);
+  for (let time = Date.parse(`${activity.from.slice(0, 10)}T00:00:00.000Z`); time <= end; time += DAY_MS5)
+    if (!observed.has(new Date(time).toISOString().slice(0, 10))) return false;
+  return true;
+}
+
+// src/core/settings/snapshot-schema.ts
+var contributionDateSchema = import_zod3.z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((date) => {
   const timestamp = Date.parse(`${date}T00:00:00.000Z`);
   return Number.isFinite(timestamp) && new Date(timestamp).toISOString().slice(0, 10) === date;
 }, "Invalid calendar date");
-var contributionDaySchema = import_zod2.z.object({
+var contributionDaySchema = import_zod3.z.object({
   date: contributionDateSchema.refine(
     (date) => date >= "0001-01-01",
     "Contribution dates require a year from 1 to 9999"
   ),
-  count: import_zod2.z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
-  level: import_zod2.z.union([import_zod2.z.literal(0), import_zod2.z.literal(1), import_zod2.z.literal(2), import_zod2.z.literal(3), import_zod2.z.literal(4)])
+  count: import_zod3.z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  level: import_zod3.z.union([import_zod3.z.literal(0), import_zod3.z.literal(1), import_zod3.z.literal(2), import_zod3.z.literal(3), import_zod3.z.literal(4)])
 });
-var contributionWeeksSchema = import_zod2.z.array(
-  import_zod2.z.object({
+var contributionWeeksSchema = import_zod3.z.array(
+  import_zod3.z.object({
     firstDay: contributionDateSchema,
-    days: import_zod2.z.array(contributionDaySchema).max(7)
+    days: import_zod3.z.array(contributionDaySchema).max(7)
   })
 ).max(MAX_CONTRIBUTION_DAYS).superRefine((weeks, context2) => {
   let count = 0;
@@ -26826,25 +26903,36 @@ var contributionWeeksSchema = import_zod2.z.array(
     });
   }
 });
-var sourceSchema = import_zod2.z.object({
-  kind: import_zod2.z.enum(["github", "import", "sample"]),
-  fetchedAt: import_zod2.z.iso.datetime({ offset: true }).transform((value) => new Date(value).toISOString()).optional()
+var sourceSchema = import_zod3.z.object({
+  kind: import_zod3.z.enum(["github", "import", "sample"]),
+  fetchedAt: import_zod3.z.iso.datetime({ offset: true }).transform((value) => new Date(value).toISOString()).optional()
 });
-var settingsEnvelopeSchema = import_zod2.z.object({
-  schemaVersion: import_zod2.z.literal(1),
-  kind: import_zod2.z.literal("maeul-settings"),
+var settingsEnvelopeSchema = import_zod3.z.object({
+  schemaVersion: import_zod3.z.literal(1),
+  kind: import_zod3.z.literal("maeul-settings"),
   username: usernameSchema,
   year: yearSchema.optional(),
   settings: renderSettingsInputSchema
 });
-var snapshotSchema = import_zod2.z.object({
-  schemaVersion: import_zod2.z.literal(1),
-  kind: import_zod2.z.literal("maeul-snapshot"),
+var snapshotSchema = import_zod3.z.object({
+  schemaVersion: import_zod3.z.literal(1),
+  kind: import_zod3.z.literal("maeul-snapshot"),
   username: usernameSchema,
   year: yearSchema,
   weeks: contributionWeeksSchema,
   settings: renderSettingsInputSchema,
-  source: sourceSchema
+  source: sourceSchema,
+  activity: activitySchema.optional()
+}).superRefine((snapshot, context2) => {
+  if (snapshot.activity && !activityMatchesCalendar(
+    snapshot.activity,
+    snapshot.weeks.flatMap((week) => week.days.map((day) => day.date))
+  ))
+    context2.addIssue({
+      code: "custom",
+      path: ["activity"],
+      message: "Activity evidence requires observed calendar dates throughout its range"
+    });
 }).transform((parsed) => ({
   schemaVersion: 1,
   kind: "maeul-snapshot",
@@ -26855,7 +26943,8 @@ var snapshotSchema = import_zod2.z.object({
   source: {
     kind: parsed.source.kind,
     ...parsed.source.fetchedAt === void 0 ? {} : { fetchedAt: parsed.source.fetchedAt }
-  }
+  },
+  ...parsed.activity === void 0 ? {} : { activity: parsed.activity }
 }));
 
 // src/core/settings/parse.ts
@@ -26877,7 +26966,13 @@ function snapshotToContributionData(snapshot) {
     firstDay: week.firstDay,
     days: week.days.map((day) => ({ ...day }))
   }));
-  return { username: snapshot.username, year: snapshot.year, weeks, stats: computeStats(weeks) };
+  return {
+    username: snapshot.username,
+    year: snapshot.year,
+    weeks,
+    stats: computeStats(weeks),
+    ...snapshot.activity === void 0 ? {} : { activity: snapshot.activity }
+  };
 }
 function createSnapshot(data, settings = {}, source = { kind: "import" }) {
   return parseSnapshot({
@@ -26887,7 +26982,8 @@ function createSnapshot(data, settings = {}, source = { kind: "import" }) {
     year: data.year,
     weeks: data.weeks,
     settings,
-    source
+    source,
+    ...data.activity === void 0 ? {} : { activity: data.activity }
   });
 }
 
@@ -26910,11 +27006,11 @@ init_boundary();
 
 // src/core/archive/schema.ts
 init_cjs_shims();
-var import_zod3 = require("zod");
+var import_zod4 = require("zod");
 init_boundary();
 init_schema();
-var comparisonYearsSchema = import_zod3.z.array(yearSchema).min(2).max(5).refine((years) => new Set(years).size === years.length, "Comparison years must be unique").transform((years) => [...years].sort((a, b) => a - b));
-var archiveSnapshotsSchema = import_zod3.z.array(snapshotSchema).max(MAX_ARCHIVE_SNAPSHOTS).superRefine((snapshots, context2) => {
+var comparisonYearsSchema = import_zod4.z.array(yearSchema).min(2).max(5).refine((years) => new Set(years).size === years.length, "Comparison years must be unique").transform((years) => [...years].sort((a, b) => a - b));
+var archiveSnapshotsSchema = import_zod4.z.array(snapshotSchema).max(MAX_ARCHIVE_SNAPSHOTS).superRefine((snapshots, context2) => {
   const identities = /* @__PURE__ */ new Set();
   let days = 0;
   for (const [index, snapshot] of snapshots.entries()) {
@@ -26940,11 +27036,11 @@ var archiveSnapshotsSchema = import_zod3.z.array(snapshotSchema).max(MAX_ARCHIVE
     (a, b) => a.year - b.year || a.username.toLowerCase().localeCompare(b.username.toLowerCase())
   )
 );
-var archiveSchema = import_zod3.z.object({
-  schemaVersion: import_zod3.z.literal(1),
-  kind: import_zod3.z.literal("maeul-archive"),
+var archiveSchema = import_zod4.z.object({
+  schemaVersion: import_zod4.z.literal(1),
+  kind: import_zod4.z.literal("maeul-archive"),
   snapshots: archiveSnapshotsSchema,
-  comparison: import_zod3.z.object({
+  comparison: import_zod4.z.object({
     normalization: fixedNormalizationSchema,
     years: comparisonYearsSchema
   })
@@ -27050,27 +27146,10 @@ init_stats();
 
 // src/api/queries.ts
 init_cjs_shims();
-var CONTRIBUTIONS_QUERY = `
-  query ContributionsCalendar($username: String!, $from: DateTime!, $to: DateTime!) {
-    user(login: $username) {
-      contributionsCollection(from: $from, to: $to) {
-        contributionCalendar {
-          totalContributions
-          weeks {
-            contributionDays {
-              date
-              contributionCount
-              contributionLevel
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 
-// src/api/request.ts
+// src/api/activity.ts
 init_cjs_shims();
+var import_zod5 = require("zod");
 
 // src/api/errors.ts
 init_cjs_shims();
@@ -27101,19 +27180,119 @@ var GitHubApiError = class extends Error {
   retryAfterMs;
 };
 
+// src/api/activity.ts
+var rangeSchema = import_zod5.z.object({ from: activityTimestampSchema, to: activityTimestampSchema });
+var countSchema2 = import_zod5.z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
+var totalsSchema = import_zod5.z.object({
+  totalCommitContributions: countSchema2,
+  totalPullRequestContributions: countSchema2,
+  totalIssueContributions: countSchema2,
+  totalPullRequestReviewContributions: countSchema2,
+  totalRepositoryContributions: countSchema2,
+  restrictedContributionsCount: countSchema2
+});
+function activityAlias(index) {
+  return `month${String(index).padStart(2, "0")}`;
+}
+function createActivityRequest(from, to) {
+  const parsed = rangeSchema.safeParse({ from, to });
+  if (!parsed.success || parsed.data.from > parsed.data.to)
+    throw new GitHubApiError("configuration");
+  const range = parsed.data;
+  const months = [];
+  const end = Date.parse(range.to);
+  let cursor = Date.parse(range.from);
+  while (cursor <= end) {
+    if (months.length === MAX_ACTIVITY_MONTHS) throw new GitHubApiError("configuration");
+    const start = new Date(cursor).toISOString();
+    const nextMonth = /* @__PURE__ */ new Date(`${start.slice(0, 7)}-01T00:00:00.000Z`);
+    nextMonth.setUTCMonth(nextMonth.getUTCMonth() + 1);
+    const last = Math.min(end, nextMonth.getTime() - 1);
+    months.push({ month: start.slice(0, 7), from: start, to: new Date(last).toISOString() });
+    cursor = last + 1;
+  }
+  return { ...range, months };
+}
+function parseActivityResponse(user, request, calendarDates) {
+  const aliases = Object.keys(user).filter((key) => /^month\d+$/.test(key));
+  if (aliases.length === 0) return void 0;
+  if (!request || aliases.length !== request.months.length)
+    throw new GitHubApiError("invalidresponse");
+  const months = request.months.map((month, index) => {
+    const parsed2 = totalsSchema.safeParse(user[activityAlias(index)]);
+    if (!parsed2.success) throw new GitHubApiError("invalidresponse");
+    const counts = parsed2.data;
+    return {
+      ...month,
+      commits: counts.totalCommitContributions,
+      pullRequests: counts.totalPullRequestContributions,
+      issues: counts.totalIssueContributions,
+      reviews: counts.totalPullRequestReviewContributions,
+      repositories: counts.totalRepositoryContributions,
+      restricted: counts.restrictedContributionsCount
+    };
+  });
+  const parsed = activitySchema.safeParse({ ...request, source: "github-contributions", months });
+  if (!parsed.success || !activityMatchesCalendar(parsed.data, calendarDates))
+    throw new GitHubApiError("invalidresponse");
+  return parsed.data;
+}
+
+// src/api/queries.ts
+function contributionsQuery(activity) {
+  const declarations = activity?.months.map((_, index) => {
+    const alias = activityAlias(index);
+    return `$${alias}From: DateTime!, $${alias}To: DateTime!`;
+  }) ?? [];
+  const selections = activity?.months.map((_, index) => {
+    const alias = activityAlias(index);
+    return `${alias}: contributionsCollection(from: $${alias}From, to: $${alias}To) {
+      totalCommitContributions
+      totalPullRequestContributions
+      totalIssueContributions
+      totalPullRequestReviewContributions
+      totalRepositoryContributions
+      restrictedContributionsCount
+    }`;
+  }) ?? [];
+  return `
+  query ContributionsCalendar($username: String!, $from: DateTime!, $to: DateTime!${declarations.length ? `, ${declarations.join(", ")}` : ""}) {
+    user(login: $username) {
+      contributionsCollection(from: $from, to: $to) {
+        contributionCalendar {
+          totalContributions
+          weeks {
+            contributionDays {
+              date
+              contributionCount
+              contributionLevel
+            }
+          }
+        }
+      }
+      ${selections.join("\n")}
+    }
+  }
+`;
+}
+var CONTRIBUTIONS_QUERY = contributionsQuery();
+
+// src/api/request.ts
+init_cjs_shims();
+
 // src/api/response.ts
 init_cjs_shims();
-var import_zod4 = require("zod");
-var countSchema = import_zod4.z.number().finite().int().nonnegative();
-var calendarSchema = import_zod4.z.object({
-  totalContributions: countSchema,
-  weeks: import_zod4.z.array(
-    import_zod4.z.object({
-      contributionDays: import_zod4.z.array(
-        import_zod4.z.object({
-          date: import_zod4.z.iso.date(),
-          contributionCount: countSchema,
-          contributionLevel: import_zod4.z.enum([
+var import_zod6 = require("zod");
+var countSchema3 = import_zod6.z.number().finite().int().nonnegative();
+var calendarSchema = import_zod6.z.object({
+  totalContributions: countSchema3,
+  weeks: import_zod6.z.array(
+    import_zod6.z.object({
+      contributionDays: import_zod6.z.array(
+        import_zod6.z.object({
+          date: import_zod6.z.iso.date(),
+          contributionCount: countSchema3,
+          contributionLevel: import_zod6.z.enum([
             "NONE",
             "FIRST_QUARTILE",
             "SECOND_QUARTILE",
@@ -27128,20 +27307,20 @@ var calendarSchema = import_zod4.z.object({
   const dates = calendar.weeks.flatMap((week) => week.contributionDays.map((day) => day.date));
   return new Set(dates).size === dates.length;
 });
-var graphQLErrorSchema = import_zod4.z.object({
-  type: import_zod4.z.string().optional(),
-  message: import_zod4.z.string(),
-  extensions: import_zod4.z.object({ code: import_zod4.z.string().optional() }).optional()
+var graphQLErrorSchema = import_zod6.z.object({
+  type: import_zod6.z.string().optional(),
+  message: import_zod6.z.string(),
+  extensions: import_zod6.z.object({ code: import_zod6.z.string().optional() }).optional()
 });
-var envelopeSchema = import_zod4.z.object({
-  data: import_zod4.z.object({
-    user: import_zod4.z.object({ contributionsCollection: import_zod4.z.object({ contributionCalendar: calendarSchema }) }).nullable()
+var envelopeSchema = import_zod6.z.object({
+  data: import_zod6.z.object({
+    user: import_zod6.z.object({ contributionsCollection: import_zod6.z.object({ contributionCalendar: calendarSchema }) }).catchall(import_zod6.z.unknown()).nullable()
   }).nullish(),
-  errors: import_zod4.z.array(graphQLErrorSchema).optional()
+  errors: import_zod6.z.array(graphQLErrorSchema).optional()
 });
-var errorBodySchema = import_zod4.z.object({
-  message: import_zod4.z.string().optional(),
-  errors: import_zod4.z.array(graphQLErrorSchema).optional()
+var errorBodySchema = import_zod6.z.object({
+  message: import_zod6.z.string().optional(),
+  errors: import_zod6.z.array(graphQLErrorSchema).optional()
 });
 function retryAfterMs(headers) {
   const retryAfter = headers.get("retry-after");
@@ -27167,7 +27346,7 @@ function rateLimitError(response) {
     retryAfterMs: retryAfterMs(response.headers) ?? 6e4
   });
 }
-async function parseGitHubResponse(response) {
+async function parseGitHubResponse(response, requestedActivity) {
   const { status } = response;
   if (status === 401) throw new GitHubApiError("auth", { status });
   if (status === 404) throw new GitHubApiError("notfound", { status });
@@ -27215,7 +27394,14 @@ async function parseGitHubResponse(response) {
   }
   if (parsed.data.data?.user === null) throw new GitHubApiError("notfound", { status });
   if (!parsed.data.data) throw new GitHubApiError("invalidresponse", { status });
-  return parsed.data.data.user.contributionsCollection.contributionCalendar;
+  const user = parsed.data.data.user;
+  const calendar = user.contributionsCollection.contributionCalendar;
+  const activity = parseActivityResponse(
+    user,
+    requestedActivity,
+    calendar.weeks.flatMap((week) => week.contributionDays.map((day) => day.date))
+  );
+  return { ...calendar, ...activity === void 0 ? {} : { activity } };
 }
 
 // src/api/request.ts
@@ -27242,7 +27428,7 @@ function requestConfig(options) {
   }
   return { timeoutMs, maxRetryWaitMs, endpoint: endpoint.href, isGitHub };
 }
-async function requestAttempt(endpoint, init, timeoutMs, signal) {
+async function requestAttempt(endpoint, init, timeoutMs, signal, activity) {
   if (signal?.aborted) throw new GitHubApiError("aborted");
   const controller = new AbortController();
   const abort = () => controller.abort(new GitHubApiError("aborted"));
@@ -27256,7 +27442,7 @@ async function requestAttempt(endpoint, init, timeoutMs, signal) {
   });
   try {
     const request = fetch(endpoint, { ...init, signal: controller.signal }).then(
-      parseGitHubResponse
+      (response) => parseGitHubResponse(response, activity)
     );
     return await Promise.race([request, interrupted]);
   } catch (error) {
@@ -27284,7 +27470,7 @@ async function waitForRetry(delay, signal) {
     signal?.addEventListener("abort", abort, { once: true });
   });
 }
-async function makeGraphQLRequest(query, variables, token, options) {
+async function makeGraphQLRequest(query, variables, token, options, activity) {
   const config = requestConfig(options);
   const deadline = Date.now() + TOTAL_TIMEOUT_MS;
   const headers = {
@@ -27307,7 +27493,8 @@ async function makeGraphQLRequest(query, variables, token, options) {
         config.endpoint,
         init,
         Math.min(config.timeoutMs, remainingMs),
-        options.signal
+        options.signal,
+        activity
       );
     } catch (error) {
       if (!(error instanceof GitHubApiError)) throw error;
@@ -27334,8 +27521,8 @@ async function fetchContributions(username, year, token, options = {}) {
   let to;
   let effectiveYear;
   if (year != null) {
-    from = `${year}-01-01T00:00:00Z`;
-    to = `${year}-12-31T23:59:59Z`;
+    from = `${String(year).padStart(4, "0")}-01-01T00:00:00Z`;
+    to = `${String(year).padStart(4, "0")}-12-31T23:59:59Z`;
     effectiveYear = year;
   } else {
     const now = /* @__PURE__ */ new Date();
@@ -27345,11 +27532,19 @@ async function fetchContributions(username, year, token, options = {}) {
     to = now.toISOString();
     effectiveYear = now.getFullYear();
   }
+  const activity = createActivityRequest(from, to);
+  const monthVariables = Object.fromEntries(
+    activity.months.flatMap((month, index) => [
+      [`${activityAlias(index)}From`, month.from],
+      [`${activityAlias(index)}To`, month.to]
+    ])
+  );
   const calendar = await makeGraphQLRequest(
-    CONTRIBUTIONS_QUERY,
-    { username, from, to },
+    contributionsQuery(activity),
+    { username, from, to, ...monthVariables },
     token,
-    options
+    options,
+    activity
   );
   const rawWeeks = calendar.weeks.map((week) => {
     const days = week.contributionDays.map((day) => ({
@@ -27371,7 +27566,8 @@ async function fetchContributions(username, year, token, options = {}) {
       total: calendar.totalContributions
     },
     year: effectiveYear,
-    username
+    username,
+    ...calendar.activity === void 0 ? {} : { activity: calendar.activity }
   };
 }
 
@@ -27387,7 +27583,7 @@ init_cjs_shims();
 var import_promises = require("fs/promises");
 var import_node_module = require("module");
 var import_resvg_wasm = require("@resvg/resvg-wasm");
-var import_zod5 = require("zod");
+var import_zod7 = require("zod");
 init_boundary();
 var initialization;
 var defaultFont;
@@ -27407,8 +27603,8 @@ async function initialize(wasmPath) {
   await (0, import_resvg_wasm.initWasm)(new Uint8Array(bytes));
 }
 async function renderPng(svg, options) {
-  const scale = parseBoundary(import_zod5.z.number().int().min(1).max(4), options.scale ?? 2, "scale");
-  const mode = parseBoundary(import_zod5.z.enum(["dark", "light"]), options.mode, "mode");
+  const scale = parseBoundary(import_zod7.z.number().int().min(1).max(4), options.scale ?? 2, "scale");
+  const mode = parseBoundary(import_zod7.z.enum(["dark", "light"]), options.mode, "mode");
   initialization ??= initialize(options.wasmPath).catch((error) => {
     initialization = void 0;
     throw error;
@@ -27467,7 +27663,7 @@ init_resolve();
 
 // src/generate/options.ts
 init_cjs_shims();
-var import_zod6 = require("zod");
+var import_zod8 = require("zod");
 init_boundary();
 init_errors();
 init_schema();
@@ -27478,7 +27674,7 @@ function optionalNumber(value, field) {
   if (value === void 0 || value === "") return void 0;
   if (typeof value === "string" && value.trim() === "")
     return invalidOption(field, "expected a number");
-  const parsed = import_zod6.z.coerce.number().finite().safeParse(value);
+  const parsed = import_zod8.z.coerce.number().finite().safeParse(value);
   if (!parsed.success) return invalidOption(field, "expected a finite number");
   return parsed.data;
 }
@@ -27528,9 +27724,9 @@ function parseGenerationSettings(request, archive = false) {
   return parsed.data;
 }
 function parseOutputOptions(request) {
-  const format = parseBoundary(import_zod6.z.enum(["svg", "png", "both"]), request.format || "svg", "format");
+  const format = parseBoundary(import_zod8.z.enum(["svg", "png", "both"]), request.format || "svg", "format");
   const scale = parseBoundary(
-    import_zod6.z.number().int().min(1).max(4),
+    import_zod8.z.number().int().min(1).max(4),
     optionalNumber(request.scale, "scale") ?? 2,
     "scale"
   );
@@ -27539,7 +27735,7 @@ function parseOutputOptions(request) {
 function parseGenerationYears(value) {
   if (value === void 0 || value === "") return void 0;
   const values = typeof value === "string" ? value.split(",").map((part) => optionalNumber(part.trim(), "years")) : value;
-  const years = parseBoundary(import_zod6.z.array(yearSchema).min(2).max(5), values, "years");
+  const years = parseBoundary(import_zod8.z.array(yearSchema).min(2).max(5), values, "years");
   if (new Set(years).size !== years.length)
     invalidOption("years", "duplicate years are not allowed");
   return [...years].sort((a, b) => a - b);
@@ -28895,12 +29091,12 @@ var PreviewCache = class {
 
 // src/preview/data.ts
 init_cjs_shims();
-var import_zod7 = require("zod");
+var import_zod9 = require("zod");
 init_resolve();
 init_schema();
-var requestSchema = import_zod7.z.strictObject({
+var requestSchema = import_zod9.z.strictObject({
   username: usernameSchema,
-  year: import_zod7.z.number().int().min(2008).max(9999).optional(),
+  year: import_zod9.z.number().int().min(2008).max(9999).optional(),
   settings: renderSettingsInputSchema.optional()
 });
 function parsePreviewRequest(input) {

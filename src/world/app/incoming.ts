@@ -18,5 +18,5 @@ export function sourcePeriod(document: WorldDocumentV1): string {
     .flatMap((week) => week.days.map((day) => day.date))
     .sort();
   const first = dates[0];
-  return first ? `${first} — ${dates.at(-1)}` : '관측된 날짜 없음';
+  return first ? `${first} — ${dates.at(-1)}` : 'No observed dates';
 }

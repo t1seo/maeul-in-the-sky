@@ -52,11 +52,11 @@ test('archive years, replay, atmosphere and saved views survive a page reload', 
   await expect(page.locator('#world-period')).toContainText('2023-01-01 — 2023-01-03');
   await openDialog(page, 'library-dialog');
   await page.locator('#library-year').selectOption('2024');
-  await page.locator('#library-list').getByRole('button', { name: '불러온 세계 열기' }).click();
+  await page.locator('#library-list').getByRole('button', { name: 'Open imported world' }).click();
   await expect(page.locator('#world-date')).toHaveValue('2024-01-03');
   await page.locator('#world-date').fill('2024-01-01');
   await page.locator('#world-date').dispatchEvent('change');
-  await expect(page.locator('#day-details')).toContainText('5번의 기여');
+  await expect(page.locator('#day-details')).toContainText('5 contributions');
   await page.locator('#replay-play').click();
   await expect(page.locator('#replay-play')).toHaveAttribute('aria-pressed', 'true');
   await page.locator('#replay-play').click();
@@ -66,14 +66,14 @@ test('archive years, replay, atmosphere and saved views survive a page reload', 
   await page.locator('#world-weather').selectOption('rain');
   await closeDialog(page, 'atmosphere-dialog');
   await page.locator('#save-world').click();
-  await expect(page.locator('#world-status')).toContainText('보관했습니다');
+  await expect(page.locator('#world-status')).toContainText('Saved the');
   await page.reload();
   await expect(page.locator('#world-host')).toHaveAttribute('data-ready', 'true');
   await openDialog(page, 'library-dialog');
   await page.locator('#library-year').selectOption('2024');
   await page
     .locator('#library-list')
-    .getByRole('button', { name: '세계 열기', exact: true })
+    .getByRole('button', { name: 'Open world', exact: true })
     .click();
   await expect(page.locator('#world-period')).toContainText('2024-01-01 — 2024-01-03');
   await expect(page.locator('#world-lighting')).toHaveValue('sunset');
@@ -101,16 +101,16 @@ test('failed imports preserve the world and public visits return to the home vie
   await expect(page.locator('#world-date')).toHaveValue('2024-02-28');
   await openDialog(page, 'visits-dialog');
   await page.locator('#visit-url').fill('https://friend.github.io/world.json');
-  await page.locator('#visit-form').getByRole('button', { name: '세계 방문하기' }).click();
+  await page.locator('#visit-form').getByRole('button', { name: 'Visit world' }).click();
   await expect(page.locator('#visit-banner')).toBeVisible();
   await expect(page.locator('#world-source')).toContainText('@friend');
   await openDialog(page, 'visits-dialog');
   await page.locator('#bookmark-visit').click();
-  await expect(page.locator('#bookmark-list')).toContainText('friend님의');
+  await expect(page.locator('#bookmark-list')).toContainText('friend’s');
   await page.locator('#visit-url').fill('https://friend.github.io/missing.json');
-  await page.locator('#visit-form').getByRole('button', { name: '세계 방문하기' }).click();
-  await expect(page.locator('#world-status')).toContainText('찾지 못했습니다');
-  await expect(page.locator('#visits-dialog [role="alert"]')).toContainText('찾지 못했습니다');
+  await page.locator('#visit-form').getByRole('button', { name: 'Visit world' }).click();
+  await expect(page.locator('#world-status')).toContainText('could not be found');
+  await expect(page.locator('#visits-dialog [role="alert"]')).toContainText('could not be found');
   await expect(page.locator('#visits-dialog [role="alert"]')).toBeVisible();
   await expect(page.locator('#world-source')).toContainText('@friend');
   await closeDialog(page, 'visits-dialog');
@@ -136,15 +136,24 @@ test('public repository metadata and releases become a removable real district',
   await expect(page.locator('#world-source')).toContainText('@world-fixture');
   await openDialog(page, 'projects-dialog');
   await page.locator('#project-query').fill('octocat');
-  await page.locator('#project-form').getByRole('button', { name: '공개 저장소 찾기' }).click();
-  await page.locator('#project-results').getByRole('button', { name: '내 세계에 더하기' }).click();
+  await page
+    .locator('#project-form')
+    .getByRole('button', { name: 'Find public repositories' })
+    .click();
+  await page.locator('#project-results').getByRole('button', { name: 'Add to my world' }).click();
   await expect(page.locator('#project-selected')).toContainText(release.tag_name);
   await expect(page.locator('#project-selected a')).toHaveAttribute('href', release.html_url);
-  await page.locator('#project-selected').getByRole('button', { name: '동네로 가기' }).click();
+  await page
+    .locator('#project-selected')
+    .getByRole('button', { name: 'Visit neighborhood' })
+    .click();
   await expect(page.locator('#projects-dialog')).not.toBeVisible();
   await openDialog(page, 'projects-dialog');
-  await page.locator('#project-selected').getByRole('button', { name: '동네에서 빼기' }).click();
-  await expect(page.locator('#project-selected')).toContainText('아직 프로젝트 동네가 없습니다');
+  await page
+    .locator('#project-selected')
+    .getByRole('button', { name: 'Remove neighborhood' })
+    .click();
+  await expect(page.locator('#project-selected')).toContainText('No project neighborhoods yet');
 });
 
 test('browser Back retains its world', async ({ playwright, baseURL }, info) => {
@@ -197,7 +206,7 @@ test('browser Back retains its world', async ({ playwright, baseURL }, info) => 
       await expect(page.locator('#world-host svg')).toHaveCount(1);
       await page.locator('#world-date').fill(date);
       await page.locator('#world-date').dispatchEvent('change');
-      await expect(page.locator('#day-details')).toContainText(`${count}번의 기여`);
+      await expect(page.locator('#day-details')).toContainText(`${count} contributions`);
     }
     await info.attach('restored-world', {
       body: await page.screenshot(),
@@ -241,7 +250,7 @@ test('keyboard dialogs, reduced motion, WebGL fallback and portable postcards wo
   const download = await downloaded;
   const path = await download.path();
   if (!path) throw new Error('SVG download did not produce a file');
-  expect(await readFile(path, 'utf8')).toContain('2024년 2월 29일');
+  expect(await readFile(path, 'utf8')).toContain('February 29, 2024');
   expect(download.suggestedFilename()).toMatch(/\.svg$/);
   await closeDialog(page, 'photo-dialog');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

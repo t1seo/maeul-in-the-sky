@@ -83,9 +83,11 @@ describe('complete miniature landscape', () => {
           },
         ],
       };
-      const elements = tags(renderMapFrame(scene, seasonal, view));
+      const svg = renderMapFrame(scene, seasonal, view);
+      const elements = tags(svg);
       expect(elements.some((element) => element['data-weather'] === view.weather)).toBe(true);
       expect(elements.some((element) => element['data-event-id'] === 'seasonal-test')).toBe(true);
+      expect(svg).toContain('<title>market · Village gathering</title>');
       expect(
         elements.some((element) => element.name === 'animate' || element.name === 'script'),
       ).toBe(false);

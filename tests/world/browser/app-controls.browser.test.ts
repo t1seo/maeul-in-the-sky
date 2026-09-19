@@ -42,7 +42,7 @@ test('selecting a dated landscape shows that day rather than the end of replay',
   const running = await open();
   running.session.selectPlace('asset:2024-02-28');
   expect(input('world-date').value).toBe('2024-02-28');
-  expect(html('day-details').textContent).toContain('5번의 기여');
+  expect(html('day-details').textContent).toContain('5 contributions');
   expect(running.session.current().view.cursorDate).toBe('2024-02-29');
 });
 
@@ -69,7 +69,7 @@ test('replays dates, pauses explicitly and stops when reaching the final day', a
   expect(running.session.current().view.cursorDate).toBe('2024-02-29');
   input('world-date').value = '2020-01-01';
   input('world-date').dispatchEvent(new Event('change'));
-  expect(html('world-status').textContent).toContain('이 세계 안의 날짜');
+  expect(html('world-status').textContent).toContain('within this world’s date range');
   const focus = running.session.current().view.focus;
   button('focus-date').click();
   expect(running.session.current().view.focus).toEqual(focus);
@@ -118,13 +118,13 @@ test('honors reduced motion at startup and stops replay when the preference chan
 
 test('uses seasonal weather by default and keeps explicit weather overrides available', async () => {
   const running = await open();
-  expect(select('world-weather').options[0]?.textContent).toBe('계절 따라');
+  expect(select('world-weather').options[0]?.textContent).toBe('Seasonal weather');
   expect(running.session.current().view.weather).toBe('seasonal');
   change('world-weather', 'rain');
   expect(running.session.current().view.weather).toBe('rain');
   change('world-weather', 'seasonal');
   change('world-season', 'spring');
   expect(running.session.current().view.weather).toBe('seasonal');
-  expect(html('photo-atmosphere').textContent).toContain('계절 따라');
-  expect(html('photo-atmosphere').textContent).toContain('봄 연출');
+  expect(html('photo-atmosphere').textContent).toContain('Seasonal weather');
+  expect(html('photo-atmosphere').textContent).toContain('Spring scenery');
 });

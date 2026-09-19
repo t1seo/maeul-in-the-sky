@@ -1,4 +1,6 @@
 @import url('./styles/explore.css');
+@import url('./controls.css');
+
 :root {
   color-scheme: light;
   --paper: #f5f1e8;
@@ -299,7 +301,7 @@ h1 {
   margin-top: 16px;
 }
 .appearance-fields select {
-  padding-inline: 8px;
+  padding-inline-start: 8px;
 }
 .renderer-selection {
   padding-block: 12px;
@@ -795,13 +797,19 @@ footer p {
     width: calc(100% - 32px);
   }
   .site-header {
-    height: 75px;
+    height: auto;
+    min-height: 75px;
+    padding-block: 18px;
+    flex-wrap: wrap;
+    row-gap: 12px;
   }
-  .site-header nav a:not(#explore-world) {
+  .site-header nav a:not(#explore-world):not(#explore-activity) {
     display: none;
   }
   .site-header nav {
     gap: 12px;
+    width: 100%;
+    justify-content: space-between;
   }
   .wordmark {
     font-size: 13px;

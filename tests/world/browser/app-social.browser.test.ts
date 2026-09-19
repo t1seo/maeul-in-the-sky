@@ -68,7 +68,7 @@ test('visits a public friend URL, bookmarks it, and returns to the exact home ca
   expect(html('visit-banner').hidden).toBe(false);
   openDialog('visits-dialog');
   button('bookmark-visit').click();
-  await expect.poll(() => html('bookmark-list').textContent).toContain('friend님의');
+  await expect.poll(() => html('bookmark-list').textContent).toContain('friend’s');
   dialog('visits-dialog').close();
   button('return-own').click();
   await expect.poll(() => html('visit-banner').hidden).toBe(true);
@@ -78,15 +78,15 @@ test('visits a public friend URL, bookmarks it, and returns to the exact home ca
   mountPage();
   running = await open('', databaseName);
   openDialog('visits-dialog');
-  await expect.poll(() => html('bookmark-list').textContent).toContain('방문지 지우기');
-  clickIn('bookmark-list', '섬 방문하기');
+  await expect.poll(() => html('bookmark-list').textContent).toContain('Remove bookmark');
+  clickIn('bookmark-list', 'Visit island');
   await expect.poll(() => running.session.current().scene.username).toBe('friend');
   button('return-own').click();
   await expect.poll(() => html('visit-banner').hidden).toBe(true);
   openDialog('visits-dialog');
-  await expect.poll(() => html('bookmark-list').textContent).toContain('방문지 지우기');
-  clickIn('bookmark-list', '방문지 지우기');
-  await expect.poll(() => html('bookmark-list').textContent).toContain('다시 찾아갈 섬');
+  await expect.poll(() => html('bookmark-list').textContent).toContain('Remove bookmark');
+  clickIn('bookmark-list', 'Remove bookmark');
+  await expect.poll(() => html('bookmark-list').textContent).toContain('Bookmark an island');
 });
 
 test('automatically opens a URL world and preserves it if the next public fetch fails', async () => {
@@ -99,14 +99,14 @@ test('automatically opens a URL world and preserves it if the next public fetch 
   openDialog('visits-dialog');
   input('visit-url').value = 'https://friend.github.io/missing.json';
   submit('visit-form');
-  await expect.poll(() => html('world-status').textContent).toContain('찾지 못했습니다');
+  await expect.poll(() => html('world-status').textContent).toContain('could not be found');
   expect(dialog('visits-dialog').querySelector('[role="alert"]')?.textContent).toContain(
-    '찾지 못했습니다',
+    'could not be found',
   );
   expect(running.session.current()).toEqual(before);
   input('visit-url').value = 'file:///private-world.json';
   submit('visit-form');
-  await expect.poll(() => html('world-status').textContent).toContain('공개 JSON 주소');
+  await expect.poll(() => html('world-status').textContent).toContain('public JSON URL');
   expect(running.session.current()).toEqual(before);
   button('share-world').click();
   await expect.poll(() => html('world-status').dataset.error).toBe('true');
@@ -140,7 +140,7 @@ test('discovers a real place, records it in the journal and filters visited plac
   const running = await open('', databaseName);
   openDialog('discovery-dialog');
   await expect.poll(() => html('discovery-list').textContent).toContain('A first grove');
-  clickIn('discovery-list', '이 장소 찾아가기');
+  clickIn('discovery-list', 'Visit this place');
   await expect.poll(() => dialog('discovery-dialog').open).toBe(false);
   expect(running.session.current().view.focus).toEqual({
     kind: 'entity',
@@ -153,13 +153,13 @@ test('discovers a real place, records it in the journal and filters visited plac
   openDialog('discovery-dialog');
   select('discovery-filter').value = 'visited';
   select('discovery-filter').dispatchEvent(new Event('change'));
-  await expect.poll(() => html('discovery-list').textContent).toContain('찾아간 장소');
-  expect(html('discovery-note').textContent).toContain('1곳을 찾았습니다');
+  await expect.poll(() => html('discovery-list').textContent).toContain('Visited');
+  expect(html('discovery-note').textContent).toContain('Discovered 1 of');
   select('discovery-filter').value = 'new';
   select('discovery-filter').dispatchEvent(new Event('change'));
   await expect
     .poll(() => html('discovery-list').textContent)
-    .toContain('지금 조건에 맞는 장소가 없습니다');
+    .toContain('No places match this view');
 });
 
 test('returns to the original home after visiting two friends in succession', async () => {

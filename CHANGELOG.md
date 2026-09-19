@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Activity dashboard** — contribution trends, monthly commit/PR comparisons, weekday totals, exact data tables, period filters and keyboard-accessible chart values are available from both demo menus
+- **Recorded monthly activity** — GitHub fetching now preserves optional monthly commit, PR, issue, review, repository and restricted contribution counts through snapshots, archives and saved worlds; older files clearly show unavailable breakdowns
 - **Selectable classic renderer** — preserve the exact pre-world browser renderer with provenance and integrity checks; switch versions with the same contribution history, share the selection, export with the selected engine, and generate a profile workflow pinned to the original commit
 - **Living seasons and surfaces** — seasonal petals, butterflies, precipitation and flowing-water motion accompany richer ground and shoreline detail in the explorer and profile SVG
 - **Sky world explorer** — a separate island map and lazy-loaded Three.js view add monthly archipelagos, one connected annual island and four seasonal islands, nature-led districts, route-following life, date replay, discoveries and seasonal photo controls
@@ -73,6 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Explorer language and controls** — the homepage and world interface use English labels and UTC date formatting, while shared native dropdowns have consistent inset arrows and readable text spacing
 - **Explicit input boundaries** — restrict palette caches to supported color modes, retain canonical containment for preview assets, and pin browser-test proxy requests to the local QA server
 
 - Preserve eligible lower-tier Wonder draws when an upper-tier draw fails, retain the daily reward marker at Wonder positions, and keep animated portal geometry within its declared bounds.

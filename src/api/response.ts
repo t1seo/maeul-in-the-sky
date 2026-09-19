@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import { GitHubApiError } from './errors.js';
+import type { ActivityBreakdown } from '../core/activity-types.js';
+import { parseActivityResponse, type ActivityRequest } from './activity.js';
 
 const countSchema = z.number().finite().int().nonnegative();
 const calendarSchema = z
@@ -39,6 +41,7 @@ const envelopeSchema = z.object({
     .object({
       user: z
         .object({ contributionsCollection: z.object({ contributionCalendar: calendarSchema }) })
+        .catchall(z.unknown())
         .nullable(),
     })
     .nullish(),
@@ -50,7 +53,9 @@ const errorBodySchema = z.object({
   errors: z.array(graphQLErrorSchema).optional(),
 });
 
-export type GitHubCalendar = z.infer<typeof calendarSchema>;
+export type GitHubCalendar = z.infer<typeof calendarSchema> & {
+  readonly activity?: ActivityBreakdown;
+};
 
 function retryAfterMs(headers: Headers): number | undefined {
   const retryAfter = headers.get('retry-after');
@@ -78,7 +83,10 @@ function rateLimitError(response: Response): GitHubApiError {
   });
 }
 
-export async function parseGitHubResponse(response: Response): Promise<GitHubCalendar> {
+export async function parseGitHubResponse(
+  response: Response,
+  requestedActivity?: ActivityRequest,
+): Promise<GitHubCalendar> {
   const { status } = response;
   if (status === 401) throw new GitHubApiError('auth', { status });
   if (status === 404) throw new GitHubApiError('notfound', { status });
@@ -146,5 +154,12 @@ export async function parseGitHubResponse(response: Response): Promise<GitHubCal
   }
   if (parsed.data.data?.user === null) throw new GitHubApiError('notfound', { status });
   if (!parsed.data.data) throw new GitHubApiError('invalidresponse', { status });
-  return parsed.data.data.user.contributionsCollection.contributionCalendar;
+  const user = parsed.data.data.user;
+  const calendar = user.contributionsCollection.contributionCalendar;
+  const activity = parseActivityResponse(
+    user,
+    requestedActivity,
+    calendar.weeks.flatMap((week) => week.contributionDays.map((day) => day.date)),
+  );
+  return { ...calendar, ...(activity === undefined ? {} : { activity }) };
 }

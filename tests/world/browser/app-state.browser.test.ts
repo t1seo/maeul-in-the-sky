@@ -65,7 +65,7 @@ test('removes a selected public project without losing the current world', async
   const opener = document.querySelector<HTMLButtonElement>('[data-dialog="projects-dialog"]');
   opener?.click();
   const remove = [...html('project-selected').querySelectorAll('button')].find(
-    (node) => node.textContent === '동네에서 빼기',
+    (node) => node.textContent === 'Remove neighborhood',
   );
   expect(remove).toBeDefined();
   remove?.click();
@@ -93,7 +93,7 @@ test('persists the live renderer camera and restores it through the library', as
   expect(saved?.view.lighting).toBe('sunset');
   running.session.reset();
   document.querySelector<HTMLButtonElement>('[data-dialog="library-dialog"]')?.click();
-  await expect.poll(() => html('library-list').textContent).toContain('세계 열기');
+  await expect.poll(() => html('library-list').textContent).toContain('Open world');
   html('library-list').querySelector<HTMLButtonElement>('button')?.click();
   await expect.poll(() => running.session.current().view.camera).toEqual(camera);
   await library.close();
@@ -101,10 +101,10 @@ test('persists the live renderer camera and restores it through the library', as
 
 test('updates dates, atmosphere, follow controls and genuine map fallback', async () => {
   const running = await open();
-  expect(html('day-details').textContent).toContain('0번의 기여');
+  expect(html('day-details').textContent).toContain('0 contributions');
   input('world-date').value = '2024-02-28';
   input('world-date').dispatchEvent(new Event('change'));
-  expect(html('day-details').textContent).toContain('5번의 기여');
+  expect(html('day-details').textContent).toContain('5 contributions');
   button('focus-date').click();
   expect(running.session.current().view.focus).toEqual({ kind: 'day', date: '2024-02-28' });
   change('world-season', 'winter');
@@ -119,7 +119,7 @@ test('updates dates, atmosphere, follow controls and genuine map fallback', asyn
     motion: 'off',
     quality: 'low',
   });
-  expect(html('season-note').textContent).toContain('겨울로 연출');
+  expect(html('season-note').textContent).toContain('Winter scenery');
   button('mode-three').click();
   await expect.poll(() => html('world-fallback').hidden).toBe(false);
   await expect.poll(() => button('mode-map').getAttribute('aria-pressed')).toBe('true');

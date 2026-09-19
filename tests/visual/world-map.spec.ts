@@ -24,10 +24,10 @@ test('2D map preserves source-day selection across input, focus, presentation, a
   const leapDay = map.locator('[data-day-id="day:2024-02-29"]');
   await leapDay.click();
   await expect(page.locator('#world-date')).toHaveValue('2024-02-29');
-  await expect(page.locator('#day-details')).toContainText('0번의 기여');
+  await expect(page.locator('#day-details')).toContainText('0 contributions');
   await map.locator('[data-day-id="day:2024-02-28"]').focus();
   await page.keyboard.press('Enter');
-  await expect(page.locator('#day-details')).toContainText('5번의 기여');
+  await expect(page.locator('#day-details')).toContainText('5 contributions');
   await page.locator('#focus-date').click();
   await page.locator('#zoom-in').click();
   await page.locator('#reset-view').click();

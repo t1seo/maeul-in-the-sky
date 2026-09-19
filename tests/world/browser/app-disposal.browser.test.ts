@@ -76,7 +76,7 @@ test('retains a cached page and still disposes when a later departure is permane
   expect(html('world-host').querySelector('svg')).not.toBeNull();
   input('world-date').value = '2024-02-28';
   input('world-date').dispatchEvent(new Event('change'));
-  expect(html('day-details').textContent).toContain('5번의 기여');
+  expect(html('day-details').textContent).toContain('5 contributions');
   window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: false }));
   await expect.poll(() => html('world-host').childElementCount).toBe(0);
 });

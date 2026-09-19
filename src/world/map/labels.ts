@@ -35,7 +35,12 @@ export function renderMapLabels(
   transform: MapTransform,
   palette: MapPalette,
 ): string {
-  const seasonNames = { spring: '봄', summer: '여름', autumn: '가을', winter: '겨울' } as const;
+  const seasonNames = {
+    spring: 'Spring',
+    summer: 'Summer',
+    autumn: 'Autumn',
+    winter: 'Winter',
+  } as const;
   const groups =
     scene.settings.layout === 'seasonal'
       ? scene.islands
@@ -89,9 +94,6 @@ export function renderCaption(
   const last = observed[observed.length - 1]?.date;
   const period =
     first && last ? `Observed ${first} – ${last}` : `No observations through ${frame.cursorDate}`;
-  const title =
-    scene.settings.culture === 'korean'
-      ? `${scene.username} 님의 하늘 마을`
-      : `${scene.username}'s sky world`;
+  const title = `${scene.username}'s sky world`;
   return `<g pointer-events="none"><text x="42" y="47" font-size="11" letter-spacing="3" fill="${palette.muted}" font-family="Georgia, serif">MAEUL · A LIVING CALENDAR</text><text x="40" y="84" font-size="27" fill="${palette.ink}" font-family="Georgia, 'Noto Serif KR', serif">${escapeXml(title)}</text><text x="42" y="109" font-size="12" fill="${palette.muted}" font-family="Georgia, serif">${period} · ${frame.stats.totalContributions.toLocaleString('en-US')} contributions</text><path d="M42,${MAP_HEIGHT - 56}h1116" stroke="${palette.muted}" opacity="0.25"/><text x="42" y="${MAP_HEIGHT - 30}" fill="${palette.muted}" font-size="12" font-family="Georgia, serif">${frame.season} · ${view.lighting} · ${view.weather}${view.seasonOverride === 'calendar' ? '' : ' · seasonal preview'}</text><text x="1158" y="${MAP_HEIGHT - 30}" text-anchor="end" fill="${palette.muted}" font-size="12" font-family="Georgia, serif">${frame.stats.observedDays} observed days · ${frame.discoveries.length} places to discover</text></g>`;
 }

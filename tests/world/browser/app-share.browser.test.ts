@@ -36,7 +36,7 @@ test('a published HTTPS explorer creates a selectable public-source link without
     const link = new URL(input('share-link').value);
     expect(link.origin + link.pathname).toBe('https://maeul.github.io/project/world/');
     expect(link.searchParams.get('world')).toBe('https://friend.github.io/world.json');
-    expect(html('world-status').textContent).toContain('주소를 복사해');
+    expect(html('world-status').textContent).toContain('Copy the selected address');
     expect(input('share-link').readOnly).toBe(true);
     expect(document.activeElement).toBe(input('share-link'));
     expect(input('share-link').selectionEnd).toBe(input('share-link').value.length);

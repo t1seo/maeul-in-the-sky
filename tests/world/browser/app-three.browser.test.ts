@@ -77,7 +77,7 @@ test('uses genuine 3D, saves the live orbit camera, and downloads a real GLB mod
   await expect.poll(() => running.session.mode()).toBe('map');
   expect(html('world-host').querySelector('canvas')).toBeNull();
   expect(input('world-date').value).toBe('2024-02-28');
-  expect(html('day-details').textContent).toContain('5번의 기여');
+  expect(html('day-details').textContent).toContain('5 contributions');
 });
 
 test('the real ESM entry boots transferred records and disposes on page departure', async () => {

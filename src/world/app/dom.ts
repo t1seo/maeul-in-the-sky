@@ -4,7 +4,7 @@ import { WorldAppError } from './errors.js';
 export function element<T extends HTMLElement>(id: string, kind: { new (): T }): T {
   const found = document.getElementById(id);
   if (!(found instanceof kind))
-    throw new WorldAppError('element', `화면 요소를 찾을 수 없습니다: ${id}`);
+    throw new WorldAppError('element', `Could not find page element: ${id}`);
   return found;
 }
 
@@ -39,37 +39,37 @@ export function describeError(error: Error): string {
   if (!(error instanceof WorldDataError)) return error.message;
   switch (error.code) {
     case 'invalid_input':
-      return '파일 또는 공개 데이터의 형식이 올바르지 않습니다. 지금 세계는 유지됩니다.';
+      return 'The file or public data format is invalid. Your current world is unchanged.';
     case 'unsupported_version':
-      return '지원하지 않는 세계 파일 버전입니다. 지금 세계는 유지됩니다.';
+      return 'This world file version is unsupported. Your current world is unchanged.';
     case 'too_large':
-      return '세계 파일은 8 MiB, 스냅샷·archive는 2 MiB 이내로 가져와 주세요.';
+      return 'World files must be 8 MiB or smaller; snapshots and archives must be 2 MiB or smaller.';
     case 'invalid_url':
-      return 'GitHub Pages 또는 raw GitHub의 공개 JSON 주소를 입력해 주세요.';
+      return 'Enter a public JSON URL hosted on GitHub Pages or raw GitHub.';
     case 'unpublished':
-      return '세계 JSON 파일을 먼저 공개하고, 공개된 탐험 페이지에서 링크를 만들어 주세요.';
+      return 'Publish your world JSON file first, then create a link from the public explorer page.';
     case 'network':
-      return '네트워크 연결을 확인해 주세요. 불러오지 못한 동안에도 지금 세계는 유지됩니다.';
+      return 'Check your network connection. Your current world is unchanged.';
     case 'timeout':
-      return '불러오는 시간이 길어져 중단했습니다. 잠시 후 다시 시도해 주세요.';
+      return 'Loading timed out. Please try again shortly.';
     case 'rate_limit':
-      return `GitHub 공개 요청 한도에 도달했습니다.${error.retryAt ? ` ${error.retryAt} 이후 다시 시도해 주세요.` : ' 잠시 후 다시 시도해 주세요.'}`;
+      return `GitHub’s public request limit has been reached.${error.retryAt ? ` Try again after ${error.retryAt}.` : ' Try again shortly.'}`;
     case 'not_found':
-      return '공개 세계 또는 저장소를 찾지 못했습니다. 주소를 확인해 주세요.';
+      return 'The public world or repository could not be found. Check the address.';
     case 'private_repository':
-      return '공개 저장소만 동네로 불러올 수 있습니다.';
+      return 'Only public repositories can be added as neighborhoods.';
     case 'storage':
-      return '브라우저 보관함을 사용할 수 없습니다. 세계 파일을 내려받아 간직해 주세요.';
+      return 'Browser storage is unavailable. Download your world file to keep a copy.';
     case 'quota':
-      return '브라우저 저장 공간이 부족합니다. 세계 파일을 내려받거나 이전 보관본을 정리해 주세요.';
+      return 'Browser storage is full. Download your world file or remove older saved worlds.';
     case 'replace_required':
-      return '같은 세계가 이미 보관되어 있습니다. 보관함에서 이전 파일을 내려받거나 삭제하실 수 있습니다.';
+      return 'This world is already saved. Download or delete the earlier file in Saved worlds.';
     case 'library_full':
-      return '보관함이 가득 찼습니다. 이전 항목을 정리한 뒤 다시 보관해 주세요.';
+      return 'Your library is full. Remove older items, then save again.';
     case 'cancelled':
-      return '불러오기를 취소했습니다.';
+      return 'Loading cancelled.';
     case 'stale':
-      return '새로운 요청으로 이동했습니다.';
+      return 'Switched to a newer request.';
     default:
       return error.code satisfies never;
   }

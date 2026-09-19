@@ -1925,17 +1925,17 @@ function toIsoCells(cells, palette, originX, originY) {
     timestamp: Date.parse(cell.date)
   }));
   const firstSunday = calendarCells.reduce(
-    (first, { timestamp, day }) => Math.min(first, timestamp - day * DAY_MS3),
+    (first, { timestamp, day }) => Math.min(first, timestamp - day * DAY_MS4),
     Infinity
   );
   const isoCells = calendarCells.map(({ cell, day, timestamp }) => {
-    const week = cell.week ?? Math.floor((timestamp - firstSunday) / (7 * DAY_MS3));
+    const week = cell.week ?? Math.floor((timestamp - firstSunday) / (7 * DAY_MS4));
     return {
       week,
       day,
       date: cell.date,
       count: cell.count,
-      absoluteWeek: Math.floor((timestamp - day * DAY_MS3 - Date.UTC(1970, 0, 4)) / (7 * DAY_MS3)),
+      absoluteWeek: Math.floor((timestamp - day * DAY_MS4 - Date.UTC(1970, 0, 4)) / (7 * DAY_MS4)),
       level100: cell.level100,
       height: palette.getHeight(cell.level100),
       isoX: originX + (week - day) * THW,
@@ -1951,7 +1951,7 @@ function toIsoCells(cells, palette, originX, originY) {
   });
   return isoCells;
 }
-var THW, THH, DAY_MS3;
+var THW, THH, DAY_MS4;
 var init_projection = __esm({
   "src/themes/terrain/scene/projection.ts"() {
     "use strict";
@@ -1960,7 +1960,7 @@ var init_projection = __esm({
     init_calendar();
     THW = 8;
     THH = 3.5;
-    DAY_MS3 = 864e5;
+    DAY_MS4 = 864e5;
   }
 });
 
@@ -24949,7 +24949,7 @@ function consistencyByDate(cells) {
   let first = 0;
   let activeDays = 0;
   for (const [index, day] of days.entries()) {
-    const cutoff = day.timestamp - (CONSISTENCY_WINDOW_DAYS - 1) * DAY_MS4;
+    const cutoff = day.timestamp - (CONSISTENCY_WINDOW_DAYS - 1) * DAY_MS5;
     while (days[first].timestamp < cutoff) {
       if (days[first].count > 0) activeDays--;
       first++;
@@ -24963,12 +24963,12 @@ function consistencyByDate(cells) {
   }
   return result;
 }
-var DAY_MS4, CONSISTENCY_WINDOW_DAYS, CONSISTENCY_MINIMUMS;
+var DAY_MS5, CONSISTENCY_WINDOW_DAYS, CONSISTENCY_MINIMUMS;
 var init_consistency = __esm({
   "src/core/consistency.ts"() {
     "use strict";
     init_esm_shims();
-    DAY_MS4 = 864e5;
+    DAY_MS5 = 864e5;
     CONSISTENCY_WINDOW_DAYS = 28;
     CONSISTENCY_MINIMUMS = [0, 5, 12, 20];
   }
@@ -26800,12 +26800,12 @@ var package_default = {
 init_esm_shims();
 init_boundary();
 import { Command } from "commander";
-import { z as z9 } from "zod";
+import { z as z11 } from "zod";
 
 // src/generate/operation.ts
 init_esm_shims();
 import { readFile as readFile5 } from "fs/promises";
-import { z as z7 } from "zod";
+import { z as z9 } from "zod";
 
 // src/archive.ts
 init_esm_shims();
@@ -26826,23 +26826,100 @@ init_boundary();
 init_schema();
 init_resolve();
 init_calendar();
+import { z as z3 } from "zod";
+
+// src/core/settings/activity-schema.ts
+init_esm_shims();
 import { z as z2 } from "zod";
-var contributionDateSchema = z2.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((date) => {
+var MAX_ACTIVITY_MONTHS = 13;
+var DAY_MS3 = 864e5;
+var countSchema = z2.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
+var countKeys = [
+  "commits",
+  "pullRequests",
+  "issues",
+  "reviews",
+  "repositories",
+  "restricted"
+];
+var activityTimestampSchema = z2.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/).refine((value) => {
+  const time = Date.parse(value);
+  if (!Number.isFinite(time) || value < "0001-01-01") return false;
+  const canonical = new Date(time).toISOString();
+  return value === canonical || value === canonical.replace(".000Z", "Z");
+}, "Expected an exact UTC timestamp in years 1\u20139999").transform((value) => new Date(value).toISOString());
+var activityMonthSchema = z2.object({
+  month: z2.string().regex(/^\d{4}-(?:0[1-9]|1[0-2])$/),
+  from: activityTimestampSchema,
+  to: activityTimestampSchema,
+  commits: countSchema,
+  pullRequests: countSchema,
+  issues: countSchema,
+  reviews: countSchema,
+  repositories: countSchema,
+  restricted: countSchema
+});
+var activitySchema = z2.object({
+  source: z2.literal("github-contributions"),
+  from: activityTimestampSchema,
+  to: activityTimestampSchema,
+  months: z2.array(activityMonthSchema).min(1).max(MAX_ACTIVITY_MONTHS)
+}).superRefine((activity, context2) => {
+  let cursor = Date.parse(activity.from);
+  const end = Date.parse(activity.to);
+  const seen = /* @__PURE__ */ new Set();
+  for (const [index, month] of activity.months.entries()) {
+    const nextMonth = /* @__PURE__ */ new Date(`${month.from.slice(0, 7)}-01T00:00:00.000Z`);
+    nextMonth.setUTCMonth(nextMonth.getUTCMonth() + 1);
+    const expectedEnd = Math.min(end, nextMonth.getTime() - 1);
+    if (seen.has(month.month) || month.month !== month.from.slice(0, 7) || month.month !== month.to.slice(0, 7) || Date.parse(month.from) !== cursor || Date.parse(month.to) !== expectedEnd || expectedEnd < cursor)
+      context2.addIssue({
+        code: "custom",
+        path: ["months", index],
+        message: "Activity months must exactly partition their UTC range in calendar order"
+      });
+    seen.add(month.month);
+    cursor = Date.parse(month.to) + 1;
+  }
+  if (cursor !== end + 1)
+    context2.addIssue({
+      code: "custom",
+      path: ["months"],
+      message: "Activity evidence must cover the entire requested range"
+    });
+  for (const key of countKeys)
+    if (!Number.isSafeInteger(activity.months.reduce((sum, month) => sum + month[key], 0)))
+      context2.addIssue({
+        code: "custom",
+        path: ["months"],
+        message: `Activity ${key} total exceeds the safe integer limit`
+      });
+});
+function activityMatchesCalendar(activity, dates) {
+  const observed = new Set(dates);
+  const end = Date.parse(activity.to);
+  for (let time = Date.parse(`${activity.from.slice(0, 10)}T00:00:00.000Z`); time <= end; time += DAY_MS3)
+    if (!observed.has(new Date(time).toISOString().slice(0, 10))) return false;
+  return true;
+}
+
+// src/core/settings/snapshot-schema.ts
+var contributionDateSchema = z3.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((date) => {
   const timestamp = Date.parse(`${date}T00:00:00.000Z`);
   return Number.isFinite(timestamp) && new Date(timestamp).toISOString().slice(0, 10) === date;
 }, "Invalid calendar date");
-var contributionDaySchema = z2.object({
+var contributionDaySchema = z3.object({
   date: contributionDateSchema.refine(
     (date) => date >= "0001-01-01",
     "Contribution dates require a year from 1 to 9999"
   ),
-  count: z2.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
-  level: z2.union([z2.literal(0), z2.literal(1), z2.literal(2), z2.literal(3), z2.literal(4)])
+  count: z3.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  level: z3.union([z3.literal(0), z3.literal(1), z3.literal(2), z3.literal(3), z3.literal(4)])
 });
-var contributionWeeksSchema = z2.array(
-  z2.object({
+var contributionWeeksSchema = z3.array(
+  z3.object({
     firstDay: contributionDateSchema,
-    days: z2.array(contributionDaySchema).max(7)
+    days: z3.array(contributionDaySchema).max(7)
   })
 ).max(MAX_CONTRIBUTION_DAYS).superRefine((weeks, context2) => {
   let count = 0;
@@ -26872,25 +26949,36 @@ var contributionWeeksSchema = z2.array(
     });
   }
 });
-var sourceSchema = z2.object({
-  kind: z2.enum(["github", "import", "sample"]),
-  fetchedAt: z2.iso.datetime({ offset: true }).transform((value) => new Date(value).toISOString()).optional()
+var sourceSchema = z3.object({
+  kind: z3.enum(["github", "import", "sample"]),
+  fetchedAt: z3.iso.datetime({ offset: true }).transform((value) => new Date(value).toISOString()).optional()
 });
-var settingsEnvelopeSchema = z2.object({
-  schemaVersion: z2.literal(1),
-  kind: z2.literal("maeul-settings"),
+var settingsEnvelopeSchema = z3.object({
+  schemaVersion: z3.literal(1),
+  kind: z3.literal("maeul-settings"),
   username: usernameSchema,
   year: yearSchema.optional(),
   settings: renderSettingsInputSchema
 });
-var snapshotSchema = z2.object({
-  schemaVersion: z2.literal(1),
-  kind: z2.literal("maeul-snapshot"),
+var snapshotSchema = z3.object({
+  schemaVersion: z3.literal(1),
+  kind: z3.literal("maeul-snapshot"),
   username: usernameSchema,
   year: yearSchema,
   weeks: contributionWeeksSchema,
   settings: renderSettingsInputSchema,
-  source: sourceSchema
+  source: sourceSchema,
+  activity: activitySchema.optional()
+}).superRefine((snapshot, context2) => {
+  if (snapshot.activity && !activityMatchesCalendar(
+    snapshot.activity,
+    snapshot.weeks.flatMap((week) => week.days.map((day) => day.date))
+  ))
+    context2.addIssue({
+      code: "custom",
+      path: ["activity"],
+      message: "Activity evidence requires observed calendar dates throughout its range"
+    });
 }).transform((parsed) => ({
   schemaVersion: 1,
   kind: "maeul-snapshot",
@@ -26901,7 +26989,8 @@ var snapshotSchema = z2.object({
   source: {
     kind: parsed.source.kind,
     ...parsed.source.fetchedAt === void 0 ? {} : { fetchedAt: parsed.source.fetchedAt }
-  }
+  },
+  ...parsed.activity === void 0 ? {} : { activity: parsed.activity }
 }));
 
 // src/core/settings/parse.ts
@@ -26923,7 +27012,13 @@ function snapshotToContributionData(snapshot) {
     firstDay: week.firstDay,
     days: week.days.map((day) => ({ ...day }))
   }));
-  return { username: snapshot.username, year: snapshot.year, weeks, stats: computeStats(weeks) };
+  return {
+    username: snapshot.username,
+    year: snapshot.year,
+    weeks,
+    stats: computeStats(weeks),
+    ...snapshot.activity === void 0 ? {} : { activity: snapshot.activity }
+  };
 }
 function createSnapshot(data, settings = {}, source = { kind: "import" }) {
   return parseSnapshot({
@@ -26933,7 +27028,8 @@ function createSnapshot(data, settings = {}, source = { kind: "import" }) {
     year: data.year,
     weeks: data.weeks,
     settings,
-    source
+    source,
+    ...data.activity === void 0 ? {} : { activity: data.activity }
   });
 }
 
@@ -26948,27 +27044,10 @@ init_stats();
 
 // src/api/queries.ts
 init_esm_shims();
-var CONTRIBUTIONS_QUERY = `
-  query ContributionsCalendar($username: String!, $from: DateTime!, $to: DateTime!) {
-    user(login: $username) {
-      contributionsCollection(from: $from, to: $to) {
-        contributionCalendar {
-          totalContributions
-          weeks {
-            contributionDays {
-              date
-              contributionCount
-              contributionLevel
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 
-// src/api/request.ts
+// src/api/activity.ts
 init_esm_shims();
+import { z as z4 } from "zod";
 
 // src/api/errors.ts
 init_esm_shims();
@@ -26999,19 +27078,119 @@ var GitHubApiError = class extends Error {
   retryAfterMs;
 };
 
+// src/api/activity.ts
+var rangeSchema = z4.object({ from: activityTimestampSchema, to: activityTimestampSchema });
+var countSchema2 = z4.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
+var totalsSchema = z4.object({
+  totalCommitContributions: countSchema2,
+  totalPullRequestContributions: countSchema2,
+  totalIssueContributions: countSchema2,
+  totalPullRequestReviewContributions: countSchema2,
+  totalRepositoryContributions: countSchema2,
+  restrictedContributionsCount: countSchema2
+});
+function activityAlias(index) {
+  return `month${String(index).padStart(2, "0")}`;
+}
+function createActivityRequest(from, to) {
+  const parsed = rangeSchema.safeParse({ from, to });
+  if (!parsed.success || parsed.data.from > parsed.data.to)
+    throw new GitHubApiError("configuration");
+  const range = parsed.data;
+  const months = [];
+  const end = Date.parse(range.to);
+  let cursor = Date.parse(range.from);
+  while (cursor <= end) {
+    if (months.length === MAX_ACTIVITY_MONTHS) throw new GitHubApiError("configuration");
+    const start = new Date(cursor).toISOString();
+    const nextMonth = /* @__PURE__ */ new Date(`${start.slice(0, 7)}-01T00:00:00.000Z`);
+    nextMonth.setUTCMonth(nextMonth.getUTCMonth() + 1);
+    const last = Math.min(end, nextMonth.getTime() - 1);
+    months.push({ month: start.slice(0, 7), from: start, to: new Date(last).toISOString() });
+    cursor = last + 1;
+  }
+  return { ...range, months };
+}
+function parseActivityResponse(user, request, calendarDates) {
+  const aliases = Object.keys(user).filter((key) => /^month\d+$/.test(key));
+  if (aliases.length === 0) return void 0;
+  if (!request || aliases.length !== request.months.length)
+    throw new GitHubApiError("invalidresponse");
+  const months = request.months.map((month, index) => {
+    const parsed2 = totalsSchema.safeParse(user[activityAlias(index)]);
+    if (!parsed2.success) throw new GitHubApiError("invalidresponse");
+    const counts = parsed2.data;
+    return {
+      ...month,
+      commits: counts.totalCommitContributions,
+      pullRequests: counts.totalPullRequestContributions,
+      issues: counts.totalIssueContributions,
+      reviews: counts.totalPullRequestReviewContributions,
+      repositories: counts.totalRepositoryContributions,
+      restricted: counts.restrictedContributionsCount
+    };
+  });
+  const parsed = activitySchema.safeParse({ ...request, source: "github-contributions", months });
+  if (!parsed.success || !activityMatchesCalendar(parsed.data, calendarDates))
+    throw new GitHubApiError("invalidresponse");
+  return parsed.data;
+}
+
+// src/api/queries.ts
+function contributionsQuery(activity) {
+  const declarations = activity?.months.map((_, index) => {
+    const alias = activityAlias(index);
+    return `$${alias}From: DateTime!, $${alias}To: DateTime!`;
+  }) ?? [];
+  const selections = activity?.months.map((_, index) => {
+    const alias = activityAlias(index);
+    return `${alias}: contributionsCollection(from: $${alias}From, to: $${alias}To) {
+      totalCommitContributions
+      totalPullRequestContributions
+      totalIssueContributions
+      totalPullRequestReviewContributions
+      totalRepositoryContributions
+      restrictedContributionsCount
+    }`;
+  }) ?? [];
+  return `
+  query ContributionsCalendar($username: String!, $from: DateTime!, $to: DateTime!${declarations.length ? `, ${declarations.join(", ")}` : ""}) {
+    user(login: $username) {
+      contributionsCollection(from: $from, to: $to) {
+        contributionCalendar {
+          totalContributions
+          weeks {
+            contributionDays {
+              date
+              contributionCount
+              contributionLevel
+            }
+          }
+        }
+      }
+      ${selections.join("\n")}
+    }
+  }
+`;
+}
+var CONTRIBUTIONS_QUERY = contributionsQuery();
+
+// src/api/request.ts
+init_esm_shims();
+
 // src/api/response.ts
 init_esm_shims();
-import { z as z3 } from "zod";
-var countSchema = z3.number().finite().int().nonnegative();
-var calendarSchema = z3.object({
-  totalContributions: countSchema,
-  weeks: z3.array(
-    z3.object({
-      contributionDays: z3.array(
-        z3.object({
-          date: z3.iso.date(),
-          contributionCount: countSchema,
-          contributionLevel: z3.enum([
+import { z as z5 } from "zod";
+var countSchema3 = z5.number().finite().int().nonnegative();
+var calendarSchema = z5.object({
+  totalContributions: countSchema3,
+  weeks: z5.array(
+    z5.object({
+      contributionDays: z5.array(
+        z5.object({
+          date: z5.iso.date(),
+          contributionCount: countSchema3,
+          contributionLevel: z5.enum([
             "NONE",
             "FIRST_QUARTILE",
             "SECOND_QUARTILE",
@@ -27026,20 +27205,20 @@ var calendarSchema = z3.object({
   const dates = calendar.weeks.flatMap((week) => week.contributionDays.map((day) => day.date));
   return new Set(dates).size === dates.length;
 });
-var graphQLErrorSchema = z3.object({
-  type: z3.string().optional(),
-  message: z3.string(),
-  extensions: z3.object({ code: z3.string().optional() }).optional()
+var graphQLErrorSchema = z5.object({
+  type: z5.string().optional(),
+  message: z5.string(),
+  extensions: z5.object({ code: z5.string().optional() }).optional()
 });
-var envelopeSchema = z3.object({
-  data: z3.object({
-    user: z3.object({ contributionsCollection: z3.object({ contributionCalendar: calendarSchema }) }).nullable()
+var envelopeSchema = z5.object({
+  data: z5.object({
+    user: z5.object({ contributionsCollection: z5.object({ contributionCalendar: calendarSchema }) }).catchall(z5.unknown()).nullable()
   }).nullish(),
-  errors: z3.array(graphQLErrorSchema).optional()
+  errors: z5.array(graphQLErrorSchema).optional()
 });
-var errorBodySchema = z3.object({
-  message: z3.string().optional(),
-  errors: z3.array(graphQLErrorSchema).optional()
+var errorBodySchema = z5.object({
+  message: z5.string().optional(),
+  errors: z5.array(graphQLErrorSchema).optional()
 });
 function retryAfterMs(headers) {
   const retryAfter = headers.get("retry-after");
@@ -27065,7 +27244,7 @@ function rateLimitError(response) {
     retryAfterMs: retryAfterMs(response.headers) ?? 6e4
   });
 }
-async function parseGitHubResponse(response) {
+async function parseGitHubResponse(response, requestedActivity) {
   const { status } = response;
   if (status === 401) throw new GitHubApiError("auth", { status });
   if (status === 404) throw new GitHubApiError("notfound", { status });
@@ -27113,7 +27292,14 @@ async function parseGitHubResponse(response) {
   }
   if (parsed.data.data?.user === null) throw new GitHubApiError("notfound", { status });
   if (!parsed.data.data) throw new GitHubApiError("invalidresponse", { status });
-  return parsed.data.data.user.contributionsCollection.contributionCalendar;
+  const user = parsed.data.data.user;
+  const calendar = user.contributionsCollection.contributionCalendar;
+  const activity = parseActivityResponse(
+    user,
+    requestedActivity,
+    calendar.weeks.flatMap((week) => week.contributionDays.map((day) => day.date))
+  );
+  return { ...calendar, ...activity === void 0 ? {} : { activity } };
 }
 
 // src/api/request.ts
@@ -27140,7 +27326,7 @@ function requestConfig(options) {
   }
   return { timeoutMs, maxRetryWaitMs, endpoint: endpoint.href, isGitHub };
 }
-async function requestAttempt(endpoint, init, timeoutMs, signal) {
+async function requestAttempt(endpoint, init, timeoutMs, signal, activity) {
   if (signal?.aborted) throw new GitHubApiError("aborted");
   const controller = new AbortController();
   const abort = () => controller.abort(new GitHubApiError("aborted"));
@@ -27154,7 +27340,7 @@ async function requestAttempt(endpoint, init, timeoutMs, signal) {
   });
   try {
     const request = fetch(endpoint, { ...init, signal: controller.signal }).then(
-      parseGitHubResponse
+      (response) => parseGitHubResponse(response, activity)
     );
     return await Promise.race([request, interrupted]);
   } catch (error) {
@@ -27182,7 +27368,7 @@ async function waitForRetry(delay, signal) {
     signal?.addEventListener("abort", abort, { once: true });
   });
 }
-async function makeGraphQLRequest(query, variables, token, options) {
+async function makeGraphQLRequest(query, variables, token, options, activity) {
   const config = requestConfig(options);
   const deadline = Date.now() + TOTAL_TIMEOUT_MS;
   const headers = {
@@ -27205,7 +27391,8 @@ async function makeGraphQLRequest(query, variables, token, options) {
         config.endpoint,
         init,
         Math.min(config.timeoutMs, remainingMs),
-        options.signal
+        options.signal,
+        activity
       );
     } catch (error) {
       if (!(error instanceof GitHubApiError)) throw error;
@@ -27232,8 +27419,8 @@ async function fetchContributions(username, year, token, options = {}) {
   let to;
   let effectiveYear;
   if (year != null) {
-    from = `${year}-01-01T00:00:00Z`;
-    to = `${year}-12-31T23:59:59Z`;
+    from = `${String(year).padStart(4, "0")}-01-01T00:00:00Z`;
+    to = `${String(year).padStart(4, "0")}-12-31T23:59:59Z`;
     effectiveYear = year;
   } else {
     const now = /* @__PURE__ */ new Date();
@@ -27243,11 +27430,19 @@ async function fetchContributions(username, year, token, options = {}) {
     to = now.toISOString();
     effectiveYear = now.getFullYear();
   }
+  const activity = createActivityRequest(from, to);
+  const monthVariables = Object.fromEntries(
+    activity.months.flatMap((month, index) => [
+      [`${activityAlias(index)}From`, month.from],
+      [`${activityAlias(index)}To`, month.to]
+    ])
+  );
   const calendar = await makeGraphQLRequest(
-    CONTRIBUTIONS_QUERY,
-    { username, from, to },
+    contributionsQuery(activity),
+    { username, from, to, ...monthVariables },
     token,
-    options
+    options,
+    activity
   );
   const rawWeeks = calendar.weeks.map((week) => {
     const days = week.contributionDays.map((day) => ({
@@ -27269,7 +27464,8 @@ async function fetchContributions(username, year, token, options = {}) {
       total: calendar.totalContributions
     },
     year: effectiveYear,
-    username
+    username,
+    ...calendar.activity === void 0 ? {} : { activity: calendar.activity }
   };
 }
 
@@ -27293,7 +27489,7 @@ init_boundary();
 import { readFile } from "fs/promises";
 import { createRequire } from "module";
 import { initWasm, Resvg } from "@resvg/resvg-wasm";
-import { z as z4 } from "zod";
+import { z as z6 } from "zod";
 var initialization;
 var defaultFont;
 async function readBundledFile(bundled, source) {
@@ -27312,8 +27508,8 @@ async function initialize(wasmPath) {
   await initWasm(new Uint8Array(bytes));
 }
 async function renderPng(svg, options) {
-  const scale = parseBoundary(z4.number().int().min(1).max(4), options.scale ?? 2, "scale");
-  const mode = parseBoundary(z4.enum(["dark", "light"]), options.mode, "mode");
+  const scale = parseBoundary(z6.number().int().min(1).max(4), options.scale ?? 2, "scale");
+  const mode = parseBoundary(z6.enum(["dark", "light"]), options.mode, "mode");
   initialization ??= initialize(options.wasmPath).catch((error) => {
     initialization = void 0;
     throw error;
@@ -27375,7 +27571,7 @@ init_esm_shims();
 init_boundary();
 init_errors();
 init_schema();
-import { z as z5 } from "zod";
+import { z as z7 } from "zod";
 function invalidOption(field, message) {
   throw new InputValidationError([{ path: field, message: `Invalid ${field}: ${message}` }]);
 }
@@ -27383,7 +27579,7 @@ function optionalNumber(value, field) {
   if (value === void 0 || value === "") return void 0;
   if (typeof value === "string" && value.trim() === "")
     return invalidOption(field, "expected a number");
-  const parsed = z5.coerce.number().finite().safeParse(value);
+  const parsed = z7.coerce.number().finite().safeParse(value);
   if (!parsed.success) return invalidOption(field, "expected a finite number");
   return parsed.data;
 }
@@ -27433,9 +27629,9 @@ function parseGenerationSettings(request, archive = false) {
   return parsed.data;
 }
 function parseOutputOptions(request) {
-  const format = parseBoundary(z5.enum(["svg", "png", "both"]), request.format || "svg", "format");
+  const format = parseBoundary(z7.enum(["svg", "png", "both"]), request.format || "svg", "format");
   const scale = parseBoundary(
-    z5.number().int().min(1).max(4),
+    z7.number().int().min(1).max(4),
     optionalNumber(request.scale, "scale") ?? 2,
     "scale"
   );
@@ -27444,7 +27640,7 @@ function parseOutputOptions(request) {
 function parseGenerationYears(value) {
   if (value === void 0 || value === "") return void 0;
   const values = typeof value === "string" ? value.split(",").map((part) => optionalNumber(part.trim(), "years")) : value;
-  const years = parseBoundary(z5.array(yearSchema).min(2).max(5), values, "years");
+  const years = parseBoundary(z7.array(yearSchema).min(2).max(5), values, "years");
   if (new Set(years).size !== years.length)
     invalidOption("years", "duplicate years are not allowed");
   return [...years].sort((a, b) => a - b);
@@ -27604,9 +27800,9 @@ init_errors();
 init_esm_shims();
 init_boundary();
 init_schema();
-import { z as z6 } from "zod";
-var comparisonYearsSchema = z6.array(yearSchema).min(2).max(5).refine((years) => new Set(years).size === years.length, "Comparison years must be unique").transform((years) => [...years].sort((a, b) => a - b));
-var archiveSnapshotsSchema = z6.array(snapshotSchema).max(MAX_ARCHIVE_SNAPSHOTS).superRefine((snapshots, context2) => {
+import { z as z8 } from "zod";
+var comparisonYearsSchema = z8.array(yearSchema).min(2).max(5).refine((years) => new Set(years).size === years.length, "Comparison years must be unique").transform((years) => [...years].sort((a, b) => a - b));
+var archiveSnapshotsSchema = z8.array(snapshotSchema).max(MAX_ARCHIVE_SNAPSHOTS).superRefine((snapshots, context2) => {
   const identities = /* @__PURE__ */ new Set();
   let days = 0;
   for (const [index, snapshot] of snapshots.entries()) {
@@ -27632,11 +27828,11 @@ var archiveSnapshotsSchema = z6.array(snapshotSchema).max(MAX_ARCHIVE_SNAPSHOTS)
     (a, b) => a.year - b.year || a.username.toLowerCase().localeCompare(b.username.toLowerCase())
   )
 );
-var archiveSchema = z6.object({
-  schemaVersion: z6.literal(1),
-  kind: z6.literal("maeul-archive"),
+var archiveSchema = z8.object({
+  schemaVersion: z8.literal(1),
+  kind: z8.literal("maeul-archive"),
   snapshots: archiveSnapshotsSchema,
-  comparison: z6.object({
+  comparison: z8.object({
     normalization: fixedNormalizationSchema,
     years: comparisonYearsSchema
   })
@@ -28740,7 +28936,7 @@ async function executeGeneration(request, dependencies = nodeGeneratorDependenci
       typeof input === "string" ? await (dependencies.readFile ?? ((path4) => readFile5(path4, "utf-8")))(input) : input
     );
     const { kind } = parseBoundary(
-      z7.object({ kind: z7.enum(["maeul-snapshot", "maeul-archive"]) }),
+      z9.object({ kind: z9.enum(["maeul-snapshot", "maeul-archive"]) }),
       json
     );
     switch (kind) {
@@ -29009,11 +29205,11 @@ var PreviewCache = class {
 // src/preview/data.ts
 init_esm_shims();
 init_resolve();
-import { z as z8 } from "zod";
+import { z as z10 } from "zod";
 init_schema();
-var requestSchema = z8.strictObject({
+var requestSchema = z10.strictObject({
   username: usernameSchema,
-  year: z8.number().int().min(2008).max(9999).optional(),
+  year: z10.number().int().min(2008).max(9999).optional(),
   settings: renderSettingsInputSchema.optional()
 });
 function parsePreviewRequest(input) {
@@ -29243,21 +29439,21 @@ async function startPreviewServer(options = {}) {
 }
 
 // src/cli/program.ts
-var optionText = z9.string().min(1).optional();
-var cliSchema = z9.strictObject({
+var optionText = z11.string().min(1).optional();
+var cliSchema = z11.strictObject({
   user: optionText,
   theme: optionText,
-  title: z9.string().optional(),
+  title: z11.string().optional(),
   output: optionText,
   year: optionText,
   years: optionText,
-  token: z9.string().optional(),
+  token: z11.string().optional(),
   hemisphere: optionText,
   preset: optionText,
   density: optionText,
   config: optionText,
   input: optionText,
-  writeSnapshot: z9.union([z9.boolean(), z9.string()]).optional(),
+  writeSnapshot: z11.union([z11.boolean(), z11.string()]).optional(),
   motion: optionText,
   layout: optionText,
   style: optionText,
@@ -29267,7 +29463,7 @@ var cliSchema = z9.strictObject({
   maxCount: optionText,
   format: optionText,
   scale: optionText,
-  layoutSeed: z9.string().optional()
+  layoutSeed: z11.string().optional()
 });
 function createCliProgram(version, dependencies = {
   generate: executeGeneration,
@@ -29288,7 +29484,7 @@ function createCliProgram(version, dependencies = {
   });
   program.command("preview").description("Start a private local preview using GITHUB_TOKEN").option("--port <number>", "Loopback port (default: 4318)").action(async (raw) => {
     const options = parseBoundary(
-      z9.object({ port: z9.coerce.number().int().min(0).max(65535).optional() }),
+      z11.object({ port: z11.coerce.number().int().min(0).max(65535).optional() }),
       raw,
       "preview"
     );

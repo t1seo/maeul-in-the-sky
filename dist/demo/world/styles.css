@@ -1,4 +1,6 @@
 @import url('./styles-panels.css');
+@import url('./styles-analytics.css');
+@import url('../controls.css');
 
 :root {
   color-scheme: light;
@@ -268,7 +270,7 @@ h1 {
 .compact-field select {
   font-size: 12px;
   min-height: 35px;
-  background: transparent;
+  background-color: transparent;
   border: 0;
   padding-left: 4px;
 }
