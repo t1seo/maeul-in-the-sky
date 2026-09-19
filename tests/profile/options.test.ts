@@ -22,4 +22,16 @@ describe('the profile capture CLI contract', () => {
       'overwrite',
     );
   });
+
+  it('keeps output names distinct on case-insensitive filesystems', () => {
+    expect(() => parseProfileOptions(['--input', 'MAEUL-IN-THE-SKY-WORLD.JSON'])).toThrow(
+      'overwrite',
+    );
+    expect(() =>
+      parseProfileOptions(['--input', 's.json', '--evidence', 'MAEUL-IN-THE-SKY-WORLD.JSON']),
+    ).toThrow('overwrite');
+    expect(() => parseProfileOptions(['--input', 's.json', '--evidence', 'S.JSON'])).toThrow(
+      'overwrite',
+    );
+  });
 });

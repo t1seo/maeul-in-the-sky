@@ -100,4 +100,4 @@ npx playwright install chromium
 npm run render:profile -- --input /path/to/snapshot.json --output-dir /path/to/profile
 ```
 
-`--evidence /path/to/capture.json` optionally records capture metrics. Manual reruns use the same workflow as scheduled refreshes; the displayed image reflects the last successful published run.
+`--evidence /path/to/capture.json` optionally records capture metrics. Input, output and evidence paths must remain distinct even when filename case is ignored, so captures are portable across filesystems. Manual reruns use the same workflow as scheduled refreshes; the displayed image reflects the last successful published run.

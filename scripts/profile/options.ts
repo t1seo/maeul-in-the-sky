@@ -15,6 +15,13 @@ export type ProfileOptions = {
   readonly evidence?: string;
 };
 
+export function assertDistinctProfilePaths(input: string, outputs: readonly string[]): void {
+  const portable = (path: string): string => path.normalize('NFC').toLowerCase();
+  const names = outputs.map(portable);
+  if (names.includes(portable(input)) || new Set(names).size !== names.length)
+    throw new Error('Profile output paths would overwrite the input or another capture artifact.');
+}
+
 export function parseProfileOptions(args: readonly string[]): ProfileOptions {
   const { values } = parseArgs({
     args: [...args],
@@ -33,8 +40,7 @@ export function parseProfileOptions(args: readonly string[]): ProfileOptions {
   const evidence = values.evidence ? resolve(values.evidence) : undefined;
   const outputs = Object.values(PROFILE_FILES).map((name) => resolve(outputDir, name));
   if (evidence) outputs.push(evidence);
-  if (outputs.includes(input) || new Set(outputs).size !== outputs.length)
-    throw new Error('Profile output paths would overwrite the input or another capture artifact.');
+  assertDistinctProfilePaths(input, outputs);
   return {
     input,
     outputDir,

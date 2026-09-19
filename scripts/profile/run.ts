@@ -3,7 +3,7 @@ import { basename, dirname, join, resolve } from 'node:path';
 import { parseWorldDocument } from '../../src/world/data/document.js';
 import { captureWithBrowser } from './browser.js';
 import { readProfileInput, sha256 } from './input.js';
-import { PROFILE_FILES, type ProfileOptions } from './options.js';
+import { assertDistinctProfilePaths, PROFILE_FILES, type ProfileOptions } from './options.js';
 import { assertCanonicalWorld, assertPngBytes } from './proof.js';
 import { publishCapture } from './publication.js';
 
@@ -23,11 +23,7 @@ export async function renderProfile(options: ProfileOptions, signal: AbortSignal
     evidence = resolve(await realpath(dirname(options.evidence)), basename(options.evidence));
   }
   const destinations = [...Object.values(paths), ...(evidence ? [evidence] : [])];
-  if (
-    destinations.includes(input.canonicalPath) ||
-    new Set(destinations).size !== destinations.length
-  )
-    throw new Error('Resolved capture paths would overwrite the snapshot or another artifact.');
+  assertDistinctProfilePaths(input.canonicalPath, destinations);
   const stage = await mkdtemp(join(outputDir, '.maeul-profile-stage-'));
   try {
     const proof = await captureWithBrowser(input, options, stage, signal);
