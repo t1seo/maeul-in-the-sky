@@ -62,7 +62,7 @@ test('centers empty, partial, and full Terrain variants on mobile', async ({ pag
     await page.locator('#settings-form details summary').click();
     await page.getByLabel('Layout', { exact: true }).selectOption(scenario.layout);
     await page
-      .getByRole('button', { name: scenario.mode === 'dark' ? 'Dark' : 'Light', exact: true })
+      .getByRole('button', { name: scenario.mode === 'dark' ? 'Night' : 'Day', exact: true })
       .click();
     await page.getByRole('button', { name: 'Zoom village', exact: true }).click();
     await expectTerrainVisible(page.locator('#zoom-viewport'));
