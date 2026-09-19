@@ -155,7 +155,7 @@ test('failed replacement discards its settings before a subsequent successful re
   expect(session.current().scene.settings.culture).toBe('korean');
 });
 
-test('retains explicit camera navigation after rebuild begins, including an ABA edit', async () => {
+test('reframes the new layout even if its previous camera was edited while loading', async () => {
   const { session, release } = await prepare();
   const camera = { ...session.current().view.camera, zoom: 2 };
   session.update({ camera });
@@ -164,7 +164,7 @@ test('retains explicit camera navigation after rebuild begins, including an ABA 
   session.update({ camera });
   release();
   await rebuilding;
-  expect(session.current().view.camera).toEqual(camera);
+  expect(session.current().view.camera).toEqual(defaultWorldView(session.current().scene).camera);
 });
 
 test('keeps pending repository additions and removals when another setting changes', async () => {
@@ -190,15 +190,16 @@ test('keeps pending repository additions and removals when another setting chang
   await layout;
   expect(session.current().repositoryData).toEqual(repositories);
   const removing = session.rebuild({}, []);
-  const culture = session.rebuild({ culture: 'korean' });
+  const culture = session.rebuild({ culture: 'korean', layout: 'seasonal' });
   session.focus({ kind: 'entity', entityId: 'repo:1' });
   release();
   await removing;
   release();
   await culture;
   expect(session.current().repositoryData).toEqual([]);
-  expect(session.current().scene.settings.layout).toBe('island');
+  expect(session.current().scene.settings.layout).toBe('seasonal');
   expect(session.current().view.focus).toEqual({ kind: 'world' });
+  expect(session.current().view.camera).toEqual(defaultWorldView(session.current().scene).camera);
   expect(() => createWorldDocument(session.current())).not.toThrow();
 });
 

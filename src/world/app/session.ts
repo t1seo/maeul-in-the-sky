@@ -10,6 +10,7 @@ type PendingWorld = {
   readonly document: WorldDocumentV1;
   readonly mode: RendererMode;
   readonly readView: () => WorldView;
+  readonly reframe: boolean;
 };
 
 export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLoaders) {
@@ -18,7 +19,6 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
   let opening = 0;
   let epoch = 0;
   let pending: PendingWorld | undefined;
-  let navigationRevision = 0;
   const subscribers = new Set<(change: SessionChange) => void>();
   const notify = (change: SessionChange): void => {
     for (const subscriber of subscribers) subscriber(change);
@@ -26,7 +26,6 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
   const renderer = createRendererHost(html('world-host'), loaders, {
     onSelect: (id) => selectPlace(id),
     onViewChange: (view) => {
-      navigationRevision++;
       document = { ...document, view };
       notify('view');
     },
@@ -49,7 +48,6 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
   }
 
   function update(patch: Partial<WorldView>): void {
-    if ('camera' in patch || 'focus' in patch) navigationRevision++;
     const view = { ...current().view, ...patch };
     document = { ...document, view };
     renderer.current()?.update(view);
@@ -82,8 +80,9 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
     html('world-fallback').hidden = true;
     try {
       const next = intent.document;
-      if (!(await renderer.show(next.scene, intent.readView(), intent.mode, intent.readView)))
-        return false;
+      const readView = (): WorldView =>
+        intent.reframe ? rebuildView(next.scene, intent.readView()) : intent.readView();
+      if (!(await renderer.show(next.scene, readView(), intent.mode, readView))) return false;
       document = { ...next, view: renderer.current()?.getView() ?? next.view };
       notify('scene');
       return true;
@@ -94,11 +93,11 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
   }
 
   function open(next: WorldDocumentV1, requested = mode): Promise<boolean> {
-    return present({ document: next, mode: requested, readView: () => next.view });
+    return present({ document: next, mode: requested, readView: () => next.view, reframe: false });
   }
 
   function intended(): PendingWorld {
-    return pending ?? { document: current(), mode, readView: () => current().view };
+    return pending ?? { document: current(), mode, readView: () => current().view, reframe: false };
   }
 
   return {
@@ -130,22 +129,19 @@ export function createWorldSession(initial: WorldDocumentV1, loaders: RendererLo
         range: before.scene.range,
         repositories: repositoryData,
       });
-      const navigation = navigationRevision;
-      const readView = (): WorldView =>
-        rebuildView(scene, intent.readView(), navigation === navigationRevision);
       await present({
         document: createWorldDocument({
           scene,
           sourceSnapshot: before.sourceSnapshot,
           repositoryData,
-          view: readView(),
+          view: rebuildView(scene, intent.readView()),
         }),
         mode: intent.mode,
-        readView,
+        readView: intent.readView,
+        reframe: true,
       });
     },
     reset(): void {
-      navigationRevision++;
       renderer.current()?.reset();
       document = current();
       notify('view');
