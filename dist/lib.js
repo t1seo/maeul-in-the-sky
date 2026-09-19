@@ -25313,24 +25313,6 @@ function waterfallOutlets(cells, biomes, hemisphere) {
   }
   return outlets;
 }
-function riverCurrentPath(cell, biomes, outlet) {
-  const [entry = "-2,-0.6", ...tributaries] = riverContacts(cell, biomes, -1);
-  const contacts = riverContacts(cell, biomes, 1);
-  const [exit = "2,0.6", ...branches] = outlet ? [.../* @__PURE__ */ new Set([`${outlet === "left" ? -4 : 4},1.75`, ...contacts])] : contacts;
-  return `M${entry}Q0,0 ${exit}` + tributaries.map((point2) => `M${point2}L0,0`).join("") + branches.map((point2) => `M0,0L${point2}`).join("");
-}
-function riverContacts(cell, biomes, direction) {
-  const contacts = [
-    [direction, 0, direction * 4, direction * 1.75],
-    [direction, direction, 0, direction * 3.5],
-    [direction, -direction, direction * 8, 0],
-    [0, direction, -direction * 4, direction * 1.75]
-  ];
-  const connected = contacts.flatMap(
-    ([week, day, x, y]) => biomes.get(`${cell.week + week},${cell.day + day}`)?.isRiver ? [`${x},${y}`] : []
-  );
-  return connected;
-}
 var init_water_topology = __esm({
   "src/themes/terrain/effects/water-topology.ts"() {
     "use strict";
@@ -25381,6 +25363,80 @@ var init_waterfalls = __esm({
   }
 });
 
+// src/themes/terrain/effects/river-art.ts
+function riverArtwork(cell) {
+  const variant = hash(cell.date ?? `${cell.week},${cell.day}`) % RIPPLES.length;
+  return { ripples: RIPPLES[variant], depthId: motionId(`river-pool-${variant}`) };
+}
+function renderRiverDepths() {
+  const id = motionId("river-depth");
+  return `<defs><radialGradient id="${id}"><stop stop-color="#16495e" stop-opacity=".5"/><stop offset="1" stop-color="#16495e" stop-opacity="0"/></radialGradient>` + DEPTH.map(
+    (path4, variant) => `<path id="${motionId(`river-pool-${variant}`)}" d="${path4}" fill="url(#${id})"/>`
+  ).join("") + "</defs>";
+}
+function renderRiverConnections(liquid, observed, biomes, water) {
+  const rivers = liquid.filter((cell) => biomes.get(`${cell.week},${cell.day}`)?.isRiver);
+  const positions = new Set(rivers.map((cell) => `${cell.week},${cell.day}`));
+  const liquidPositions = new Set(liquid.map((cell) => `${cell.week},${cell.day}`));
+  const links = rivers.flatMap(
+    (cell) => [-1, 1].flatMap((offset) => {
+      const flanks = [`${cell.week},${cell.day + offset}`, `${cell.week + 1},${cell.day}`];
+      if (!positions.has(`${cell.week + 1},${cell.day + offset}`) || flanks.some((key) => {
+        const neighbor = observed.get(key);
+        return !neighbor || neighbor.level100 >= 9 && neighbor.level100 <= 22 && !liquidPositions.has(key);
+      }))
+        return [];
+      const x = cell.isoX + (offset === -1 ? 8 : 0);
+      const y = cell.isoY + (offset === 1 ? 3.5 : 0);
+      return [`M${svgNumber(x - 1)},${svgNumber(y)}h2`];
+    })
+  );
+  return links.length ? `<path data-river-links="true" d="${links.join("")}" fill="none" stroke="${water}" stroke-width="1.4" stroke-linecap="round"/>` : "";
+}
+function renderRiverBanks(cell, observed, biomes) {
+  const identity = hash(cell.date ?? `${cell.week},${cell.day}`);
+  return EDGES.flatMap(([week, day, ax, ay, bx, by], index) => {
+    const key = `${cell.week + week},${cell.day + day}`;
+    const neighbor = observed.get(key);
+    const biome = biomes.get(key);
+    if (!neighbor || biome?.isRiver || biome?.isPond || neighbor.level100 >= 9 && neighbor.level100 <= 22)
+      return [];
+    const depth = 0.2 + (identity >>> index * 3) % 5 * 0.035;
+    const point2 = (t, inset = 0) => `${svgNumber((ax + (bx - ax) * t) * (1 - inset))},${svgNumber((ay + (by - ay) * t) * (1 - inset))}`;
+    const edge = `M${point2(0.1)}L${point2(0.9)}`;
+    const shore = `Q${point2(0.77, depth * 0.5)} ${point2(0.54, depth)}Q${point2(0.28, depth * 1.35)} ${point2(0.1)}Z`;
+    return [`<path data-river-bank="${index}" d="${edge}${shore}" fill="${neighbor.colors.top}"/>`];
+  }).join("");
+}
+var EDGES, RIPPLES, DEPTH;
+var init_river_art = __esm({
+  "src/themes/terrain/effects/river-art.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_svg();
+    init_animation();
+    init_math();
+    EDGES = [
+      [-1, 0, -8, 0, 0, -3.5],
+      [0, -1, 0, -3.5, 8, 0],
+      [1, 0, 8, 0, 0, 3.5],
+      [0, 1, 0, 3.5, -8, 0]
+    ];
+    RIPPLES = [
+      "M-4.8,-.2Q-3.5,.65-1.8,.15M-.8,-1.7Q.5,-.9 2.3,-1.2M.7,1.2Q2.2,1.6 3.8,.65",
+      "M-4.1,.15Q-2.9,-.6-1.3,-.25M.3,-1.45Q1.6,-.8 3.7,-.55M-1,1.45Q.3,.6 1.9,1",
+      "M-5,0Q-3.7,.5-2.4,-.1M-1.7,-1.15Q-.3,-1.85 1.1,-1.25M.2,.75Q2,1.5 4.1,.35",
+      "M-3.9,-.65Q-2.7,.05-1.3,-.2M1,-1.45Q2.2,-.9 4,-.55M-1.4,1.2Q.2,1.85 1.7,1.2"
+    ];
+    DEPTH = [
+      "M-5.8,0Q-2,-2.4 2.1,-1.5Q4.8,-.8 5.4,.2Q1.6,.1-.7,1.5Q-3.5,1.1-5.8,0Z",
+      "M-5.4,-.1Q-2.1,-.5-.6,-2Q3.5,-1.3 5.5,.1Q2.9,1.6-.4,1.8Q-4,1.1-5.4,-.1Z",
+      "M-5.6,.1Q-3.1,-1.4.1,-1.9Q3.7,-1.1 5.6,-.1Q3,.2 1.2,1.5Q-2.2,1.9-5.6,.1Z",
+      "M-5.7,0Q-3.4,-1.8-.6,-1.7Q1.8,-.3 5.5,0Q3.1,1.4.2,1.9Q-1.2,.4-5.7,0Z"
+    ];
+  }
+});
+
 // src/themes/terrain/effects/surface-water.ts
 function movingSurfaceCells(cells, biomes) {
   const limit = currentMotionContext().mode === "subtle" ? 4 : currentSurfaceContext()?.waterMotionLimit ?? 15;
@@ -25390,30 +25446,40 @@ function movingSurfaceCells(cells, biomes) {
   );
 }
 function renderSurfaceWater(cells, palette, biomes) {
-  const outlets = new Map(waterfallOutlets(cells, biomes).map(({ cell, edge }) => [cell, edge]));
-  const shapes = liquidSurfaceCells(cells, biomes).flatMap((cell) => {
+  const observed = new Map(cells.map((cell) => [`${cell.week},${cell.day}`, cell]));
+  const water = lerpColor(palette.assets.water, "#48aa9e", 0.62);
+  const liquid = liquidSurfaceCells(cells, biomes);
+  let hasRiver = false;
+  const shapes = liquid.flatMap((cell) => {
     const biome = biomes.get(`${cell.week},${cell.day}`);
     if (!biome?.isRiver && !biome?.isPond) return [];
     const { isoX: x, isoY: y } = cell;
-    const color = biome.isPond ? palette.assets.pondOverlay : palette.assets.riverOverlay;
-    const channel = biome.isRiver ? riverCurrentPath(cell, biomes, outlets.get(cell)) : "M-5.8,-.2Q-2,-1.3 1,-2.2L4,-.7Q0,-1.1 -3,.4Z";
+    if (biome.isRiver) {
+      hasRiver = true;
+      return [
+        `<g transform="translate(${svgNumber(x)} ${svgNumber(y)})"><path d="M-8,0 0,-3.5 8,0 0,3.5Z"/><use href="#${riverArtwork(cell).depthId}"/>` + renderRiverBanks(cell, observed, biomes) + "</g>"
+      ];
+    }
+    const color = palette.assets.pondOverlay;
+    const channel = "M-5.8,-.2Q-2,-1.3 1,-2.2L4,-.7Q0,-1.1 -3,.4Z";
     return [
       `<path transform="translate(${svgNumber(x)} ${svgNumber(y)})" d="M-8,0Q-4,-1.75 0,-3.5L8,0Q4,1.75 0,3.5Z" fill="${color}" opacity=".8"/>`,
-      `<path transform="translate(${svgNumber(x)} ${svgNumber(y)})" d="${channel}" fill="${biome.isRiver ? "none" : palette.assets.waterLight}" stroke="${palette.assets.waterLight}" stroke-width="2.4" opacity=".24"/>`
+      `<path transform="translate(${svgNumber(x)} ${svgNumber(y)})" d="${channel}" fill="${palette.assets.waterLight}" stroke="${palette.assets.waterLight}" stroke-width="2.4" opacity=".24"/>`
     ];
   });
-  return shapes.length ? `<g class="water-overlays">${shapes.join("")}</g>` : "";
+  const definitions = hasRiver ? renderRiverDepths() : "";
+  const connections = renderRiverConnections(liquid, observed, biomes, water);
+  return shapes.length ? `${definitions}<g class="water-overlays" fill="${water}">${shapes.join("")}${connections}</g>` : "";
 }
 function renderSurfaceRipples(cells, palette, biomes) {
   const moving = new Set(movingSurfaceCells(cells, biomes));
-  const outlets = new Map(waterfallOutlets(cells, biomes).map(({ cell, edge }) => [cell, edge]));
   const enabled = currentMotionContext().mode !== "off";
   let index = 0;
   const paths = liquidSurfaceCells(cells, biomes).map((cell) => {
     const river = biomes.get(`${cell.week},${cell.day}`)?.isRiver;
-    const path4 = river ? riverCurrentPath(cell, biomes, outlets.get(cell)) : "M-4,-.3Q-.8,-1.2 3.8,-.2M-2,1Q.7,.3 3,.8";
+    const path4 = river ? riverArtwork(cell).ripples : "M-4,-.3Q-.8,-1.2 3.8,-.2M-2,1Q.7,.3 3,.8";
     const animation = enabled && moving.has(cell) ? ` class="${motionId("surface-current-" + index++ % 3)}"` : "";
-    return `<path data-water-current="true" transform="translate(${svgNumber(cell.isoX)} ${svgNumber(cell.isoY)})" d="${path4}" fill="none" stroke="${river ? "#c4eff1" : palette.assets.waterLight}" stroke-width="${river ? ".5" : ".3"}" stroke-linecap="round" stroke-dasharray="2.2 4.5" opacity="${river ? ".65" : ".4"}"${animation}/>`;
+    return `<path data-water-current="true" transform="translate(${svgNumber(cell.isoX)} ${svgNumber(cell.isoY)})" d="${path4}" fill="none" stroke="${river ? "#c4eff1" : palette.assets.waterLight}" stroke-width="${river ? ".28" : ".3"}" stroke-linecap="round" stroke-dasharray="${river ? "1.3 1.7 .5 3.2" : "2.2 4.5"}" opacity="${river ? ".62" : ".4"}"${animation}/>`;
   });
   return paths.length ? `<g class="water-ripples">${paths.join("")}</g>` : "";
 }
@@ -25423,10 +25489,12 @@ var init_surface_water = __esm({
     init_esm_shims();
     init_animation();
     init_svg();
+    init_color();
     init_surface_context();
     init_selection3();
     init_water_topology();
     init_waterfalls();
+    init_river_art();
   }
 });
 
