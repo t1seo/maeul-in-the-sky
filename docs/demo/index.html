@@ -17,8 +17,7 @@
         ><span class="mark" aria-hidden="true">田</span> Maeul in the Sky</a
       >
       <nav aria-label="Main">
-        <a id="explore-world" href="./world/">Explore your world ↗</a>
-        <a id="explore-activity" href="./world/?panel=activity">Activity</a>
+        <button id="explore-activity" type="button" class="enhanced" hidden>Activity</button>
         <a href="#make-it-yours">Make it yours</a
         ><a href="https://github.com/t1seo/maeul-in-the-sky">GitHub ↗</a>
       </nav>
@@ -61,11 +60,11 @@
             <label for="renderer-version">Artwork version</label>
             <select id="renderer-version" aria-describedby="renderer-note renderer-status">
               <option value="current">Current</option>
-              <option value="classic">Classic · before Sky World</option>
+              <option value="classic">Classic · original artwork</option>
             </select>
             <p id="renderer-note" class="muted">
-              Use the latest artwork or the original version from before Sky World. Both keep your
-              dates, counts and settings.
+              Use the latest artwork or the original version. Both keep your dates, counts and
+              settings.
             </p>
             <p id="renderer-status" role="status" aria-live="polite" aria-atomic="true"></p>
           </div>
@@ -181,9 +180,9 @@
         <div class="preview-panel" id="preview-panel" data-mode="dark">
           <div class="preview-top">
             <span class="source-badge" id="source-badge">Sample village</span>
-            <div class="mode-switch" aria-label="Color mode">
-              <button type="button" data-mode="dark" aria-pressed="true">Dark</button
-              ><button type="button" data-mode="light" aria-pressed="false">Light</button>
+            <div class="mode-switch" aria-label="Time of day">
+              <button type="button" data-mode="dark" aria-pressed="true">Night</button
+              ><button type="button" data-mode="light" aria-pressed="false">Day</button>
             </div>
           </div>
           <div class="village-frame" id="village-frame">
@@ -498,6 +497,16 @@
           </details>
           <details>
             <summary>README picture</summary>
+            <label for="readme-appearance">README appearance</label>
+            <select id="readme-appearance" aria-describedby="readme-appearance-note">
+              <option value="auto">Automatic · GitHub theme</option>
+              <option value="light">Day · always light</option>
+              <option value="dark">Night · always dark</option>
+            </select>
+            <p id="readme-appearance-note" class="muted">
+              Follow the viewer’s GitHub theme, or keep your village in daylight or at night. This
+              choice applies to the README code below; both SVGs are generated.
+            </p>
             <pre id="readme-preview" tabindex="0"></pre>
             <div class="button-row">
               <button type="button" id="copy-readme">Copy README</button
@@ -506,6 +515,15 @@
           </details>
         </div>
       </section>
+      <details id="world-archive" class="experiment-archive">
+        <summary>Archive · 3D &amp; island experiments</summary>
+        <p>
+          The SVG village above is the default experience. Earlier 2D maps, 3D islands, saved
+          worlds, and static profile captures are kept here as archived experiments.
+        </p>
+        <a id="explore-world" class="text-link" href="./world/">Open archived world explorer ↗</a>
+        <p class="muted">Your current contribution snapshot will travel with you.</p>
+      </details>
       <footer>
         <p>
           <span class="mark" aria-hidden="true">田</span> Little contributions. A lasting place.
@@ -514,6 +532,72 @@
         ><a href="https://www.npmjs.com/package/maeul-in-the-sky">npm ↗</a>
       </footer>
     </main>
+    <dialog id="analytics-dialog" aria-labelledby="analytics-title">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">THE HISTORY BEHIND YOUR WORLD</p>
+          <h2 id="analytics-title">Activity</h2>
+        </div>
+        <button type="button" data-close aria-label="Close activity">×</button>
+      </div>
+      <div class="analytics-intro">
+        <p id="analytics-account"></p>
+        <p id="analytics-period"></p>
+        <p id="analytics-source" class="fine-print"></p>
+      </div>
+      <div class="analytics-filters">
+        <label class="field"
+          ><span>Period</span
+          ><select id="analytics-month">
+            <option value="">All history</option>
+          </select></label
+        >
+        <label class="field"
+          ><span>Group contributions by</span
+          ><select id="analytics-granularity">
+            <option value="day">Day</option>
+            <option value="week" selected>Week</option>
+            <option value="month">Month</option>
+          </select></label
+        >
+      </div>
+      <div id="analytics-metrics" class="analytics-metrics" aria-label="Activity summary"></div>
+      <section class="analytics-card" aria-labelledby="analytics-trend-title">
+        <div class="analytics-chart-heading">
+          <div>
+            <p class="eyebrow">A LITTLE, OVER TIME</p>
+            <h3 id="analytics-trend-title">Contribution rhythm</h3>
+          </div>
+          <span class="analytics-unit">Contributions</span>
+        </div>
+        <div id="analytics-trend" class="analytics-chart"></div>
+        <p id="analytics-coverage" class="fine-print"></p>
+      </section>
+      <div class="analytics-chart-grid">
+        <section class="analytics-card" aria-labelledby="analytics-breakdown-title">
+          <div class="analytics-chart-heading">
+            <h3 id="analytics-breakdown-title">Commits &amp; pull requests</h3>
+          </div>
+          <div id="analytics-breakdown" class="analytics-chart"></div>
+          <p id="analytics-availability" class="fine-print"></p>
+        </section>
+        <section class="analytics-card" aria-labelledby="analytics-weekdays-title">
+          <div class="analytics-chart-heading">
+            <h3 id="analytics-weekdays-title">Days of the week</h3>
+          </div>
+          <div id="analytics-weekdays" class="analytics-chart"></div>
+          <p class="fine-print">Total contributions on each weekday in the selected period.</p>
+        </section>
+      </div>
+      <details class="analytics-data">
+        <summary>View the numbers</summary>
+        <div id="analytics-table" class="analytics-table"></div>
+      </details>
+      <p class="fine-print analytics-footnote">
+        Charts use the current contribution snapshot. GitHub contribution counts follow profile
+        eligibility and visibility rules. PRs represent pull requests opened, not merged.
+      </p>
+    </dialog>
     <dialog id="zoom-dialog" aria-labelledby="zoom-title">
       <div class="dialog-heading">
         <h2 id="zoom-title">A closer look</h2>

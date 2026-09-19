@@ -48,7 +48,8 @@ function main(): void {
     `${window.location.pathname}${demoQuery(settings)}${window.location.hash}`;
   const replaceHistory = () => window.history.replaceState({}, '', settingsUrl());
   const currentSnapshot = (): SnapshotV1 => ({ ...snapshot, settings: settings.document.settings });
-  setupWorldBridge(currentSnapshot, () => settings.renderer);
+  const sourceSnapshot = () => snapshot;
+  const bridge = setupWorldBridge(sourceSnapshot, () => settings.renderer, currentSnapshot);
   const synchronize = (push = false, prepared?: TerrainRenderResult): void => {
     output =
       prepared ??
@@ -56,15 +57,13 @@ function main(): void {
     updateExplorer(output, snapshot, settings.mode);
     html('preview-panel').dataset.renderer = renderer.version;
     updateEncyclopedia(output.metadata);
+    bridge.refresh();
     if (valid) updateSetup(settings.document, settings.renderer);
     else disableSetup(html('settings-error').textContent ?? initialError);
     updatePresentationLabels(settings);
     const next = settingsUrl();
-    if (
-      push &&
-      `${window.location.pathname}${window.location.search}${window.location.hash}` !== next
-    )
-      window.history.pushState({}, '', next);
+    const previous = window.location.pathname + window.location.search + window.location.hash;
+    if (push && previous !== next) window.history.pushState({}, '', next);
   };
   const showValidation = (message = ''): void => {
     valid = !message;

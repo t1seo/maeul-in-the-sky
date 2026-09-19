@@ -10,11 +10,14 @@ export async function smokeWorld(page: Page): Promise<void> {
     if (request.resourceType() === 'script') scripts.add(request.url());
   });
   const rendererVersion = await page.locator('#renderer-version').inputValue();
+  await expect(page.locator('#world-archive')).not.toHaveAttribute('open');
+  await page.locator('#world-archive summary').click();
   await page.locator('#explore-world').click();
   await expect(page).toHaveURL(
     (url) =>
       url.pathname.endsWith('/world/') && url.searchParams.get('renderer') === rendererVersion,
   );
+  await expect(page.locator('.archive-notice')).toBeVisible();
   await expect(page.locator('#world-host svg').first()).toBeVisible();
   await expect(page.locator('#world-host')).toHaveAttribute('aria-busy', 'false');
   assert.ok(![...scripts].some((url) => /\/three-[^/]+\.js$/.test(url)));

@@ -146,13 +146,15 @@ test('English native dropdowns keep an inset arrow and usable mobile layout', as
   ).toBe('none');
 });
 
-test('Activity in the SVG demo carries the current history into the dashboard', async ({
-  page,
-}) => {
+test('Activity in the SVG demo opens the current history locally', async ({ page }) => {
   await page.goto('/docs/demo/');
+  const url = page.url();
   await page.locator('#explore-activity').click();
-  await expect(page).toHaveURL(/panel=activity/);
+  await expect(page).toHaveURL(url);
   await expect(page.locator('#analytics-dialog')).toBeVisible();
   await expect(page.locator('#analytics-source')).toContainText(/sample/i);
   await expect(page.locator('#analytics-trend svg')).toBeVisible();
+  expect(await page.evaluate(() => sessionStorage.getItem('maeul-world-transfer'))).toBeNull();
+  await page.locator('#analytics-dialog [data-close]').click();
+  await expect(page.locator('#explore-activity')).toBeFocused();
 });

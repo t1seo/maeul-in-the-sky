@@ -3,7 +3,10 @@ import { setupWorldBridge } from '../../../src/demo/world-bridge.js';
 import { parseSnapshot } from '../../../src/core/settings/parse.js';
 import { historySnapshot } from './harness.js';
 
+let dispose: (() => void) | undefined;
+
 afterEach(() => {
+  dispose?.();
   vi.restoreAllMocks();
   sessionStorage.clear();
   document.body.replaceChildren();
@@ -23,7 +26,7 @@ function mountLink(): HTMLAnchorElement {
 it('transfers the current snapshot when the world link opens', () => {
   const link = mountLink();
   let snapshot = historySnapshot();
-  setupWorldBridge(() => snapshot);
+  dispose = setupWorldBridge(() => snapshot).dispose;
   snapshot = historySnapshot(2025, 40);
   link.addEventListener('click', (event) => event.preventDefault());
 
@@ -36,7 +39,7 @@ it('transfers the current snapshot when the world link opens', () => {
 it('keeps the demo open with a useful error when storage is unavailable', () => {
   const link = mountLink();
   link.removeAttribute('href');
-  setupWorldBridge(() => historySnapshot());
+  dispose = setupWorldBridge(() => historySnapshot()).dispose;
   vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
     throw new DOMException('Storage unavailable', 'QuotaExceededError');
   });
@@ -49,22 +52,40 @@ it('keeps the demo open with a useful error when storage is unavailable', () => 
   expect(sessionStorage.getItem('maeul-world-transfer')).toBeNull();
 });
 
-it('opens activity with the current history and renderer selection', () => {
-  mountLink();
-  const activity = document.createElement('a');
-  activity.id = 'explore-activity';
-  activity.href = './world/?panel=activity';
-  document.body.append(activity);
+it('transfers current preview settings independently of the analytics source getter', () => {
+  const link = mountLink();
+  const source = historySnapshot();
+  const preview = { ...source, settings: { ...source.settings, title: 'Updated preview title' } };
+  dispose = setupWorldBridge(
+    () => source,
+    () => 'current',
+    () => preview,
+  ).dispose;
+  link.addEventListener('click', (event) => event.preventDefault());
+
+  link.click();
+
+  expect(parseSnapshot(sessionStorage.getItem('maeul-world-transfer') ?? '')).toEqual(preview);
+  expect(source.settings.title).toBe('My history');
+});
+
+it('preserves the archived world transfer with the current renderer selection', () => {
+  const link = mountLink();
+  const archive = document.createElement('details');
+  archive.id = 'world-archive';
+  link.before(archive);
+  archive.append(link);
   let snapshot = historySnapshot();
-  setupWorldBridge(
+  dispose = setupWorldBridge(
     () => snapshot,
     () => 'classic',
-  );
+  ).dispose;
   snapshot = historySnapshot(2025, 40);
-  activity.addEventListener('click', (event) => event.preventDefault());
+  link.addEventListener('click', (event) => event.preventDefault());
 
-  activity.click();
+  link.click();
 
   expect(parseSnapshot(sessionStorage.getItem('maeul-world-transfer') ?? '')).toEqual(snapshot);
-  expect(activity.getAttribute('href')).toBe('./world/?renderer=classic&panel=activity');
+  expect(link.getAttribute('href')).toBe('./world/?renderer=classic');
+  expect(archive.open).toBe(false);
 });

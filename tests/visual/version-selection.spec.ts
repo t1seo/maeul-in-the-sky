@@ -212,7 +212,8 @@ test('restores a one-shot world snapshot with separately selected classic artwor
   await page.locator('#explore-world').evaluate((link) => {
     link.addEventListener('click', (event) => event.preventDefault());
   });
-  await page.getByRole('link', { name: 'Explore your world' }).click();
+  await page.locator('#world-archive summary').click();
+  await page.getByRole('link', { name: 'Open archived world explorer' }).click();
   expect(
     parseSnapshot(await page.evaluate(() => sessionStorage.getItem('maeul-world-transfer') ?? '')),
   ).toEqual(snapshot);

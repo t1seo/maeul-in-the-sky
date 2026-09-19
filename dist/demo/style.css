@@ -1,5 +1,7 @@
 @import url('./styles/explore.css');
 @import url('./controls.css');
+@import url('./styles/analytics.css');
+@import url('./styles/svg-studio.css');
 
 :root {
   color-scheme: light;

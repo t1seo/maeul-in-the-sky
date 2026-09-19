@@ -107,9 +107,21 @@ export function escapeHtml(value: string): string {
     .replace(/'/g, '&#39;');
 }
 
-export function readmeDocument(document: SettingsV1, repository: string): string {
+export type ReadmeAppearance = 'auto' | 'light' | 'dark';
+
+export function readmeDocument(
+  document: SettingsV1,
+  repository: string,
+  appearance: ReadmeAppearance = 'auto',
+): string {
   const path = repository.split('/').map(encodeURIComponent).join('/');
   const base = `https://raw.githubusercontent.com/${path}/output/maeul-in-the-sky`;
+  if (appearance !== 'auto') {
+    return `<a href="https://t1seo.github.io/maeul-in-the-sky/">
+  <img alt="${escapeHtml(document.settings.title)}" src="${escapeHtml(base)}-${appearance}.svg" width="100%">
+</a>
+`;
+  }
   return `<a href="https://t1seo.github.io/maeul-in-the-sky/">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="${escapeHtml(base)}-dark.svg">

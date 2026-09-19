@@ -41,7 +41,7 @@ function prepare(source: SnapshotV1 = snapshot(history, activity)): void {
     { ...initial, sourceSnapshot: source },
     { map: mountMap, three: mountMap },
   );
-  analytics = setupAnalytics(session, controller.signal);
+  analytics = setupAnalytics(() => session.current().sourceSnapshot, controller.signal);
 }
 function open(): void {
   dialog('analytics-dialog').showModal();

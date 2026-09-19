@@ -73,9 +73,18 @@ test('preserves sample provenance while changing presets, setup and imported set
   );
   await press('copy-workflow');
   await expect.poll(() => clipboard.mock.lastCall?.[0]).toContain('username: "bob"');
+  change('readme-appearance', 'light');
+  await expect
+    .poll(() => node('#readme-preview', HTMLElement).textContent)
+    .not.toContain('<source');
+  await press('copy-readme');
+  await expect
+    .poll(() => clipboard.mock.lastCall?.[0])
+    .toBe(node('#readme-preview', HTMLElement).textContent);
+  expect(clipboard.mock.lastCall?.[0]).toContain('-light.svg');
   await press('download-readme');
-  expect(await (await downloadAt(capture.downloads, 'maeul-readme.html')).text()).toContain(
-    'bob/village%20repo',
+  expect(await (await downloadAt(capture.downloads, 'maeul-readme.html')).text()).toBe(
+    node('#readme-preview', HTMLElement).textContent,
   );
   clipboard.mockRejectedValue(new DOMException('Clipboard blocked', 'NotAllowedError'));
   await press('copy-readme');

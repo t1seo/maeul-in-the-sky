@@ -1,5 +1,5 @@
 name: Maeul Three Profile Capture
-description: Capture a frozen four-season Three.js island from an existing contribution snapshot.
+description: Archived experiment. Capture a frozen four-season Three.js island from an existing contribution snapshot.
 inputs:
   snapshot_path:
     description: Existing maeul-snapshot JSON path, relative to the caller workspace or absolute.

@@ -2009,7 +2009,18 @@ function surfaceTexture(cell) {
   const identity = hash(cell.date ?? `${cell.week},${cell.day}`);
   if (identity % 8 !== 0) return "";
   const material3 = cell.level100 < 9 ? "soil" : cell.level100 <= 22 ? "ice" : cell.level100 >= 80 ? "stone" : "grass";
-  return `<path data-surface="${material3}" transform="translate(${svgNumber(cell.isoX)} ${svgNumber(cell.isoY)})" d="${TEXTURES[material3]}" fill="none" stroke="${material3 === "ice" ? "#fff" : cell.colors.left}" stroke-width=".35" stroke-linecap="round" opacity=".35"/>`;
+  const [first, second, third] = TEXTURES[material3];
+  const variant = (identity >>> 3) % 3;
+  const texture = variant === 0 ? first : variant === 1 ? second : third;
+  return `<path data-surface="${material3}" transform="translate(${svgNumber(cell.isoX)} ${svgNumber(cell.isoY)})" d="${texture}" fill="none" stroke="${material3 === "ice" ? "#fff" : cell.colors.left}" stroke-width=".35" stroke-linecap="round" opacity=".35"/>`;
+}
+function sideStrata(cell) {
+  if (cell.height < 10) return "";
+  const identity = hash(cell.date ?? `${cell.week},${cell.day}`);
+  if (identity % 6 !== 0) return "";
+  const depth = cell.height * (identity & 32 ? 0.55 : 0.4);
+  const y = (offset) => svgNumber(depth + offset);
+  return `<path data-strata="${cell.level100 >= 80 ? "stone" : "soil"}" transform="translate(${svgNumber(cell.isoX)} ${svgNumber(cell.isoY)})" d="M-6.4 ${y(0)}L-4.2 ${y(0.7)}-3 ${y(0.6)}-1.4 ${y(1.8)}M1.4 ${y(2.1)}L3.3 ${y(1.1)} 4.6 ${y(1.3)} 6.4 ${y(0.4)}" fill="none" stroke="${cell.colors.top}" stroke-width=".4" stroke-linejoin="round" opacity=".34"/>`;
 }
 function renderSurfaceBlock(cell, water) {
   const { isoX: x, isoY: y, height, colors } = cell;
@@ -2017,7 +2028,7 @@ function renderSurfaceBlock(cell, water) {
   const top = [point2(0, -THH), point2(THW, 0), point2(0, THH), point2(-THW, 0)].join(" ");
   const sides = height ? `<polygon points="${[point2(-THW, 0), point2(0, THH), point2(0, THH + height), point2(-THW, height)].join(" ")}" fill="${colors.left}"/><polygon points="${[point2(THW, 0), point2(0, THH), point2(0, THH + height), point2(THW, height)].join(" ")}" fill="${colors.right}"/>` : "";
   const detail = water ? `<path transform="translate(${svgNumber(x)} ${svgNumber(y)})" d="M-6,0Q-3,-2 0,-2.7L5,-.2Q1,-1.1 -2,-.5Z" fill="#d2e9dc" opacity="${cell.level100 <= 14 ? ".14" : ".08"}"/>` : surfaceTexture(cell);
-  return sides + `<polygon points="${top}" fill="${colors.top}" stroke="${colors.top}" stroke-width="0.3"/>` + detail;
+  return sides + (water ? "" : sideStrata(cell)) + `<polygon points="${top}" fill="${colors.top}" stroke="${colors.top}" stroke-width="0.3"/>` + detail;
 }
 var TEXTURES;
 var init_surface_block = __esm({
@@ -2028,10 +2039,26 @@ var init_surface_block = __esm({
     init_math();
     init_projection();
     TEXTURES = {
-      soil: "M-3,-.4l.8,.2m2.4,-1.1l.7,.1m-.9,2l1,.1",
-      grass: "M-3,.1l-.5,-.7m.5,.7l.3,-.8m3.4,1l-.2,-.7m.2,.7l.5,-.5",
-      stone: "M-3,-.2l.8,-.4 .9,.2 -.7,.5zm3.5,.5l.7,-.3 .9,.2 -.8,.4z",
-      ice: "M-4,0l2,-.6 1,.5 2,-.9m-2,.9l1,1"
+      soil: [
+        "M-4 .2Q-3-.5-1.7 0M.1 1Q1 .4 2.4 .8M1.2-1.2L2-1.1",
+        "M-3-.5Q-1.8-1.1-.8-.5M-1.3 1Q-.2 .5 .9 1M2.1-.1L3.3 .2",
+        "M-4 .1Q-2.9 .6-1.8 .1M-.5-.9Q.7-1.4 1.7-.8M1.8 .9L2.8 .6"
+      ],
+      grass: [
+        "M-3 .5Q-3.7 0-3.4-.7M-3 .5Q-2.7-.2-2-.4M1.5 .7Q.8-.2 1.3-.8M1.5 .7L2.2 .1",
+        "M-2.4 .2Q-3-.4-2.6-1M-2.4 .2L-1.5-.5M.4 1Q.1 .3 .5-.3M.4 1Q1 .2 1.8 .3",
+        "M-3.2 .6Q-3.4-.2-2.9-.6M-3.2 .6L-2.3 .1M1 .4Q.3-.3 .8-1M1 .4Q1.8-.6 2.6-.4"
+      ],
+      stone: [
+        "M-4 .2L-3.4-.6-2-.5-1.7 .1-2.8 .6ZM.5 1L1.1 .2 2.6 .4 2.1 1.1ZM1.5-1.3L3-.9",
+        "M-3.6 0L-2.8-.7-1.5-.2-2 .5ZM.3-.6L1.3-1.1 2.8-.5 1.8 .1ZM-.3 1.2L1 1.5",
+        "M-3.8 .2L-2.4-.4-1 .1-2.1 .7ZM.6 .8L1.4 .1 3 .2 2.5 1ZM-.5-1.4L.7-1"
+      ],
+      ice: [
+        "M-4 .1L-2.4-.6-.7-.3 1.2-1.1 3.6-.4M-.7-.3L.2 1.4M1.2-1.1L1.1-1.7",
+        "M-3.7-.3L-2 .2-.2-.6 1.5 .3 3.7-.1M-2 .2L-1.3 1.2M1.5 .3L1.2 1.5",
+        "M-4 .2L-2.4-.2-.7 .5 1-.3 3.3 .1M-.7 .5L-.4 1.7M1-.3L.6-1.5"
+      ]
     };
   }
 });
@@ -25238,9 +25265,8 @@ var init_selection3 = __esm({
   }
 });
 
-// src/themes/terrain/effects/surface-water.ts
-function liquidSurfaceCells(cells, biomes) {
-  const hemisphere = currentSurfaceContext()?.hemisphere ?? "north";
+// src/themes/terrain/effects/water-topology.ts
+function liquidSurfaceCells(cells, biomes, hemisphere = currentSurfaceContext()?.hemisphere ?? "north") {
   return cells.filter((cell) => {
     const natural = cell.level100 >= 9 && cell.level100 <= 22;
     if (natural && cell.date) {
@@ -25251,32 +25277,137 @@ function liquidSurfaceCells(cells, biomes) {
     return natural || biome?.isRiver || biome?.isPond;
   });
 }
+function waterfallOutlets(cells, biomes, hemisphere) {
+  const lastPosition = Math.max(...cells.map((cell) => cell.week * 7 + cell.day));
+  const observed = new Set(cells.map((cell) => `${cell.week},${cell.day}`));
+  const riverAt = (week, day) => observed.has(`${week},${day}`) && biomes?.get(`${week},${day}`)?.isRiver;
+  const rivers = liquidSurfaceCells(cells, biomes, hemisphere).filter(
+    (cell) => riverAt(cell.week, cell.day)
+  );
+  const terminals = rivers.filter(
+    (cell) => (cell.week + 1) * 7 + cell.day > lastPosition && ![-1, 0, 1].some((offset) => riverAt(cell.week + 1, cell.day + offset))
+  );
+  const spillways = rivers.filter(
+    (cell) => cell.day === 6 && !terminals.includes(cell) && observed.has(`${cell.week + 1},6`) && !riverAt(cell.week + 1, 6) && (riverAt(cell.week - 1, 6) || riverAt(cell.week - 1, 5) || riverAt(cell.week, 5))
+  );
+  const candidates = [
+    ...selectEvenly(terminals, 4).map((cell) => ({ cell, edge: "right" })),
+    ...selectEvenly(spillways, 2).map((cell) => ({ cell, edge: "left" }))
+  ];
+  const outlets = [];
+  for (const { cell, edge } of candidates) {
+    const x = cell.isoX + (edge === "left" ? -4 : 4);
+    const y = cell.isoY + 1.75;
+    if (outlets.length >= 4) break;
+    if (outlets.some(
+      (outlet) => Math.hypot(outlet.x - x, outlet.y - y) < (edge === "right" ? 10 : 30)
+    ))
+      continue;
+    outlets.push({ cell, edge, x, y, drop: cell.height + 20 });
+  }
+  return outlets;
+}
+function riverCurrentPath(cell, biomes, outlet) {
+  const [entry = "-2,-0.6", ...tributaries] = riverContacts(cell, biomes, -1);
+  const contacts = riverContacts(cell, biomes, 1);
+  const [exit = "2,0.6", ...branches] = outlet ? [.../* @__PURE__ */ new Set([`${outlet === "left" ? -4 : 4},1.75`, ...contacts])] : contacts;
+  return `M${entry}Q0,0 ${exit}` + tributaries.map((point2) => `M${point2}L0,0`).join("") + branches.map((point2) => `M0,0L${point2}`).join("");
+}
+function riverContacts(cell, biomes, direction) {
+  const contacts = [
+    [direction, 0, direction * 4, direction * 1.75],
+    [direction, direction, 0, direction * 3.5],
+    [direction, -direction, direction * 8, 0],
+    [0, direction, -direction * 4, direction * 1.75]
+  ];
+  const connected = contacts.flatMap(
+    ([week, day, x, y]) => biomes.get(`${cell.week + week},${cell.day + day}`)?.isRiver ? [`${x},${y}`] : []
+  );
+  return connected;
+}
+var init_water_topology = __esm({
+  "src/themes/terrain/effects/water-topology.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_season();
+    init_surface_context();
+    init_selection3();
+  }
+});
+
+// src/themes/terrain/effects/waterfalls.ts
+function movingWaterfallCount(outlets) {
+  const mode = currentMotionContext().mode;
+  return mode === "off" ? 0 : Math.min(
+    outlets.length,
+    mode === "subtle" ? 2 : currentSurfaceContext()?.waterMotionLimit ?? 15
+  );
+}
+function waterfallBounds(outlets) {
+  return outlets.map(({ x, y, drop }) => ({ x: x - 9, y: y - 2, width: 18, height: drop + 8 }));
+}
+function renderWaterfalls(outlets, palette) {
+  if (!outlets.length) return "";
+  const moving = movingWaterfallCount(outlets);
+  const id = motionId("waterfall-water");
+  const flow = motionId("waterfall-flow");
+  const foam = palette.text.primary.startsWith("#e") ? "#c3f1ee" : "#efffff";
+  const css = moving ? svgStyle(
+    `@keyframes ${flow}{from{stroke-dashoffset:10}to{stroke-dashoffset:0}}.${flow}{animation:${flow} ${currentMotionContext().mode === "subtle" ? 5 : 1.25}s linear infinite}`
+  ) : "";
+  const definitions = `<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop stop-color="${palette.assets.waterLight}" stop-opacity=".9"/><stop offset=".5" stop-color="#66c8d1" stop-opacity=".66"/><stop offset="1" stop-color="#a9e6e9" stop-opacity="0"/></linearGradient></defs>`;
+  const falls = outlets.map(({ cell, edge, x, y, drop }, index) => {
+    const tilt = edge === "left" ? 0.95 : -0.95;
+    const drift = edge === "left" ? -2 : 2;
+    const end = svgNumber(drop);
+    const middle = svgNumber(drop * 0.5);
+    return `<g data-waterfall="true" data-week="${cell.week}" data-day="${cell.day}" transform="translate(${svgNumber(x)} ${svgNumber(y)})"><path d="M-2.2,${-tilt}L2.2,${tilt}C2.5,7 ${2.5 + drift},${middle} ${2.8 + drift},${end}L${-2.8 + drift},${end}C${-2.5 + drift},${middle} -2.5,7 -2.2,${-tilt}Z" fill="url(#${id})"/><path d="M-2.6,${-tilt}Q0,-1 2.6,${tilt}M-1,1Q-1,7 ${drift * 0.3 - 1},${svgNumber(drop * 0.72)}M1,2Q1,8 ${drift * 0.3 + 1},${svgNumber(drop * 0.63)}" fill="none" stroke="${foam}" stroke-width=".5" opacity=".52"/><path data-waterfall-current="true" d="M-1,1Q-1,8 ${drift - 1},${end}M1,2Q1,8 ${drift + 1},${end}" fill="none" stroke="${foam}" stroke-width=".7" stroke-dasharray="2 8" opacity=".72"${index < moving ? ` class="${flow}"` : ""}/><path data-waterfall-mist="true" d="M${drift - 6},${end}a6,1.8 0 1,0 12,0a6,1.8 0 1,0 -12,0M${drift - 3},${svgNumber(drop + 3)}a4,1 0 1,0 8,0a4,1 0 1,0 -8,0" fill="${foam}" opacity=".12"/></g>`;
+  });
+  return `${css}${definitions}<g class="sky-waterfalls">${falls.join("")}</g>`;
+}
+var init_waterfalls = __esm({
+  "src/themes/terrain/effects/waterfalls.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_animation();
+    init_svg();
+    init_surface_context();
+  }
+});
+
+// src/themes/terrain/effects/surface-water.ts
 function movingSurfaceCells(cells, biomes) {
+  const limit = currentMotionContext().mode === "subtle" ? 4 : currentSurfaceContext()?.waterMotionLimit ?? 15;
   return selectEvenly(
     liquidSurfaceCells(cells, biomes),
-    currentMotionContext().mode === "subtle" ? 4 : currentSurfaceContext()?.waterMotionLimit ?? 15
+    Math.max(0, limit - movingWaterfallCount(waterfallOutlets(cells, biomes)))
   );
 }
 function renderSurfaceWater(cells, palette, biomes) {
+  const outlets = new Map(waterfallOutlets(cells, biomes).map(({ cell, edge }) => [cell, edge]));
   const shapes = liquidSurfaceCells(cells, biomes).flatMap((cell) => {
     const biome = biomes.get(`${cell.week},${cell.day}`);
     if (!biome?.isRiver && !biome?.isPond) return [];
     const { isoX: x, isoY: y } = cell;
     const color = biome.isPond ? palette.assets.pondOverlay : palette.assets.riverOverlay;
+    const channel = biome.isRiver ? riverCurrentPath(cell, biomes, outlets.get(cell)) : "M-5.8,-.2Q-2,-1.3 1,-2.2L4,-.7Q0,-1.1 -3,.4Z";
     return [
-      `<path transform="translate(${svgNumber(x)} ${svgNumber(y)})" d="M-7,0Q-3,-1.9 0,-3L7,0Q3,1.9 0,3Z" fill="${color}" opacity=".72"/>`,
-      `<path transform="translate(${svgNumber(x)} ${svgNumber(y)})" d="M-5.8,-.2Q-2,-1.3 1,-2.2L4,-.7Q0,-1.1 -3,.4Z" fill="${palette.assets.waterLight}" opacity=".12"/>`
+      `<path transform="translate(${svgNumber(x)} ${svgNumber(y)})" d="M-8,0Q-4,-1.75 0,-3.5L8,0Q4,1.75 0,3.5Z" fill="${color}" opacity=".8"/>`,
+      `<path transform="translate(${svgNumber(x)} ${svgNumber(y)})" d="${channel}" fill="${biome.isRiver ? "none" : palette.assets.waterLight}" stroke="${palette.assets.waterLight}" stroke-width="2.4" opacity=".24"/>`
     ];
   });
   return shapes.length ? `<g class="water-overlays">${shapes.join("")}</g>` : "";
 }
 function renderSurfaceRipples(cells, palette, biomes) {
   const moving = new Set(movingSurfaceCells(cells, biomes));
+  const outlets = new Map(waterfallOutlets(cells, biomes).map(({ cell, edge }) => [cell, edge]));
   const enabled = currentMotionContext().mode !== "off";
   let index = 0;
   const paths = liquidSurfaceCells(cells, biomes).map((cell) => {
+    const river = biomes.get(`${cell.week},${cell.day}`)?.isRiver;
+    const path4 = river ? riverCurrentPath(cell, biomes, outlets.get(cell)) : "M-4,-.3Q-.8,-1.2 3.8,-.2M-2,1Q.7,.3 3,.8";
     const animation = enabled && moving.has(cell) ? ` class="${motionId("surface-current-" + index++ % 3)}"` : "";
-    return `<path data-water-current="true" transform="translate(${svgNumber(cell.isoX)} ${svgNumber(cell.isoY)})" d="M-4,-.3Q-.8,-1.2 3.8,-.2M-2,1Q.7,.3 3,.8" fill="none" stroke="${palette.assets.waterLight}" stroke-width=".28" stroke-linecap="round" stroke-dasharray="2 4" opacity=".3"${animation}/>`;
+    return `<path data-water-current="true" transform="translate(${svgNumber(cell.isoX)} ${svgNumber(cell.isoY)})" d="${path4}" fill="none" stroke="${river ? "#c4eff1" : palette.assets.waterLight}" stroke-width="${river ? ".5" : ".3"}" stroke-linecap="round" stroke-dasharray="2.2 4.5" opacity="${river ? ".65" : ".4"}"${animation}/>`;
   });
   return paths.length ? `<g class="water-ripples">${paths.join("")}</g>` : "";
 }
@@ -25286,9 +25417,10 @@ var init_surface_water = __esm({
     init_esm_shims();
     init_animation();
     init_svg();
-    init_season();
     init_surface_context();
     init_selection3();
+    init_water_topology();
+    init_waterfalls();
   }
 });
 
@@ -25409,9 +25541,9 @@ function renderSurfaceMotionCSS(cells, biomes) {
   if (mode === "off") return "";
   const count = movingSurfaceCells(cells, biomes).length;
   const name = motionId("surface-flow");
-  const water = count ? `@keyframes ${name}{from{stroke-dashoffset:6}to{stroke-dashoffset:0}}` + Array.from(
+  const water = count ? `@keyframes ${name}{from{stroke-dashoffset:6.7}to{stroke-dashoffset:0}}` + Array.from(
     { length: Math.min(3, count) },
-    (_, phase) => `.${motionId("surface-current-" + phase)}{animation:${name} ${mode === "subtle" ? 24 + phase * 3 : 10 + phase * 2}s linear -${phase * 3}s infinite}`
+    (_, phase) => `.${motionId("surface-current-" + phase)}{animation:${name} ${mode === "subtle" ? 14 + phase * 2 : 3.4 + phase * 0.5}s linear -${phase}s infinite}`
   ).join("") : "";
   return water + renderSeasonalWeatherCSS(cells);
 }
@@ -26506,7 +26638,11 @@ function renderTerrainScene(scene, mode, options = {}) {
     colors: palettes[cell.week].getElevation(cell.level100)
   }));
   const biomes = new Map(scene.biomes.map((entry) => [`${entry.week},${entry.day}`, entry.biome]));
-  const transform = fitScene(scene.bounds, sceneViewport(settings.layout));
+  const outlets = settings.artStyle === "miniature" ? waterfallOutlets(isoCells, biomes, settings.hemisphere) : [];
+  const transform = fitScene(
+    unionBounds([scene.bounds, ...waterfallBounds(outlets)]),
+    sceneViewport(settings.layout)
+  );
   const seed = hash(scene.seed.root);
   const rotation = dateSeasonPosition(scene.fromDate, settings.hemisphere);
   const body = withSurfaceContext(
@@ -26523,7 +26659,7 @@ function renderTerrainScene(scene, mode, options = {}) {
         townSparkles
       ) + renderConsistencyEffects(scene.consistencyEffects ?? [], mode);
       reserveSurfaceMotion(sky + assets + overlays, css, isoCells);
-      const terrain = renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) + renderWaterOverlays(isoCells, reference, biomes) + renderWaterRipples(isoCells, reference, biomes) + assets + renderSeasonalParticles(isoCells, seed, reference, rotation) + overlays;
+      const terrain = renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) + renderWaterOverlays(isoCells, reference, biomes) + renderWaterRipples(isoCells, reference, biomes) + renderWaterfalls(outlets, reference) + assets + renderSeasonalParticles(isoCells, seed, reference, rotation) + overlays;
       return (css ? svgStyle(css) : "") + definitions + `<svg x="0" y="0" width="${viewWidth}" height="${card ? 240 : viewHeight}" viewBox="0 0 840 240" aria-hidden="true">${sky}</svg><g class="terrain-fit" transform="translate(${svgNumber(transform.x)} ${svgNumber(transform.y)}) scale(${transform.scale.toFixed(6)})">${terrain}</g>`;
     })
   );
@@ -26567,6 +26703,8 @@ var init_render2 = __esm({
     init_asset_symbols();
     init_surface_context();
     init_surface_budget();
+    init_water_topology();
+    init_waterfalls();
   }
 });
 

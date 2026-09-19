@@ -43,9 +43,11 @@ async function frame(page: Page, time: number) {
         kind: element.getAttribute('data-seasonal'),
         transform: getComputedStyle(element).transform,
       })),
-      currents: [...document.querySelectorAll(`${active} [data-water-current][class]`)].map(
-        (element) => getComputedStyle(element).strokeDashoffset,
-      ),
+      currents: [
+        ...document.querySelectorAll(
+          `${active} [data-water-current][class], ${active} [data-waterfall-current][class]`,
+        ),
+      ].map((element) => getComputedStyle(element).strokeDashoffset),
       surfaces: [...document.querySelectorAll('.water-overlays path')].map(
         (element) => getComputedStyle(element).opacity,
       ),

@@ -74,7 +74,7 @@ export async function startWorldApp(options: WorldAppOptions) {
   collection.remember(incoming.documents);
   const projects = setupProjects(session, signal);
   const discoveries = setupDiscoveries(session, records, signal);
-  const analytics = setupAnalytics(session, signal);
+  const analytics = setupAnalytics(() => session.current().sourceSnapshot, signal);
   const stopControls = setupControls(session, signal);
   setupExports(session, signal);
   setupVersionSelection(() => session.current().sourceSnapshot, signal);
