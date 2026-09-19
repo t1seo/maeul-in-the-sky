@@ -4,6 +4,7 @@ import type { ColorMode } from '../core/types.js';
 import { bindDates } from './date-navigation.js';
 import { button, click, dialog, html } from './dom.js';
 import { mountSvg, renderSnapshot } from './preview.js';
+import { CURRENT_RENDERER, type DemoRenderer } from './renderers.js';
 
 type TouchPoint = { readonly x: number; readonly y: number };
 type PanGesture = {
@@ -36,6 +37,7 @@ export function setupZoom(
     readonly output: TerrainRenderResult;
     readonly mode: ColorMode;
     readonly snapshot: SnapshotV1;
+    readonly renderer?: DemoRenderer;
   },
 ): void {
   const modal = dialog('zoom-dialog');
@@ -148,8 +150,8 @@ export function setupZoom(
   viewport.addEventListener('pointerup', finishTouch);
   viewport.addEventListener('pointercancel', finishTouch);
   click('zoom-button', () => {
-    const { snapshot, mode } = current();
-    const output = renderSnapshot(snapshot, snapshot.settings, 'zoom');
+    const { snapshot, mode, renderer = CURRENT_RENDERER } = current();
+    const output = renderSnapshot(snapshot, snapshot.settings, 'zoom', renderer);
     viewport.dataset.mode = mode;
     const root = mountSvg(content, output[mode]);
     bindDates(root, output.metadata, html('zoom-date-details'));

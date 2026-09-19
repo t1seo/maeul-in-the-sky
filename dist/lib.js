@@ -297,9 +297,9 @@ var init_schema = __esm({
       normalization: normalizationSchema,
       layoutSeed: xml10TextSchema.max(256).optional()
     });
-    renderSettingsInputSchema = renderSettingsSchema.partial().extend({ villageStyle: villageStyleSchema.optional() }).superRefine((settings, context) => {
+    renderSettingsInputSchema = renderSettingsSchema.partial().extend({ villageStyle: villageStyleSchema.optional() }).superRefine((settings, context2) => {
       if (settings.style !== void 0 && settings.villageStyle !== void 0 && settings.style !== settings.villageStyle) {
-        context.addIssue({
+        context2.addIssue({
           code: "custom",
           path: ["villageStyle"],
           message: "villageStyle conflicts with style"
@@ -1957,8 +1957,81 @@ var init_projection = __esm({
   }
 });
 
+// src/themes/terrain/scene/surface-context.ts
+function currentSurfaceContext() {
+  return context;
+}
+function setSurfaceMotionLimits(water, weather) {
+  if (context) context = { ...context, waterMotionLimit: water, weatherMotionLimit: weather };
+}
+function seasonalSurfaceCells(cells, season) {
+  const cached = context?.seasons.get(cells);
+  if (cached) return cached[season];
+  const grouped = { winter: [], spring: [], summer: [], autumn: [] };
+  for (const cell of cells) {
+    if (cell.date) grouped[datePeakSeason(cell.date, context?.hemisphere ?? "north")].push(cell);
+  }
+  context?.seasons.set(cells, grouped);
+  return grouped[season];
+}
+function withSurfaceContext(settings, render) {
+  const previous = context;
+  context = settings.artStyle === "miniature" ? {
+    hemisphere: settings.hemisphere,
+    seasons: /* @__PURE__ */ new WeakMap(),
+    waterMotionLimit: 15,
+    weatherMotionLimit: 10
+  } : void 0;
+  try {
+    return render();
+  } finally {
+    context = previous;
+  }
+}
+var context;
+var init_surface_context = __esm({
+  "src/themes/terrain/scene/surface-context.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_season();
+  }
+});
+
+// src/themes/terrain/scene/surface-block.ts
+function surfaceTexture(cell) {
+  const identity = hash(cell.date ?? `${cell.week},${cell.day}`);
+  if (identity % 8 !== 0) return "";
+  const material3 = cell.level100 < 9 ? "soil" : cell.level100 <= 22 ? "ice" : cell.level100 >= 80 ? "stone" : "grass";
+  return `<path data-surface="${material3}" transform="translate(${svgNumber(cell.isoX)} ${svgNumber(cell.isoY)})" d="${TEXTURES[material3]}" fill="none" stroke="${material3 === "ice" ? "#fff" : cell.colors.left}" stroke-width=".35" stroke-linecap="round" opacity=".35"/>`;
+}
+function renderSurfaceBlock(cell, water) {
+  const { isoX: x, isoY: y, height, colors } = cell;
+  const point2 = (dx, dy) => `${svgNumber(x + dx)},${svgNumber(y + dy)}`;
+  const top = [point2(0, -THH), point2(THW, 0), point2(0, THH), point2(-THW, 0)].join(" ");
+  const sides = height ? `<polygon points="${[point2(-THW, 0), point2(0, THH), point2(0, THH + height), point2(-THW, height)].join(" ")}" fill="${colors.left}"/><polygon points="${[point2(THW, 0), point2(0, THH), point2(0, THH + height), point2(THW, height)].join(" ")}" fill="${colors.right}"/>` : "";
+  const detail = water ? `<path transform="translate(${svgNumber(x)} ${svgNumber(y)})" d="M-6,0Q-3,-2 0,-2.7L5,-.2Q1,-1.1 -2,-.5Z" fill="#d2e9dc" opacity="${cell.level100 <= 14 ? ".14" : ".08"}"/>` : surfaceTexture(cell);
+  return sides + `<polygon points="${top}" fill="${colors.top}" stroke="${colors.top}" stroke-width="0.3"/>` + detail;
+}
+var TEXTURES;
+var init_surface_block = __esm({
+  "src/themes/terrain/scene/surface-block.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_svg();
+    init_math();
+    init_projection();
+    TEXTURES = {
+      soil: "M-3,-.4l.8,.2m2.4,-1.1l.7,.1m-.9,2l1,.1",
+      grass: "M-3,.1l-.5,-.7m.5,.7l.3,-.8m3.4,1l-.2,-.7m.2,.7l.5,-.5",
+      stone: "M-3,-.2l.8,-.4 .9,.2 -.7,.5zm3.5,.5l.7,-.3 .9,.2 -.8,.4z",
+      ice: "M-4,0l2,-.6 1,.5 2,-.9m-2,.9l1,1"
+    };
+  }
+});
+
 // src/themes/terrain/scene/block-shape.ts
 function renderBlock(cell, isWater = false) {
+  if (currentSurfaceContext()) return renderSurfaceBlock(cell, isWater);
   const { isoX: cx, isoY: cy, height: h, colors } = cell;
   if (h === 0) {
     const topPoints2 = [
@@ -2050,6 +2123,8 @@ var init_block_shape = __esm({
     init_esm_shims();
     init_svg();
     init_projection();
+    init_surface_context();
+    init_surface_block();
   }
 });
 
@@ -2649,9 +2724,9 @@ var init_date_seed = __esm({
 function currentMotionContext() {
   return currentContext;
 }
-function withMotionContext(context, render) {
+function withMotionContext(context2, render) {
   const previous = currentContext;
-  currentContext = context;
+  currentContext = context2;
   try {
     return render();
   } finally {
@@ -24520,7 +24595,7 @@ function renderAssetPlacements(placed, palettes, artStyle = "miniature", symbols
     if ("assets" in palettes) return palettes;
     return palettes[Math.min(week, palettes.length - 1)];
   };
-  const context = currentMotionContext();
+  const context2 = currentMotionContext();
   const parts = placed.map((asset) => {
     const palette = paletteFor(asset.cell.week);
     const art = symbols && !asset.animated ? symbols.render(
@@ -24537,7 +24612,7 @@ function renderAssetPlacements(placed, palettes, artStyle = "miniature", symbols
       palette.assets,
       asset.variant
     ) : withMotionContext(
-      { ...context, mode: asset.animated ? context.mode : "off" },
+      { ...context2, mode: asset.animated ? context2.mode : "off" },
       () => ASSET_RENDERERS[asset.type](
         asset.cx + asset.ox,
         asset.cy + asset.oy,
@@ -25118,21 +25193,21 @@ var init_prepare = __esm({
 });
 
 // src/themes/terrain/motion/index.ts
-function renderMotionBranches(context, renderBranch) {
-  if (context.mode === "off") return withMotionContext(context, renderBranch);
-  const rootId = withMotionContext(context, () => motionId("motion"));
+function renderMotionBranches(context2, renderBranch) {
+  if (context2.mode === "off") return withMotionContext(context2, renderBranch);
+  const rootId = withMotionContext(context2, () => motionId("motion"));
   const staticScene = withMotionContext(
-    { mode: "off", namespace: `${context.namespace}-static` },
+    { mode: "off", namespace: `${context2.namespace}-static` },
     renderBranch
   );
   const activeScene = withMotionContext(
-    { mode: context.mode, namespace: `${context.namespace}-active` },
+    { mode: context2.mode, namespace: `${context2.namespace}-active` },
     renderBranch
   );
   const staticSelector = `#${rootId} > [data-motion-branch="static"]`;
   const activeSelector = `#${rootId} > [data-motion-branch="active"]`;
   const css = `${staticSelector} * { animation: none !important; }@media (prefers-reduced-motion: no-preference) {${staticSelector} { display: none; }${activeSelector} { display: inline; }}`;
-  return `<g id="${rootId}" data-motion="${context.mode}"><style>${css}</style><g data-motion-branch="static">${staticScene}</g><g data-motion-branch="active" display="none">${activeScene}</g></g>`;
+  return `<g id="${rootId}" data-motion="${context2.mode}"><style>${css}</style><g data-motion-branch="static">${staticScene}</g><g data-motion-branch="active" display="none">${activeScene}</g></g>`;
 }
 var init_motion = __esm({
   "src/themes/terrain/motion/index.ts"() {
@@ -25159,8 +25234,203 @@ var init_selection3 = __esm({
   }
 });
 
+// src/themes/terrain/effects/surface-water.ts
+function liquidSurfaceCells(cells, biomes) {
+  const hemisphere = currentSurfaceContext()?.hemisphere ?? "north";
+  return cells.filter((cell) => {
+    const natural = cell.level100 >= 9 && cell.level100 <= 22;
+    if (natural && cell.date) {
+      const zone = dateSeasonZone(cell.date, hemisphere);
+      if (zone === 0 || zone === 1 || zone === 7) return false;
+    }
+    const biome = biomes?.get(`${cell.week},${cell.day}`);
+    return natural || biome?.isRiver || biome?.isPond;
+  });
+}
+function movingSurfaceCells(cells, biomes) {
+  return selectEvenly(
+    liquidSurfaceCells(cells, biomes),
+    currentMotionContext().mode === "subtle" ? 4 : currentSurfaceContext()?.waterMotionLimit ?? 15
+  );
+}
+function renderSurfaceWater(cells, palette, biomes) {
+  const shapes = liquidSurfaceCells(cells, biomes).flatMap((cell) => {
+    const biome = biomes.get(`${cell.week},${cell.day}`);
+    if (!biome?.isRiver && !biome?.isPond) return [];
+    const { isoX: x, isoY: y } = cell;
+    const color = biome.isPond ? palette.assets.pondOverlay : palette.assets.riverOverlay;
+    return [
+      `<path transform="translate(${svgNumber(x)} ${svgNumber(y)})" d="M-7,0Q-3,-1.9 0,-3L7,0Q3,1.9 0,3Z" fill="${color}" opacity=".72"/>`,
+      `<path transform="translate(${svgNumber(x)} ${svgNumber(y)})" d="M-5.8,-.2Q-2,-1.3 1,-2.2L4,-.7Q0,-1.1 -3,.4Z" fill="${palette.assets.waterLight}" opacity=".12"/>`
+    ];
+  });
+  return shapes.length ? `<g class="water-overlays">${shapes.join("")}</g>` : "";
+}
+function renderSurfaceRipples(cells, palette, biomes) {
+  const moving = new Set(movingSurfaceCells(cells, biomes));
+  const enabled = currentMotionContext().mode !== "off";
+  let index = 0;
+  const paths = liquidSurfaceCells(cells, biomes).map((cell) => {
+    const animation = enabled && moving.has(cell) ? ` class="${motionId("surface-current-" + index++ % 3)}"` : "";
+    return `<path data-water-current="true" transform="translate(${svgNumber(cell.isoX)} ${svgNumber(cell.isoY)})" d="M-4,-.3Q-.8,-1.2 3.8,-.2M-2,1Q.7,.3 3,.8" fill="none" stroke="${palette.assets.waterLight}" stroke-width=".28" stroke-linecap="round" stroke-dasharray="2 4" opacity=".3"${animation}/>`;
+  });
+  return paths.length ? `<g class="water-ripples">${paths.join("")}</g>` : "";
+}
+var init_surface_water = __esm({
+  "src/themes/terrain/effects/surface-water.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_animation();
+    init_svg();
+    init_season();
+    init_surface_context();
+    init_selection3();
+  }
+});
+
+// src/themes/terrain/effects/seasonal-weather.ts
+function weatherCells(cells, kind) {
+  return seasonalSurfaceCells(cells, WEATHER[kind].season);
+}
+function seasonalWeatherTargets(cells) {
+  return [0, 1].flatMap(
+    (phase) => KINDS.flatMap(
+      (kind) => weatherCells(cells, kind).length > phase ? [`seasonal-${kind}-${phase}`] : []
+    )
+  );
+}
+function weatherShape(kind, x, y) {
+  const start = `M${x.toFixed(1)},${y.toFixed(1)}`;
+  switch (kind) {
+    case "snow":
+      return `${start}a.45,.45 0 1 0 .9,0a.45,.45 0 1 0-.9,0`;
+    case "petals":
+      return `${start}q.8,-.9 1.2,-.2q-.3,.8-1.2,.2Z`;
+    case "butterflies":
+      return `${start}c-1.5,-2.1-2.7,.4 0,.8c2.7,-.4 1.5,-2.1 0,-.8Z`;
+    case "rain":
+      return `${start}l-.8,2.6`;
+    case "leaves":
+      return `${start}q1.5,-.7 1.8,.3q-1.3,.8-1.8,-.3Z`;
+    default: {
+      const exhaustive = kind;
+      return exhaustive;
+    }
+  }
+}
+function weatherColor(kind, palette, phase) {
+  switch (kind) {
+    case "snow":
+      return "#fff";
+    case "petals":
+      return palette.assets.cherryPetalPink;
+    case "butterflies":
+      return palette.assets.fallenLeafGold;
+    case "rain":
+      return palette.assets.waterLight;
+    case "leaves":
+      return phase ? palette.assets.fallenLeafOrange : palette.assets.fallenLeafRed;
+    default: {
+      const exhaustive = kind;
+      return exhaustive;
+    }
+  }
+}
+function renderSeasonalWeather(cells, seed, palette) {
+  const moving = new Set(
+    seasonalWeatherTargets(cells).slice(0, currentSurfaceContext()?.weatherMotionLimit ?? 10)
+  );
+  return KINDS.map((kind) => {
+    const selected = selectEvenly(weatherCells(cells, kind), WEATHER[kind].count);
+    if (!selected.length) return "";
+    const phases = [0, 1].map((phase) => {
+      const shapes = selected.flatMap((cell, index) => {
+        if (index % 2 !== phase) return [];
+        const rng = seededRandom(hash(`${seed}:${kind}:${cell.date}`));
+        return weatherShape(kind, cell.isoX + (rng() - 0.5) * 6, cell.isoY - 3 - rng() * 12);
+      });
+      if (!shapes.length) return "";
+      const color = weatherColor(kind, palette, phase);
+      const paint = kind === "rain" ? `fill="none" stroke="${color}" stroke-width=".35" stroke-linecap="round"` : `fill="${color}"`;
+      const motion = currentMotionContext().mode === "full" && moving.has(`seasonal-${kind}-${phase}`) ? ` class="${motionId(`seasonal-${kind}-${phase}`)}"` : "";
+      return `<path data-seasonal="${kind}" d="${shapes.join("")}" ${paint}${motion}/>`;
+    }).join("");
+    return `<g class="${WEATHER[kind].group}" opacity="${WEATHER[kind].opacity}">${phases}</g>`;
+  }).join("");
+}
+function renderSeasonalWeatherCSS(cells) {
+  if (currentMotionContext().mode !== "full") return "";
+  return KINDS.flatMap((kind) => {
+    if (!weatherCells(cells, kind).length) return [];
+    const name = motionId(`seasonal-${kind}`);
+    const frames = kind === "butterflies" ? "0%,100%{transform:translate(0,0)}35%{transform:translate(3px,-2px)}70%{transform:translate(-1px,-4px)}" : `0%{transform:translate(-2px,-5px);opacity:0}15%,85%{opacity:1}100%{transform:translate(${kind === "rain" ? -5 : 3}px,7px);opacity:0}`;
+    return [
+      `@keyframes ${name}{${frames}}`,
+      ...[0, 1].map((phase) => {
+        const duration = WEATHER[kind].duration + phase * 2;
+        return `.${motionId(`seasonal-${kind}-${phase}`)}{animation:${name} ${duration}s ${kind === "butterflies" ? "ease-in-out" : "linear"} -${duration * (phase ? 0.7 : 0.3)}s infinite}`;
+      })
+    ];
+  }).join("");
+}
+var WEATHER, KINDS;
+var init_seasonal_weather = __esm({
+  "src/themes/terrain/effects/seasonal-weather.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_animation();
+    init_math();
+    init_surface_context();
+    init_selection3();
+    WEATHER = {
+      snow: { season: "winter", count: 12, group: "snow-particles", opacity: ".55", duration: 14 },
+      petals: { season: "spring", count: 10, group: "falling-petals", opacity: ".6", duration: 12 },
+      butterflies: {
+        season: "spring",
+        count: 3,
+        group: "spring-butterflies",
+        opacity: ".65",
+        duration: 16
+      },
+      rain: { season: "summer", count: 12, group: "summer-rain", opacity: ".3", duration: 5 },
+      leaves: { season: "autumn", count: 10, group: "falling-leaves", opacity: ".6", duration: 13 }
+    };
+    KINDS = ["snow", "petals", "butterflies", "rain", "leaves"];
+  }
+});
+
+// src/themes/terrain/effects/surface-motion.ts
+function renderSurfaceMotionCSS(cells, biomes) {
+  const mode = currentMotionContext().mode;
+  if (mode === "off") return "";
+  const count = movingSurfaceCells(cells, biomes).length;
+  const name = motionId("surface-flow");
+  const water = count ? `@keyframes ${name}{from{stroke-dashoffset:6}to{stroke-dashoffset:0}}` + Array.from(
+    { length: Math.min(3, count) },
+    (_, phase) => `.${motionId("surface-current-" + phase)}{animation:${name} ${mode === "subtle" ? 24 + phase * 3 : 10 + phase * 2}s linear -${phase * 3}s infinite}`
+  ).join("") : "";
+  return water + renderSeasonalWeatherCSS(cells);
+}
+var init_surface_motion = __esm({
+  "src/themes/terrain/effects/surface-motion.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_animation();
+    init_surface_water();
+    init_seasonal_weather();
+  }
+});
+
 // src/themes/terrain/effects/css.ts
 function renderTerrainCSS(isoCells, biomeMap, townSparkles = true) {
+  if (!currentSurfaceContext()) return renderLegacyTerrainCSS(isoCells, biomeMap, townSparkles);
+  return renderSurfaceMotionCSS(isoCells, biomeMap) + renderLegacyTerrainCSS(
+    isoCells.filter((cell) => cell.level100 < 10 || cell.level100 > 22),
+    void 0,
+    townSparkles
+  );
+}
+function renderLegacyTerrainCSS(isoCells, biomeMap, townSparkles = true) {
   const mode = currentMotionContext().mode;
   if (mode === "off") return "";
   const blocks = [];
@@ -25263,6 +25533,8 @@ var init_css = __esm({
     init_esm_shims();
     init_animation();
     init_selection3();
+    init_surface_context();
+    init_surface_motion();
     MAX_WATER = 15;
     MAX_SPARKLE = 10;
   }
@@ -25311,6 +25583,106 @@ var init_overlays = __esm({
   }
 });
 
+// src/themes/terrain/effects/sky/cloud-shapes.ts
+var CLOUD_SHAPES;
+var init_cloud_shapes = __esm({
+  "src/themes/terrain/effects/sky/cloud-shapes.ts"() {
+    "use strict";
+    init_esm_shims();
+    CLOUD_SHAPES = [
+      {
+        body: "M-30 1C-32-2-28-6-24-6C-24-10-19-13-14-11C-12-18-1-19 4-12C10-15 17-11 17-6C23-8 29-3 27 1C34 2 32 5 25 6C14 8-16 8-26 6C-32 5-35 3-30 1Z",
+        shade: "M-30 2C-23 4-17 1-12 2C-5 5 4 1 10 2C18 5 25 1 30 3C30 5 27 6 23 6C10 8-16 7-26 5C-29 5-31 4-30 2Z",
+        folds: "M-24-5C-20-8-15-7-13-3M-10-11C-4-14 2-10 3-5M8-5C12-7 17-4 18-1",
+        rim: "M-25-7C-23-11-19-12-16-11M-12-12C-10-17-2-18 2-13M6-12C10-13 14-10 15-7"
+      },
+      {
+        body: "M-34 2C-35-2-29-5-23-4C-22-10-14-12-9-7C-5-12 4-12 8-6C14-9 23-6 23-1C29-3 35 0 33 3C38 6 22 8 14 7C2 9-6 7-15 8C-23 7-35 7-34 2Z",
+        shade: "M-33 3C-26 3-21 1-16 3C-9 6-3 2 3 3C13 6 22 2 31 3C36 5 26 7 16 6C4 8-5 6-15 7C-26 6-33 6-33 3Z",
+        folds: "M-22-3C-18-6-12-5-10-2M-6-6C-2-8 4-7 6-3M12-3C16-4 20-2 21 1",
+        rim: "M-22-5C-21-9-15-10-11-7M-7-7C-3-10 3-10 6-7M10-6C15-7 20-5 21-2"
+      },
+      {
+        body: "M-29 1C-30-4-24-7-19-5C-20-10-14-14-9-11C-5-16 5-14 7-8C14-13 24-7 23-1C29-2 34 2 30 5C23 8 14 6 7 7C-4 8-16 6-24 6C-32 6-35 3-29 1Z",
+        shade: "M-29 2C-22 4-18 1-13 2C-6 5 1 1 7 2C14 4 23 2 30 3C29 6 21 6 14 5C5 8-8 5-17 5C-24 5-29 5-29 2Z",
+        folds: "M-18-4C-15-7-10-6-8-2M-7-9C-3-12 3-9 4-4M9-5C14-8 20-4 21 0",
+        rim: "M-18-7C-17-11-13-12-10-10M-7-11C-3-14 3-12 5-8M9-8C14-11 21-7 21-3"
+      }
+    ];
+  }
+});
+
+// src/themes/terrain/effects/sky/clouds.ts
+function cloudPaint(palette) {
+  const { r, g, b } = hexToRgb(palette.bg.subtle);
+  const dark = r * 0.2126 + g * 0.7152 + b * 0.0722 < 128;
+  const top = dark ? "#8198ae" : "#fffef8";
+  const middle = dark ? "#4e657d" : "#e5edf2";
+  const bottom = dark ? "#293d53" : "#a9bfce";
+  const rim = dark ? "#b8cedb" : "#ffffff";
+  return `<defs><linearGradient id="${motionId("sky-cloud-volume")}" x1="30%" y1="0%" x2="60%" y2="100%"><stop stop-color="${lerpColor(top, palette.bg.subtle, 0.08)}"/><stop offset=".48" stop-color="${middle}"/><stop offset="1" stop-color="${bottom}"/></linearGradient><linearGradient id="${motionId("sky-cloud-shade")}" x2="0" y2="1"><stop stop-color="${bottom}" stop-opacity="0"/><stop offset="1" stop-color="${bottom}" stop-opacity=".65"/></linearGradient><linearGradient id="${motionId("sky-cloud-rim")}" x2="0" y2="1"><stop stop-color="${rim}" stop-opacity=".8"/><stop offset="1" stop-color="${rim}" stop-opacity=".08"/></linearGradient></defs>`;
+}
+function cloudVolume(x, y, scale, variant) {
+  const shape = CLOUD_SHAPES[variant % CLOUD_SHAPES.length];
+  return `<g class="cloud-volume" transform="translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${scale.toFixed(3)})"><path class="cloud-body" d="${shape.body}" fill="url(#${motionId("sky-cloud-volume")})"/><path d="${shape.shade}" fill="url(#${motionId("sky-cloud-shade")})"/><path d="${shape.folds}" fill="none" stroke="url(#${motionId("sky-cloud-rim")})" stroke-width=".65" opacity=".4" stroke-linecap="round"/><path d="${shape.rim}" fill="none" stroke="url(#${motionId("sky-cloud-rim")})" stroke-width=".7" stroke-linecap="round"/></g>`;
+}
+var init_clouds = __esm({
+  "src/themes/terrain/effects/sky/clouds.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_animation();
+    init_color();
+    init_cloud_shapes();
+  }
+});
+
+// src/themes/terrain/effects/sky/moon.ts
+function sculptedMoon(x, y, palette) {
+  const surface = motionId("sky-moon-surface");
+  const halo = motionId("sky-moon-halo");
+  const clip = motionId("sky-moon-clip");
+  const craterColor = lerpColor(palette.bg.subtle, "#bacbd2", 0.7);
+  const craters = CRATERS.map(
+    ({ x: cx, y: cy, r }) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${craterColor}" opacity=".5"/><path d="M${(cx - r * 0.8).toFixed(2)} ${(cy + r * 0.35).toFixed(2)}a${r} ${r} 0 0 0 ${(r * 1.6).toFixed(2)} 0" fill="none" stroke="#fff8df" stroke-width=".35" opacity=".7"/>`
+  ).join("");
+  return `<g class="sky-moon" transform="translate(${x.toFixed(2)} ${y.toFixed(2)})"><defs><radialGradient id="${halo}"><stop stop-color="#c5dbeb" stop-opacity=".2"/><stop offset=".45" stop-color="#b7cfe5" stop-opacity=".06"/><stop offset="1" stop-color="#b7cfe5" stop-opacity="0"/></radialGradient><radialGradient id="${surface}" cx="28%" cy="26%" r="80%"><stop stop-color="#fff9de"/><stop offset=".55" stop-color="#e2e2d0"/><stop offset="1" stop-color="#9bb4c1"/></radialGradient><clipPath id="${clip}"><path d="${CRESCENT}"/></clipPath></defs><circle r="24" fill="url(#${halo})"/><path class="moon-body" d="${CRESCENT}" fill="url(#${surface})"/><g class="moon-craters" clip-path="url(#${clip})">${craters}</g><path d="M-7.7-5.2A9.4 9.4 0 0 0-4.9 8" fill="none" stroke="#fff9e4" stroke-width=".45" opacity=".75"/></g>`;
+}
+var CRESCENT, CRATERS;
+var init_moon = __esm({
+  "src/themes/terrain/effects/sky/moon.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_animation();
+    init_color();
+    CRESCENT = "M3.6-9.2A9.9 9.9 0 1 0 6.6 7.4C-1.2 8.6-6.7 3.1-5.6-3.2C-5-7-1.2-9.1 3.6-9.2Z";
+    CRATERS = [
+      { x: -7.6, y: -2.4, r: 1.05 },
+      { x: -6.5, y: 3.3, r: 1.4 },
+      { x: -3.1, y: 7, r: 0.85 },
+      { x: -5.3, y: -6.3, r: 0.6 },
+      { x: -8.1, y: 1, r: 0.45 }
+    ];
+  }
+});
+
+// src/themes/terrain/effects/sky/sun.ts
+function luminousSun(x, y) {
+  const surface = motionId("sky-sun-surface");
+  const halo = motionId("sky-sun-halo");
+  const rays = Array.from({ length: 12 }, (_, index) => {
+    const tip = index % 3 === 0 ? 16 : 13.5;
+    return `<path d="M-.65-10.8Q0-10.3.65-10.8L.3-${tip}Q0-${tip + 0.8}-.3-${tip}Z" transform="rotate(${index * 30})"/>`;
+  }).join("");
+  return `<g class="sky-sun" transform="translate(${x.toFixed(2)} ${y.toFixed(2)})"><defs><radialGradient id="${halo}"><stop stop-color="#ffe5a4" stop-opacity=".65"/><stop offset=".48" stop-color="#ffd273" stop-opacity=".2"/><stop offset="1" stop-color="#ffd273" stop-opacity="0"/></radialGradient><radialGradient id="${surface}" cx="34%" cy="26%" r="76%"><stop stop-color="#fffbe5"/><stop offset=".42" stop-color="#ffe999"/><stop offset=".8" stop-color="#ffc550"/><stop offset="1" stop-color="#eaa045"/></radialGradient></defs><circle r="22" fill="url(#${halo})"/><g class="sun-corona" fill="#e6a950" opacity=".48">${rays}</g><circle r="9.5" fill="none" stroke="#ffd68d" stroke-width=".45" opacity=".45"/><circle class="sun-body" r="8" fill="url(#${surface})"/><path d="M-6.6-2.5A7 7 0 0 1 2.4-6.7" fill="none" stroke="#fffbea" stroke-width=".55" opacity=".9"/></g>`;
+}
+var init_sun = __esm({
+  "src/themes/terrain/effects/sky/sun.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_animation();
+  }
+});
+
 // src/themes/terrain/effects/sky.ts
 function renderCelestials(seed, palette, isDark) {
   const rng = seededRandom(seed + 3331);
@@ -25334,70 +25706,27 @@ function renderCelestials(seed, palette, isDark) {
         `<g opacity="${(0.5 + rng() * 0.3).toFixed(2)}"><line x1="${bx - len}" y1="${by}" x2="${bx + len}" y2="${by}" stroke="#fff" stroke-width="0.4"/><line x1="${bx}" y1="${by - len}" x2="${bx}" y2="${by + len}" stroke="#fff" stroke-width="0.4"/></g>`
       );
     }
-    const mx = 750 + rng() * 60;
-    const my = 18 + rng() * 15;
-    const mr = 8;
-    parts.push(
-      `<g><circle cx="${mx}" cy="${my}" r="${mr}" fill="#e8e4d0" opacity="0.85"/><circle cx="${mx + 3.5}" cy="${my - 1.5}" r="${mr - 0.5}" fill="${palette.bg.subtle}"/><circle cx="${mx}" cy="${my}" r="${mr + 3}" fill="#e8e4d0" opacity="0.04"/></g>`
-    );
+    parts.push(sculptedMoon(750 + rng() * 60, 38 + rng() * 12, palette));
   } else {
-    const sx = 770 + rng() * 50;
-    const sy = 20 + rng() * 12;
-    const sr = 7;
-    parts.push(`<circle cx="${sx}" cy="${sy}" r="${sr + 6}" fill="#ffeebb" opacity="0.1"/>`);
-    parts.push(`<circle cx="${sx}" cy="${sy}" r="${sr + 3}" fill="#ffdd88" opacity="0.15"/>`);
-    parts.push(`<circle cx="${sx}" cy="${sy}" r="${sr}" fill="#ffe066" opacity="0.9"/>`);
-    parts.push(
-      `<circle cx="${sx - 1.5}" cy="${sy - 1.5}" r="${sr * 0.45}" fill="#fff8cc" opacity="0.6"/>`
-    );
-    for (let r = 0; r < 8; r++) {
-      const angle = r / 8 * Math.PI * 2;
-      const innerR = sr + 2;
-      const outerR = sr + 5 + r % 2 * 2;
-      const x1 = sx + Math.cos(angle) * innerR;
-      const y1 = sy + Math.sin(angle) * innerR;
-      const x2 = sx + Math.cos(angle) * outerR;
-      const y2 = sy + Math.sin(angle) * outerR;
-      parts.push(
-        `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#ffdd66" stroke-width="0.8" opacity="0.5" stroke-linecap="round"/>`
-      );
-    }
+    parts.push(luminousSun(770 + rng() * 50, 43 + rng() * 12));
   }
   return `<g class="celestials">${parts.join("")}</g>`;
 }
 function renderClouds(seed, palette) {
   const rng = seededRandom(seed);
-  const clouds = [];
+  const clouds = [cloudPaint(palette)];
   const mode = currentMotionContext().mode;
+  const firstShape = Math.floor(seededRandom(seed + 5009)() * 3);
   for (let i = 0; i < NUM_CLOUDS; i++) {
     const baseCx = 250 + rng() * 500;
-    const baseCy = 20 + rng() * 60;
+    const baseCy = 46 + rng() * 34;
     const scale = 0.8 + rng() * 0.5;
     const fullDuration = (35 + rng() * 20).toFixed(0);
     const dur = mode === "subtle" ? String(Number(fullDuration) * 2) : fullDuration;
     const fullDrift = 60 + rng() * 50;
     const driftX = mode === "subtle" ? Math.min(12, fullDrift / 8) : fullDrift;
-    const ellipses = [];
-    const f = palette.cloud.fill;
-    const s = palette.cloud.stroke;
-    const o = palette.cloud.opacity;
-    ellipses.push(
-      `<ellipse cx="${baseCx}" cy="${baseCy}" rx="${(28 * scale).toFixed(1)}" ry="${(5 * scale).toFixed(1)}" fill="${f}" stroke="${s}" stroke-width="0.4" opacity="${o}"/>`
-    );
-    ellipses.push(
-      `<ellipse cx="${(baseCx - 14 * scale).toFixed(1)}" cy="${(baseCy - 3 * scale).toFixed(1)}" rx="${(12 * scale).toFixed(1)}" ry="${(6 * scale).toFixed(1)}" fill="${f}" stroke="${s}" stroke-width="0.3" opacity="${o}"/>`
-    );
-    ellipses.push(
-      `<ellipse cx="${(baseCx - 2 * scale).toFixed(1)}" cy="${(baseCy - 6 * scale).toFixed(1)}" rx="${(14 * scale).toFixed(1)}" ry="${(8 * scale).toFixed(1)}" fill="${f}" stroke="${s}" stroke-width="0.3" opacity="${o}"/>`
-    );
-    ellipses.push(
-      `<ellipse cx="${(baseCx + 12 * scale).toFixed(1)}" cy="${(baseCy - 3.5 * scale).toFixed(1)}" rx="${(11 * scale).toFixed(1)}" ry="${(5.5 * scale).toFixed(1)}" fill="${f}" stroke="${s}" stroke-width="0.3" opacity="${o}"/>`
-    );
-    ellipses.push(
-      `<ellipse cx="${(baseCx - 4 * scale).toFixed(1)}" cy="${(baseCy - 9 * scale).toFixed(1)}" rx="${(7 * scale).toFixed(1)}" ry="${(4 * scale).toFixed(1)}" fill="${f}" stroke="none" opacity="${(o * 0.7).toFixed(2)}"/>`
-    );
     clouds.push(
-      `<g>` + ellipses.join("") + (mode === "off" ? "" : `<animateTransform attributeName="transform" type="translate" values="0,0;${driftX.toFixed(0)},0;0,0" dur="${dur}s" repeatCount="indefinite"/>`) + `</g>`
+      `<g>` + cloudVolume(baseCx, baseCy, scale, firstShape + i) + (mode === "off" ? "" : `<animateTransform attributeName="transform" type="translate" values="0,0;${driftX.toFixed(0)},0;0,0" dur="${dur}s" repeatCount="indefinite"/>`) + `</g>`
     );
   }
   return `<g class="terrain-clouds">${clouds.join("")}</g>`;
@@ -25409,12 +25738,16 @@ var init_sky = __esm({
     init_esm_shims();
     init_animation();
     init_math();
+    init_clouds();
+    init_moon();
+    init_sun();
     NUM_CLOUDS = 2;
   }
 });
 
 // src/themes/terrain/effects/water.ts
 function renderWaterOverlays(isoCells, palette, biomeMap) {
+  if (currentSurfaceContext()) return renderSurfaceWater(isoCells, palette, biomeMap);
   const overlays = [];
   let shimmerIdx = 0;
   const mode = currentMotionContext().mode;
@@ -25451,6 +25784,7 @@ function renderWaterOverlays(isoCells, palette, biomeMap) {
   return overlays.length > 0 ? `<g class="water-overlays">${overlays.join("")}</g>` : "";
 }
 function renderWaterRipples(isoCells, palette, biomeMap) {
+  if (currentSurfaceContext()) return renderSurfaceRipples(isoCells, palette, biomeMap);
   const ripples = [];
   const color = palette.assets.waterLight;
   const rng = seededRandom(isoCells.length * 7 + 31);
@@ -25482,10 +25816,16 @@ var init_water = __esm({
     init_animation();
     init_blocks();
     init_math();
+    init_surface_context();
+    init_surface_water();
   }
 });
 
 // src/themes/terrain/effects/particles.ts
+function renderSeasonalParticles(isoCells, seed, palette, seasonRotation) {
+  if (currentSurfaceContext()) return renderSeasonalWeather(isoCells, seed, palette);
+  return renderSnowParticles(isoCells, seed, seasonRotation) + renderFallingPetals(isoCells, seed, palette, seasonRotation) + renderFallingLeaves(isoCells, seed, palette, seasonRotation);
+}
 function renderSnowParticles(isoCells, seed, seasonRotation = 0) {
   const rng = seededRandom(seed + 9991);
   const particles = [];
@@ -25587,6 +25927,8 @@ var init_particles = __esm({
     init_math();
     init_seasons();
     init_selection3();
+    init_surface_context();
+    init_seasonal_weather();
   }
 });
 
@@ -26072,6 +26414,43 @@ var init_asset_symbols = __esm({
   }
 });
 
+// src/themes/terrain/effects/surface-budget.ts
+function existingMotionCount(markup, css) {
+  const animatedClasses = /* @__PURE__ */ new Set();
+  const styles = css + [...markup.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g)].map((match) => match[1]).join("");
+  for (const rule of styles.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    if (!ANIMATION.test(rule[2])) continue;
+    for (const name of rule[1].matchAll(/\.([\w-]+)/g)) animatedClasses.add(name[1]);
+  }
+  let count = (markup.match(/<(?:animate(?:Transform|Motion)?|set)\b/g) ?? []).length;
+  let previousTarget = -1;
+  for (const match of markup.matchAll(/\s(class|style)="([^"]*)"/g)) {
+    const animated = match[1] === "class" ? match[2].split(/\s+/).some((name) => animatedClasses.has(name)) : ANIMATION.test(match[2]);
+    if (!animated) continue;
+    const target = markup.lastIndexOf("<", match.index);
+    if (target !== previousTarget) count++;
+    previousTarget = target;
+  }
+  return count;
+}
+function reserveSurfaceMotion(existing, css, cells) {
+  if (!currentSurfaceContext() || currentMotionContext().mode !== "full") return;
+  const available = Math.max(0, 50 - existingMotionCount(existing, css));
+  const weather = Math.min(available, seasonalWeatherTargets(cells).length);
+  setSurfaceMotionLimits(Math.min(15, available - weather), weather);
+}
+var ANIMATION;
+var init_surface_budget = __esm({
+  "src/themes/terrain/effects/surface-budget.ts"() {
+    "use strict";
+    init_esm_shims();
+    init_animation();
+    init_surface_context();
+    init_seasonal_weather();
+    ANIMATION = /(?:^|;)\s*animation(?:-name)?\s*:\s*(?!none\b)/;
+  }
+});
+
 // src/themes/terrain/scene/render.ts
 function renderTerrainScene(scene, mode, options = {}) {
   const supported = /* @__PURE__ */ new Set([
@@ -26126,14 +26505,24 @@ function renderTerrainScene(scene, mode, options = {}) {
   const transform = fitScene(scene.bounds, sceneViewport(settings.layout));
   const seed = hash(scene.seed.root);
   const rotation = dateSeasonPosition(scene.fromDate, settings.hemisphere);
-  const body = renderMotionBranches({ mode: settings.motion, namespace }, () => {
-    const townSparkles = scene.layoutVersion < 3;
-    const css = renderTerrainCSS(isoCells, biomes, townSparkles) + renderAssetCSS() + renderEpicCSS();
-    const definitions = scene.wonders.length ? `<defs>${renderEpicGlowDefs(mode)}</defs>` : "";
-    const sky = renderCelestials(seed, reference, mode === "dark") + renderClouds(seed, reference);
-    const terrain = renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) + renderWaterOverlays(isoCells, reference, biomes) + renderWaterRipples(isoCells, reference, biomes) + renderDepthLayer(scene, isoCells, palettes, settings.artStyle, symbols) + renderDailyRewards(presented, palettes) + renderSnowParticles(isoCells, seed, rotation) + renderFallingPetals(isoCells, seed, reference, rotation) + renderFallingLeaves(isoCells, seed, reference, rotation) + renderAnimatedOverlays(isoCells, reference, townSparkles) + renderConsistencyEffects(scene.consistencyEffects ?? [], mode);
-    return (css ? svgStyle(css) : "") + definitions + `<svg x="0" y="0" width="${viewWidth}" height="${card ? 240 : viewHeight}" viewBox="0 0 840 240" aria-hidden="true">${sky}</svg><g class="terrain-fit" transform="translate(${svgNumber(transform.x)} ${svgNumber(transform.y)}) scale(${transform.scale.toFixed(6)})">${terrain}</g>`;
-  });
+  const body = withSurfaceContext(
+    settings,
+    () => renderMotionBranches({ mode: settings.motion, namespace }, () => {
+      const townSparkles = scene.layoutVersion < 3;
+      const css = renderTerrainCSS(isoCells, biomes, townSparkles) + renderAssetCSS() + renderEpicCSS();
+      const definitions = scene.wonders.length ? `<defs>${renderEpicGlowDefs(mode)}</defs>` : "";
+      const sky = renderCelestials(seed, reference, mode === "dark") + renderClouds(seed, reference);
+      const assets = renderDepthLayer(scene, isoCells, palettes, settings.artStyle, symbols) + renderDailyRewards(presented, palettes);
+      const overlays = renderAnimatedOverlays(
+        settings.artStyle === "miniature" ? isoCells.filter((cell) => cell.level100 < 10 || cell.level100 > 22) : isoCells,
+        reference,
+        townSparkles
+      ) + renderConsistencyEffects(scene.consistencyEffects ?? [], mode);
+      reserveSurfaceMotion(sky + assets + overlays, css, isoCells);
+      const terrain = renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) + renderWaterOverlays(isoCells, reference, biomes) + renderWaterRipples(isoCells, reference, biomes) + assets + renderSeasonalParticles(isoCells, seed, reference, rotation) + overlays;
+      return (css ? svgStyle(css) : "") + definitions + `<svg x="0" y="0" width="${viewWidth}" height="${card ? 240 : viewHeight}" viewBox="0 0 840 240" aria-hidden="true">${sky}</svg><g class="terrain-fit" transform="translate(${svgNumber(transform.x)} ${svgNumber(transform.y)}) scale(${transform.scale.toFixed(6)})">${terrain}</g>`;
+    })
+  );
   const description = `Isometric contribution terrain for @${scene.username} ${scene.fromDate ? `from ${scene.fromDate} to ${scene.toDate}` : "with no supplied contribution dates"}. ${formatNumber(scene.stats.total)} contributions across ${formatNumber(scene.stats.activeDays)} active days. ${scene.wonders.length} wonders discovered. ${scene.normalization.kind} normalization, maximum ${scene.normalization.maxCount}.`;
   const content = `<rect width="${viewWidth}" height="${viewHeight}" rx="10" fill="${mode === "dark" ? "#0d1117" : "#ffffff"}"/>` + (symbols?.definitions() ?? "") + body + renderPresentation(presented, reference);
   return svgRoot(
@@ -26172,6 +26561,8 @@ var init_render2 = __esm({
     init_rewards();
     init_consistency3();
     init_asset_symbols();
+    init_surface_context();
+    init_surface_budget();
   }
 });
 
@@ -26337,7 +26728,7 @@ var contributionWeeksSchema = z2.array(
     firstDay: contributionDateSchema,
     days: z2.array(contributionDaySchema).max(7)
   })
-).max(MAX_CONTRIBUTION_DAYS).superRefine((weeks, context) => {
+).max(MAX_CONTRIBUTION_DAYS).superRefine((weeks, context2) => {
   let count = 0;
   let total = 0;
   const dates = /* @__PURE__ */ new Set();
@@ -26346,7 +26737,7 @@ var contributionWeeksSchema = z2.array(
     for (const [dayIndex, day] of week.days.entries()) {
       total += day.count;
       if (dates.has(day.date)) {
-        context.addIssue({
+        context2.addIssue({
           code: "custom",
           path: [weekIndex, "days", dayIndex, "date"],
           message: "Duplicate contribution date"
@@ -26356,10 +26747,10 @@ var contributionWeeksSchema = z2.array(
     }
   }
   if (count > MAX_CONTRIBUTION_DAYS) {
-    context.addIssue({ code: "custom", message: "Import exceeds 20,000 contribution days" });
+    context2.addIssue({ code: "custom", message: "Import exceeds 20,000 contribution days" });
   }
   if (!Number.isSafeInteger(total)) {
-    context.addIssue({
+    context2.addIssue({
       code: "custom",
       message: "Contribution total exceeds the safe integer limit"
     });
@@ -26453,13 +26844,13 @@ init_boundary();
 init_schema();
 import { z as z3 } from "zod";
 var comparisonYearsSchema = z3.array(yearSchema).min(2).max(5).refine((years) => new Set(years).size === years.length, "Comparison years must be unique").transform((years) => [...years].sort((a, b) => a - b));
-var archiveSnapshotsSchema = z3.array(snapshotSchema).max(MAX_ARCHIVE_SNAPSHOTS).superRefine((snapshots, context) => {
+var archiveSnapshotsSchema = z3.array(snapshotSchema).max(MAX_ARCHIVE_SNAPSHOTS).superRefine((snapshots, context2) => {
   const identities = /* @__PURE__ */ new Set();
   let days = 0;
   for (const [index, snapshot] of snapshots.entries()) {
     const identity = `${snapshot.username.toLowerCase()}:${snapshot.year}`;
     if (identities.has(identity)) {
-      context.addIssue({
+      context2.addIssue({
         code: "custom",
         path: [index],
         message: "Duplicate username/year requires explicit replacement"
@@ -26469,7 +26860,7 @@ var archiveSnapshotsSchema = z3.array(snapshotSchema).max(MAX_ARCHIVE_SNAPSHOTS)
     days += snapshot.weeks.reduce((sum, week) => sum + week.days.length, 0);
   }
   if (days > MAX_CONTRIBUTION_DAYS) {
-    context.addIssue({
+    context2.addIssue({
       code: "custom",
       message: "Import exceeds 20,000 contribution days across snapshots"
     });
@@ -27775,11 +28166,11 @@ function namespaceInsertionOffset(ast) {
   }
   return importOffset ?? preImportOffset;
 }
-function rewriteCss(source, ids, context, xmlEntities, attributes) {
+function rewriteCss(source, ids, context2, xmlEntities, attributes) {
   const normalized = normalizeCssSource(source, xmlEntities);
   let ast;
   try {
-    ast = parse2(normalized.value, { context, parseCustomProperty: true, positions: true });
+    ast = parse2(normalized.value, { context: context2, parseCustomProperty: true, positions: true });
   } catch (error) {
     if (error instanceof Error) throw invalidCss3(`Unable to parse CSS: ${error.message}`);
     throw error;
@@ -27793,7 +28184,7 @@ function rewriteCss(source, ids, context, xmlEntities, attributes) {
       normalized,
       node,
       ids,
-      context === "stylesheet",
+      context2 === "stylesheet",
       xmlEntities,
       attributes,
       namespaces
@@ -28296,7 +28687,8 @@ var MIME = {
   ".png": "image/png",
   ".ico": "image/x-icon",
   ".woff2": "font/woff2",
-  ".webp": "image/webp"
+  ".webp": "image/webp",
+  ".txt": "text/plain; charset=utf-8"
 };
 function defaultAssetRoot() {
   const directory = dirname2(fileURLToPath2(import.meta.url));
@@ -28328,13 +28720,14 @@ async function serveAsset(root, rawPath, response) {
     if (!type || !(await stat(realFile)).isFile())
       throw new PreviewError(404, "not_found", "Asset not found.");
     const content = await readFile5(realFile);
+    const connections = path4.startsWith("/world/") ? "'self' https://api.github.com https://raw.githubusercontent.com https://*.github.io" : "'self'";
     response.writeHead(200, {
       "Content-Type": type,
       "Cache-Control": "no-cache",
       "X-Content-Type-Options": "nosniff",
       "Referrer-Policy": "no-referrer",
       "Cross-Origin-Resource-Policy": "same-origin",
-      "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
+      "Content-Security-Policy": `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src ${connections}; object-src 'none'; base-uri 'none'; frame-ancestors 'none'`
     });
     response.end(content);
   } catch (error) {

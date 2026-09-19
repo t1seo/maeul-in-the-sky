@@ -3,6 +3,23 @@ import type { TerrainPalette100 } from '../palette.js';
 import { seededRandom } from '../../../utils/math.js';
 import { getSeasonZone } from '../seasons.js';
 import { selectEvenly } from './selection.js';
+import { currentSurfaceContext } from '../scene/surface-context.js';
+import { renderSeasonalWeather } from './seasonal-weather.js';
+
+export function renderSeasonalParticles(
+  isoCells: IsoCell[],
+  seed: number,
+  palette: TerrainPalette100,
+  seasonRotation: number,
+): string {
+  if (currentSurfaceContext()) return renderSeasonalWeather(isoCells, seed, palette);
+  return (
+    renderSnowParticles(isoCells, seed, seasonRotation) +
+    renderFallingPetals(isoCells, seed, palette, seasonRotation) +
+    renderFallingLeaves(isoCells, seed, palette, seasonRotation)
+  );
+}
+
 export function renderSnowParticles(
   isoCells: IsoCell[],
   seed: number,

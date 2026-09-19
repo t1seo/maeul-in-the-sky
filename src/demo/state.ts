@@ -2,8 +2,13 @@ import type { SettingsV1 } from '../core/snapshot-types.js';
 import type { ColorMode } from '../core/types.js';
 import { z } from 'zod';
 import { parseSettings } from '../core/settings/parse.js';
+import { rendererVersionSchema, type RendererVersion } from './renderer-version.js';
 
-export type DemoSettings = { readonly document: SettingsV1; readonly mode: ColorMode };
+export type DemoSettings = {
+  readonly document: SettingsV1;
+  readonly mode: ColorMode;
+  readonly renderer: RendererVersion;
+};
 
 export function parseDemoQuery(search: string, light = false): DemoSettings {
   const query = new URLSearchParams(search);
@@ -39,16 +44,18 @@ export function parseDemoQuery(search: string, light = false): DemoSettings {
       settings,
     }),
     mode: z.enum(['dark', 'light']).parse(query.get('mode') ?? (light ? 'light' : 'dark')),
+    renderer: rendererVersionSchema.parse(query.get('renderer') ?? 'current'),
   };
 }
 
-export function demoQuery({ document, mode }: DemoSettings): string {
+export function demoQuery({ document, mode, renderer }: DemoSettings): string {
   const settings = document.settings;
   const query = new URLSearchParams({
     v: '1',
     user: document.username,
     preset: settings.preset,
     mode,
+    renderer,
     title: settings.title,
     density: String(settings.density),
     hemisphere: settings.hemisphere,

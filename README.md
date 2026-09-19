@@ -19,13 +19,15 @@
   <img alt="An animated isometric village built from a GitHub Contribution Calendar" src=".github/assets/preview-dark.svg" width="840">
 </picture>
 
-[**Try the preset demo**](https://t1seo.github.io/maeul-in-the-sky/) · [Quick start](#quick-start) · [npm](https://www.npmjs.com/package/maeul-in-the-sky) · [Showcase](SHOWCASE.md)
+[**Explore your sky world**](https://t1seo.github.io/maeul-in-the-sky/world/) · [Preset demo](https://t1seo.github.io/maeul-in-the-sky/) · [Quick start](#quick-start) · [npm](https://www.npmjs.com/package/maeul-in-the-sky) · [Showcase](SHOWCASE.md)
 
 </div>
 
 Maeul (마을) means “village” in Korean. Each day in your Contribution Calendar becomes part of a floating Terrain: quiet days form water and open land, while active days grow forests, farms, villages, cities, and rare wonders.
 
-The output is a pair of standalone SVG files. They work in profile READMEs, switch with GitHub’s color mode, and require no client-side JavaScript.
+The profile output is a pair of standalone SVG files. They work in profile READMEs, switch with GitHub’s color mode, and require no client-side JavaScript. The separate [world explorer](https://t1seo.github.io/maeul-in-the-sky/world/) opens that same history as an interactive island map or a genuine 3D miniature.
+
+Prefer the previous design? Choose **Classic** in the [SVG demo](https://t1seo.github.io/maeul-in-the-sky/?renderer=classic). It uses the preserved pre-upgrade renderer, and its setup workflow pins `05a10eff07575acf2c81adcd66a66bc501507217` so future updates do not change that design. The explorer’s version selector carries the same source history into either SVG version.
 
 **Current `main` documentation:** the asset, season, daily-growth and art-style improvements below are not included in published npm `1.4.0` or the current `v1` Action tag. This update targets `main` and the GitHub Pages demo; use the Action at `@main` or the source-checkout commands below.
 
@@ -45,10 +47,13 @@ The output is a pair of standalone SVG files. They work in profile READMEs, swit
 - Visible contribution range, active days, streaks, busiest month, and Wonder count
 - Banner/card layouts, full/subtle/off motion, static PNG, and a zoomable browser explorer
 - Versioned settings, contribution snapshots, multi-year comparisons, and local authenticated preview
+- A separate 2D/3D world with monthly islands, one connected annual island, or four seasonal islands
 
 The README previews and six preset images use seeded **synthetic data**, with 364 supplied days from **2025-01-05 to 2026-01-03**. They are examples, not a fetched account or a complete 2025 calendar. Sparse and maximum previews use separate seeded patterns; the original benchmark fixtures remain frozen for reproducible comparisons.
 
 ## Choose a village preset
+
+For the island map, interactive 3D, replay, world saves and visits, see the [world explorer guide](docs/world-explorer.md).
 
 Presets change the mix of extra decorations. They do not change contribution counts, elevation, colors or daily reward tiers.
 

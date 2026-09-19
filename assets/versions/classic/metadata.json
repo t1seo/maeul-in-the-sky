@@ -1,0 +1,24 @@
+{
+  "id": "classic",
+  "name": "Classic · before Sky World",
+  "commit": "05a10eff07575acf2c81adcd66a66bc501507217",
+  "repository": "https://github.com/t1seo/maeul-in-the-sky",
+  "license": "MIT",
+  "files": {
+    "browser.js": {
+      "source": "dist/browser.js",
+      "sha256": "44e02537900ec9d8a0f58b492ca4f4ba5ed7145f149929804c84272b725ae458",
+      "bytes": 1364130
+    },
+    "browser.js.map": {
+      "source": "dist/browser.js.map",
+      "sha256": "94b2f49819ded6d13244f9e8a0cfca9c1a1340dbcdcfbaed6e4754cbb310f3f2",
+      "bytes": 3142394
+    },
+    "browser.d.ts": {
+      "source": "dist/browser.d.ts",
+      "sha256": "bdf3ca4dd0ef62d12d3587503681a20a1aed054f8adf48608515490b2078e748",
+      "bytes": 26599
+    }
+  }
+}

@@ -87,6 +87,7 @@ describe('C08 complete village browser', () => {
             css: animated.length,
             smil: smil.length,
             names: animated.map((node) => getComputedStyle(node).animationName),
+            waterOnly: animated.every((node) => node.matches('path[data-water-current="true"]')),
           };
         });
         if (motion === 'off')
@@ -100,7 +101,8 @@ describe('C08 complete village browser', () => {
         if (motion === 'subtle' && preference === 'no-preference') {
           expect(counts.smil).toBeLessThanOrEqual(2);
           expect(counts.css).toBeLessThanOrEqual(4);
-          expect(counts.names.every((name) => name === 'subtle-water')).toBe(true);
+          expect(counts.names.every((name) => name.endsWith('--surface-flow'))).toBe(true);
+          expect(counts.waterOnly).toBe(true);
         }
         await writeFile(
           `${evidence}/${name}.json`,

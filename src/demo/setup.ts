@@ -1,11 +1,16 @@
 import type { SettingsV1 } from '../core/snapshot-types.js';
+import { RENDERER_VERSIONS, type RendererVersion } from './renderer-version.js';
 
 export type WorkflowResult =
   | { readonly ok: true; readonly content: string }
   | { readonly ok: false; readonly field: 'title' | 'layoutSeed'; readonly message: string };
 
-export function workflowDocument(document: SettingsV1): WorkflowResult {
+export function workflowDocument(
+  document: SettingsV1,
+  renderer: RendererVersion = 'current',
+): WorkflowResult {
   const { settings } = document;
+  const version = RENDERER_VERSIONS[renderer];
   if (settings.title.includes('${{')) {
     return {
       ok: false,
@@ -43,7 +48,9 @@ export function workflowDocument(document: SettingsV1): WorkflowResult {
     .join('\n');
   return {
     ok: true,
-    content: `name: Update Maeul in the Sky
+    content: `# Presentation: ${version.label}. ${version.description}
+# Settings and snapshot JSON store data/settings; select the presentation in this workflow or demo URL.
+name: Update Maeul in the Sky
 
 on:
   schedule:
@@ -60,7 +67,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v7
-      - uses: t1seo/maeul-in-the-sky@main
+      - uses: t1seo/maeul-in-the-sky@${version.revision}
         with:
           github_token: \${{ secrets.GITHUB_TOKEN }}
 ${inputs}

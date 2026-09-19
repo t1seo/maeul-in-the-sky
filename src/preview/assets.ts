@@ -15,6 +15,7 @@ const MIME: Readonly<Record<string, string>> = {
   '.ico': 'image/x-icon',
   '.woff2': 'font/woff2',
   '.webp': 'image/webp',
+  '.txt': 'text/plain; charset=utf-8',
 };
 
 export function defaultAssetRoot(): string {
@@ -58,14 +59,16 @@ export async function serveAsset(
     if (!type || !(await stat(realFile)).isFile())
       throw new PreviewError(404, 'not_found', 'Asset not found.');
     const content = await readFile(realFile);
+    const connections = path.startsWith('/world/')
+      ? "'self' https://api.github.com https://raw.githubusercontent.com https://*.github.io"
+      : "'self'";
     response.writeHead(200, {
       'Content-Type': type,
       'Cache-Control': 'no-cache',
       'X-Content-Type-Options': 'nosniff',
       'Referrer-Policy': 'no-referrer',
       'Cross-Origin-Resource-Policy': 'same-origin',
-      'Content-Security-Policy':
-        "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+      'Content-Security-Policy': `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src ${connections}; object-src 'none'; base-uri 'none'; frame-ancestors 'none'`,
     });
     response.end(content);
   } catch (error) {

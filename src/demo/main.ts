@@ -1,18 +1,21 @@
 import { VILLAGE_PRESETS, isVillagePreset } from '../core/presets.js';
-import { serializeSnapshot } from '../core/settings/serialize.js';
 import type { SettingsV1, SnapshotV1 } from '../core/snapshot-types.js';
+import type { TerrainRenderResult } from '../core/scene-types.js';
 import { setupArchive } from './archive.js';
 import { button, click, element, errorMessage, html, input, safeAction, status } from './dom.js';
-import { downloadBlob, downloadText, pngBlob } from './downloads.js';
 import { setupEncyclopedia, updateEncyclopedia } from './encyclopedia.js';
 import { setupZoom, updateExplorer } from './explorer.js';
 import { parseImportedData, readImportFile } from './imports.js';
 import { fetchPreview, localCapability } from './local-client.js';
-import { renderOptions, renderSnapshot, staticSnapshotSvg } from './preview.js';
+import { renderSnapshot } from './preview.js';
+import { CURRENT_RENDERER } from './renderers.js';
+import { setupVersionSelector } from './version-selector.js';
+import { setupSceneDownloads } from './scene-downloads.js';
 import { sampleSnapshot } from './sample.js';
-import { readForm, updateFormLabels, writeForm } from './settings.js';
+import { readForm, updateFormLabels, updatePresentationLabels, writeForm } from './settings.js';
 import { disableSetup, setupExports, updateSetup } from './setup-panel.js';
 import { demoQuery, parseDemoQuery, type DemoSettings } from './state.js';
+import { consumeDemoTransfer, setupWorldBridge } from './world-bridge.js';
 
 declare global {
   interface Window {
@@ -33,33 +36,30 @@ function main(): void {
     initialError = errorMessage(error);
     settings = parseDemoQuery('');
   }
+  const initialRenderer = settings.renderer;
+  settings = { ...settings, renderer: 'current' };
+  let renderer = CURRENT_RENDERER;
   let snapshot = sampleSnapshot();
   let output = renderSnapshot(snapshot, settings.document.settings);
   let valid = !initialError;
+  let editRevision = 0;
+  const form = element('#settings-form', HTMLFormElement);
+  const settingsUrl = () =>
+    `${window.location.pathname}${demoQuery(settings)}${window.location.hash}`;
+  const replaceHistory = () => window.history.replaceState({}, '', settingsUrl());
   const currentSnapshot = (): SnapshotV1 => ({ ...snapshot, settings: settings.document.settings });
-  const synchronize = (push = false): void => {
-    output = renderSnapshot(currentSnapshot());
+  setupWorldBridge(currentSnapshot, () => settings.renderer);
+  const synchronize = (push = false, prepared?: TerrainRenderResult): void => {
+    output =
+      prepared ??
+      renderSnapshot(currentSnapshot(), settings.document.settings, 'village', renderer);
     updateExplorer(output, snapshot, settings.mode);
+    html('preview-panel').dataset.renderer = renderer.version;
     updateEncyclopedia(output.metadata);
-    updateSetup(settings.document);
-    html('preset-name').textContent =
-      VILLAGE_PRESETS[settings.document.settings.preset].displayName;
-    html('preset-description').textContent =
-      VILLAGE_PRESETS[settings.document.settings.preset].description;
-    document
-      .querySelectorAll<HTMLButtonElement>('[data-preset]')
-      .forEach((node) =>
-        node.setAttribute(
-          'aria-pressed',
-          String(node.dataset.preset === settings.document.settings.preset),
-        ),
-      );
-    document
-      .querySelectorAll<HTMLButtonElement>('button[data-mode]')
-      .forEach((node) =>
-        node.setAttribute('aria-pressed', String(node.dataset.mode === settings.mode)),
-      );
-    const next = `${window.location.pathname}${demoQuery(settings)}${window.location.hash}`;
+    if (valid) updateSetup(settings.document, settings.renderer);
+    else disableSetup(html('settings-error').textContent ?? initialError);
+    updatePresentationLabels(settings);
+    const next = settingsUrl();
     if (
       push &&
       `${window.location.pathname}${window.location.search}${window.location.hash}` !== next
@@ -72,22 +72,29 @@ function main(): void {
     html('settings-error').hidden = !message;
     if (message) disableSetup(message);
   };
-  const restore = (document: SettingsV1, push = true): void => {
+  const restore = (document: SettingsV1, push = true, prepared?: TerrainRenderResult): void => {
+    editRevision++;
+    const rendered = prepared ?? renderSnapshot(snapshot, document.settings, 'village', renderer);
     settings = { ...settings, document };
     writeForm(document);
     input('repository').value = `${document.username}/${document.username}`;
     showValidation();
-    synchronize(push);
+    synchronize(push, rendered);
   };
   const openSnapshot = (incoming: SnapshotV1): void => {
+    const prepared = renderSnapshot(incoming, incoming.settings, 'village', renderer);
     snapshot = incoming;
-    restore({
-      schemaVersion: 1,
-      kind: 'maeul-settings',
-      username: incoming.username,
-      year: incoming.year,
-      settings: incoming.settings,
-    });
+    restore(
+      {
+        schemaVersion: 1,
+        kind: 'maeul-settings',
+        username: incoming.username,
+        year: incoming.year,
+        settings: incoming.settings,
+      },
+      true,
+      prepared,
+    );
     status(
       `Opened ${incoming.source.kind} data for @${incoming.username}. ${output.metadata.stats.total.toLocaleString()} actual contributions in the supplied dates.`,
     );
@@ -100,25 +107,60 @@ function main(): void {
   });
   window.maeulEnhanced = true;
   status('Your sample village is ready. Import a snapshot to explore your own history.');
-  const archive = setupArchive(currentSnapshot, () => settings.mode, openSnapshot);
+  const archive = setupArchive(
+    currentSnapshot,
+    () => settings.mode,
+    openSnapshot,
+    () => renderer,
+  );
+  const chooseVersion = setupVersionSelector(
+    () => settings,
+    (nextRenderer, restored, push) => {
+      const next = { ...(restored ?? settings), renderer: nextRenderer.version };
+      const prepared = renderSnapshot(snapshot, next.document.settings, 'village', nextRenderer);
+      renderer = nextRenderer;
+      settings = next;
+      if (restored) {
+        writeForm(settings.document);
+        input('repository').value = `${settings.document.username}/${settings.document.username}`;
+        showValidation();
+      }
+      synchronize(push, prepared);
+      if (!push) replaceHistory();
+      archive.refresh();
+    },
+    replaceHistory,
+    undefined,
+    () => editRevision,
+  );
   setupEncyclopedia();
-  setupZoom(() => ({ output, mode: settings.mode, snapshot: currentSnapshot() }));
+  const currentScene = () => ({
+    output,
+    mode: settings.mode,
+    snapshot: currentSnapshot(),
+    renderer,
+  });
+  setupZoom(currentScene);
+  setupSceneDownloads(currentScene);
   setupExports(
     () => ({ ...settings, document: readForm(settings.document.settings.preset) }),
     restore,
   );
-  const form = element('#settings-form', HTMLFormElement);
   form.addEventListener('submit', (event) => event.preventDefault());
   form.addEventListener('input', () => {
+    editRevision++;
     updateFormLabels();
     try {
-      updateSetup(readForm(settings.document.settings.preset));
+      const document = readForm(settings.document.settings.preset);
+      settings = { ...settings, document };
+      updateSetup(document, settings.renderer);
       showValidation();
     } catch (error) {
       showValidation(errorMessage(error));
     }
   });
   form.addEventListener('change', () => {
+    editRevision++;
     try {
       const document = readForm(settings.document.settings.preset);
       settings = { ...settings, document };
@@ -133,6 +175,7 @@ function main(): void {
       safeAction(() => {
         const preset = node.dataset.preset;
         if (!preset || !isVillagePreset(preset)) return;
+        editRevision++;
         input('density').value = String(VILLAGE_PRESETS[preset].density);
         restore(readForm(preset));
       }),
@@ -143,6 +186,7 @@ function main(): void {
       safeAction(() => {
         const mode = node.dataset.mode;
         if (mode !== 'light' && mode !== 'dark') return;
+        editRevision++;
         settings = { ...settings, mode };
         synchronize(true);
         archive.refresh();
@@ -151,9 +195,8 @@ function main(): void {
   );
   window.addEventListener('popstate', () => {
     try {
-      settings = parseDemoQuery(window.location.search);
-      restore(settings.document, false);
-      archive.refresh();
+      const restored = parseDemoQuery(window.location.search);
+      void chooseVersion(restored.renderer, restored, false);
     } catch (error) {
       showValidation(`Invalid settings link: ${errorMessage(error)}`);
     }
@@ -177,26 +220,6 @@ function main(): void {
     synchronize();
     status('Showing the fixed sample history. No account has been fetched.');
   });
-  click('download-svg', () =>
-    downloadText(output[settings.mode], `maeul-in-the-sky-${settings.mode}.svg`, 'image/svg+xml'),
-  );
-  click('download-snapshot', () =>
-    downloadText(
-      serializeSnapshot(currentSnapshot()),
-      `maeul-${snapshot.username}-${snapshot.year}.json`,
-    ),
-  );
-  click('download-png', async () => {
-    const dimensions = renderOptions(settings.document.settings);
-    const blob = await pngBlob(
-      staticSnapshotSvg(currentSnapshot(), settings.mode),
-      dimensions.width,
-      dimensions.height,
-      settings.mode === 'light',
-    );
-    downloadBlob(blob, `maeul-in-the-sky-${settings.mode}.png`);
-    status('Downloaded a complete static PNG at 2× resolution.');
-  });
   safeAction(async () => {
     const capability = await localCapability(new URL(window.location.href));
     html('service-status').textContent = capability.message;
@@ -219,6 +242,8 @@ function main(): void {
       button('fetch-preview').disabled = false;
     }
   });
+  consumeDemoTransfer(openSnapshot);
+  if (initialRenderer === 'classic') void chooseVersion(initialRenderer, undefined, false);
   if (initialError)
     showValidation(
       `Invalid settings link: ${initialError}. Correct your settings to enable workflow export.`,

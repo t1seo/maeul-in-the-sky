@@ -1,0 +1,84 @@
+{
+  "comparisons": [
+    {
+      "fixture": "empty-banner-dark",
+      "svgIdentical": true,
+      "sha256": "7f94b463ab2debb1d9b85bbd9c2b39eb975e10a5aac1c9c882712986ebf2b8fa"
+    },
+    {
+      "fixture": "empty-banner-light",
+      "svgIdentical": true,
+      "sha256": "063df9293c5a43b5e81239195542695f0e7e1cfe78b81fc8e31253961e966ddb"
+    },
+    {
+      "fixture": "empty-card-dark",
+      "svgIdentical": true,
+      "sha256": "0319e1ceeb62ff82dd00e024e48cf35941e7557dc0d5e1937a19eb1ad8f5cc73"
+    },
+    {
+      "fixture": "empty-card-light",
+      "svgIdentical": true,
+      "sha256": "775f3f06b9b2f48c631ed35795f8f23068f45992271e5f6864534c1651b319b4"
+    },
+    {
+      "fixture": "mixed-banner-dark",
+      "svgIdentical": true,
+      "sha256": "45999c3e027b207b6a17ae847ae91232303382cfb1f6f0618d8c26399c1da45d"
+    },
+    {
+      "fixture": "mixed-banner-light",
+      "svgIdentical": true,
+      "sha256": "99075a3e2466b249e82fda726b899d9cd9d95ed5070940822bd38176831ba602"
+    },
+    {
+      "fixture": "mixed-card-dark",
+      "svgIdentical": true,
+      "sha256": "0caa1eba1f28fa84a361f8fc0928065e5b86c4b898e31982916d9cd81dcbc488"
+    },
+    {
+      "fixture": "mixed-card-light",
+      "svgIdentical": true,
+      "sha256": "d08a64dbcd41c56c5a792865e8ea9be839bb0a56c065fd340afd638d75d09e75"
+    },
+    {
+      "fixture": "full-banner-dark",
+      "svgIdentical": true,
+      "sha256": "958a59cdcd32b5853ef566d97a2109f761cd48b2b5398a2806dcf5871276122b"
+    },
+    {
+      "fixture": "full-banner-light",
+      "svgIdentical": true,
+      "sha256": "f33b50daf07a704aa681f8f956a9e0362013e0f8431a2c6afaaae72c2384d17c"
+    },
+    {
+      "fixture": "full-card-dark",
+      "svgIdentical": true,
+      "sha256": "90d181570bf25ef0b088cbfbb43378054e481d7fe97f65706c1ad3bc3e8e50e2"
+    },
+    {
+      "fixture": "full-card-light",
+      "svgIdentical": true,
+      "sha256": "803acf793f5633946b3c086f08b8b4771acd59f09211e82b41f50feabccd4d1b"
+    }
+  ],
+  "profiles": [
+    {
+      "username": "t1seo",
+      "cssTargets": 45,
+      "smilElements": 5,
+      "combined": 50
+    },
+    {
+      "username": "octocat",
+      "cssTargets": 43,
+      "smilElements": 4,
+      "combined": 47
+    },
+    {
+      "username": "surface-check",
+      "cssTargets": 39,
+      "smilElements": 8,
+      "combined": 47
+    }
+  ]
+}

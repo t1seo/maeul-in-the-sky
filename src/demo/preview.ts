@@ -1,4 +1,5 @@
-import { renderTerrain, snapshotToContributionData } from '../browser.js';
+import { snapshotToContributionData } from '../browser.js';
+import { CURRENT_RENDERER, type DemoRenderer } from './renderers.js';
 import type { ResolvedRenderSettings } from '../core/render-options.js';
 import type { SnapshotV1 } from '../core/snapshot-types.js';
 import type { ColorMode, ThemeOptions } from '../core/types.js';
@@ -16,19 +17,26 @@ export function renderSnapshot(
   snapshot: SnapshotV1,
   settings = snapshot.settings,
   namespace = 'village',
+  renderer: DemoRenderer = CURRENT_RENDERER,
 ): TerrainRenderResult {
   const presented =
     snapshot.source.kind === 'sample' && !settings.title.endsWith(' · sample data')
       ? { ...settings, title: `${settings.title.slice(0, 986)} · sample data` }
       : settings;
-  return renderTerrain(snapshotToContributionData(snapshot), {
+  return renderer.renderTerrain(snapshotToContributionData(snapshot), {
     ...renderOptions(presented),
     namespace,
   });
 }
 
-export function staticSnapshotSvg(snapshot: SnapshotV1, mode: ColorMode): string {
-  return renderSnapshot(snapshot, { ...snapshot.settings, motion: 'off' })[mode];
+export function staticSnapshotSvg(
+  snapshot: SnapshotV1,
+  mode: ColorMode,
+  renderer: DemoRenderer = CURRENT_RENDERER,
+): string {
+  return renderSnapshot(snapshot, { ...snapshot.settings, motion: 'off' }, 'village', renderer)[
+    mode
+  ];
 }
 
 export function mountSvg(target: HTMLElement, svg: string): SVGSVGElement {

@@ -72,11 +72,15 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run test:artifact
+      - name: Verify committed runtime bundles
+        run: |
+          git diff --exit-code -- dist docs/demo/app docs/demo/world/app docs/demo/versions
+          test -z "$(git ls-files --others --exclude-standard dist docs/demo/app docs/demo/world/app docs/demo/versions)"
 
   browser:
     name: Browser Regression
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -111,7 +115,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium
       - run: npm run build
-      - run: npx playwright test tests/visual/static.spec.ts --project=chromium-desktop
+      - run: npx playwright test tests/visual/static.spec.ts tests/visual/world-static.spec.ts --project=chromium-desktop
       - uses: actions/upload-artifact@v4
         if: always()
         with:

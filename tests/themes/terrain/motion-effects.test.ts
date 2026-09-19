@@ -32,7 +32,7 @@ describe('C08-full-subtle-off effects', () => {
     // Given / When: all effect producers render the same scene with motion off.
     const svg = withMotionContext({ mode: 'off', namespace: '' }, renderEffects);
     // Then: base clouds, water and sparkles are visible without animation sources.
-    expect(svg).toContain('<ellipse');
+    expect(svg.match(/class="cloud-body"/g)).toHaveLength(2);
     expect(svg).toContain('<polygon');
     expect(svg).toContain('<circle');
     expect(svg).not.toMatch(/@keyframes|animation\s*:|<animate/);

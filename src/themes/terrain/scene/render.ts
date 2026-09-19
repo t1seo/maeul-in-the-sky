@@ -17,9 +17,7 @@ import {
   renderWaterOverlays,
   renderWaterRipples,
   renderCelestials,
-  renderSnowParticles,
-  renderFallingPetals,
-  renderFallingLeaves,
+  renderSeasonalParticles,
 } from '../effects.js';
 import { hash } from '../../../utils/math.js';
 import { fitScene, sceneViewport } from './bounds.js';
@@ -29,6 +27,8 @@ import { renderPresentation } from './presentation.js';
 import { renderDailyRewards } from './rewards.js';
 import { renderConsistencyEffects } from '../effects/consistency.js';
 import { AssetSymbols } from './asset-symbols.js';
+import { withSurfaceContext } from './surface-context.js';
+import { reserveSurfaceMotion } from '../effects/surface-budget.js';
 
 export function renderTerrainScene(
   scene: TerrainScene,
@@ -88,30 +88,41 @@ export function renderTerrainScene(
   const transform = fitScene(scene.bounds, sceneViewport(settings.layout));
   const seed = hash(scene.seed.root);
   const rotation = dateSeasonPosition(scene.fromDate, settings.hemisphere);
-  const body = renderMotionBranches({ mode: settings.motion, namespace }, () => {
-    const townSparkles = scene.layoutVersion < 3;
-    const css =
-      renderTerrainCSS(isoCells, biomes, townSparkles) + renderAssetCSS() + renderEpicCSS();
-    const definitions = scene.wonders.length ? `<defs>${renderEpicGlowDefs(mode)}</defs>` : '';
-    const sky = renderCelestials(seed, reference, mode === 'dark') + renderClouds(seed, reference);
-    const terrain =
-      renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) +
-      renderWaterOverlays(isoCells, reference, biomes) +
-      renderWaterRipples(isoCells, reference, biomes) +
-      renderDepthLayer(scene, isoCells, palettes, settings.artStyle, symbols) +
-      renderDailyRewards(presented, palettes) +
-      renderSnowParticles(isoCells, seed, rotation) +
-      renderFallingPetals(isoCells, seed, reference, rotation) +
-      renderFallingLeaves(isoCells, seed, reference, rotation) +
-      renderAnimatedOverlays(isoCells, reference, townSparkles) +
-      renderConsistencyEffects(scene.consistencyEffects ?? [], mode);
-    return (
-      (css ? svgStyle(css) : '') +
-      definitions +
-      `<svg x="0" y="0" width="${viewWidth}" height="${card ? 240 : viewHeight}" viewBox="0 0 840 240" aria-hidden="true">${sky}</svg>` +
-      `<g class="terrain-fit" transform="translate(${svgNumber(transform.x)} ${svgNumber(transform.y)}) scale(${transform.scale.toFixed(6)})">${terrain}</g>`
-    );
-  });
+  const body = withSurfaceContext(settings, () =>
+    renderMotionBranches({ mode: settings.motion, namespace }, () => {
+      const townSparkles = scene.layoutVersion < 3;
+      const css =
+        renderTerrainCSS(isoCells, biomes, townSparkles) + renderAssetCSS() + renderEpicCSS();
+      const definitions = scene.wonders.length ? `<defs>${renderEpicGlowDefs(mode)}</defs>` : '';
+      const sky =
+        renderCelestials(seed, reference, mode === 'dark') + renderClouds(seed, reference);
+      const assets =
+        renderDepthLayer(scene, isoCells, palettes, settings.artStyle, symbols) +
+        renderDailyRewards(presented, palettes);
+      const overlays =
+        renderAnimatedOverlays(
+          settings.artStyle === 'miniature'
+            ? isoCells.filter((cell) => cell.level100 < 10 || cell.level100 > 22)
+            : isoCells,
+          reference,
+          townSparkles,
+        ) + renderConsistencyEffects(scene.consistencyEffects ?? [], mode);
+      reserveSurfaceMotion(sky + assets + overlays, css, isoCells);
+      const terrain =
+        renderPreparedTerrainBlocks(isoCells, palettes, rotation, biomes, settings.hemisphere) +
+        renderWaterOverlays(isoCells, reference, biomes) +
+        renderWaterRipples(isoCells, reference, biomes) +
+        assets +
+        renderSeasonalParticles(isoCells, seed, reference, rotation) +
+        overlays;
+      return (
+        (css ? svgStyle(css) : '') +
+        definitions +
+        `<svg x="0" y="0" width="${viewWidth}" height="${card ? 240 : viewHeight}" viewBox="0 0 840 240" aria-hidden="true">${sky}</svg>` +
+        `<g class="terrain-fit" transform="translate(${svgNumber(transform.x)} ${svgNumber(transform.y)}) scale(${transform.scale.toFixed(6)})">${terrain}</g>`
+      );
+    }),
+  );
   const description =
     `Isometric contribution terrain for @${scene.username} ${scene.fromDate ? `from ${scene.fromDate} to ${scene.toDate}` : 'with no supplied contribution dates'}. ` +
     `${formatNumber(scene.stats.total)} contributions across ${formatNumber(scene.stats.activeDays)} active days. ` +
