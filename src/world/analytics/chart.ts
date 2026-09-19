@@ -153,12 +153,18 @@ export function chart(
     canvas.append(node);
     if (labels.at(-1)?.text !== point.label) labels.push({ text: point.label, x: center });
   }
-  const spacing = id === 'analytics-weekdays' ? 34 : 65;
-  let previousLabel = -Infinity;
+  const finalLabel = labels.at(-1);
+  const finalLabelLeft = finalLabel ? finalLabel.x - finalLabel.text.length * 6.5 : right;
+  let previousLabelRight = -Infinity;
   for (const [index, label] of labels.entries()) {
+    const anchor = index === 0 ? 'start' : index === labels.length - 1 ? 'end' : 'middle';
+    const labelWidth = label.text.length * 6.5;
+    const labelLeft =
+      label.x - (anchor === 'start' ? 0 : anchor === 'end' ? labelWidth : labelWidth / 2);
+    const labelRight = labelLeft + labelWidth;
     if (
-      label.x - previousLabel >= spacing &&
-      (index === 0 || right - label.x >= spacing || index === labels.length - 1)
+      labelLeft >= previousLabelRight + 10 &&
+      (index === 0 || index === labels.length - 1 || labelRight <= finalLabelLeft - 10)
     ) {
       canvas.append(
         svg(
@@ -166,13 +172,13 @@ export function chart(
           {
             x: label.x,
             y: 223,
-            'text-anchor': index === 0 ? 'start' : index === labels.length - 1 ? 'end' : 'middle',
+            'text-anchor': anchor,
             class: 'analytics-axis',
           },
           label.text,
         ),
       );
-      previousLabel = label.x;
+      previousLabelRight = labelRight;
     }
   }
   const tooltip = text('output', 'Focus or point to a value for details.', 'analytics-tooltip');

@@ -34,9 +34,14 @@ test.each([240, 360, 440])(
     const host = document.createElement('div');
     host.id = 'paired-bars';
     host.style.width = `${width}px`;
+    host.style.font = '11px sans-serif';
     document.body.append(host);
     const points = Array.from({ length: 26 }, (_, index) => ({
-      label: String(Math.floor(index / 2)),
+      label: new Date(Date.UTC(2025, 8 + Math.floor(index / 2), 1)).toLocaleDateString('en-US', {
+        month: 'short',
+        year: 'numeric',
+        timeZone: 'UTC',
+      }),
       description: `Monthly series ${index}`,
       value: index + 1,
       position: Math.floor(index / 2) * 3 + (index % 2),
@@ -52,5 +57,11 @@ test.each([240, 360, 440])(
       previousRight = left + Number(bar.getAttribute('width'));
     }
     expect(previousRight).toBeCloseTo(width - 18, 6);
+    let labelRight = -Infinity;
+    for (const label of host.querySelectorAll<SVGTextElement>('text[y="223"]')) {
+      const bounds = label.getBoundingClientRect();
+      expect(bounds.left).toBeGreaterThanOrEqual(labelRight + 4);
+      labelRight = bounds.right;
+    }
   },
 );
