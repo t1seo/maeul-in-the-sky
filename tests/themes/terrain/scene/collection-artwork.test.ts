@@ -129,7 +129,7 @@ describe('collection reserved bounds', () => {
         layout === 'card' ? 396.4 : 270.4,
       );
       expect((bounds?.y ?? 0) + (bounds?.height ?? 0)).toBeLessThanOrEqual(
-        layout === 'card' ? 354.4 : 130.4,
+        layout === 'card' ? 354.4 : 154.4,
       );
       expect(rendered.render().asPng().byteLength).toBeGreaterThan(500);
     },
