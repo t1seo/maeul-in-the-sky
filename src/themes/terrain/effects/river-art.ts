@@ -45,6 +45,39 @@ export function renderRiverDepths(): string {
   );
 }
 
+export function renderRiverConnections(
+  liquid: readonly IsoCell[],
+  observed: ReadonlyMap<string, IsoCell>,
+  biomes: ReadonlyMap<string, BiomeContext>,
+  water: string,
+): string {
+  const rivers = liquid.filter((cell) => biomes.get(`${cell.week},${cell.day}`)?.isRiver);
+  const positions = new Set(rivers.map((cell) => `${cell.week},${cell.day}`));
+  const liquidPositions = new Set(liquid.map((cell) => `${cell.week},${cell.day}`));
+  const links = rivers.flatMap((cell) =>
+    [-1, 1].flatMap((offset) => {
+      const flanks = [`${cell.week},${cell.day + offset}`, `${cell.week + 1},${cell.day}`];
+      if (
+        !positions.has(`${cell.week + 1},${cell.day + offset}`) ||
+        flanks.some((key) => {
+          const neighbor = observed.get(key);
+          return (
+            !neighbor ||
+            (neighbor.level100 >= 9 && neighbor.level100 <= 22 && !liquidPositions.has(key))
+          );
+        })
+      )
+        return [];
+      const x = cell.isoX + (offset === -1 ? 8 : 0);
+      const y = cell.isoY + (offset === 1 ? 3.5 : 0);
+      return [`M${svgNumber(x - 1)},${svgNumber(y)}h2`];
+    }),
+  );
+  return links.length
+    ? `<path data-river-links="true" d="${links.join('')}" fill="none" stroke="${water}" stroke-width="1.4" stroke-linecap="round"/>`
+    : '';
+}
+
 export function renderRiverBanks(
   cell: IsoCell,
   observed: ReadonlyMap<string, IsoCell>,

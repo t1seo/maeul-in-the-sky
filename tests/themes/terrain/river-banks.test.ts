@@ -43,6 +43,35 @@ describe('natural river banks', () => {
     expect(renderSurfaceWater(cells, palette, biomes)).not.toContain('data-river-bank=');
   });
 
+  it('gives diagonal river contacts a visible throat without drawing across missing dates', () => {
+    const cells = Array.from({ length: 28 }, (_, index) => cell(Math.floor(index / 7), index % 7));
+    const biomes = new Map(['0,1', '1,2', '2,1', '3,2'].map((key) => [key, river]));
+    const output = renderSurfaceWater(cells, palette, biomes);
+    const links = output.match(/data-river-links="true" d="([^"]+)"/);
+    expect(links).not.toBeNull();
+    expect(links?.[1].match(/M/g)).toHaveLength(3);
+    const missing = renderSurfaceWater([cell(0, 1), cell(2, 1)], palette, biomes);
+    expect(missing).not.toContain('data-river-links=');
+  });
+
+  it('does not widen diagonal contacts over missing ground or frozen river cells', () => {
+    const cells = [cell(0, 1), cell(1, 2), cell(0, 2), cell(1, 1)];
+    const biomes = new Map(['0,1', '1,2'].map((key) => [key, river]));
+    const frozen = cells.map((value) => ({ ...value, level100: 15, date: '2025-01-01' }));
+    expect(renderSurfaceWater(cells.slice(0, 3), palette, biomes)).not.toContain(
+      'data-river-links=',
+    );
+    expect(renderSurfaceWater(frozen, palette, biomes)).not.toContain('data-river-links=');
+  });
+
+  it('keeps neighboring ice intact when unfrozen rivers meet at its corner', () => {
+    const cells = [cell(0, 1), cell(1, 2), cell(0, 2, 15), cell(1, 1, 15)];
+    const biomes = new Map(['0,1', '1,2'].map((key) => [key, river]));
+    const winter = cells.map((value) => ({ ...value, date: value.date?.replace('-07-', '-01-') }));
+    expect(renderSurfaceWater(winter, palette, biomes)).not.toContain('data-river-links=');
+    expect(renderSurfaceWater(cells, palette, biomes)).toContain('data-river-links=');
+  });
+
   it('keeps all bank control points inside the tile and away from diagonal river contacts', () => {
     const center = cell(1, 2);
     const surrounding = [cell(0, 2), cell(2, 2), cell(1, 1), cell(1, 3)];

@@ -8,7 +8,12 @@ import { currentSurfaceContext } from '../scene/surface-context.js';
 import { selectEvenly } from './selection.js';
 import { liquidSurfaceCells, waterfallOutlets } from './water-topology.js';
 import { movingWaterfallCount } from './waterfalls.js';
-import { renderRiverBanks, renderRiverDepths, riverArtwork } from './river-art.js';
+import {
+  renderRiverBanks,
+  renderRiverConnections,
+  renderRiverDepths,
+  riverArtwork,
+} from './river-art.js';
 
 export function movingSurfaceCells(
   cells: readonly IsoCell[],
@@ -31,8 +36,9 @@ export function renderSurfaceWater(
 ): string {
   const observed = new Map(cells.map((cell) => [`${cell.week},${cell.day}`, cell]));
   const water = lerpColor(palette.assets.water, '#48aa9e', 0.62);
+  const liquid = liquidSurfaceCells(cells, biomes);
   let hasRiver = false;
-  const shapes = liquidSurfaceCells(cells, biomes).flatMap((cell) => {
+  const shapes = liquid.flatMap((cell) => {
     const biome = biomes.get(`${cell.week},${cell.day}`);
     if (!biome?.isRiver && !biome?.isPond) return [];
     const { isoX: x, isoY: y } = cell;
@@ -54,8 +60,9 @@ export function renderSurfaceWater(
     ];
   });
   const definitions = hasRiver ? renderRiverDepths() : '';
+  const connections = renderRiverConnections(liquid, observed, biomes, water);
   return shapes.length
-    ? `${definitions}<g class="water-overlays" fill="${water}">${shapes.join('')}</g>`
+    ? `${definitions}<g class="water-overlays" fill="${water}">${shapes.join('')}${connections}</g>`
     : '';
 }
 

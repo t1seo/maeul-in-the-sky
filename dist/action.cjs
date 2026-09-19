@@ -90170,6 +90170,25 @@ function renderRiverDepths() {
     (path3, variant) => `<path id="${motionId(`river-pool-${variant}`)}" d="${path3}" fill="url(#${id})"/>`
   ).join("") + "</defs>";
 }
+function renderRiverConnections(liquid, observed, biomes, water) {
+  const rivers = liquid.filter((cell) => biomes.get(`${cell.week},${cell.day}`)?.isRiver);
+  const positions = new Set(rivers.map((cell) => `${cell.week},${cell.day}`));
+  const liquidPositions = new Set(liquid.map((cell) => `${cell.week},${cell.day}`));
+  const links = rivers.flatMap(
+    (cell) => [-1, 1].flatMap((offset) => {
+      const flanks = [`${cell.week},${cell.day + offset}`, `${cell.week + 1},${cell.day}`];
+      if (!positions.has(`${cell.week + 1},${cell.day + offset}`) || flanks.some((key) => {
+        const neighbor = observed.get(key);
+        return !neighbor || neighbor.level100 >= 9 && neighbor.level100 <= 22 && !liquidPositions.has(key);
+      }))
+        return [];
+      const x = cell.isoX + (offset === -1 ? 8 : 0);
+      const y = cell.isoY + (offset === 1 ? 3.5 : 0);
+      return [`M${svgNumber(x - 1)},${svgNumber(y)}h2`];
+    })
+  );
+  return links.length ? `<path data-river-links="true" d="${links.join("")}" fill="none" stroke="${water}" stroke-width="1.4" stroke-linecap="round"/>` : "";
+}
 function renderRiverBanks(cell, observed, biomes) {
   const identity = hash2(cell.date ?? `${cell.week},${cell.day}`);
   return EDGES.flatMap(([week, day, ax, ay, bx, by], index) => {
@@ -90197,8 +90216,9 @@ function movingSurfaceCells(cells, biomes) {
 function renderSurfaceWater(cells, palette, biomes) {
   const observed = new Map(cells.map((cell) => [`${cell.week},${cell.day}`, cell]));
   const water = lerpColor(palette.assets.water, "#48aa9e", 0.62);
+  const liquid = liquidSurfaceCells(cells, biomes);
   let hasRiver = false;
-  const shapes = liquidSurfaceCells(cells, biomes).flatMap((cell) => {
+  const shapes = liquid.flatMap((cell) => {
     const biome = biomes.get(`${cell.week},${cell.day}`);
     if (!biome?.isRiver && !biome?.isPond) return [];
     const { isoX: x, isoY: y } = cell;
@@ -90216,7 +90236,8 @@ function renderSurfaceWater(cells, palette, biomes) {
     ];
   });
   const definitions = hasRiver ? renderRiverDepths() : "";
-  return shapes.length ? `${definitions}<g class="water-overlays" fill="${water}">${shapes.join("")}</g>` : "";
+  const connections = renderRiverConnections(liquid, observed, biomes, water);
+  return shapes.length ? `${definitions}<g class="water-overlays" fill="${water}">${shapes.join("")}${connections}</g>` : "";
 }
 function renderSurfaceRipples(cells, palette, biomes) {
   const moving = new Set(movingSurfaceCells(cells, biomes));
