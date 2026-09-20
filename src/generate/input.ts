@@ -70,6 +70,8 @@ export async function resolveGenerationInput(
       request.villageStyle,
       request.normalization,
       request.layoutSeed,
+      request.terrainMode,
+      request.landscapeLayout,
     ].some((value) => value !== undefined && value !== '');
   return { username, year, settings, snapshot, advanced, ...output };
 }

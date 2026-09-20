@@ -15,6 +15,7 @@ export function updateExplorer(
 ): void {
   const { metadata } = output;
   html('preview-panel').dataset.mode = mode;
+  html('preview-panel').dataset.terrainMode = metadata.terrainMode ?? 'calendar';
   const target = html('live-terrain');
   const root = mountSvg(target, output[mode]);
   target.hidden = false;
@@ -34,7 +35,10 @@ export function updateExplorer(
       ? `Sample Contribution Calendar for @${snapshot.username}. ${metadata.dataDayCount} supplied days. Editing the setup username does not fetch an account.`
       : `@${snapshot.username} · Source: ${snapshot.source.kind}${snapshot.source.fetchedAt ? ` · Fetched ${snapshot.source.fetchedAt}` : ''}. ${metadata.dataDayCount} supplied days; ${metadata.missingDayCount} missing days are not counted as zero.`;
   html('scale-note').textContent =
-    `${metadata.normalization.kind === 'relative' ? 'Relative P90' : 'Fixed'} height scale: ${metadata.normalization.maxCount} contributions. ${metadata.normalization.kind === 'relative' ? 'Heights can change when this history changes.' : 'Equal counts share equal heights at this maximum.'}`;
+    metadata.terrainMode === 'landscape'
+      ? 'Landscape elevation follows geography. Contributions determine daily rewards and earned Wonders; explore a date to see its actual count.'
+      : `${metadata.normalization.kind === 'relative' ? 'Relative P90' : 'Fixed'} height scale: ${metadata.normalization.maxCount} contributions. ${metadata.normalization.kind === 'relative' ? 'Heights can change when this history changes.' : 'Equal counts share equal heights at this maximum.'}`;
+  html('activity-legend').hidden = metadata.terrainMode === 'landscape';
   const dateSelect = select('date-select');
   const previousDate = dateSelect.value;
   dateSelect.replaceChildren(

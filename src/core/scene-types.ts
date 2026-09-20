@@ -1,5 +1,10 @@
 import type { NormalizationSummary, ResolvedRenderSettings } from './render-options.js';
 import type { ContributionStats } from './types.js';
+import type {
+  LandscapeBiome,
+  LandscapeGeography,
+  LandscapeLayout,
+} from '../themes/terrain/landscape/types.js';
 
 export type SceneBounds = {
   readonly x: number;
@@ -13,6 +18,7 @@ export type SceneBiome = {
   readonly isPond: boolean;
   readonly nearWater: boolean;
   readonly forestDensity: number;
+  readonly landscapeBiome?: LandscapeBiome;
 };
 
 export type RewardTier = 0 | 1 | 2 | 3 | 4 | 5;
@@ -140,6 +146,15 @@ export type TerrainScene = {
   readonly consistencyEffects?: readonly SceneConsistencyEffect[];
   readonly neighborhoodPaths: readonly NeighborhoodPath[];
   readonly bounds: SceneBounds;
+  readonly geography?: LandscapeGeography;
+};
+
+export type SceneScenery = {
+  readonly id: string;
+  readonly catalogId: string;
+  readonly cx: number;
+  readonly cy: number;
+  readonly footprint: SceneBounds;
 };
 
 export type TerrainCellMetadata = {
@@ -176,6 +191,9 @@ export type TerrainMetadata = {
   readonly rewards?: readonly SceneDailyReward[];
   readonly consistencyEffects?: readonly SceneConsistencyEffect[];
   readonly neighborhoodPaths: readonly NeighborhoodPath[];
+  readonly terrainMode?: 'landscape';
+  readonly landscapeLayout?: LandscapeLayout;
+  readonly scenery?: readonly SceneScenery[];
 };
 
 export type TerrainRenderResult = {

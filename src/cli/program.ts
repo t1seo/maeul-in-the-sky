@@ -29,6 +29,8 @@ const cliSchema = z.strictObject({
   format: optionText,
   scale: optionText,
   layoutSeed: z.string().optional(),
+  terrainMode: optionText,
+  landscapeLayout: optionText,
 });
 
 export interface CliDependencies {
@@ -66,6 +68,8 @@ export function createCliProgram(
     .option('--write-snapshot [path]', 'Write a reusable snapshot JSON')
     .option('--motion <mode>', 'full, subtle, off')
     .option('--layout <layout>', 'banner or card')
+    .option('--terrain-mode <mode>', 'calendar (default) or landscape')
+    .option('--landscape-layout <layout>', 'island, archipelago, valley (landscape mode only)')
     .option('--style <style>', 'classic or korean')
     .option('--art-style <style>', 'miniature or pixel')
     .option('--village-style <style>', 'Alias for --style')

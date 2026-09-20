@@ -6,6 +6,7 @@ import {
 } from './renderer-version.js';
 import { CURRENT_RENDERER, loadClassicRenderer, type DemoRenderer } from './renderers.js';
 import type { DemoSettings } from './state.js';
+import { updateFormLabels } from './settings.js';
 
 export function setupVersionSelector(
   current: () => DemoSettings,
@@ -33,7 +34,10 @@ export function setupVersionSelector(
       const renderer = version === 'current' ? CURRENT_RENDERER : await load();
       if (generation !== request) return;
       apply(renderer, editRevision() === beforeLoading ? settings : undefined, push);
-      message.textContent = `${RENDERER_VERSIONS[version].label} applied. Your contribution history and settings are preserved.`;
+      message.textContent =
+        version === 'classic'
+          ? 'Classic · original artwork applied in calendar terrain. Your contribution dates and counts are preserved; landscape is available with Current artwork.'
+          : `${RENDERER_VERSIONS[version].label} applied. Your contribution history and settings are preserved.`;
     } catch (error) {
       if (generation !== request) return;
       picker.value = current().renderer;
@@ -41,7 +45,10 @@ export function setupVersionSelector(
       message.textContent = `Could not apply ${RENDERER_VERSIONS[version].label}: ${errorMessage(error)} Your previous scene is kept. Select the version again to retry.`;
       recover();
     } finally {
-      if (generation === request) html('renderer-selection').setAttribute('aria-busy', 'false');
+      if (generation === request) {
+        html('renderer-selection').setAttribute('aria-busy', 'false');
+        updateFormLabels();
+      }
     }
   };
   picker.addEventListener('change', () => {

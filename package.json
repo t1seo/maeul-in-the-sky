@@ -27,7 +27,8 @@
   "scripts": {
     "prebuild": "npm run check:pixel",
     "build": "tsup && npm run build:demo && tsx scripts/package-runtime-assets.ts",
-    "build:demo": "tsx scripts/build-demo.ts && npm run build:world",
+    "build:demo": "tsx scripts/build-demo.ts && npm run build:world && npm run build:terrain-lab",
+    "build:terrain-lab": "tsx scripts/build-terrain-lab.ts",
     "build:world": "tsx scripts/build-world.ts",
     "render:profile": "tsx scripts/render-profile.ts",
     "dev": "tsup --watch",
@@ -46,7 +47,9 @@
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\" \"scripts/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\" \"scripts/**/*.ts\"",
     "typecheck": "tsc -p tsconfig.check.json",
-    "prepare": "husky"
+    "prepare": "husky",
+    "generate:landscape": "tsx scripts/generate-landscape.ts",
+    "verify:landscape": "npm run typecheck && vitest run --project unit tests/landscape tests/core/settings/terrain-mode.test.ts tests/core/display-size.test.ts tests/cli/terrain-mode.test.ts tests/cli/landscape-archive.test.ts tests/demo/landscape-settings.test.ts && vitest run --project demo-browser tests/demo/browser/landscape.browser.test.ts && npm run generate:landscape"
   },
   "engines": {
     "node": ">=20"

@@ -17,9 +17,9 @@ var __export = (target, all) => {
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    for (let key2 of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key2) && key2 !== except)
+        __defProp(to, key2, { get: () => from[key2], enumerable: !(desc = __getOwnPropDesc(from, key2)) || desc.enumerable });
   }
   return to;
 };
@@ -820,9 +820,9 @@ var require_constants = __commonJS({
       "X-XSS-Protection"
     ];
     for (let i = 0; i < wellknownHeaderNames.length; ++i) {
-      const key = wellknownHeaderNames[i];
-      const lowerCasedKey = key.toLowerCase();
-      headerNameLowerCasedRecord[key] = headerNameLowerCasedRecord[lowerCasedKey] = lowerCasedKey;
+      const key2 = wellknownHeaderNames[i];
+      const lowerCasedKey = key2.toLowerCase();
+      headerNameLowerCasedRecord[key2] = headerNameLowerCasedRecord[lowerCasedKey] = lowerCasedKey;
     }
     Object.setPrototypeOf(headerNameLowerCasedRecord, null);
     module2.exports = {
@@ -857,16 +857,16 @@ var require_tree = __commonJS({
        * @param {any} value
        * @param {number} index
        */
-      constructor(key, value, index) {
-        if (index === void 0 || index >= key.length) {
+      constructor(key2, value, index) {
+        if (index === void 0 || index >= key2.length) {
           throw new TypeError("Unreachable");
         }
-        const code = this.code = key.charCodeAt(index);
+        const code = this.code = key2.charCodeAt(index);
         if (code > 127) {
           throw new TypeError("key must be ascii string");
         }
-        if (key.length !== ++index) {
-          this.middle = new _TstNode(key, value, index);
+        if (key2.length !== ++index) {
+          this.middle = new _TstNode(key2, value, index);
         } else {
           this.value = value;
         }
@@ -875,15 +875,15 @@ var require_tree = __commonJS({
        * @param {string} key
        * @param {any} value
        */
-      add(key, value) {
-        const length = key.length;
+      add(key2, value) {
+        const length = key2.length;
         if (length === 0) {
           throw new TypeError("Unreachable");
         }
         let index = 0;
         let node2 = this;
         while (true) {
-          const code = key.charCodeAt(index);
+          const code = key2.charCodeAt(index);
           if (code > 127) {
             throw new TypeError("key must be ascii string");
           }
@@ -894,20 +894,20 @@ var require_tree = __commonJS({
             } else if (node2.middle !== null) {
               node2 = node2.middle;
             } else {
-              node2.middle = new _TstNode(key, value, index);
+              node2.middle = new _TstNode(key2, value, index);
               break;
             }
           } else if (node2.code < code) {
             if (node2.left !== null) {
               node2 = node2.left;
             } else {
-              node2.left = new _TstNode(key, value, index);
+              node2.left = new _TstNode(key2, value, index);
               break;
             }
           } else if (node2.right !== null) {
             node2 = node2.right;
           } else {
-            node2.right = new _TstNode(key, value, index);
+            node2.right = new _TstNode(key2, value, index);
             break;
           }
         }
@@ -916,12 +916,12 @@ var require_tree = __commonJS({
        * @param {Uint8Array} key
        * @return {TstNode | null}
        */
-      search(key) {
-        const keylength = key.length;
+      search(key2) {
+        const keylength = key2.length;
         let index = 0;
         let node2 = this;
         while (node2 !== null && index < keylength) {
-          let code = key[index];
+          let code = key2[index];
           if (code <= 90 && code >= 65) {
             code |= 32;
           }
@@ -946,29 +946,29 @@ var require_tree = __commonJS({
        * @param {string} key
        * @param {any} value
        * */
-      insert(key, value) {
+      insert(key2, value) {
         if (this.node === null) {
-          this.node = new TstNode(key, value, 0);
+          this.node = new TstNode(key2, value, 0);
         } else {
-          this.node.add(key, value);
+          this.node.add(key2, value);
         }
       }
       /**
        * @param {Uint8Array} key
        * @return {any}
        */
-      lookup(key) {
-        return this.node?.search(key)?.value ?? null;
+      lookup(key2) {
+        return this.node?.search(key2)?.value ?? null;
       }
     };
-    var tree = new TernarySearchTree();
+    var tree2 = new TernarySearchTree();
     for (let i = 0; i < wellknownHeaderNames.length; ++i) {
-      const key = headerNameLowerCasedRecord[wellknownHeaderNames[i]];
-      tree.insert(key, key);
+      const key2 = headerNameLowerCasedRecord[wellknownHeaderNames[i]];
+      tree2.insert(key2, key2);
     }
     module2.exports = {
       TernarySearchTree,
-      tree
+      tree: tree2
     };
   }
 });
@@ -989,7 +989,7 @@ var require_util = __commonJS({
     var { EventEmitter: EE } = require("events");
     var { InvalidArgumentError } = require_errors();
     var { headerNameLowerCasedRecord } = require_constants();
-    var { tree } = require_tree();
+    var { tree: tree2 } = require_tree();
     var [nodeMajor, nodeMinor] = process.versions.node.split(".").map((v) => Number(v));
     var BodyAsyncIterable = class {
       constructor(body) {
@@ -1181,28 +1181,28 @@ var require_util = __commonJS({
       return m ? parseInt(m[1], 10) * 1e3 : null;
     }
     function headerNameToString(value) {
-      return typeof value === "string" ? headerNameLowerCasedRecord[value] ?? value.toLowerCase() : tree.lookup(value) ?? value.toString("latin1").toLowerCase();
+      return typeof value === "string" ? headerNameLowerCasedRecord[value] ?? value.toLowerCase() : tree2.lookup(value) ?? value.toString("latin1").toLowerCase();
     }
     function bufferToLowerCasedHeaderName(value) {
-      return tree.lookup(value) ?? value.toString("latin1").toLowerCase();
+      return tree2.lookup(value) ?? value.toString("latin1").toLowerCase();
     }
     function parseHeaders(headers, obj) {
       if (obj === void 0) obj = {};
       for (let i = 0; i < headers.length; i += 2) {
-        const key = headerNameToString(headers[i]);
-        let val = obj[key];
+        const key2 = headerNameToString(headers[i]);
+        let val = obj[key2];
         if (val) {
           if (typeof val === "string") {
             val = [val];
-            obj[key] = val;
+            obj[key2] = val;
           }
           val.push(headers[i + 1].toString("utf8"));
         } else {
           const headersValue = headers[i + 1];
           if (typeof headersValue === "string") {
-            obj[key] = headersValue;
+            obj[key2] = headersValue;
           } else {
-            obj[key] = Array.isArray(headersValue) ? headersValue.map((x) => x.toString("utf8")) : headersValue.toString("utf8");
+            obj[key2] = Array.isArray(headersValue) ? headersValue.map((x) => x.toString("utf8")) : headersValue.toString("utf8");
           }
         }
       }
@@ -1216,21 +1216,21 @@ var require_util = __commonJS({
       const ret = new Array(len);
       let hasContentLength = false;
       let contentDispositionIdx = -1;
-      let key;
+      let key2;
       let val;
       let kLen = 0;
       for (let n = 0; n < headers.length; n += 2) {
-        key = headers[n];
+        key2 = headers[n];
         val = headers[n + 1];
-        typeof key !== "string" && (key = key.toString());
+        typeof key2 !== "string" && (key2 = key2.toString());
         typeof val !== "string" && (val = val.toString("utf8"));
-        kLen = key.length;
-        if (kLen === 14 && key[7] === "-" && (key === "content-length" || key.toLowerCase() === "content-length")) {
+        kLen = key2.length;
+        if (kLen === 14 && key2[7] === "-" && (key2 === "content-length" || key2.toLowerCase() === "content-length")) {
           hasContentLength = true;
-        } else if (kLen === 19 && key[7] === "-" && (key === "content-disposition" || key.toLowerCase() === "content-disposition")) {
+        } else if (kLen === 19 && key2[7] === "-" && (key2 === "content-disposition" || key2.toLowerCase() === "content-disposition")) {
           contentDispositionIdx = n + 1;
         }
-        ret[n] = key;
+        ret[n] = key2;
         ret[n + 1] = val;
       }
       if (hasContentLength && contentDispositionIdx !== -1) {
@@ -1917,20 +1917,20 @@ var require_request = __commonJS({
           this.endHandler = null;
         }
       }
-      addHeader(key, value) {
-        processHeader(this, key, value);
+      addHeader(key2, value) {
+        processHeader(this, key2, value);
         return this;
       }
     };
-    function processHeader(request, key, val) {
+    function processHeader(request, key2, val) {
       if (val && (typeof val === "object" && !Array.isArray(val))) {
-        throw new InvalidArgumentError(`invalid ${key} header`);
+        throw new InvalidArgumentError(`invalid ${key2} header`);
       } else if (val === void 0) {
         return;
       }
-      let headerName = headerNameLowerCasedRecord[key];
+      let headerName = headerNameLowerCasedRecord[key2];
       if (headerName === void 0) {
-        headerName = key.toLowerCase();
+        headerName = key2.toLowerCase();
         if (headerNameLowerCasedRecord[headerName] === void 0 && !isValidHTTPToken(headerName)) {
           throw new InvalidArgumentError("invalid header key");
         }
@@ -1940,17 +1940,17 @@ var require_request = __commonJS({
         for (let i = 0; i < val.length; i++) {
           if (typeof val[i] === "string") {
             if (!isValidHeaderValue(val[i])) {
-              throw new InvalidArgumentError(`invalid ${key} header`);
+              throw new InvalidArgumentError(`invalid ${key2} header`);
             }
             arr.push(val[i]);
           } else if (val[i] === null) {
             arr.push("");
           } else if (typeof val[i] === "object") {
-            throw new InvalidArgumentError(`invalid ${key} header`);
+            throw new InvalidArgumentError(`invalid ${key2} header`);
           } else {
             const str = `${val[i]}`;
             if (!isValidHeaderValue(str)) {
-              throw new InvalidArgumentError(`invalid ${key} header`);
+              throw new InvalidArgumentError(`invalid ${key2} header`);
             }
             arr.push(str);
           }
@@ -1958,14 +1958,14 @@ var require_request = __commonJS({
         val = arr;
       } else if (typeof val === "string") {
         if (!isValidHeaderValue(val)) {
-          throw new InvalidArgumentError(`invalid ${key} header`);
+          throw new InvalidArgumentError(`invalid ${key2} header`);
         }
       } else if (val === null) {
         val = "";
       } else {
         val = `${val}`;
         if (!isValidHeaderValue(val)) {
-          throw new InvalidArgumentError(`invalid ${key} header`);
+          throw new InvalidArgumentError(`invalid ${key2} header`);
         }
       }
       if (headerName === "host") {
@@ -1986,7 +1986,7 @@ var require_request = __commonJS({
         }
       } else if (request.contentType === null && headerName === "content-type") {
         request.contentType = val;
-        request.headers.push(key, val);
+        request.headers.push(key2, val);
       } else if (headerName === "transfer-encoding" || headerName === "keep-alive" || headerName === "upgrade") {
         throw new InvalidArgumentError(`invalid ${headerName} header`);
       } else if (headerName === "connection") {
@@ -2000,7 +2000,7 @@ var require_request = __commonJS({
       } else if (headerName === "expect") {
         throw new NotSupportedError("expect header not supported");
       } else {
-        request.headers.push(key, val);
+        request.headers.push(key2, val);
       }
     }
     module2.exports = Request2;
@@ -2484,13 +2484,13 @@ var require_connect = __commonJS({
         constructor(maxCachedSessions) {
           this._maxCachedSessions = maxCachedSessions;
           this._sessionCache = /* @__PURE__ */ new Map();
-          this._sessionRegistry = new global.FinalizationRegistry((key) => {
+          this._sessionRegistry = new global.FinalizationRegistry((key2) => {
             if (this._sessionCache.size < this._maxCachedSessions) {
               return;
             }
-            const ref = this._sessionCache.get(key);
+            const ref = this._sessionCache.get(key2);
             if (ref !== void 0 && ref.deref() === void 0) {
-              this._sessionCache.delete(key);
+              this._sessionCache.delete(key2);
             }
           });
         }
@@ -2655,10 +2655,10 @@ var require_utils = __commonJS({
     exports2.enumToMap = void 0;
     function enumToMap(obj) {
       const res = {};
-      Object.keys(obj).forEach((key) => {
-        const value = obj[key];
+      Object.keys(obj).forEach((key2) => {
+        const value = obj[key2];
         if (typeof value === "number") {
-          res[key] = value;
+          res[key2] = value;
         }
       });
       return res;
@@ -2836,9 +2836,9 @@ var require_constants2 = __commonJS({
     ];
     exports2.METHOD_MAP = utils_1.enumToMap(METHODS);
     exports2.H_METHOD_MAP = {};
-    Object.keys(exports2.METHOD_MAP).forEach((key) => {
-      if (/^H/.test(key)) {
-        exports2.H_METHOD_MAP[key] = exports2.METHOD_MAP[key];
+    Object.keys(exports2.METHOD_MAP).forEach((key2) => {
+      if (/^H/.test(key2)) {
+        exports2.H_METHOD_MAP[key2] = exports2.METHOD_MAP[key2];
       }
     });
     var FINISH;
@@ -3815,19 +3815,19 @@ var require_webidl = __commonJS({
         const result = {};
         if (!types.isProxy(O)) {
           const keys2 = [...Object.getOwnPropertyNames(O), ...Object.getOwnPropertySymbols(O)];
-          for (const key of keys2) {
-            const typedKey = keyConverter(key, prefix, argument);
-            const typedValue = valueConverter(O[key], prefix, argument);
+          for (const key2 of keys2) {
+            const typedKey = keyConverter(key2, prefix, argument);
+            const typedValue = valueConverter(O[key2], prefix, argument);
             result[typedKey] = typedValue;
           }
           return result;
         }
         const keys = Reflect.ownKeys(O);
-        for (const key of keys) {
-          const desc = Reflect.getOwnPropertyDescriptor(O, key);
+        for (const key2 of keys) {
+          const desc = Reflect.getOwnPropertyDescriptor(O, key2);
           if (desc?.enumerable) {
-            const typedKey = keyConverter(key, prefix, argument);
-            const typedValue = valueConverter(O[key], prefix, argument);
+            const typedKey = keyConverter(key2, prefix, argument);
+            const typedValue = valueConverter(O[key2], prefix, argument);
             result[typedKey] = typedValue;
           }
         }
@@ -3858,29 +3858,29 @@ var require_webidl = __commonJS({
           });
         }
         for (const options of converters) {
-          const { key, defaultValue, required: required2, converter } = options;
+          const { key: key2, defaultValue, required: required2, converter } = options;
           if (required2 === true) {
-            if (!Object.hasOwn(dictionary, key)) {
+            if (!Object.hasOwn(dictionary, key2)) {
               throw webidl.errors.exception({
                 header: prefix,
-                message: `Missing required key "${key}".`
+                message: `Missing required key "${key2}".`
               });
             }
           }
-          let value = dictionary[key];
+          let value = dictionary[key2];
           const hasDefault = Object.hasOwn(options, "defaultValue");
           if (hasDefault && value !== null) {
             value ??= defaultValue();
           }
           if (required2 || hasDefault || value !== void 0) {
-            value = converter(value, prefix, `${argument}.${key}`);
+            value = converter(value, prefix, `${argument}.${key2}`);
             if (options.allowedValues && !options.allowedValues.includes(value)) {
               throw webidl.errors.exception({
                 header: prefix,
                 message: `${value} is not an accepted type. Expected one of ${options.allowedValues.join(", ")}.`
               });
             }
-            dict[key] = value;
+            dict[key2] = value;
           }
         }
         return dict;
@@ -4496,18 +4496,18 @@ var require_util2 = __commonJS({
               done: true
             };
           }
-          const { [keyIndex]: key, [valueIndex]: value } = values[index];
+          const { [keyIndex]: key2, [valueIndex]: value } = values[index];
           this.#index = index + 1;
           let result;
           switch (this.#kind) {
             case "key":
-              result = key;
+              result = key2;
               break;
             case "value":
               result = value;
               break;
             case "key+value":
-              result = [key, value];
+              result = [key2, value];
               break;
           }
           return {
@@ -4573,8 +4573,8 @@ var require_util2 = __commonJS({
                 `Failed to execute 'forEach' on '${name}': parameter 1 is not of type 'Function'.`
               );
             }
-            for (const { 0: key, 1: value } of makeIterator(this, "key+value")) {
-              callbackfn.call(thisArg, value, key, this);
+            for (const { 0: key2, 1: value } of makeIterator(this, "key+value")) {
+              callbackfn.call(thisArg, value, key2, this);
             }
           }
         }
@@ -5084,7 +5084,7 @@ var require_formdata = __commonJS({
           this[kState].push(entry);
         }
       }
-      [nodeUtil.inspect.custom](depth, options) {
+      [nodeUtil.inspect.custom](depth2, options) {
         const state = this[kState].reduce((a, b) => {
           if (a[b.name]) {
             if (Array.isArray(a[b.name])) {
@@ -5097,7 +5097,7 @@ var require_formdata = __commonJS({
           }
           return a;
         }, { __proto__: null });
-        options.depth ??= depth;
+        options.depth ??= depth2;
         options.colors ??= true;
         const output2 = nodeUtil.formatWithOptions(options, state);
         return `FormData ${output2.slice(output2.indexOf("]") + 2)}`;
@@ -6023,15 +6023,15 @@ var require_client_h1 = __commonJS({
         } else {
           this.headers[len - 1] = Buffer.concat([this.headers[len - 1], buf]);
         }
-        const key = this.headers[len - 2];
-        if (key.length === 10) {
-          const headerName = util.bufferToLowerCasedHeaderName(key);
+        const key2 = this.headers[len - 2];
+        if (key2.length === 10) {
+          const headerName = util.bufferToLowerCasedHeaderName(key2);
           if (headerName === "keep-alive") {
             this.keepAlive += buf.toString();
           } else if (headerName === "connection") {
             this.connection += buf.toString();
           }
-        } else if (key.length === 14 && util.bufferToLowerCasedHeaderName(key) === "content-length") {
+        } else if (key2.length === 14 && util.bufferToLowerCasedHeaderName(key2) === "content-length") {
           this.contentLength += buf.toString();
         }
         this.trackHeader(buf.length);
@@ -6524,15 +6524,15 @@ upgrade: ${upgrade}\r
       }
       if (Array.isArray(headers)) {
         for (let n = 0; n < headers.length; n += 2) {
-          const key = headers[n + 0];
+          const key2 = headers[n + 0];
           const val = headers[n + 1];
           if (Array.isArray(val)) {
             for (let i = 0; i < val.length; i++) {
-              header += `${key}: ${val[i]}\r
+              header += `${key2}: ${val[i]}\r
 `;
             }
           } else {
-            header += `${key}: ${val}\r
+            header += `${key2}: ${val}\r
 `;
           }
         }
@@ -7040,18 +7040,18 @@ var require_client_h2 = __commonJS({
       }
       const headers = {};
       for (let n = 0; n < reqHeaders.length; n += 2) {
-        const key = reqHeaders[n + 0];
+        const key2 = reqHeaders[n + 0];
         const val = reqHeaders[n + 1];
         if (Array.isArray(val)) {
           for (let i = 0; i < val.length; i++) {
-            if (headers[key]) {
-              headers[key] += `,${val[i]}`;
+            if (headers[key2]) {
+              headers[key2] += `,${val[i]}`;
             } else {
-              headers[key] = val[i];
+              headers[key2] = val[i];
             }
           }
         } else {
-          headers[key] = val;
+          headers[key2] = val;
         }
       }
       let stream;
@@ -7452,8 +7452,8 @@ var require_redirect_handler = __commonJS({
         if (!this.location) {
           return this.handler.onHeaders(statusCode, headers, resume, statusText);
         }
-        const { origin, pathname, search } = util.parseURL(new URL(this.location, this.opts.origin && new URL(this.opts.path, this.opts.origin)));
-        const path3 = search ? `${pathname}${search}` : pathname;
+        const { origin, pathname, search: search2 } = util.parseURL(new URL(this.location, this.opts.origin && new URL(this.opts.path, this.opts.origin)));
+        const path3 = search2 ? `${pathname}${search2}` : pathname;
         this.opts.headers = cleanRequestHeaders(this.opts.headers, statusCode === 303, this.opts.origin !== origin);
         this.opts.path = path3;
         this.opts.origin = origin;
@@ -7517,9 +7517,9 @@ var require_redirect_handler = __commonJS({
           }
         }
       } else if (headers && typeof headers === "object") {
-        for (const key of Object.keys(headers)) {
-          if (!shouldRemoveHeader(key, removeContent, unknownOrigin)) {
-            ret.push(key, headers[key]);
+        for (const key2 of Object.keys(headers)) {
+          if (!shouldRemoveHeader(key2, removeContent, unknownOrigin)) {
+            ret.push(key2, headers[key2]);
           }
         }
       } else {
@@ -8605,16 +8605,16 @@ var require_agent = __commonJS({
         return ret;
       }
       [kDispatch](opts, handler) {
-        let key;
+        let key2;
         if (opts.origin && (typeof opts.origin === "string" || opts.origin instanceof URL)) {
-          key = String(opts.origin);
+          key2 = String(opts.origin);
         } else {
           throw new InvalidArgumentError("opts.origin must be a non-empty string or URL.");
         }
-        let dispatcher = this[kClients].get(key);
+        let dispatcher = this[kClients].get(key2);
         if (!dispatcher) {
           dispatcher = this[kFactory](opts.origin, this[kOptions]).on("drain", this[kOnDrain]).on("connect", this[kOnConnect]).on("disconnect", this[kOnDisconnect]).on("connectionError", this[kOnConnectionError]);
-          this[kClients].set(key, dispatcher);
+          this[kClients].set(key2, dispatcher);
         }
         return dispatcher.dispatch(opts, handler);
       }
@@ -8854,7 +8854,7 @@ var require_proxy_agent = __commonJS({
       return headers;
     }
     function throwIfProxyAuthIsSent(headers) {
-      const existProxyAuth = headers && Object.keys(headers).find((key) => key.toLowerCase() === "proxy-authorization");
+      const existProxyAuth = headers && Object.keys(headers).find((key2) => key2.toLowerCase() === "proxy-authorization");
       if (existProxyAuth) {
         throw new InvalidArgumentError("Proxy-Authorization should be sent in ProxyAgent constructor");
       }
@@ -10626,18 +10626,18 @@ var require_mock_utils = __commonJS({
         })
       );
     }
-    function getHeaderByName(headers, key) {
+    function getHeaderByName(headers, key2) {
       if (Array.isArray(headers)) {
         for (let i = 0; i < headers.length; i += 2) {
-          if (headers[i].toLocaleLowerCase() === key.toLocaleLowerCase()) {
+          if (headers[i].toLocaleLowerCase() === key2.toLocaleLowerCase()) {
             return headers[i + 1];
           }
         }
         return void 0;
       } else if (typeof headers.get === "function") {
-        return headers.get(key);
+        return headers.get(key2);
       } else {
-        return lowerCaseEntries(headers)[key.toLocaleLowerCase()];
+        return lowerCaseEntries(headers)[key2.toLocaleLowerCase()];
       }
     }
     function buildHeadersFromArray(headers) {
@@ -10701,41 +10701,41 @@ var require_mock_utils = __commonJS({
         return data.toString();
       }
     }
-    function getMockDispatch(mockDispatches, key) {
-      const basePath = key.query ? buildURL(key.path, key.query) : key.path;
+    function getMockDispatch(mockDispatches, key2) {
+      const basePath = key2.query ? buildURL(key2.path, key2.query) : key2.path;
       const resolvedPath = typeof basePath === "string" ? safeUrl(basePath) : basePath;
       let matchedMockDispatches = mockDispatches.filter(({ consumed }) => !consumed).filter(({ path: path3 }) => matchValue(safeUrl(path3), resolvedPath));
       if (matchedMockDispatches.length === 0) {
         throw new MockNotMatchedError(`Mock dispatch not matched for path '${resolvedPath}'`);
       }
-      matchedMockDispatches = matchedMockDispatches.filter(({ method }) => matchValue(method, key.method));
+      matchedMockDispatches = matchedMockDispatches.filter(({ method }) => matchValue(method, key2.method));
       if (matchedMockDispatches.length === 0) {
-        throw new MockNotMatchedError(`Mock dispatch not matched for method '${key.method}' on path '${resolvedPath}'`);
+        throw new MockNotMatchedError(`Mock dispatch not matched for method '${key2.method}' on path '${resolvedPath}'`);
       }
-      matchedMockDispatches = matchedMockDispatches.filter(({ body }) => typeof body !== "undefined" ? matchValue(body, key.body) : true);
+      matchedMockDispatches = matchedMockDispatches.filter(({ body }) => typeof body !== "undefined" ? matchValue(body, key2.body) : true);
       if (matchedMockDispatches.length === 0) {
-        throw new MockNotMatchedError(`Mock dispatch not matched for body '${key.body}' on path '${resolvedPath}'`);
+        throw new MockNotMatchedError(`Mock dispatch not matched for body '${key2.body}' on path '${resolvedPath}'`);
       }
-      matchedMockDispatches = matchedMockDispatches.filter((mockDispatch2) => matchHeaders(mockDispatch2, key.headers));
+      matchedMockDispatches = matchedMockDispatches.filter((mockDispatch2) => matchHeaders(mockDispatch2, key2.headers));
       if (matchedMockDispatches.length === 0) {
-        const headers = typeof key.headers === "object" ? JSON.stringify(key.headers) : key.headers;
+        const headers = typeof key2.headers === "object" ? JSON.stringify(key2.headers) : key2.headers;
         throw new MockNotMatchedError(`Mock dispatch not matched for headers '${headers}' on path '${resolvedPath}'`);
       }
       return matchedMockDispatches[0];
     }
-    function addMockDispatch(mockDispatches, key, data) {
+    function addMockDispatch(mockDispatches, key2, data) {
       const baseData = { timesInvoked: 0, times: 1, persist: false, consumed: false };
       const replyData = typeof data === "function" ? { callback: data } : { ...data };
-      const newMockDispatch = { ...baseData, ...key, pending: true, data: { error: null, ...replyData } };
+      const newMockDispatch = { ...baseData, ...key2, pending: true, data: { error: null, ...replyData } };
       mockDispatches.push(newMockDispatch);
       return newMockDispatch;
     }
-    function deleteMockDispatch(mockDispatches, key) {
+    function deleteMockDispatch(mockDispatches, key2) {
       const index = mockDispatches.findIndex((dispatch) => {
         if (!dispatch.consumed) {
           return false;
         }
-        return matchKey(dispatch, key);
+        return matchKey(dispatch, key2);
       });
       if (index !== -1) {
         mockDispatches.splice(index, 1);
@@ -10755,9 +10755,9 @@ var require_mock_utils = __commonJS({
       const keys = Object.keys(data);
       const result = [];
       for (let i = 0; i < keys.length; ++i) {
-        const key = keys[i];
-        const value = data[key];
-        const name = Buffer.from(`${key}`);
+        const key2 = keys[i];
+        const value = data[key2];
+        const name = Buffer.from(`${key2}`);
         if (Array.isArray(value)) {
           for (let j = 0; j < value.length; ++j) {
             result.push(name, Buffer.from(`${value[j]}`));
@@ -10779,8 +10779,8 @@ var require_mock_utils = __commonJS({
       return Buffer.concat(buffers).toString("utf8");
     }
     function mockDispatch(opts, handler) {
-      const key = buildKey(opts);
-      const mockDispatch2 = getMockDispatch(this[kDispatches], key);
+      const key2 = buildKey(opts);
+      const mockDispatch2 = getMockDispatch(this[kDispatches], key2);
       mockDispatch2.timesInvoked++;
       if (mockDispatch2.data.callback) {
         mockDispatch2.data = { ...mockDispatch2.data, ...mockDispatch2.data.callback(opts) };
@@ -10790,7 +10790,7 @@ var require_mock_utils = __commonJS({
       mockDispatch2.consumed = !persist && timesInvoked >= times;
       mockDispatch2.pending = timesInvoked < times;
       if (error63 !== null) {
-        deleteMockDispatch(this[kDispatches], key);
+        deleteMockDispatch(this[kDispatches], key2);
         handler.onError(error63);
         return true;
       }
@@ -10815,7 +10815,7 @@ var require_mock_utils = __commonJS({
         handler.onHeaders?.(statusCode, responseHeaders, resume, getStatusText(statusCode));
         handler.onData?.(Buffer.from(responseData));
         handler.onComplete?.(responseTrailers);
-        deleteMockDispatch(mockDispatches, key);
+        deleteMockDispatch(mockDispatches, key2);
       }
       function resume() {
       }
@@ -12247,8 +12247,8 @@ var require_headers = __commonJS({
         }
         return this.#headersList[kHeadersSortedMap] = headers;
       }
-      [util.inspect.custom](depth, options) {
-        options.depth ??= depth;
+      [util.inspect.custom](depth2, options) {
+        options.depth ??= depth2;
         return `Headers ${util.formatWithOptions(options, this.#headersList.entries)}`;
       }
       static getHeadersGuard(o) {
@@ -12475,7 +12475,7 @@ var require_response = __commonJS({
         }
         return fromInnerResponse(clonedResponse, getHeadersGuard(this[kHeaders]));
       }
-      [nodeUtil.inspect.custom](depth, options) {
+      [nodeUtil.inspect.custom](depth2, options) {
         if (options.depth === null) {
           options.depth = 2;
         }
@@ -12737,16 +12737,16 @@ var require_dispatcher_weakref = __commonJS({
       constructor(finalizer) {
         this.finalizer = finalizer;
       }
-      register(dispatcher, key) {
+      register(dispatcher, key2) {
         if (dispatcher.on) {
           dispatcher.on("disconnect", () => {
             if (dispatcher[kConnected] === 0 && dispatcher[kSize] === 0) {
-              this.finalizer(key);
+              this.finalizer(key2);
             }
           });
         }
       }
-      unregister(key) {
+      unregister(key2) {
       }
     };
     module2.exports = function() {
@@ -13246,7 +13246,7 @@ var require_request2 = __commonJS({
         }
         return fromInnerRequest(clonedRequest, ac.signal, getHeadersGuard(this[kHeaders]));
       }
-      [nodeUtil.inspect.custom](depth, options) {
+      [nodeUtil.inspect.custom](depth2, options) {
         if (options.depth === null) {
           options.depth = 2;
         }
@@ -16246,8 +16246,8 @@ var require_util6 = __commonJS({
         if (!part.includes("=")) {
           throw new Error("Invalid unparsed");
         }
-        const [key, ...value] = part.split("=");
-        const trimmedKey = key.trim();
+        const [key2, ...value] = part.split("=");
+        const trimmedKey = key2.trim();
         const joinedValue = value.join("=");
         validateCookieName(trimmedKey);
         validateCookieValue(joinedValue);
@@ -18427,41 +18427,41 @@ var require_eventsource_stream = __commonJS({
         if (colonPosition === 0) {
           return;
         }
-        let field = "";
+        let field2 = "";
         let value = "";
         if (colonPosition !== -1) {
-          field = line.subarray(0, colonPosition).toString("utf8");
+          field2 = line.subarray(0, colonPosition).toString("utf8");
           let valueStart = colonPosition + 1;
           if (line[valueStart] === SPACE) {
             ++valueStart;
           }
           value = line.subarray(valueStart).toString("utf8");
         } else {
-          field = line.toString("utf8");
+          field2 = line.toString("utf8");
           value = "";
         }
-        switch (field) {
+        switch (field2) {
           case "data":
-            if (event[field] === void 0) {
-              event[field] = value;
+            if (event[field2] === void 0) {
+              event[field2] = value;
             } else {
-              event[field] += `
+              event[field2] += `
 ${value}`;
             }
             break;
           case "retry":
             if (isASCIINumber(value)) {
-              event[field] = value;
+              event[field2] = value;
             }
             break;
           case "id":
             if (isValidLastEventId(value)) {
-              event[field] = value;
+              event[field2] = value;
             }
             break;
           case "event":
             if (value.length > 0) {
-              event[field] = value;
+              event[field2] = value;
             }
             break;
         }
@@ -20719,9 +20719,9 @@ var require_create = __commonJS({
           return name;
         },
         consumeNumber(type) {
-          const number4 = source.substring(this.tokenStart, utils.consumeNumber(source, this.tokenStart));
+          const number5 = source.substring(this.tokenStart, utils.consumeNumber(source, this.tokenStart));
           this.eat(type);
-          return number4;
+          return number5;
         },
         eat(tokenType) {
           if (this.tokenType !== tokenType) {
@@ -20879,11 +20879,11 @@ var require_base64 = __commonJS({
     "use strict";
     init_cjs_shims();
     var intToCharMap = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".split("");
-    exports2.encode = function(number4) {
-      if (0 <= number4 && number4 < intToCharMap.length) {
-        return intToCharMap[number4];
+    exports2.encode = function(number5) {
+      if (0 <= number5 && number5 < intToCharMap.length) {
+        return intToCharMap[number5];
       }
-      throw new TypeError("Must be between 0 and 63: " + number4);
+      throw new TypeError("Must be between 0 and 63: " + number5);
     };
     exports2.decode = function(charCode) {
       var bigA = 65;
@@ -21733,8 +21733,8 @@ var require_source_map_generator = __commonJS({
         if (aSourceRoot != null) {
           source = util.relative(aSourceRoot, source);
         }
-        var key = util.toSetString(source);
-        return Object.prototype.hasOwnProperty.call(this._sourcesContents, key) ? this._sourcesContents[key] : null;
+        var key2 = util.toSetString(source);
+        return Object.prototype.hasOwnProperty.call(this._sourcesContents, key2) ? this._sourcesContents[key2] : null;
       }, this);
     };
     SourceMapGenerator.prototype.toJSON = function SourceMapGenerator_toJSON() {
@@ -22132,13 +22132,13 @@ var require_create4 = __commonJS({
     function getWalkersFromStructure(name, nodeType) {
       const structure = nodeType.structure;
       const walkers = [];
-      for (const key in structure) {
-        if (hasOwnProperty2.call(structure, key) === false) {
+      for (const key2 in structure) {
+        if (hasOwnProperty2.call(structure, key2) === false) {
           continue;
         }
-        let fieldTypes = structure[key];
+        let fieldTypes = structure[key2];
         const walker = {
-          name: key,
+          name: key2,
           type: false,
           nullable: false
         };
@@ -22192,10 +22192,10 @@ var require_create4 = __commonJS({
           prevContextValue = context2[contextName];
           context2[contextName] = node2;
         }
-        for (const field of fields) {
-          const ref = node2[field.name];
-          if (!field.nullable || ref) {
-            if (field.type === "list") {
+        for (const field2 of fields) {
+          const ref = node2[field2.name];
+          if (!field2.nullable || ref) {
+            if (field2.type === "list") {
               const breakWalk = reverse ? ref.reduceRight(walkReducer, false) : ref.reduce(walkReducer, false);
               if (breakWalk) {
                 return true;
@@ -23267,7 +23267,7 @@ var require_generic = __commonJS({
         return next(token, getNextToken, opts);
       };
     }
-    function number4(token, getNextToken, opts) {
+    function number5(token, getNextToken, opts) {
       if (token === null) {
         return 0;
       }
@@ -23331,7 +23331,7 @@ var require_generic = __commonJS({
       "percentage": math(percentage, percentageFunctionNames),
       // numeric
       "zero": zero(),
-      "number": math(number4, numberFunctionNames),
+      "number": math(number5, numberFunctionNames),
       "integer": math(integer2, numberFunctionNames),
       // complex types
       "custom-ident": customIdent,
@@ -24202,9 +24202,9 @@ var require_match_graph = __commonJS({
                 );
               }
               if (map2 !== null) {
-                const key = (isFunctionType(term.name) ? term.name.slice(0, -1) : term.name).toLowerCase();
-                if (key in map2 === false) {
-                  map2[key] = term;
+                const key2 = (isFunctionType(term.name) ? term.name.slice(0, -1) : term.name).toLowerCase();
+                if (key2 in map2 === false) {
+                  map2[key2] = term;
                   continue;
                 }
               }
@@ -25077,62 +25077,62 @@ var require_structure = __commonJS({
         if (!node2 || node2.constructor !== Object) {
           return warn(node2, "Type of node should be an Object");
         }
-        for (let key in node2) {
+        for (let key2 in node2) {
           let valid = true;
-          if (hasOwnProperty2.call(node2, key) === false) {
+          if (hasOwnProperty2.call(node2, key2) === false) {
             continue;
           }
-          if (key === "type") {
+          if (key2 === "type") {
             if (node2.type !== type) {
               warn(node2, "Wrong node type `" + node2.type + "`, expected `" + type + "`");
             }
-          } else if (key === "loc") {
+          } else if (key2 === "loc") {
             if (node2.loc === null) {
               continue;
             } else if (node2.loc && node2.loc.constructor === Object) {
               if (typeof node2.loc.source !== "string") {
-                key += ".source";
+                key2 += ".source";
               } else if (!isValidLocation(node2.loc.start)) {
-                key += ".start";
+                key2 += ".start";
               } else if (!isValidLocation(node2.loc.end)) {
-                key += ".end";
+                key2 += ".end";
               } else {
                 continue;
               }
             }
             valid = false;
-          } else if (fields.hasOwnProperty(key)) {
+          } else if (fields.hasOwnProperty(key2)) {
             valid = false;
-            for (let i = 0; !valid && i < fields[key].length; i++) {
-              const fieldType = fields[key][i];
+            for (let i = 0; !valid && i < fields[key2].length; i++) {
+              const fieldType = fields[key2][i];
               switch (fieldType) {
                 case String:
-                  valid = typeof node2[key] === "string";
+                  valid = typeof node2[key2] === "string";
                   break;
                 case Boolean:
-                  valid = typeof node2[key] === "boolean";
+                  valid = typeof node2[key2] === "boolean";
                   break;
                 case null:
-                  valid = node2[key] === null;
+                  valid = node2[key2] === null;
                   break;
                 default:
                   if (typeof fieldType === "string") {
-                    valid = node2[key] && node2[key].type === fieldType;
+                    valid = node2[key2] && node2[key2].type === fieldType;
                   } else if (Array.isArray(fieldType)) {
-                    valid = node2[key] instanceof List.List;
+                    valid = node2[key2] instanceof List.List;
                   }
               }
             }
           } else {
-            warn(node2, "Unknown field `" + key + "` for " + type + " node type");
+            warn(node2, "Unknown field `" + key2 + "` for " + type + " node type");
           }
           if (!valid) {
-            warn(node2, "Bad value for `" + type + "." + key + "`");
+            warn(node2, "Bad value for `" + type + "." + key2 + "`");
           }
         }
-        for (const key in fields) {
-          if (hasOwnProperty2.call(fields, key) && hasOwnProperty2.call(node2, key) === false) {
-            warn(node2, "Field `" + type + "." + key + "` is missed");
+        for (const key2 in fields) {
+          if (hasOwnProperty2.call(fields, key2) && hasOwnProperty2.call(node2, key2) === false) {
+            warn(node2, "Field `" + type + "." + key2 + "` is missed");
           }
         }
       };
@@ -25164,12 +25164,12 @@ var require_structure = __commonJS({
       const docs = {
         type: '"' + name + '"'
       };
-      for (const key in structure) {
-        if (hasOwnProperty2.call(structure, key) === false) {
+      for (const key2 in structure) {
+        if (hasOwnProperty2.call(structure, key2) === false) {
           continue;
         }
-        const fieldTypes = fields[key] = Array.isArray(structure[key]) ? structure[key].slice() : [structure[key]];
-        docs[key] = genTypesList(fieldTypes, name + "." + key);
+        const fieldTypes = fields[key2] = Array.isArray(structure[key2]) ? structure[key2].slice() : [structure[key2]];
+        docs[key2] = genTypesList(fieldTypes, name + "." + key2);
       }
       return {
         docs,
@@ -25262,7 +25262,7 @@ var require_Lexer = __commonJS({
     var matchGraph = require_match_graph();
     var match = require_match();
     var trace = require_trace();
-    var search = require_search();
+    var search2 = require_search();
     var structure = require_structure();
     var parse5 = require_parse2();
     var generate = require_generate();
@@ -25564,10 +25564,10 @@ var require_Lexer = __commonJS({
         return matchSyntax(this, syntax, value, false);
       }
       findValueFragments(propertyName, value, type, name) {
-        return search.matchFragments(this, value, this.matchProperty(propertyName, value), type, name);
+        return search2.matchFragments(this, value, this.matchProperty(propertyName, value), type, name);
       }
       findDeclarationValueFragments(declaration, type, name) {
-        return search.matchFragments(this, declaration.value, this.matchDeclaration(declaration), type, name);
+        return search2.matchFragments(this, declaration.value, this.matchDeclaration(declaration), type, name);
       }
       findAllFragments(ast, type, name) {
         const result = [];
@@ -25628,11 +25628,11 @@ var require_Lexer = __commonJS({
         const errors = [];
         let brokenTypes = /* @__PURE__ */ new Map();
         let brokenProperties = /* @__PURE__ */ new Map();
-        for (const key in this.types) {
-          validate2(this, key, brokenTypes, this.types[key]);
+        for (const key2 in this.types) {
+          validate2(this, key2, brokenTypes, this.types[key2]);
         }
-        for (const key in this.properties) {
-          validate2(this, key, brokenProperties, this.properties[key]);
+        for (const key2 in this.properties) {
+          validate2(this, key2, brokenProperties, this.properties[key2]);
         }
         const brokenTypesArray = [...brokenTypes.keys()].filter((name) => brokenTypes.get(name));
         const brokenPropertiesArray = [...brokenProperties.keys()].filter((name) => brokenProperties.get(name));
@@ -25685,9 +25685,9 @@ var require_mix = __commonJS({
     }
     function mergeDicts(base, ext, fields) {
       const result = { ...base };
-      for (const [key, props] of Object.entries(ext)) {
-        result[key] = {
-          ...result[key],
+      for (const [key2, props] of Object.entries(ext)) {
+        result[key2] = {
+          ...result[key2],
           ...fields ? extractProps(props, fields) : props
         };
       }
@@ -40331,21 +40331,21 @@ var require_data = __commonJS({
     }
     function patchDictionary(dict, patchDict) {
       const result = /* @__PURE__ */ Object.create(null);
-      for (const [key, value] of Object.entries(dict)) {
+      for (const [key2, value] of Object.entries(dict)) {
         if (value) {
-          result[key] = value.syntax || value;
+          result[key2] = value.syntax || value;
         }
       }
-      for (const key of Object.keys(patchDict)) {
-        if (hasOwn(dict, key)) {
-          if (patchDict[key].syntax) {
-            result[key] = extendSyntax.test(patchDict[key].syntax) ? result[key] + " " + patchDict[key].syntax.trim() : patchDict[key].syntax;
+      for (const key2 of Object.keys(patchDict)) {
+        if (hasOwn(dict, key2)) {
+          if (patchDict[key2].syntax) {
+            result[key2] = extendSyntax.test(patchDict[key2].syntax) ? result[key2] + " " + patchDict[key2].syntax.trim() : patchDict[key2].syntax;
           } else {
-            delete result[key];
+            delete result[key2];
           }
         } else {
-          if (patchDict[key].syntax) {
-            result[key] = patchDict[key].syntax.replace(extendSyntax, "");
+          if (patchDict[key2].syntax) {
+            result[key2] = patchDict[key2].syntax.replace(extendSyntax, "");
           }
         }
       }
@@ -40353,29 +40353,29 @@ var require_data = __commonJS({
     }
     function preprocessPatchAtrulesDescritors(declarations) {
       const result = {};
-      for (const [key, value] of Object.entries(declarations || {})) {
-        result[key] = typeof value === "string" ? { syntax: value } : value;
+      for (const [key2, value] of Object.entries(declarations || {})) {
+        result[key2] = typeof value === "string" ? { syntax: value } : value;
       }
       return result;
     }
     function patchAtrules(dict, patchDict) {
       const result = {};
-      for (const key in dict) {
-        if (patchDict[key] === null) {
+      for (const key2 in dict) {
+        if (patchDict[key2] === null) {
           continue;
         }
-        const atrulePatch = patchDict[key] || {};
-        result[key] = {
-          prelude: key in patchDict && "prelude" in atrulePatch ? atrulePatch.prelude : dict[key].prelude || null,
+        const atrulePatch = patchDict[key2] || {};
+        result[key2] = {
+          prelude: key2 in patchDict && "prelude" in atrulePatch ? atrulePatch.prelude : dict[key2].prelude || null,
           descriptors: patchDictionary(
-            dict[key].descriptors || {},
+            dict[key2].descriptors || {},
             preprocessPatchAtrulesDescritors(atrulePatch.descriptors)
           )
         };
       }
-      for (const [key, atrulePatch] of Object.entries(patchDict)) {
-        if (atrulePatch && !hasOwn(dict, key)) {
-          result[key] = {
+      for (const [key2, atrulePatch] of Object.entries(patchDict)) {
+        if (atrulePatch && !hasOwn(dict, key2)) {
+          result[key2] = {
             prelude: atrulePatch.prelude || null,
             descriptors: atrulePatch.descriptors ? patchDictionary({}, preprocessPatchAtrulesDescritors(atrulePatch.descriptors)) : null
           };
@@ -44394,8 +44394,8 @@ var require_clone = __commonJS({
     var List = require_List();
     function clone2(node2) {
       const result = {};
-      for (const key of Object.keys(node2)) {
-        let value = node2[key];
+      for (const key2 of Object.keys(node2)) {
+        let value = node2[key2];
         if (value) {
           if (Array.isArray(value) || value instanceof List.List) {
             value = value.map(clone2);
@@ -44403,7 +44403,7 @@ var require_clone = __commonJS({
             value = clone2(value);
           }
         }
-        result[key] = value;
+        result[key2] = value;
       }
       return result;
     }
@@ -46512,16 +46512,16 @@ var Command = class {
     if (this.properties && Object.keys(this.properties).length > 0) {
       cmdStr += " ";
       let first = true;
-      for (const key in this.properties) {
-        if (this.properties.hasOwnProperty(key)) {
-          const val = this.properties[key];
+      for (const key2 in this.properties) {
+        if (this.properties.hasOwnProperty(key2)) {
+          const val = this.properties[key2];
           if (val) {
             if (first) {
               first = false;
             } else {
               cmdStr += ",";
             }
-            cmdStr += `${key}=${escapeProperty(val)}`;
+            cmdStr += `${key2}=${escapeProperty(val)}`;
           }
         }
       }
@@ -46554,16 +46554,16 @@ function issueFileCommand(command, message) {
     encoding: "utf8"
   });
 }
-function prepareKeyValueMessage(key, value) {
+function prepareKeyValueMessage(key2, value) {
   const delimiter = `ghadelimiter_${crypto.randomUUID()}`;
   const convertedValue = toCommandValue(value);
-  if (key.includes(delimiter)) {
+  if (key2.includes(delimiter)) {
     throw new Error(`Unexpected input: name should not contain the delimiter "${delimiter}"`);
   }
   if (convertedValue.includes(delimiter)) {
     throw new Error(`Unexpected input: value should not contain the delimiter "${delimiter}"`);
   }
-  return `${key}<<${delimiter}${os2.EOL}${convertedValue}${os2.EOL}${delimiter}`;
+  return `${key2}<<${delimiter}${os2.EOL}${convertedValue}${os2.EOL}${delimiter}`;
 }
 
 // node_modules/@actions/core/lib/core.js
@@ -46707,7 +46707,7 @@ var Summary = class {
    * @returns {string} content wrapped in HTML element
    */
   wrap(tag, content, attrs = {}) {
-    const htmlAttrs = Object.entries(attrs).map(([key, value]) => ` ${key}="${value}"`).join("");
+    const htmlAttrs = Object.entries(attrs).map(([key2, value]) => ` ${key2}="${value}"`).join("");
     if (!content) {
       return `<${tag}${htmlAttrs}>`;
     }
@@ -47724,9 +47724,9 @@ function floatSafeRemainder(val, step) {
   return ratio - roundedRatio;
 }
 var EVALUATING = /* @__PURE__ */ Symbol("evaluating");
-function defineLazy(object2, key, getter) {
+function defineLazy(object2, key2, getter) {
   let value = void 0;
-  Object.defineProperty(object2, key, {
+  Object.defineProperty(object2, key2, {
     get() {
       if (value === EVALUATING) {
         return void 0;
@@ -47738,7 +47738,7 @@ function defineLazy(object2, key, getter) {
       return value;
     },
     set(v) {
-      Object.defineProperty(object2, key, {
+      Object.defineProperty(object2, key2, {
         value: v
         // configurable: true,
       });
@@ -47764,47 +47764,47 @@ function rawShape(def) {
 function sourceShape(schema) {
   return rawShape(schema._zod.def) ?? schema._zod.def.shape;
 }
-function deferProp(target, key, getter) {
-  Object.defineProperty(target, key, {
+function deferProp(target, key2, getter) {
+  Object.defineProperty(target, key2, {
     get() {
       const value = getter();
-      assignProp(this, key, value);
+      assignProp(this, key2, value);
       return value;
     },
     enumerable: true,
     configurable: true
   });
 }
-function putProp(target, key, value) {
-  if (key in target)
-    assignProp(target, key, value);
+function putProp(target, key2, value) {
+  if (key2 in target)
+    assignProp(target, key2, value);
   else
-    target[key] = value;
+    target[key2] = value;
 }
 function mirrorShape(target, source, keys, wrap) {
   const raw = sourceShape(source);
-  for (const key of keys) {
-    const desc = Object.getOwnPropertyDescriptor(raw, key);
+  for (const key2 of keys) {
+    const desc = Object.getOwnPropertyDescriptor(raw, key2);
     if (!desc.enumerable)
       continue;
     if (desc.get) {
-      deferProp(target, key, () => {
-        const value = source._zod.def.shape[key];
-        return wrap ? wrap(value, key) : value;
+      deferProp(target, key2, () => {
+        const value = source._zod.def.shape[key2];
+        return wrap ? wrap(value, key2) : value;
       });
     } else
-      putProp(target, key, wrap ? wrap(desc.value, key) : desc.value);
+      putProp(target, key2, wrap ? wrap(desc.value, key2) : desc.value);
   }
 }
 function mirrorProps(target, source) {
-  for (const key of Reflect.ownKeys(source)) {
-    const desc = Object.getOwnPropertyDescriptor(source, key);
+  for (const key2 of Reflect.ownKeys(source)) {
+    const desc = Object.getOwnPropertyDescriptor(source, key2);
     if (!desc.enumerable)
       continue;
     if (desc.get)
-      deferProp(target, key, () => source[key]);
+      deferProp(target, key2, () => source[key2]);
     else
-      putProp(target, key, desc.value);
+      putProp(target, key2, desc.value);
   }
 }
 function mergeDefs(...defs) {
@@ -47821,11 +47821,11 @@ function cloneDef(schema) {
 function getElementAtPath(obj, path3) {
   if (!path3)
     return obj;
-  return path3.reduce((acc, key) => acc?.[key], obj);
+  return path3.reduce((acc, key2) => acc?.[key2], obj);
 }
 function promiseAllObject(promisesObj) {
   const keys = Object.keys(promisesObj);
-  const promises3 = keys.map((key) => promisesObj[key]);
+  const promises3 = keys.map((key2) => promisesObj[key2]);
   return Promise.all(promises3).then((results) => {
     const resolvedObj = {};
     for (let i = 0; i < keys.length; i++) {
@@ -47897,8 +47897,8 @@ function shallowClone(o) {
 }
 function numKeys(data) {
   let keyCount = 0;
-  for (const key in data) {
-    if (Object.prototype.hasOwnProperty.call(data, key)) {
+  for (const key2 in data) {
+    if (Object.prototype.hasOwnProperty.call(data, key2)) {
       keyCount++;
     }
   }
@@ -48052,12 +48052,12 @@ function pick(schema, mask) {
 function maskedKeys(schema, mask) {
   const raw = sourceShape(schema);
   const keys = [];
-  for (const key of Reflect.ownKeys(mask)) {
-    if (!Object.getOwnPropertyDescriptor(raw, key)?.enumerable) {
-      throw new Error(`Unrecognized key: "${String(key)}"`);
+  for (const key2 of Reflect.ownKeys(mask)) {
+    if (!Object.getOwnPropertyDescriptor(raw, key2)?.enumerable) {
+      throw new Error(`Unrecognized key: "${String(key2)}"`);
     }
-    if (mask[key])
-      keys.push(key);
+    if (mask[key2])
+      keys.push(key2);
   }
   return keys;
 }
@@ -48070,7 +48070,7 @@ function omit(schema, mask) {
   }
   const omitted = new Set(maskedKeys(schema, mask));
   const newShape = {};
-  mirrorShape(newShape, schema, Reflect.ownKeys(sourceShape(schema)).filter((key) => !omitted.has(key)));
+  mirrorShape(newShape, schema, Reflect.ownKeys(sourceShape(schema)).filter((key2) => !omitted.has(key2)));
   return clone(schema, mergeDefs(currDef, { shape: newShape, checks: [] }));
 }
 function extend(schema, shape) {
@@ -48081,8 +48081,8 @@ function extend(schema, shape) {
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
     const existingShape = sourceShape(schema);
-    for (const key of Reflect.ownKeys(shape)) {
-      if (Object.getOwnPropertyDescriptor(existingShape, key) !== void 0) {
+    for (const key2 of Reflect.ownKeys(shape)) {
+      if (Object.getOwnPropertyDescriptor(existingShape, key2) !== void 0) {
         throw new Error("Cannot overwrite keys on object schemas containing refinements. Use `.safeExtend()` instead.");
       }
     }
@@ -48129,15 +48129,15 @@ function partial(Class2, schema, mask, name = "partial") {
   }
   const selected = mask ? new Set(maskedKeys(schema, mask)) : void 0;
   const newShape = {};
-  mirrorShape(newShape, schema, Reflect.ownKeys(sourceShape(schema)), Class2 && ((value, key) => selected && !selected.has(key) ? value : new Class2({ type: "optional", innerType: value })));
+  mirrorShape(newShape, schema, Reflect.ownKeys(sourceShape(schema)), Class2 && ((value, key2) => selected && !selected.has(key2) ? value : new Class2({ type: "optional", innerType: value })));
   return clone(schema, mergeDefs(schema._zod.def, { shape: newShape, checks: [] }));
 }
 function required(Class2, schema, mask) {
   const selected = mask ? new Set(maskedKeys(schema, mask)) : void 0;
   const newShape = {};
-  mirrorShape(newShape, schema, Reflect.ownKeys(sourceShape(schema)), (value, key) => (
+  mirrorShape(newShape, schema, Reflect.ownKeys(sourceShape(schema)), (value, key2) => (
     // overwrite with non-optional
-    selected && !selected.has(key) ? value : new Class2({ type: "nonoptional", innerType: value })
+    selected && !selected.has(key2) ? value : new Class2({ type: "nonoptional", innerType: value })
   ));
   return clone(schema, mergeDefs(schema._zod.def, { shape: newShape }));
 }
@@ -48312,46 +48312,46 @@ var Class = class {
   }
 };
 function members(proto, table) {
-  for (const key in table) {
-    const desc = Object.getOwnPropertyDescriptor(table, key);
+  for (const key2 in table) {
+    const desc = Object.getOwnPropertyDescriptor(table, key2);
     if (desc.get)
-      Object.defineProperty(proto, key, { ...desc, enumerable: false });
+      Object.defineProperty(proto, key2, { ...desc, enumerable: false });
     else
-      defineBound(proto, key, desc.value);
+      defineBound(proto, key2, desc.value);
   }
 }
-function own(inst, key, value, enumerable = true) {
-  Object.defineProperty(inst, key, { configurable: true, writable: true, enumerable, value });
+function own(inst, key2, value, enumerable = true) {
+  Object.defineProperty(inst, key2, { configurable: true, writable: true, enumerable, value });
   return value;
 }
-function hide(inst, key, value) {
-  return own(inst, key, value, false);
+function hide(inst, key2, value) {
+  return own(inst, key2, value, false);
 }
 // @__NO_SIDE_EFFECTS__
 function derived(computes, table) {
-  for (const key in computes) {
-    const compute = computes[key];
-    Object.defineProperty(table, key, {
+  for (const key2 in computes) {
+    const compute = computes[key2];
+    Object.defineProperty(table, key2, {
       configurable: true,
       enumerable: true,
       get() {
-        return own(this, key, compute(this));
+        return own(this, key2, compute(this));
       },
       set(value) {
-        own(this, key, value);
+        own(this, key2, value);
       }
     });
   }
   return table;
 }
-function defineBound(proto, key, fn) {
-  Object.defineProperty(proto, key, {
+function defineBound(proto, key2, fn) {
+  Object.defineProperty(proto, key2, {
     configurable: true,
     get() {
-      return this == null ? fn : own(this, key, fn.bind(this));
+      return this == null ? fn : own(this, key2, fn.bind(this));
     },
     set(value) {
-      own(this, key, value);
+      own(this, key2, value);
     }
   });
 }
@@ -48368,53 +48368,53 @@ var breaker = {
     return void 0;
   }
 };
-function defineLazyInternal(inst, key, compute) {
+function defineLazyInternal(inst, key2, compute) {
   const proto = Object.getPrototypeOf(inst._zod);
-  if (key in proto && installing !== inst._zod) {
+  if (key2 in proto && installing !== inst._zod) {
     installing = void 0;
     return;
   }
   installing = inst._zod;
-  Object.defineProperty(proto, key, {
+  Object.defineProperty(proto, key2, {
     configurable: true,
     get() {
-      Object.defineProperty(this, key, breaker);
+      Object.defineProperty(this, key2, breaker);
       const outer = broke;
       broke = false;
       try {
         const value = compute(this);
         if (broke)
-          delete this[key];
+          delete this[key2];
         else
-          Object.defineProperty(this, key, { configurable: true, writable: true, value });
+          Object.defineProperty(this, key2, { configurable: true, writable: true, value });
         broke = broke || outer;
         return value;
       } catch (err) {
-        delete this[key];
+        delete this[key2];
         broke = broke || outer;
         throw err;
       }
     },
     set(value) {
-      Object.defineProperty(this, key, { configurable: true, writable: true, value });
+      Object.defineProperty(this, key2, { configurable: true, writable: true, value });
     }
   });
 }
-function installLazyProp(inst, key, make, enumerable) {
-  const proto = claim(inst, key);
+function installLazyProp(inst, key2, make, enumerable) {
+  const proto = claim(inst, key2);
   if (!proto)
     return;
-  Object.defineProperty(proto, key, {
+  Object.defineProperty(proto, key2, {
     configurable: true,
     get() {
       const desc = { configurable: true, writable: true, enumerable, value: void 0 };
-      Object.defineProperty(this, key, desc);
+      Object.defineProperty(this, key2, desc);
       desc.value = make(this);
-      Object.defineProperty(this, key, desc);
+      Object.defineProperty(this, key2, desc);
       return desc.value;
     },
     set(value) {
-      Object.defineProperty(this, key, { configurable: true, writable: true, enumerable, value });
+      Object.defineProperty(this, key2, { configurable: true, writable: true, enumerable, value });
     }
   });
 }
@@ -48595,15 +48595,15 @@ var $ZodError = $constructor("$ZodError", initializer);
 var $ZodRealError = $constructor("$ZodError", initializer, void 0, {
   Parent: Error
 });
-function node(obj, key, make) {
-  if (!Object.prototype.hasOwnProperty.call(obj, key)) {
-    if (key === "__proto__") {
-      Object.defineProperty(obj, key, { value: make(), writable: true, enumerable: true, configurable: true });
+function node(obj, key2, make) {
+  if (!Object.prototype.hasOwnProperty.call(obj, key2)) {
+    if (key2 === "__proto__") {
+      Object.defineProperty(obj, key2, { value: make(), writable: true, enumerable: true, configurable: true });
     } else {
-      obj[key] = make();
+      obj[key2] = make();
     }
   }
-  return obj[key];
+  return obj[key2];
 }
 function flattenError(error63, mapper = (issue3) => issue3.message) {
   const fieldErrors = {};
@@ -49519,16 +49519,16 @@ var $ZodCheckProperties = /* @__PURE__ */ $constructor("$ZodCheckProperties", (i
       payload.issues.push({ expected: "object", code: "invalid_type", input: payload.value, inst });
       return void 0;
     }
-    entries ?? (entries = Reflect.ownKeys(def.shape).map((key) => [key, def.shape[key]]));
+    entries ?? (entries = Reflect.ownKeys(def.shape).map((key2) => [key2, def.shape[key2]]));
     const input2 = payload.value;
     let proms;
-    for (const [key, schema] of entries) {
-      const result = schema._zod.run({ value: input2[key], issues: [] }, {});
+    for (const [key2, schema] of entries) {
+      const result = schema._zod.run({ value: input2[key2], issues: [] }, {});
       if (result instanceof Promise) {
         proms ?? (proms = []);
-        proms.push(result.then((result2) => handleCheckPropertyResult(result2, payload, key)));
+        proms.push(result.then((result2) => handleCheckPropertyResult(result2, payload, key2)));
       } else {
-        handleCheckPropertyResult(result, payload, key);
+        handleCheckPropertyResult(result, payload, key2);
       }
     }
     if (proms)
@@ -50405,8 +50405,8 @@ var $ZodArray = /* @__PURE__ */ $constructor("$ZodArray", (inst, def) => {
     return payload;
   };
 });
-function handlePropertyResult(result, final, key, input2, optin, optout) {
-  const isPresent = key in input2;
+function handlePropertyResult(result, final, key2, input2, optin, optout) {
+  const isPresent = key2 in input2;
   const isOptionalOut = optout === "optional";
   if (!isPresent && isOptionalOut && optin === "optional") {
     return;
@@ -50415,7 +50415,7 @@ function handlePropertyResult(result, final, key, input2, optin, optout) {
     if (optin !== void 0 && isOptionalOut && !isPresent) {
       return;
     }
-    final.issues.push(...prefixIssues(key, result.issues));
+    final.issues.push(...prefixIssues(key2, result.issues));
   }
   if (!isPresent && optin === void 0) {
     if (!result.issues.length) {
@@ -50423,17 +50423,17 @@ function handlePropertyResult(result, final, key, input2, optin, optout) {
         code: "invalid_type",
         expected: "nonoptional",
         input: void 0,
-        path: [key]
+        path: [key2]
       });
     }
     return;
   }
   if (result.value === void 0) {
     if (isPresent || optin === "defaulted" && !isOptionalOut) {
-      final.value[key] = void 0;
+      final.value[key2] = void 0;
     }
   } else {
-    final.value[key] = result.value;
+    final.value[key2] = result.value;
   }
 }
 var NO_SYMBOL_KEYS = [];
@@ -50466,28 +50466,28 @@ function handleCatchall(proms, input2, payload, ctx, def, inst, abortEarly) {
   const optin = _catchall.optin;
   const optout = _catchall.optout;
   let seen = 0;
-  for (const key in input2) {
+  for (const key2 in input2) {
     if (abortEarly && payload.issues.length !== seen) {
       if (aborted(payload, seen))
         break;
       seen = payload.issues.length;
     }
-    if (keySet.has(key))
+    if (keySet.has(key2))
       continue;
-    if (key === "__proto__") {
+    if (key2 === "__proto__") {
       if (t === "never")
-        unrecognized.push(key);
+        unrecognized.push(key2);
       continue;
     }
     if (t === "never") {
-      unrecognized.push(key);
+      unrecognized.push(key2);
       continue;
     }
-    const r = _catchall.run({ value: input2[key], issues: [] }, ctx);
+    const r = _catchall.run({ value: input2[key2], issues: [] }, ctx);
     if (r instanceof Promise) {
-      proms.push(r.then((r2) => handlePropertyResult(r2, payload, key, input2, optin, optout)));
+      proms.push(r.then((r2) => handlePropertyResult(r2, payload, key2, input2, optin, optout)));
     } else {
-      handlePropertyResult(r, payload, key, input2, optin, optout);
+      handlePropertyResult(r, payload, key2, input2, optin, optout);
     }
   }
   if (unrecognized.length) {
@@ -50524,16 +50524,16 @@ var $ZodObject = /* @__PURE__ */ $constructor("$ZodObject", (inst, def) => {
   defineLazyInternal(inst, "propValues", (zod) => {
     const shape = zod.def.shape;
     const propValues = {};
-    for (const key in shape) {
-      const field = shape[key]._zod;
-      if (field.values) {
-        if (!Object.prototype.hasOwnProperty.call(propValues, key)) {
-          assignProp(propValues, key, /* @__PURE__ */ new Set());
+    for (const key2 in shape) {
+      const field2 = shape[key2]._zod;
+      if (field2.values) {
+        if (!Object.prototype.hasOwnProperty.call(propValues, key2)) {
+          assignProp(propValues, key2, /* @__PURE__ */ new Set());
         }
-        for (const v of field.values)
-          propValues[key].add(v);
-        if (field.optin !== void 0)
-          propValues[key].add(void 0);
+        for (const v of field2.values)
+          propValues[key2].add(v);
+        if (field2.optin !== void 0)
+          propValues[key2].add(void 0);
       }
     }
     return propValues;
@@ -50560,22 +50560,22 @@ var $ZodObject = /* @__PURE__ */ $constructor("$ZodObject", (inst, def) => {
     const shape = value.shape;
     const abortEarly = ctx?.abortEarly;
     let seen = payload.issues.length;
-    for (const key of value.allKeys) {
+    for (const key2 of value.allKeys) {
       if (abortEarly && payload.issues.length !== seen) {
         if (aborted(payload, seen))
           break;
         seen = payload.issues.length;
       }
-      if (key === "__proto__")
+      if (key2 === "__proto__")
         continue;
-      const el = shape[key];
+      const el = shape[key2];
       const optin = el._zod.optin;
       const optout = el._zod.optout;
-      const r = el._zod.run({ value: input2[key], issues: [] }, ctx);
+      const r = el._zod.run({ value: input2[key2], issues: [] }, ctx);
       if (r instanceof Promise) {
-        proms.push(r.then((r2) => handlePropertyResult(r2, payload, key, input2, optin, optout)));
+        proms.push(r.then((r2) => handlePropertyResult(r2, payload, key2, input2, optin, optout)));
       } else {
-        handlePropertyResult(r, payload, key, input2, optin, optout);
+        handlePropertyResult(r, payload, key2, input2, optin, optout);
       }
     }
     if (!catchall) {
@@ -50609,17 +50609,17 @@ var $ZodObjectJIT = /* @__PURE__ */ $constructor("$ZodObjectJIT", (inst, def) =>
     doc.write(`const input = payload.value;`);
     const ids = /* @__PURE__ */ Object.create(null);
     let counter = 0;
-    for (const key of normalized.allKeys) {
-      ids[key] = `key_${counter++}`;
+    for (const key2 of normalized.allKeys) {
+      ids[key2] = `key_${counter++}`;
     }
     doc.write(memo2 ? `const newResult = memo.alloc(inst, payload, {}, ctx);` : `const newResult = {};`);
-    for (const key of normalized.allKeys) {
-      if (key === "__proto__")
+    for (const key2 of normalized.allKeys) {
+      if (key2 === "__proto__")
         continue;
-      const id = ids[key];
-      const k = typeof key === "symbol" ? `syms[${syms.indexOf(key)}]` : esc(key);
+      const id = ids[key2];
+      const k = typeof key2 === "symbol" ? `syms[${syms.indexOf(key2)}]` : esc(key2);
       const isPresent = `${k} in input`;
-      const schema = shape[key];
+      const schema = shape[key2];
       const optin = schema?._zod?.optin;
       const isOptionalIn = optin !== void 0;
       const isOptionalOut = schema?._zod?.optout === "optional";
@@ -50953,21 +50953,21 @@ function mergeValues(a, b) {
   }
   if (isPlainObject(a) && isPlainObject(b)) {
     const bKeys = Object.keys(b);
-    const sharedKeys = Object.keys(a).filter((key) => bKeys.indexOf(key) !== -1);
+    const sharedKeys = Object.keys(a).filter((key2) => bKeys.indexOf(key2) !== -1);
     const newObj = { ...a, ...b };
     if (Object.prototype.hasOwnProperty.call(newObj, "__proto__"))
       delete newObj.__proto__;
-    for (const key of sharedKeys) {
-      if (key === "__proto__")
+    for (const key2 of sharedKeys) {
+      if (key2 === "__proto__")
         continue;
-      const sharedValue = mergeValues(a[key], b[key]);
+      const sharedValue = mergeValues(a[key2], b[key2]);
       if (!sharedValue.valid) {
         return {
           valid: false,
-          mergeErrorPath: [key, ...sharedValue.mergeErrorPath]
+          mergeErrorPath: [key2, ...sharedValue.mergeErrorPath]
         };
       }
-      newObj[key] = sharedValue.data;
+      newObj[key2] = sharedValue.data;
     }
     return { valid: true, data: newObj };
   }
@@ -51126,9 +51126,9 @@ var $ZodTuple = /* @__PURE__ */ $constructor("$ZodTuple", (inst, def) => {
     return handleTupleResults(itemResults, payload, items, input2, optoutStart);
   };
 });
-function getTupleOptStart(items, key) {
+function getTupleOptStart(items, key2) {
   for (let i = items.length - 1; i >= 0; i--) {
-    const omittable = key === "optin" ? items[i]._zod.optin !== void 0 : items[i]._zod.optout === "optional";
+    const omittable = key2 === "optin" ? items[i]._zod.optin !== void 0 : items[i]._zod.optout === "optional";
     if (!omittable)
       return i + 1;
   }
@@ -51186,12 +51186,12 @@ var $ZodRecord = /* @__PURE__ */ $constructor("$ZodRecord", (inst, def) => {
     if (values && !def.partial) {
       payload.value = memo2 ? memo2.alloc(inst, payload, {}, ctx) : {};
       const recordKeys = /* @__PURE__ */ new Set();
-      for (const key of values) {
-        if (typeof key === "string" || typeof key === "number" || typeof key === "symbol") {
-          recordKeys.add(typeof key === "number" ? key.toString() : key);
-          if (key === "__proto__")
+      for (const key2 of values) {
+        if (typeof key2 === "string" || typeof key2 === "number" || typeof key2 === "symbol") {
+          recordKeys.add(typeof key2 === "number" ? key2.toString() : key2);
+          if (key2 === "__proto__")
             continue;
-          const keyResult = def.keyType._zod.run({ value: key, issues: [] }, ctx);
+          const keyResult = def.keyType._zod.run({ value: key2, issues: [] }, ctx);
           if (keyResult instanceof Promise) {
             throw new Error("Async schemas not supported in object keys currently");
           }
@@ -51200,8 +51200,8 @@ var $ZodRecord = /* @__PURE__ */ $constructor("$ZodRecord", (inst, def) => {
               code: "invalid_key",
               origin: "record",
               issues: keyResult.issues.map((iss) => finalizeIssue(iss, ctx, config())),
-              input: key,
-              path: [key],
+              input: key2,
+              path: [key2],
               inst
             });
             continue;
@@ -51209,32 +51209,32 @@ var $ZodRecord = /* @__PURE__ */ $constructor("$ZodRecord", (inst, def) => {
           const outKey = keyResult.value;
           if (outKey === "__proto__")
             continue;
-          const result = def.valueType._zod.run({ value: input2[key], issues: [] }, ctx);
+          const result = def.valueType._zod.run({ value: input2[key2], issues: [] }, ctx);
           if (result instanceof Promise) {
             proms.push(result.then((result2) => {
               if (result2.issues.length) {
-                payload.issues.push(...prefixIssues(key, result2.issues));
+                payload.issues.push(...prefixIssues(key2, result2.issues));
               }
               payload.value[outKey] = result2.value;
             }));
           } else {
             if (result.issues.length) {
-              payload.issues.push(...prefixIssues(key, result.issues));
+              payload.issues.push(...prefixIssues(key2, result.issues));
             }
             payload.value[outKey] = result.value;
           }
         }
       }
       let unrecognized;
-      for (const key in input2) {
-        if (!recordKeys.has(key)) {
+      for (const key2 in input2) {
+        if (!recordKeys.has(key2)) {
           if (def.mode === "loose") {
-            if (key === "__proto__")
+            if (key2 === "__proto__")
               continue;
-            payload.value[key] = input2[key];
+            payload.value[key2] = input2[key2];
           } else {
             unrecognized = unrecognized ?? [];
-            unrecognized.push(key);
+            unrecognized.push(key2);
           }
         }
       }
@@ -51250,18 +51250,18 @@ var $ZodRecord = /* @__PURE__ */ $constructor("$ZodRecord", (inst, def) => {
     } else {
       payload.value = memo2 ? memo2.alloc(inst, payload, {}, ctx) : {};
       let unrecognized;
-      for (const key of Reflect.ownKeys(input2)) {
-        if (key === "__proto__")
+      for (const key2 of Reflect.ownKeys(input2)) {
+        if (key2 === "__proto__")
           continue;
-        if (!Object.prototype.propertyIsEnumerable.call(input2, key))
+        if (!Object.prototype.propertyIsEnumerable.call(input2, key2))
           continue;
-        let keyResult = def.keyType._zod.run({ value: key, issues: [] }, ctx);
+        let keyResult = def.keyType._zod.run({ value: key2, issues: [] }, ctx);
         if (keyResult instanceof Promise) {
           throw new Error("Async schemas not supported in object keys currently");
         }
-        const checkNumericKey = typeof key === "string" && number.test(key) && keyResult.issues.length;
+        const checkNumericKey = typeof key2 === "string" && number.test(key2) && keyResult.issues.length;
         if (checkNumericKey) {
-          const retryResult = def.keyType._zod.run({ value: Number(key), issues: [] }, ctx);
+          const retryResult = def.keyType._zod.run({ value: Number(key2), issues: [] }, ctx);
           if (retryResult instanceof Promise) {
             throw new Error("Async schemas not supported in object keys currently");
           }
@@ -51271,17 +51271,17 @@ var $ZodRecord = /* @__PURE__ */ $constructor("$ZodRecord", (inst, def) => {
         }
         if (keyResult.issues.length) {
           if (def.mode === "loose") {
-            payload.value[key] = input2[key];
+            payload.value[key2] = input2[key2];
           } else if (values) {
             unrecognized = unrecognized ?? [];
-            unrecognized.push(key);
+            unrecognized.push(key2);
           } else {
             payload.issues.push({
               code: "invalid_key",
               origin: "record",
               issues: keyResult.issues.map((iss) => finalizeIssue(iss, ctx, config())),
-              input: key,
-              path: [key],
+              input: key2,
+              path: [key2],
               inst
             });
           }
@@ -51290,17 +51290,17 @@ var $ZodRecord = /* @__PURE__ */ $constructor("$ZodRecord", (inst, def) => {
         const outKey = keyResult.value;
         if (outKey === "__proto__")
           continue;
-        const result = def.valueType._zod.run({ value: input2[key], issues: [] }, ctx);
+        const result = def.valueType._zod.run({ value: input2[key2], issues: [] }, ctx);
         if (result instanceof Promise) {
           proms.push(result.then((result2) => {
             if (result2.issues.length) {
-              payload.issues.push(...prefixIssues(key, result2.issues));
+              payload.issues.push(...prefixIssues(key2, result2.issues));
             }
             payload.value[outKey] = result2.value;
           }));
         } else {
           if (result.issues.length) {
-            payload.issues.push(...prefixIssues(key, result.issues));
+            payload.issues.push(...prefixIssues(key2, result.issues));
           }
           payload.value[outKey] = result.value;
         }
@@ -51340,20 +51340,20 @@ var $ZodMap = /* @__PURE__ */ $constructor("$ZodMap", (inst, def) => {
     payload.value = memo2 ? memo2.alloc(inst, payload, /* @__PURE__ */ new Map(), ctx) : /* @__PURE__ */ new Map();
     const abortEarly = ctx?.abortEarly;
     let seen = payload.issues.length;
-    for (const [key, value] of input2) {
+    for (const [key2, value] of input2) {
       if (abortEarly && payload.issues.length !== seen) {
         if (aborted(payload, seen))
           break;
         seen = payload.issues.length;
       }
-      const keyResult = def.keyType._zod.run({ value: key, issues: [] }, ctx);
+      const keyResult = def.keyType._zod.run({ value: key2, issues: [] }, ctx);
       const valueResult = def.valueType._zod.run({ value, issues: [] }, ctx);
       if (keyResult instanceof Promise || valueResult instanceof Promise) {
         proms.push(Promise.all([keyResult, valueResult]).then(([keyResult2, valueResult2]) => {
-          handleMapResult(keyResult2, valueResult2, payload, key, input2, inst, ctx);
+          handleMapResult(keyResult2, valueResult2, payload, key2, input2, inst, ctx);
         }));
       } else {
-        handleMapResult(keyResult, valueResult, payload, key, input2, inst, ctx);
+        handleMapResult(keyResult, valueResult, payload, key2, input2, inst, ctx);
       }
     }
     if (proms.length)
@@ -51361,10 +51361,10 @@ var $ZodMap = /* @__PURE__ */ $constructor("$ZodMap", (inst, def) => {
     return payload;
   };
 });
-function handleMapResult(keyResult, valueResult, final, key, input2, inst, ctx) {
+function handleMapResult(keyResult, valueResult, final, key2, input2, inst, ctx) {
   if (keyResult.issues.length) {
-    if (propertyKeyTypes.has(typeof key)) {
-      final.issues.push(...prefixIssues(key, keyResult.issues));
+    if (propertyKeyTypes.has(typeof key2)) {
+      final.issues.push(...prefixIssues(key2, keyResult.issues));
     } else {
       final.issues.push({
         code: "invalid_key",
@@ -51376,15 +51376,15 @@ function handleMapResult(keyResult, valueResult, final, key, input2, inst, ctx) 
     }
   }
   if (valueResult.issues.length) {
-    if (propertyKeyTypes.has(typeof key)) {
-      final.issues.push(...prefixIssues(key, valueResult.issues));
+    if (propertyKeyTypes.has(typeof key2)) {
+      final.issues.push(...prefixIssues(key2, valueResult.issues));
     } else {
       final.issues.push({
         origin: "map",
         code: "invalid_element",
         input: input2,
         inst,
-        key,
+        key: key2,
         issues: valueResult.issues.map((iss) => finalizeIssue(iss, ctx, config()))
       });
     }
@@ -52059,8 +52059,8 @@ function isRecursive(inst, stack, resolve) {
   };
   const shape = (sh, spread) => {
     let answer = NONE;
-    for (const key of Reflect.ownKeys(sh)) {
-      const desc = Object.getOwnPropertyDescriptor(sh, key);
+    for (const key2 of Reflect.ownKeys(sh)) {
+      const desc = Object.getOwnPropertyDescriptor(sh, key2);
       if (spread && !desc.enumerable)
         continue;
       const child = desc.get ? ASSUMED : desc.value?._zod ? isRecursive(desc.value, stack, resolve) : NONE;
@@ -52156,8 +52156,8 @@ function isRecursive(inst, stack, resolve) {
       break;
     default: {
       kind;
-      for (const key in def) {
-        const desc = Object.getOwnPropertyDescriptor(def, key);
+      for (const key2 in def) {
+        const desc = Object.getOwnPropertyDescriptor(def, key2);
         if (!desc || desc.get)
           continue;
         const value = desc.value;
@@ -52271,10 +52271,10 @@ var memo = {
           return payload;
         }
         handoff = bucket;
-        const depth = open2.length;
+        const depth2 = open2.length;
         const result = base(payload, ctx);
         handoff = void 0;
-        const entry = open2.length > depth ? open2.pop() : void 0;
+        const entry = open2.length > depth2 ? open2.pop() : void 0;
         if (result instanceof Promise) {
           return result.then((r) => {
             if (entry)
@@ -56365,8 +56365,8 @@ init_cjs_shims();
 var capitalizeFirstCharacter = (text) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
-function getUnitTypeFromNumber(number4) {
-  const abs = Math.abs(number4);
+function getUnitTypeFromNumber(number5) {
+  const abs = Math.abs(number5);
   const last = abs % 10;
   const last2 = abs % 100;
   if (last2 >= 11 && last2 <= 19 || last === 0)
@@ -60360,11 +60360,11 @@ function generatePropertiesChecks(doc, ctx, def, accessor) {
   }
   doc.write(`if (${accessor} == null) return INVALID;`);
   const shape = def.shape;
-  for (const key of Reflect.ownKeys(shape)) {
-    const keyExpr = typeof key === "symbol" ? addConstant(ctx, key) : esc(key);
+  for (const key2 of Reflect.ownKeys(shape)) {
+    const keyExpr = typeof key2 === "symbol" ? addConstant(ctx, key2) : esc(key2);
     const inputVar = newVar(ctx);
     doc.write(`const ${inputVar} = ${accessor}[${keyExpr}];`);
-    compileChild(doc, ctx, shape[key], inputVar, false);
+    compileChild(doc, ctx, shape[key2], inputVar, false);
   }
 }
 function generatePropertyCheck(doc, ctx, def, accessor) {
@@ -60757,9 +60757,9 @@ function generateObjectCheck(doc, ctx, schema, accessor, buildsValue = true) {
     throw new ZodCompileUnsupportedError('object shape key "__proto__"');
   }
   const propOutputs = /* @__PURE__ */ new Map();
-  for (const key of allKeys) {
-    const propSchema = propShape[key];
-    const kx = keyExpr(key);
+  for (const key2 of allKeys) {
+    const propSchema = propShape[key2];
+    const kx = keyExpr(key2);
     const inputVar = newVar(ctx);
     doc.write(`const ${inputVar} = ${accessor}[${kx}];`);
     if (propSchema._zod.optin !== void 0) {
@@ -60780,14 +60780,14 @@ function generateObjectCheck(doc, ctx, schema, accessor, buildsValue = true) {
       } else {
         doc.write(`if (${outputVar2} === INVALID) return INVALID;`);
       }
-      propOutputs.set(key, outputVar2);
+      propOutputs.set(key2, outputVar2);
     } else {
       if (requiresPresenceCheck(propSchema)) {
         doc.write(`if (!(${kx} in ${accessor})) return INVALID;`);
       }
       const outputAccessor = compileChild(doc, ctx, propSchema, inputVar, buildsValue);
       if (outputAccessor !== null)
-        propOutputs.set(key, outputAccessor);
+        propOutputs.set(key2, outputAccessor);
     }
   }
   const catchall = def.catchall;
@@ -61202,9 +61202,9 @@ function generateTupleCheck(doc, ctx, schema, accessor) {
   }
   return outputVar;
 }
-function getTupleOptStart2(items, key) {
+function getTupleOptStart2(items, key2) {
   for (let i = items.length - 1; i >= 0; i--) {
-    const omittable = key === "optin" ? items[i]._zod.optin !== void 0 : items[i]._zod.optout === "optional";
+    const omittable = key2 === "optin" ? items[i]._zod.optin !== void 0 : items[i]._zod.optout === "optional";
     if (!omittable)
       return i + 1;
   }
@@ -61334,16 +61334,16 @@ function generateRecordCheck(doc, ctx, schema, accessor) {
   const keyValues = recordDef.partial ? void 0 : def.keyType._zod.values;
   if (keyValues) {
     const inputKeys = [];
-    for (const key of keyValues) {
-      if (!(typeof key === "string" || typeof key === "number" || typeof key === "symbol")) {
-        throw new ZodCompileUnsupportedError(`record key value ${String(key)}`);
+    for (const key2 of keyValues) {
+      if (!(typeof key2 === "string" || typeof key2 === "number" || typeof key2 === "symbol")) {
+        throw new ZodCompileUnsupportedError(`record key value ${String(key2)}`);
       }
-      const inputKey = typeof key === "number" ? key.toString() : key;
+      const inputKey = typeof key2 === "number" ? key2.toString() : key2;
       if (inputKey === "__proto__") {
         throw new ZodCompileUnsupportedError('record key "__proto__"');
       }
       inputKeys.push(inputKey);
-      const keyConst = addConstant(ctx, key);
+      const keyConst = addConstant(ctx, key2);
       const outKey = generateCheck(doc, ctx, def.keyType, keyConst);
       const valueVar = newVar(ctx);
       doc.write(`const ${valueVar} = ${accessor}[${literalPropertyKey(ctx, inputKey)}];`);
@@ -61421,10 +61421,10 @@ function emitOwnKeys(doc, ctx, accessor, kVar, body, onSymbol) {
   });
   doc.write(`}`);
 }
-function literalPropertyKey(ctx, key) {
-  if (typeof key === "string")
-    return esc(key);
-  return addConstant(ctx, key);
+function literalPropertyKey(ctx, key2) {
+  if (typeof key2 === "string")
+    return esc(key2);
+  return addConstant(ctx, key2);
 }
 function generateMapCheck(doc, ctx, schema, accessor) {
   const def = schema._zod.def;
@@ -62653,9 +62653,9 @@ function _stringFormat(Class2, format, fnOrRegex, _params = {}) {
 init_cjs_shims();
 function assignProps(target, ...sources) {
   for (const source of sources) {
-    for (const key of Reflect.ownKeys(source)) {
-      if (Object.prototype.propertyIsEnumerable.call(source, key)) {
-        assignProp(target, key, source[key]);
+    for (const key2 of Reflect.ownKeys(source)) {
+      if (Object.prototype.propertyIsEnumerable.call(source, key2)) {
+        assignProp(target, key2, source[key2]);
       }
     }
   }
@@ -62801,8 +62801,8 @@ function extractDefs(ctx, schema) {
     if (defId)
       seen.defId = defId;
     const schema2 = seen.schema;
-    for (const key in schema2) {
-      delete schema2[key];
+    for (const key2 in schema2) {
+      delete schema2[key2];
     }
     schema2.$ref = ref;
   };
@@ -62883,8 +62883,8 @@ function foldObjects(members2) {
   for (const member of members2) {
     if (typeof member !== "object" || member.type !== "object")
       return null;
-    for (const key in member) {
-      if (!FOLDABLE_KEYS.has(key))
+    for (const key2 in member) {
+      if (!FOLDABLE_KEYS.has(key2))
         return null;
     }
     objects.push(member);
@@ -62892,22 +62892,22 @@ function foldObjects(members2) {
   const properties = {};
   const required2 = /* @__PURE__ */ new Set();
   for (const object2 of objects) {
-    for (const key in object2.properties) {
-      if (Object.prototype.hasOwnProperty.call(properties, key))
+    for (const key2 in object2.properties) {
+      if (Object.prototype.hasOwnProperty.call(properties, key2))
         continue;
       const parts = [];
       for (const other of objects) {
-        const part = other.properties?.[key] ?? undeclaredConstraint(other);
+        const part = other.properties?.[key2] ?? undeclaredConstraint(other);
         if (part === null || part === void 0)
           continue;
         if (!parts.some((seen) => JSON.stringify(seen) === JSON.stringify(part)))
           parts.push(part);
       }
       const merged = parts.length === 1 ? parts[0] : foldObjects(parts) ?? { allOf: parts };
-      assignProp(properties, key, merged);
+      assignProp(properties, key2, merged);
     }
-    for (const key of object2.required ?? [])
-      required2.add(key);
+    for (const key2 of object2.required ?? [])
+      required2.add(key2);
   }
   const folded = { type: "object", properties };
   if (required2.size)
@@ -62932,8 +62932,8 @@ function foldIntersection(json2) {
   const allOf = json2.allOf;
   if (!Array.isArray(allOf) || allOf.length < 2)
     return;
-  for (const key of FOLDABLE_KEYS)
-    if (key in json2)
+  for (const key2 of FOLDABLE_KEYS)
+    if (key2 in json2)
       return;
   const unions = allOf.filter((m) => UNION_KEYS.some((k) => Array.isArray(m[k])));
   let folded = null;
@@ -62980,20 +62980,20 @@ function finalize(ctx, schema) {
       assignProps(schema2, _cached);
       const isParentRef = zodSchema._zod.parent === ref;
       if (isParentRef) {
-        for (const key in schema2) {
-          if (key === "$ref" || key === "allOf")
+        for (const key2 in schema2) {
+          if (key2 === "$ref" || key2 === "allOf")
             continue;
-          if (!(key in _cached)) {
-            delete schema2[key];
+          if (!(key2 in _cached)) {
+            delete schema2[key2];
           }
         }
       }
       if (refSchema.$ref && refSeen.def) {
-        for (const key in schema2) {
-          if (key === "$ref" || key === "allOf")
+        for (const key2 in schema2) {
+          if (key2 === "$ref" || key2 === "allOf")
             continue;
-          if (key in refSeen.def && JSON.stringify(schema2[key]) === JSON.stringify(refSeen.def[key])) {
-            delete schema2[key];
+          if (key2 in refSeen.def && JSON.stringify(schema2[key2]) === JSON.stringify(refSeen.def[key2])) {
+            delete schema2[key2];
           }
         }
       }
@@ -63005,11 +63005,11 @@ function finalize(ctx, schema) {
       if (parentSeen?.schema.$ref) {
         schema2.$ref = parentSeen.schema.$ref;
         if (parentSeen.def) {
-          for (const key in schema2) {
-            if (key === "$ref" || key === "allOf")
+          for (const key2 in schema2) {
+            if (key2 === "$ref" || key2 === "allOf")
               continue;
-            if (key in parentSeen.def && JSON.stringify(schema2[key]) === JSON.stringify(parentSeen.def[key])) {
-              delete schema2[key];
+            if (key2 in parentSeen.def && JSON.stringify(schema2[key2]) === JSON.stringify(parentSeen.def[key2])) {
+              delete schema2[key2];
             }
           }
         }
@@ -63142,8 +63142,8 @@ function isTransforming(_schema, _ctx) {
     return isTransforming(def.in, ctx) || isTransforming(def.out, ctx);
   }
   if (def.type === "object") {
-    for (const key in def.shape) {
-      if (isTransforming(def.shape[key], ctx))
+    for (const key2 in def.shape) {
+      if (isTransforming(def.shape[key2], ctx))
         return true;
     }
     return false;
@@ -63182,13 +63182,13 @@ var createStandardJSONSchemaMethod = (schema, io, processors = {}) => (params) =
 
 // node_modules/zod/v4/core/json-schema-processors.js
 init_cjs_shims();
-var narrowMin = (agg, key, value) => {
-  if (agg[key] === void 0 || value > agg[key])
-    agg[key] = value;
+var narrowMin = (agg, key2, value) => {
+  if (agg[key2] === void 0 || value > agg[key2])
+    agg[key2] = value;
 };
-var narrowMax = (agg, key, value) => {
-  if (agg[key] === void 0 || value < agg[key])
-    agg[key] = value;
+var narrowMax = (agg, key2, value) => {
+  if (agg[key2] === void 0 || value < agg[key2])
+    agg[key2] = value;
 };
 var narrowBoth = (agg, value) => {
   narrowMin(agg, "minimum", value);
@@ -63526,17 +63526,17 @@ var objectProcessor = (schema, ctx, _json, params) => {
   }
   json2.type = "object";
   json2.properties = {};
-  for (const key in shape) {
-    assignProp(json2.properties, key, processSchema(shape[key], ctx, {
+  for (const key2 in shape) {
+    assignProp(json2.properties, key2, processSchema(shape[key2], ctx, {
       ...params,
-      path: [...params.path, "properties", key]
+      path: [...params.path, "properties", key2]
     }));
   }
   const requiredKeys = [];
-  for (const key of Object.keys(shape)) {
-    const field = def.shape[key];
-    if (ctx.io === "input" ? inputOptin(field) === void 0 : field._zod.optout === void 0) {
-      requiredKeys.push(key);
+  for (const key2 of Object.keys(shape)) {
+    const field2 = def.shape[key2];
+    if (ctx.io === "input" ? inputOptin(field2) === void 0 : field2._zod.optout === void 0) {
+      requiredKeys.push(key2);
     }
   }
   if (requiredKeys.length > 0) {
@@ -63911,9 +63911,9 @@ function toJSONSchema(input2, params) {
     };
     ctx2.external = external;
     for (const entry of registry2._idmap.entries()) {
-      const [key, schema] = entry;
+      const [key2, schema] = entry;
       extractDefs(ctx2, schema);
-      assignProp(schemas, key, finalize(ctx2, schema));
+      assignProp(schemas, key2, finalize(ctx2, schema));
     }
     if (Object.keys(defs).length > 0) {
       const defsSegment = ctx2.target === "draft-2020-12" ? "$defs" : "definitions";
@@ -64236,17 +64236,17 @@ init_cjs_shims();
 // node_modules/zod/v4/classic/errors.js
 init_cjs_shims();
 var _installedErrorProtos = /* @__PURE__ */ new WeakSet([Object.prototype, Error.prototype]);
-function _lazyMethod(proto, key, make) {
-  Object.defineProperty(proto, key, {
+function _lazyMethod(proto, key2, make) {
+  Object.defineProperty(proto, key2, {
     configurable: true,
     enumerable: false,
     get() {
       const value = make(this);
-      Object.defineProperty(this, key, { value, configurable: true, writable: true });
+      Object.defineProperty(this, key2, { value, configurable: true, writable: true });
       return value;
     },
     set(value) {
-      Object.defineProperty(this, key, { value, configurable: true, writable: true });
+      Object.defineProperty(this, key2, { value, configurable: true, writable: true });
     }
   });
 }
@@ -65921,11 +65921,11 @@ function resolveRef(ref, ctx) {
   }
   const defsKey = ctx.version === "draft-2020-12" ? "$defs" : "definitions";
   if (path3[0] === defsKey) {
-    const key = path3[1] === void 0 ? void 0 : decodeJSONPointerSegment(path3[1]);
-    if (!key || !ctx.defs[key]) {
+    const key2 = path3[1] === void 0 ? void 0 : decodeJSONPointerSegment(path3[1]);
+    if (!key2 || !ctx.defs[key2]) {
       throw new Error(`Reference not found: ${ref}`);
     }
-    return ctx.defs[key];
+    return ctx.defs[key2];
   }
   throw new Error(`Reference not found: ${ref}`);
 }
@@ -65960,16 +65960,16 @@ function checkObjectGuards(objectSchema, guards) {
       });
     }
     if (guards.keySchema) {
-      for (const key of keys) {
-        const result = guards.keySchema.safeParse(key);
+      for (const key2 of keys) {
+        const result = guards.keySchema.safeParse(key2);
         if (result.success)
           continue;
         payload.issues.push({
           code: "invalid_key",
           origin: "record",
           issues: result.error.issues,
-          input: key,
-          path: [key],
+          input: key2,
+          path: [key2],
           continue: true
         });
       }
@@ -65994,20 +65994,20 @@ function canonicalKey(value, seen) {
     if (Array.isArray(value)) {
       const parts2 = [];
       for (const item of value) {
-        const key = canonicalKey(item, seen);
-        if (key === null)
+        const key2 = canonicalKey(item, seen);
+        if (key2 === null)
           return null;
-        parts2.push(key);
+        parts2.push(key2);
       }
       return `a${parts2.length}:[${parts2.join(",")}]`;
     }
     const keys = Object.keys(value).sort();
     const parts = [];
     for (const k of keys) {
-      const key = canonicalKey(value[k], seen);
-      if (key === null)
+      const key2 = canonicalKey(value[k], seen);
+      if (key2 === null)
         return null;
-      parts.push(`${k.length}:${k}=${key}`);
+      parts.push(`${k.length}:${k}=${key2}`);
     }
     return `o${parts.length}:{${parts.join(",")}}`;
   } finally {
@@ -66047,10 +66047,10 @@ function containsRef(value) {
     return value.some(containsRef);
   if (typeof value.$ref === "string")
     return true;
-  return Object.entries(value).some(([key, sub]) => {
-    if (SCHEMA_KEYWORDS.has(key))
+  return Object.entries(value).some(([key2, sub]) => {
+    if (SCHEMA_KEYWORDS.has(key2))
       return containsRef(sub);
-    if (!SCHEMA_MAP_KEYWORDS.has(key) || typeof sub !== "object" || sub === null)
+    if (!SCHEMA_MAP_KEYWORDS.has(key2) || typeof sub !== "object" || sub === null)
       return false;
     return Object.values(sub).some(containsRef);
   });
@@ -66066,12 +66066,12 @@ function checkArrayGuards(arraySchema, guards) {
     if (guards.uniqueItems === true) {
       const firstSeen = /* @__PURE__ */ new Map();
       for (let i = 0; i < items.length; i++) {
-        const key = canonicalKey(items[i], /* @__PURE__ */ new Set());
-        if (key === null)
+        const key2 = canonicalKey(items[i], /* @__PURE__ */ new Set());
+        if (key2 === null)
           continue;
-        const first = firstSeen.get(key);
+        const first = firstSeen.get(key2);
         if (first === void 0) {
-          firstSeen.set(key, i);
+          firstSeen.set(key2, i);
           continue;
         }
         payload.issues.push({
@@ -66310,9 +66310,9 @@ function convertBaseSchema(schema, ctx) {
       const properties = schema.properties || {};
       const requiredSet = new Set(schema.required || []);
       const additionalSchema = typeof schema.additionalProperties === "object" ? convertSchema(schema.additionalProperties, ctx) : void 0;
-      for (const [key, propSchema] of Object.entries(properties)) {
+      for (const [key2, propSchema] of Object.entries(properties)) {
         const propZodSchema = convertSchema(propSchema, ctx);
-        assignProp(shape, key, requiredSet.has(key) ? propZodSchema : propZodSchema.optional());
+        assignProp(shape, key2, requiredSet.has(key2) ? propZodSchema : propZodSchema.optional());
       }
       if (schema.patternProperties) {
         const patternProps = schema.patternProperties;
@@ -66347,12 +66347,12 @@ function convertBaseSchema(schema, ctx) {
             if (!isPlainObject(payload.value))
               return;
             const unrecognized = [];
-            for (const key of Object.keys(payload.value)) {
-              if (propertyKeys.includes(key))
+            for (const key2 of Object.keys(payload.value)) {
+              if (propertyKeys.includes(key2))
                 continue;
-              if (patterns.some((regex) => regex.test(key)))
+              if (patterns.some((regex) => regex.test(key2)))
                 continue;
-              unrecognized.push(key);
+              unrecognized.push(key2);
             }
             if (unrecognized.length) {
               payload.issues.push({
@@ -66483,38 +66483,38 @@ function convertSchema(schema, ctx) {
   }
   const extraMeta = {};
   const coreMetadataKeys = ["$id", "id", "$comment", "$anchor", "$vocabulary", "$dynamicRef", "$dynamicAnchor"];
-  for (const key of coreMetadataKeys) {
-    if (key in schema) {
-      extraMeta[key] = schema[key];
+  for (const key2 of coreMetadataKeys) {
+    if (key2 in schema) {
+      extraMeta[key2] = schema[key2];
     }
   }
   const contentMetadataKeys = ["contentEncoding", "contentMediaType", "contentSchema"];
-  for (const key of contentMetadataKeys) {
-    if (key in schema) {
-      extraMeta[key] = schema[key];
+  for (const key2 of contentMetadataKeys) {
+    if (key2 in schema) {
+      extraMeta[key2] = schema[key2];
     }
   }
   if (schema.type === "object" && schema.$ref === void 0) {
     if (schema.propertyNames !== void 0 && !containsRef(schema.propertyNames)) {
       extraMeta.propertyNames = schema.propertyNames;
     }
-    for (const key of ["minProperties", "maxProperties"]) {
-      if (schema[key] !== void 0)
-        extraMeta[key] = schema[key];
+    for (const key2 of ["minProperties", "maxProperties"]) {
+      if (schema[key2] !== void 0)
+        extraMeta[key2] = schema[key2];
     }
   }
   if (schema.type === "array" && schema.$ref === void 0) {
     if (schema.contains !== void 0 && !containsRef(schema.contains)) {
       extraMeta.contains = schema.contains;
     }
-    for (const key of ["uniqueItems", "minContains", "maxContains"]) {
-      if (schema[key] !== void 0)
-        extraMeta[key] = schema[key];
+    for (const key2 of ["uniqueItems", "minContains", "maxContains"]) {
+      if (schema[key2] !== void 0)
+        extraMeta[key2] = schema[key2];
     }
   }
-  for (const key of Object.keys(schema)) {
-    if (!RECOGNIZED_KEYS.has(key)) {
-      assignProp(extraMeta, key, schema[key]);
+  for (const key2 of Object.keys(schema)) {
+    if (!RECOGNIZED_KEYS.has(key2)) {
+      assignProp(extraMeta, key2, schema[key2]);
     }
   }
   if (Object.keys(extraMeta).length > 0) {
@@ -66783,6 +66783,16 @@ var import_node_path2 = require("path");
 // src/generate.ts
 init_cjs_shims();
 
+// src/core/display-size.ts
+init_cjs_shims();
+var sizes = {
+  calendar: { banner: { width: 840, height: 240 }, card: { width: 420, height: 360 } },
+  landscape: { banner: { width: 1200, height: 840 }, card: { width: 840, height: 840 } }
+};
+function resolveDisplaySize(settings) {
+  return sizes[settings.terrainMode ?? "calendar"][settings.layout];
+}
+
 // src/core/settings/parse.ts
 init_cjs_shims();
 
@@ -67030,7 +67040,9 @@ var renderSettingsSchema = external_exports.strictObject({
   style: villageStyleSchema,
   artStyle: external_exports.enum(["miniature", "pixel"]),
   normalization: normalizationSchema,
-  layoutSeed: xml10TextSchema.max(256).optional()
+  layoutSeed: xml10TextSchema.max(256).optional(),
+  terrainMode: external_exports.enum(["calendar", "landscape"]).optional(),
+  landscapeLayout: external_exports.enum(["island", "archipelago", "valley"]).optional()
 });
 var renderSettingsInputSchema = renderSettingsSchema.partial().extend({ villageStyle: villageStyleSchema.optional() }).superRefine((settings, context2) => {
   if (settings.style !== void 0 && settings.villageStyle !== void 0 && settings.style !== settings.villageStyle) {
@@ -67051,7 +67063,8 @@ function resolveRenderSettings(explicit = {}, loaded = {}, username = "") {
   const stored = parseBoundary(renderSettingsInputSchema, loaded, "settings");
   const preset = overrides.preset ?? stored.preset ?? "balanced";
   const layoutSeed = overrides.layoutSeed ?? stored.layoutSeed;
-  return {
+  const terrainMode = overrides.terrainMode ?? stored.terrainMode ?? "calendar";
+  const settings = {
     preset,
     density: overrides.density ?? stored.density ?? VILLAGE_PRESETS[preset].density,
     title: overrides.title ?? stored.title ?? (username ? `@${username}` : "My Village"),
@@ -67063,6 +67076,18 @@ function resolveRenderSettings(explicit = {}, loaded = {}, username = "") {
     normalization: overrides.normalization ?? stored.normalization ?? { kind: "relative" },
     ...layoutSeed === void 0 ? {} : { layoutSeed }
   };
+  switch (terrainMode) {
+    case "calendar":
+      return settings;
+    case "landscape":
+      return {
+        ...settings,
+        terrainMode,
+        landscapeLayout: overrides.landscapeLayout ?? stored.landscapeLayout ?? "island"
+      };
+    default:
+      return terrainMode;
+  }
 }
 
 // src/core/settings/snapshot-schema.ts
@@ -67126,12 +67151,12 @@ var activitySchema = external_exports.object({
       path: ["months"],
       message: "Activity evidence must cover the entire requested range"
     });
-  for (const key of countKeys)
-    if (!Number.isSafeInteger(activity.months.reduce((sum, month) => sum + month[key], 0)))
+  for (const key2 of countKeys)
+    if (!Number.isSafeInteger(activity.months.reduce((sum, month) => sum + month[key2], 0)))
       context2.addIssue({
         code: "custom",
         path: ["months"],
-        message: `Activity ${key} total exceeds the safe integer limit`
+        message: `Activity ${key2} total exceeds the safe integer limit`
       });
 });
 function activityMatchesCalendar(activity, dates) {
@@ -67348,7 +67373,7 @@ function createActivityRequest(from, to) {
   return { ...range, months };
 }
 function parseActivityResponse(user, request, calendarDates) {
-  const aliases = Object.keys(user).filter((key) => /^month\d+$/.test(key));
+  const aliases = Object.keys(user).filter((key2) => /^month\d+$/.test(key2));
   if (aliases.length === 0) return void 0;
   if (!request || aliases.length !== request.months.length)
     throw new GitHubApiError("invalidresponse");
@@ -67731,7 +67756,7 @@ init_cjs_shims();
 // src/core/svg.ts
 init_cjs_shims();
 function svgElement(tag, attrs, children) {
-  const attrString = Object.entries(attrs).map(([key, value]) => `${key}="${escapeXml(String(value))}"`).join(" ");
+  const attrString = Object.entries(attrs).map(([key2, value]) => `${key2}="${escapeXml(String(value))}"`).join(" ");
   if (children !== void 0) {
     return `<${tag} ${attrString}>${children}</${tag}>`;
   }
@@ -67767,9 +67792,9 @@ function svgText(x, y, text, attrs) {
 function formatNumber(n) {
   const text = n.toString();
   if (text.includes("e")) return text;
-  const [integer2 = "", fraction] = text.split(".");
+  const [integer2 = "", fraction2] = text.split(".");
   const grouped = integer2.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return fraction === void 0 ? grouped : `${grouped}.${fraction}`;
+  return fraction2 === void 0 ? grouped : `${grouped}.${fraction2}`;
 }
 function escapeXml(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
@@ -69310,8 +69335,8 @@ function sideStrata(cell) {
   if (cell.height < 10) return "";
   const identity = hash2(cell.date ?? `${cell.week},${cell.day}`);
   if (identity % 6 !== 0) return "";
-  const depth = cell.height * (identity & 32 ? 0.55 : 0.4);
-  const y = (offset) => svgNumber(depth + offset);
+  const depth2 = cell.height * (identity & 32 ? 0.55 : 0.4);
+  const y = (offset) => svgNumber(depth2 + offset);
   return `<path data-strata="${cell.level100 >= 80 ? "stone" : "soil"}" transform="translate(${svgNumber(cell.isoX)} ${svgNumber(cell.isoY)})" d="M-6.4 ${y(0)}L-4.2 ${y(0.7)}-3 ${y(0.6)}-1.4 ${y(1.8)}M1.4 ${y(2.1)}L3.3 ${y(1.1)} 4.6 ${y(1.3)} 6.4 ${y(0.4)}" fill="none" stroke="${cell.colors.top}" stroke-width=".4" stroke-linejoin="round" opacity=".34"/>`;
 }
 function renderSurfaceBlock(cell, water) {
@@ -70434,11 +70459,11 @@ function svgBarn(x, y, c, v) {
   const left = small ? -2.5 : large ? -4.1 : -3.3;
   const right = small ? 2.6 : large ? 4.5 : 3.6;
   const eave = small ? -2.7 : large ? -4.4 : -3.5;
-  const ridge = small ? -4.5 : large ? -8 : -6.6;
+  const ridge2 = small ? -4.5 : large ? -8 : -6.6;
   const front = small ? -0.15 : -0.25;
-  const depth = small ? 1.15 : large ? 1.8 : 1.5;
+  const depth2 = small ? 1.15 : large ? 1.8 : 1.5;
   const doorHeight = small ? 1.8 : 2.4;
-  return `<g transform="translate(${x},${y})"><path d="M${left},.15 0,${depth + 0.6} ${right + 0.45},.25 .2,-1.2Z" fill="${c.shadow}" opacity=".14"/><path d="M${left},0 0,${depth} 0,${eave + depth} ${left},${eave}Z" fill="${small ? c.wall : red.base}"/><path d="M0,${depth} ${right},0 ${right},${eave} 0,${eave + depth}Z" fill="${small ? c.wallShade : red.shade}"/><path d="M${left},${eave} ${left / 2},${ridge + 0.8} 0,${eave + depth}Z" fill="${small ? c.wall : red.light}"/><path d="M${left - 0.4},${eave - 0.1} ${left / 2},${ridge + 0.45} ${right / 2},${ridge - 0.1} .3,${eave + depth - 0.1} 0,${eave + depth + 0.2}Z" fill="${roof.light}"/><path d="M${left / 2},${ridge + 0.45} ${right / 2},${ridge - 0.1} ${right + 0.4},${eave - 0.1} .3,${eave + depth - 0.1}Z" fill="${roof.base}"/><path d="M.3,${eave + depth - 0.1} ${right + 0.4},${eave - 0.1}v.35L.3,${eave + depth + 0.25}Z" fill="${roof.shade}"/><path d="M${left + 0.65},.15v${small ? -1.8 : -2.4}l${-left - 1.1},${depth - 0.65}v${small ? 1.8 : 2.4}Z" fill="${c.trunk}"/><path d="M${left + 0.65},.15l${-left - 1.1},${depth - 0.65 - doorHeight}M${left + 0.65},${0.15 - doorHeight}l${-left - 1.1},${depth - 0.65 + doorHeight}" stroke="${c.fence}" stroke-width=".22"/><path d="M${left},${eave}V0L0,${depth} ${right},0M${front},${eave + depth}V${depth}" stroke="${c.fence}" stroke-width=".25" fill="none"/><path d="M${right * 0.45},${eave + 1.2}l${right * 0.3},${-depth * 0.3}v.85l${-right * 0.3},${depth * 0.3}Z" fill="${c.trunk}"/>` + (large ? `<path d="M1,-6.95v-1.15l.7,-.3 .65,.35v.75Z" fill="${c.wall}"/><path d="M.75,-8.1 1.7,-8.7 2.6,-8.25 1.7,-7.95Z" fill="${roof.shade}"/>` : "") + `</g>`;
+  return `<g transform="translate(${x},${y})"><path d="M${left},.15 0,${depth2 + 0.6} ${right + 0.45},.25 .2,-1.2Z" fill="${c.shadow}" opacity=".14"/><path d="M${left},0 0,${depth2} 0,${eave + depth2} ${left},${eave}Z" fill="${small ? c.wall : red.base}"/><path d="M0,${depth2} ${right},0 ${right},${eave} 0,${eave + depth2}Z" fill="${small ? c.wallShade : red.shade}"/><path d="M${left},${eave} ${left / 2},${ridge2 + 0.8} 0,${eave + depth2}Z" fill="${small ? c.wall : red.light}"/><path d="M${left - 0.4},${eave - 0.1} ${left / 2},${ridge2 + 0.45} ${right / 2},${ridge2 - 0.1} .3,${eave + depth2 - 0.1} 0,${eave + depth2 + 0.2}Z" fill="${roof.light}"/><path d="M${left / 2},${ridge2 + 0.45} ${right / 2},${ridge2 - 0.1} ${right + 0.4},${eave - 0.1} .3,${eave + depth2 - 0.1}Z" fill="${roof.base}"/><path d="M.3,${eave + depth2 - 0.1} ${right + 0.4},${eave - 0.1}v.35L.3,${eave + depth2 + 0.25}Z" fill="${roof.shade}"/><path d="M${left + 0.65},.15v${small ? -1.8 : -2.4}l${-left - 1.1},${depth2 - 0.65}v${small ? 1.8 : 2.4}Z" fill="${c.trunk}"/><path d="M${left + 0.65},.15l${-left - 1.1},${depth2 - 0.65 - doorHeight}M${left + 0.65},${0.15 - doorHeight}l${-left - 1.1},${depth2 - 0.65 + doorHeight}" stroke="${c.fence}" stroke-width=".22"/><path d="M${left},${eave}V0L0,${depth2} ${right},0M${front},${eave + depth2}V${depth2}" stroke="${c.fence}" stroke-width=".25" fill="none"/><path d="M${right * 0.45},${eave + 1.2}l${right * 0.3},${-depth2 * 0.3}v.85l${-right * 0.3},${depth2 * 0.3}Z" fill="${c.trunk}"/>` + (large ? `<path d="M1,-6.95v-1.15l.7,-.3 .65,.35v.75Z" fill="${c.wall}"/><path d="M.75,-8.1 1.7,-8.7 2.6,-8.25 1.7,-7.95Z" fill="${roof.shade}"/>` : "") + `</g>`;
 }
 
 // src/themes/terrain/assets/renderers/farm-sheep.ts
@@ -70812,7 +70837,7 @@ function church(x, y, c, v) {
       stroke("M-1.4,-6.2 V-4.7 M-1.9,-5.7 H-0.9", c.church, 0.32),
       ellipse(-1.3, -3.1, 0.35, 0.4, c.cathedralWindow)
     );
-  const bell = v === 1;
+  const bell2 = v === 1;
   return group(
     x,
     y,
@@ -70822,10 +70847,10 @@ function church(x, y, c, v) {
     polygon("-3.4,-4.2 -1.2,-6.8 0,-2.6", roof.light),
     polygon("-1.6,-8.7 0.2,-8 0.2,0.5 -1.6,-0.2", stone.light),
     polygon("0.2,-8 1.1,-8.5 1.1,0 0.2,0.5", stone.dark),
-    bell ? path("M-1.9,-8.5 L-0.8,-10.2 0.5,-8.2 1.4,-8.7 -0.1,-10.6 -0.8,-10.2Z", roof.base) : polygon("-2,-8.6 -0.7,-11 1.5,-8.6 0.2,-7.9", roof.base),
+    bell2 ? path("M-1.9,-8.5 L-0.8,-10.2 0.5,-8.2 1.4,-8.7 -0.1,-10.6 -0.8,-10.2Z", roof.base) : polygon("-2,-8.6 -0.7,-11 1.5,-8.6 0.2,-7.9", roof.base),
     path("M-1.1,0 V-2 Q-0.6,-3.3 -0.1,-1.7 V0.4Z", c.trunk),
-    bell ? path("M-1.25,-6.3 V-7.2 Q-0.7,-8.5 -0.15,-7 V-5.9Z", c.shadow) : polygon("-1.2,-7.3 -0.3,-6.9 -0.3,-5.9 -1.2,-6.3", c.cathedralWindow),
-    bell ? path("M-1.1,-6.4 L-0.95,-7.1 -0.55,-7 -0.3,-6.1Z", c.wheat) : stroke("M-0.7,-12.3 V-11 M-1.3,-11.8 H-0.1", c.church, 0.32),
+    bell2 ? path("M-1.25,-6.3 V-7.2 Q-0.7,-8.5 -0.15,-7 V-5.9Z", c.shadow) : polygon("-1.2,-7.3 -0.3,-6.9 -0.3,-5.9 -1.2,-6.3", c.cathedralWindow),
+    bell2 ? path("M-1.1,-6.4 L-0.95,-7.1 -0.55,-7 -0.3,-6.1Z", c.wheat) : stroke("M-0.7,-12.3 V-11 M-1.3,-11.8 H-0.1", c.church, 0.32),
     path(
       "M1.6,-3.8 L2.2,-4.1 V-2.2 L1.6,-1.9Z M2.5,-4.2 L2.8,-4.3 V-2.5 L2.5,-2.3Z",
       c.cathedralWindow
@@ -71797,10 +71822,10 @@ function youngShoot(x, y, size, c, extraLeaf = false) {
 // src/themes/terrain/assets/renderers/seasonal-spring-cherry-blossom.ts
 function svgCherryBlossom(x, y, c, v) {
   const pink = v === 2 ? c.cherryPetalWhite : c.cherryPetalPink;
-  const shade = lerpColor(pink, c.cherryTrunk, 0.2);
+  const shade2 = lerpColor(pink, c.cherryTrunk, 0.2);
   const trunk = `<path d="M-.75,1.95Q-.05,.55 -.45,-1.65L-2.7,-3.55 -2.35,-3.85 -.2,-2.4 .65,-4.5 1,-4.35 .43,-2.12 2.65,-3.38 2.9,-3.05 .5,-1.4 .67,1.5 1.05,2Z" fill="${c.cherryTrunk}"/><path d="M-.75,1.95Q-.05,.55 -.45,-1.65L-2.7,-3.55 -.08,-1.8 .15,1.65Z" fill="${c.cherryBranch}"/>`;
   const crown = v === 2 ? "M-3.9,-3.05Q-4.65,-4.2 -3.25,-4.9Q-3.3,-6.1 -1.78,-6.05Q-.72,-6.95 .2,-6.12Q1.63,-6.45 2,-5.1Q3.52,-5.25 3.8,-3.82Q4.18,-2.42 2.8,-2.13Q1.58,-1.2 .25,-2Q-.75,-1.25 -1.72,-2.05Q-3.45,-1.62 -3.9,-3.05Z" : "M-4.05,-3.2Q-4.42,-4.65 -2.95,-4.95Q-2.76,-6.35 -1.26,-6.02Q-.04,-6.75 1.05,-5.8Q2.55,-5.94 2.72,-4.65Q4.12,-4.55 4.02,-3.2Q3.8,-1.78 2.38,-1.98Q1.42,-1.15 .25,-1.9Q-1.1,-1.26 -2.03,-2.06Q-3.7,-1.58 -4.05,-3.2Z";
-  const blooms = v === 1 ? blossomCluster(-2.5, -3.75, 1.15, pink, c) + blossomCluster(0.8, -4.85, 1.2, pink, c) + blossomCluster(2.65, -3.2, 0.95, pink, c) : `<path d="${crown}" fill="${shade}"/><path d="M-4.05,-3.2Q-4.42,-4.65 -2.95,-4.95Q-2.76,-6.35 -1.26,-6.02Q-.04,-6.75 1.05,-5.8Q2.55,-5.94 2.72,-4.65Q1.6,-4.78 1.35,-3.78Q.25,-4.3 -.28,-3.28Q-1.57,-4.08 -2.4,-3Q-3.12,-2.58 -4.05,-3.2Z" fill="${pink}"/><path d="M-3.48,-4.63Q-2.66,-4.65 -2.35,-5.53Q-1.5,-6.03 -.78,-5.52Q-.05,-6.2 .75,-5.63Q-.38,-5.37 -.7,-4.73Q-2,-5.05 -2.55,-4.07Z" fill="${lerpColor(pink, c.blossomWhite, 0.52)}"/><path d="M-2.1,-3.6l.18,-.28 .22,.26 -.18,.3ZM.4,-4.4l.22,-.26 .2,.28 -.2,.3ZM2.55,-3.5l.2,-.25 .2,.28 -.2,.28Z" fill="${c.blossomWhite}"/>`;
+  const blooms = v === 1 ? blossomCluster(-2.5, -3.75, 1.15, pink, c) + blossomCluster(0.8, -4.85, 1.2, pink, c) + blossomCluster(2.65, -3.2, 0.95, pink, c) : `<path d="${crown}" fill="${shade2}"/><path d="M-4.05,-3.2Q-4.42,-4.65 -2.95,-4.95Q-2.76,-6.35 -1.26,-6.02Q-.04,-6.75 1.05,-5.8Q2.55,-5.94 2.72,-4.65Q1.6,-4.78 1.35,-3.78Q.25,-4.3 -.28,-3.28Q-1.57,-4.08 -2.4,-3Q-3.12,-2.58 -4.05,-3.2Z" fill="${pink}"/><path d="M-3.48,-4.63Q-2.66,-4.65 -2.35,-5.53Q-1.5,-6.03 -.78,-5.52Q-.05,-6.2 .75,-5.63Q-.38,-5.37 -.7,-4.73Q-2,-5.05 -2.55,-4.07Z" fill="${lerpColor(pink, c.blossomWhite, 0.52)}"/><path d="M-2.1,-3.6l.18,-.28 .22,.26 -.18,.3ZM.4,-4.4l.22,-.26 .2,.28 -.2,.3ZM2.55,-3.5l.2,-.25 .2,.28 -.2,.28Z" fill="${c.blossomWhite}"/>`;
   return `<g transform="translate(${x},${y})"><ellipse cx=".4" cy="1.95" rx="1.7" ry=".36" fill="${c.shadow}" opacity=".16"/>${trunk}${blooms}</g>`;
 }
 function svgCherryBlossomSmall(x, y, c, v) {
@@ -71944,39 +71969,39 @@ function svgParasol(x, y, c, v) {
   const color = v === 1 ? c.parasolBlue : v === 2 ? c.parasolYellow : c.parasolRed;
   const h = v === 1 ? -5.6 : v === 2 ? -4.9 : -5.3;
   const w = v === 1 ? 3.5 : 3.15;
-  const shade = lerpColor(color, c.trunk, 0.3);
+  const shade2 = lerpColor(color, c.trunk, 0.3);
   return `<g transform="translate(${x},${y})">
     <ellipse cx="0.55" cy="0.65" rx="2.15" ry="0.55" fill="${c.trunk}" opacity="0.15"/>
     <path d="M-0.18,0.65 L-0.12,${h} 0.15,${h} 0.2,0.6Z" fill="${c.bareBranch}"/>
     <path d="M-0.12,-3.2 V0.4" stroke="${c.sandcastleWall}" stroke-width="0.12"/>
-    <path d="M-${w},-3.5 Q0,-2.4 ${w},-3.5 L0,${h}Z" fill="${shade}"/>
+    <path d="M-${w},-3.5 Q0,-2.4 ${w},-3.5 L0,${h}Z" fill="${shade2}"/>
     <path d="M-${w},-3.5 Q-2.2,${h + 0.15} 0,${h} Q2.5,${h + 0.15} ${w},-3.5 Q2.2,-3.12 1.3,-3.42 Q0,-2.88 -1.35,-3.42 Q-2.5,-3.1 -${w},-3.5Z" fill="${color}"/>
     <path d="M0,${h} Q-1.9,${h + 0.55} -1.35,-3.42 Q-2.3,-3.1 -${w},-3.5 Q-2.2,${h + 0.15} 0,${h}Z" fill="${lerpColor(color, c.parasolStripe, 0.38)}"/>
     <path d="M0,${h} Q-0.7,-4.5 -1.35,-3.42 Q0,-2.88 1.3,-3.42 Q0.7,-4.5 0,${h}Z" fill="${c.parasolStripe}"/>
-    <path d="M0,${h} Q1.8,${h + 0.55} 1.3,-3.42 Q2.2,-3.12 ${w},-3.5" fill="${shade}"/>
+    <path d="M0,${h} Q1.8,${h + 0.55} 1.3,-3.42 Q2.2,-3.12 ${w},-3.5" fill="${shade2}"/>
     <path d="M-0.12,${h + 0.03} L0,${h - 0.25} 0.15,${h + 0.04}Z" fill="${c.bareBranch}"/>
   </g>`;
 }
 function svgBeachTowel(x, y, c, v) {
   const color = v === 1 ? c.beachTowelB : v === 2 ? c.parasolYellow : c.beachTowelA;
-  const shade = lerpColor(color, c.trunk, 0.25);
+  const shade2 = lerpColor(color, c.trunk, 0.25);
   return `<g transform="translate(${x},${y})">
     <path d="M-3.1,0 L-0.55,-1.45 3.05,-0.18 0.5,1.35Z" fill="${color}"/>
-    <path d="M-3.1,0 V0.27 L0.5,1.64 3.05,0.05 V-0.18 L0.5,1.35Z" fill="${shade}"/>
+    <path d="M-3.1,0 V0.27 L0.5,1.64 3.05,0.05 V-0.18 L0.5,1.35Z" fill="${shade2}"/>
     <path d="M-2.63,0.04 L-0.17,-1.25 M-1.95,0.3 L0.48,-1.02 M-0.2,0.95 L2.18,-0.37" stroke="${c.parasolStripe}" stroke-width="${v === 0 ? 0.32 : 0.16}"/>
     <path d="M-2.72,0.36 l-0.3,0.18 M-1.95,0.65 l-0.3,0.2 M-1.2,0.94 l-0.3,0.2 M-0.4,1.23 l-0.3,0.2 M0.35,1.52 l-0.3,0.2" stroke="${c.parasolStripe}" stroke-width="0.16"/>
-    ${v === 2 ? `<path d="M2.3,0.25 L3.05,-0.18 Q3.6,-0.75 2.98,-0.92 L2.3,-0.5Z" fill="${shade}"/><path d="M2.3,-0.5 L2.98,-0.92 Q3.27,-0.72 3.05,-0.4Z" fill="${c.parasolStripe}"/>` : ""}
-    ${v === 1 ? `<path d="M-2.92,-0.3 Q-3.2,-0.85 -2.78,-1.07 L-0.62,-1.75 Q-0.17,-1.65 -0.26,-1.18 L-2.4,-0.35Z" fill="${color}"/><path d="M-2.88,-0.48 Q-3.18,-0.84 -2.75,-1 Q-2.37,-1 -2.43,-0.53Z" fill="${shade}"/>` : ""}
+    ${v === 2 ? `<path d="M2.3,0.25 L3.05,-0.18 Q3.6,-0.75 2.98,-0.92 L2.3,-0.5Z" fill="${shade2}"/><path d="M2.3,-0.5 L2.98,-0.92 Q3.27,-0.72 3.05,-0.4Z" fill="${c.parasolStripe}"/>` : ""}
+    ${v === 1 ? `<path d="M-2.92,-0.3 Q-3.2,-0.85 -2.78,-1.07 L-0.62,-1.75 Q-0.17,-1.65 -0.26,-1.18 L-2.4,-0.35Z" fill="${color}"/><path d="M-2.88,-0.48 Q-3.18,-0.84 -2.75,-1 Q-2.37,-1 -2.43,-0.53Z" fill="${shade2}"/>` : ""}
     ${v === 2 ? `<path d="M-0.45,-0.78 L0.15,-0.65 0.25,-0.16 Q-0.15,0.09 -0.5,-0.24Z M0.48,-0.46 L1.13,-0.31 1.16,0.16 Q0.74,0.4 0.49,0.03Z" fill="${c.watermelonSeed}"/><path d="M0.12,-0.51 L0.53,-0.35 M-0.45,-0.64 L-0.7,-0.83 M1.03,-0.25 L1.45,-0.57" stroke="${c.watermelonSeed}" stroke-width="0.18"/>` : ""}
   </g>`;
 }
 function sandTower(x, y, w, h, c) {
-  const shade = lerpColor(c.sandcastleWall, c.trunk, 0.27);
+  const shade2 = lerpColor(c.sandcastleWall, c.trunk, 0.27);
   return `<g transform="translate(${x},${y})">
     <path d="M-${w},${-h} L-${w + 0.15},0 Q0,0.65 ${w + 0.15},0 L${w},${-h}Z" fill="${c.sandcastleWall}"/>
-    <path d="M0.3,${-h} L${w},${-h} ${w + 0.15},0 Q0.5,0.4 0.25,0.35Z" fill="${shade}"/>
+    <path d="M0.3,${-h} L${w},${-h} ${w + 0.15},0 Q0.5,0.4 0.25,0.35Z" fill="${shade2}"/>
     <path d="M-${w},${-h} V${-h - 0.42} L-${w * 0.5},${-h - 0.48} V${-h - 0.15} L0,${-h - 0.12} V${-h - 0.5} L${w * 0.5},${-h - 0.43} V${-h - 0.1} L${w},${-h - 0.2} V${-h} Q0,${-h + 0.4} -${w},${-h}Z" fill="${lerpColor(c.sandcastleWall, c.parasolStripe, 0.4)}"/>
-    <path d="M-0.22,0 V-0.5 Q0,-0.86 0.25,-0.5 V0.08Z" fill="${shade}"/>
+    <path d="M-0.22,0 V-0.5 Q0,-0.86 0.25,-0.5 V0.08Z" fill="${shade2}"/>
   </g>`;
 }
 function svgSandcastleSummer(x, y, c, v) {
@@ -72003,14 +72028,14 @@ function svgSurfboard(x, y, c, v) {
   </g>`;
 }
 function svgIceCreamCartAsset(x, y, c, v) {
-  const shade = lerpColor(c.iceCreamCart, c.trunk, 0.35);
+  const shade2 = lerpColor(c.iceCreamCart, c.trunk, 0.35);
   return `<g transform="translate(${x},${y})">
     <ellipse cx="0.4" cy="1.05" rx="2.4" ry="0.5" fill="${c.trunk}" opacity="0.16"/>
     <path d="M-1.1,0.1 L-1.2,0.95 M1.7,-0.1 L1.8,0.85 M1.8,-1.5 L2.7,-1.85 3,-1.5" fill="none" stroke="${c.sprinklerMetal}" stroke-width="0.23"/>
     <path d="M-1.8,-1.75 L0.55,-1.23 0.55,0.7 -1.8,0.1Z" fill="${c.iceCreamCart}"/>
-    <path d="M0.55,-1.23 L2.1,-2 2.1,-0.1 0.55,0.7Z" fill="${shade}"/>
+    <path d="M0.55,-1.23 L2.1,-2 2.1,-0.1 0.55,0.7Z" fill="${shade2}"/>
     <path d="M-1.8,-1.75 L-0.4,-2.47 2.1,-2 0.55,-1.23Z" fill="${c.parasolStripe}"/>
-    <path d="M-0.65,-1.96 L0,-2.28 1.22,-2.02 0.58,-1.68Z" fill="${shade}"/>
+    <path d="M-0.65,-1.96 L0,-2.28 1.22,-2.02 0.58,-1.68Z" fill="${shade2}"/>
     <path d="M-0.4,-2.3 V-4.25" stroke="${c.bareBranch}" stroke-width="0.22"/>
     <path d="M-2.65,-3.45 Q-1.8,-4.8 -0.4,-4.7 Q1.25,-4.5 1.9,-3.5 Q0.9,-3.03 -0.35,-3.3 Q-1.65,-3 -2.65,-3.45Z" fill="${c.iceCreamUmbrella}"/>
     <path d="M-0.4,-4.7 Q-1.6,-4.2 -1.45,-3.28 L-0.35,-3.3 Q0.15,-4.15 -0.4,-4.7Z" fill="${c.parasolStripe}"/>
@@ -72024,14 +72049,14 @@ function svgIceCreamCartAsset(x, y, c, v) {
 }
 function svgHammock(x, y, c, v) {
   const dip = v === 1 ? -0.4 : -0.75;
-  const shade = lerpColor(c.hammockFabric, c.trunk, 0.35);
+  const shade2 = lerpColor(c.hammockFabric, c.trunk, 0.35);
   return `<g transform="translate(${x},${y})">
     <ellipse cx="0.25" cy="0.48" rx="3.3" ry="0.35" fill="${c.trunk}" opacity="0.14"/>
     <path d="M-4,0.45 L-3.65,-3.5 -3.15,-3.35 -3.48,0.6Z M3.35,0.55 L3.02,-3.2 3.48,-3.4 3.87,0.35Z" fill="${c.bareBranch}"/>
     <path d="M-3.85,0.4 L-3.5,-3.25 M3.47,0.3 L3.17,-3.12" stroke="${c.sandcastleWall}" stroke-width="0.12"/>
     <path d="M-3.4,-2.85 L-2.6,-1.9 M3.23,-2.62 L2.55,-1.65" stroke="${c.parasolStripe}" stroke-width="0.15"/>
     <path d="M-2.6,-2.2 Q0,${dip + 0.3} 2.55,-1.95 L2.55,-1.25 Q0,${dip + 1.5} -2.6,-1.48Z" fill="${c.hammockFabric}"/>
-    <path d="M-2.6,-1.75 Q0,${dip + 1.05} 2.55,-1.55 L2.55,-1.25 Q0,${dip + 1.5} -2.6,-1.48Z" fill="${shade}"/>
+    <path d="M-2.6,-1.75 Q0,${dip + 1.05} 2.55,-1.55 L2.55,-1.25 Q0,${dip + 1.5} -2.6,-1.48Z" fill="${shade2}"/>
     <path d="M-2.3,-1.9 Q0,${dip + 0.5} 2.3,-1.65" fill="none" stroke="${c.parasolStripe}" stroke-width="0.16"/>
     ${v === 1 ? `<path d="M-1.7,-1.42 l0.2,0.63 M-0.8,-1.08 l0.15,0.7 M0.2,-0.91 v0.7 M1.2,-1.1 l-0.15,0.6" stroke="${c.parasolStripe}" stroke-width="0.13"/>` : ""}
     ${v === 2 ? `<path d="M-1.85,-1.9 Q-1.45,-2.37 -0.85,-2.06 L-0.1,-1.62 Q-0.3,-1.1 -0.9,-1.21Z" fill="${c.beachTowelA}"/><path d="M-1.65,-1.88 L-0.88,-1.6" stroke="${c.parasolStripe}" stroke-width="0.14"/>` : ""}
@@ -72056,12 +72081,12 @@ function svgSunflower(x, y, c, v) {
   return `<g transform="translate(${x},${y})">${flowers}</g>`;
 }
 function svgWatermelon(x, y, c, v) {
-  const shade = lerpColor(c.watermelonRind, c.trunk, 0.35);
+  const shade2 = lerpColor(c.watermelonRind, c.trunk, 0.35);
   if (v === 0)
     return `<g transform="translate(${x},${y})">
     <ellipse cx="0.2" cy="0.65" rx="1.9" ry="0.4" fill="${c.trunk}" opacity="0.16"/>
     <path d="M-1.8,0 Q-1.85,-1.23 -0.1,-1.4 Q1.7,-1.33 1.85,-0.25 Q2,0.8 0.3,1 Q-1.35,1 -1.8,0Z" fill="${c.watermelonRind}"/>
-    <path d="M-1.65,0.2 Q0.5,1 1.75,-0.65 Q2.25,0.7 0.3,1 Q-1.1,1 -1.65,0.2Z" fill="${shade}"/>
+    <path d="M-1.65,0.2 Q0.5,1 1.75,-0.65 Q2.25,0.7 0.3,1 Q-1.1,1 -1.65,0.2Z" fill="${shade2}"/>
     <path d="M-0.9,-1.17 Q-1.6,-0.3 -0.5,0.7 M0,-1.25 Q-0.5,-0.3 0.5,0.66 M0.8,-1.05 Q0.5,-0.3 1.2,0.35" fill="none" stroke="${c.autumnOlive}" stroke-width="0.19"/>
     <path d="M-1.28,-0.54 Q-0.95,-1 -0.5,-0.96" fill="none" stroke="${lerpColor(c.watermelonRind, c.parasolStripe, 0.45)}" stroke-width="0.19"/>
   </g>`;
@@ -72090,15 +72115,15 @@ function svgSprinkler(x, y, c, v) {
 // src/themes/terrain/assets/renderers/seasonal-summer-lemonade.ts
 init_cjs_shims();
 function svgLemonade(x, y, c, v) {
-  const shade = lerpColor(c.lemonadeStand, c.trunk, 0.4);
+  const shade2 = lerpColor(c.lemonadeStand, c.trunk, 0.4);
   const top = lerpColor(c.lemonadeStand, c.parasolStripe, 0.45);
   const w = v === 1 ? 2.5 : 2.15;
   return `<g transform="translate(${x},${y})">
     <path d="M-${w},0.7 L0.9,1.35 2.8,0.6 0,-0.15Z" fill="${c.trunk}" opacity="0.16"/>
     <path d="M-${w},-0.9 L1.1,-0.35 1.1,0.9 -${w},0.35Z" fill="${c.lemonadeStand}"/>
-    <path d="M1.1,-0.35 L2.6,-1.1 2.6,0.2 1.1,0.9Z" fill="${shade}"/>
+    <path d="M1.1,-0.35 L2.6,-1.1 2.6,0.2 1.1,0.9Z" fill="${shade2}"/>
     <path d="M-${w + 0.15},-1.1 L-0.7,-1.9 2.8,-1.3 1.15,-0.45Z" fill="${top}"/>
-    <path d="M-${w + 0.15},-1.1 L1.15,-0.45 2.8,-1.3 2.8,-1.03 1.15,-0.18 -${w + 0.15},-0.82Z" fill="${shade}"/>
+    <path d="M-${w + 0.15},-1.1 L1.15,-0.45 2.8,-1.3 2.8,-1.03 1.15,-0.18 -${w + 0.15},-0.82Z" fill="${shade2}"/>
     <path d="M-1.55,-0.4 L0.45,-0.08 M-1.55,-0.05 L0.45,0.27" stroke="${top}" stroke-width="0.12"/>
     <path d="M-1.75,0.35 V0.85 M0.8,0.8 V1.2 M2.35,0.25 V0.65" stroke="${c.bareBranch}" stroke-width="0.28"/>
     <path d="M-1.4,-2.65 L-0.4,-2.48 -0.5,-1.38 Q-1,-1.15 -1.45,-1.55Z" fill="${c.poolEdge}"/>
@@ -72146,11 +72171,11 @@ function svgFirefliesAsset(x, y, c, v) {
   return `<g transform="translate(${x},${y})">${insects}</g>`;
 }
 function svgSwimmingPool(x, y, c, v) {
-  const shade = lerpColor(c.poolEdge, c.poolWater, 0.45);
+  const shade2 = lerpColor(c.poolEdge, c.poolWater, 0.45);
   const floor = lerpColor(c.poolWater, c.waterLight, 0.3);
   const w = v === 0 ? 3.15 : 3.55;
   return `<g transform="translate(${x},${y})">
-    <path d="M-${w},-0.6 Q-4,0.2 -2.5,0.85 L0.8,2 Q1.4,2.2 2,1.9 L3.55,1.05 V0.3 L0.8,0.9Z" fill="${shade}"/>
+    <path d="M-${w},-0.6 Q-4,0.2 -2.5,0.85 L0.8,2 Q1.4,2.2 2,1.9 L3.55,1.05 V0.3 L0.8,0.9Z" fill="${shade2}"/>
     <path d="M-${w},-0.8 L-1.5,-1.8 Q-1.1,-2 0,-1.65 L3.25,-0.65 Q4,-0.3 3.4,0.2 L1.65,1.2 Q1.2,1.45 0.6,1.22 L-2.9,0.15 Q-${w + 0.2},-0.1 -${w},-0.8Z" fill="${c.poolEdge}"/>
     <path d="M-2.8,-0.6 L-1.3,-1.38 2.95,-0.1 1.35,0.82Z" fill="${c.poolWater}"/>
     <path d="M-2.8,-0.6 L-1.3,-1.38 -1.3,-0.92 2.25,0.26 1.35,0.82Z" fill="${floor}"/>
@@ -72181,13 +72206,13 @@ function orchardFruit(x, y, radius, color, c) {
   </g>`;
 }
 function wovenBasket(contents, c, handle) {
-  const shade = lerpColor(c.nestBrown, c.trunk, 0.35);
+  const shade2 = lerpColor(c.nestBrown, c.trunk, 0.35);
   const light = lerpColor(c.nestBrown, c.haybale, 0.55);
   return `${handle ? `<path d="M-1.35,-0.7 Q-1.45,-2.9 0,-2.6 Q1.6,-2.35 1.35,-0.6" fill="none" stroke="${light}" stroke-width="0.23"/>` : ""}
-    <ellipse cy="-0.9" rx="1.65" ry="0.57" fill="${shade}"/>
+    <ellipse cy="-0.9" rx="1.65" ry="0.57" fill="${shade2}"/>
     ${contents}
     <path d="M-1.65,-0.95 Q0,-0.1 1.65,-0.95 L1.23,0.6 Q0,1.15 -1.23,0.6Z" fill="${c.nestBrown}"/>
-    <path d="M0.72,-0.53 L1.65,-0.95 1.23,0.6 Q0.8,0.9 0.25,0.91Z" fill="${shade}"/>
+    <path d="M0.72,-0.53 L1.65,-0.95 1.23,0.6 Q0.8,0.9 0.25,0.91Z" fill="${shade2}"/>
     <path d="M-1.65,-0.95 Q0,-0.1 1.65,-0.95 M-1.43,-0.23 Q0,0.35 1.42,-0.24 M-1.28,0.35 Q0,0.85 1.25,0.34" fill="none" stroke="${light}" stroke-width="0.16"/>
     <path d="M-0.9,-0.56 L-0.74,0.65 M-0.15,-0.43 L-0.1,0.82 M0.56,-0.5 L0.42,0.76" stroke="${light}" stroke-width="0.12"/>`;
 }
@@ -72195,7 +72220,7 @@ function wovenBasket(contents, c, handle) {
 // src/themes/terrain/assets/renderers/seasonal-autumn-autumn-maple.ts
 function svgAutumnMaple(x, y, c, v) {
   const base = v === 1 ? c.mapleOrange : c.mapleRed;
-  const shade = v === 1 ? c.autumnRust : c.mapleCrimson;
+  const shade2 = v === 1 ? c.autumnRust : c.mapleCrimson;
   const light = v === 1 || v === 2 ? c.autumnGold : c.mapleOrange;
   const crown = v === 1 ? "M-3.1,-3.3 L-2.7,-4.3 -2.95,-4.5 -2.1,-5.2 -2.2,-5.8 -1.35,-6.12 -1.25,-6.9 -0.55,-6.8 0,-7.5 0.45,-6.7 1.25,-6.5 1.4,-5.7 2.4,-5.3 2.15,-4.5 3.1,-3.65 2.7,-2.9 1.7,-2.3 0.4,-2.65 -0.7,-2.1 -1.4,-2.5 -2.6,-2.3Z" : v === 2 ? "M-3.35,-3.7 L-2.9,-4.3 -3,-4.9 -2.1,-5.5 -1.95,-6.2 -1.1,-6.1 -0.6,-6.95 0.15,-6.5 0.65,-6.9 1.2,-5.8 2,-5.6 1.8,-4.8 2.6,-4.2 2.3,-3.4 1.5,-3.15 0.65,-3.5 0.1,-2.8 -1.1,-3.15 -1.9,-2.7 -2.3,-3.1 -3.1,-3Z" : "M-3.5,-3.3 L-3.05,-4.1 -3.2,-4.5 -2.35,-4.8 -2.5,-5.5 -1.65,-5.85 -1.25,-6.75 -0.5,-6.5 0.2,-7.25 0.85,-6.35 1.8,-6.1 1.65,-5.3 2.65,-5.05 2.55,-4.4 3.45,-3.8 3.1,-2.9 2.2,-2.6 1.25,-2.85 0.45,-2.15 -0.4,-2.5 -1.15,-2.1 -2.1,-2.6 -2.9,-2.35Z";
   return `<g transform="translate(${x},${y})">
@@ -72203,7 +72228,7 @@ function svgAutumnMaple(x, y, c, v) {
     <path d="M-0.78,2.5 Q-0.2,0.3 -0.55,-2.1 L-1.75,-3.6 -1.4,-3.7 -0.15,-2.8 0.12,-5.2 0.45,-5 0.42,-2.25 1.9,-3.5 2.1,-3.2 0.55,-1.65 Q0.38,1.2 0.9,2.6 L0.15,2.35Z" fill="${c.trunk}"/>
     <path d="M-0.55,2.34 Q-0.04,-0.8 -0.32,-2.1 L-1.3,-3.25 -0.1,-2.55 0.04,1.8Z" fill="${lerpColor(c.trunk, c.haybale, 0.38)}"/>
     <path d="${crown}" fill="${base}"/>
-    <path d="M0.5,-5.1 L1.8,-4.5 2.6,-4.2 2.3,-3.4 1.5,-3.15 0.65,-3.5 0.1,-2.8 -1.1,-3.15 -1.9,-2.7 -2.3,-3.1 -0.8,-3.65Z" fill="${shade}"/>
+    <path d="M0.5,-5.1 L1.8,-4.5 2.6,-4.2 2.3,-3.4 1.5,-3.15 0.65,-3.5 0.1,-2.8 -1.1,-3.15 -1.9,-2.7 -2.3,-3.1 -0.8,-3.65Z" fill="${shade2}"/>
     <path d="M-2.7,-4.35 L-2.15,-5.05 -1.65,-5.15 -1.45,-6 -0.65,-5.8 0.05,-6.5 0.35,-5.45 -0.25,-4.78 -1.25,-4.92 -1.72,-4.2Z" fill="${light}"/>
     ${v === 2 ? autumnLeaf(-1.8, 1.7, -15, 0.8, c.mapleRed, c.trunk) + autumnLeaf(1.65, 0.9, 32, 0.65, c.autumnGold, c.trunk) + autumnLeaf(2.5, -1.3, 65, 0.55, c.mapleOrange, c.trunk) : ""}
   </g>`;
@@ -72211,14 +72236,14 @@ function svgAutumnMaple(x, y, c, v) {
 function svgAutumnOak(x, y, c, v) {
   const base = v === 1 ? c.autumnBronze : v === 2 ? c.autumnRust : c.oakGold;
   const light = v === 1 ? c.autumnOlive : v === 2 ? c.autumnBronze : c.autumnGold;
-  const shade = v === 2 ? c.autumnBurgundy : c.oakBrown;
+  const shade2 = v === 2 ? c.autumnBurgundy : c.oakBrown;
   const crown = v === 1 ? "M-3.25,-3.4 Q-3.85,-4.9 -2.5,-5.4 Q-2.65,-6.8 -1.1,-6.7 Q0,-7.25 0.75,-6.35 Q2.5,-6.4 2.45,-5 Q3.55,-4.85 3.1,-3.65 Q3.55,-2.5 2.25,-2.15 Q0.8,-1.8 0.4,-2.5 Q-0.8,-1.9 -1.6,-2.55 Q-3,-1.9 -3.25,-3.4Z" : v === 2 ? "M-3.1,-3 Q-3.8,-4.3 -2.6,-5 Q-2.75,-6.1 -1.3,-6.3 Q-0.5,-7 0.8,-6.4 Q2.2,-6.85 2.7,-5.35 Q3.7,-4.95 3.3,-3.9 Q3.8,-2.7 2.5,-2.3 Q1.1,-1.4 0.15,-2.25 Q-1.5,-1.55 -2.2,-2.45 Q-3.2,-2 -3.1,-3Z" : "M-3.3,-3.4 Q-3.9,-4.6 -2.8,-5.15 Q-2.65,-6.7 -1.25,-6.45 Q-0.35,-7.3 0.75,-6.45 Q2.35,-6.8 2.7,-5.4 Q3.7,-5 3.45,-3.9 Q3.9,-2.7 2.7,-2.45 Q1.9,-1.5 0.5,-2.15 Q-0.5,-1.6 -1.55,-2.3 Q-3,-1.75 -3.3,-3.4Z";
   return `<g transform="translate(${x},${y})">
     <ellipse cx="0.4" cy="2.9" rx="2.2" ry="0.45" fill="${c.trunk}" opacity="0.16"/>
     <path d="M-1,2.8 Q-0.28,1 -0.65,-1 L-2.1,-2.8 -1.65,-3.1 -0.2,-1.8 0,-4.5 0.45,-4.6 0.55,-1.9 2,-3.25 2.35,-2.95 0.8,-1 Q0.65,1.8 1.3,2.8 L0.5,2.7 0.05,2.35 -0.5,2.8Z" fill="${c.trunk}"/>
     <path d="M-0.72,2.62 Q-0.05,1 -0.36,-1.14 L-1.5,-2.6 0,-1.55 0.2,1.8Z" fill="${lerpColor(c.trunk, c.haybale, 0.36)}"/>
     <path d="${crown}" fill="${base}"/>
-    <path d="M0.6,-5.1 Q1.7,-5.65 2.55,-4.8 Q3.55,-4.4 3,-3.5 Q3.55,-2.75 2.4,-2.45 Q1.8,-1.95 0.5,-2.4 Q-0.8,-1.9 -1.8,-2.65 Q0.7,-2.35 0.6,-5.1Z" fill="${shade}"/>
+    <path d="M0.6,-5.1 Q1.7,-5.65 2.55,-4.8 Q3.55,-4.4 3,-3.5 Q3.55,-2.75 2.4,-2.45 Q1.8,-1.95 0.5,-2.4 Q-0.8,-1.9 -1.8,-2.65 Q0.7,-2.35 0.6,-5.1Z" fill="${shade2}"/>
     <path d="M-2.95,-4.75 Q-2.45,-5.25 -1.95,-5 Q-2.2,-6.1 -1.1,-6.12 Q-0.3,-6.7 0.4,-6.03 Q1.25,-6.3 1.7,-5.5 Q1.2,-4.65 0,-4.8 Q-1.05,-4 -2.15,-4.42Z" fill="${light}"/>
     ${v === 0 ? `<path d="M0.86,-2.4 Q1.5,-2.45 1.33,-1.8 L1.12,-1.6 Q0.72,-1.82 0.86,-2.4Z" fill="${c.acornBody}"/><path d="M0.8,-2.38 Q1.1,-2.8 1.47,-2.37Z" fill="${c.acornCap}"/>` : ""}
     ${v === 2 ? autumnLeaf(-1.45, 2.35, 15, 0.9, c.autumnBurgundy, c.trunk) : ""}
@@ -72320,12 +72345,12 @@ function svgHarvestBasket(x, y, c, v) {
 function svgHotDrink(x, y, c, v) {
   const top = v === 1 ? -1.75 : -1.3;
   const width = v === 2 ? 0.92 : 0.72;
-  const shade = lerpColor(c.hotDrinkMug, c.trunk, 0.35);
+  const shade2 = lerpColor(c.hotDrinkMug, c.trunk, 0.35);
   return `<g transform="translate(${x},${y})">
     ${v === 2 ? `<ellipse cx="0.18" cy="0.68" rx="1.62" ry="0.45" fill="${c.hotDrinkMug}"/><ellipse cx="0.12" cy="0.6" rx="1.2" ry="0.25" fill="${c.parasolStripe}"/>` : ""}
-    <path d="M${width - 0.04},${top + 0.35} Q1.85,${top + 0.05} 1.6,${top + 1.12} Q1.5,${top + 1.6} ${width - 0.05},${top + 1.2}" fill="none" stroke="${shade}" stroke-width="0.29"/>
+    <path d="M${width - 0.04},${top + 0.35} Q1.85,${top + 0.05} 1.6,${top + 1.12} Q1.5,${top + 1.6} ${width - 0.05},${top + 1.2}" fill="none" stroke="${shade2}" stroke-width="0.29"/>
     <path d="M-${width},${top} H${width} L${width - 0.08},0.35 Q0,0.85 -${width - 0.08},0.35Z" fill="${c.hotDrinkMug}"/>
-    <path d="M${width * 0.35},${top} H${width} L${width - 0.08},0.35 Q0.3,0.65 0,0.6 Q0.6,-0.05 ${width * 0.35},${top}Z" fill="${shade}"/>
+    <path d="M${width * 0.35},${top} H${width} L${width - 0.08},0.35 Q0.3,0.65 0,0.6 Q0.6,-0.05 ${width * 0.35},${top}Z" fill="${shade2}"/>
     <ellipse cy="${top}" rx="${width}" ry="0.3" fill="${c.parasolStripe}"/>
     <ellipse cy="${top + 0.02}" rx="${width - 0.17}" ry="0.18" fill="${c.acornCap}"/>
     <path d="M-${width - 0.18},${top + 0.36} L-${width - 0.2},0.15" stroke="${lerpColor(c.hotDrinkMug, c.parasolStripe, 0.65)}" stroke-width="0.15" stroke-linecap="round"/>
@@ -72336,12 +72361,12 @@ function svgHotDrink(x, y, c, v) {
 }
 function svgAutumnWreath(x, y, c, v) {
   const light = v === 1 ? c.fallenLeafGold : c.autumnOlive;
-  const shade = lerpColor(c.wreathGreen, c.trunk, 0.4);
+  const shade2 = lerpColor(c.wreathGreen, c.trunk, 0.4);
   return `<g transform="translate(${x},${y})">
     <path d="M-1.7,-1.55 Q-1.8,-3.55 0,-3.45 Q1.9,-3.35 1.72,-1.4 Q1.5,0.15 -0.1,0.07 Q-1.6,-0.1 -1.7,-1.55Z M-1,-1.6 Q-1,-0.58 -0.02,-0.65 Q1,-0.55 1.05,-1.6 Q1.1,-2.65 0,-2.63 Q-1.1,-2.7 -1,-1.6Z" fill="${c.nestBrown}" fill-rule="evenodd"/>
     <path d="M-1.92,-1.45 L-1.62,-1.86 -1.9,-2.36 -1.37,-2.52 -1.32,-3.05 -0.7,-2.96 -0.38,-3.56 0.05,-3.19 0.65,-3.43 0.9,-2.98 1.53,-2.92 1.42,-2.37 1.98,-2.03 1.64,-1.54 1.82,-0.94 1.31,-0.82 1.03,-0.21 0.48,-0.38 0.08,0.15 -0.33,-0.26 -0.99,-0.08 -1.14,-0.61 -1.72,-0.64 -1.53,-1.15Z M-1.1,-1.5 L-0.86,-1.06 -0.43,-0.81 0.04,-0.77 0.6,-0.99 0.91,-1.32 1.03,-1.79 0.69,-2.39 0.1,-2.56 -0.45,-2.41 -0.89,-2.07Z" fill="${c.wreathGreen}" fill-rule="evenodd"/>
     <path d="M-1.62,-1.86 L-1.9,-2.36 -1.37,-2.52 -1.32,-3.05 -0.7,-2.96 -0.38,-3.56 0.05,-3.19 0.65,-3.43 0.9,-2.98 0.12,-2.85 -0.47,-2.95 -0.69,-2.47 -1.28,-2.2 -1.12,-1.62Z" fill="${light}"/>
-    <path d="M1.25,-2.28 L1.98,-2.03 1.64,-1.54 1.82,-0.94 1.31,-0.82 1.03,-0.21 0.48,-0.38 0.08,0.15 -0.33,-0.26 -0.99,-0.08 -1.14,-0.61 -0.3,-0.51 0.19,-0.29 0.65,-0.66 1.13,-1.08Z" fill="${shade}"/>
+    <path d="M1.25,-2.28 L1.98,-2.03 1.64,-1.54 1.82,-0.94 1.31,-0.82 1.03,-0.21 0.48,-0.38 0.08,0.15 -0.33,-0.26 -0.99,-0.08 -1.14,-0.61 -0.3,-0.51 0.19,-0.29 0.65,-0.66 1.13,-1.08Z" fill="${shade2}"/>
     ${v === 1 ? `<path d="M1.44,-1.3 L2.26,-1.9 2.12,-1.05 1.52,-0.86Z" fill="${c.fallenLeafGold}"/>` : ""}
     ${v > 0 ? `<path d="M0.65,-2.9 a0.23,0.23 0 1 0 0.46,0 a0.23,0.23 0 1 0 -0.46,0 M1.17,-2.51 a0.22,0.22 0 1 0 0.44,0 a0.22,0.22 0 1 0 -0.44,0 M-1.48,-1.5 a0.24,0.24 0 1 0 0.48,0 a0.24,0.24 0 1 0 -0.48,0" fill="${c.wreathBerry}"/>` : ""}
     ${v === 2 ? `<path d="M0,-0.38 Q-1.22,-1.22 -0.92,-0.04 L-0.15,-0.12 -0.5,0.97 0.06,0.72 0.36,1.03 0.34,-0.12 Q1.27,0.03 0.88,-0.8Z" fill="${c.scarfRed}"/><path d="M-0.12,-0.48 L0.23,-0.41 0.29,-0.02 -0.16,-0.02Z" fill="${c.wreathBerry}"/>` : ""}
@@ -72364,10 +72389,10 @@ function svgPumpkinPatch(x, y, c, v) {
   </g>`;
 }
 function strawBale(x, y, width, c) {
-  const shade = lerpColor(c.haybale, c.trunk, 0.35);
+  const shade2 = lerpColor(c.haybale, c.trunk, 0.35);
   return `<g transform="translate(${x},${y})">
     <path d="M0,0 L${width},0.38 V-0.72 L0,-1.1Z" fill="${c.haybale}"/>
-    <path d="M${width},0.38 L${width + 0.7},-0.05 V-1.15 L${width},-0.72Z" fill="${shade}"/>
+    <path d="M${width},0.38 L${width + 0.7},-0.05 V-1.15 L${width},-0.72Z" fill="${shade2}"/>
     <path d="M0,-1.1 L0.7,-1.53 ${width + 0.7},-1.15 ${width},-0.72Z" fill="${c.autumnGold}"/>
     <path d="M0.45,-1.04 V0.06 M${width - 0.32},-0.8 V0.27" stroke="${c.nestBrown}" stroke-width="0.16"/>
     <path d="M0.08,-0.65 L${width - 0.05},-0.33 M0.08,-0.31 L${width - 0.05},0.02" stroke="${c.autumnGold}" stroke-width="0.12"/>
@@ -72446,8 +72471,8 @@ var GROVES = [
 function svgCedarGrove(x, y, c, v) {
   const grove = GROVES[v] ?? GROVES[0];
   const trees = grove.map(([dx, dy, scale, form]) => {
-    const tree = CEDARS[form];
-    return `<g transform="translate(${dx},${dy}) scale(${scale})"><path d="M-1.3,.5 -.55,-.6 -.5,-5.4 .25,-7 .8,-6.8 .35,-4.7 .65,-.5 1.65,.4 .3,.1Z" fill="${c.trunk}"/><path d="M-.4,-.4 -.3,-4.4 .1,-4.5 .15,-.2Z" fill="${c.stump}"/><path d="${tree.crown}" fill="${c.evergreenDark}"/><path d="${tree.face}" fill="${c.pine}"/><path d="${tree.light}" fill="${c.evergreenLight}"/></g>`;
+    const tree2 = CEDARS[form];
+    return `<g transform="translate(${dx},${dy}) scale(${scale})"><path d="M-1.3,.5 -.55,-.6 -.5,-5.4 .25,-7 .8,-6.8 .35,-4.7 .65,-.5 1.65,.4 .3,.1Z" fill="${c.trunk}"/><path d="M-.4,-.4 -.3,-4.4 .1,-4.5 .15,-.2Z" fill="${c.stump}"/><path d="${tree2.crown}" fill="${c.evergreenDark}"/><path d="${tree2.face}" fill="${c.pine}"/><path d="${tree2.light}" fill="${c.evergreenLight}"/></g>`;
   }).join("");
   return `<g transform="translate(${x},${y})"><ellipse cx="0" cy=".45" rx="6.7" ry="1.1" fill="${c.shadow}" opacity=".13"/>${trees}<path d="M-4.2,.2 -4.8,-.3 -4,-.1 -3.7,-1.1 -3.35,-.25 -2.4,-.7 -2.8,.1Z M2,.5 1.4,-.2 2.4,0 2.8,-.9 3.1,-.1 4,-.4 3.7,.45Z" fill="${c.pine}"/></g>`;
 }
@@ -72481,8 +72506,8 @@ var OAKS = [
   }
 ];
 function svgAncientOak(x, y, c, v) {
-  const tree = OAKS[v] ?? OAKS[0];
-  return `<g transform="translate(${x},${y})"><ellipse cx=".4" cy=".5" rx="4.8" ry=".9" fill="${c.shadow}" opacity=".15"/><path d="${tree.trunk}" fill="${c.trunk}"/><path d="${tree.bark}" fill="${c.stump}"/><path d="${tree.hollow}" fill="${c.shadow}"/><path d="${tree.crown}" fill="${c.bushDark}"/><path d="${tree.face}" fill="${c.leaf}"/><path d="${tree.light}" fill="${c.leafLight}"/><path d="M-3.5,.4 -4.4,-.4 -3.6,-.2 -3.6,-1.4 -3.1,-.5 -2.1,-.9 -2.6,.1Z M1.8,.7 1.3,-.1 2.2,.15 2.9,-.6 3,.25 3.9,.1 3.6,.6Z" fill="${c.moss}"/><path d="M-2.9,-7.3a.28,.4 0 1 0 .56,0a.28,.4 0 1 0 -.56,0 M3.1,-8.3a.26,.36 0 1 0 .52,0a.26,.36 0 1 0 -.52,0" fill="${c.acornBody}"/></g>`;
+  const tree2 = OAKS[v] ?? OAKS[0];
+  return `<g transform="translate(${x},${y})"><ellipse cx=".4" cy=".5" rx="4.8" ry=".9" fill="${c.shadow}" opacity=".15"/><path d="${tree2.trunk}" fill="${c.trunk}"/><path d="${tree2.bark}" fill="${c.stump}"/><path d="${tree2.hollow}" fill="${c.shadow}"/><path d="${tree2.crown}" fill="${c.bushDark}"/><path d="${tree2.face}" fill="${c.leaf}"/><path d="${tree2.light}" fill="${c.leafLight}"/><path d="M-3.5,.4 -4.4,-.4 -3.6,-.2 -3.6,-1.4 -3.1,-.5 -2.1,-.9 -2.6,.1Z M1.8,.7 1.3,-.1 2.2,.15 2.9,-.6 3,.25 3.9,.1 3.6,.6Z" fill="${c.moss}"/><path d="M-2.9,-7.3a.28,.4 0 1 0 .56,0a.28,.4 0 1 0 -.56,0 M3.1,-8.3a.26,.36 0 1 0 .52,0a.26,.36 0 1 0 -.52,0" fill="${c.acornBody}"/></g>`;
 }
 
 // src/themes/terrain/assets/renderers/nature-bamboo.ts
@@ -72738,8 +72763,8 @@ var PONDS = [
 function svgWillowPond(x, y, c, v) {
   const pond = PONDS[v] ?? PONDS[0];
   const trees = pond.map(([dx, dy, size, form]) => {
-    const tree = WILLOWS[form];
-    return `<g transform="translate(${dx},${dy}) scale(${size})"><path d="${tree.trunk}" fill="${c.trunk}"/><path d="${tree.crown}" fill="${c.bushDark}"/><path d="${tree.light}" fill="${c.willow}"/><path d="${tree.veins}" stroke="${c.leafLight}" stroke-width=".3" fill="none" stroke-linecap="round"/></g>`;
+    const tree2 = WILLOWS[form];
+    return `<g transform="translate(${dx},${dy}) scale(${size})"><path d="${tree2.trunk}" fill="${c.trunk}"/><path d="${tree2.crown}" fill="${c.bushDark}"/><path d="${tree2.light}" fill="${c.willow}"/><path d="${tree2.veins}" stroke="${c.leafLight}" stroke-width=".3" fill="none" stroke-linecap="round"/></g>`;
   }).join("");
   return `<g transform="translate(${x},${y})">${naturePool(c, v)}` + lotusLeaf(c, 4.5, 0.2, 0.7) + lotusLeaf(c, 1.5, 1, 0.55) + trees + `<path d="M-5.6,.2 -4.8,-.7 -3.7,-.6 -3,.3 -4.6,.7Z" fill="${c.rock}"/><path d="M-5.6,.2 -4.8,-.7 -3.7,-.6 -4.2,.1Z" fill="${c.moss}"/></g>`;
 }
@@ -72787,26 +72812,26 @@ function material2(base, c) {
     dark: lerpColor(fullHex2(base), fullHex2(c.shadow), 0.3)
   };
 }
-function giwaRoof(c, width, rise, depth = 2.5) {
+function giwaRoof(c, width, rise, depth2 = 2.5) {
   const roof = material2(c.giwa, c);
   const left = Number((-width * 0.27).toFixed(2));
   const right = Number((width * 0.3).toFixed(2));
   const crest = rise + 0.8;
   return `<g data-part="giwa-roof">` + path2(
-    `M${-width},0 Q${-width * 0.6},${depth * 0.5} 0,${depth} Q${width * 0.7},1 ${width},0 L${width},0.65 L0,${depth + 0.7} L${-width},0.65Z`,
+    `M${-width},0 Q${-width * 0.6},${depth2 * 0.5} 0,${depth2} Q${width * 0.7},1 ${width},0 L${width},0.65 L0,${depth2 + 0.7} L${-width},0.65Z`,
     roof.dark
   ) + path2(
-    `M${-width},0 Q${left - 2},-0.6 ${left},${-rise} L${right},${-crest} Q${right + 1.8},-0.8 ${width},0 Q${width * 0.6},0.1 0,${depth} Q${-width * 0.65},0.4 ${-width},0Z`,
+    `M${-width},0 Q${left - 2},-0.6 ${left},${-rise} L${right},${-crest} Q${right + 1.8},-0.8 ${width},0 Q${width * 0.6},0.1 0,${depth2} Q${-width * 0.65},0.4 ${-width},0Z`,
     roof.light
   ) + path2(
-    `M${right},${-crest} Q${right + 1.8},-0.8 ${width},0 L0,${depth} Q${right - 1.3},-1.1 ${right},${-crest}Z`,
+    `M${right},${-crest} Q${right + 1.8},-0.8 ${width},0 L0,${depth2} Q${right - 1.3},-1.1 ${right},${-crest}Z`,
     roof.base
   ) + stroke2(`M${left - 0.5},${-rise - 0.2} L${right + 0.5},${-crest - 0.2}`, c.rock, 0.6) + stroke2(
-    `M${left - 0.4},${-rise + 0.8} Q-3,-1.8 ${-width + 2},0.2 M${left + 1.2},${-rise + 0.45} Q-1.3,-0.8 -2,1.3 M${left + 2.8},${-rise + 0.1} Q0.2,-1 0,${depth - 0.3}`,
+    `M${left - 0.4},${-rise + 0.8} Q-3,-1.8 ${-width + 2},0.2 M${left + 1.2},${-rise + 0.45} Q-1.3,-0.8 -2,1.3 M${left + 2.8},${-rise + 0.1} Q0.2,-1 0,${depth2 - 0.3}`,
     roof.dark,
     0.24
   ) + stroke2(
-    `M${-width},-0.2 Q${-width * 0.6},${depth * 0.5} 0,${depth} L${width},-0.2`,
+    `M${-width},-0.2 Q${-width * 0.6},${depth2 * 0.5} 0,${depth2} L${width},-0.2`,
     c.rock,
     0.38
   ) + "</g>";
@@ -74201,8 +74226,8 @@ function dailyPrimaryPool(tier, season, biome, style = "classic") {
   const water = Boolean(biome?.isPond || biome?.isRiver);
   const forest = (biome?.forestDensity ?? 0) > 0.55;
   const shore = Boolean(biome?.nearWater);
-  const key = `${tier}:${season}:${water}:${forest}:${shore}:${style}`;
-  const cached2 = PRIMARY_POOLS.get(key);
+  const key2 = `${tier}:${season}:${water}:${forest}:${shore}:${style}`;
+  const cached2 = PRIMARY_POOLS.get(key2);
   if (cached2) return cached2;
   const removed = getSeasonalPoolOverrides(SEASON_POSITION[season], 0, 99).remove;
   const eligible = ASSET_CATALOG.filter((entry) => {
@@ -74233,7 +74258,7 @@ function dailyPrimaryPool(tier, season, biome, style = "classic") {
       })
     )
   ];
-  PRIMARY_POOLS.set(key, pool);
+  PRIMARY_POOLS.set(key2, pool);
   return pool;
 }
 
@@ -74259,7 +74284,7 @@ function primaryFocalSite(cell, seed) {
   }
   return true;
 }
-function spatialPrimaryType(pool, cell, key, seed) {
+function spatialPrimaryType(pool, cell, key2, seed) {
   const { week, day } = absolutePosition(cell);
   const colors = Math.max(1, Math.min(4, Math.floor(pool.length / 2)));
   const color = colors === 4 ? modulo(week, 2) * 2 + modulo(day, 2) : modulo(week + day * (colors === 3 ? 2 : 1), colors);
@@ -74268,12 +74293,12 @@ function spatialPrimaryType(pool, cell, key, seed) {
     rank: assetDateSeed(seed, type, "primary-order")
   })).sort((a, b) => a.rank - b.rank || a.type.localeCompare(b.type));
   const candidates = ranked.filter((_, index) => index % colors === color);
-  const choice = seededRandom(assetDateSeed(seed, key, "primary-catalog"))();
+  const choice = seededRandom(assetDateSeed(seed, key2, "primary-catalog"))();
   return candidates[Math.floor(choice * candidates.length)].type;
 }
 
 // src/themes/terrain/assets/progression-primary.ts
-function dailyPrimaryPlacement(cell, key, seed, options) {
+function dailyPrimaryPlacement(cell, key2, seed, options) {
   const tier = getDailyRewardTier(cell.count ?? 0);
   if (tier === 0) return void 0;
   const biome = options.biomeMap?.get(`${cell.week},${cell.day}`);
@@ -74282,12 +74307,12 @@ function dailyPrimaryPlacement(cell, key, seed, options) {
   const nature = pool.filter(isNaturePrimary);
   const focal = pool.filter((type2) => !isNaturePrimary(type2));
   const candidates = focal.length > 0 && primaryFocalSite(cell, seed) ? focal : nature;
-  const type = spatialPrimaryType(candidates, cell, key, seed);
+  const type = spatialPrimaryType(candidates, cell, key2, seed);
   const variant = Math.floor(
-    seededRandom(assetDateSeed(options.variantSeed ?? seed, key, "primary-variant"))() * 3
+    seededRandom(assetDateSeed(options.variantSeed ?? seed, key2, "primary-variant"))() * 3
   );
   return {
-    id: `asset:${key}:0`,
+    id: `asset:${key2}:0`,
     date: cell.date,
     catalogId: type,
     type,
@@ -74358,18 +74383,18 @@ function selectAssetPlacements(isoCells, seed, options = {}) {
   const assets = [];
   const dates = /* @__PURE__ */ new Map();
   for (const cell of isoCells) {
-    const key = assetCellIdentity(cell);
-    dates.set(key, (dates.get(key) ?? 0) + 1);
+    const key2 = assetCellIdentity(cell);
+    dates.set(key2, (dates.get(key2) ?? 0) + 1);
   }
   for (const cell of isoCells) {
     if (options.excludeCells?.has(`${cell.week},${cell.day}`)) continue;
     const identity = assetCellIdentity(cell);
-    const key = (dates.get(identity) ?? 0) > 1 ? `${identity}:${cell.week},${cell.day}` : identity;
-    const primary = dailyPrimaryPlacement(cell, key, seed, options);
+    const key2 = (dates.get(identity) ?? 0) > 1 ? `${identity}:${cell.week},${cell.day}` : identity;
+    const primary = dailyPrimaryPlacement(cell, key2, seed, options);
     if (primary) assets.push(primary);
-    const rng = seededRandom(assetDateSeed(seed, key, primary ? "decoration" : "selection"));
+    const rng = seededRandom(assetDateSeed(seed, key2, primary ? "decoration" : "selection"));
     const variants = seededRandom(
-      assetDateSeed(options.variantSeed ?? seed, key, primary ? "decoration-variant" : "variant")
+      assetDateSeed(options.variantSeed ?? seed, key2, primary ? "decoration-variant" : "variant")
     );
     const pool = poolForCell(cell, options);
     const abundance = cell.count === 0 ? 0 : cell.level100 / 99;
@@ -74384,7 +74409,7 @@ function selectAssetPlacements(isoCells, seed, options = {}) {
       };
       if (!offset) continue;
       assets.push({
-        id: `asset:${key}:${slot}`,
+        id: `asset:${key2}:${slot}`,
         date: cell.date,
         catalogId: type,
         cell,
@@ -74664,8 +74689,8 @@ function computeRichness(cell, cellMap) {
   for (let dw = -1; dw <= 1; dw++) {
     for (let dd = -1; dd <= 1; dd++) {
       if (dw === 0 && dd === 0) continue;
-      const key = `${cell.week + dw},${cell.day + dd}`;
-      const n = cellMap.get(key);
+      const key2 = `${cell.week + dw},${cell.day + dd}`;
+      const n = cellMap.get(key2);
       if (n) {
         neighborSum += n.level100;
         count++;
@@ -74705,10 +74730,10 @@ function selectEpicBuildings(isoCells, seed, stats, biomeMap) {
   );
   for (const cell of shuffled) {
     if (placed.length >= MAX_EPIC_BUDGET) break;
-    const key = `${cell.week},${cell.day}`;
+    const key2 = `${cell.week},${cell.day}`;
     const identity = assetCellIdentity(cell);
     if (cell.count === 0 || cell.level100 === 0) continue;
-    const biome = biomeMap?.get(key);
+    const biome = biomeMap?.get(key2);
     if (biome?.isRiver || biome?.isPond) continue;
     const tooClose = placed.some(
       (p) => manhattanDistance(p, cell.week, cell.day) < MIN_MANHATTAN_DISTANCE
@@ -74738,7 +74763,7 @@ function selectEpicBuildings(isoCells, seed, stats, biomeMap) {
           cx: cell.isoX,
           cy: cell.isoY
         });
-        epicCells.add(key);
+        epicCells.add(key2);
         break;
       }
     }
@@ -89191,8 +89216,8 @@ function renderPixelAsset(id, x, y, colors, variant = 0) {
   if (!variants?.length) throw new MissingPixelSpriteError(id);
   const selected = Number.isFinite(variant) ? Math.trunc(variant) : 0;
   const index = (selected % variants.length + variants.length) % variants.length;
-  const sprite = variants[index];
-  const paths = sprite.layers.map(({ paint, d }) => `<path fill="${escapeXml(resolvePixelPaint(paint, colors))}" d="${d}"/>`).join("");
+  const sprite2 = variants[index];
+  const paths = sprite2.layers.map(({ paint, d }) => `<path fill="${escapeXml(resolvePixelPaint(paint, colors))}" d="${d}"/>`).join("");
   return `<g data-art-style="pixel" data-pixel-grid="${PIXEL_GRID_STEP}" shape-rendering="crispEdges" transform="translate(${x},${y})">${paths}</g>`;
 }
 
@@ -89772,25 +89797,25 @@ function rewardMarker(reward, palette) {
   const c = palette.assets;
   const radius = 1.6 + tier * 0.3;
   const rise = 0.5 + tier * 0.12;
-  const depth = 0.2 + tier * 0.1;
+  const depth2 = 0.2 + tier * 0.1;
   const y = 2.4;
   const front = y + rise;
   const material3 = tier >= 2 ? c.cobble : c.fence;
-  const shade = c.rock;
+  const shade2 = c.rock;
   const edge = tier >= 3 ? c.wall : c.leafLight;
-  const left = `<path d="M${point(-radius, y)} ${point(0, front)} ${point(0, front + depth)} ${point(-radius, y + depth)}Z" fill="${shade}"/>`;
-  const right = `<path d="M${point(0, front)} ${point(radius, y)} ${point(radius, y + depth)} ${point(0, front + depth)}Z" fill="${material3}"/>`;
+  const left = `<path d="M${point(-radius, y)} ${point(0, front)} ${point(0, front + depth2)} ${point(-radius, y + depth2)}Z" fill="${shade2}"/>`;
+  const right = `<path d="M${point(0, front)} ${point(radius, y)} ${point(radius, y + depth2)} ${point(0, front + depth2)}Z" fill="${material3}"/>`;
   const rim = `<path d="M${point(-radius, y)} ${point(0, front)} ${point(radius, y)}" fill="none" stroke="${edge}" stroke-width="0.3" stroke-linejoin="round"/>`;
   const marks = Array.from({ length: tier }, (_, index) => {
     const x = (index - (tier - 1) / 2) * 0.8;
-    const markY = front - Math.abs(x) / radius * rise + depth * 0.5;
+    const markY = front - Math.abs(x) / radius * rise + depth2 * 0.5;
     return `M${point(x, markY - 0.2)} ${point(x + 0.25, markY)} ${point(x, markY + 0.2)} ${point(x - 0.25, markY)}Z`;
   }).join("");
   const caps = tier >= 4 ? [-1, 1].map(
     (side) => `M${point(side * radius, y - 0.25)} ${point(side * radius + 0.3, y)} ${point(side * radius, y + 0.25)} ${point(side * radius - 0.3, y)}Z`
   ).join("") : "";
   const inlay = `<path d="${marks}${caps}" fill="${tier >= 4 ? c.epicGold : c.flowerCenter}"/>`;
-  const crest = tier === 5 ? `<path d="M${point(-0.45, front + depth)} ${point(0, front + depth - 0.4)} ${point(0.45, front + depth)} ${point(0, front + depth + 0.4)}Z" fill="${c.epicGold}" stroke="${c.wall}" stroke-width="0.15"/>` : "";
+  const crest = tier === 5 ? `<path d="M${point(-0.45, front + depth2)} ${point(0, front + depth2 - 0.4)} ${point(0.45, front + depth2)} ${point(0, front + depth2 + 0.4)}Z" fill="${c.epicGold}" stroke="${c.wall}" stroke-width="0.15"/>` : "";
   return `<g data-reward-id="${escapeXml(reward.id)}" data-reward-tier="${tier}" data-reward-count="${reward.count}" transform="translate(${svgNumber(reward.cx)} ${svgNumber(reward.cy)})">${left}${right}${rim}${inlay}${crest}</g>`;
 }
 function renderDailyRewards(scene, palettes) {
@@ -89922,6 +89947,1579 @@ function consistencyEffectPlacements(cells, root, hemisphere) {
   }).sort((a, b) => a.anchorDate.localeCompare(b.anchorDate));
 }
 
+// src/themes/terrain/landscape/prepare.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/model.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/heightfield.ts
+init_cjs_shims();
+
+// src/utils/noise.ts
+init_cjs_shims();
+
+// node_modules/simplex-noise/dist/esm/simplex-noise.js
+init_cjs_shims();
+var SQRT3 = /* @__PURE__ */ Math.sqrt(3);
+var SQRT5 = /* @__PURE__ */ Math.sqrt(5);
+var F2 = 0.5 * (SQRT3 - 1);
+var G2 = (3 - SQRT3) / 6;
+var F3 = 1 / 3;
+var G3 = 1 / 6;
+var F4 = (SQRT5 - 1) / 4;
+var G4 = (5 - SQRT5) / 20;
+var fastFloor = (x) => Math.floor(x) | 0;
+var grad2 = /* @__PURE__ */ new Float64Array([
+  1,
+  1,
+  -1,
+  1,
+  1,
+  -1,
+  -1,
+  -1,
+  1,
+  0,
+  -1,
+  0,
+  1,
+  0,
+  -1,
+  0,
+  0,
+  1,
+  0,
+  -1,
+  0,
+  1,
+  0,
+  -1
+]);
+function createNoise2D(random = Math.random) {
+  const perm = buildPermutationTable(random);
+  const permGrad2x = new Float64Array(perm).map((v) => grad2[v % 12 * 2]);
+  const permGrad2y = new Float64Array(perm).map((v) => grad2[v % 12 * 2 + 1]);
+  return function noise2D(x, y) {
+    let n0 = 0;
+    let n1 = 0;
+    let n2 = 0;
+    const s = (x + y) * F2;
+    const i = fastFloor(x + s);
+    const j = fastFloor(y + s);
+    const t = (i + j) * G2;
+    const X0 = i - t;
+    const Y0 = j - t;
+    const x0 = x - X0;
+    const y0 = y - Y0;
+    let i1, j1;
+    if (x0 > y0) {
+      i1 = 1;
+      j1 = 0;
+    } else {
+      i1 = 0;
+      j1 = 1;
+    }
+    const x1 = x0 - i1 + G2;
+    const y1 = y0 - j1 + G2;
+    const x2 = x0 - 1 + 2 * G2;
+    const y2 = y0 - 1 + 2 * G2;
+    const ii = i & 255;
+    const jj = j & 255;
+    let t0 = 0.5 - x0 * x0 - y0 * y0;
+    if (t0 >= 0) {
+      const gi0 = ii + perm[jj];
+      const g0x = permGrad2x[gi0];
+      const g0y = permGrad2y[gi0];
+      t0 *= t0;
+      n0 = t0 * t0 * (g0x * x0 + g0y * y0);
+    }
+    let t1 = 0.5 - x1 * x1 - y1 * y1;
+    if (t1 >= 0) {
+      const gi1 = ii + i1 + perm[jj + j1];
+      const g1x = permGrad2x[gi1];
+      const g1y = permGrad2y[gi1];
+      t1 *= t1;
+      n1 = t1 * t1 * (g1x * x1 + g1y * y1);
+    }
+    let t2 = 0.5 - x2 * x2 - y2 * y2;
+    if (t2 >= 0) {
+      const gi2 = ii + 1 + perm[jj + 1];
+      const g2x = permGrad2x[gi2];
+      const g2y = permGrad2y[gi2];
+      t2 *= t2;
+      n2 = t2 * t2 * (g2x * x2 + g2y * y2);
+    }
+    return 70 * (n0 + n1 + n2);
+  };
+}
+function buildPermutationTable(random) {
+  const tableSize = 512;
+  const p = new Uint8Array(tableSize);
+  for (let i = 0; i < tableSize / 2; i++) {
+    p[i] = i;
+  }
+  for (let i = 0; i < tableSize / 2 - 1; i++) {
+    const r = i + ~~(random() * (256 - i));
+    const aux = p[i];
+    p[i] = p[r];
+    p[r] = aux;
+  }
+  for (let i = 256; i < tableSize; i++) {
+    p[i] = p[i - 256];
+  }
+  return p;
+}
+
+// src/utils/noise.ts
+function createNoise2D2(seed) {
+  const alea = (seed2) => {
+    let s = seed2;
+    return () => {
+      s = (s * 9301 + 49297) % 233280;
+      return s / 233280;
+    };
+  };
+  const noise2D = createNoise2D(alea(seed));
+  return (x, y) => {
+    return noise2D(x, y);
+  };
+}
+
+// src/themes/terrain/landscape/heightfield.ts
+var ellipse3 = (x, z2, cx, cz, rx, rz) => Math.hypot((x - cx) / rx, (z2 - cz) / rz);
+var bell = (x, z2, cx, cz, rx, rz) => Math.exp(-(ellipse3(x, z2, cx, cz, rx, rz) ** 2));
+function ridge(x, z2, nodes, width) {
+  let height = 0;
+  for (let index = 1; index < nodes.length; index++) {
+    const [ax, az, ah] = nodes[index - 1], [bx, bz, bh] = nodes[index];
+    const dx = bx - ax, dz = bz - az;
+    const t = clamp(((x - ax) * dx + (z2 - az) * dz) / (dx * dx + dz * dz), 0, 1);
+    const distance2 = Math.hypot(x - ax - dx * t, z2 - az - dz * t);
+    const peak = ah + (bh - ah) * t;
+    height = Math.max(height, peak * Math.max(0, 1 - distance2 / width) ** 1.35);
+  }
+  return height;
+}
+function landform(x, z2, options, noise) {
+  switch (options.layout) {
+    case "island": {
+      const shore = Math.max(1 - ellipse3(x, z2, -3, -1, 27, 19.5), 0.85 - ellipse3(x, z2, 14, 8, 15, 12)) - 0.24 * bell(x, z2, -17, 12, 7, 6) - 0.2 * bell(x, z2, 20, -5, 7, 5) + noise;
+      const mountains = ridge(
+        x,
+        z2,
+        [
+          [-20, -5, 3.8],
+          [-14, -9, 7],
+          [-8, -11, 8.8],
+          [-1, -8, 5.5],
+          [6, -11, 7],
+          [14, -6, 3.8]
+        ],
+        6.4
+      );
+      return [shore, mountains];
+    }
+    case "archipelago": {
+      const shore = Math.max(
+        1 - ellipse3(x, z2, -15, -6, 14, 12.5),
+        1 - ellipse3(x, z2, 14, -7, 12, 10.5),
+        1 - ellipse3(x, z2, 7, 15, 10.5, 7),
+        1 - ellipse3(x, z2, -20, 15.5, 6, 4.8)
+      ) + noise * 0.55;
+      const mountains = Math.max(
+        ridge(
+          x,
+          z2,
+          [
+            [-23, -8, 3],
+            [-17, -11, 8],
+            [-9, -8, 5]
+          ],
+          5.2
+        ),
+        ridge(
+          x,
+          z2,
+          [
+            [7, -10, 3.5],
+            [15, -12, 7.4],
+            [22, -6, 3]
+          ],
+          4.6
+        ),
+        ridge(
+          x,
+          z2,
+          [
+            [0, 13, 2.7],
+            [7, 12, 4.5],
+            [14, 14, 2]
+          ],
+          3.7
+        )
+      );
+      return [shore, mountains];
+    }
+    case "valley": {
+      const shore = 1 - ellipse3(x, z2, -1, 0, 29, 21) + noise * 0.65;
+      const mountains = Math.max(
+        ridge(
+          x,
+          z2,
+          [
+            [-15, 10, 2.2],
+            [-15, 2, 5.7],
+            [-12, -8, 8.6],
+            [-7, -15, 6]
+          ],
+          6
+        ),
+        ridge(
+          x,
+          z2,
+          [
+            [14, 13, 2],
+            [15, 2, 5],
+            [12, -10, 7.2],
+            [5, -15, 4.6]
+          ],
+          5.5
+        )
+      );
+      return [shore, mountains];
+    }
+    default: {
+      const unreachable = options.layout;
+      return unreachable;
+    }
+  }
+}
+function createHeightField(options) {
+  const noise = createNoise2D2(options.seed >>> 0);
+  const rain = createNoise2D2(options.seed + 731 >>> 0);
+  return {
+    elevation: (x, z2) => {
+      const coastNoise = noise(x * 0.08, z2 * 0.08) * (0.075 + options.roughness * 0.11) + noise(x * 0.22 + 81, z2 * 0.22 - 29) * options.roughness * 0.045;
+      const [shore, mountains] = landform(x, z2, options, coastNoise);
+      if (shore <= 0) return shore * 5 * options.relief;
+      const coastFade = clamp(shore * 6, 0, 1);
+      const channel = 2 + Math.sin(z2 * 0.2) * 2.1;
+      const valley = Math.exp(-(((x - channel) / 3.2) ** 2));
+      const plain = 0.72 + (17 - z2) * 0.024 + Math.min(shore, 0.7) * 0.15;
+      const mountainRelief = mountains * (1 - valley * 0.7);
+      const detail = noise(x * 0.38, z2 * 0.38) * options.roughness * Math.min(0.65, mountains * 0.16);
+      return Math.max(0.015, (plain - valley * 0.38 + mountainRelief + detail) * coastFade) * options.relief;
+    },
+    moisture: (x, z2) => clamp(
+      0.47 + rain(x * 0.055, z2 * 0.055) * 0.17 + bell(x, z2, -15, 1, 12, 15) * 0.19 - bell(x, z2, 16, 8, 14, 16) * 0.29,
+      0.05,
+      0.95
+    )
+  };
+}
+function classifyBiome(elevation, slope, moisture, relief) {
+  const height = elevation / relief;
+  if (height < 0.16) return "sand";
+  if (height > 6.9) return "snow";
+  if (height > 4.1 || slope > relief * 1.05) return "rock";
+  if (height < 1.9 && slope < relief * 0.22 && moisture > 0.72) return "wetland";
+  if (moisture < 0.34) return "dry";
+  if (moisture > 0.55) return "forest";
+  return "meadow";
+}
+
+// src/themes/terrain/landscape/hydrology.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/mesh.ts
+init_cjs_shims();
+function landComponents(mesh) {
+  const components = mesh.vertices.map(() => -1);
+  const groups = [];
+  for (const [index, point2] of mesh.vertices.entries()) {
+    if (point2.elevation <= 0 || components[index] >= 0) continue;
+    const id = groups.length;
+    const group2 = [index];
+    components[index] = id;
+    for (let next = 0; next < group2.length; next++) {
+      for (const neighbor of mesh.neighbors[group2[next]]) {
+        if (components[neighbor] >= 0 || mesh.vertices[neighbor].elevation <= 0) continue;
+        components[neighbor] = id;
+        group2.push(neighbor);
+      }
+    }
+    groups.push(group2);
+  }
+  const order = groups.map((group2, id) => ({ size: group2.length, id })).sort((a, b) => b.size - a.size);
+  const ordered = new Map(order.map((group2, index) => [group2.id, index]));
+  return components.map((id) => ordered.get(id) ?? -1);
+}
+function createMesh(field2, seed) {
+  const random = seededRandom(seed + 317);
+  const columns = 76, rows = 60, spacing = 0.9;
+  const vertices = [], faces = [];
+  for (let row = 0; row <= rows; row++) {
+    for (let column = 0; column <= columns; column++) {
+      const x = (column - columns / 2) * spacing + (random() - 0.5) * 0.32;
+      const z2 = (row - rows / 2) * spacing + (random() - 0.5) * 0.32;
+      vertices.push({ x, z: z2, elevation: field2.elevation(x, z2) });
+      if (row === rows || column === columns) continue;
+      const a = row * (columns + 1) + column, b = a + 1, c = a + columns + 1, d = c + 1;
+      if (random() > 0.5) faces.push([a, b, d], [a, d, c]);
+      else faces.push([a, b, c], [b, d, c]);
+    }
+  }
+  const neighbors = vertices.map(() => /* @__PURE__ */ new Set());
+  for (const [a, b, c] of faces) {
+    neighbors[a].add(b).add(c);
+    neighbors[b].add(a).add(c);
+    neighbors[c].add(a).add(b);
+  }
+  const mesh = { vertices, faces, neighbors: neighbors.map((set2) => [...set2]) };
+  const components = landComponents(mesh);
+  const sizes2 = /* @__PURE__ */ new Map();
+  for (const component of components) sizes2.set(component, (sizes2.get(component) ?? 0) + 1);
+  return {
+    ...mesh,
+    vertices: vertices.map(
+      (point2, index) => components[index] >= 0 && (sizes2.get(components[index]) ?? 0) < 8 ? { ...point2, elevation: -point2.elevation } : point2
+    )
+  };
+}
+function seaIntersection(a, b) {
+  const [first, second] = a.x < b.x || a.x === b.x && a.z < b.z ? [a, b] : [b, a];
+  const fraction2 = -first.elevation / (second.elevation - first.elevation);
+  return {
+    x: first.x + (second.x - first.x) * fraction2,
+    z: first.z + (second.z - first.z) * fraction2,
+    elevation: 0
+  };
+}
+function clipFace(points) {
+  const polygon2 = [], shore = [];
+  for (const [index, point2] of points.entries()) {
+    const next = points[(index + 1) % points.length];
+    if (point2.elevation > 0) polygon2.push(point2);
+    if (point2.elevation > 0 !== next.elevation > 0) {
+      const crossing2 = seaIntersection(point2, next);
+      polygon2.push(crossing2);
+      shore.push(crossing2);
+    }
+  }
+  return { polygon: polygon2, shore };
+}
+function faceSlope(points) {
+  const [a, b, c] = points;
+  const determinant = (b.x - a.x) * (c.z - a.z) - (c.x - a.x) * (b.z - a.z);
+  const dx = ((b.elevation - a.elevation) * (c.z - a.z) - (c.elevation - a.elevation) * (b.z - a.z)) / determinant;
+  const dz = ((c.elevation - a.elevation) * (b.x - a.x) - (b.elevation - a.elevation) * (c.x - a.x)) / determinant;
+  return Math.hypot(dx, dz);
+}
+function buildSurface(mesh, moistureAt, relief) {
+  const triangles = [], coast = [];
+  const components = landComponents(mesh);
+  for (const face of mesh.faces) {
+    const { polygon: polygon2, shore } = clipFace(face.map((index) => mesh.vertices[index]));
+    if (shore.length === 2) coast.push({ a: shore[0], b: shore[1] });
+    const component = Math.max(...face.map((index) => components[index]));
+    for (let index = 1; index + 1 < polygon2.length; index++) {
+      const points = [polygon2[0], polygon2[index], polygon2[index + 1]];
+      const [a, b, c] = points;
+      if (Math.abs((b.x - a.x) * (c.z - a.z) - (c.x - a.x) * (b.z - a.z)) < 1e-7) continue;
+      const elevation = (a.elevation + b.elevation + c.elevation) / 3;
+      const moisture = (moistureAt(a) + moistureAt(b) + moistureAt(c)) / 3;
+      triangles.push({
+        points,
+        moisture,
+        component,
+        biome: classifyBiome(elevation, faceSlope(points), moisture, relief)
+      });
+    }
+  }
+  return { triangles, coast };
+}
+
+// src/themes/terrain/landscape/hydrology.ts
+var ElevationQueue = class {
+  entries = [];
+  push(entry) {
+    this.entries.push(entry);
+    let index = this.entries.length - 1;
+    while (index > 0) {
+      const parent = Math.floor((index - 1) / 2);
+      if (this.entries[parent].elevation <= entry.elevation) break;
+      this.entries[index] = this.entries[parent];
+      index = parent;
+    }
+    this.entries[index] = entry;
+  }
+  take() {
+    const first = this.entries[0], last = this.entries.pop();
+    if (!last || this.entries.length === 0) return first;
+    let index = 0;
+    while (index * 2 + 1 < this.entries.length) {
+      let child = index * 2 + 1;
+      if (child + 1 < this.entries.length && this.entries[child + 1].elevation < this.entries[child].elevation)
+        child++;
+      if (this.entries[child].elevation >= last.elevation) break;
+      this.entries[index] = this.entries[child];
+      index = child;
+    }
+    this.entries[index] = last;
+    return first;
+  }
+};
+function traceRiver(source, mesh, drainage) {
+  const points = [];
+  let index = source;
+  while (index >= 0) {
+    const point2 = mesh.vertices[index];
+    points.push(point2);
+    const next = drainage[index];
+    if (next < 0) return [];
+    const downstream = mesh.vertices[next];
+    if (downstream.elevation <= 0) {
+      points.push(seaIntersection(point2, downstream));
+      return points;
+    }
+    index = next;
+  }
+  return [];
+}
+function chooseRivers(mesh, drainage) {
+  const peak = Math.max(...mesh.vertices.map((point2) => point2.elevation));
+  const candidates = mesh.vertices.flatMap((point2, index) => {
+    if (point2.elevation < peak * 0.23) return [];
+    const points = traceRiver(index, mesh, drainage);
+    const outlet = points.at(-1);
+    if (points.length < 12 || !outlet) return [];
+    const length = points.reduce((total, current, position) => {
+      const previous = points[position - 1];
+      return total + (previous ? Math.hypot(current.x - previous.x, current.z - previous.z) : 0);
+    }, 0);
+    const score = length * (outlet.x + outlet.z > 0 ? 1.25 : 0.82) + point2.elevation * 0.35;
+    return [{ point: point2, points, length, score }];
+  }).sort((a, b) => b.score - a.score);
+  const rivers = [], sources = [];
+  const occupied = /* @__PURE__ */ new Set();
+  for (const candidate of candidates) {
+    if (sources.some(
+      (point2) => Math.hypot(point2.x - candidate.point.x, point2.z - candidate.point.z) < 8
+    ))
+      continue;
+    const fresh = candidate.points.filter((point2) => !occupied.has(`${point2.x}:${point2.z}`));
+    if (fresh.length < candidate.points.length * 0.5) continue;
+    sources.push(candidate.point);
+    for (const point2 of candidate.points) occupied.add(`${point2.x}:${point2.z}`);
+    rivers.push({
+      points: candidate.points,
+      width: Math.min(0.95, 0.3 + candidate.length * 0.016)
+    });
+    if (rivers.length === 4) break;
+  }
+  return rivers;
+}
+function drainLandscape(mesh, relief) {
+  const elevations = mesh.vertices.map((point2) => point2.elevation);
+  const drainage = mesh.vertices.map(() => -1);
+  const visited = mesh.vertices.map((point2) => point2.elevation <= 0);
+  const queue = new ElevationQueue();
+  for (const [index, elevation] of elevations.entries())
+    if (elevation <= 0) queue.push({ index, elevation });
+  let current = queue.take();
+  while (current) {
+    for (const next of mesh.neighbors[current.index]) {
+      if (visited[next]) continue;
+      visited[next] = true;
+      drainage[next] = current.index;
+      elevations[next] = Math.max(elevations[next], current.elevation + 2e-3 * relief);
+      queue.push({ index: next, elevation: elevations[next] });
+    }
+    current = queue.take();
+  }
+  const drained = {
+    ...mesh,
+    vertices: mesh.vertices.map((point2, index) => ({ ...point2, elevation: elevations[index] }))
+  };
+  return { mesh: drained, rivers: chooseRivers(drained, drainage) };
+}
+
+// src/themes/terrain/landscape/placement.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/sampling.ts
+init_cjs_shims();
+var CELL_SIZE = 2;
+var indexes = /* @__PURE__ */ new WeakMap();
+var cellKey = (x, z2) => `${Math.floor(x / CELL_SIZE)}:${Math.floor(z2 / CELL_SIZE)}`;
+function sampleTriangle(face, x, z2) {
+  const [a, b, c] = face.points;
+  const determinant = (b.z - c.z) * (a.x - c.x) + (c.x - b.x) * (a.z - c.z);
+  const wa = ((b.z - c.z) * (x - c.x) + (c.x - b.x) * (z2 - c.z)) / determinant;
+  const wb = ((c.z - a.z) * (x - c.x) + (a.x - c.x) * (z2 - c.z)) / determinant;
+  const wc = 1 - wa - wb;
+  if (wa < -1e-8 || wb < -1e-8 || wc < -1e-8) return void 0;
+  return {
+    x,
+    z: z2,
+    elevation: Math.max(0, a.elevation * wa + b.elevation * wb + c.elevation * wc),
+    slope: faceSlope(face.points),
+    moisture: face.moisture,
+    biome: face.biome,
+    component: face.component
+  };
+}
+function spatialIndex(model) {
+  const cached2 = indexes.get(model);
+  if (cached2) return cached2;
+  const index = /* @__PURE__ */ new Map();
+  for (const face of model.triangles) {
+    const minX = Math.floor(Math.min(...face.points.map((point2) => point2.x)) / CELL_SIZE);
+    const maxX = Math.floor(Math.max(...face.points.map((point2) => point2.x)) / CELL_SIZE);
+    const minZ = Math.floor(Math.min(...face.points.map((point2) => point2.z)) / CELL_SIZE);
+    const maxZ = Math.floor(Math.max(...face.points.map((point2) => point2.z)) / CELL_SIZE);
+    for (let x = minX; x <= maxX; x++) {
+      for (let z2 = minZ; z2 <= maxZ; z2++) {
+        const key2 = `${x}:${z2}`, faces = index.get(key2) ?? [];
+        faces.push(face);
+        index.set(key2, faces);
+      }
+    }
+  }
+  indexes.set(model, index);
+  return index;
+}
+function sampleLandscape(model, x, z2) {
+  const candidates = spatialIndex(model).get(cellKey(x, z2)) ?? [];
+  for (const triangle of candidates) {
+    const site = sampleTriangle(triangle, x, z2);
+    if (site) return site;
+  }
+  return void 0;
+}
+
+// src/themes/terrain/landscape/placement.ts
+var distance = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
+var fraction = (value) => value - Math.floor(value);
+function createMoistureField(field2, rivers) {
+  const water = rivers.flatMap((river) => river.points);
+  return (point2) => {
+    const nearest = water.reduce(
+      (best, sample2) => Math.min(best, distance(point2, sample2)),
+      Infinity
+    );
+    return clamp(field2.moisture(point2.x, point2.z) + Math.exp(-nearest / 2.7) * 0.38, 0, 1);
+  };
+}
+function createSites(mesh, moistureAt, relief) {
+  const components = landComponents(mesh);
+  return mesh.vertices.flatMap((point2, index) => {
+    if (point2.elevation <= 0.12 * relief) return [];
+    const slope = Math.max(
+      ...mesh.neighbors[index].map((neighbor) => {
+        const other = mesh.vertices[neighbor];
+        return Math.abs(other.elevation - point2.elevation) / distance(point2, other);
+      })
+    );
+    const moisture = moistureAt(point2);
+    return [
+      {
+        ...point2,
+        slope,
+        moisture,
+        component: components[index],
+        biome: classifyBiome(point2.elevation, slope, moisture, relief)
+      }
+    ];
+  });
+}
+function spreadSites(candidates, count, separation) {
+  const selected = [];
+  for (const site of candidates) {
+    if (selected.every((other) => distance(site, other) >= separation)) selected.push(site);
+    if (selected.length === count) break;
+  }
+  return selected;
+}
+function findLandmarks(sites, rivers, relief) {
+  const riverPoints = rivers.flatMap((river) => river.points);
+  const scored = sites.flatMap((site) => {
+    if (site.slope > 0.3 * relief || site.elevation < 0.48 * relief || site.elevation > 2.5 * relief)
+      return [];
+    const riverDistance2 = riverPoints.reduce(
+      (best, point2) => Math.min(best, distance(site, point2)),
+      Infinity
+    );
+    if (riverDistance2 < 2.2) return [];
+    const neighborhood = sites.filter((other) => distance(site, other) < 3.2);
+    const broad = neighborhood.length >= 25 && neighborhood.every((other) => other.slope <= 0.55 * relief);
+    const compact = neighborhood.filter((other) => distance(site, other) < 2.5);
+    if (!broad && (compact.length < 14 || compact.some((other) => other.slope > 0.55 * relief)))
+      return [];
+    const score = site.slope * 9 + Math.abs(riverDistance2 - 4) * 0.08 + Math.max(0, -site.x - site.z) * 0.025 + (broad ? 0 : 10);
+    return [{ site, score }];
+  }).sort((a, b) => a.score - b.score);
+  const settlements = spreadSites(
+    scored.map((entry) => entry.site),
+    3,
+    10
+  );
+  return {
+    settlements,
+    peaks: spreadSites(
+      [...sites].sort((a, b) => b.elevation - a.elevation),
+      5,
+      7
+    )
+  };
+}
+function placeDays(days, triangles, seed) {
+  if (days.length === 0) return [];
+  const candidates = triangles.filter(
+    (face) => face.points.every((point2) => point2.elevation > 0.12)
+  );
+  const cumulative = [];
+  let totalArea = 0;
+  for (const face of candidates) {
+    const [a, b, c] = face.points;
+    totalArea += Math.abs((b.x - a.x) * (c.z - a.z) - (c.x - a.x) * (b.z - a.z)) / 2;
+    cumulative.push(totalArea);
+  }
+  const seedOffset = hash2(`landscape-days:${seed}`) / 4294967296;
+  return [...days].sort((a, b) => a.date.localeCompare(b.date)).map((day) => {
+    const ordinal = Date.parse(`${day.date}T00:00:00.000Z`) / 864e5;
+    const target = fraction(ordinal * 0.6180339887498949 + seedOffset) * totalArea;
+    let low = 0, high = cumulative.length - 1;
+    while (low < high) {
+      const middle = low + high >>> 1;
+      if (cumulative[middle] < target) low = middle + 1;
+      else high = middle;
+    }
+    const triangle = candidates[low];
+    const [a, b, c] = triangle.points;
+    const u = 0.05 + fraction(ordinal * 0.7548776662466927 + seedOffset) * 0.9;
+    const v = 0.05 + fraction(ordinal * 0.5698402909980532 + seedOffset) * 0.9;
+    const root = Math.sqrt(u), wa = 1 - root, wb = root * (1 - v), wc = root * v;
+    const x = a.x * wa + b.x * wb + c.x * wc, z2 = a.z * wa + b.z * wb + c.z * wc;
+    const position = sampleTriangle(triangle, x, z2);
+    if (!position) throw new RangeError("A barycentric date anchor escaped its land triangle");
+    return { date: day.date, count: day.count, position };
+  });
+}
+
+// src/themes/terrain/landscape/model.ts
+function buildLandscapeModel(days, options) {
+  const field2 = createHeightField(options);
+  const { mesh, rivers } = drainLandscape(createMesh(field2, options.seed), options.relief);
+  const moisture = createMoistureField(field2, rivers);
+  const surface = buildSurface(mesh, moisture, options.relief);
+  const sites = createSites(mesh, moisture, options.relief);
+  return {
+    options,
+    ...surface,
+    rivers,
+    sites,
+    plots: placeDays(days, surface.triangles, options.seed),
+    ...findLandmarks(sites, rivers, options.relief)
+  };
+}
+
+// src/themes/terrain/landscape/projection.ts
+init_cjs_shims();
+var number4 = (value) => String(Math.round(value * 100) / 100);
+var depth = (point2) => point2.x + point2.z;
+var rawPoint = (point2) => ({
+  x: (point2.x - point2.z) * 11,
+  y: (point2.x + point2.z) * 5.5 - point2.elevation * 10
+});
+function createLandscapeProjection(model) {
+  const vertices = model.triangles.flatMap((triangle) => triangle.points).map(rawPoint);
+  const extent = vertices.reduce(
+    (bounds, point2) => ({
+      left: Math.min(bounds.left, point2.x),
+      right: Math.max(bounds.right, point2.x),
+      top: Math.min(bounds.top, point2.y),
+      bottom: Math.max(bounds.bottom, point2.y)
+    }),
+    { left: 0, right: 0, top: 0, bottom: 0 }
+  );
+  const top = extent.top - 100;
+  const bottom = extent.bottom + 65;
+  const scale = Math.min(1090 / (extent.right - extent.left + 60), 620 / (bottom - top));
+  return {
+    scale,
+    point: (point2) => {
+      const projected = rawPoint(point2);
+      return {
+        x: 600 + (projected.x - (extent.left + extent.right) / 2) * scale,
+        y: 430 + (projected.y - (top + bottom) / 2) * scale
+      };
+    }
+  };
+}
+function pointsAttribute(points, projection) {
+  return points.map((point2) => {
+    const projected = projection.point(point2);
+    return `${number4(projected.x)},${number4(projected.y)}`;
+  }).join(" ");
+}
+function segmentPath(points, projection) {
+  return points.map((point2, index) => {
+    const projected = projection.point(point2);
+    return `${index ? "L" : "M"}${number4(projected.x)},${number4(projected.y)}`;
+  }).join("");
+}
+
+// src/themes/terrain/landscape/settlements.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/fields.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/settlement-geometry.ts
+init_cjs_shims();
+var groundDistance = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
+function segmentDistance(point2, a, b) {
+  const dx = b.x - a.x, dz = b.z - a.z;
+  const length = dx * dx + dz * dz;
+  const t = length === 0 ? 0 : Math.max(0, Math.min(1, ((point2.x - a.x) * dx + (point2.z - a.z) * dz) / length));
+  return Math.hypot(point2.x - a.x - dx * t, point2.z - a.z - dz * t);
+}
+function riverDistance(model, point2) {
+  let nearest = Number.POSITIVE_INFINITY;
+  for (const river of model.rivers) {
+    for (let i = 1; i < river.points.length; i++) {
+      nearest = Math.min(
+        nearest,
+        segmentDistance(point2, river.points[i - 1], river.points[i]) - river.width * 0.5
+      );
+    }
+  }
+  return nearest;
+}
+function groundLine(model, from, to) {
+  if (from.component !== to.component) return [];
+  const steps = Math.max(1, Math.ceil(groundDistance(from, to) / 0.35));
+  const points = [];
+  for (let i = 0; i <= steps; i++) {
+    const point2 = sampleLandscape(
+      model,
+      from.x + (to.x - from.x) * i / steps,
+      from.z + (to.z - from.z) * i / steps
+    );
+    if (!point2 || point2.elevation <= 0.025 || point2.component !== from.component) return [];
+    points.push(point2);
+  }
+  return points;
+}
+function groundPolygon(model, center, offsets) {
+  const points = [];
+  for (const [x, z2] of offsets) {
+    const point2 = sampleLandscape(model, center.x + x, center.z + z2);
+    if (!point2 || point2.component !== center.component || point2.elevation < 0.12) return [];
+    points.push(point2);
+  }
+  return points.every(
+    (point2, index) => groundLine(model, point2, points[(index + 1) % points.length]).length > 0
+  ) ? points : [];
+}
+
+// src/themes/terrain/landscape/sprite-size.ts
+init_cjs_shims();
+var BUILDINGS = /* @__PURE__ */ new Set([
+  "tent",
+  "hut",
+  "house",
+  "houseB",
+  "church",
+  "windmill",
+  "tavern",
+  "bakery",
+  "stable",
+  "shrine",
+  "watermill",
+  "igloo",
+  "houseWinter",
+  "houseBWinter",
+  "churchWinter",
+  "hanok",
+  "pavilion",
+  "choga",
+  "koreanWatermill",
+  "hanokGate",
+  "market",
+  "inn",
+  "blacksmith",
+  "castle",
+  "tower",
+  "cathedral",
+  "library",
+  "clocktower",
+  "warehouse",
+  "gatehouse",
+  "manor",
+  "hanokEstate",
+  "barn",
+  "barnWinter",
+  "silo"
+]);
+var TREES = /* @__PURE__ */ new Set([
+  "cedarGrove",
+  "ancientOak",
+  "bambooThicket",
+  "pine",
+  "deciduous",
+  "birch",
+  "willow",
+  "palm",
+  "deadTree",
+  "gardenTree",
+  "snowPine",
+  "snowDeciduous",
+  "cherryBlossom",
+  "cherryBlossomSmall",
+  "cherryBlossomFull",
+  "peachBlossom",
+  "autumnMaple",
+  "autumnOak",
+  "autumnBirch",
+  "autumnGinkgo",
+  "christmasTree"
+]);
+function isLandscapeBuilding(catalogId) {
+  return BUILDINGS.has(catalogId);
+}
+function landscapeSpriteBounds(catalogId) {
+  if (isAssetType(catalogId)) return ASSET_BOUNDS[catalogId];
+  if (isEpicBuildingType(catalogId)) return EPIC_BOUNDS[catalogId];
+  return { x: -3.6, y: 2, width: 7.2, height: 3 };
+}
+function landscapeSpriteScale(catalogId) {
+  const bounds = landscapeSpriteBounds(catalogId);
+  if (isEpicBuildingType(catalogId)) {
+    return catalogId === "colosseum" || catalogId === "operaHouse" ? 86 / bounds.width : Math.min(78 / bounds.height, 96 / bounds.width);
+  }
+  if (!isAssetType(catalogId)) return 0.75;
+  if (isLandscapeBuilding(catalogId)) {
+    const width = getAssetCatalogEntry(catalogId).category === "town" ? 42 : 32;
+    return Math.min(width / bounds.width, 56 / bounds.height);
+  }
+  if (TREES.has(catalogId)) return 30 / bounds.height;
+  return Math.min(20 / bounds.width, 23 / bounds.height);
+}
+function landscapeFootRadius(catalogId) {
+  const width = landscapeSpriteBounds(catalogId).width * landscapeSpriteScale(catalogId);
+  return Math.max(0.45, width / (isEpicBuildingType(catalogId) ? 22 : 30));
+}
+
+// src/themes/terrain/landscape/fields.ts
+function field(model, center, id, angle, crop, scale) {
+  const rotate = (x, z2) => [
+    (x * Math.cos(angle) - z2 * Math.sin(angle)) * scale,
+    (x * Math.sin(angle) + z2 * Math.cos(angle)) * scale
+  ];
+  const points = groundPolygon(model, center, [
+    rotate(-2.1, -1.35),
+    rotate(2.2, -1.2),
+    rotate(2.05, 1.4),
+    rotate(-1.95, 1.25)
+  ]);
+  if (points.length < 4 || points.some(
+    (point2) => Math.abs(point2.elevation - center.elevation) > 0.55 || riverDistance(model, point2) < 0.35
+  ))
+    return void 0;
+  const rows = [];
+  for (let row = 0; row < 6; row++) {
+    const z2 = -0.95 + row * 0.38;
+    const [ax, az] = rotate(-1.7, z2), [bx, bz] = rotate(1.7, z2);
+    const a = sampleLandscape(model, center.x + ax, center.z + az), b = sampleLandscape(model, center.x + bx, center.z + bz);
+    if (!a || !b) return void 0;
+    const line = groundLine(model, a, b);
+    if (!line.length) return void 0;
+    rows.push(line);
+  }
+  return { id, points, crop, rows };
+}
+function planLandscapeFields(model, towns2, sprites249, style) {
+  const result = [];
+  const centers = [];
+  const protectedSprites = sprites249.filter(
+    (sprite2) => sprite2.kind === "wonder" || isLandscapeBuilding(sprite2.catalogId)
+  );
+  for (const [index, town] of towns2.entries()) {
+    let count = 0;
+    for (let candidate = 0; candidate < 42 && count < 4; candidate++) {
+      const radius = candidate < 14 ? 9.7 : candidate < 28 ? 7 : 5.5;
+      const scale = candidate < 14 ? 1 : 0.65;
+      const angle = candidate % 14 * Math.PI * 2 / 14 + index * 0.37;
+      const center = sampleLandscape(
+        model,
+        town.center.x + Math.cos(angle) * radius,
+        town.center.z + Math.sin(angle) * radius
+      );
+      if (!center || center.component !== town.center.component || center.slope > 0.7 || center.elevation < 0.3 || riverDistance(model, center) < 2 || centers.some((other) => groundDistance(center, other) < 3.8))
+        continue;
+      if (towns2.some((other) => groundDistance(other.center, center) < 4.5) || protectedSprites.some((sprite2) => groundDistance(sprite2.position, center) < 3.3))
+        continue;
+      const crop = style === "korean" ? "rice" : count % 3 === 2 ? "vegetable" : "wheat";
+      const item = field(model, center, `field:${town.id}:${count}`, angle * 0.35, crop, scale);
+      if (item) {
+        result.push(item);
+        centers.push(center);
+        count++;
+      }
+    }
+  }
+  return result;
+}
+
+// src/themes/terrain/landscape/parcels.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/parcel-index.ts
+init_cjs_shims();
+var suitability = /* @__PURE__ */ new WeakMap();
+function landSuitability(model) {
+  const previous = suitability.get(model);
+  if (previous) return previous;
+  const riverDistances = /* @__PURE__ */ new WeakMap();
+  const pools = /* @__PURE__ */ new Map();
+  const riverClearance = (point2) => {
+    const known = riverDistances.get(point2);
+    if (known !== void 0) return known;
+    const distance2 = riverDistance(model, point2);
+    riverDistances.set(point2, distance2);
+    return distance2;
+  };
+  const buildable = (site, radius) => {
+    if (site.slope > 0.95 || site.elevation < 0.25 || riverClearance(site) < radius + 0.2)
+      return false;
+    const corners = groundPolygon(model, site, [
+      [-radius, 0],
+      [0, -radius],
+      [radius, 0],
+      [0, radius]
+    ]);
+    return corners.length > 0 && corners.every((point2) => Math.abs(point2.elevation - site.elevation) < 0.65);
+  };
+  const cached2 = (key2, select) => {
+    const known = pools.get(key2);
+    if (known) return known;
+    const candidates = model.sites.filter(select);
+    pools.set(key2, candidates);
+    return candidates;
+  };
+  const result = {
+    riverClearance,
+    buildable,
+    buildingSites: (radius, component) => cached2(
+      `build:${radius}:${component ?? "*"}`,
+      (point2) => (component === void 0 || point2.component === component) && buildable(point2, radius)
+    ),
+    habitatSites: (component, water) => cached2(
+      `habitat:${component}:${water}`,
+      (point2) => point2.component === component && (water ? riverClearance(point2) < 0.6 : riverClearance(point2) > 0.35)
+    )
+  };
+  suitability.set(model, result);
+  return result;
+}
+function createParcelClearance() {
+  const buckets = /* @__PURE__ */ new Map();
+  let largestRadius = 0, version2 = 0;
+  const key2 = (x, z2) => `${x}:${z2}`;
+  return {
+    version: () => version2,
+    reserve: (point2, radius) => {
+      const cell = key2(Math.floor(point2.x / 4), Math.floor(point2.z / 4));
+      const entries = buckets.get(cell) ?? [];
+      entries.push({ point: point2, radius });
+      buckets.set(cell, entries);
+      largestRadius = Math.max(largestRadius, radius);
+      version2++;
+    },
+    available: (point2, radius) => {
+      const extent = Math.ceil((radius + largestRadius) / 4);
+      const x = Math.floor(point2.x / 4), z2 = Math.floor(point2.z / 4);
+      for (let dx = -extent; dx <= extent; dx++) {
+        for (let dz = -extent; dz <= extent; dz++) {
+          if ((buckets.get(key2(x + dx, z2 + dz)) ?? []).some(
+            (other) => groundDistance(other.point, point2) <= other.radius + radius
+          ))
+            return false;
+        }
+      }
+      return true;
+    }
+  };
+}
+function nearestSite(candidates, target, available = () => true) {
+  let chosen, nearest = Number.POSITIVE_INFINITY;
+  for (const candidate of candidates) {
+    const distance2 = groundDistance(candidate, target);
+    if (distance2 < nearest && available(candidate)) {
+      chosen = candidate;
+      nearest = distance2;
+    }
+  }
+  return chosen;
+}
+
+// src/themes/terrain/landscape/parcels.ts
+function landscapeHouseLots(model, towns2) {
+  const land = landSuitability(model);
+  return towns2.flatMap((town) => {
+    const candidates = [];
+    for (let x = -3; x <= 3; x++) {
+      for (let z2 = -3; z2 <= 3; z2++) {
+        if (x === 0 || z2 === 0) continue;
+        const point2 = sampleLandscape(model, town.center.x + x * 2.2, town.center.z + z2 * 2.2);
+        if (point2 && point2.component === town.center.component && land.buildable(point2, 1.2))
+          candidates.push(point2);
+      }
+    }
+    return candidates.sort(
+      (a, b) => groundDistance(a, town.center) - groundDistance(b, town.center)
+    );
+  });
+}
+function sprite(item, kind, position) {
+  return {
+    id: item.id,
+    catalogId: item.catalogId,
+    kind,
+    anchorDate: item.anchorDate,
+    position,
+    scale: landscapeSpriteScale(item.catalogId),
+    variant: item.variant
+  };
+}
+function placeLandscapeFacts(model, scene, towns2) {
+  const anchors = new Map(model.plots.map((plot) => [plot.date, plot.position]));
+  const result = [];
+  const land = landSuitability(model);
+  const occupied = createParcelClearance();
+  const lots = landscapeHouseLots(model, towns2);
+  const exhausted = /* @__PURE__ */ new Set();
+  const habitats = /* @__PURE__ */ new Map();
+  const place = (item, kind) => {
+    const anchor2 = anchors.get(item.anchorDate);
+    if (!anchor2) return;
+    let position = anchor2;
+    const radius = landscapeFootRadius(item.catalogId);
+    if (kind === "wonder") {
+      const chosen = nearestSite(
+        land.buildingSites(radius, anchor2.component),
+        anchor2,
+        (point2) => occupied.available(point2, radius + 1.5)
+      );
+      position = chosen ?? anchor2;
+      occupied.reserve(position, radius + 1.5);
+    } else if (isLandscapeBuilding(item.catalogId)) {
+      const home = towns2[hash2(item.anchorDate) % towns2.length]?.center ?? anchor2;
+      const pool = `${radius}:${home.component}`;
+      if (!exhausted.has(pool)) {
+        const free = (point2) => point2.component === home.component && occupied.available(point2, radius);
+        const chosen = nearestSite(lots, home, free) ?? nearestSite(land.buildingSites(radius, home.component), home, free);
+        if (chosen) {
+          position = chosen;
+          occupied.reserve(position, radius);
+        } else exhausted.add(pool);
+      }
+    } else if (kind !== "reward") {
+      const water = isAssetType(item.catalogId) && getAssetCatalogEntry(item.catalogId).category === "water";
+      if (water || land.riverClearance(anchor2) <= 0.35 || !occupied.available(anchor2, radius)) {
+        const key2 = `${anchor2.component}:${water}:${radius}:${occupied.version()}`;
+        let candidates = habitats.get(key2);
+        const habitat = land.habitatSites(anchor2.component, water);
+        if (!candidates) {
+          candidates = habitat.filter((point2) => occupied.available(point2, water ? 0.3 : radius));
+          habitats.set(key2, candidates);
+        }
+        position = nearestSite(candidates, anchor2) ?? nearestSite(habitat, anchor2) ?? anchor2;
+      }
+    }
+    result.push(sprite(item, kind, position));
+  };
+  for (const item of scene.wonders) place(item, "wonder");
+  const assets = [...scene.placements].sort(
+    (a, b) => Number(Boolean(b.primary)) - Number(Boolean(a.primary)) || Number(isLandscapeBuilding(b.catalogId)) - Number(isLandscapeBuilding(a.catalogId)) || a.id.localeCompare(b.id)
+  );
+  for (const item of assets) place(item, "asset");
+  for (const item of scene.rewards ?? []) place(item, "reward");
+  return result;
+}
+
+// src/themes/terrain/landscape/roads.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/road-graph.ts
+init_cjs_shims();
+var key = (point2) => `${point2.x},${point2.z}`;
+function contains(triangle, point2) {
+  const [a, b, c] = triangle.points;
+  const denominator = (b.z - c.z) * (a.x - c.x) + (c.x - b.x) * (a.z - c.z);
+  const u = ((b.z - c.z) * (point2.x - c.x) + (c.x - b.x) * (point2.z - c.z)) / denominator;
+  const v = ((c.z - a.z) * (point2.x - c.x) + (a.x - c.x) * (point2.z - c.z)) / denominator;
+  return u >= -1e-7 && v >= -1e-7 && u + v <= 1 + 1e-7;
+}
+function graph(model) {
+  const nodes = model.triangles.map((triangle) => ({
+    triangle,
+    center: {
+      x: triangle.points.reduce((sum, point2) => sum + point2.x, 0) / 3,
+      z: triangle.points.reduce((sum, point2) => sum + point2.z, 0) / 3,
+      elevation: triangle.points.reduce((sum, point2) => sum + point2.elevation, 0) / 3,
+      biome: triangle.biome,
+      moisture: triangle.moisture,
+      slope: 0,
+      component: triangle.component
+    },
+    edges: []
+  }));
+  const edges = /* @__PURE__ */ new Map();
+  for (const [index, node2] of nodes.entries()) {
+    for (let side = 0; side < 3; side++) {
+      const a = node2.triangle.points[side], b = node2.triangle.points[(side + 1) % 3];
+      const id = [key(a), key(b)].sort().join("|");
+      const previous = edges.get(id);
+      if (previous && nodes[previous.node].center.component === node2.center.component) {
+        node2.edges.push({ neighbor: previous.node, portal: previous.portal });
+        nodes[previous.node].edges.push({ neighbor: index, portal: previous.portal });
+      } else {
+        edges.set(id, {
+          node: index,
+          portal: {
+            x: (a.x + b.x) / 2,
+            z: (a.z + b.z) / 2,
+            elevation: (a.elevation + b.elevation) / 2
+          }
+        });
+      }
+    }
+  }
+  return nodes;
+}
+function search(nodes, start, end) {
+  const open3 = /* @__PURE__ */ new Set([start]);
+  const costs = /* @__PURE__ */ new Map([[start, 0]]);
+  const previous = /* @__PURE__ */ new Map();
+  while (open3.size > 0) {
+    let current = start, best = Number.POSITIVE_INFINITY;
+    for (const index of open3) {
+      const score = (costs.get(index) ?? 0) + groundDistance(nodes[index].center, nodes[end].center);
+      if (score < best) {
+        current = index;
+        best = score;
+      }
+    }
+    if (current === end) {
+      const result = [nodes[end].center];
+      while (current !== start) {
+        const step = previous.get(current);
+        if (!step) return [];
+        result.push(step.portal, nodes[step.node].center);
+        current = step.node;
+      }
+      return result.reverse();
+    }
+    open3.delete(current);
+    for (const edge of nodes[current].edges) {
+      const from = nodes[current].center, to = nodes[edge.neighbor].center;
+      if (edge.portal.elevation < 0.025) continue;
+      const cost = (costs.get(current) ?? 0) + groundDistance(from, to) + Math.abs(from.elevation - to.elevation) * 7;
+      if (cost >= (costs.get(edge.neighbor) ?? Number.POSITIVE_INFINITY)) continue;
+      costs.set(edge.neighbor, cost);
+      previous.set(edge.neighbor, { node: current, portal: edge.portal });
+      open3.add(edge.neighbor);
+    }
+  }
+  return [];
+}
+function createLandscapeRouter(model) {
+  const nodes = graph(model);
+  return (from, to) => {
+    if (from.component !== to.component) return [];
+    const direct = groundLine(model, from, to);
+    if (direct.length && direct.every((point2) => point2.slope < 0.65)) return direct;
+    const start = nodes.findIndex(
+      (node2) => node2.center.component === from.component && contains(node2.triangle, from)
+    );
+    const end = nodes.findIndex(
+      (node2) => node2.center.component === to.component && contains(node2.triangle, to)
+    );
+    if (start < 0 || end < 0) return [];
+    const route = search(nodes, start, end);
+    return route.length ? [from, ...route, to] : [];
+  };
+}
+
+// src/themes/terrain/landscape/roads.ts
+function crossing(a, b, c, d) {
+  const denominator = (b.x - a.x) * (d.z - c.z) - (b.z - a.z) * (d.x - c.x);
+  if (Math.abs(denominator) < 1e-8) return void 0;
+  const t = ((c.x - a.x) * (d.z - c.z) - (c.z - a.z) * (d.x - c.x)) / denominator;
+  const u = ((c.x - a.x) * (b.z - a.z) - (c.z - a.z) * (b.x - a.x)) / denominator;
+  return t >= 0 && t <= 1 && u >= 0 && u <= 1 ? t : void 0;
+}
+function bridges(model, points) {
+  const result = [];
+  const centers = [];
+  for (let i = 1; i < points.length; i++) {
+    const a = points[i - 1], b = points[i];
+    for (const river of model.rivers) {
+      for (let j = 1; j < river.points.length; j++) {
+        const c = river.points[j - 1], d = river.points[j];
+        const t = crossing(a, b, c, d);
+        if (t === void 0) continue;
+        const center = {
+          x: a.x + (b.x - a.x) * t,
+          z: a.z + (b.z - a.z) * t,
+          elevation: a.elevation + (b.elevation - a.elevation) * t
+        };
+        if (centers.some((point2) => groundDistance(point2, center) < river.width + 0.7)) continue;
+        const length = groundDistance(a, b), riverLength = groundDistance(c, d);
+        const sine = Math.abs((b.x - a.x) * (d.z - c.z) - (b.z - a.z) * (d.x - c.x)) / (length * riverLength);
+        const half = Math.min(3, (river.width * 0.65 + 0.35) / Math.max(0.25, sine));
+        const from = sampleLandscape(
+          model,
+          center.x - (b.x - a.x) * half / length,
+          center.z - (b.z - a.z) * half / length
+        );
+        const to = sampleLandscape(
+          model,
+          center.x + (b.x - a.x) * half / length,
+          center.z + (b.z - a.z) * half / length
+        );
+        if (!from || !to || from.component !== to.component) continue;
+        centers.push(center);
+        result.push([
+          { ...from, elevation: from.elevation + 0.12 },
+          { ...to, elevation: to.elevation + 0.12 }
+        ]);
+      }
+    }
+  }
+  return result;
+}
+function planLandscapeRoads(model, towns2) {
+  if (!towns2.length) return [];
+  const route = createLandscapeRouter(model);
+  const result = [];
+  const add = (id, from, to, width) => {
+    const points = route(from, to);
+    if (points.length > 1) result.push({ id, points, width, bridges: bridges(model, points) });
+  };
+  for (const [index, town] of towns2.entries()) {
+    const earlier = towns2.slice(0, index).filter((other) => other.center.component === town.center.component);
+    const neighbor = earlier.sort(
+      (a, b) => groundDistance(a.center, town.center) - groundDistance(b.center, town.center)
+    )[0];
+    if (neighbor) add(`road:${neighbor.id}:${town.id}`, neighbor.center, town.center, 0.62);
+    for (const [dx, dz] of [
+      [-6.5, 0],
+      [6.5, 0],
+      [0, -5.5],
+      [0, 5.5]
+    ]) {
+      const end = sampleLandscape(model, town.center.x + dx, town.center.z + dz);
+      if (end && end.component === town.center.component)
+        add(`lane:${town.id}:${dx}:${dz}`, town.center, end, 0.38);
+    }
+  }
+  return result;
+}
+
+// src/themes/terrain/landscape/scenery.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/village-scenery.ts
+init_cjs_shims();
+function villageScenery(model, scene, towns2, fields, roads, facts) {
+  const active = scene.cells.filter((cell) => cell.count > 0).length;
+  if (!active) return [];
+  const result = [];
+  const buildings = facts.filter(
+    (sprite2) => sprite2.kind === "wonder" || isLandscapeBuilding(sprite2.catalogId)
+  );
+  const fieldCenters = fields.map((field2) => ({
+    x: field2.points.reduce((sum, point2) => sum + point2.x, 0) / field2.points.length,
+    z: field2.points.reduce((sum, point2) => sum + point2.z, 0) / field2.points.length,
+    elevation: 0
+  }));
+  for (const [townIndex, town] of towns2.entries()) {
+    if (townIndex > 0 && active < 20) continue;
+    const target = Math.max(
+      2,
+      Math.round(
+        (townIndex === 0 ? 10 : 6) * (0.6 + scene.settings.density * 0.04) * Math.min(1, active / 90)
+      )
+    );
+    const existing = buildings.filter(
+      (sprite2) => groundDistance(sprite2.position, town.center) < 7
+    ).length;
+    const candidates = landscapeHouseLots(model, [town]);
+    let placed = 0;
+    for (const position of candidates) {
+      if (placed + existing >= target) break;
+      if (groundDistance(position, town.center) > 7.2 || fieldCenters.some((center) => groundDistance(center, position) < 3.4))
+        continue;
+      if ([...buildings, ...result].some(
+        (sprite2) => groundDistance(sprite2.position, position) < landscapeFootRadius(sprite2.catalogId) + 1.08
+      ))
+        continue;
+      if (roads.some(
+        (road) => road.points.some(
+          (point2, index) => index > 0 && segmentDistance(position, road.points[index - 1], point2) < 1.15 + road.width * 0.5
+        )
+      ))
+        continue;
+      const catalogId = scene.settings.style === "korean" ? placed === 6 ? "pavilion" : placed % 3 === 1 ? "choga" : "hanok" : placed === 6 ? "tavern" : placed % 2 ? "houseB" : "house";
+      result.push({
+        id: `scenery:${town.id}:home:${placed}`,
+        kind: "scenery",
+        catalogId,
+        position,
+        scale: landscapeSpriteScale(catalogId),
+        variant: placed % 3
+      });
+      placed++;
+    }
+    if (placed + existing > 0 && buildings.every((sprite2) => groundDistance(sprite2.position, town.center) > 3)) {
+      const catalogId = scene.settings.style === "korean" ? "onggi" : "well";
+      result.push({
+        id: `scenery:${town.id}:square`,
+        kind: "scenery",
+        catalogId,
+        position: town.center,
+        scale: landscapeSpriteScale(catalogId),
+        variant: townIndex % 3
+      });
+    }
+  }
+  return result;
+}
+
+// src/themes/terrain/landscape/scenery.ts
+function tree(site, random, korean) {
+  switch (site.biome) {
+    case "snow":
+      return random < 0.75 ? "snowPine" : "snowCoveredRock";
+    case "rock":
+      return random < 0.7 ? "pine" : "alpineRocks";
+    case "wetland":
+      return random < 0.55 ? "willow" : "reedMarsh";
+    case "dry":
+      return random < 0.55 ? "oliveTree" : "boulder";
+    case "sand":
+      return random < 0.55 ? "tallGrass" : "boulder";
+    case "forest":
+      return korean && random < 0.25 ? "bambooThicket" : random < 0.5 ? "pine" : "cedarGrove";
+    case "meadow":
+      return random < 0.42 ? "deciduous" : random < 0.7 ? "birch" : "ancientOak";
+  }
+}
+function landscapeScenery(model, scene, towns2, fields, facts, roads) {
+  const village = villageScenery(model, scene, towns2, fields, roads, facts);
+  const random = seededRandom(hash2(`forest:${model.options.seed}`));
+  const protectedSprites = [...facts, ...village].filter(
+    (sprite2) => sprite2.kind === "wonder" || isLandscapeBuilding(sprite2.catalogId)
+  );
+  const fieldsCenters = fields.map((field2) => ({
+    x: field2.points.reduce((sum, point2) => sum + point2.x, 0) / field2.points.length,
+    z: field2.points.reduce((sum, point2) => sum + point2.z, 0) / field2.points.length,
+    elevation: 0
+  }));
+  const clear = (point2) => point2.elevation > 0.2 && point2.slope < 1.6 && riverDistance(model, point2) > 0.4 && towns2.every((town) => groundDistance(town.center, point2) > 8.3) && fieldsCenters.every((center) => groundDistance(center, point2) > 3.5) && protectedSprites.every(
+    (sprite2) => groundDistance(sprite2.position, point2) > landscapeFootRadius(sprite2.catalogId) + 2
+  );
+  const centers = [];
+  const candidates = model.sites.filter(clear).map((site) => ({ site, score: random() + (site.biome === "forest" ? 1 : 0) })).sort((a, b) => b.score - a.score);
+  for (const { site } of candidates) {
+    if (centers.every((center) => groundDistance(center, site) > 7.5)) centers.push(site);
+    if (centers.length === 7) break;
+  }
+  const result = [];
+  for (const [cluster, center] of centers.entries()) {
+    for (let slot = 0; slot < 30; slot++) {
+      const chance = random(), angle = random() * Math.PI * 2, radius = Math.sqrt(random()) * 4.5;
+      const variety = random();
+      if (chance > 0.18 + scene.settings.density * 0.067) continue;
+      const position = sampleLandscape(
+        model,
+        center.x + Math.cos(angle) * radius,
+        center.z + Math.sin(angle) * radius
+      );
+      if (!position || position.component !== center.component || !clear(position) || result.some((other) => groundDistance(other.position, position) < 0.75))
+        continue;
+      const catalogId = tree(position, variety, scene.settings.style === "korean");
+      result.push({
+        id: `scenery:forest:${cluster}:${slot}`,
+        kind: "scenery",
+        catalogId,
+        position,
+        scale: landscapeSpriteScale(catalogId) * (0.86 + variety * 0.24),
+        variant: slot % 3
+      });
+    }
+  }
+  return [...village, ...result];
+}
+
+// src/themes/terrain/landscape/settlements.ts
+function towns(model, scene) {
+  if (!scene.cells.some((cell) => cell.count > 0)) return [];
+  return model.settlements.map((center, index) => {
+    const radius = index === 0 ? 1.65 : 1.35;
+    const offsets = Array.from({ length: 8 }, (_, side) => {
+      const angle = side * Math.PI / 4;
+      return [Math.cos(angle) * radius, Math.sin(angle) * radius];
+    });
+    return { id: `town:${index}`, center, plaza: groundPolygon(model, center, offsets) };
+  });
+}
+function planLandscapeSettlements(model, scene) {
+  const settlements = towns(model, scene);
+  const facts = placeLandscapeFacts(model, scene, settlements);
+  const fields = planLandscapeFields(model, settlements, facts, scene.settings.style);
+  const roads = planLandscapeRoads(model, settlements);
+  return {
+    towns: settlements,
+    roads,
+    fields,
+    sprites: [...facts, ...landscapeScenery(model, scene, settlements, fields, facts, roads)]
+  };
+}
+
+// src/themes/terrain/landscape/scene-placement.ts
+init_cjs_shims();
+function projectedSprite(sprite2, projection) {
+  const local = sprite2.kind === "reward" ? { x: -3.6, y: 2, width: 7.2, height: 3 } : isAssetType(sprite2.catalogId) ? ASSET_BOUNDS[sprite2.catalogId] : isEpicBuildingType(sprite2.catalogId) ? EPIC_BOUNDS[sprite2.catalogId] : void 0;
+  if (!local) throw new Error(`Unknown landscape sprite: ${sprite2.catalogId}`);
+  const { x: cx, y: cy } = projection.point(sprite2.position);
+  const scale = sprite2.scale * projection.scale;
+  const footprint = {
+    x: cx + local.x * scale,
+    y: cy + local.y * scale,
+    width: local.width * scale,
+    height: local.height * scale
+  };
+  return { id: sprite2.id, catalogId: sprite2.catalogId, cx, cy, footprint };
+}
+function reprojectPlacement(placement, sprites249, projection) {
+  const sprite2 = sprites249.get(placement.id);
+  if (!sprite2) throw new Error(`Missing landscape placement: ${placement.id}`);
+  return {
+    ...placement,
+    ...projectedSprite(sprite2, projection),
+    drawOrder: sprite2.position.x + sprite2.position.z
+  };
+}
+
+// src/themes/terrain/landscape/prepare.ts
+function prepareRoad(road, cells, projection) {
+  const points = road.points.map(projection.point);
+  const start = points[0];
+  if (!start || !cells.length) return void 0;
+  const nearest = cells.reduce(
+    (closest, cell) => Math.hypot(cell.isoX - start.x, cell.isoY - start.y) < Math.hypot(closest.isoX - start.x, closest.isoY - start.y) ? cell : closest
+  );
+  const padding = Math.max(road.width * 11 * projection.scale / 2 + 1, 4) + 4;
+  return {
+    id: road.id,
+    catalogId: "cobblePath",
+    anchorDate: nearest.date,
+    week: nearest.week,
+    day: nearest.day,
+    points,
+    drawOrder: Math.max(...road.points.map((point2) => point2.x + point2.z)) + 1.5,
+    footprint: unionBounds(
+      points.map(({ x, y }) => ({
+        x: x - padding,
+        y: y - padding,
+        width: padding * 2,
+        height: padding * 2
+      }))
+    )
+  };
+}
+function prepareLandscapeScene(scene) {
+  const layout = scene.settings.landscapeLayout ?? "island";
+  const model = buildLandscapeModel(scene.cells, {
+    layout,
+    seed: hash2(`${scene.seed.root}:landscape-v1:${layout}`),
+    relief: 1,
+    roughness: 0.55
+  });
+  const projection = createLandscapeProjection(model);
+  const positions = new Map(model.plots.map((plot) => [plot.date, plot.position]));
+  const positionFor = (date5) => {
+    const point2 = positions.get(date5);
+    if (!point2) throw new Error(`Missing landscape date: ${date5}`);
+    return point2;
+  };
+  const cells = scene.cells.map((cell) => {
+    const position = positionFor(cell.date);
+    const point2 = projection.point(position);
+    return { ...cell, isoX: point2.x, isoY: point2.y, height: position.elevation };
+  });
+  const settlement = planLandscapeSettlements(model, scene);
+  const sprites249 = new Map(settlement.sprites.map((sprite2) => [sprite2.id, sprite2]));
+  const placements = scene.placements.map(
+    (placement) => reprojectPlacement(placement, sprites249, projection)
+  );
+  const wonders = scene.wonders.map(
+    (placement) => reprojectPlacement(placement, sprites249, projection)
+  );
+  const rewards = scene.rewards?.map(
+    (placement) => reprojectPlacement(placement, sprites249, projection)
+  );
+  const consistencyEffects = consistencyEffectPlacements(
+    cells.map((cell) => ({ ...cell, height: 0 })),
+    scene.seed.root,
+    scene.settings.hemisphere
+  );
+  const neighborhoodPaths2 = settlement.roads.flatMap((road) => {
+    const path3 = prepareRoad(road, cells, projection);
+    return path3 ? [path3] : [];
+  });
+  const points = [
+    ...model.triangles.flatMap((triangle) => triangle.points),
+    ...model.coast.map(({ a }) => ({ ...a, elevation: -8 }))
+  ].map(projection.point);
+  return {
+    ...scene,
+    cells,
+    biomes: cells.map((cell) => {
+      const position = positionFor(cell.date);
+      const distanceToRiver = riverDistance(model, position);
+      return {
+        week: cell.week,
+        day: cell.day,
+        biome: {
+          isRiver: distanceToRiver <= 0,
+          isPond: false,
+          nearWater: distanceToRiver < 1.5,
+          forestDensity: position.biome === "forest" ? 0.85 : 0.1,
+          landscapeBiome: position.biome
+        }
+      };
+    }),
+    placements,
+    wonders,
+    rewards,
+    consistencyEffects,
+    neighborhoodPaths: neighborhoodPaths2,
+    bounds: unionBounds([
+      ...points.map(({ x, y }) => ({ x, y, width: 1, height: 1 })),
+      ...settlement.sprites.map((sprite2) => projectedSprite(sprite2, projection).footprint),
+      ...consistencyEffects.map(({ footprint }) => footprint)
+    ]),
+    geography: { version: 1, model, settlement }
+  };
+}
+
 // src/themes/terrain/scene/prepare.ts
 function prepareTerrainScene(data, options = {}) {
   const { width: _width, height: _height, namespace: _namespace, ...inputSettings } = options;
@@ -89984,7 +91582,7 @@ function prepareTerrainScene(data, options = {}) {
   const paths = neighborhoodPaths(cells, placements, biomeMap);
   const rewards = dailyRewardPlacements(cells);
   const consistencyEffects = consistencyEffectPlacements(cells, root, settings.hemisphere);
-  return {
+  const scene = {
     schemaVersion: 1,
     layoutVersion: 3,
     username: data.username,
@@ -90016,6 +91614,7 @@ function prepareTerrainScene(data, options = {}) {
       consistencyEffects.map((effect) => effect.footprint)
     )
   };
+  return settings.terrainMode === "landscape" ? prepareLandscapeScene(scene) : scene;
 }
 
 // src/themes/terrain/scene/render.ts
@@ -90177,9 +91776,9 @@ function renderRiverConnections(liquid, observed, biomes, water) {
   const links = rivers.flatMap(
     (cell) => [-1, 1].flatMap((offset) => {
       const flanks = [`${cell.week},${cell.day + offset}`, `${cell.week + 1},${cell.day}`];
-      if (!positions.has(`${cell.week + 1},${cell.day + offset}`) || flanks.some((key) => {
-        const neighbor = observed.get(key);
-        return !neighbor || neighbor.level100 >= 9 && neighbor.level100 <= 22 && !liquidPositions.has(key);
+      if (!positions.has(`${cell.week + 1},${cell.day + offset}`) || flanks.some((key2) => {
+        const neighbor = observed.get(key2);
+        return !neighbor || neighbor.level100 >= 9 && neighbor.level100 <= 22 && !liquidPositions.has(key2);
       }))
         return [];
       const x = cell.isoX + (offset === -1 ? 8 : 0);
@@ -90192,15 +91791,15 @@ function renderRiverConnections(liquid, observed, biomes, water) {
 function renderRiverBanks(cell, observed, biomes) {
   const identity = hash2(cell.date ?? `${cell.week},${cell.day}`);
   return EDGES.flatMap(([week, day, ax, ay, bx, by], index) => {
-    const key = `${cell.week + week},${cell.day + day}`;
-    const neighbor = observed.get(key);
-    const biome = biomes.get(key);
+    const key2 = `${cell.week + week},${cell.day + day}`;
+    const neighbor = observed.get(key2);
+    const biome = biomes.get(key2);
     if (!neighbor || biome?.isRiver || biome?.isPond || neighbor.level100 >= 9 && neighbor.level100 <= 22)
       return [];
-    const depth = 0.2 + (identity >>> index * 3) % 5 * 0.035;
+    const depth2 = 0.2 + (identity >>> index * 3) % 5 * 0.035;
     const point2 = (t, inset = 0) => `${svgNumber((ax + (bx - ax) * t) * (1 - inset))},${svgNumber((ay + (by - ay) * t) * (1 - inset))}`;
     const edge = `M${point2(0.1)}L${point2(0.9)}`;
-    const shore = `Q${point2(0.77, depth * 0.5)} ${point2(0.54, depth)}Q${point2(0.28, depth * 1.35)} ${point2(0.1)}Z`;
+    const shore = `Q${point2(0.77, depth2 * 0.5)} ${point2(0.54, depth2)}Q${point2(0.28, depth2 * 1.35)} ${point2(0.1)}Z`;
     return [`<path data-river-bank="${index}" d="${edge}${shore}" fill="${neighbor.colors.top}"/>`];
   }).join("");
 }
@@ -91535,8 +93134,8 @@ var AssetSymbols = class {
       paletteKey = JSON.stringify(colors);
       this.paletteKeys.set(colors, paletteKey);
     }
-    const key = `${type}:${variant}:${artStyle}:${paletteKey}`;
-    let shape = this.shapes.get(key);
+    const key2 = `${type}:${variant}:${artStyle}:${paletteKey}`;
+    let shape = this.shapes.get(key2);
     if (!shape) {
       const id = `${this.namespace}-asset-${this.shapes.size}`;
       const art = withMotionContext(
@@ -91544,7 +93143,7 @@ var AssetSymbols = class {
         () => renderCatalogAsset(type, colors, variant, artStyle)
       );
       shape = { id, art };
-      this.shapes.set(key, shape);
+      this.shapes.set(key2, shape);
     }
     return `<use href="#${shape.id}" x="${x}" y="${y}"/>`;
   }
@@ -91585,6 +93184,494 @@ function reserveSurfaceMotion(existing, css, cells) {
   setSurfaceMotionLimits(Math.min(15, available - weather), weather);
 }
 
+// src/themes/terrain/landscape/render.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/palette.ts
+init_cjs_shims();
+var PALETTES = {
+  light: {
+    sky: ["#edf1e9", "#dbe6dd"],
+    text: "#2d423c",
+    muted: "#67796d",
+    rule: "#c0cdbd",
+    accent: "#90703b",
+    ocean: "#84bcb1",
+    foam: "#d4e5d7",
+    water: "#4f9ba0",
+    waterLight: "#b9e0cf",
+    bank: "#82966c",
+    cliff: "#746f59",
+    soil: "#a89773",
+    road: "#d6c59b",
+    roadEdge: "#9b9874",
+    paving: "#bebaa1",
+    biomes: {
+      sand: "#cfc196",
+      meadow: "#a5b879",
+      forest: "#829b64",
+      rock: "#929788",
+      snow: "#e2e9dc",
+      wetland: "#87a580",
+      dry: "#b7ad78"
+    }
+  },
+  dark: {
+    sky: ["#14252b", "#253c3d"],
+    text: "#e4e8d6",
+    muted: "#9cad9e",
+    rule: "#425a51",
+    accent: "#d6b575",
+    ocean: "#315d60",
+    foam: "#618884",
+    water: "#438b93",
+    waterLight: "#93c9c1",
+    bank: "#536e56",
+    cliff: "#394d49",
+    soil: "#69715b",
+    road: "#a19b73",
+    roadEdge: "#536952",
+    paving: "#8d9580",
+    biomes: {
+      sand: "#9b9b73",
+      meadow: "#688c65",
+      forest: "#52775b",
+      rock: "#798a7f",
+      snow: "#b4cec7",
+      wetland: "#527d6b",
+      dry: "#85916a"
+    }
+  }
+};
+function landscapePalette(mode) {
+  return PALETTES[mode];
+}
+function shade(hex3, multiplier) {
+  const channels = [1, 3, 5].map(
+    (offset) => Math.max(
+      0,
+      Math.min(255, Math.round(parseInt(hex3.slice(offset, offset + 2), 16) * multiplier))
+    )
+  );
+  return `rgb(${channels.join(",")})`;
+}
+
+// src/themes/terrain/landscape/presentation.ts
+init_cjs_shims();
+function landscapeBackdrop(width, palette) {
+  const sky = motionId("landscape-sky"), glow = motionId("landscape-glow");
+  return `<defs><linearGradient id="${sky}" x2="0" y2="1"><stop stop-color="${palette.sky[0]}"/><stop offset="1" stop-color="${palette.sky[1]}"/></linearGradient><radialGradient id="${glow}"><stop stop-color="${palette.foam}" stop-opacity=".28"/><stop offset="1" stop-color="${palette.foam}" stop-opacity="0"/></radialGradient></defs><rect width="${width}" height="840" rx="14" fill="url(#${sky})"/><ellipse cx="${width / 2}" cy="445" rx="${width * 0.49}" ry="310" fill="url(#${glow})"/><rect x="15" y="15" width="${width - 30}" height="810" rx="8" fill="none" stroke="${palette.rule}" stroke-width=".65" opacity=".5"/>`;
+}
+function landscapePresentation(scene, palette, width) {
+  const card = scene.settings.layout === "card";
+  const margin = card ? 40 : 54;
+  const title = escapeXml(scene.settings.title);
+  const period = scene.fromDate ? `${scene.fromDate} \u2014 ${scene.toDate}` : "No supplied contribution dates";
+  const heading = `<text x="${margin}" y="63" fill="${palette.accent}" font-size="11" letter-spacing="3.5">MAEUL IN THE SKY</text><text x="${margin}" y="103" fill="${palette.text}" font-family="Georgia,serif" font-size="29">${title}</text><text x="${width - margin}" y="66" text-anchor="end" fill="${palette.muted}" font-size="11">${escapeXml(period)}</text>`;
+  const stats = [
+    { value: formatNumber(scene.stats.total), label: "CONTRIBUTIONS" },
+    { value: formatNumber(scene.stats.activeDays), label: "ACTIVE DAYS" },
+    { value: formatNumber(scene.wonders.length), label: "WONDERS DISCOVERED" }
+  ];
+  const footer = stats.map((stat2, index) => {
+    const x = margin + index * (card ? 233 : 210);
+    return `<text x="${x}" y="${card ? 726 : 765}" fill="${palette.text}" font-family="Georgia,serif" font-size="29">${stat2.value}</text><text x="${x}" y="${card ? 747 : 786}" fill="${palette.muted}" font-size="9" letter-spacing="1.5">${stat2.label}</text>`;
+  }).join("");
+  const note = card ? `<text x="${margin}" y="789" fill="${palette.muted}" font-size="10">Height describes geography \xB7 dated assets reflect contributions</text>` : `<text x="${width - margin}" y="762" text-anchor="end" fill="${palette.muted}" font-size="10">Height describes geography</text><text x="${width - margin}" y="781" text-anchor="end" fill="${palette.muted}" font-size="10">Dated assets reflect contributions</text>`;
+  return `<g class="landscape-presentation" font-family="ui-sans-serif,system-ui,sans-serif">${heading}<path d="M${margin},${card ? 689 : 725}H${width - margin}" stroke="${palette.rule}" stroke-width=".7"/>${footer}${note}</g>`;
+}
+
+// src/themes/terrain/landscape/surface.ts
+init_cjs_shims();
+function faceColor(face, palette) {
+  const [a, b, c] = face.points;
+  const ux = b.x - a.x, uz = b.z - a.z, uy = b.elevation - a.elevation;
+  const vx = c.x - a.x, vz = c.z - a.z, vy = c.elevation - a.elevation;
+  const normal = { x: uz * vy - uy * vz, y: ux * vz - uz * vx, z: uy * vx - ux * vy };
+  const orientation = normal.y < 0 ? -1 : 1;
+  const length = Math.hypot(normal.x, normal.y, normal.z) || 1;
+  const light = (normal.y * 0.88 - normal.x * 0.37 - normal.z * 0.29) * orientation / length;
+  const alpine = face.biome === "rock" || face.biome === "snow";
+  const tone = alpine ? 0.77 + light * 0.31 : 0.94 + light * 0.07;
+  const broadVariation = Math.sin((a.x + b.x + c.x) * 0.07 + (a.z + b.z + c.z) * 0.05) * 0.014;
+  return shade(palette.biomes[face.biome], Math.max(0.66, tone + broadVariation));
+}
+function cliffBottom(point2) {
+  const thickness = 1.55 + Math.sin(point2.x * 0.28 + point2.z * 0.37) * 0.55 + Math.cos(point2.x * 0.51 - point2.z * 0.19) * 0.25;
+  return { x: point2.x * 0.991, z: point2.z * 0.991, elevation: -thickness };
+}
+function surfaceItems(model, projection, palette) {
+  const items = model.triangles.map((face) => {
+    const fill = faceColor(face, palette);
+    return {
+      depth: face.points.reduce((sum, point2) => sum + depth(point2), 0) / 3,
+      layer: 0,
+      markup: `<polygon data-biome="${face.biome}" points="${pointsAttribute(face.points, projection)}" fill="${fill}" stroke="${fill}" stroke-width="1.05" stroke-linejoin="round"/>`
+    };
+  });
+  for (const edge of model.coast) {
+    const bottomA = cliffBottom(edge.a), bottomB = cliffBottom(edge.b);
+    const midA = { ...edge.a, elevation: -0.48 }, midB = { ...edge.b, elevation: -0.48 };
+    const variation = 0.91 + Math.sin(edge.a.x * 0.55 - edge.a.z * 0.43) * 0.08;
+    const rock = shade(palette.cliff, variation), soil = shade(palette.soil, variation);
+    const strata = [
+      { ...bottomA, elevation: bottomA.elevation * 0.65 },
+      { ...bottomB, elevation: bottomB.elevation * 0.65 }
+    ];
+    items.push({
+      depth: (depth(edge.a) + depth(edge.b)) / 2 + 0.04,
+      layer: -1,
+      markup: `<g class="coast-cliff"><polygon points="${pointsAttribute([edge.a, edge.b, bottomB, bottomA], projection)}" fill="${rock}" stroke="${rock}" stroke-width=".5"/><polygon points="${pointsAttribute([edge.a, edge.b, midB, midA], projection)}" fill="${soil}" stroke="${soil}" stroke-width=".45"/><path d="${segmentPath(strata, projection)}" fill="none" stroke="${soil}" stroke-width=".7" opacity=".35"/></g>`
+    });
+  }
+  return items;
+}
+function coastalWater(model, projection, palette) {
+  const paths = model.coast.map((edge) => segmentPath([cliffBottom(edge.a), cliffBottom(edge.b)], projection)).join("");
+  return `<g class="coastal-water" fill="none" stroke-linecap="round"><path d="${paths}" stroke="${palette.ocean}" stroke-width="${number4(19 * projection.scale)}" opacity=".2"/><path d="${paths}" stroke="${palette.foam}" stroke-width="${number4(3.5 * projection.scale)}" opacity=".42"/></g>`;
+}
+
+// src/themes/terrain/landscape/water.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/ribbon.ts
+init_cjs_shims();
+function strip(a, b, extra, fraction2) {
+  const edges = [
+    [a, -1],
+    [b, -1],
+    [b, 1],
+    [a, 1]
+  ];
+  return edges.map(([station, side]) => {
+    const radius = (station.width * fraction2 + extra) / 2;
+    return `${number4(station.point.x + station.normal.x * radius * side)},${number4(station.point.y + station.normal.y * radius * side)}`;
+  }).join(" ");
+}
+function surfaceRibbons(source, projection, widthAt, border) {
+  const points = source.map(projection.point);
+  const stations = points.map((point2, index) => {
+    const before = points[Math.max(0, index - 1)], after = points[Math.min(points.length - 1, index + 1)];
+    const dx = after.x - before.x, dy = after.y - before.y, length = Math.hypot(dx, dy) || 1;
+    return {
+      point: point2,
+      normal: { x: -dy / length, y: dx / length },
+      width: widthAt(index, points.length)
+    };
+  });
+  return stations.slice(1).map((station, index) => ({
+    border: strip(stations[index], station, border, 1),
+    body: strip(stations[index], station, 0, 1),
+    center: strip(stations[index], station, 0, 0.12)
+  }));
+}
+
+// src/themes/terrain/landscape/water.ts
+function waterfall(point2, width, projection, palette, index) {
+  const context2 = currentMotionContext();
+  return renderMotionBranches(
+    { ...context2, namespace: `${context2.namespace}-fall-${index}` },
+    () => {
+      const top = projection.point(point2), bottom = projection.point({ ...point2, elevation: -3.4 });
+      const gradient = motionId("waterfall");
+      return `<defs><linearGradient id="${gradient}" x2="0" y2="1"><stop stop-color="${palette.waterLight}"/><stop offset="1" stop-color="${palette.water}" stop-opacity="0"/></linearGradient></defs><g class="landscape-waterfall"><path d="M${number4(top.x)},${number4(top.y)}Q${number4(top.x + 2)},${number4((top.y + bottom.y) / 2)} ${number4(bottom.x)},${number4(bottom.y)}" fill="none" stroke="url(#${gradient})" stroke-width="${number4(width)}"/><path d="M${number4(top.x - 1)},${number4(top.y + 1)}L${number4(bottom.x - 1)},${number4(bottom.y - 9)}" stroke="${palette.waterLight}" stroke-width=".9" opacity=".7"/><ellipse cx="${number4(bottom.x)}" cy="${number4(bottom.y)}" rx="${number4(width * 1.15)}" ry="2" fill="${palette.foam}" opacity=".2">${motionMarkup('<animate attributeName="opacity" values=".16;.32;.16" dur="4s" repeatCount="indefinite"/>')}</ellipse></g>`;
+    }
+  );
+}
+function waterItems(model, projection, palette) {
+  const items = [];
+  for (const [riverIndex, river] of model.rivers.entries()) {
+    const ribbons = surfaceRibbons(
+      river.points,
+      projection,
+      (index, total) => Math.max(1, river.width * (0.56 + index / total * 0.65) * 11 * projection.scale),
+      2.7 * projection.scale
+    );
+    for (let index = 1; index < river.points.length; index++) {
+      const a = river.points[index - 1], b = river.points[index];
+      const ribbon = ribbons[index - 1];
+      items.push({
+        depth: Math.max(depth(a), depth(b)) + 1.1 + river.width * 0.5,
+        layer: 1,
+        markup: `<g class="landscape-river"><polygon points="${ribbon.border}" fill="${palette.bank}"/><polygon points="${ribbon.body}" fill="${palette.water}" stroke="${palette.water}" stroke-width=".55" stroke-linejoin="round"/><polygon points="${ribbon.center}" fill="${palette.waterLight}" opacity=".45"/></g>`
+      });
+    }
+    const outlet = river.points.at(-1);
+    if (outlet && depth(outlet) > -2 && riverIndex < 4) {
+      items.push({
+        depth: depth(outlet) + 0.8,
+        layer: 2,
+        markup: waterfall(
+          outlet,
+          river.width * 9 * projection.scale,
+          projection,
+          palette,
+          riverIndex
+        )
+      });
+    }
+  }
+  return items;
+}
+
+// src/themes/terrain/landscape/ground.ts
+init_cjs_shims();
+var FIELD_COLORS = {
+  wheat: { soil: "#b3a069", row: "#d7c586", detail: "#8c945b" },
+  rice: { soil: "#76a69a", row: "#a5b878", detail: "#cfca94" },
+  vegetable: { soil: "#8a8c60", row: "#bac186", detail: "#6f965e" }
+};
+function fieldMarkup(field2, projection, palette) {
+  const colors = FIELD_COLORS[field2.crop];
+  const rows = field2.rows.map(
+    (row) => `<path d="${segmentPath(row, projection)}" stroke="${colors.row}" stroke-width="${number4(1.65 * projection.scale)}"/><path d="${segmentPath(row, projection)}" stroke="${colors.detail}" stroke-width="${number4(0.6 * projection.scale)}" stroke-dasharray="1.2 2.5"/>`
+  ).join("");
+  const polygon2 = pointsAttribute(field2.points, projection);
+  return `<g data-field-id="${escapeXml(field2.id)}" data-crop="${field2.crop}"><polygon points="${polygon2}" fill="${palette.roadEdge}" transform="translate(0 1.8)"/><polygon points="${polygon2}" fill="${colors.soil}" stroke="${palette.road}" stroke-width="1.2" stroke-linejoin="round"/><g fill="none" stroke-linecap="round">${rows}</g></g>`;
+}
+function bridgeMarkup(points, width, projection, palette) {
+  const [a, b] = points.map(projection.point);
+  const dx = b.x - a.x, dy = b.y - a.y, length = Math.hypot(dx, dy) || 1;
+  const nx = -dy / length * width / 2, ny = dx / length * width / 2;
+  const line = `M${number4(a.x)},${number4(a.y)}L${number4(b.x)},${number4(b.y)}`;
+  const rails = [-1, 1].map((side) => {
+    const start = { x: a.x + nx * side, y: a.y + ny * side }, end = { x: b.x + nx * side, y: b.y + ny * side };
+    const posts = [0, 0.33, 0.66, 1].map((t) => {
+      const x = start.x + (end.x - start.x) * t, y = start.y + (end.y - start.y) * t;
+      return `M${number4(x)},${number4(y)}v-3.5`;
+    }).join("");
+    return `<path d="M${number4(start.x)},${number4(start.y - 3.5)}L${number4(end.x)},${number4(end.y - 3.5)}${posts}"/>`;
+  }).join("");
+  return `<g data-bridge="true" fill="none" stroke-linecap="round"><path d="${line}" stroke="${palette.cliff}" stroke-width="${number4(width + 2)}" transform="translate(0 2)"/><path d="${line}" stroke="${palette.road}" stroke-width="${number4(width)}"/><path d="${line}" stroke="${palette.soil}" stroke-width="${number4(width)}" stroke-dasharray=".65 2.7"/><g stroke="${shade(palette.cliff, 1.2)}" stroke-width="1.1">${rails}</g></g>`;
+}
+function groundItems(plan, projection, palette) {
+  const items = plan.fields.map((field2) => ({
+    depth: Math.max(...field2.points.map(depth)) + 0.75,
+    layer: 1,
+    markup: fieldMarkup(field2, projection, palette)
+  }));
+  for (const town of plan.towns) {
+    const crosslines = town.plaza.slice(0, 4).map((point2, index) => {
+      const opposite = town.plaza.at(index + Math.floor(town.plaza.length / 2));
+      return opposite ? segmentPath([point2, opposite], projection) : "";
+    }).join("");
+    items.push({
+      depth: Math.max(...town.plaza.map(depth)) + 0.8,
+      layer: 1,
+      markup: `<g data-town-id="${escapeXml(town.id)}"><polygon points="${pointsAttribute(town.plaza, projection)}" fill="${palette.paving}" stroke="${palette.roadEdge}" stroke-width="2"/><path d="${crosslines}" fill="none" stroke="${palette.road}" stroke-width=".65" opacity=".75"/></g>`
+    });
+  }
+  for (const road of plan.roads) {
+    const width = road.width * 11 * projection.scale;
+    const ribbons = surfaceRibbons(road.points, projection, () => width, 1.5);
+    for (let index = 1; index < road.points.length; index++) {
+      const a = road.points[index - 1], b = road.points[index];
+      const path3 = segmentPath([a, b], projection);
+      const ribbon = ribbons[index - 1];
+      items.push({
+        depth: Math.max(depth(a), depth(b)) + 1.1 + road.width * 0.5,
+        layer: 2,
+        markup: `<g data-road-id="${escapeXml(road.id)}"><polygon points="${ribbon.border}" fill="${palette.roadEdge}" opacity=".6"/><polygon points="${ribbon.body}" fill="${palette.road}" stroke="${palette.road}" stroke-width=".55" stroke-linejoin="round"/><path d="${path3}" fill="none" stroke="${palette.paving}" stroke-width=".7" stroke-dasharray="1 3" opacity=".45"/></g>`
+      });
+    }
+    for (const crossing2 of road.bridges)
+      items.push({
+        depth: Math.max(...crossing2.map(depth)) + 1.5,
+        layer: 3,
+        markup: bridgeMarkup(crossing2, Math.max(width + 2, 5), projection, palette)
+      });
+  }
+  return items;
+}
+
+// src/themes/terrain/landscape/sprites.ts
+init_cjs_shims();
+
+// src/themes/terrain/landscape/motion.ts
+init_cjs_shims();
+var WINDMILLS = /* @__PURE__ */ new Set(["windmill", "windmillGrand", "koreanWatermill"]);
+var ANIMATED_CLASS = /\sclass="[^"]*\b(?:epic-glow-pulse|epic-portal-swirl|sway-gentle|sway-slow)\b[^"]*"/g;
+function createLandscapeMotionBudget() {
+  let remaining = 36;
+  let sprites249 = 0;
+  let windmills = 0;
+  return {
+    reserve: (catalogId, markup) => {
+      const count = (markup.match(/<(?:animate(?:Transform|Motion)?|set)\b/g) ?? []).length + (markup.match(ANIMATED_CLASS) ?? []).length;
+      const windmill = WINDMILLS.has(catalogId);
+      if (!count || count > remaining || sprites249 >= 8 || windmill && windmills >= 4) return false;
+      remaining -= count;
+      sprites249++;
+      if (windmill) windmills++;
+      return true;
+    }
+  };
+}
+
+// src/themes/terrain/landscape/sprites.ts
+var ANIMATED_ASSETS = /* @__PURE__ */ new Set([
+  "windmill",
+  "koreanWatermill",
+  "windmillGrand",
+  "blacksmith",
+  "campfire",
+  "laundry",
+  "sakuraEternal",
+  "worldTree",
+  "ancientPortal",
+  "aurora",
+  "bioluminescentPool"
+]);
+function spriteArt(sprite2, scene, mode, reward) {
+  const palette = sprite2.anchorDate ? getSeasonalPalette100(
+    mode,
+    0,
+    dateSeasonPosition(sprite2.anchorDate, scene.settings.hemisphere)
+  ) : getTerrainPalette100(mode);
+  if (sprite2.kind === "reward") {
+    if (!reward)
+      throw new InputValidationError([
+        { path: "geography.settlement.sprites", message: `Missing daily reward ${sprite2.id}` }
+      ]);
+    return renderDailyRewards({ ...scene, rewards: [{ ...reward, cx: 0, cy: 0 }] }, palette);
+  }
+  const colors = palette.assets;
+  if (isAssetType(sprite2.catalogId))
+    return renderCatalogAsset(sprite2.catalogId, colors, sprite2.variant, scene.settings.artStyle);
+  if (isEpicBuildingType(sprite2.catalogId))
+    return renderCatalogEpic(sprite2.catalogId, colors, scene.settings.artStyle);
+  throw new InputValidationError([
+    { path: "geography.settlement.sprites", message: `Unknown catalog ID ${sprite2.catalogId}` }
+  ]);
+}
+function activeSprite(sprite2, scene, mode) {
+  const art = spriteArt(sprite2, scene, mode);
+  if (currentMotionContext().mode !== "full") return art;
+  const id = motionId("sprite"), pulse = motionId("pulse"), sway = motionId("sway"), swirl = motionId("swirl");
+  const css = `@keyframes ${pulse}{0%,100%{opacity:.45}50%{opacity:.9}}@keyframes ${sway}{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1deg)}}@keyframes ${swirl}{to{transform:rotate(360deg)}}#${id} .epic-glow-pulse{animation:${pulse} 4s ease-in-out infinite}#${id} .epic-portal-swirl{animation:${swirl} 10s linear infinite;transform-origin:center}#${id} .sway-gentle,#${id} .sway-slow{animation:${sway} 6s ease-in-out infinite;transform-origin:bottom}`;
+  return `<g id="${id}">${svgStyle(css)}${art}</g>`;
+}
+function spriteItems(sprites249, scene, mode, projection) {
+  const context2 = currentMotionContext();
+  const rewards = new Map(scene.rewards?.map((reward) => [reward.id, reward]));
+  const budget = createLandscapeMotionBudget();
+  return sprites249.map((sprite2) => {
+    const bounds = sprite2.kind === "reward" ? { x: -3.6, y: 2, width: 7.2, height: 3 } : isAssetType(sprite2.catalogId) ? ASSET_BOUNDS[sprite2.catalogId] : isEpicBuildingType(sprite2.catalogId) ? EPIC_BOUNDS[sprite2.catalogId] : void 0;
+    if (!bounds)
+      throw new InputValidationError([
+        { path: "geography.settlement.sprites", message: `Unknown catalog ID ${sprite2.catalogId}` }
+      ]);
+    const position = projection.point(sprite2.position), scale = sprite2.scale * projection.scale;
+    const namespace = `${context2.namespace}-sprite-${sprite2.id}`;
+    const moving = context2.mode === "full" && ANIMATED_ASSETS.has(sprite2.catalogId) && budget.reserve(
+      sprite2.catalogId,
+      withMotionContext({ ...context2, namespace }, () => spriteArt(sprite2, scene, mode))
+    );
+    const art = moving ? renderMotionBranches({ ...context2, namespace }, () => activeSprite(sprite2, scene, mode)) : withMotionContext(
+      { mode: "off", namespace },
+      () => spriteArt(sprite2, scene, mode, rewards.get(sprite2.id))
+    );
+    const kindAttribute = sprite2.kind === "wonder" ? "data-wonder-id" : sprite2.kind === "reward" ? "data-landscape-reward" : sprite2.kind === "scenery" ? "data-scenery-id" : "data-asset-id";
+    const date5 = sprite2.anchorDate ? ` data-date="${escapeXml(sprite2.anchorDate)}"` : "";
+    return {
+      depth: depth(sprite2.position) + Math.max(0, bounds.y + bounds.height) * sprite2.scale / 5.5 + 1.25,
+      layer: 4,
+      markup: `<g ${kindAttribute}="${escapeXml(sprite2.id)}" data-catalog-id="${escapeXml(sprite2.catalogId)}"${date5} transform="translate(${number4(position.x)} ${number4(position.y)}) scale(${number4(scale)})">${sprite2.kind === "reward" ? "" : `<ellipse cx=".5" cy=".4" rx="${number4(bounds.width * 0.31)}" ry="${number4(bounds.width * 0.09)}" fill="#273d34" opacity=".14"/>`}${art}</g>`
+    };
+  });
+}
+
+// src/themes/terrain/landscape/render.ts
+function dateMarkers(model, projection) {
+  const id = motionId("dates");
+  const css = `#${id} [data-date]{outline:none}#${id} [data-date]:hover .date-outline,#${id} [data-date]:focus .date-outline{stroke-opacity:1;fill-opacity:.15}`;
+  const markers = model.plots.map((plot) => {
+    const point2 = projection.point(plot.position), date5 = escapeXml(plot.date);
+    const label = `${date5} \xB7 ${plot.count} contributions`;
+    return `<g data-date="${date5}" data-count="${plot.count}" transform="translate(${number4(point2.x)} ${number4(point2.y)})" aria-label="${label}"><title>${label}</title><ellipse rx="7" ry="4.5" fill="transparent"/><ellipse class="date-outline" rx="8" ry="4.5" fill="#fff3c7" fill-opacity="0" stroke="#f7da89" stroke-width="1.5" stroke-opacity="0"/></g>`;
+  }).join("");
+  return `<g class="terrain-blocks" id="${id}">${svgStyle(css)}${markers}</g>`;
+}
+function validateOptions(options) {
+  const supported = /* @__PURE__ */ new Set([
+    "width",
+    "height",
+    "namespace",
+    "title",
+    "motion",
+    "layout",
+    "artStyle"
+  ]);
+  for (const key2 of Object.keys(options))
+    if (!supported.has(key2)) {
+      throw new InputValidationError([
+        { path: key2, message: "Prepare a new terrain scene to change geometry settings" }
+      ]);
+    }
+  for (const [key2, value] of [
+    ["width", options.width],
+    ["height", options.height]
+  ]) {
+    if (value !== void 0 && (!Number.isFinite(value) || value <= 0)) {
+      throw new InputValidationError([
+        { path: key2, message: "Expected a positive finite display size" }
+      ]);
+    }
+  }
+}
+function renderLandscapeScene(scene, mode, options = {}) {
+  validateOptions(options);
+  const geography = scene.geography;
+  if (!geography)
+    throw new InputValidationError([
+      { path: "geography", message: "Expected prepared landscape geography" }
+    ]);
+  const { width, height, namespace: customNamespace, ...overrides } = options;
+  const settings = resolveRenderSettings(
+    { ...overrides, terrainMode: "landscape" },
+    scene.settings,
+    scene.username
+  );
+  const presented = { ...scene, settings };
+  const display = resolveDisplaySize(settings);
+  const namespace = `${customNamespace ?? `maeul-${hash2(JSON.stringify(scene))}`}-${mode}-${settings.layout}-landscape`;
+  const context2 = { mode: settings.motion, namespace };
+  const accessibility = withMotionContext(context2, () => motionId("svg"));
+  const palette = landscapePalette(mode);
+  const projection = createLandscapeProjection(geography.model);
+  const content = withMotionContext(context2, () => {
+    const items = [
+      ...surfaceItems(geography.model, projection, palette),
+      ...waterItems(geography.model, projection, palette),
+      ...groundItems(geography.settlement, projection, palette),
+      ...spriteItems(geography.settlement.sprites, presented, mode, projection)
+    ].sort((a, b) => a.depth - b.depth || a.layer - b.layer);
+    const effects = scene.consistencyEffects?.length ? renderMotionBranches(
+      { ...currentMotionContext(), namespace: `${namespace}-consistency` },
+      () => renderConsistencyEffects(scene.consistencyEffects ?? [], mode)
+    ) : "";
+    const mapTransform = settings.layout === "card" ? "translate(0 100) scale(.7)" : "translate(0 0)";
+    const artwork = `<g class="landscape-map" transform="${mapTransform}"><ellipse cx="600" cy="685" rx="360" ry="30" fill="${palette.cliff}" opacity=".055"/>${coastalWater(geography.model, projection, palette)}<g class="landscape-geography">${items.map((item) => item.markup).join("")}</g>${effects}${dateMarkers(geography.model, projection)}</g>`;
+    return landscapeBackdrop(display.width, palette) + artwork + landscapePresentation(presented, palette, display.width);
+  });
+  const description = `Geographic contribution terrain for @${scene.username} ${scene.fromDate ? `from ${scene.fromDate} to ${scene.toDate}` : "with no supplied contribution dates"}. ${formatNumber(scene.stats.total)} contributions across ${formatNumber(scene.stats.activeDays)} active days. ${scene.wonders.length} wonders discovered. Height describes geography; dated assets reflect contributions. All supplied dates, including observed zeros, remain inspectable.`;
+  return svgRoot(
+    {
+      width: width ?? display.width,
+      height: height ?? display.height,
+      viewBox: `0 0 ${display.width} ${display.height}`,
+      "data-layout": settings.layout,
+      "data-landscape-layout": geography.model.options.layout,
+      "data-terrain-mode": "landscape",
+      "data-scene": scene.seed.root,
+      "data-color-mode": mode,
+      "data-art-style": settings.artStyle
+    },
+    content,
+    { title: settings.title, description, namespace: accessibility }
+  );
+}
+
 // src/themes/terrain/scene/render.ts
 function renderTerrainScene(scene, mode, options = {}) {
   const supported = /* @__PURE__ */ new Set([
@@ -91596,25 +93683,26 @@ function renderTerrainScene(scene, mode, options = {}) {
     "layout",
     "artStyle"
   ]);
-  for (const key of Object.keys(options)) {
-    if (!supported.has(key))
+  for (const key2 of Object.keys(options)) {
+    if (!supported.has(key2))
       throw new InputValidationError([
-        { path: key, message: "Prepare a new terrain scene to change geometry settings" }
+        { path: key2, message: "Prepare a new terrain scene to change geometry settings" }
       ]);
   }
   const { width, height, namespace: customNamespace, ...overrides } = options;
-  for (const [key, value] of [
+  for (const [key2, value] of [
     ["width", width],
     ["height", height]
   ]) {
     if (value !== void 0 && (!Number.isFinite(value) || value <= 0)) {
       throw new InputValidationError([
-        { path: key, message: "Expected a positive finite display size" }
+        { path: key2, message: "Expected a positive finite display size" }
       ]);
     }
   }
   const settings = resolveRenderSettings(overrides, scene.settings, scene.username);
   const presented = { ...scene, settings };
+  if (scene.geography) return renderLandscapeScene(presented, mode, options);
   const card = settings.layout === "card";
   const viewWidth = card ? 420 : 840;
   const viewHeight = card ? 360 : 240;
@@ -91701,6 +93789,8 @@ function terrainMetadata(scene) {
   const rewards = byDate(scene.rewards ?? []);
   const consistencyEffects = byDate(scene.consistencyEffects ?? []);
   const span = scene.fromDate && scene.toDate ? Math.round((Date.parse(scene.toDate) - Date.parse(scene.fromDate)) / 864e5) + 1 : 0;
+  const landscape = scene.geography;
+  const projection = landscape ? createLandscapeProjection(landscape.model) : void 0;
   return {
     schemaVersion: 1,
     layoutVersion: scene.layoutVersion,
@@ -91737,7 +93827,12 @@ function terrainMetadata(scene) {
     wonders: scene.wonders,
     rewards: scene.rewards ?? [],
     consistencyEffects: scene.consistencyEffects ?? [],
-    neighborhoodPaths: scene.neighborhoodPaths
+    neighborhoodPaths: scene.neighborhoodPaths,
+    ...landscape && projection ? {
+      terrainMode: "landscape",
+      landscapeLayout: landscape.model.options.layout,
+      scenery: landscape.settlement.sprites.filter((sprite2) => sprite2.kind === "scenery").map((sprite2) => projectedSprite(sprite2, projection))
+    } : {}
   };
 }
 
@@ -92434,15 +94529,15 @@ var import_promises3 = require("fs/promises");
 
 // src/generate/options.ts
 init_cjs_shims();
-function invalidOption(field, message) {
-  throw new InputValidationError([{ path: field, message: `Invalid ${field}: ${message}` }]);
+function invalidOption(field2, message) {
+  throw new InputValidationError([{ path: field2, message: `Invalid ${field2}: ${message}` }]);
 }
-function optionalNumber(value, field) {
+function optionalNumber(value, field2) {
   if (value === void 0 || value === "") return void 0;
   if (typeof value === "string" && value.trim() === "")
-    return invalidOption(field, "expected a number");
+    return invalidOption(field2, "expected a number");
   const parsed = external_exports.coerce.number().finite().safeParse(value);
-  if (!parsed.success) return invalidOption(field, "expected a finite number");
+  if (!parsed.success) return invalidOption(field2, "expected a finite number");
   return parsed.data;
 }
 function parseGenerationYear(value) {
@@ -92477,6 +94572,8 @@ function parseGenerationSettings(request, archive = false) {
     style: request.style || request.villageStyle || void 0,
     artStyle: request.artStyle || void 0,
     layoutSeed: request.layoutSeed,
+    terrainMode: request.terrainMode,
+    landscapeLayout: request.landscapeLayout,
     normalization: normalization === "fixed" ? { kind: "fixed", maxCount } : normalization === "relative" ? { kind: "relative" } : void 0
   };
   const parsed = renderSettingsInputSchema.safeParse(explicit);
@@ -92548,7 +94645,9 @@ async function resolveGenerationInput(request, dependencies) {
     request.artStyle,
     request.villageStyle,
     request.normalization,
-    request.layoutSeed
+    request.layoutSeed,
+    request.terrainMode,
+    request.landscapeLayout
   ].some((value) => value !== void 0 && value !== "");
   return { username, year, settings, snapshot, advanced, ...output2 };
 }
@@ -92622,8 +94721,7 @@ function createTerrainGenerator(dependencies) {
     request.onProgress?.(`Rendering with ${theme.displayName} theme...`);
     const options = {
       title: settings.title,
-      width: settings.layout === "card" ? 420 : 840,
-      height: settings.layout === "card" ? 360 : 240,
+      ...resolveDisplaySize(settings),
       hemisphere: settings.hemisphere,
       density: settings.density,
       ...advanced ? {
@@ -92632,7 +94730,8 @@ function createTerrainGenerator(dependencies) {
         style: settings.style,
         artStyle: settings.artStyle,
         normalization: settings.normalization,
-        ...settings.layoutSeed === void 0 ? {} : { layoutSeed: settings.layoutSeed }
+        ...settings.layoutSeed === void 0 ? {} : { layoutSeed: settings.layoutSeed },
+        ...settings.terrainMode === void 0 ? {} : { terrainMode: settings.terrainMode, landscapeLayout: settings.landscapeLayout }
       } : {}
     };
     const paths = await writeTerrainOutputs(
@@ -93661,27 +95760,36 @@ function namespaceAndPositionSvg(source, prefix, x, y) {
 
 // src/archive/comparison.ts
 function renderArchiveComparison(archive, theme, source) {
-  const width = 420;
   const header = 64;
-  const rowHeight = 390;
   const snapshots = selectComparisonSnapshots(archive.snapshots, archive.comparison.years);
-  const height = header + rowHeight * snapshots.length;
-  const rows = snapshots.map((snapshot) => ({
-    year: snapshot.year,
-    svg: theme.render(snapshotToContributionData(snapshot), {
-      title: snapshot.settings.title,
-      width,
-      height: 360,
-      hemisphere: snapshot.settings.hemisphere,
-      density: snapshot.settings.density,
-      style: snapshot.settings.style,
-      artStyle: snapshot.settings.artStyle,
-      layout: "card",
-      motion: snapshot.settings.motion,
-      layoutSeed: snapshot.settings.layoutSeed,
-      normalization: archive.comparison.normalization
-    })
-  }));
+  const rows = snapshots.map((snapshot) => {
+    const size = resolveDisplaySize({ ...snapshot.settings, layout: "card" });
+    return {
+      year: snapshot.year,
+      ...size,
+      svg: theme.render(snapshotToContributionData(snapshot), {
+        title: snapshot.settings.title,
+        ...size,
+        hemisphere: snapshot.settings.hemisphere,
+        density: snapshot.settings.density,
+        style: snapshot.settings.style,
+        artStyle: snapshot.settings.artStyle,
+        layout: "card",
+        motion: snapshot.settings.motion,
+        layoutSeed: snapshot.settings.layoutSeed,
+        normalization: archive.comparison.normalization,
+        ...snapshot.settings.terrainMode === void 0 ? {} : {
+          terrainMode: snapshot.settings.terrainMode,
+          landscapeLayout: snapshot.settings.landscapeLayout
+        }
+      })
+    };
+  });
+  const width = Math.max(420, ...rows.map((row) => row.width));
+  const height = header + rows.reduce((sum, row) => sum + row.height + 30, 0);
+  const scaleDescription = snapshots.some(
+    (snapshot) => snapshot.settings.terrainMode === "landscape"
+  ) ? "Equal contribution counts use equal normalized levels. Geographic elevation is independent of contributions." : "Equal contribution counts use equal terrain heights.";
   const renderMode = (mode) => {
     const background = mode === "dark" ? "#0d1117" : "#ffffff";
     const foreground = mode === "dark" ? "#f0f6fc" : "#1f2328";
@@ -93689,16 +95797,16 @@ function renderArchiveComparison(archive, theme, source) {
     const legend = `${label}: ${archive.comparison.normalization.maxCount} contributions/day`;
     const username = snapshots[0]?.username ?? "";
     const body = rows.map((row, index) => {
-      const top = header + index * rowHeight;
+      const top = header + rows.slice(0, index).reduce((sum, preceding) => sum + preceding.height + 30, 0);
       const svg = namespaceAndPositionSvg(
         row.svg[mode],
         `archive-${mode}-${index}-`,
-        0,
+        (width - row.width) / 2,
         top + 30
       );
       return `<text x="16" y="${top + 22}" font-size="18" font-weight="600">${row.year}</text>${svg}`;
     }).join("");
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="archive-${mode}-title archive-${mode}-desc"><title id="archive-${mode}-title">${escapeXml(username)} annual village comparison</title><desc id="archive-${mode}-desc">${escapeXml(legend)}. Equal contribution counts use equal terrain heights.</desc><rect width="${width}" height="${height}" fill="${background}"/><g fill="${foreground}" font-family="Noto Sans KR, sans-serif"><text x="16" y="25" font-size="18">@${escapeXml(username)} \xB7 ${archive.comparison.years.join(", ")}</text><text x="16" y="49" font-size="12">${escapeXml(legend)}</text>${body}</g></svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="archive-${mode}-title archive-${mode}-desc"><title id="archive-${mode}-title">${escapeXml(username)} annual village comparison</title><desc id="archive-${mode}-desc">${escapeXml(legend)}. ${scaleDescription}</desc><rect width="${width}" height="${height}" fill="${background}"/><g fill="${foreground}" font-family="Noto Sans KR, sans-serif"><text x="16" y="25" font-size="18">@${escapeXml(username)} \xB7 ${archive.comparison.years.join(", ")}</text><text x="16" y="49" font-size="12">${escapeXml(legend)}</text>${body}</g></svg>`;
   };
   return { dark: renderMode("dark"), light: renderMode("light") };
 }
@@ -93870,6 +95978,8 @@ function readActionRequest(dependencies) {
     format: input2("format"),
     scale: input2("scale"),
     layoutSeed: input2("layout_seed"),
+    terrainMode: input2("terrain_mode"),
+    landscapeLayout: input2("landscape_layout"),
     onProgress: dependencies.info
   };
 }

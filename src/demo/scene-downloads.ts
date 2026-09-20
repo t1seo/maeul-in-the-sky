@@ -6,6 +6,7 @@ import { click, status } from './dom.js';
 import { downloadBlob, downloadText, pngBlob } from './downloads.js';
 import { renderOptions, staticSnapshotSvg } from './preview.js';
 import type { DemoRenderer } from './renderers.js';
+import { settingsForRenderer } from './renderer-settings.js';
 
 export function setupSceneDownloads(
   current: () => {
@@ -25,7 +26,7 @@ export function setupSceneDownloads(
   });
   click('download-png', async () => {
     const { snapshot, mode, renderer } = current();
-    const dimensions = renderOptions(snapshot.settings);
+    const dimensions = renderOptions(settingsForRenderer(snapshot.settings, renderer.version));
     const blob = await pngBlob(
       staticSnapshotSvg(snapshot, mode, renderer),
       dimensions.width,

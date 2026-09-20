@@ -5,6 +5,7 @@ import {
   type DemoRenderer,
 } from '../../../src/demo/renderers.js';
 import { setupVersionSelector } from '../../../src/demo/version-selector.js';
+import { updateFormLabels } from '../../../src/demo/settings.js';
 import { consumeDemoTransfer } from '../../../src/demo/world-bridge.js';
 import { serializeSnapshot } from '../../../src/core/settings/serialize.js';
 import { demoQuery, parseDemoQuery } from '../../../src/demo/state.js';
@@ -51,11 +52,15 @@ it('keeps the active scene and permits retry when classic fails to load', async 
     .mockResolvedValueOnce({ ...CURRENT_RENDERER, version: 'classic' });
   const choose = setupVersionSelector(() => parseDemoQuery(''), apply, recover, load);
 
-  await choose('classic');
+  const pending = choose('classic');
+  updateFormLabels();
+  expect(node('#terrain-mode', HTMLSelectElement).disabled).toBe(true);
+  await pending;
 
   expect(apply).not.toHaveBeenCalled();
   expect(recover).toHaveBeenCalledOnce();
   expect(node('#renderer-version', HTMLSelectElement).value).toBe('current');
+  expect(node('#terrain-mode', HTMLSelectElement).disabled).toBe(false);
   expect(node('#renderer-status', HTMLElement).textContent).toContain('previous scene is kept');
   await choose('classic');
   expect(apply).toHaveBeenCalledOnce();

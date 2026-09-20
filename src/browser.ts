@@ -24,6 +24,7 @@ export {
   snapshotToContributionData,
 } from './core/settings/parse.js';
 export { resolveRenderSettings } from './core/settings/resolve.js';
+export { resolveDisplaySize, type DisplaySize } from './core/display-size.js';
 export { InputValidationError, type ValidationIssue } from './core/settings/errors.js';
 export { serializeSettings, serializeSnapshot } from './core/settings/serialize.js';
 export { parseArchive } from './core/archive/parse.js';
@@ -48,12 +49,14 @@ export type {
 export type {
   ArtStyle,
   Hemisphere,
+  LandscapeLayout,
   MotionMode,
   NormalizationOptions,
   NormalizationSummary,
   RenderSettingsInput,
   ResolvedRenderSettings,
   TerrainLayout,
+  TerrainMode,
   VillageStyle,
 } from './core/render-options.js';
 export type {
@@ -72,6 +75,14 @@ export type {
   SceneDailyReward,
   ScenePlacement,
   SceneWonderPlacement,
+  SceneScenery,
 } from './core/scene-types.js';
+export type {
+  LandscapeGeography,
+  LandscapeModel,
+  LandscapePoint,
+  LandscapeSite,
+  LandscapeSettlementPlan,
+} from './themes/terrain/landscape/types.js';
 export type { ArchiveV1, SettingsV1, SnapshotSource, SnapshotV1 } from './core/snapshot-types.js';
 export type { ActivityBreakdown, ActivityMonth } from './core/activity-types.js';

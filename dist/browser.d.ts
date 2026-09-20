@@ -21,6 +21,8 @@ declare function isVillagePreset(value: string): value is VillagePreset;
 
 type MotionMode = 'full' | 'subtle' | 'off';
 type TerrainLayout = 'banner' | 'card';
+type TerrainMode = 'calendar' | 'landscape';
+type LandscapeLayout$1 = 'island' | 'archipelago' | 'valley';
 type VillageStyle$1 = 'classic' | 'korean';
 type ArtStyle = 'miniature' | 'pixel';
 type Hemisphere = 'north' | 'south';
@@ -41,6 +43,8 @@ type ResolvedRenderSettings = {
     readonly artStyle: ArtStyle;
     readonly normalization: NormalizationOptions;
     readonly layoutSeed?: string;
+    readonly terrainMode?: TerrainMode;
+    readonly landscapeLayout?: LandscapeLayout$1;
 };
 type RenderSettingsInput = Omit<Partial<ResolvedRenderSettings>, 'style'> & {
     readonly style?: VillageStyle$1;
@@ -136,6 +140,8 @@ interface ThemeOptions {
     villageStyle?: VillageStyle$1;
     normalization?: NormalizationOptions;
     layoutSeed?: string;
+    readonly terrainMode?: TerrainMode;
+    readonly landscapeLayout?: LandscapeLayout$1;
 }
 /** Rendered SVG output for both color modes */
 interface ThemeOutput {
@@ -183,6 +189,92 @@ declare function getTheme(name: string): Theme | undefined;
  */
 declare function listThemes(): string[];
 
+type LandscapeLayout = 'island' | 'archipelago' | 'valley';
+type LandscapeBiome = 'sand' | 'meadow' | 'forest' | 'rock' | 'snow' | 'wetland' | 'dry';
+interface LandscapePoint {
+    readonly x: number;
+    readonly z: number;
+    readonly elevation: number;
+}
+interface LandscapeSite extends LandscapePoint {
+    readonly moisture: number;
+    readonly slope: number;
+    readonly biome: LandscapeBiome;
+    readonly component: number;
+}
+interface LandscapeTriangle {
+    readonly points: readonly [LandscapePoint, LandscapePoint, LandscapePoint];
+    readonly biome: LandscapeBiome;
+    readonly moisture: number;
+    readonly component: number;
+}
+interface LandscapeCoast {
+    readonly a: LandscapePoint;
+    readonly b: LandscapePoint;
+}
+interface LandscapeRiver {
+    readonly points: readonly LandscapePoint[];
+    readonly width: number;
+}
+interface LandscapeOptions {
+    readonly layout: LandscapeLayout;
+    readonly seed: number;
+    readonly relief: number;
+    readonly roughness: number;
+}
+interface LandscapePlot {
+    readonly date: string;
+    readonly count: number;
+    readonly position: LandscapeSite;
+}
+interface LandscapeModel {
+    readonly options: LandscapeOptions;
+    readonly triangles: readonly LandscapeTriangle[];
+    readonly coast: readonly LandscapeCoast[];
+    readonly rivers: readonly LandscapeRiver[];
+    readonly plots: readonly LandscapePlot[];
+    readonly sites: readonly LandscapeSite[];
+    readonly settlements: readonly LandscapeSite[];
+    readonly peaks: readonly LandscapeSite[];
+}
+interface LandscapeSprite {
+    readonly id: string;
+    readonly catalogId: string;
+    readonly kind: 'asset' | 'wonder' | 'reward' | 'scenery';
+    readonly anchorDate?: string;
+    readonly position: LandscapeSite;
+    readonly scale: number;
+    readonly variant: number;
+}
+interface LandscapeRoad {
+    readonly id: string;
+    readonly points: readonly LandscapePoint[];
+    readonly width: number;
+    readonly bridges: readonly (readonly [LandscapePoint, LandscapePoint])[];
+}
+interface LandscapeField {
+    readonly id: string;
+    readonly points: readonly LandscapePoint[];
+    readonly crop: 'wheat' | 'rice' | 'vegetable';
+    readonly rows: readonly (readonly LandscapePoint[])[];
+}
+interface LandscapeTown {
+    readonly id: string;
+    readonly center: LandscapeSite;
+    readonly plaza: readonly LandscapePoint[];
+}
+interface LandscapeSettlementPlan {
+    readonly towns: readonly LandscapeTown[];
+    readonly roads: readonly LandscapeRoad[];
+    readonly fields: readonly LandscapeField[];
+    readonly sprites: readonly LandscapeSprite[];
+}
+interface LandscapeGeography {
+    readonly version: 1;
+    readonly model: LandscapeModel;
+    readonly settlement: LandscapeSettlementPlan;
+}
+
 type SceneBounds = {
     readonly x: number;
     readonly y: number;
@@ -194,6 +286,7 @@ type SceneBiome = {
     readonly isPond: boolean;
     readonly nearWater: boolean;
     readonly forestDensity: number;
+    readonly landscapeBiome?: LandscapeBiome;
 };
 type RewardTier = 0 | 1 | 2 | 3 | 4 | 5;
 type PositiveRewardTier = Exclude<RewardTier, 0>;
@@ -308,6 +401,14 @@ type TerrainScene = {
     readonly consistencyEffects?: readonly SceneConsistencyEffect[];
     readonly neighborhoodPaths: readonly NeighborhoodPath[];
     readonly bounds: SceneBounds;
+    readonly geography?: LandscapeGeography;
+};
+type SceneScenery = {
+    readonly id: string;
+    readonly catalogId: string;
+    readonly cx: number;
+    readonly cy: number;
+    readonly footprint: SceneBounds;
 };
 type TerrainCellMetadata = {
     readonly date: string;
@@ -342,6 +443,9 @@ type TerrainMetadata = {
     readonly rewards?: readonly SceneDailyReward[];
     readonly consistencyEffects?: readonly SceneConsistencyEffect[];
     readonly neighborhoodPaths: readonly NeighborhoodPath[];
+    readonly terrainMode?: 'landscape';
+    readonly landscapeLayout?: LandscapeLayout;
+    readonly scenery?: readonly SceneScenery[];
 };
 type TerrainRenderResult = {
     readonly dark: string;
@@ -732,6 +836,12 @@ declare function createSnapshot(data: ContributionData, settings?: RenderSetting
 
 declare function resolveRenderSettings(explicit?: unknown, loaded?: unknown, username?: string): ResolvedRenderSettings;
 
+type DisplaySize = {
+    readonly width: number;
+    readonly height: number;
+};
+declare function resolveDisplaySize(settings: Pick<ResolvedRenderSettings, 'layout' | 'terrainMode'>): DisplaySize;
+
 type ValidationIssue = {
     readonly path: string;
     readonly message: string;
@@ -759,4 +869,4 @@ declare function upsertArchiveSnapshot(snapshots: readonly SnapshotV1[], snapsho
 
 declare function serializeArchive(archive: ArchiveV1): string;
 
-export { ASSET_CATALOG, ASSET_CATALOG_COUNTS, type ActivityBreakdown, type ActivityMonth, type ArchiveV1, type ArtStyle, type ColorMode, type ConsistencyEffectKind, type ConsistencyParticle, type ConsistencyProgress, type ConsistencyTier, type ContributionData, type ContributionDay, type ContributionStats, type ContributionWeek, DEFAULT_VILLAGE_PRESET, EPIC_CATALOG, EPIC_CATALOG_COUNTS, type Hemisphere, InputValidationError, type MotionMode, type NormalizationOptions, type NormalizationSummary, type PositiveRewardTier, type RenderSettingsInput, type ResolvedRenderSettings, type RewardTier, type SceneCell, type SceneConsistencyEffect, type SceneDailyReward, type ScenePlacement, type SceneWonderPlacement, type SettingsV1, type SnapshotSource, type SnapshotV1, type TerrainCellMetadata, type TerrainLayout, type TerrainMetadata, type TerrainRenderOptions, type TerrainRenderResult, type TerrainScene, type TerrainSceneRenderOptions, type Theme, type ThemeOptions, type ThemeOutput, VILLAGE_PRESETS, type ValidationIssue, type VillagePreset, type VillageStyle$1 as VillageStyle, computeSharedNormalization, computeStats, createArchive, createSnapshot, getAssetCatalogEntry, getEpicCatalogEntry, getTheme, isAssetType, isEpicBuildingType, isVillagePreset, listThemes, parseArchive, parseSettings, parseSnapshot, prepareTerrainScene, registerTheme, renderCatalogAsset, renderCatalogEpic, renderTerrain, renderTerrainScene, resolveRenderSettings, selectComparisonSnapshots, serializeArchive, serializeSettings, serializeSnapshot, snapshotToContributionData, upsertArchiveSnapshot };
+export { ASSET_CATALOG, ASSET_CATALOG_COUNTS, type ActivityBreakdown, type ActivityMonth, type ArchiveV1, type ArtStyle, type ColorMode, type ConsistencyEffectKind, type ConsistencyParticle, type ConsistencyProgress, type ConsistencyTier, type ContributionData, type ContributionDay, type ContributionStats, type ContributionWeek, DEFAULT_VILLAGE_PRESET, type DisplaySize, EPIC_CATALOG, EPIC_CATALOG_COUNTS, type Hemisphere, InputValidationError, type LandscapeGeography, type LandscapeLayout$1 as LandscapeLayout, type LandscapeModel, type LandscapePoint, type LandscapeSettlementPlan, type LandscapeSite, type MotionMode, type NormalizationOptions, type NormalizationSummary, type PositiveRewardTier, type RenderSettingsInput, type ResolvedRenderSettings, type RewardTier, type SceneCell, type SceneConsistencyEffect, type SceneDailyReward, type ScenePlacement, type SceneScenery, type SceneWonderPlacement, type SettingsV1, type SnapshotSource, type SnapshotV1, type TerrainCellMetadata, type TerrainLayout, type TerrainMetadata, type TerrainMode, type TerrainRenderOptions, type TerrainRenderResult, type TerrainScene, type TerrainSceneRenderOptions, type Theme, type ThemeOptions, type ThemeOutput, VILLAGE_PRESETS, type ValidationIssue, type VillagePreset, type VillageStyle$1 as VillageStyle, computeSharedNormalization, computeStats, createArchive, createSnapshot, getAssetCatalogEntry, getEpicCatalogEntry, getTheme, isAssetType, isEpicBuildingType, isVillagePreset, listThemes, parseArchive, parseSettings, parseSnapshot, prepareTerrainScene, registerTheme, renderCatalogAsset, renderCatalogEpic, renderTerrain, renderTerrainScene, resolveDisplaySize, resolveRenderSettings, selectComparisonSnapshots, serializeArchive, serializeSettings, serializeSnapshot, snapshotToContributionData, upsertArchiveSnapshot };

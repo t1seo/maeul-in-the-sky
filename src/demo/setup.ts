@@ -1,5 +1,6 @@
 import type { SettingsV1 } from '../core/snapshot-types.js';
-import { RENDERER_VERSIONS, type RendererVersion } from './renderer-version.js';
+import type { RendererVersion } from './renderer-version.js';
+import { settingsForRenderer, workflowVersion } from './renderer-settings.js';
 
 export type WorkflowResult =
   | { readonly ok: true; readonly content: string }
@@ -9,8 +10,8 @@ export function workflowDocument(
   document: SettingsV1,
   renderer: RendererVersion = 'current',
 ): WorkflowResult {
-  const { settings } = document;
-  const version = RENDERER_VERSIONS[renderer];
+  const settings = settingsForRenderer(document.settings, renderer);
+  const version = workflowVersion(settings, renderer);
   if (settings.title.includes('${{')) {
     return {
       ok: false,
@@ -42,6 +43,10 @@ export function workflowDocument(
   };
   if (document.year !== undefined) fields.year = document.year;
   if (settings.layoutSeed !== undefined) fields.layout_seed = settings.layoutSeed;
+  if (settings.terrainMode === 'landscape') {
+    fields.terrain_mode = 'landscape';
+    fields.landscape_layout = settings.landscapeLayout ?? 'island';
+  }
   if (settings.normalization.kind === 'fixed') fields.max_count = settings.normalization.maxCount;
   const inputs = Object.entries(fields)
     .map(([key, value]) => `          ${key}: ${JSON.stringify(String(value))}`)

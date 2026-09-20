@@ -49,6 +49,12 @@ inputs:
   layout:
     description: 'Output layout: banner or card'
     required: false
+  terrain_mode:
+    description: 'Terrain composition: calendar or landscape; defaults to calendar'
+    required: false
+  landscape_layout:
+    description: 'Landscape landform: island, archipelago, or valley; defaults to island in landscape mode'
+    required: false
   village_style:
     description: 'Village architecture: classic or korean'
     required: false

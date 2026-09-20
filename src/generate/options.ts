@@ -57,6 +57,8 @@ export function parseGenerationSettings(
     style: request.style || request.villageStyle || undefined,
     artStyle: request.artStyle || undefined,
     layoutSeed: request.layoutSeed,
+    terrainMode: request.terrainMode,
+    landscapeLayout: request.landscapeLayout,
     normalization:
       normalization === 'fixed'
         ? { kind: 'fixed', maxCount }

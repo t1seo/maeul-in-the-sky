@@ -2,17 +2,18 @@ import { VILLAGE_PRESETS, isVillagePreset } from '../core/presets.js';
 import type { SettingsV1, SnapshotV1 } from '../core/snapshot-types.js';
 import type { TerrainRenderResult } from '../core/scene-types.js';
 import { setupArchive } from './archive.js';
-import { button, click, element, errorMessage, html, input, safeAction, status } from './dom.js';
+import { button, click, errorMessage, html, input, safeAction, status } from './dom.js';
 import { setupEncyclopedia, updateEncyclopedia } from './encyclopedia.js';
 import { setupZoom, updateExplorer } from './explorer.js';
 import { parseImportedData, readImportFile } from './imports.js';
 import { fetchPreview, localCapability } from './local-client.js';
 import { renderSnapshot } from './preview.js';
 import { CURRENT_RENDERER } from './renderers.js';
+import { settingsForRenderer } from './renderer-settings.js';
 import { setupVersionSelector } from './version-selector.js';
 import { setupSceneDownloads } from './scene-downloads.js';
 import { sampleSnapshot } from './sample.js';
-import { readForm, updateFormLabels, updatePresentationLabels, writeForm } from './settings.js';
+import { readForm, setupSettingsForm, updatePresentationLabels, writeForm } from './settings.js';
 import { disableSetup, setupExports, updateSetup } from './setup-panel.js';
 import { demoQuery, parseDemoQuery, type DemoSettings } from './state.js';
 import { consumeDemoTransfer, setupWorldBridge } from './world-bridge.js';
@@ -43,7 +44,6 @@ function main(): void {
   let output = renderSnapshot(snapshot, settings.document.settings);
   let valid = !initialError;
   let editRevision = 0;
-  const form = element('#settings-form', HTMLFormElement);
   const settingsUrl = () =>
     `${window.location.pathname}${demoQuery(settings)}${window.location.hash}`;
   const replaceHistory = () => window.history.replaceState({}, '', settingsUrl());
@@ -73,9 +73,13 @@ function main(): void {
   };
   const restore = (document: SettingsV1, push = true, prepared?: TerrainRenderResult): void => {
     editRevision++;
-    const rendered = prepared ?? renderSnapshot(snapshot, document.settings, 'village', renderer);
-    settings = { ...settings, document };
-    writeForm(document);
+    const compatible = {
+      ...document,
+      settings: settingsForRenderer(document.settings, renderer.version),
+    };
+    const rendered = prepared ?? renderSnapshot(snapshot, compatible.settings, 'village', renderer);
+    settings = { ...settings, document: compatible };
+    writeForm(compatible);
     input('repository').value = `${document.username}/${document.username}`;
     showValidation();
     synchronize(push, rendered);
@@ -116,11 +120,15 @@ function main(): void {
     () => settings,
     (nextRenderer, restored, push) => {
       const next = { ...(restored ?? settings), renderer: nextRenderer.version };
+      next.document = {
+        ...next.document,
+        settings: settingsForRenderer(next.document.settings, nextRenderer.version),
+      };
       const prepared = renderSnapshot(snapshot, next.document.settings, 'village', nextRenderer);
       renderer = nextRenderer;
       settings = next;
+      writeForm(settings.document);
       if (restored) {
-        writeForm(settings.document);
         input('repository').value = `${settings.document.username}/${settings.document.username}`;
         showValidation();
       }
@@ -145,30 +153,19 @@ function main(): void {
     () => ({ ...settings, document: readForm(settings.document.settings.preset) }),
     restore,
   );
-  form.addEventListener('submit', (event) => event.preventDefault());
-  form.addEventListener('input', () => {
-    editRevision++;
-    updateFormLabels();
-    try {
-      const document = readForm(settings.document.settings.preset);
-      settings = { ...settings, document };
-      updateSetup(document, settings.renderer);
-      showValidation();
-    } catch (error) {
-      showValidation(errorMessage(error));
-    }
-  });
-  form.addEventListener('change', () => {
-    editRevision++;
-    try {
-      const document = readForm(settings.document.settings.preset);
+  setupSettingsForm(
+    () => settings.document.settings.preset,
+    (document, commit) => {
       settings = { ...settings, document };
       showValidation();
-      synchronize(true);
-    } catch (error) {
-      showValidation(errorMessage(error));
-    }
-  });
+      if (commit) synchronize(true);
+      else updateSetup(document, settings.renderer);
+    },
+    () => {
+      editRevision++;
+    },
+    showValidation,
+  );
   document.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach((node) =>
     node.addEventListener('click', () =>
       safeAction(() => {

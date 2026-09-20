@@ -46,6 +46,8 @@ export const renderSettingsSchema = z.strictObject({
   artStyle: z.enum(['miniature', 'pixel']),
   normalization: normalizationSchema,
   layoutSeed: xml10TextSchema.max(256).optional(),
+  terrainMode: z.enum(['calendar', 'landscape']).optional(),
+  landscapeLayout: z.enum(['island', 'archipelago', 'valley']).optional(),
 });
 
 export const renderSettingsInputSchema = renderSettingsSchema

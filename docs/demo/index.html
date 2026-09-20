@@ -18,7 +18,7 @@
       >
       <nav aria-label="Main">
         <button id="explore-activity" type="button" class="enhanced" hidden>Activity</button>
-        <a href="#make-it-yours">Make it yours</a
+        <a href="#make-it-yours">Make it yours</a><a href="./landscape/">Landscapes</a
         ><a href="https://github.com/t1seo/maeul-in-the-sky">GitHub ↗</a>
       </nav>
     </header>
@@ -63,12 +63,32 @@
               <option value="classic">Classic · original artwork</option>
             </select>
             <p id="renderer-note" class="muted">
-              Use the latest artwork or the original version. Both keep your dates, counts and
-              settings.
+              Use the latest artwork or the original calendar version. Both keep your dates and
+              contribution counts. Landscapes use Current artwork.
             </p>
             <p id="renderer-status" role="status" aria-live="polite" aria-atomic="true"></p>
           </div>
           <form id="settings-form" class="enhanced" hidden novalidate>
+            <div class="form-row">
+              <div>
+                <label for="terrain-mode">Terrain · 지형</label>
+                <select id="terrain-mode" name="terrainMode" aria-describedby="terrain-note">
+                  <option value="calendar">Calendar · 기존 달력</option>
+                  <option value="landscape">Landscape · 자연 지형</option>
+                </select>
+              </div>
+              <div id="landscape-layout-field" hidden>
+                <label for="landscape-layout">Landform · 형태</label>
+                <select id="landscape-layout" name="landscapeLayout">
+                  <option value="island">Island · 섬</option>
+                  <option value="archipelago">Archipelago · 군도</option>
+                  <option value="valley">Valley · 계곡</option>
+                </select>
+              </div>
+            </div>
+            <small id="terrain-note">
+              The original dated calendar terrain. Height follows contribution activity.
+            </small>
             <div class="form-row appearance-fields">
               <div>
                 <label for="style">Village style</label
@@ -149,7 +169,7 @@
                   </select>
                 </div>
               </div>
-              <label for="normalization">Height scale</label
+              <label id="normalization-label" for="normalization">Height scale</label
               ><select id="normalization" name="normalization">
                 <option value="relative">Relative · this history</option>
                 <option value="fixed">Fixed · comparable counts</option>
@@ -210,7 +230,7 @@
             </p>
             <p class="enhanced" id="scale-note" hidden></p>
           </div>
-          <div class="legend">
+          <div id="activity-legend" class="legend">
             <span>Low</span
             ><span
               class="swatches"
@@ -218,7 +238,9 @@
               aria-label="Five contribution heights, from low to high"
               ><i></i><i></i><i></i><i></i><i></i></span
             ><span>High</span
-            ><span class="season-note">Height follows activity. Seasons follow dates.</span>
+            ><span id="season-note" class="season-note"
+              >Height follows activity. Seasons follow dates.</span
+            >
           </div>
           <details id="day-explorer" class="date-inspector enhanced" hidden>
             <summary>Explore a day</summary>
@@ -337,8 +359,8 @@
               <h2 id="growth-heading">Every day leaves its own mark.</h2>
             </div>
             <p>
-              Daily contributions grow more than the height of your terrain. Reach a new range to
-              give that day a richer main feature.
+              Reach a new daily contribution range to give that day a richer main feature. Both
+              calendar and landscape terrain keep these same activity milestones.
             </p>
           </div>
           <p class="growth-unit">GitHub contributions per day</p>
@@ -369,9 +391,9 @@
             </li>
           </ol>
           <p class="guide-note">
-            At 25 and 50 contributions, the main feature becomes more substantial, even when terrain
-            height has reached its limit. Density and other busy days do not lower a day's growth.
-            Wonders are extra discoveries alongside this daily growth.
+            At 25 and 50 contributions, the main feature becomes more substantial. Calendar heights
+            follow activity; landscape heights follow geography. Density and other busy days do not
+            lower a day's growth. Wonders are extra discoveries alongside this daily growth.
           </p>
           <p class="guide-note">
             Groves, meadows, and waterside gardens lead the landscape. Buildings and boats appear as
@@ -438,7 +460,7 @@
         </div>
         <p class="muted">
           Save snapshots in this browser. Compare two to five years from the same account using one
-          shared height scale.
+          shared activity scale. Landscape elevations stay geographic.
         </p>
         <div class="archive-toolbar">
           <button type="button" id="save-snapshot">Save current year</button
@@ -471,6 +493,10 @@
           ><input id="repository" value="octocat/octocat" />
           <p class="muted">
             Images publish to the <code>output</code> branch. Your token stays in GitHub Secrets.
+          </p>
+          <p class="muted">
+            README images are standalone SVGs. Interactive controls belong on a hosted demo page.
+            The landscape preview is local until its feature branch and demo are published.
           </p>
           <p id="workflow-version" class="muted"></p>
           <p class="muted">

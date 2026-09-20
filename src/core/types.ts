@@ -3,6 +3,8 @@ import type {
   MotionMode,
   NormalizationOptions,
   TerrainLayout,
+  TerrainMode,
+  LandscapeLayout,
   VillageStyle,
 } from './render-options.js';
 import type { ActivityBreakdown } from './activity-types.js';
@@ -81,6 +83,8 @@ export interface ThemeOptions {
   villageStyle?: VillageStyle;
   normalization?: NormalizationOptions;
   layoutSeed?: string;
+  readonly terrainMode?: TerrainMode;
+  readonly landscapeLayout?: LandscapeLayout;
 }
 
 /** Rendered SVG output for both color modes */

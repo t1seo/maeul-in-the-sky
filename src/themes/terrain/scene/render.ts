@@ -33,6 +33,7 @@ import { reserveSurfaceMotion } from '../effects/surface-budget.js';
 import { waterfallOutlets } from '../effects/water-topology.js';
 import { renderWaterfalls, waterfallBounds } from '../effects/waterfalls.js';
 import { clipSeasonalWeather } from '../effects/seasonal-weather-clip.js';
+import { renderLandscapeScene } from '../landscape/render.js';
 
 export function renderTerrainScene(
   scene: TerrainScene,
@@ -67,6 +68,7 @@ export function renderTerrainScene(
   }
   const settings = resolveRenderSettings(overrides, scene.settings, scene.username);
   const presented = { ...scene, settings };
+  if (scene.geography) return renderLandscapeScene(presented, mode, options);
   const card = settings.layout === 'card';
   const viewWidth = card ? 420 : 840;
   const viewHeight = card ? 360 : 240;

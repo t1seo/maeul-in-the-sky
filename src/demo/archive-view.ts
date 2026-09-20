@@ -6,6 +6,8 @@ import { downloadBlob, downloadText, pngBlob } from './downloads.js';
 import { renderSnapshot } from './preview.js';
 import { CURRENT_RENDERER, type DemoRenderer } from './renderers.js';
 import { RENDERER_VERSIONS } from './renderer-version.js';
+import { resolveDisplaySize } from '../core/display-size.js';
+import { settingsForRenderer } from './renderer-settings.js';
 
 export function snapshotKey(snapshot: SnapshotV1): string {
   return `${snapshot.username.toLowerCase()}:${snapshot.year}`;
@@ -90,18 +92,22 @@ export function showComparison(
     archive.comparison.years.includes(snapshot.year),
   );
   html('comparison-note').textContent =
-    `Comparing ${snapshots.length} years for @${snapshots[0]?.username ?? ''}. Common fixed maximum: ${maxCount} contributions. Equal counts share equal terrain heights; all cards use this scale. Artwork: ${RENDERER_VERSIONS[renderer.version].label}.`;
+    `Comparing ${snapshots.length} years for @${snapshots[0]?.username ?? ''}. Common fixed maximum: ${maxCount} contributions. ${snapshots.some((snapshot) => settingsForRenderer(snapshot.settings, renderer.version).terrainMode === 'landscape') ? 'Landscape elevations follow geography; daily rewards follow contribution counts.' : 'Equal counts share equal terrain heights; all cards use this scale.'} Artwork: ${RENDERER_VERSIONS[renderer.version].label}.`;
   const cards = snapshots.map((snapshot) => {
     const card = textNode('article', '', 'annual-card');
     card.dataset.normalizationMax = String(maxCount);
     card.dataset.year = String(snapshot.year);
     card.dataset.renderer = renderer.version;
     const svg = annualCardSvg(snapshot, mode, maxCount, renderer);
+    const dimensions = resolveDisplaySize({
+      ...settingsForRenderer(snapshot.settings, renderer.version),
+      layout: 'card',
+    });
     const image = document.createElement('img');
     image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
     image.alt = `${snapshot.year} village for ${snapshot.username}, common maximum ${maxCount}`;
-    image.width = 420;
-    image.height = 360;
+    image.width = dimensions.width;
+    image.height = dimensions.height;
     card.append(
       textNode('h3', String(snapshot.year)),
       image,
@@ -116,7 +122,7 @@ export function showComparison(
     pngButton.addEventListener('click', () =>
       safeAction(async () =>
         downloadBlob(
-          await pngBlob(svg, 420, 360, mode === 'light'),
+          await pngBlob(svg, dimensions.width, dimensions.height, mode === 'light'),
           `maeul-${snapshot.year}-comparison.png`,
         ),
       ),

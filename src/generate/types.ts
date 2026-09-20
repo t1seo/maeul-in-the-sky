@@ -26,6 +26,8 @@ export interface TerrainGenerationRequest {
   readonly normalization?: string;
   readonly maxCount?: string | number;
   readonly layoutSeed?: string;
+  readonly terrainMode?: string;
+  readonly landscapeLayout?: string;
   readonly format?: string;
   readonly scale?: string | number;
   readonly onProgress?: (message: string) => void;

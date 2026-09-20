@@ -2,6 +2,8 @@ import type { VillagePreset } from './presets.js';
 
 export type MotionMode = 'full' | 'subtle' | 'off';
 export type TerrainLayout = 'banner' | 'card';
+export type TerrainMode = 'calendar' | 'landscape';
+export type LandscapeLayout = 'island' | 'archipelago' | 'valley';
 export type VillageStyle = 'classic' | 'korean';
 export type ArtStyle = 'miniature' | 'pixel';
 export type Hemisphere = 'north' | 'south';
@@ -19,6 +21,8 @@ export type ResolvedRenderSettings = {
   readonly artStyle: ArtStyle;
   readonly normalization: NormalizationOptions;
   readonly layoutSeed?: string;
+  readonly terrainMode?: TerrainMode;
+  readonly landscapeLayout?: LandscapeLayout;
 };
 
 export type RenderSettingsInput = Omit<Partial<ResolvedRenderSettings>, 'style'> & {

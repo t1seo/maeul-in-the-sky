@@ -1,4 +1,5 @@
 import type { ThemeOptions } from './core/types.js';
+import { resolveDisplaySize } from './core/display-size.js';
 import { snapshotToContributionData } from './core/settings/parse.js';
 import { nodeGeneratorDependencies } from './generate/dependencies.js';
 import { resolveGenerationInput } from './generate/input.js';
@@ -40,8 +41,7 @@ export function createTerrainGenerator(dependencies: TerrainGeneratorDependencie
     request.onProgress?.(`Rendering with ${theme.displayName} theme...`);
     const options: ThemeOptions = {
       title: settings.title,
-      width: settings.layout === 'card' ? 420 : 840,
-      height: settings.layout === 'card' ? 360 : 240,
+      ...resolveDisplaySize(settings),
       hemisphere: settings.hemisphere,
       density: settings.density,
       ...(advanced
@@ -52,6 +52,9 @@ export function createTerrainGenerator(dependencies: TerrainGeneratorDependencie
             artStyle: settings.artStyle,
             normalization: settings.normalization,
             ...(settings.layoutSeed === undefined ? {} : { layoutSeed: settings.layoutSeed }),
+            ...(settings.terrainMode === undefined
+              ? {}
+              : { terrainMode: settings.terrainMode, landscapeLayout: settings.landscapeLayout }),
           }
         : {}),
     };

@@ -56,6 +56,8 @@ export function readActionRequest(dependencies: ActionDependencies): TerrainGene
     format: input('format'),
     scale: input('scale'),
     layoutSeed: input('layout_seed'),
+    terrainMode: input('terrain_mode'),
+    landscapeLayout: input('landscape_layout'),
     onProgress: dependencies.info,
   };
 }

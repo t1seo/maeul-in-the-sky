@@ -9,6 +9,8 @@ on:
       - 'scripts/generate-demo.ts'
       - 'scripts/build-demo.ts'
       - 'scripts/build-world.ts'
+      - 'scripts/build-terrain-lab.ts'
+      - 'scripts/generate-landscape.ts'
       - 'scripts/generate-catalog.ts'
       - 'scripts/catalog/**'
       - 'src/**'
@@ -39,6 +41,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run generate:demo
+      - run: npm run generate:landscape
       - run: npm run generate:catalog
       - run: npm run check:catalog
       - name: Verify enhanced demo and static fallback assets
@@ -48,6 +51,15 @@ jobs:
           test -s docs/demo/world/app/main.js
           test -s docs/demo/catalog/index.html
           test -s docs/demo/catalog/catalog.json
+          test -s docs/demo/catalog/wonders.html
+          test -s docs/demo/landscape/index.html
+          test -s docs/demo/terrain-lab/index.html
+          test -s docs/demo/terrain-lab/app/main.js
+          for landform in island archipelago valley; do
+            for mode in dark light; do
+              test -s "docs/demo/landscape/assets/$landform-$mode.svg"
+            done
+          done
           for preset in nature balanced civilization; do
             for mode in dark light; do
               test -s "docs/demo/assets/preset-$preset-$mode.svg"

@@ -31,6 +31,8 @@ Prefer the original artwork? Choose **Classic** in the [SVG studio](https://t1se
 
 **Current `main` documentation:** the asset, season, daily-growth and art-style improvements below are not included in published npm `1.4.0` or the current `v1` Action tag. This update targets `main` and the GitHub Pages demo; use the Action at `@main` or the source-checkout commands below.
 
+**Landscape preview branch:** this separate `t1seo/civilization-terrain` checkout adds optional geographic islands, archipelagos and valleys alongside the default calendar terrain. It reuses the village artwork with new terrain and settlement composition. Open the [landscape demo](https://t1seo.github.io/maeul-in-the-sky/landscape/) or choose **Terrain → Landscape** in the studio. The CLI accepts `--terrain-mode landscape --landscape-layout island`. Read the [landscape guide](docs/landscape.md) for branch deployment, local preview and README images. Landscape workflows use this feature branch; the published npm package and `v1` Action tag retain their existing behavior.
+
 ## What your village includes
 
 - Deterministic isometric Terrain with 100 elevation levels
@@ -250,6 +252,8 @@ GITHUB_TOKEN="$(gh auth token)" node dist/index.js \
 | `--write-snapshot [path]`         | `write_snapshot` | CLI optional path; Action `true`/`false`; default off                      |
 | `--motion`                        | `motion`         | `full` / `subtle` / `off`                                                  |
 | `--layout`                        | `layout`         | `banner` (840×240) / `card` (420×360)                                      |
+| `--terrain-mode`                  | `terrain_mode`   | `calendar` (default) / `landscape` (feature branch)                         |
+| `--landscape-layout`              | `landscape_layout` | `island` (default) / `archipelago` / `valley`; landscape banner is 1200×840, card is 840×840 |
 | `--style`, `--village-style`      | `village_style`  | `classic` / `korean`                                                       |
 | `--art-style`                     | `art_style`      | `miniature` / `pixel`; independent artwork, default `miniature`           |
 | `--normalization`                 | `normalization`  | `relative` / `fixed` / `shared` (archive only)                             |

@@ -6,7 +6,8 @@ import { copyOrDownload, downloadText } from './downloads.js';
 import { readImportFile } from './imports.js';
 import { readmeDocument, workflowDocument, type ReadmeAppearance } from './setup.js';
 import { demoQuery, type DemoSettings } from './state.js';
-import { RENDERER_VERSIONS, type RendererVersion } from './renderer-version.js';
+import type { RendererVersion } from './renderer-version.js';
+import { workflowVersion } from './renderer-settings.js';
 
 function readmeAppearance(): ReadmeAppearance {
   const value = select('readme-appearance').value;
@@ -19,7 +20,7 @@ function readme(document: SettingsV1): string {
 
 export function updateSetup(document: SettingsV1, renderer: RendererVersion = 'current'): void {
   const workflow = workflowDocument(document, renderer);
-  html('workflow-version').textContent = RENDERER_VERSIONS[renderer].description;
+  html('workflow-version').textContent = workflowVersion(document.settings, renderer).description;
   html('workflow-preview').textContent = workflow.ok ? workflow.content : workflow.message;
   for (const [field, id] of [
     ['title', 'title-error'],
@@ -56,7 +57,11 @@ export function setupExports(
     const content = workflow();
     if (content) {
       downloadText(content, 'maeul.yml', 'text/yaml');
-      status('Downloaded maeul.yml. Save it in .github/workflows/ and run it from Actions.');
+      status(
+        current().document.settings.terrainMode === 'landscape'
+          ? 'Downloaded maeul.yml. Publish the landscape feature branch with its built Action files before running this workflow on GitHub.'
+          : 'Downloaded maeul.yml. Save it in .github/workflows/ and run it from Actions.',
+      );
     }
   });
   click('copy-workflow', async () => {

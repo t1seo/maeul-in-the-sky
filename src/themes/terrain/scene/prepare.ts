@@ -20,6 +20,7 @@ import { dailyRewardPlacements } from './rewards.js';
 import { getDailyRewardTier } from '../assets/progression.js';
 import { consistencyByDate } from '../../../core/consistency.js';
 import { consistencyEffectPlacements } from './consistency.js';
+import { prepareLandscapeScene } from '../landscape/prepare.js';
 
 export function prepareTerrainScene(
   data: ContributionData,
@@ -94,7 +95,7 @@ export function prepareTerrainScene(
   const paths = neighborhoodPaths(cells, placements, biomeMap);
   const rewards = dailyRewardPlacements(cells);
   const consistencyEffects = consistencyEffectPlacements(cells, root, settings.hemisphere);
-  return {
+  const scene: TerrainScene = {
     schemaVersion: 1,
     layoutVersion: 3,
     username: data.username,
@@ -126,4 +127,5 @@ export function prepareTerrainScene(
       consistencyEffects.map((effect) => effect.footprint),
     ),
   };
+  return settings.terrainMode === 'landscape' ? prepareLandscapeScene(scene) : scene;
 }

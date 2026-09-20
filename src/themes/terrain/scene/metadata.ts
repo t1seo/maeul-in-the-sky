@@ -1,4 +1,6 @@
 import type { TerrainMetadata, TerrainScene } from '../../../core/scene-types.js';
+import { createLandscapeProjection } from '../landscape/projection.js';
+import { projectedSprite } from '../landscape/scene-placement.js';
 
 export function terrainMetadata(scene: TerrainScene): TerrainMetadata {
   const biomes = new Map(scene.biomes.map((entry) => [`${entry.week},${entry.day}`, entry.biome]));
@@ -19,6 +21,8 @@ export function terrainMetadata(scene: TerrainScene): TerrainMetadata {
     scene.fromDate && scene.toDate
       ? Math.round((Date.parse(scene.toDate) - Date.parse(scene.fromDate)) / 86400000) + 1
       : 0;
+  const landscape = scene.geography;
+  const projection = landscape ? createLandscapeProjection(landscape.model) : undefined;
   return {
     schemaVersion: 1,
     layoutVersion: scene.layoutVersion,
@@ -56,5 +60,14 @@ export function terrainMetadata(scene: TerrainScene): TerrainMetadata {
     rewards: scene.rewards ?? [],
     consistencyEffects: scene.consistencyEffects ?? [],
     neighborhoodPaths: scene.neighborhoodPaths,
+    ...(landscape && projection
+      ? {
+          terrainMode: 'landscape' as const,
+          landscapeLayout: landscape.model.options.layout,
+          scenery: landscape.settlement.sprites
+            .filter((sprite) => sprite.kind === 'scenery')
+            .map((sprite) => projectedSprite(sprite, projection)),
+        }
+      : {}),
   };
 }

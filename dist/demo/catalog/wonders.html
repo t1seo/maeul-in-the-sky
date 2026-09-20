@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="ko" data-mode="light" data-art-style="miniature">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Maeul in the Sky의 모든 원더를 한국어 설명과 실제 SVG 그림으로 살펴보는 도감입니다."
+    />
+    <link rel="icon" href="data:," />
+    <title>원더 도감 · Maeul in the Sky</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f4f2e9;
+        --card: #fffdf7;
+        --stage: #edeede;
+        --ink: #263c30;
+        --muted: #62705f;
+        --line: #d5d9c9;
+        --accent: #345b40;
+        --active: #e0e9d5;
+        --rare: #587046;
+        --epic: #8b523f;
+        --legendary: #675682;
+      }
+      :root[data-mode='dark'] {
+        color-scheme: dark;
+        --paper: #17231f;
+        --card: #20312a;
+        --stage: #273a31;
+        --ink: #eff0df;
+        --muted: #b2bfac;
+        --line: #405449;
+        --accent: #cee1b0;
+        --active: #3b5340;
+        --rare: #b5d491;
+        --epic: #edb49b;
+        --legendary: #cbb7e8;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 24px;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+        line-height: 1.6;
+        word-break: keep-all;
+      }
+      a {
+        color: inherit;
+        text-underline-offset: 4px;
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+      }
+      :focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 5px;
+      }
+      .skip {
+        position: absolute;
+        top: -80px;
+        left: 16px;
+        padding: 12px;
+        background: var(--card);
+        z-index: 5;
+      }
+      .skip:focus {
+        top: 8px;
+      }
+      .wrap {
+        width: min(1264px, calc(100% - 64px));
+        margin: auto;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 25px 0 18px;
+        border-bottom: 1px solid var(--line);
+        font-size: 13px;
+      }
+      .brand {
+        font:
+          600 19px Georgia,
+          serif;
+        letter-spacing: -0.4px;
+        text-decoration: none;
+      }
+      .topbar nav {
+        display: flex;
+        gap: 22px;
+      }
+      .hero {
+        padding: 34px 0 26px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 32px;
+      }
+      .eyebrow {
+        margin: 0 0 10px;
+        font-size: 11px;
+        letter-spacing: 0.19em;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(30px, 4vw, 48px);
+        line-height: 1.25;
+        letter-spacing: -0.055em;
+        font-weight: 650;
+      }
+      .intro {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        max-width: 620px;
+      }
+      .edition {
+        border-left: 1px solid var(--line);
+        padding: 0 0 0 28px;
+        min-width: 145px;
+      }
+      .edition strong {
+        font:
+          64px/1 Georgia,
+          serif;
+      }
+      .edition span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 8px;
+      }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 18px 0;
+        border-block: 1px solid var(--line);
+      }
+      .jump-links {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .jump-links a {
+        padding: 7px 13px;
+        font-size: 13px;
+        text-decoration: none;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+      }
+      .jump-links a:hover {
+        background: var(--active);
+      }
+      .controls {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+      fieldset {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        gap: 4px;
+      }
+      legend {
+        float: left;
+        align-self: center;
+        margin-right: 9px;
+        padding: 7px 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      button {
+        border: 1px solid transparent;
+        border-radius: 4px;
+        background: transparent;
+        color: var(--muted);
+        padding: 6px 11px;
+        font-size: 13px;
+      }
+      button[aria-pressed='true'] {
+        background: var(--active);
+        color: var(--ink);
+        border-color: var(--line);
+        font-weight: 700;
+      }
+      button:hover {
+        color: var(--ink);
+      }
+      #status {
+        margin: 12px 0 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .collection {
+        padding: 28px 0 14px;
+        --tier: var(--rare);
+      }
+      .collection[data-tier='epic'] {
+        --tier: var(--epic);
+      }
+      .collection[data-tier='legendary'] {
+        --tier: var(--legendary);
+      }
+      .section-heading {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      h2 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+      }
+      h2 span {
+        color: var(--tier);
+        margin-left: 10px;
+        font:
+          italic 19px Georgia,
+          serif;
+        letter-spacing: 0;
+      }
+      .section-heading p {
+        margin: 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .wonder {
+        min-width: 0;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        overflow: hidden;
+      }
+      .art {
+        margin: 10px 10px 0;
+        height: 176px;
+        position: relative;
+        display: grid;
+        place-items: center;
+        background-color: var(--stage);
+        background-image: radial-gradient(var(--line) 0.75px, transparent 0.75px);
+        background-size: 12px 12px;
+        border-radius: 3px;
+      }
+      .number {
+        position: absolute;
+        top: 9px;
+        left: 11px;
+        font:
+          12px Georgia,
+          serif;
+        color: var(--muted);
+      }
+      .category {
+        position: absolute;
+        top: 7px;
+        right: 9px;
+        font-size: 10px;
+        color: var(--muted);
+        background: var(--stage);
+        padding: 1px 4px;
+      }
+      .art svg {
+        width: 80%;
+        height: 140px;
+        margin-top: 13px;
+        overflow: hidden;
+      }
+      [data-art-style='pixel'] .art svg {
+        image-rendering: pixelated;
+      }
+      .copy {
+        padding: 16px 18px 17px;
+      }
+      .copy h3 {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.4;
+        letter-spacing: -0.035em;
+        font-weight: 600;
+      }
+      .english {
+        display: block;
+        color: var(--muted);
+        font:
+          italic 13px/1.5 Georgia,
+          serif;
+        margin-top: 3px;
+      }
+      .description {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 11px 0 13px;
+        min-height: 38px;
+      }
+      .card-foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        padding-top: 10px;
+        border-top: 1px solid var(--line);
+      }
+      .card-foot code {
+        font:
+          10px ui-monospace,
+          monospace;
+        color: var(--muted);
+        overflow-wrap: anywhere;
+      }
+      .tier-label {
+        font:
+          10px Georgia,
+          serif;
+        letter-spacing: 0.05em;
+        color: var(--tier);
+      }
+      .notes {
+        border-block: 1px solid var(--line);
+        margin-top: 30px;
+        padding: 24px 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+      .notes h2 {
+        font-size: 16px;
+      }
+      .notes p,
+      .notes li {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .notes ul {
+        padding-left: 18px;
+        margin-bottom: 0;
+      }
+      footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 0 32px;
+        gap: 20px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      [hidden] {
+        display: none !important;
+      }
+      @media (min-width: 1500px) {
+        .wrap {
+          width: min(1440px, calc(100% - 96px));
+        }
+        .grid {
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 950px) {
+        .grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .edition {
+          display: none;
+        }
+      }
+      @media (max-width: 700px) {
+        .wrap {
+          width: calc(100% - 32px);
+        }
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+        }
+        .hero {
+          display: block;
+          padding-top: 26px;
+        }
+        .topbar nav {
+          gap: 12px;
+          font-size: 11px;
+        }
+        .brand {
+          font-size: 16px;
+        }
+        .art {
+          height: 150px;
+          margin: 6px 6px 0;
+        }
+        .art svg {
+          height: 113px;
+        }
+        .copy {
+          padding: 13px 12px;
+        }
+        .copy h3 {
+          font-size: 16px;
+        }
+        .english {
+          font-size: 12px;
+        }
+        .section-heading {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .notes {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+        .controls {
+          gap: 12px;
+        }
+        footer {
+          flex-wrap: wrap;
+        }
+      }
+      @media (max-width: 360px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .topbar {
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#gallery">원더 목록으로 건너뛰기</a>
+    <div class="wrap">
+      <header>
+        <div class="topbar">
+          <a class="brand" href="../">Maeul in the Sky</a>
+          <nav aria-label="관련 페이지">
+            <a href="./">전체 에셋 도감</a><a href="../">마을 데모</a>
+          </nav>
+        </div>
+        <div class="hero">
+          <div>
+            <p class="eyebrow">The Wonder Collection</p>
+            <h1>작은 마을, 경이로운 풍경.</h1>
+            <p class="intro">
+              GitHub 기여 기록으로 자라나는 하늘 위 마을.<br />그 안에 찾아오는 특별한 건축물과
+              자연, 판타지 원더를 모두 모았습니다.
+            </p>
+          </div>
+          <div class="edition"><strong id="total">30</strong><span>WONDERS · 원더 도감</span></div>
+        </div>
+        <div class="toolbar">
+          <nav class="jump-links" aria-label="원더 등급 바로가기">
+            <a href="#rare">희귀 <span data-count="rare">14</span></a
+            ><a href="#epic">에픽 <span data-count="epic">10</span></a
+            ><a href="#legendary">전설 <span data-count="legendary">6</span></a>
+          </nav>
+          <div class="controls">
+            <fieldset>
+              <legend>그림체</legend>
+              <button type="button" data-style="miniature" aria-pressed="true">미니어처</button
+              ><button type="button" data-style="pixel" aria-pressed="false">픽셀</button>
+            </fieldset>
+            <fieldset>
+              <legend>조명</legend>
+              <button type="button" data-mode="light" aria-pressed="true">낮</button
+              ><button type="button" data-mode="dark" aria-pressed="false">밤</button>
+            </fieldset>
+          </div>
+        </div>
+        <p id="status" role="status" aria-live="polite">원더 도감을 불러오고 있습니다.</p>
+      </header>
+      <main id="gallery" tabindex="-1"></main>
+      <noscript
+        ><p>
+          원더 도감을 보시려면 JavaScript를 켜주세요.
+          <a href="wonders-light.svg">30종 전체 미리보기</a>는 바로 보실 수 있습니다.
+        </p></noscript
+      >
+      <aside class="notes" aria-label="프로젝트와 원더 안내">
+        <div>
+          <h2>이 마을은 어떻게 만들어지나요?</h2>
+          <p>
+            GitHub 기여 캘린더의 날짜별 활동을 0~99레벨 지형으로 바꾸고, 계절과 주변 환경에 맞춰
+            나무와 건물을 배치합니다. 같은 기록과 설정에서는 같은 마을이 만들어지며, 낮·밤을 바꿔도
+            배치는 유지됩니다.
+          </p>
+          <p>
+            원더는 일반 에셋 210종과 별도로 집계됩니다. 이 도감의 그림은 프로젝트에 등록된 실제 SVG
+            에셋의 정지 장면입니다.
+          </p>
+        </div>
+        <div>
+          <h2>원더가 나타나는 조건</h2>
+          <ul id="requirements"></ul>
+          <p>
+            표시된 레벨은 기여 횟수가 아닌 지형 레벨입니다. 등급별 기여 조건과 주변 풍성도를 충족한
+            뒤에도 희귀도 추첨과 간격 제한을 적용하며, 한 마을에는 원더가 최대 3개까지 배치됩니다.
+          </p>
+        </div>
+      </aside>
+      <footer>
+        <span>MAEUL FIELD NOTES / WONDER EDITION</span><a href="#">맨 위로 돌아가기 ↑</a>
+      </footer>
+    </div>
+    <script type="module">
+      const names = {
+        mountFuji: ['후지산', '마을 위로 솟은, 눈 덮인 화산 봉우리.'],
+        colosseum: ['콜로세움', '둥근 외벽에 석조 아치가 겹겹이 이어지는 원형극장.'],
+        giantSequoia: ['거대 세쿼이아', '붉고 굵은 줄기 위로 높이 자란 상록수.'],
+        coralReef: ['산호초', '선명한 빛깔의 산호 가지가 모인 작은 바다 정원.'],
+        pagoda: ['파고다', '층층이 포개진 지붕의 곡선이 돋보이는 탑.'],
+        torii: ['도리이', '완만한 곡선의 가로보를 얹은 붉은 문.'],
+        geyser: ['간헐천', '바위 웅덩이에서 하늘로 솟아오르는 물줄기.'],
+        hotSpring: ['온천', '따뜻한 돌 사이로 수증기가 피어나는 연못.'],
+        eiffelTower: ['에펠탑', '넓은 아치형 기단에서 가늘게 솟아오르는 격자 탑.'],
+        grandCanyon: ['그랜드 캐니언', '가느다란 강을 따라 층층이 드러난 붉은 절벽.'],
+        windmillGrand: ['대형 풍차', '높은 몸체에 커다란 날개 네 개를 단 풍차.'],
+        oasis: ['오아시스', '야자수 그늘 아래 자리한 청록빛 물웅덩이.'],
+        volcano: ['화산', '어두운 산 정상에 붉게 빛나는 분화구.'],
+        giantMushroom: ['거대 버섯', '작은 버섯들 위로 펼쳐진 거대한 점박이 갓.'],
+        aurora: ['오로라', '어두운 풍경 위로 흐르는 초록과 보랏빛 띠.'],
+        tajMahal: ['타지마할', '밝은 돔과 가느다란 첨탑이 어우러진 건축물.'],
+        giantWaterfall: ['거대 폭포', '높은 바위턱에서 넓게 쏟아지는 물의 장막.'],
+        stBasils: ['성 바실리 대성당', '형형색색의 양파 모양 돔이 모인 성당.'],
+        bambooGrove: ['대나무 숲', '마디진 대나무가 곧게 자란 고요한 초록 숲.'],
+        operaHouse: ['시드니 오페라 하우스', '물가의 낮은 기단 위로 펼쳐진 하얀 돛 모양 지붕.'],
+        glacierPeak: ['빙하 봉우리', '푸른 균열을 품고 뾰족하게 솟은 얼음 봉우리.'],
+        bioluminescentPool: ['생물 발광 연못', '작은 빛들이 은은하게 반짝이는 아늑한 연못.'],
+        meteorCrater: ['운석 분화구', '빛나는 운석을 가운데 품은 둥근 충돌 흔적.'],
+        bonsaiGiant: ['거대 분재', '뒤틀린 오래된 줄기 위에 넓게 펼쳐진 수관.'],
+        floatingIsland: ['공중섬', '바위 아래를 드러낸 채 하늘에 떠 있는 풀빛 섬.'],
+        crystalSpire: ['수정 첨탑', '빛을 머금은 반투명 결정들이 모인 첨탑.'],
+        dragonNest: ['드래곤 둥지', '몸을 웅크린 드래곤을 감싸는 바위 둥지.'],
+        worldTree: ['세계수', '황금빛 점들이 가지마다 깃든 거대한 나무.'],
+        sakuraEternal: ['영원의 벚나무', '빛나는 꽃잎을 흩날리는 환상 속 벚나무.'],
+        ancientPortal: ['고대 차원문', '오래된 돌 아치 안에서 소용돌이치는 마법의 문.'],
+      };
+      const tiers = {
+        rare: ['희귀', 'Rare'],
+        epic: ['에픽', 'Epic'],
+        legendary: ['전설', 'Legendary'],
+      };
+      const categories = { landmark: '건축물', nature: '자연', fantasy: '판타지' };
+      const root = document.documentElement;
+      const status = document.querySelector('#status');
+      const escape = (value) =>
+        String(value)
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#39;');
+      let entries = [];
+
+      function updateAppearance() {
+        const { mode, artStyle } = root.dataset;
+        const sprite = `catalog-sprite-${artStyle === 'pixel' ? 'pixel-' : ''}${mode}.svg`;
+        for (const card of document.querySelectorAll('[data-wonder-id]')) {
+          card
+            .querySelector('use')
+            .setAttribute('href', `${sprite}#wonder-${card.dataset.wonderId}`);
+        }
+        for (const button of document.querySelectorAll('[data-style], button[data-mode]')) {
+          button.setAttribute(
+            'aria-pressed',
+            String(
+              button.dataset.style
+                ? button.dataset.style === artStyle
+                : button.dataset.mode === mode,
+            ),
+          );
+        }
+        if (entries.length)
+          status.textContent = `전체 ${entries.length}종 · ${Object.entries(categories)
+            .map(
+              ([key, label]) =>
+                `${label} ${entries.filter((entry) => entry.category === key).length}`,
+            )
+            .join(
+              ' / ',
+            )} · ${artStyle === 'pixel' ? '픽셀' : '미니어처'} · ${mode === 'light' ? '낮' : '밤'}`;
+      }
+
+      function cardMarkup(entry, index) {
+        const [name, description] = names[entry.id] ?? [entry.displayName, entry.description];
+        const b = entry.bounds;
+        const padding = Math.max(2, Math.max(b.width, b.height) * 0.08);
+        const viewBox = [
+          b.x - padding,
+          b.y - padding,
+          b.width + padding * 2,
+          b.height + padding * 2,
+        ].join(' ');
+        return `<article class="wonder" data-wonder-id="${escape(entry.id)}" aria-labelledby="name-${escape(entry.id)}">
+        <div class="art"><span class="number">${String(index + 1).padStart(2, '0')}</span><span class="category">${categories[entry.category]}</span><svg viewBox="${viewBox}" role="img" aria-label="${escape(name)} 미리보기"><use href="catalog-sprite-light.svg#wonder-${escape(entry.id)}"></use></svg></div>
+        <div class="copy"><h3 id="name-${escape(entry.id)}">${escape(name)}</h3><span class="english" lang="en">${escape(entry.displayName)}</span><p class="description">${escape(description)}</p><div class="card-foot"><code>${escape(entry.id)}</code><span class="tier-label" lang="en">${tiers[entry.tier][1]}</span></div></div>
+      </article>`;
+      }
+
+      for (const button of document.querySelectorAll('[data-style], button[data-mode]')) {
+        button.addEventListener('click', () => {
+          if (button.dataset.style) root.dataset.artStyle = button.dataset.style;
+          else root.dataset.mode = button.dataset.mode;
+          updateAppearance();
+        });
+      }
+
+      try {
+        const response = await fetch('catalog.json');
+        if (!response.ok) throw new Error(`Catalog HTTP ${response.status}`);
+        const catalog = await response.json();
+        entries = catalog.wonders.entries;
+        document.querySelector('#total').textContent = entries.length;
+        document.querySelector('#gallery').innerHTML = Object.entries(tiers)
+          .map(([tier, [label, english]]) => {
+            const group = entries.filter((entry) => entry.tier === tier);
+            document.querySelector(`[data-count="${tier}"]`).textContent = group.length;
+            return `<section class="collection" id="${tier}" data-tier="${tier}" aria-labelledby="heading-${tier}"><div class="section-heading"><h2 id="heading-${tier}">${label} 원더 <span lang="en">${english} / ${group.length}</span></h2><p>${group.filter((entry) => entry.category === 'landmark').length ? '건축물과 자연이 만드는 특별한 풍경' : '상상 속 풍경이 마을에 머무는 순간'}</p></div><div class="grid">${group.map((entry) => cardMarkup(entry, entries.indexOf(entry))).join('')}</div></section>`;
+          })
+          .join('');
+        document.querySelector('#requirements').innerHTML = Object.entries(tiers)
+          .map(([tier, [label]]) => {
+            const { gate } = entries.find((entry) => entry.tier === tier);
+            const rule = gate.stats;
+            return `<li>${label}: 레벨 ${gate.minLevel} 이상 · 주변 풍성도 ${gate.minRichness} 이상 · 총 기여 ${rule.total.toLocaleString('ko-KR')}회 이상 ${rule.combination === 'or' ? '또는' : '그리고'} 최장 연속 활동 ${rule.longestStreak}일 이상</li>`;
+          })
+          .join('');
+        updateAppearance();
+      } catch (error) {
+        status.textContent =
+          '도감을 불러오지 못했습니다. 로컬 HTTP 서버에서 이 페이지를 열고 새로고침해주세요.';
+        const fallback = document.createElement('a');
+        fallback.href = 'wonders-light.svg';
+        fallback.textContent = '30종 전체 SVG 미리보기 열기';
+        document.querySelector('#gallery').append(fallback);
+        console.error(error);
+      }
+    </script>
+  </body>
+</html>

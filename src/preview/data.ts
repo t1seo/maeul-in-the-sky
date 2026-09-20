@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { resolveDisplaySize } from '../core/display-size.js';
 import { resolveRenderSettings } from '../core/settings/resolve.js';
 import { createSnapshot, snapshotToContributionData } from '../core/settings/parse.js';
 import { usernameSchema, renderSettingsInputSchema } from '../core/settings/schema.js';
@@ -40,6 +41,9 @@ export async function createPreviewResponse(
   const snapshot = createSnapshot(data, request.settings, { kind: 'github', fetchedAt });
   const verified = snapshotToContributionData(snapshot);
   const { renderTerrain } = await import('../themes/terrain/index.js');
-  const rendered = renderTerrain(verified, { ...snapshot.settings, width: 840, height: 240 });
+  const rendered = renderTerrain(verified, {
+    ...snapshot.settings,
+    ...resolveDisplaySize(snapshot.settings),
+  });
   return { snapshot, metadata: rendered.metadata };
 }

@@ -29,6 +29,7 @@ test-results/
 
 # Local Orca runs, authenticated snapshots, and QA evidence
 .orca/
+.omo/
 evidence/
 
 # Internal docs & artifacts
@@ -38,6 +39,7 @@ docs/*
 !docs/README.zh.md
 !docs/world-explorer.md
 !docs/world-explorer.ko.md
+!docs/landscape.md
 !docs/demo/
 !docs/demo/**
 examples/

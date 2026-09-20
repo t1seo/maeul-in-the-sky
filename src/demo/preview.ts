@@ -4,12 +4,13 @@ import type { ResolvedRenderSettings } from '../core/render-options.js';
 import type { SnapshotV1 } from '../core/snapshot-types.js';
 import type { ColorMode, ThemeOptions } from '../core/types.js';
 import type { TerrainRenderResult } from '../core/scene-types.js';
+import { resolveDisplaySize } from '../core/display-size.js';
+import { settingsForRenderer } from './renderer-settings.js';
 
 export function renderOptions(settings: ResolvedRenderSettings): ThemeOptions {
   return {
     ...settings,
-    width: settings.layout === 'card' ? 420 : 840,
-    height: settings.layout === 'card' ? 360 : 240,
+    ...resolveDisplaySize(settings),
   };
 }
 
@@ -24,7 +25,7 @@ export function renderSnapshot(
       ? { ...settings, title: `${settings.title.slice(0, 986)} · sample data` }
       : settings;
   return renderer.renderTerrain(snapshotToContributionData(snapshot), {
-    ...renderOptions(presented),
+    ...renderOptions(settingsForRenderer(presented, renderer.version)),
     namespace,
   });
 }

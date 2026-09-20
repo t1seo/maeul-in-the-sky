@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <title>지형과 마을 · Maeul in the Sky</title>
+    <style>
+      :root { color-scheme: dark; --bg: #101b24; --surface: #172630; --text: #f0f1e9; --muted: #a6b9be; --line: #31464d; --accent: #d6dfac; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, sans-serif; }
+      body.light { color-scheme: light; --bg: #f3f1e8; --surface: #fffef9; --text: #24352f; --muted: #647268; --line: #d4dbce; --accent: #355e46; }
+      main { max-width: 1320px; margin: auto; padding: 34px 40px 80px; }
+      nav, .tools, .caption, .section-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+      nav { padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+      .brand { letter-spacing: .12em; font-size: 12px; font-weight: 700; }
+      a { color: var(--accent); text-underline-offset: 4px; }
+      .eyebrow { color: var(--accent); font-size: 12px; letter-spacing: .13em; margin: 42px 0 12px; }
+      h1 { font-size: clamp(30px, 4.5vw, 56px); line-height: 1.2; letter-spacing: -.05em; margin: 0 0 18px; font-weight: 650; }
+      .intro { max-width: 790px; color: var(--muted); margin: 0 0 28px; }
+      button, .button { font: inherit; font-size: 14px; color: var(--text); border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 9px 16px; cursor: pointer; text-decoration: none; }
+      button[aria-pressed="true"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+      button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+      .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+      figure { margin: 20px 0 0; border: 1px solid var(--line); background: var(--surface); border-radius: 14px; overflow: hidden; }
+      #landscape { width: 100%; height: auto; display: block; aspect-ratio: 10/7; object-fit: contain; }
+      .caption { border-top: 1px solid var(--line); padding: 20px 24px; }
+      .caption p { margin: 3px 0 0; font-size: 14px; color: var(--muted); }
+      .facts { font-size: 13px; color: var(--muted); display: flex; gap: 20px; flex-wrap: wrap; margin-top: 16px; }
+      .sections { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 38px; }
+      article { border-top: 1px solid var(--line); padding-top: 20px; }
+      h2 { margin: 0 0 10px; font-size: 20px; letter-spacing: -.03em; }
+      article p { margin: 0 0 15px; color: var(--muted); font-size: 14px; }
+      .calendar { width: 100%; height: auto; border-radius: 8px; }
+      .note { font-size: 13px; color: var(--muted); margin: 28px 0 0; }
+      code { font-size: 12px; overflow-wrap: anywhere; }
+      @media (max-width: 680px) { main { padding: 22px 16px 48px; } .sections { grid-template-columns: 1fr; } .caption { padding: 16px; } .tools { align-items: flex-start; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav><span class="brand">MAEUL IN THE SKY / LANDSCAPES</span><a href="../catalog/wonders.html">원더 30종 보기 ↗</a></nav>
+      <p class="eyebrow">지형 위에 쌓이는 기록</p>
+      <h1>산과 강 사이,<br />우리의 마을.</h1>
+      <p class="intro">능선을 따라 자라는 숲, 물길 옆 농경지, 광장으로 이어지는 작은 길. 기존 건물과 원더를 새로운 지형에 배치했습니다. 같은 활동 기록을 섬·군도·계곡 세 가지 풍경으로 살펴보세요.</p>
+      <div class="tools">
+        <div class="tabs" role="group" aria-label="지형 선택">
+          <button data-layout="island" aria-pressed="true">01 · 섬</button>
+          <button data-layout="archipelago" aria-pressed="false">02 · 군도</button>
+          <button data-layout="valley" aria-pressed="false">03 · 계곡</button>
+        </div>
+        <button id="lighting" aria-pressed="false">밝은 배경으로 보기</button>
+      </div>
+      <figure>
+        <img id="landscape" src="./assets/island-dark.svg" alt="설산, 숲, 강, 농경지와 한옥 마을이 있는 섬 지형" width="1200" height="840" />
+        <figcaption class="caption">
+          <div><strong id="name">섬 · Island</strong><p id="description">해안으로 열린 평야, 뒤편의 산맥, 강가의 마을.</p></div>
+          <a class="button" id="studio" href="../?terrainMode=landscape&amp;landscapeLayout=island&amp;style=korean&amp;preset=civilization&amp;layoutSeed=41&amp;user=maeul-sky">스튜디오에서 설정하기 ↗</a>
+        </figcaption>
+      </figure>
+      <div class="facts"><span>같은 샘플 · 364일 · 1,582회 기여</span><span>기존 에셋 재사용 + 새 지형·길·농경지</span><a id="svg-download" href="./assets/island-dark.svg" download>독립 SVG 다운로드 ↓</a></div>
+      <div class="sections">
+        <article><h2>기존 달력형도 그대로</h2><p>날짜 순서대로 쌓이는 기존 방식은 기본값으로 유지됩니다. 스튜디오의 지형 설정에서 언제든 바꿀 수 있습니다.</p><img class="calendar" id="calendar" src="./assets/calendar-dark.svg" alt="같은 기록의 기존 달력형 마을" width="840" height="240" /><a href="../?terrainMode=calendar&amp;style=korean&amp;preset=civilization&amp;layoutSeed=41&amp;user=maeul-sky">달력형 열기 ↗</a></article>
+        <article><h2>GitHub에서도 보는 풍경</h2><p>위 그림은 실제 생성기가 만든 SVG 이미지입니다. README에는 이 이미지를 넣고, 지형 선택·설정·확대는 HTML 스튜디오에서 사용할 수 있습니다. 스튜디오에서는 SVG와 PNG를 내려받을 수 있습니다.</p><p>높이는 산과 평야의 지형을 나타냅니다. 활동 기록과 획득 조건에 따른 건물·원더는 유지하며, 날짜별 기록은 스튜디오에서 확인할 수 있습니다.</p><p class="note">이 데모는 <a href="https://github.com/t1seo/maeul-in-the-sky/tree/t1seo/civilization-terrain">t1seo/civilization-terrain 개발 브랜치</a>에서 제공합니다. GitHub Action에서도 이 브랜치를 선택해 새 지형을 생성할 수 있습니다.</p></article>
+      </div>
+      <p class="note">이 화면은 실제 계정 데이터가 아닌 고정된 공개 샘플을 사용합니다. 산과 숲, 들판은 배경 지형이며 추가 기여나 획득한 보상으로 집계하지 않습니다.</p>
+    </main>
+    <script>
+      const descriptions = {
+        island: ['섬 · Island', '해안으로 열린 평야, 뒤편의 산맥, 강가의 마을.'],
+        archipelago: ['군도 · Archipelago', '여러 섬의 해안선과, 각각의 육지에 자리 잡은 마을.'],
+        valley: ['계곡 · Valley', '양쪽 능선 사이를 흐르는 강과, 물길 옆의 농경지.'],
+      };
+      let layout = 'island';
+      let mode = 'dark';
+      function update() {
+        const source = `./assets/${layout}-${mode}.svg`;
+        document.getElementById('landscape').src = source;
+        document.getElementById('landscape').alt = `${descriptions[layout][0]}: ${descriptions[layout][1]}`;
+        document.getElementById('calendar').src = `./assets/calendar-${mode}.svg`;
+        document.getElementById('svg-download').href = source;
+        document.getElementById('name').textContent = descriptions[layout][0];
+        document.getElementById('description').textContent = descriptions[layout][1];
+        document.getElementById('studio').href = `../?terrainMode=landscape&landscapeLayout=${layout}&style=korean&preset=civilization&layoutSeed=41&user=maeul-sky&mode=${mode}`;
+        document.querySelectorAll('[data-layout]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.layout === layout)));
+        document.body.classList.toggle('light', mode === 'light');
+        document.getElementById('lighting').textContent = mode === 'light' ? '어두운 배경으로 보기' : '밝은 배경으로 보기';
+        document.getElementById('lighting').setAttribute('aria-pressed', String(mode === 'light'));
+      }
+      document.querySelectorAll('[data-layout]').forEach(button => button.addEventListener('click', () => { layout = button.dataset.layout; update(); }));
+      document.getElementById('lighting').addEventListener('click', () => { mode = mode === 'dark' ? 'light' : 'dark'; update(); });
+    </script>
+  </body>
+</html>
