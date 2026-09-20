@@ -50,7 +50,10 @@ export async function fetchContributions(
     const now = new Date();
     const oneYearAgo = new Date(now);
     oneYearAgo.setFullYear(now.getFullYear() - 1);
-    from = oneYearAgo.toISOString();
+    const firstCalendarWeek = new Date(now);
+    firstCalendarWeek.setUTCDate(now.getUTCDate() - now.getUTCDay() - 52 * 7);
+    firstCalendarWeek.setUTCHours(0, 0, 0, 0);
+    from = new Date(Math.max(oneYearAgo.getTime(), firstCalendarWeek.getTime())).toISOString();
     to = now.toISOString();
     effectiveYear = now.getFullYear();
   }
