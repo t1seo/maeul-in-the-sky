@@ -1,10 +1,10 @@
-# Landscape terrain preview
+# Archived landscape terrain experiment
 
-This feature lives in the separate `t1seo/civilization-terrain` branch and `civilization-terrain/` worktree. The established calendar renderer remains the default. The [public landscape demo](https://t1seo.github.io/maeul-in-the-sky/landscape/) and [SVG studio](https://t1seo.github.io/maeul-in-the-sky/?terrainMode=landscape&landscapeLayout=island&style=korean&preset=civilization&layoutSeed=41&mode=light) are deployed from this branch through GitHub Pages. Publishing this branch does not merge it into `main` or update the npm package or `v1` Action tag.
+Archived at the user's request on 2026-09-21. The profile and [public SVG studio](https://t1seo.github.io/maeul-in-the-sky/) use the original calendar renderer again; Pages deploys from `main`. The day/night images, contribution snapshot and former profile workflow are preserved in the [landscape archive](https://github.com/t1seo/t1seo/tree/main/archive/landscape-2026-09-21). Source, HTML demos, tests and the implementation plan remain in `t1seo/civilization-terrain` and the `archive/civilization-terrain-2026-09-21` tag. The separate worktree is retained. No feature merge, npm publication or `v1` Action update was performed.
 
 ## Two terrain modes
 
-In the built SVG studio, choose **Terrain · 지형 → Landscape · 자연 지형**, then **Island**, **Archipelago**, or **Valley**. **Calendar · 기존 달력** returns to the original dated terrain. Culture, miniature/pixel artwork, day/night, motion, decoration density and banner/card remain separate choices. The archived **Classic · original artwork** renderer supports calendar terrain only; selecting it returns the terrain control to Calendar and explains the change.
+In this branch's locally built SVG studio, choose **Terrain · 지형 → Landscape · 자연 지형**, then **Island**, **Archipelago**, or **Valley**. **Calendar · 기존 달력** returns to the original dated terrain. Culture, miniature/pixel artwork, day/night, motion, decoration density and banner/card remain separate choices. The archived **Classic · original artwork** renderer supports calendar terrain only; selecting it returns the terrain control to Calendar and explains the change.
 
 Landscape mode uses geographic elevation, ridges, coastlines and drainage. Counts continue to determine the existing daily rewards and earned Wonders. The terrain does not invent contributions or award showcase Wonders. The date inspector, collection, source label, zero days and total contribution statistics keep their original meaning. Mountains are geographic features, not contribution-height bars.
 
@@ -38,13 +38,13 @@ The generated SVGs can be embedded in a GitHub README as images. They contain th
 
 The studio's landscape workflow export references `t1seo/maeul-in-the-sky@t1seo/civilization-terrain`, including its committed built Action files. Calendar workflows retain `@main`; archived Classic workflows retain their pinned commit. A downloaded workflow generates and publishes images only after you install and run it in your own repository.
 
-To redeploy this branch after rebuilding and pushing its changes, run:
+If this experiment is explicitly restored, its former deployment command is:
 
 ```sh
 gh workflow run pages.yml --repo t1seo/maeul-in-the-sky --ref t1seo/civilization-terrain
 ```
 
-The `github-pages` environment must allow this exact branch alongside `main`. The workflow rebuilds the studio, generates the landscape samples and catalog, verifies the expected files, and deploys `docs/demo`. GitHub Pages serves one current deployment for this repository: a later deployment from `main` replaces the preview site until this branch is deployed again. Both calendar and landscape remain usable within this branch's studio.
+The archived branch's deployment permission has been removed from `github-pages`; only `main` remains allowed. Restoring the experiment requires explicitly allowing this exact branch again. Its workflow rebuilds the studio, generates the landscape samples and catalog, verifies the expected files, and deploys `docs/demo`. GitHub Pages serves one current deployment for this repository. Both calendar and landscape remain usable within this branch's local studio.
 
 Settings links preserve `terrainMode=landscape` and `landscapeLayout=island|archipelago|valley`. They share settings only. Settings and snapshot JSON preserve the mode and geography choice; snapshots also contain your supplied contribution data. Full prepared Scene JSON is the exact rendering replay format; metadata is descriptive and does not contain the complete terrain mesh.
 

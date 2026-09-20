@@ -31,7 +31,7 @@ Prefer the original artwork? Choose **Classic** in the [SVG studio](https://t1se
 
 **Current `main` documentation:** the asset, season, daily-growth and art-style improvements below are not included in published npm `1.4.0` or the current `v1` Action tag. This update targets `main` and the GitHub Pages demo; use the Action at `@main` or the source-checkout commands below.
 
-**Landscape preview branch:** this separate `t1seo/civilization-terrain` checkout adds optional geographic islands, archipelagos and valleys alongside the default calendar terrain. It reuses the village artwork with new terrain and settlement composition. Open the [landscape demo](https://t1seo.github.io/maeul-in-the-sky/landscape/) or choose **Terrain → Landscape** in the studio. The CLI accepts `--terrain-mode landscape --landscape-layout island`. Read the [landscape guide](docs/landscape.md) for branch deployment, local preview and README images. Landscape workflows use this feature branch; the published npm package and `v1` Action tag retain their existing behavior.
+**Archived landscape experiment · 2026-09-21:** the geographic islands, archipelagos and valleys in `t1seo/civilization-terrain` are preserved for reference. The profile and public SVG studio use the original calendar layout again. View the [frozen landscape archive](https://github.com/t1seo/t1seo/tree/main/archive/landscape-2026-09-21) or read the [landscape guide](docs/landscape.md) to run this branch locally. The complete implementation is preserved at `archive/civilization-terrain-2026-09-21`; the published npm package and `v1` Action tag retain their existing behavior.
 
 ## What your village includes
 

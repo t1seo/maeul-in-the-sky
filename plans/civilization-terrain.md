@@ -95,3 +95,7 @@ Report actual branch/worktree, local demo URL, how to select the new mode, SVG/P
 - Keep the existing `main` environment rule and add only `t1seo/civilization-terrain` as an allowed Pages deployment branch.
 - Dispatch `pages.yml` from the feature branch, including landscape sample generation and artifact checks.
 - Verify the successful GitHub deployment, public sample images, all three landform controls, studio rendering and the preserved calendar mode. Open the public demo in Orca and record the run URL locally.
+
+## Archival decision · 2026-09-21
+
+The user preferred the original calendar layout and requested archiving this experiment. Restore the calendar as the primary profile image and deploy the public studio from `main`. Keep the source branch and an archive tag, preserve the landscape images/snapshot/former workflow in the profile repository's dated archive, and stop scheduled landscape regeneration. The profile's calendar Action remains pinned to the verified rolling-calendar bug fix in `47df5c54b1d644f9447e1cb2c2e0fb306e8f7d9d`. The original project `main` checkout remains unchanged.
