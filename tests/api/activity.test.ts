@@ -80,6 +80,29 @@ describe('monthly activity in the calendar request', () => {
     expect(data.activity?.months.at(-1)?.to).toBe('2025-03-05T12:34:56.789Z');
   });
 
+  it.each([
+    ['2026-09-20T21:09:39.907Z', '2025-09-21T00:00:00.000Z'],
+    ['2024-09-22T06:00:00.000Z', '2023-09-24T00:00:00.000Z'],
+    ['2024-09-23T06:00:00.000Z', '2023-09-24T00:00:00.000Z'],
+  ])('keeps rolling activity within GitHub’s 53 calendar weeks on %s', async (now, from) => {
+    // Given GitHub omits the leading partial week when a rolling year spans 54 weeks.
+    vi.useFakeTimers();
+    vi.setSystemTime(now);
+    fetchMock.mockResolvedValue(Response.json(activityResponse(from, now)));
+
+    // When the rolling calendar and its monthly evidence are requested together.
+    const result = await fetchContributions('octocat');
+    const body = requested();
+
+    // Then every claimed activity date is present, including across a leap year.
+    expect(body.variables.from).toBe(from);
+    expect(body.variables.month00From).toBe(from);
+    expect(result.activity?.from).toBe(from);
+    expect(result.activity?.to).toBe(now);
+    expect(result.weeks[0]?.days[0]?.date).toBe(from.slice(0, 10));
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
   it('accepts legacy responses without claiming an available breakdown', async () => {
     // Given an old fixture with no monthly aliases.
     fetchMock.mockResolvedValue(Response.json(calendarResponse()));

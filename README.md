@@ -29,7 +29,9 @@ The default experience is the animated diagonal SVG village shown above. The pro
 
 Prefer the original artwork? Choose **Classic** in the [SVG studio](https://t1seo.github.io/maeul-in-the-sky/?renderer=classic). It uses the preserved pre-upgrade renderer, and its setup workflow pins `05a10eff07575acf2c81adcd66a66bc501507217` so future updates do not change that design.
 
-**Current `main` documentation:** the asset, season, daily-growth and art-style improvements below are not included in published npm `1.4.0` or the current `v1` Action tag. This update targets `main` and the GitHub Pages demo; use the Action at `@main` or the source-checkout commands below.
+**Version 2.0.0** includes the asset, season, daily-growth and art-style improvements below. The original animated calendar remains the default; the newer geographic landscape experiment is [archived separately](https://github.com/t1seo/maeul-in-the-sky/tree/archive/civilization-terrain-2026-09-21).
+
+**Migrating from 1.x:** when constructing `ContributionData` manually, set `stats: computeStats(weeks)` to include the four new required statistics fields. Regenerated scenes use layout version 3 and updated artwork; saved version-1 and version-2 prepared scenes remain supported.
 
 ## What your village includes
 
@@ -75,7 +77,7 @@ Open **Archive · 3D & island experiments** at the bottom of the studio, or read
 
 For a GitHub profile, use the repository whose name matches your username. Add `.github/workflows/maeul-sky.yml`:
 
-These examples use `@main` for the current features. The `v1` tag still points to the older commit `1d514430`. For reproducible runs, replace `@main` with the full commit SHA you have tested; a branch name moves as updates land.
+These examples pin `@v2.0.0`. Use `@v2` to follow compatible updates; `@v1` remains on the previous major. For immutable runs, pin the full commit SHA you have tested.
 
 ```yaml
 name: Update Maeul in the Sky
@@ -94,7 +96,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: t1seo/maeul-in-the-sky@main
+      - uses: t1seo/maeul-in-the-sky@v2.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           preset: balanced
@@ -157,7 +159,7 @@ Outputs: `dark_svg_path` and `light_svg_path` contain the default generated path
 ### Common customizations
 
 ```yaml
-- uses: t1seo/maeul-in-the-sky@main
+- uses: t1seo/maeul-in-the-sky@v2.0.0
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
     username: octocat
@@ -207,29 +209,34 @@ Open the [demo](https://t1seo.github.io/maeul-in-the-sky/) to choose a preset, u
 
 Select a date to inspect its count, reward tier, Biome and placements. The explorer displays source, exact dates, total, active days, streak and a height/season legend. Zoom supports +/−/reset, keyboard panning, Escape and focus return. The [Wonder encyclopedia](https://t1seo.github.io/maeul-in-the-sky/#wonders) shows discovered/locked landmarks and their actual gates. Eligibility does not guarantee selection: spacing, neighboring terrain, chance and the maximum-three budget also apply.
 
-The setup section downloads settings JSON, a workflow and a README snippet. Its workflow uses `t1seo/maeul-in-the-sky@main` and publishes to the `output` branch; its snippet points there, as an alternative to the main-branch quick start above. Pin a tested full commit SHA if you need a fixed version. Only the publication job receives `contents: write`. Titles or layout seeds containing `${{` cannot be exported to a workflow because GitHub evaluates Actions expressions; they remain valid in images and JSON.
+The setup section downloads settings JSON, a workflow and a README snippet. Its workflow uses `t1seo/maeul-in-the-sky@v2.0.0` and publishes to the `output` branch; its snippet points there, as an alternative to the main-branch quick start above. Pin a tested full commit SHA if you need a fixed version. Only the publication job receives `contents: write`. Titles or layout seeds containing `${{` cannot be exported to a workflow because GitHub evaluates Actions expressions; they remain valid in images and JSON.
 
 ## CLI
 
-Node.js 20 or newer is required. These examples use current `main` features that are **not yet released on npm**. Build a source checkout first:
+Node.js 20 or newer is required. The commands below run the published 2.0.0 CLI with `npx`.
+
+<details>
+<summary>Build from source (optional)</summary>
 
 ```bash
-git clone --branch main https://github.com/t1seo/maeul-in-the-sky.git
+git clone --branch v2.0.0 https://github.com/t1seo/maeul-in-the-sky.git
 cd maeul-in-the-sky
 npm ci
 npx tsx scripts/pixel/generate.ts --check
 npm run build
 ```
 
+</details>
+
 ```bash
-GITHUB_TOKEN="$(gh auth token)" node dist/index.js \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
   --user octocat --preset civilization --output ./terrain
 
-node dist/index.js --input village.snapshot.json \
+npx --package=maeul-in-the-sky@2.0.0 maeul-sky --input village.snapshot.json \
   --layout card --village-style korean --art-style pixel --motion off --format both --scale 2 \
   --write-snapshot --output ./terrain
 
-GITHUB_TOKEN="$(gh auth token)" node dist/index.js \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
   --user octocat --years 2024,2025 --normalization shared --output ./archive
 ```
 
@@ -259,7 +266,7 @@ GITHUB_TOKEN="$(gh auth token)" node dist/index.js \
 | `--scale`                         | `scale`          | Integer PNG scale 1–4; default 2                                           |
 | `--help`, `-h`; `--version`, `-V` | —                | CLI help/version                                                           |
 
-Run `node dist/index.js --help` and `node dist/index.js preview --help` for this checkout. Invalid/conflicting options fail with field-specific errors.
+Run `npx --package=maeul-in-the-sky@2.0.0 maeul-sky --help` and `npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --help` for this checkout. Invalid/conflicting options fail with field-specific errors.
 
 Defaults remain `terrain`, `balanced`, density `5`, `north`, `classic`, `full`, `banner`, relative P90 and a rolling range; artwork defaults to `miniature`. Render settings resolve in this order: explicit CLI/Action/UI field → loaded settings → selected preset defaults → library defaults. In single-render CLI/API calls, `--config` supplies loaded settings in preference to snapshot settings; they are not merged field by field. An explicit preset alone does not replace saved density. Omitted flags do not override saved settings. Format and PNG scale are output options, not saved render settings.
 
@@ -268,7 +275,7 @@ The default still writes `maeul-in-the-sky-dark.svg` and `maeul-in-the-sky-light
 ### Local preview with your account
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" node dist/index.js preview --port 4318
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --port 4318
 ```
 
 Open `http://127.0.0.1:4318/` and select **Fetch contributions**. The service binds loopback only and reads its token from the server environment. There is no browser token field: do not place tokens in links, JSON or forms. The static public demo imports JSON and never contacts your localhost service. Missing credentials produce an actionable error; upstream errors are sanitized. The local process caches account/year responses for five minutes, up to 32 entries.
@@ -301,16 +308,16 @@ Both banner and card retain the full supplied period. Card places larger statist
 
 ## JavaScript and browser API
 
-The published npm package remains the **legacy 1.4.0 release**, without the improvements documented above:
+Install the released package, including the Node and browser APIs:
 
 ```bash
-npm install maeul-in-the-sky@1.4.0
+npm install maeul-in-the-sky@2.0.0
 ```
 
-For the **current `main` API**, build the source checkout as shown above and run the following as an `.mjs` file in its root:
+Run this example as an `.mjs` file in the project where you installed the package:
 
 ```js
-import { generateTerrain, generateArchive } from './dist/lib.js';
+import { generateTerrain, generateArchive } from 'maeul-in-the-sky';
 
 const result = await generateTerrain({
   username: 'octocat',
@@ -344,7 +351,7 @@ import {
   renderTerrain,
   prepareTerrainScene,
   renderTerrainScene,
-} from './dist/browser.js';
+} from 'maeul-in-the-sky/browser';
 
 export function renderSavedVillage(snapshotJson) {
   const snapshot = parseSnapshot(snapshotJson);

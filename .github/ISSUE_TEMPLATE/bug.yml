@@ -23,7 +23,7 @@ body:
     attributes:
       label: Version
       description: Action tag, npm version, or commit SHA
-      placeholder: v1 or 1.4.0
+      placeholder: v2 or 2.0.0
     validations:
       required: true
   - type: textarea

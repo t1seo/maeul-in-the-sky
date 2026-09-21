@@ -7,15 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
+## [2.0.0] - 2026-09-21
 
-- Give miniature SVG rivers blue-green depth shading, tapered natural banks and varied ripples in place of road-like central stripes, while retaining existing flow and waterfall motion limits
-- Replace the SVG height legend with a village collection: static badges for unique discovered Wonders, an undiscovered marker and earned seasonal effects, scoped to the displayed landscape
-- Make seasonal SVG snow, rain, cherry petals and autumn leaves easier to see with distinct movement, bounded airspace and the existing motion budget
-- Enrich miniature SVG ground with varied material textures and cliff strata, clearer directional river currents, and bounded coastal waterfalls with fading mist; retain still geometry for reduced/off motion and PNG exports
-- Restore the animated diagonal SVG village as the main studio and profile experience, with Day/Night previews and automatic or fixed Day/Night README exports
-- Preserve 2D/3D island worlds and 3D profile capture tooling as explicitly archived experiments, with existing routes and saved files still supported
-- Open Activity charts directly in the SVG studio using the current source snapshot, without navigating to the archived world explorer
+### Migration
+
+- The animated calendar village remains the default. The newer geographic landscape experiment is archived separately and is not part of this release. Existing `/world/` experiments remain available as archived tools.
+- `ContributionData.stats` now requires `activeDays`, `busiestMonth`, `fromDate` and `toDate`; use `computeStats(weeks)` when constructing contribution data manually.
+- New scenes use `layoutVersion: 3`, so regenerated artwork can differ from 1.4.0. Saved version-1 and version-2 prepared scenes remain supported.
+- Install `maeul-in-the-sky@2.0.0` or use the Action at `@v2.0.0` / `@v2`. The `v1` tag remains on the previous major.
 
 ### Added
 
@@ -62,6 +61,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Give miniature SVG rivers blue-green depth shading, tapered natural banks and varied ripples in place of road-like central stripes, while retaining existing flow and waterfall motion limits
+- Replace the SVG height legend with a village collection: static badges for unique discovered Wonders, an undiscovered marker and earned seasonal effects, scoped to the displayed landscape
+- Make seasonal SVG snow, rain, cherry petals and autumn leaves easier to see with distinct movement, bounded airspace and the existing motion budget
+- Enrich miniature SVG ground with varied material textures and cliff strata, clearer directional river currents, and bounded coastal waterfalls with fading mist; retain still geometry for reduced/off motion and PNG exports
+- Restore the animated diagonal SVG village as the main studio and profile experience, with Day/Night previews and automatic or fixed Day/Night README exports
+- Preserve 2D/3D island worlds and 3D profile capture tooling as explicitly archived experiments, with existing routes and saved files still supported
+- Open Activity charts directly in the SVG studio using the current source snapshot, without navigating to the archived world explorer
+
 - **Shared SVG artwork** — static ordinary artwork is defined once and reused across placements and motion branches, preserving dated hit targets and reducing exported SVG size
 - **Readable height legend** — neutral gray bars share a baseline and rise with contribution height; season colors no longer imply contribution levels
 - **Calendar-aligned rewards** — dated primary assets and consistency effects follow calendar seasons and hemisphere, avoiding premature next-season choices during terrain color transitions
@@ -73,7 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Layout version 2** — date-based primary rewards and bounded surrounding decorations use a new declared layout identity; legacy settings and prepared scenes remain accepted, but regenerating a scene can change its arrangement
 - **Decoration density** — density now adjusts surrounding decoration choices within available space and growth stages; it does not lower a daily reward tier or change its guaranteed primary asset
 - **Renderer cost baseline** — increased art detail and daily rewards require a documented new feature baseline after simplification; prior/current size and timing measurements remain public, and future +5% size, +20% median, and +30% p95 regression limits are unchanged
-- **Current-source setup** — new-feature workflow examples use the main Action bundle; npm 1.4.0 and the existing v1 tag do not include these unreleased features
+- **Release setup** — workflow examples and studio exports pin `v2.0.0`; npm now includes the current calendar artwork, CLI, Node API and portable browser entry
 - **Contribution calendar rendering** — supplied UTC dates now determine Sunday-based positions, including partial weeks, gaps, leap days, and ranges longer than 53 weeks without inventing missing dates
 - **Deterministic layout identity** — versioned date-based seeds keep dark/light scene geometry aligned and allow an explicit `layoutSeed` override, with documented stability limits around neighbors, normalization, and Wonder budgets
 - **Output adapters** — CLI and Action accept settings/snapshot input, layout, style, normalization, archive, PNG, and snapshot-output controls while preserving the default two-SVG workflow
@@ -87,6 +94,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dependencies** — updated the test and Action toolchains; `npm audit` now reports zero vulnerabilities
 
 ### Fixed
+
+- Bound rolling GitHub requests to its 53 calendar weeks so omitted leading dates cannot invalidate monthly activity, including leap-year boundaries
 
 - Separate the seasonal collection heading from evenly spaced icon-and-label chips to prevent badge text overlap
 - Keep tall grass and cattails rooted while swaying by separating terrain placement from the animated local transform
@@ -194,6 +203,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Water system** — two-tone water overlays, ripple lines, river shimmer animations
 - **Contribution statistics** — streak calculation, day-of-week analysis
 
+[Unreleased]: https://github.com/t1seo/maeul-in-the-sky/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/t1seo/maeul-in-the-sky/compare/v1.4.0...v2.0.0
 [1.4.0]: https://github.com/t1seo/maeul-in-the-sky/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/t1seo/maeul-in-the-sky/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/t1seo/maeul-in-the-sky/compare/v1.1.0...v1.2.0

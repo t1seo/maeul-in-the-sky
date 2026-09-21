@@ -59,7 +59,7 @@ Published links can add `&view=three` after their `world` parameter to open dire
 
 From a source checkout, run `npm ci`, `npm run build`, then `node dist/index.js preview`. Open the printed local address and choose **Explore your world**. The packaged preview serves the same world application as Pages. The existing CLI, Action and browser rendering APIs still produce SVG without loading Three.js.
 
-The current world explorer is published from `main`. npm `1.4.0` and the older floating `v1` Action tag do not contain it; follow the source-checkout or tested commit instructions in the README.
+The world explorer is retained as an archived experiment in 2.0.0. The default studio and profile use the original animated calendar village. Install `maeul-in-the-sky@2.0.0` or follow the README source instructions to explore the archived tools.
 
 ## Show a 3D island on your profile
 
@@ -69,7 +69,7 @@ Add this optional step **after** your existing generation step with `write_snaps
 
 ```yaml
 - name: Capture the four-season sky island
-  uses: t1seo/maeul-in-the-sky/profile@main
+  uses: t1seo/maeul-in-the-sky/profile@v2.0.0
   with:
     snapshot_path: maeul-in-the-sky.snapshot.json
     output_dir: .

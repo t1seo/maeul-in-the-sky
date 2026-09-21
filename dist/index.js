@@ -27260,7 +27260,7 @@ init_esm_shims();
 // package.json
 var package_default = {
   name: "maeul-in-the-sky",
-  version: "1.4.0",
+  version: "2.0.0",
   description: "Build an animated isometric village from your GitHub contributions",
   type: "module",
   bin: {
@@ -28009,7 +28009,10 @@ async function fetchContributions(username, year, token, options = {}) {
     const now = /* @__PURE__ */ new Date();
     const oneYearAgo = new Date(now);
     oneYearAgo.setFullYear(now.getFullYear() - 1);
-    from = oneYearAgo.toISOString();
+    const firstCalendarWeek = new Date(now);
+    firstCalendarWeek.setUTCDate(now.getUTCDate() - now.getUTCDay() - 52 * 7);
+    firstCalendarWeek.setUTCHours(0, 0, 0, 0);
+    from = new Date(Math.max(oneYearAgo.getTime(), firstCalendarWeek.getTime())).toISOString();
     to = now.toISOString();
     effectiveYear = now.getFullYear();
   }

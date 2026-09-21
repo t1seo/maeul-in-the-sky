@@ -47,7 +47,7 @@ WebGL 2를 사용할 수 없는 환경에서도 지도는 이용하실 수 있�
 
 소스 체크아웃에서는 `npm ci`, `npm run build`, `node dist/index.js preview`를 순서대로 실행한 뒤 표시되는 주소를 열어 주세요. **Explore your world**에서 Pages와 같은 탐험기를 여실 수 있습니다. 기존 CLI·Action·브라우저 렌더링 API는 Three.js를 불러오지 않고 SVG를 생성합니다.
 
-이번 탐험기는 `main`과 Pages에 반영됩니다. npm `1.4.0`과 이전 `v1` Action 태그에는 포함되지 않으므로 README의 소스 체크아웃 또는 검증된 커밋 사용 안내를 따라 주세요.
+탐험기는 2.0.0에 아카이브된 실험으로 보존되어 있습니다. 기본 스튜디오와 프로필은 기존 달력형 마을을 사용합니다. 보관된 도구를 살펴보려면 `maeul-in-the-sky@2.0.0`을 설치하거나 README의 소스 빌드 안내를 따라 주세요.
 
 ## GitHub 프로필에 3D 섬 표시하기
 
