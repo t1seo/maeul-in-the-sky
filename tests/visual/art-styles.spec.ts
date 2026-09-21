@@ -42,7 +42,7 @@ test('preserves independent culture and art choices across setup, sharing and im
   const workflow = (await clickDownload(page, 'Download workflow')).toString();
   expect(workflow).toContain('village_style: "korean"');
   expect(workflow).toContain('art_style: "pixel"');
-  expect(workflow).toContain('uses: t1seo/maeul-in-the-sky@main');
+  expect(workflow).toContain('uses: t1seo/maeul-in-the-sky@v2.0.0');
   await art.selectOption('miniature');
   await page.locator('#settings-input').setInputFiles({
     name: 'settings.json',
