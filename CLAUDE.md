@@ -102,7 +102,7 @@ npx tsx scripts/generate-catalog.ts docs/demo/catalog # Generate registry catalo
 
 - Gitmoji commit style: `emoji type: message`
 - **Always update CHANGELOG.md** when committing notable changes (new features, fixes, breaking changes)
-- **Always create/update GitHub release** after pushing version changes: `gh release create vX.Y.Z` with notes matching CHANGELOG. Update the floating `v1` tag to point to the latest release.
+- **Always create/update GitHub release** after pushing version changes: `gh release create vX.Y.Z` with notes matching CHANGELOG. Update the matching major tag (`v2` for 2.x); preserve tags for earlier majors.
 - TypeScript strict mode
 - ESM modules (`"type": "module"` in package.json)
 - No default exports — named exports only

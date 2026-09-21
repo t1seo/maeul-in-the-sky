@@ -28,7 +28,9 @@ GitHub Contribution Calendar의 하루가 하늘에 떠 있는 Terrain의 일부
 
 원래 그림체를 계속 사용하시려면 [SVG 스튜디오의 클래식 버전](https://t1seo.github.io/maeul-in-the-sky/?renderer=classic)을 선택해 주세요. 업데이트 직전의 렌더러를 그대로 사용하며, 설정 화면에서 받는 워크플로도 `05a10eff07575acf2c81adcd66a66bc501507217`에 고정됩니다.
 
-**현재 `main` 기준 문서입니다.** 아래의 에셋·사계절·일별 성장·그림체 개선은 npm `1.4.0`과 현재 `v1` Action 태그에 포함되어 있지 않습니다. 이번 변경은 `main`과 GitHub Pages 데모를 대상으로 하므로 Action은 `@main`, CLI와 라이브러리는 아래 소스 체크아웃 예제를 사용해 주세요.
+**2.0.0 릴리스**에는 아래의 에셋·사계절·일별 성장·그림체 개선이 포함됩니다. 기본 화면은 기존 달력형 마을이며, 새 지형 실험은 [별도 아카이브](https://github.com/t1seo/maeul-in-the-sky/tree/archive/civilization-terrain-2026-09-21)에 보관되어 있습니다.
+
+**1.x에서 이전하기:** `ContributionData`를 직접 만들 때는 새 필수 통계 필드 네 개가 포함되도록 `stats: computeStats(weeks)`를 사용하세요. 새 장면은 배치 버전 3과 개선된 에셋으로 생성되며, 저장된 버전 1·2 장면도 계속 지원합니다.
 
 ## 마을에 포함되는 것
 
@@ -72,7 +74,7 @@ README 미리보기와 프리셋 이미지 6개는 고정 시드의 **합성 데
 
 GitHub 프로필에 사용하려면 사용자명과 같은 이름의 저장소에 `.github/workflows/maeul-sky.yml`을 추가합니다.
 
-새 기능을 사용하도록 예제는 `@main`을 지정합니다. 현재 `v1` 태그는 이전 `1d514430`을 가리킵니다. 같은 버전을 재현하려면 `@main` 대신 직접 검증한 전체 커밋 SHA를 고정해 주세요. 브랜치는 업데이트에 따라 이동합니다.
+예제는 `@v2.0.0`을 고정합니다. 호환되는 업데이트를 받으려면 `@v2`를 사용하세요. `@v1`은 이전 메이저 버전을 유지합니다. 변경되지 않는 참조가 필요하면 검증한 전체 커밋 SHA를 고정해 주세요.
 
 ```yaml
 name: Update Maeul in the Sky
@@ -91,7 +93,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: t1seo/maeul-in-the-sky@main
+      - uses: t1seo/maeul-in-the-sky@v2.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           preset: balanced
@@ -152,7 +154,7 @@ jobs:
 기본 출력값은 `dark_svg_path`와 `light_svg_path`입니다. 해당 기능을 사용할 때 `dark_png_path`, `light_png_path`, `snapshot_path`, `archive_path`, `comparison_dark_svg_path`, `comparison_light_svg_path`도 제공됩니다.
 
 ```yaml
-- uses: t1seo/maeul-in-the-sky@main
+- uses: t1seo/maeul-in-the-sky@v2.0.0
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
     username: octocat
@@ -200,29 +202,34 @@ Wonder는 해당 셀의 활동량, 주변 셀의 풍부함, 전체 기여 통계
 
 날짜를 선택하면 수치, 보상 단계, Biome, 배치 항목을 확인할 수 있습니다. 탐색기는 출처, 정확한 날짜 범위, 총합, 활동일, 연속 기여와 높이/계절 범례를 표시합니다. 확대/축소/초기화, 키보드 이동, Escape, 포커스 복귀를 지원합니다. [Wonder 도감](https://t1seo.github.io/maeul-in-the-sky/#wonders)은 발견/잠김 상태와 실제 조건을 보여 줍니다. 조건 충족만으로 선택이 보장되지는 않으며, 간격, 주변 Terrain, 확률, 최대 3개 제한도 적용됩니다.
 
-설정 영역에서는 설정 JSON, 워크플로, README 조각을 내려받을 수 있습니다. 생성한 워크플로는 `t1seo/maeul-in-the-sky@main`을 사용해 `output` 브랜치에 게시하며, README 조각도 그 브랜치를 가리킵니다. 버전을 고정하려면 검증한 전체 커밋 SHA로 바꿔 주세요. `${{`가 들어간 제목이나 배치 시드는 GitHub Actions 표현식으로 해석될 수 있어 워크플로로 내보낼 수 없지만 이미지와 JSON에서는 사용할 수 있습니다.
+설정 영역에서는 설정 JSON, 워크플로, README 조각을 내려받을 수 있습니다. 생성한 워크플로는 `t1seo/maeul-in-the-sky@v2.0.0`을 사용해 `output` 브랜치에 게시하며, README 조각도 그 브랜치를 가리킵니다. 버전을 고정하려면 검증한 전체 커밋 SHA로 바꿔 주세요. `${{`가 들어간 제목이나 배치 시드는 GitHub Actions 표현식으로 해석될 수 있어 워크플로로 내보낼 수 없지만 이미지와 JSON에서는 사용할 수 있습니다.
 
 ## CLI
 
-Node.js 20 이상이 필요합니다. 아래는 **현재 `main` 기준이며 npm에는 아직 배포되지 않은 기능**을 사용하는 예제입니다. 먼저 소스를 체크아웃하고 빌드해 주세요.
+Node.js 20 이상이 필요합니다. 아래 명령은 npm에 배포된 2.0.0 CLI를 `npx`로 실행합니다.
+
+<details>
+<summary>소스에서 빌드하기 (선택 사항)</summary>
 
 ```bash
-git clone --branch main https://github.com/t1seo/maeul-in-the-sky.git
+git clone --branch v2.0.0 https://github.com/t1seo/maeul-in-the-sky.git
 cd maeul-in-the-sky
 npm ci
 npx tsx scripts/pixel/generate.ts --check
 npm run build
 ```
 
+</details>
+
 ```bash
-GITHUB_TOKEN="$(gh auth token)" node dist/index.js \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
   --user octocat --preset civilization --output ./terrain
 
-node dist/index.js --input village.snapshot.json \
+npx --package=maeul-in-the-sky@2.0.0 maeul-sky --input village.snapshot.json \
   --layout card --village-style korean --art-style pixel --motion off --format both --scale 2 \
   --write-snapshot --output ./terrain
 
-GITHUB_TOKEN="$(gh auth token)" node dist/index.js \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
   --user octocat --years 2024,2025 --normalization shared --output ./archive
 ```
 
@@ -252,14 +259,14 @@ GITHUB_TOKEN="$(gh auth token)" node dist/index.js \
 | `--scale`                         | PNG 배율 정수 1부터 4. 기본 2                             |
 | `--help`, `-h`; `--version`, `-V` | 도움말과 버전 출력                                        |
 
-이 체크아웃의 플래그는 `node dist/index.js --help`, 로컬 서비스는 `node dist/index.js preview --help`에서 확인하세요. 기본값은 `terrain`, `balanced`, 밀도 `5`, `north`, `classic`, `full`, `banner`, 상대 P90, 최근 52주이며 그림체는 `miniature`입니다. 우선순위는 명시한 CLI/Action/UI 값 → 불러온 설정 → 선택한 프리셋 기본값 → 라이브러리 기본값입니다. 단일 렌더에서 `--config`는 스냅샷 설정보다 우선하며 두 설정을 필드별로 합치지 않습니다. 명시한 프리셋만으로 저장된 밀도를 바꾸지는 않습니다. 형식과 PNG 배율은 저장되는 렌더 설정이 아닙니다.
+이 체크아웃의 플래그는 `npx --package=maeul-in-the-sky@2.0.0 maeul-sky --help`, 로컬 서비스는 `npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --help`에서 확인하세요. 기본값은 `terrain`, `balanced`, 밀도 `5`, `north`, `classic`, `full`, `banner`, 상대 P90, 최근 52주이며 그림체는 `miniature`입니다. 우선순위는 명시한 CLI/Action/UI 값 → 불러온 설정 → 선택한 프리셋 기본값 → 라이브러리 기본값입니다. 단일 렌더에서 `--config`는 스냅샷 설정보다 우선하며 두 설정을 필드별로 합치지 않습니다. 명시한 프리셋만으로 저장된 밀도를 바꾸지는 않습니다. 형식과 PNG 배율은 저장되는 렌더 설정이 아닙니다.
 
 기본 실행은 여전히 `maeul-in-the-sky-{dark,light}.svg` 두 개만 씁니다. PNG와 스냅샷은 요청했을 때만 추가됩니다. `--format png`에서는 SVG 경로 결과가 빈 문자열입니다.
 
 ### 내 계정 로컬 미리보기
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" node dist/index.js preview --port 4318
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --port 4318
 ```
 
 `http://127.0.0.1:4318/`을 열고 **Fetch contributions**를 선택하세요. 서비스는 루프백에만 바인딩하고 서버 환경의 토큰만 읽습니다. 브라우저 토큰 입력란은 없으며 링크, JSON, 폼에 토큰을 넣으면 안 됩니다. 공개 정적 데모는 JSON만 불러오며 localhost에 접속하지 않습니다. 로컬 프로세스는 계정/연도 응답을 5분 동안 최대 32개 캐시합니다.
@@ -290,16 +297,16 @@ GITHUB_TOKEN="$(gh auth token)" node dist/index.js preview --port 4318
 
 ## JavaScript 및 브라우저 API
 
-공개 npm 패키지는 위 개선이 포함되지 않은 **기존 1.4.0 릴리스**입니다.
+Node와 브라우저 API가 포함된 정식 패키지를 설치하세요.
 
 ```bash
-npm install maeul-in-the-sky@1.4.0
+npm install maeul-in-the-sky@2.0.0
 ```
 
-**현재 `main` API**를 사용하려면 위 소스 체크아웃을 빌드한 뒤, 저장소 루트에 `.mjs` 파일을 만들어 아래 예제를 실행해 주세요.
+패키지를 설치한 프로젝트에 `.mjs` 파일을 만들어 아래 예제를 실행해 주세요.
 
 ```js
-import { generateArchive, generateTerrain } from './dist/lib.js';
+import { generateArchive, generateTerrain } from 'maeul-in-the-sky';
 
 const result = await generateTerrain({
   username: 'octocat',

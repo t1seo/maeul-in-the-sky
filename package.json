@@ -1,6 +1,6 @@
 {
   "name": "maeul-in-the-sky",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "Build an animated isometric village from your GitHub contributions",
   "type": "module",
   "bin": {
