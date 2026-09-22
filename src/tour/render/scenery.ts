@@ -1,11 +1,4 @@
-import {
-  Color,
-  InstancedMesh,
-  MeshStandardMaterial,
-  BufferGeometry,
-  Float32BufferAttribute,
-  Group,
-} from 'three';
+import { Color, DoubleSide, InstancedMesh, MeshStandardMaterial, Group } from 'three';
 import { part } from '../../world/model/recipes/primitives.js';
 import { seededRandom } from '../../utils/math.js';
 import { transform } from '../../world/three/geometry/placements.js';
@@ -13,59 +6,111 @@ import type { GeometryResources } from '../../world/three/geometry/resources.js'
 import type { TourModel } from '../types.js';
 import type { createBatches } from './batches.js';
 import { cellColor } from './land.js';
+import type { ForestWind } from './wind.js';
+import { createGrassGeometry } from './wind-grass.js';
+import { WIND_PROFILES, windMargin } from './wind-profiles.js';
+
+const ANIMALS = new Set<string>([
+  'squirrel',
+  'rabbit',
+  'lamb',
+  'chicken',
+  'bird',
+  'owl',
+  'robinBird',
+  'winterBird',
+  'cow',
+  'deer',
+  'fox',
+  'horse',
+  'donkey',
+  'sheep',
+  'pigpen',
+  'goat',
+]);
 
 export function addScenery(
   model: TourModel,
   batches: ReturnType<typeof createBatches>,
   resources: GeometryResources,
+  wind?: ForestWind,
 ): Group {
   const group = new Group();
   const random = seededRandom(7301);
   const grassy = model.cells.filter((cell) => cell.surface === 'grass' || cell.surface === 'earth');
-  const geometry = resources.geometry(new BufferGeometry());
-  geometry.setAttribute(
-    'position',
-    new Float32BufferAttribute(
-      [
-        -0.09, 0, 0, 0.05, 0.38, 0.03, 0.07, 0, 0, 0, 0, -0.09, -0.025, 0.29, 0.03, 0, 0, 0.06,
-        -0.1, 0, -0.04, -0.18, 0.24, -0.13, 0.04, 0, 0.03,
-      ],
-      3,
-    ),
+  const geometry = resources.geometry(createGrassGeometry());
+  const base = resources.material(
+    new MeshStandardMaterial({
+      color: '#ffffff',
+      roughness: 1,
+      side: DoubleSide,
+      vertexColors: true,
+    }),
   );
-  geometry.computeVertexNormals();
-  const material = resources.material(
-    new MeshStandardMaterial({ color: '#ffffff', roughness: 1, side: 2 }),
-  );
-  const grass = new InstancedMesh(geometry, material, grassy.length * 12);
+  const material = wind ? wind.material(base, 'grass') : base;
+  const grass = new InstancedMesh(geometry, material, grassy.length * 24);
+  grass.name = 'Meadow grass';
   resources.instance(grass);
   let index = 0;
   for (const cell of grassy) {
-    for (let blade = 0; blade < 12; blade++) {
+    const clearings = model.placements.filter(
+      ({ position }) => Math.abs(position.x - cell.x) < 2.6 && Math.abs(position.z - cell.z) < 2.6,
+    );
+    const density = cell.surface === 'grass' ? 24 : 14;
+    for (let blade = 0; blade < density; blade++) {
       const position = {
-        x: cell.x + (random() - 0.5) * 3.9,
+        x: cell.x + (random() - 0.5) * 3.7,
         y: 0.015,
-        z: cell.z + (random() - 0.5) * 3.9,
+        z: cell.z + (random() - 0.5) * 3.7,
       };
-      const height = 0.5 + random() * 0.8;
+      const height = 0.65 + random() * 0.7;
+      if (
+        random() > 0.9 ||
+        clearings.some(({ source, position: anchor }) => {
+          const radius = ANIMALS.has(source.catalogId) ? 0.55 : 0.4;
+          return Math.hypot(position.x - anchor.x, position.z - anchor.z) < radius;
+        })
+      )
+        continue;
       grass.setMatrixAt(
         index,
         transform(position, { x: 0, y: random() * 6.28, z: 0 }, { x: 1, y: height, z: 1 }),
       );
-      grass.setColorAt(index, cellColor(cell).multiplyScalar(0.75 + random() * 0.2));
+      grass.setColorAt(index, cellColor(cell).multiplyScalar(0.72 + random() * 0.25));
       index++;
       if (blade < 2 && cell.season === 'spring') {
         batches.add(
-          part('sphere', blade === 0 ? '#efbdd0' : '#f8e6ac', [0, 0.17, 0], [0.14, 0.09, 0.14]),
+          part('sphere', blade === 0 ? '#efbdd0' : '#f8e6ac', [0, 0.23, 0], [0.14, 0.09, 0.14]),
           'flower',
           position,
           1,
           cell.source.date,
+          false,
+          'flower',
+        );
+        batches.add(
+          part('cylinder', '#648853', [0, 0.11, 0], [0.018, 0.22, 0.018]),
+          'flower-stem',
+          position,
+          1,
+          cell.source.date,
+          false,
+          'flower',
         );
       }
     }
   }
+  grass.count = index;
+  grass.castShadow = true;
   grass.receiveShadow = true;
+  grass.computeBoundingSphere();
+  if (wind) {
+    grass.customDepthMaterial = wind.depth('grass');
+    const margin = windMargin(WIND_PROFILES.grass);
+    if (grass.boundingSphere) grass.boundingSphere.radius += margin;
+    grass.computeBoundingBox();
+    grass.boundingBox?.expandByScalar(margin);
+  }
   group.add(grass);
   const water = new Set(
     model.cells.filter((cell) => cell.surface === 'water').map((cell) => `${cell.x},${cell.z}`),

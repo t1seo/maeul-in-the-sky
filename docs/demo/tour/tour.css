@@ -494,6 +494,14 @@ body[data-map-side='left'] #map-dock svg {
   font-size: 16px;
   font-weight: 600;
 }
+.help-panel .credits-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .help-panel p {
   font-size: 12px;
   line-height: 1.85;

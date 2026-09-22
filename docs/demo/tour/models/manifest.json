@@ -1,0 +1,931 @@
+{
+  "version": 1,
+  "models": [
+    {
+      "id": "squirrel",
+      "file": "squirrel.glb",
+      "source": {
+        "id": "squirrel",
+        "creator": "Poly by Google",
+        "modelUrl": "https://poly.pizza/m/fQ5KzXoR2uA",
+        "downloadUrl": "https://static.poly.pizza/a5701682-cb65-493a-8d52-4817b76107ac.glb",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "sha256": "963821ab643595967e73ce1c24056d293159ed2ccdded1efda5ab69ba14b8ddc",
+        "rawFile": "squirrel-fQ5KzXoR2uA.glb",
+        "bytes": 46420
+      },
+      "sha256": "799632447dea9ec0604212040f6436e406ee3ead2e99ac546531982f6f418e27",
+      "bytes": 45852,
+      "triangles": 634,
+      "bones": 0,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": false,
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "+Z",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -8.57382,
+            -23.095741,
+            -36.612747
+          ],
+          "max": [
+            8.57382,
+            23.095741,
+            36.612743
+          ],
+          "size": [
+            17.14764,
+            46.191483,
+            73.225491
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Repacked as one self-contained GLB; original texture, geometry, node transform and silhouette preserved.",
+        "Unused data removed and duplicate resources deduplicated. No bones or animation invented."
+      ]
+    },
+    {
+      "id": "cow",
+      "file": "cow.glb",
+      "source": {
+        "creator": "Quaternius",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "id": "cow",
+        "modelUrl": "https://quaternius.com/packs/ultimateanimatedanimals.html",
+        "downloadUrl": "https://drive.google.com/uc?export=download&id=1lS3t1Sof0FVne1C1WXfdX48qaHES_pDG",
+        "sha256": "b04af067688d9fadf1395b4456dbf3117c2f760fb49e704ee5c8b6391fc8adb5",
+        "rawFile": "cow-quaternius.gltf",
+        "bytes": 3114187
+      },
+      "sha256": "dcb1d9df530115842ed48b28a182324af7fca3413e0eb588d9de65124edcd3a4",
+      "bytes": 993460,
+      "triangles": 2450,
+      "bones": 42,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": true,
+      "clips": [
+        {
+          "name": "Eating",
+          "duration": 6
+        },
+        {
+          "name": "Idle",
+          "duration": 3.3333332538604736
+        },
+        {
+          "name": "Idle_2",
+          "duration": 3.3333332538604736
+        },
+        {
+          "name": "Idle_Headlow",
+          "duration": 3.3333332538604736
+        }
+      ],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "+Z",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -1.156094,
+            -0.055506,
+            -2.979617
+          ],
+          "max": [
+            1.156095,
+            4.531166,
+            5.087369
+          ],
+          "size": [
+            2.312189,
+            4.586672,
+            8.066986
+          ]
+        },
+        "animatedBounds": [
+          {
+            "clip": "Eating",
+            "samples": 17,
+            "min": [
+              -1.636124,
+              -0.055506,
+              -3.027244
+            ],
+            "max": [
+              1.750061,
+              4.551954,
+              5.145601
+            ],
+            "size": [
+              3.386185,
+              4.60746,
+              8.172845
+            ],
+            "minFootY": -0.055506,
+            "maxFootY": -0.055506
+          },
+          {
+            "clip": "Idle",
+            "samples": 17,
+            "min": [
+              -1.775423,
+              -0.055506,
+              -3.011179
+            ],
+            "max": [
+              1.748303,
+              4.549275,
+              5.155035
+            ],
+            "size": [
+              3.523726,
+              4.604781,
+              8.166214
+            ],
+            "minFootY": -0.055506,
+            "maxFootY": -0.055506
+          },
+          {
+            "clip": "Idle_2",
+            "samples": 17,
+            "min": [
+              -1.515336,
+              -0.055506,
+              -3.009194
+            ],
+            "max": [
+              1.748711,
+              4.677053,
+              5.158407
+            ],
+            "size": [
+              3.264047,
+              4.732559,
+              8.167602
+            ],
+            "minFootY": -0.055506,
+            "maxFootY": -0.055506
+          },
+          {
+            "clip": "Idle_Headlow",
+            "samples": 17,
+            "min": [
+              -1.156094,
+              -0.055506,
+              -3.324664
+            ],
+            "max": [
+              1.156094,
+              4.554466,
+              5.087368
+            ],
+            "size": [
+              2.312188,
+              4.609972,
+              8.412032
+            ],
+            "minFootY": -0.055506,
+            "maxFootY": -0.055506
+          }
+        ]
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "deer",
+      "file": "deer.glb",
+      "source": {
+        "creator": "Quaternius",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "id": "deer",
+        "modelUrl": "https://quaternius.com/packs/ultimateanimatedanimals.html",
+        "downloadUrl": "https://drive.google.com/uc?export=download&id=1iGpXKrqYGyZCPGHPPSuDAoKnOXLhXJ0q",
+        "sha256": "b8afd0647e7a74332ce802c8326dfefe1a2b76da67ab925a631aaddb5ae9bdd4",
+        "rawFile": "deer-quaternius.gltf",
+        "bytes": 3288813
+      },
+      "sha256": "e1859e6b3d311cd0bb443660ac566325f34e91aac908250a585bed1b1382f3eb",
+      "bytes": 1041348,
+      "triangles": 2098,
+      "bones": 46,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": true,
+      "clips": [
+        {
+          "name": "Eating",
+          "duration": 6
+        },
+        {
+          "name": "Idle",
+          "duration": 3.3333332538604736
+        },
+        {
+          "name": "Idle_2",
+          "duration": 3.3333332538604736
+        },
+        {
+          "name": "Idle_Headlow",
+          "duration": 3.3333332538604736
+        }
+      ],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "+Z",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -0.72949,
+            -0.013107,
+            -1.6422
+          ],
+          "max": [
+            0.729491,
+            4.260979,
+            2.755117
+          ],
+          "size": [
+            1.458981,
+            4.274086,
+            4.397317
+          ]
+        },
+        "animatedBounds": [
+          {
+            "clip": "Eating",
+            "samples": 17,
+            "min": [
+              -0.733089,
+              -0.013107,
+              -1.648645
+            ],
+            "max": [
+              0.736552,
+              4.260978,
+              3.524289
+            ],
+            "size": [
+              1.469641,
+              4.274085,
+              5.172934
+            ],
+            "minFootY": -0.013107,
+            "maxFootY": -0.013107
+          },
+          {
+            "clip": "Idle",
+            "samples": 17,
+            "min": [
+              -0.812667,
+              -0.013107,
+              -1.642199
+            ],
+            "max": [
+              0.856589,
+              4.337809,
+              2.75574
+            ],
+            "size": [
+              1.669256,
+              4.350916,
+              4.39794
+            ],
+            "minFootY": -0.013107,
+            "maxFootY": -0.013107
+          },
+          {
+            "clip": "Idle_2",
+            "samples": 17,
+            "min": [
+              -0.857231,
+              -0.013107,
+              -1.642199
+            ],
+            "max": [
+              0.913647,
+              4.32761,
+              2.761555
+            ],
+            "size": [
+              1.770878,
+              4.340717,
+              4.403754
+            ],
+            "minFootY": -0.013107,
+            "maxFootY": -0.013107
+          },
+          {
+            "clip": "Idle_Headlow",
+            "samples": 17,
+            "min": [
+              -0.72949,
+              -0.013108,
+              -1.882755
+            ],
+            "max": [
+              0.729491,
+              4.260978,
+              2.960621
+            ],
+            "size": [
+              1.458981,
+              4.274085,
+              4.843376
+            ],
+            "minFootY": -0.013108,
+            "maxFootY": -0.013107
+          }
+        ]
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "fox",
+      "file": "fox.glb",
+      "source": {
+        "creator": "Quaternius",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "id": "fox",
+        "modelUrl": "https://quaternius.com/packs/ultimateanimatedanimals.html",
+        "downloadUrl": "https://drive.google.com/uc?export=download&id=1z-CWoUC2vJxrqgGFTYlMaywpE1ooV-bA",
+        "sha256": "2f36e3c9c75ecddda85c5f9944e98ee1e88e7c679a546534aff1cea8ecde64c7",
+        "rawFile": "fox-quaternius.gltf",
+        "bytes": 3163174
+      },
+      "sha256": "2fd9f52aabc7dbd680c2b18e2d3109a0cca02fec4520ccbdd95a15f62f9b9454",
+      "bytes": 794868,
+      "triangles": 1848,
+      "bones": 51,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": true,
+      "clips": [
+        {
+          "name": "Eating",
+          "duration": 2.5333333015441895
+        },
+        {
+          "name": "Idle",
+          "duration": 3.3333332538604736
+        },
+        {
+          "name": "Idle_2",
+          "duration": 3.3333332538604736
+        }
+      ],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "+Z",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -0.527156,
+            -0.001931,
+            -2.896948
+          ],
+          "max": [
+            0.527156,
+            2.664653,
+            2.702743
+          ],
+          "size": [
+            1.054312,
+            2.666584,
+            5.599691
+          ]
+        },
+        "animatedBounds": [
+          {
+            "clip": "Eating",
+            "samples": 17,
+            "min": [
+              -0.767596,
+              -0.001931,
+              -2.979277
+            ],
+            "max": [
+              0.944576,
+              2.84926,
+              2.81508
+            ],
+            "size": [
+              1.712171,
+              2.85119,
+              5.794357
+            ],
+            "minFootY": -0.001931,
+            "maxFootY": -0.001931
+          },
+          {
+            "clip": "Idle",
+            "samples": 17,
+            "min": [
+              -0.589955,
+              -0.001931,
+              -2.899803
+            ],
+            "max": [
+              0.610426,
+              2.694867,
+              2.708735
+            ],
+            "size": [
+              1.200381,
+              2.696797,
+              5.608538
+            ],
+            "minFootY": -0.001931,
+            "maxFootY": -0.001931
+          },
+          {
+            "clip": "Idle_2",
+            "samples": 17,
+            "min": [
+              -0.648899,
+              -0.001931,
+              -2.900776
+            ],
+            "max": [
+              0.632984,
+              2.686463,
+              2.710579
+            ],
+            "size": [
+              1.281883,
+              2.688394,
+              5.611355
+            ],
+            "minFootY": -0.001931,
+            "maxFootY": -0.001931
+          }
+        ]
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "horse",
+      "file": "horse.glb",
+      "source": {
+        "creator": "Quaternius",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "id": "horse",
+        "modelUrl": "https://quaternius.com/packs/ultimateanimatedanimals.html",
+        "downloadUrl": "https://drive.google.com/uc?export=download&id=1hbtY8kxnXiPdwYGVY7rWRgU0jl_-Q-LG",
+        "sha256": "3deb61550dff1d2786d04b6e8559d63ad3907d6ab606ba28ce0af074ed96341b",
+        "rawFile": "horse-quaternius.gltf",
+        "bytes": 3610082
+      },
+      "sha256": "72e4fd933a55926d718cf5e640904677d40ed2f8565045de6178937423eafa3e",
+      "bytes": 1017020,
+      "triangles": 2182,
+      "bones": 50,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": true,
+      "clips": [
+        {
+          "name": "Eating",
+          "duration": 6
+        },
+        {
+          "name": "Idle",
+          "duration": 3.3333332538604736
+        },
+        {
+          "name": "Idle_2",
+          "duration": 3.3333332538604736
+        }
+      ],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "+Z",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -0.705718,
+            -0.011219,
+            -2.223291
+          ],
+          "max": [
+            0.705718,
+            4.812731,
+            3.452822
+          ],
+          "size": [
+            1.411436,
+            4.82395,
+            5.676114
+          ]
+        },
+        "animatedBounds": [
+          {
+            "clip": "Eating",
+            "samples": 17,
+            "min": [
+              -1.260555,
+              -0.011219,
+              -2.247438
+            ],
+            "max": [
+              1.250505,
+              4.812729,
+              3.769668
+            ],
+            "size": [
+              2.51106,
+              4.823948,
+              6.017106
+            ],
+            "minFootY": -0.011219,
+            "maxFootY": -0.011219
+          },
+          {
+            "clip": "Idle",
+            "samples": 17,
+            "min": [
+              -1.235553,
+              -0.011219,
+              -2.227269
+            ],
+            "max": [
+              1.226568,
+              4.85428,
+              3.505637
+            ],
+            "size": [
+              2.462122,
+              4.865499,
+              5.732906
+            ],
+            "minFootY": -0.011219,
+            "maxFootY": -0.011219
+          },
+          {
+            "clip": "Idle_2",
+            "samples": 17,
+            "min": [
+              -1.055179,
+              -0.011219,
+              -2.232303
+            ],
+            "max": [
+              1.22685,
+              4.880166,
+              3.512433
+            ],
+            "size": [
+              2.282029,
+              4.891385,
+              5.744736
+            ],
+            "minFootY": -0.011219,
+            "maxFootY": -0.011219
+          }
+        ]
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "donkey",
+      "file": "donkey.glb",
+      "source": {
+        "creator": "Quaternius",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "id": "donkey",
+        "modelUrl": "https://quaternius.com/packs/ultimateanimatedanimals.html",
+        "downloadUrl": "https://drive.google.com/uc?export=download&id=1Buic-_4vNtmwN0rtMHcdWw3TEaSPz4iW",
+        "sha256": "4cbb2eb7d057789c945b6445d99d0c73b76c0caf7ac9b37ce88a04ca718be2ff",
+        "rawFile": "donkey-quaternius.gltf",
+        "bytes": 3564269
+      },
+      "sha256": "9481a6523b1fffe23f50ee367547810a423759129f6724702c63d2b70e356ba6",
+      "bytes": 976284,
+      "triangles": 2000,
+      "bones": 50,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": true,
+      "clips": [
+        {
+          "name": "Eating",
+          "duration": 6
+        },
+        {
+          "name": "Idle",
+          "duration": 3.3333332538604736
+        },
+        {
+          "name": "Idle_2",
+          "duration": 3.3333332538604736
+        }
+      ],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "+Z",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -0.58294,
+            0.004989,
+            -1.70933
+          ],
+          "max": [
+            0.58294,
+            3.958774,
+            2.998702
+          ],
+          "size": [
+            1.16588,
+            3.953785,
+            4.708032
+          ]
+        },
+        "animatedBounds": [
+          {
+            "clip": "Eating",
+            "samples": 17,
+            "min": [
+              -0.934537,
+              0.004989,
+              -1.740721
+            ],
+            "max": [
+              0.920725,
+              3.958773,
+              3.187525
+            ],
+            "size": [
+              1.855261,
+              3.953784,
+              4.928246
+            ],
+            "minFootY": 0.004989,
+            "maxFootY": 0.004989
+          },
+          {
+            "clip": "Idle",
+            "samples": 17,
+            "min": [
+              -0.915086,
+              0.004989,
+              -1.719493
+            ],
+            "max": [
+              0.904082,
+              4.025454,
+              3.043582
+            ],
+            "size": [
+              1.819169,
+              4.020465,
+              4.763075
+            ],
+            "minFootY": 0.004989,
+            "maxFootY": 0.004989
+          },
+          {
+            "clip": "Idle_2",
+            "samples": 17,
+            "min": [
+              -0.792877,
+              0.004989,
+              -1.720709
+            ],
+            "max": [
+              0.904278,
+              4.032595,
+              3.043845
+            ],
+            "size": [
+              1.697155,
+              4.027606,
+              4.764554
+            ],
+            "minFootY": 0.004989,
+            "maxFootY": 0.004989
+          }
+        ]
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "sheep",
+      "file": "sheep.glb",
+      "source": {
+        "creator": "Quaternius",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "id": "sheep",
+        "modelUrl": "https://poly.pizza/m/C39AUXUUes",
+        "downloadUrl": "https://static.poly.pizza/a4bd2c4e-fe71-4dbd-9881-cf3ac8a00bbf.glb",
+        "sha256": "91aedec323b54d42b802b065b2f5005daea527b0a379a9f3fe90f3258f3c2382",
+        "rawFile": "C39AUXUUes.glb",
+        "bytes": 156948
+      },
+      "sha256": "c3eb9a2b8901a6bc203e3c7778e3651e0beee6c63168e5091501365621c0a902",
+      "bytes": 131496,
+      "triangles": 610,
+      "bones": 24,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": true,
+      "clips": [
+        {
+          "name": "Armature|Idle",
+          "duration": 6.25
+        }
+      ],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "+Z",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -1.112494,
+            -0.015033,
+            -2.408742
+          ],
+          "max": [
+            1.112543,
+            4.349553,
+            3.510661
+          ],
+          "size": [
+            2.225037,
+            4.364586,
+            5.919403
+          ]
+        },
+        "animatedBounds": [
+          {
+            "clip": "Armature|Idle",
+            "samples": 17,
+            "min": [
+              -1.112533,
+              -0.016309,
+              -2.408742
+            ],
+            "max": [
+              1.112659,
+              4.349553,
+              3.567434
+            ],
+            "size": [
+              2.225192,
+              4.365862,
+              5.976176
+            ],
+            "minFootY": -0.016309,
+            "maxFootY": -0.015033
+          }
+        ]
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "pig",
+      "file": "pig.glb",
+      "source": {
+        "creator": "Quaternius",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "id": "pig",
+        "modelUrl": "https://poly.pizza/m/TNvG3QUFlp",
+        "downloadUrl": "https://static.poly.pizza/665ee586-6494-4fbd-be46-fcbe600f653e.glb",
+        "sha256": "4bb5fc230a35db446fa2ea043f77dfc077f0b21d6e59d0235b15f01d01b05525",
+        "rawFile": "TNvG3QUFlp.glb",
+        "bytes": 159724
+      },
+      "sha256": "11bcccd6236ec93b158d7293d0d3c210abb9fdca105df257c6337e01a8484cf9",
+      "bytes": 124368,
+      "triangles": 562,
+      "bones": 24,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": true,
+      "clips": [
+        {
+          "name": "Armature|Idle",
+          "duration": 6.25
+        }
+      ],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "+Z",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -1.652527,
+            -0.004261,
+            -4.542178
+          ],
+          "max": [
+            1.6511,
+            4.57078,
+            5.228424
+          ],
+          "size": [
+            3.303628,
+            4.575042,
+            9.770602
+          ]
+        },
+        "animatedBounds": [
+          {
+            "clip": "Armature|Idle",
+            "samples": 17,
+            "min": [
+              -1.652594,
+              -0.005881,
+              -4.577422
+            ],
+            "max": [
+              1.65118,
+              4.586273,
+              5.252986
+            ],
+            "size": [
+              3.303774,
+              4.592154,
+              9.830408
+            ],
+            "minFootY": -0.005881,
+            "maxFootY": -0.002589
+          }
+        ]
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    }
+  ]
+}

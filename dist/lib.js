@@ -29476,7 +29476,9 @@ var MIME = {
   ".ico": "image/x-icon",
   ".woff2": "font/woff2",
   ".webp": "image/webp",
-  ".txt": "text/plain; charset=utf-8"
+  ".txt": "text/plain; charset=utf-8",
+  ".md": "text/markdown; charset=utf-8",
+  ".glb": "model/gltf-binary"
 };
 function defaultAssetRoot() {
   const directory = dirname2(fileURLToPath2(import.meta.url));

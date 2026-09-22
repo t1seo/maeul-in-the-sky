@@ -9,6 +9,7 @@ import { startQaServer } from '../qa/server.js';
 import { cleanEnvironment } from './runtime.js';
 import { smokeWorld } from './world.js';
 import { smokeClassic } from './classic.js';
+import { smokeTour } from './tour.js';
 
 export async function smokeBrowser(packageRoot: string, fixture: string) {
   const manifest = z
@@ -145,6 +146,7 @@ for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => { void se
     });
     assert.equal(noToken.status(), 503);
     await smokeWorld(page);
+    await smokeTour(page, url);
     assert.deepEqual(errors, []);
     assert.deepEqual(missing, []);
     console.log(

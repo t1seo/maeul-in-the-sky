@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import markup from '../../../docs/demo/tour/index.html?raw';
 import stylesheet from '../../../docs/demo/tour/tour.css?raw';
-import { mountTour } from '../../../src/tour/app/main.js';
+import { mountTestTour as mountTour } from './fixture.js';
 import { buttonElement, canvasElement, element } from '../../../src/tour/app/dom.js';
 
 let app: ReturnType<typeof mountTour> | null = null;

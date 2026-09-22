@@ -40,10 +40,7 @@ export function createTourPicker(
     cell: (clientX: number, clientY: number) => {
       const hit = hitAt(clientX, clientY);
       if (!hit) return null;
-      const id =
-        hit.instanceId === undefined
-          ? undefined
-          : village.identities.get(hit.object.uuid)?.[hit.instanceId];
+      const id = village.identities.get(hit.object.uuid)?.[hit.instanceId ?? 0];
       const placement = model.placements.find((candidate) => candidate.source.id === id);
       const cell = placement
         ? model.cells.find((candidate) => candidate.source.date === placement.source.anchorDate)

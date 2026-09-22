@@ -6,6 +6,7 @@ import { join, resolve } from 'node:path';
 import { smokeAction, smokeCli, smokeModules } from './smoke/adapters.js';
 import { smokeBrowser, smokePreview } from './smoke/browser.js';
 import { nodeRuntime } from './smoke/runtime.js';
+import { assertTourAssets } from './smoke/tour.js';
 
 const repositoryRoot = resolve(import.meta.dirname, '..');
 const temporaryDirectory = mkdtempSync(join(tmpdir(), 'maeul-package-smoke-'));
@@ -37,9 +38,12 @@ try {
     'dist/demo/tour/index.html',
     'dist/demo/tour/tour.css',
     'dist/demo/tour/app/main.js',
+    'dist/demo/tour/credits.html',
+    'dist/demo/tour/credits.css',
   ]) {
     assert.ok(statSync(join(packageRoot, path)).size > 0, `Missing runtime asset: ${path}`);
   }
+  assertTourAssets(packageRoot);
   smokeAction(packageRoot, node24, fixture);
   execFileSync(
     'npm',

@@ -15,12 +15,15 @@ import { createAtmosphere, type TourLighting } from './atmosphere.js';
 import { populateVillage } from './populate.js';
 import { createParticles } from './particles.js';
 import { createTourPicker } from './picking.js';
+import { createForestWind } from './wind.js';
+import type { WildlifeLibrary } from '../wildlife/library.js';
 
 type RendererOptions = {
   readonly reducedMotion?: boolean;
   readonly onChange?: () => void;
   readonly onNavigationFrame?: () => void;
   readonly onError?: (message: string) => void;
+  readonly wildlife?: WildlifeLibrary;
 };
 
 export function createTourRenderer(
@@ -59,7 +62,8 @@ function buildTourRenderer(
   const scene = new Scene();
   const camera = new PerspectiveCamera(46, 1, 0.12, 1400);
   const land = createLand(model, resources);
-  const village = populateVillage(model, resources);
+  const wind = createForestWind(resources);
+  const village = populateVillage(model, resources, wind, options.wildlife);
   const water = createWater(model, resources);
   const particles = createParticles(model, resources);
   scene.add(land, village.root, water.mesh, particles.points);
@@ -84,6 +88,7 @@ function buildTourRenderer(
   let frame = 0;
   let disposed = false;
   let contextLost = false;
+  let visible = true;
   let reduced = options.reducedMotion ?? false;
   const lifetime = new AbortController();
   const resize = (): void => {
@@ -95,6 +100,11 @@ function buildTourRenderer(
   };
   const observer = new ResizeObserver(resize);
   observer.observe(canvas);
+  const visibility = new IntersectionObserver(([entry]) => {
+    visible = entry?.isIntersecting ?? false;
+    previous = 0;
+  });
+  visibility.observe(canvas);
   resize();
   const setLighting = (mode: TourLighting): void => {
     lighting = mode;
@@ -109,7 +119,7 @@ function buildTourRenderer(
     if (disposed) return;
     const dt = previous ? Math.min((timestamp - previous) / 1000, 0.05) : 0;
     previous = timestamp;
-    if (!document.hidden && !contextLost) {
+    if (!document.hidden && !contextLost && visible) {
       navigation.update(dt);
       if (timestamp - navigationFrame >= 100) {
         navigationFrame = timestamp;
@@ -118,6 +128,8 @@ function buildTourRenderer(
       if (!reduced) elapsed += dt;
       water.update(elapsed);
       particles.update(elapsed);
+      wind.update(elapsed);
+      village.animals.update(elapsed, camera);
       atmosphere.update(camera.position);
       renderer.render(scene, camera);
     }
@@ -143,6 +155,7 @@ function buildTourRenderer(
     { signal: lifetime.signal },
   );
   atmosphere.update(camera.position);
+  village.animals.update(elapsed, camera);
   renderer.render(scene, camera);
   frame = requestAnimationFrame(animate);
   const picker = createTourPicker(camera, canvas, model, village, [land, water.mesh]);
@@ -167,6 +180,9 @@ function buildTourRenderer(
       triangles: renderer.info.render.triangles,
       position: { x: camera.position.x, y: camera.position.y, z: camera.position.z },
       geometries: renderer.info.memory.geometries,
+      wildlife: village.animals.inspect(),
+      windTime: wind.elapsed,
+      visible,
     }),
     dispose: (): void => {
       if (disposed) return;
@@ -174,6 +190,7 @@ function buildTourRenderer(
       cancelAnimationFrame(frame);
       lifetime.abort();
       observer.disconnect();
+      visibility.disconnect();
       navigation.dispose();
       atmosphere.dispose();
       resources.dispose();
