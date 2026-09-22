@@ -18,7 +18,7 @@
   <img alt="GitHub Contribution Calendar から作られたアイソメトリックの村" src="../.github/assets/preview-dark.svg" width="840">
 </picture>
 
-[**プリセットデモ**](https://t1seo.github.io/maeul-in-the-sky/) · [クイックスタート](#クイックスタート) · [npm](https://www.npmjs.com/package/maeul-in-the-sky) · [ショーケース](../SHOWCASE.md)
+[**SVG 村スタジオ**](https://t1seo.github.io/maeul-in-the-sky/) · [3D ツアー](https://t1seo.github.io/maeul-in-the-sky/tour/) · [クイックスタート](#クイックスタート) · [npm](https://www.npmjs.com/package/maeul-in-the-sky) · [ショーケース](../SHOWCASE.md)
 
 </div>
 
@@ -26,9 +26,42 @@ Maeul（마을）は韓国語で「村」という意味です。Contribution Ca
 
 出力は独立した 2 つの SVG です。プロフィール README で GitHub のカラーモードに合わせて切り替わり、クライアント側の JavaScript は必要ありません。
 
-**バージョン 2.0.0** には、以下のアセット・四季・日別成長・画風の改善が含まれます。標準表示は従来のカレンダー型の村です。新しい地形実験は[別のアーカイブ](https://github.com/t1seo/maeul-in-the-sky/tree/archive/civilization-terrain-2026-09-21)に保存されています。
+**バージョン 2.1.0** では、歩ける 3D カレンダー村、精細な外部の動物・景観モデル、地図ナビゲーションの改善、読みやすい日別詳細パネルを追加しました。標準表示は従来のカレンダー型 SVG です。地形実験は[別のアーカイブ](https://github.com/t1seo/maeul-in-the-sky/tree/archive/civilization-terrain-2026-09-21)に保存されています。[変更履歴](../CHANGELOG.md#210---2026-09-22)もご覧ください。
 
 **1.x からの移行:** `ContributionData` を直接作成する場合は、追加された必須統計フィールドを含めるために `stats: computeStats(weeks)` を使ってください。新しいシーンはレイアウトバージョン 3 と更新済みアートを使用します。保存済みのバージョン 1・2 のシーンも引き続き対応します。
+
+## カレンダーの村を歩く
+
+[3D ツアー](https://t1seo.github.io/maeul-in-the-sky/tour/)では、同じ日付の村を Three.js で探索できます。メニューは英語で、動物・樹木・建物・小物と一部の Wonder に外部制作者のモデルを使用します。初期表示にはサンプルデータであることを明記しています。
+
+[![精細な動物と景観を備えた 3D カレンダー村](../.github/screenshots/tour-assets/after.png)](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json)
+
+- **WASD** で歩き、**Q/E** または左右キーでその場で回転し、ドラッグで視点を動かします。タッチ操作にも対応します。
+- 地図、または歩行中の地面をクリックすると、近くの安全な陸地へ移動します。正方形タイルの半透明地図は左右どちらの下隅にも配置でき、コンパスは実際の視線方向を示します。
+- 季節ごとの視点、自動ツアー、昼・夕暮れ・夜を選べます。動物・風・水のアニメーションはモーション低減設定に従います。日別詳細パネルは不透明で、開いている間は紹介文と統計を隠します。
+
+ローカルのモデルライブラリには **動物 24 種と GLB ファイル 65 個**が含まれます。[クレジット](https://t1seo.github.io/maeul-in-the-sky/tour/credits.html)に制作者・ライセンス・改変内容を記載しています。[全 240 ID の対応表](demo/tour/models/coverage.md)では、外部モデル 95 ID、既存の詳細と組み合わせた 31 ID、維持した 114 ID を区別しています。地形・水・道・環境効果はカレンダーの動作を維持します。モデルと帰属情報は Pages と npm プレビューに同梱され、実行時に外部モデル CDN を利用しません。
+
+自分の村を開くには、Action のステップでスナップショット出力を有効にし、生成された `maeul-in-the-sky.snapshot.json` を SVG と一緒にコミットしてください。
+
+```yaml
+- uses: t1seo/maeul-in-the-sky@v2.1.0
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    write_snapshot: 'true'
+```
+
+次の URL の `USERNAME` を GitHub ユーザー名に置き換えます。
+
+```text
+https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2FUSERNAME%2FUSERNAME%2Fmain%2Fmaeul-in-the-sky.snapshot.json
+```
+
+例はクイックスタートの `main` ブランチを使用しています。スタジオで生成したワークフローは `output` に公開するため、実際の公開ブランチとファイルパスに合わせて URL を変更してください。
+
+README の既存の `<picture>…</picture>` を `<a href="TOUR_URL">…</a>` で囲むと、GitHub 上の SVG をクリックして同じ記録の村へ移動できます。明暗の画像 URL はそのまま使えます。[実際のプロフィールの村を訪れる](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json)。
+
+日付・貢献数・配置 ID・季節の水域・獲得した Wonder を保ち、元の絵を 3D で表現します。未獲得の家や Wonder は追加しません。水で分かれた場所には地図や季節の視点から移動できます。GitHub raw / Pages の公開 HTTPS スナップショット（最大 2 MiB、800 日間）に対応し、無効な URL はサンプルに置き換えずエラーを表示します。
 
 ## 村に含まれるもの
 
@@ -63,7 +96,7 @@ README プレビューと 6 枚のプリセット画像は、固定シードの*
 
 GitHub プロフィールで使う場合は、ユーザー名と同じ名前のリポジトリに `.github/workflows/maeul-sky.yml` を追加します。
 
-例では `@v2.0.0` を固定します。互換性のある更新を追従するには `@v2` を使ってください。`@v1` は以前のメジャーバージョンを維持します。不変の参照が必要な場合は、検証済みの完全なコミット SHA を固定してください。
+例では `@v2.1.0` を固定します。互換性のある更新を追従するには `@v2` を使ってください。`@v1` は以前のメジャーバージョンを維持します。不変の参照が必要な場合は、検証済みの完全なコミット SHA を固定してください。
 
 ```yaml
 name: Update Maeul in the Sky
@@ -82,7 +115,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: t1seo/maeul-in-the-sky@v2.0.0
+      - uses: t1seo/maeul-in-the-sky@v2.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           preset: balanced
@@ -143,7 +176,7 @@ GitHub ユーザー名の既定値はリポジトリ所有者です。別のユ�
 既定出力は `dark_svg_path` と `light_svg_path` です。該当する実行では `dark_png_path`、`light_png_path`、`snapshot_path`、`archive_path`、`comparison_dark_svg_path`、`comparison_light_svg_path` も返します。
 
 ```yaml
-- uses: t1seo/maeul-in-the-sky@v2.0.0
+- uses: t1seo/maeul-in-the-sky@v2.1.0
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
     username: octocat
@@ -189,17 +222,17 @@ Wonder の選択には、そのセルの活動量、周辺セルの豊かさ、�
 
 日付を選ぶと件数、報酬段階、Biome、配置を確認できます。探索画面は出典、正確な日付範囲、合計、活動日数、連続日数、高さ/季節凡例を表示します。ズーム、リセット、キーボード移動、Escape、フォーカス復帰に対応します。[Wonder 図鑑](https://t1seo.github.io/maeul-in-the-sky/#wonders)は発見/未発見と実際の条件を示します。条件を満たしても選択は保証されず、間隔、周辺 Terrain、確率、最大 3 個の予算も適用されます。
 
-セットアップ欄から設定 JSON、ワークフロー、README 断片をダウンロードできます。生成ワークフローは `t1seo/maeul-in-the-sky@v2.0.0` で `output` ブランチへ公開し、README 断片もそこを参照します。再現性が必要なら検証済みの完全なコミット SHA に固定してください。`${{` を含むタイトルやレイアウトシードは GitHub Actions 式として評価され得るためワークフローへ出力できませんが、画像と JSON では使用できます。
+セットアップ欄から設定 JSON、ワークフロー、README 断片をダウンロードできます。生成ワークフローは `t1seo/maeul-in-the-sky@v2.1.0` で `output` ブランチへ公開し、README 断片もそこを参照します。再現性が必要なら検証済みの完全なコミット SHA に固定してください。`${{` を含むタイトルやレイアウトシードは GitHub Actions 式として評価され得るためワークフローへ出力できませんが、画像と JSON では使用できます。
 
 ## CLI
 
-Node.js 20 以上が必要です。以下のコマンドは、公開済みの 2.0.0 CLI を `npx` で実行します。
+Node.js 20 以上が必要です。以下のコマンドは、公開済みの 2.1.0 CLI を `npx` で実行します。
 
 <details>
 <summary>ソースからビルドする（任意）</summary>
 
 ```bash
-git clone --branch v2.0.0 https://github.com/t1seo/maeul-in-the-sky.git
+git clone --branch v2.1.0 https://github.com/t1seo/maeul-in-the-sky.git
 cd maeul-in-the-sky
 npm ci
 npx tsx scripts/pixel/generate.ts --check
@@ -209,14 +242,14 @@ npm run build
 </details>
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky \
   --user octocat --preset civilization --output ./terrain
 
-npx --package=maeul-in-the-sky@2.0.0 maeul-sky --input village.snapshot.json \
+npx --package=maeul-in-the-sky@2.1.0 maeul-sky --input village.snapshot.json \
   --layout card --village-style korean --art-style pixel --motion off --format both --scale 2 \
   --write-snapshot --output ./terrain
 
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky \
   --user octocat --years 2024,2025 --normalization shared --output ./archive
 ```
 
@@ -246,14 +279,14 @@ GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
 | `--scale`                         | PNG 倍率の整数 1〜4。既定 2                                   |
 | `--help`, `-h`; `--version`, `-V` | ヘルプとバージョンを表示                                      |
 
-この checkout のフラグは `npx --package=maeul-in-the-sky@2.0.0 maeul-sky --help`、ローカルサービスは `npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --help` で確認してください。既定値は `terrain`、`balanced`、密度 `5`、`north`、`classic`、`full`、`banner`、相対 P90、直近 52 週、画風は `miniature` です。優先順位は明示した CLI/Action/UI 値 → 読み込んだ設定 → 選択プリセットの既定 → ライブラリ既定です。単一レンダーでは `--config` がスナップショット設定より優先され、フィールド単位ではマージしません。明示したプリセットだけでは保存済み密度を置き換えません。format と PNG scale は保存するレンダー設定ではありません。
+この checkout のフラグは `npx --package=maeul-in-the-sky@2.1.0 maeul-sky --help`、ローカルサービスは `npx --package=maeul-in-the-sky@2.1.0 maeul-sky preview --help` で確認してください。既定値は `terrain`、`balanced`、密度 `5`、`north`、`classic`、`full`、`banner`、相対 P90、直近 52 週、画風は `miniature` です。優先順位は明示した CLI/Action/UI 値 → 読み込んだ設定 → 選択プリセットの既定 → ライブラリ既定です。単一レンダーでは `--config` がスナップショット設定より優先され、フィールド単位ではマージしません。明示したプリセットだけでは保存済み密度を置き換えません。format と PNG scale は保存するレンダー設定ではありません。
 
 既定では引き続き `maeul-in-the-sky-{dark,light}.svg` の 2 ファイルだけを書きます。PNG とスナップショットは要求時だけ追加されます。`--format png` では SVG パス結果は空文字列です。
 
 ### 自分のアカウントをローカルでプレビュー
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --port 4318
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky preview --port 4318
 ```
 
 `http://127.0.0.1:4318/` を開き、**Fetch contributions** を選びます。サービスは loopback のみに bind し、サーバー環境のトークンだけを読みます。ブラウザにトークン入力欄はなく、リンク、JSON、フォームへトークンを置かないでください。公開静的デモは JSON のみをインポートし、localhost へ接続しません。ローカルプロセスはアカウント/年の応答を 5 分、最大 32 件キャッシュします。
@@ -285,7 +318,7 @@ banner/card はどちらも提供期間全体を保持します。`full` は全 
 Node とブラウザ API を含むリリース済みパッケージをインストールします。
 
 ```bash
-npm install maeul-in-the-sky@2.0.0
+npm install maeul-in-the-sky@2.1.0
 ```
 
 パッケージをインストールしたプロジェクトの `.mjs` ファイルで、以下の例を実行してください。
@@ -361,3 +394,5 @@ npx tsx scripts/generate-catalog.ts docs/demo/catalog
 ## ライセンス
 
 [MIT](../LICENSE) © [t1seo](https://github.com/t1seo)
+
+外部の 3D モデルには各制作者のライセンスが適用されます。[モデルのクレジットとライセンスファイル](https://t1seo.github.io/maeul-in-the-sky/tour/credits.html)をご確認ください。

@@ -19,7 +19,7 @@
   <img alt="An animated isometric village built from a GitHub Contribution Calendar" src=".github/assets/preview-dark.svg" width="840">
 </picture>
 
-[**Open the SVG village studio**](https://t1seo.github.io/maeul-in-the-sky/) · [Day](https://t1seo.github.io/maeul-in-the-sky/?mode=light) · [Night](https://t1seo.github.io/maeul-in-the-sky/?mode=dark) · [Quick start](#quick-start) · [Showcase](SHOWCASE.md)
+[**Open the SVG village studio**](https://t1seo.github.io/maeul-in-the-sky/) · [3D tour](https://t1seo.github.io/maeul-in-the-sky/tour/) · [Day](https://t1seo.github.io/maeul-in-the-sky/?mode=light) · [Night](https://t1seo.github.io/maeul-in-the-sky/?mode=dark) · [Quick start](#quick-start) · [Showcase](SHOWCASE.md)
 
 </div>
 
@@ -29,7 +29,7 @@ The default experience is the animated diagonal SVG village shown above. The pro
 
 Prefer the original artwork? Choose **Classic** in the [SVG studio](https://t1seo.github.io/maeul-in-the-sky/?renderer=classic). It uses the preserved pre-upgrade renderer, and its setup workflow pins `05a10eff07575acf2c81adcd66a66bc501507217` so future updates do not change that design.
 
-**Version 2.0.0** includes the asset, season, daily-growth and art-style improvements below. The original animated calendar remains the default; the newer geographic landscape experiment is [archived separately](https://github.com/t1seo/maeul-in-the-sky/tree/archive/civilization-terrain-2026-09-21).
+**Version 2.1.0** adds a walkable 3D Calendar village, detailed external wildlife and scenery, improved map navigation, and readable day details. The original animated calendar remains the default; the geographic landscape experiment is [archived separately](https://github.com/t1seo/maeul-in-the-sky/tree/archive/civilization-terrain-2026-09-21). See the [release notes](CHANGELOG.md#210---2026-09-22).
 
 **Migrating from 1.x:** when constructing `ContributionData` manually, set `stats: computeStats(weeks)` to include the four new required statistics fields. Regenerated scenes use layout version 3 and updated artwork; saved version-1 and version-2 prepared scenes remain supported.
 
@@ -55,15 +55,32 @@ The README previews and six preset images use seeded **synthetic data**, with 36
 
 ## Walk inside your Calendar village
 
-The [3D tour](https://t1seo.github.io/maeul-in-the-sky/tour/) opens the same dated Calendar as a real Three.js miniature, with English menus and locally hosted wildlife, trees, buildings, props and selected Wonder models. Explore seasonal viewpoints, take a guided flight, or walk with WASD. Turn in place with Q/E or the left/right arrows, and drag to look around. Click the map to jump to nearby safe ground; while walking, you can also click the visible terrain. Touch movement and turning, day-to-night lighting, reduced motion and a Calendar fallback are included. The default tour is clearly labeled sample data.
+The [3D tour](https://t1seo.github.io/maeul-in-the-sky/tour/) opens the same dated Calendar as a Three.js miniature, with English menus and locally hosted wildlife, trees, buildings, props and selected Wonder models. The default tour is clearly labeled sample data.
 
-The [3D asset credits](https://t1seo.github.io/maeul-in-the-sky/tour/credits.html) identify each model's creator, license and adaptations. The [complete coverage ledger](docs/demo/tour/models/coverage.md) lists all 240 catalog IDs as external models, combinations with existing details, or retained designs. Generated terrain, water, paths and ambient effects keep their Calendar behavior. Asset files and attribution are included in both the Pages demo and the packaged preview; the tour does not download models from a runtime CDN.
+[![The Calendar village with detailed 3D wildlife and scenery](.github/screenshots/tour-assets/after.png)](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json)
 
-For your own village, publish the snapshot generated alongside your SVG and link to:
+- Walk with **WASD**, turn in place with **Q/E** or the left/right arrows, and drag to look around. Touch movement and turning controls are also available.
+- Click the map or, while walking, the visible terrain to jump to nearby safe ground. The translucent map has square tiles, docks at either bottom corner, and accompanies a compass that follows your viewing direction.
+- Explore seasonal viewpoints, take a guided flight, or choose day, golden-hour or night lighting. Animated wildlife, wind and water respect reduced motion. Day details use an opaque panel and hide the overview text while open.
+
+The local library includes **24 animal species and 65 GLB files**. The [3D asset credits](https://t1seo.github.io/maeul-in-the-sky/tour/credits.html) identify each model's creator, license and adaptations. The [complete coverage ledger](docs/demo/tour/models/coverage.md) accounts for all 240 catalog IDs: 95 use external models, 31 combine them with existing details, and 114 retain their designs. Generated terrain, water, paths and ambient effects keep their Calendar behavior. Asset files and attribution are included in both the Pages demo and the packaged preview; the tour does not download models from a runtime CDN.
+
+For your own village, enable snapshot output in the Action step and commit the generated `maeul-in-the-sky.snapshot.json` alongside your SVGs:
+
+```yaml
+- uses: t1seo/maeul-in-the-sky@v2.1.0
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    write_snapshot: 'true'
+```
+
+Replace `USERNAME` in this tour URL with your GitHub username:
 
 ```text
 https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2FUSERNAME%2FUSERNAME%2Fmain%2Fmaeul-in-the-sky.snapshot.json
 ```
+
+The example uses the Quick start's `main` branch. Studio-generated workflows publish to `output`; adjust the snapshot URL to your actual publication branch and file path.
 
 Wrap your existing README `<picture>…</picture>` in an `<a href="TOUR_URL">…</a>`. GitHub displays the original SVG; clicking opens the interactive tour on Pages. Both theme-specific image sources stay the same. [Visit a real profile village](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json).
 
@@ -93,7 +110,7 @@ Open **Archive · 3D & island experiments** at the bottom of the studio, or read
 
 For a GitHub profile, use the repository whose name matches your username. Add `.github/workflows/maeul-sky.yml`:
 
-These examples pin `@v2.0.0`. Use `@v2` to follow compatible updates; `@v1` remains on the previous major. For immutable runs, pin the full commit SHA you have tested.
+These examples pin `@v2.1.0`. Use `@v2` to follow compatible updates; `@v1` remains on the previous major. For immutable runs, pin the full commit SHA you have tested.
 
 ```yaml
 name: Update Maeul in the Sky
@@ -112,7 +129,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: t1seo/maeul-in-the-sky@v2.0.0
+      - uses: t1seo/maeul-in-the-sky@v2.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           preset: balanced
@@ -175,7 +192,7 @@ Outputs: `dark_svg_path` and `light_svg_path` contain the default generated path
 ### Common customizations
 
 ```yaml
-- uses: t1seo/maeul-in-the-sky@v2.0.0
+- uses: t1seo/maeul-in-the-sky@v2.1.0
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
     username: octocat
@@ -225,17 +242,17 @@ Open the [demo](https://t1seo.github.io/maeul-in-the-sky/) to choose a preset, u
 
 Select a date to inspect its count, reward tier, Biome and placements. The explorer displays source, exact dates, total, active days, streak and a height/season legend. Zoom supports +/−/reset, keyboard panning, Escape and focus return. The [Wonder encyclopedia](https://t1seo.github.io/maeul-in-the-sky/#wonders) shows discovered/locked landmarks and their actual gates. Eligibility does not guarantee selection: spacing, neighboring terrain, chance and the maximum-three budget also apply.
 
-The setup section downloads settings JSON, a workflow and a README snippet. Its workflow uses `t1seo/maeul-in-the-sky@v2.0.0` and publishes to the `output` branch; its snippet points there, as an alternative to the main-branch quick start above. Pin a tested full commit SHA if you need a fixed version. Only the publication job receives `contents: write`. Titles or layout seeds containing `${{` cannot be exported to a workflow because GitHub evaluates Actions expressions; they remain valid in images and JSON.
+The setup section downloads settings JSON, a workflow and a README snippet. Its workflow uses `t1seo/maeul-in-the-sky@v2.1.0` and publishes to the `output` branch; its snippet points there, as an alternative to the main-branch quick start above. Pin a tested full commit SHA if you need a fixed version. Only the publication job receives `contents: write`. Titles or layout seeds containing `${{` cannot be exported to a workflow because GitHub evaluates Actions expressions; they remain valid in images and JSON.
 
 ## CLI
 
-Node.js 20 or newer is required. The commands below run the published 2.0.0 CLI with `npx`.
+Node.js 20 or newer is required. The commands below run the published 2.1.0 CLI with `npx`.
 
 <details>
 <summary>Build from source (optional)</summary>
 
 ```bash
-git clone --branch v2.0.0 https://github.com/t1seo/maeul-in-the-sky.git
+git clone --branch v2.1.0 https://github.com/t1seo/maeul-in-the-sky.git
 cd maeul-in-the-sky
 npm ci
 npx tsx scripts/pixel/generate.ts --check
@@ -245,14 +262,14 @@ npm run build
 </details>
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky \
   --user octocat --preset civilization --output ./terrain
 
-npx --package=maeul-in-the-sky@2.0.0 maeul-sky --input village.snapshot.json \
+npx --package=maeul-in-the-sky@2.1.0 maeul-sky --input village.snapshot.json \
   --layout card --village-style korean --art-style pixel --motion off --format both --scale 2 \
   --write-snapshot --output ./terrain
 
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky \
   --user octocat --years 2024,2025 --normalization shared --output ./archive
 ```
 
@@ -282,7 +299,7 @@ GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
 | `--scale`                         | `scale`          | Integer PNG scale 1–4; default 2                                           |
 | `--help`, `-h`; `--version`, `-V` | —                | CLI help/version                                                           |
 
-Run `npx --package=maeul-in-the-sky@2.0.0 maeul-sky --help` and `npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --help` for this checkout. Invalid/conflicting options fail with field-specific errors.
+Run `npx --package=maeul-in-the-sky@2.1.0 maeul-sky --help` and `npx --package=maeul-in-the-sky@2.1.0 maeul-sky preview --help` for this checkout. Invalid/conflicting options fail with field-specific errors.
 
 Defaults remain `terrain`, `balanced`, density `5`, `north`, `classic`, `full`, `banner`, relative P90 and a rolling range; artwork defaults to `miniature`. Render settings resolve in this order: explicit CLI/Action/UI field → loaded settings → selected preset defaults → library defaults. In single-render CLI/API calls, `--config` supplies loaded settings in preference to snapshot settings; they are not merged field by field. An explicit preset alone does not replace saved density. Omitted flags do not override saved settings. Format and PNG scale are output options, not saved render settings.
 
@@ -291,7 +308,7 @@ The default still writes `maeul-in-the-sky-dark.svg` and `maeul-in-the-sky-light
 ### Local preview with your account
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --port 4318
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky preview --port 4318
 ```
 
 Open `http://127.0.0.1:4318/` and select **Fetch contributions**. The service binds loopback only and reads its token from the server environment. There is no browser token field: do not place tokens in links, JSON or forms. The static public demo imports JSON and never contacts your localhost service. Missing credentials produce an actionable error; upstream errors are sanitized. The local process caches account/year responses for five minutes, up to 32 entries.
@@ -327,7 +344,7 @@ Both banner and card retain the full supplied period. Card places larger statist
 Install the released package, including the Node and browser APIs:
 
 ```bash
-npm install maeul-in-the-sky@2.0.0
+npm install maeul-in-the-sky@2.1.0
 ```
 
 Run this example as an `.mjs` file in the project where you installed the package:
@@ -435,3 +452,5 @@ See [Support](SUPPORT.md) or [open an issue](https://github.com/t1seo/maeul-in-t
 ## License
 
 [MIT](LICENSE) © [t1seo](https://github.com/t1seo)
+
+Third-party 3D models retain their own licenses; see the [model credits and license files](https://t1seo.github.io/maeul-in-the-sky/tour/credits.html).

@@ -18,7 +18,7 @@
   <img alt="由 GitHub Contribution Calendar 建造的等距村庄" src="../.github/assets/preview-dark.svg" width="840">
 </picture>
 
-[**体验预设演示**](https://t1seo.github.io/maeul-in-the-sky/) · [快速开始](#快速开始) · [npm](https://www.npmjs.com/package/maeul-in-the-sky) · [展示区](../SHOWCASE.md)
+[**SVG 村庄工作室**](https://t1seo.github.io/maeul-in-the-sky/) · [3D 漫游](https://t1seo.github.io/maeul-in-the-sky/tour/) · [快速开始](#快速开始) · [npm](https://www.npmjs.com/package/maeul-in-the-sky) · [展示区](../SHOWCASE.md)
 
 </div>
 
@@ -26,9 +26,42 @@ Maeul（마을）在韩语中意为“村庄”。Contribution Calendar 中的�
 
 输出是两个独立的 SVG 文件，可在个人资料 README 中随 GitHub 配色自动切换，不需要客户端 JavaScript。
 
-**2.0.0 版本**包含下述资源、四季、每日成长和画风改进。默认显示仍是原有日历式村庄；新的地形实验保存在[独立归档](https://github.com/t1seo/maeul-in-the-sky/tree/archive/civilization-terrain-2026-09-21)中。
+**2.1.0 版本**新增可步行的 3D 日历村庄、精细的外部动物和场景模型、改进的地图导航，以及更清晰的日期详情面板。默认显示仍是原有日历式 SVG；地形实验保存在[独立归档](https://github.com/t1seo/maeul-in-the-sky/tree/archive/civilization-terrain-2026-09-21)中。详情请参阅[更新日志](../CHANGELOG.md#210---2026-09-22)。
 
 **从 1.x 迁移：**手动构造 `ContributionData` 时，请使用 `stats: computeStats(weeks)`，以包含新增的四个必填统计字段。新场景采用布局版本 3 和改进后的资源；已保存的版本 1、2 场景仍受支持。
+
+## 走进日历中的村庄
+
+[3D 漫游](https://t1seo.github.io/maeul-in-the-sky/tour/)使用 Three.js 呈现同一日期的村庄，提供英文菜单，以及外部创作者制作的动物、树木、建筑、道具和部分 Wonder 模型。默认村庄明确标注为示例数据。
+
+[![拥有精细动物和场景模型的 3D 日历村庄](../.github/screenshots/tour-assets/after.png)](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json)
+
+- 使用 **WASD** 步行，**Q/E** 或左右方向键原地转向，拖动以环顾四周。也支持触屏移动和转向。
+- 点击地图，或在步行时点击可见地面，即可传送至附近的安全陆地。半透明地图使用正方形格子，可放在左下角或右下角；指南针随实际视线方向转动。
+- 可选择季节视角、自动游览，以及白天、黄昏或夜晚。动物、风和水的动画遵循减少动态效果设置。日期详情面板使用不透明背景，打开时隐藏村庄介绍和统计文字。
+
+本地模型库包含 **24 种动物和 65 个 GLB 文件**。[资源署名](https://t1seo.github.io/maeul-in-the-sky/tour/credits.html)列出作者、许可证和修改记录。[完整覆盖表](demo/tour/models/coverage.md)涵盖全部 240 个 ID：95 个使用外部模型，31 个结合原有细节，114 个保留原有设计。地形、水、道路和环境效果继续使用原有日历行为。模型及署名随 Pages 和 npm 预览一起提供，运行时无需从外部模型 CDN 下载。
+
+要连接自己的村庄，请在 Action 步骤中启用快照输出，并将生成的 `maeul-in-the-sky.snapshot.json` 与 SVG 一起提交。
+
+```yaml
+- uses: t1seo/maeul-in-the-sky@v2.1.0
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    write_snapshot: 'true'
+```
+
+将以下地址中的 `USERNAME` 替换为您的 GitHub 用户名：
+
+```text
+https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2FUSERNAME%2FUSERNAME%2Fmain%2Fmaeul-in-the-sky.snapshot.json
+```
+
+示例使用快速开始中的 `main` 分支。工作室生成的工作流发布到 `output` 分支，请根据实际发布分支和文件路径调整快照地址。
+
+将 README 中现有的 `<picture>…</picture>` 包在 `<a href="TOUR_URL">…</a>` 中，即可点击 GitHub 上的 SVG，进入同一份记录的村庄。保留原有深浅色图片地址即可。[访问真实个人资料的村庄](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json)。
+
+漫游保留日期、贡献数、放置 ID、季节水域和已获得的 Wonder，以 3D 重新呈现原有画面，不添加未获得的房屋或 Wonder。被水隔开的区域可通过地图或季节视角访问。支持 GitHub raw / Pages 上公开的 HTTPS 快照，最大 2 MiB、跨度不超过 800 天；无效来源会显示错误，而不会替换为示例数据。
 
 ## 村庄包含的内容
 
@@ -63,7 +96,7 @@ README 预览和 6 张预设图片使用固定种子的**合成数据**，显示
 
 用于 GitHub 个人资料时，请在与用户名同名的仓库中添加 `.github/workflows/maeul-sky.yml`。
 
-示例固定使用 `@v2.0.0`。如需跟随兼容更新，请使用 `@v2`；`@v1` 保留在上一主版本。如需不可变引用，请固定已验证的完整提交 SHA。
+示例固定使用 `@v2.1.0`。如需跟随兼容更新，请使用 `@v2`；`@v1` 保留在上一主版本。如需不可变引用，请固定已验证的完整提交 SHA。
 
 ```yaml
 name: Update Maeul in the Sky
@@ -82,7 +115,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: t1seo/maeul-in-the-sky@v2.0.0
+      - uses: t1seo/maeul-in-the-sky@v2.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           preset: balanced
@@ -143,7 +176,7 @@ jobs:
 默认输出为 `dark_svg_path` 和 `light_svg_path`。对应运行还会提供 `dark_png_path`、`light_png_path`、`snapshot_path`、`archive_path`、`comparison_dark_svg_path` 和 `comparison_light_svg_path`。
 
 ```yaml
-- uses: t1seo/maeul-in-the-sky@v2.0.0
+- uses: t1seo/maeul-in-the-sky@v2.1.0
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
     username: octocat
@@ -189,17 +222,17 @@ Wonder 的选择会考虑当前单元的活动量、附近单元的丰富程度�
 
 选择日期可查看贡献数、奖励等级、Biome 和放置对象。探索器显示来源、准确日期范围、总数、活跃天数、连续贡献及高度/季节图例，并支持缩放、重置、键盘平移、Escape 和焦点返回。[Wonder 图鉴](https://t1seo.github.io/maeul-in-the-sky/#wonders)显示已发现/未发现状态和真实门槛。满足资格并不保证被选中；间距、周围 Terrain、概率和最多三个的预算也会生效。
 
-设置区可以下载设置 JSON、工作流和 README 片段。生成的工作流使用 `t1seo/maeul-in-the-sky@v2.0.0` 发布到 `output` 分支，README 片段也指向该分支。需要复现版本时，请固定已验证的完整提交 SHA。包含 `${{` 的标题或布局种子可能被 GitHub 当作 Actions 表达式，因此不能导出到工作流，但仍可用于图片和 JSON。
+设置区可以下载设置 JSON、工作流和 README 片段。生成的工作流使用 `t1seo/maeul-in-the-sky@v2.1.0` 发布到 `output` 分支，README 片段也指向该分支。需要复现版本时，请固定已验证的完整提交 SHA。包含 `${{` 的标题或布局种子可能被 GitHub 当作 Actions 表达式，因此不能导出到工作流，但仍可用于图片和 JSON。
 
 ## CLI
 
-需要 Node.js 20 或更高版本。以下命令通过 `npx` 运行已发布的 2.0.0 CLI。
+需要 Node.js 20 或更高版本。以下命令通过 `npx` 运行已发布的 2.1.0 CLI。
 
 <details>
 <summary>从源码构建（可选）</summary>
 
 ```bash
-git clone --branch v2.0.0 https://github.com/t1seo/maeul-in-the-sky.git
+git clone --branch v2.1.0 https://github.com/t1seo/maeul-in-the-sky.git
 cd maeul-in-the-sky
 npm ci
 npx tsx scripts/pixel/generate.ts --check
@@ -209,14 +242,14 @@ npm run build
 </details>
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky \
   --user octocat --preset civilization --output ./terrain
 
-npx --package=maeul-in-the-sky@2.0.0 maeul-sky --input village.snapshot.json \
+npx --package=maeul-in-the-sky@2.1.0 maeul-sky --input village.snapshot.json \
   --layout card --village-style korean --art-style pixel --motion off --format both --scale 2 \
   --write-snapshot --output ./terrain
 
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky \
   --user octocat --years 2024,2025 --normalization shared --output ./archive
 ```
 
@@ -246,14 +279,14 @@ GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
 | `--scale`                         | PNG 整数倍率 1 到 4；默认 2                              |
 | `--help`, `-h`; `--version`, `-V` | 显示帮助与版本                                           |
 
-请通过 `npx --package=maeul-in-the-sky@2.0.0 maeul-sky --help` 和 `npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --help` 查看当前源码的参数。默认值是 `terrain`、`balanced`、密度 `5`、`north`、`classic`、`full`、`banner`、相对 P90、最近 52 周，画风默认 `miniature`。优先级为：显式 CLI/Action/UI 值 → 加载的设置 → 所选预设默认值 → 库默认值。单次渲染中，`--config` 优先于快照设置，二者不会按字段合并。只显式选择 preset 不会覆盖已保存 density。format 与 PNG scale 不属于保存的渲染设置。
+请通过 `npx --package=maeul-in-the-sky@2.1.0 maeul-sky --help` 和 `npx --package=maeul-in-the-sky@2.1.0 maeul-sky preview --help` 查看当前源码的参数。默认值是 `terrain`、`balanced`、密度 `5`、`north`、`classic`、`full`、`banner`、相对 P90、最近 52 周，画风默认 `miniature`。优先级为：显式 CLI/Action/UI 值 → 加载的设置 → 所选预设默认值 → 库默认值。单次渲染中，`--config` 优先于快照设置，二者不会按字段合并。只显式选择 preset 不会覆盖已保存 density。format 与 PNG scale 不属于保存的渲染设置。
 
 默认仍只写出 `maeul-in-the-sky-{dark,light}.svg` 两个文件。PNG 和快照仅在请求时添加。`--format png` 时 SVG 路径结果为空字符串。
 
 ### 本地预览自己的账户
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --port 4318
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky preview --port 4318
 ```
 
 打开 `http://127.0.0.1:4318/` 并选择 **Fetch contributions**。服务只绑定 loopback，只读取服务器环境中的令牌。浏览器没有令牌输入框；不要把令牌放入链接、JSON 或表单。公开静态演示只导入 JSON，不连接 localhost。本地进程会缓存账户/年份响应 5 分钟，最多 32 项。
@@ -285,7 +318,7 @@ banner/card 都保留提供的完整日期范围。`full` 开启全部环境效�
 安装包含 Node 和浏览器 API 的正式发布包：
 
 ```bash
-npm install maeul-in-the-sky@2.0.0
+npm install maeul-in-the-sky@2.1.0
 ```
 
 在已安装该包的项目中创建 `.mjs` 文件，并运行以下示例。
@@ -361,3 +394,5 @@ npx tsx scripts/generate-catalog.ts docs/demo/catalog
 ## 许可证
 
 [MIT](../LICENSE) © [t1seo](https://github.com/t1seo)
+
+外部 3D 模型遵循各自的许可证，请参阅[模型署名及许可证文件](https://t1seo.github.io/maeul-in-the-sky/tour/credits.html)。
