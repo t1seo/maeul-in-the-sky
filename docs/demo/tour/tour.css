@@ -24,10 +24,10 @@ button, a { touch-action: manipulation; }
 .round-button { border: 1px solid var(--line); background: var(--glass); font-size: 17px; }
 .back-link { font-size: 12px; padding: 10px 12px; }
 .back-link span { margin-left: 8px; }
-.introduction { position: absolute; top: 20%; left: 4%; pointer-events: none; }
+.introduction { position: absolute; top: 20%; left: 4%; max-width: min(420px, calc(100% - 80px)); pointer-events: none; }
 .eyebrow { font-size: 9px; font-weight: 700; letter-spacing: .19em; color: var(--muted); }
 h1 { font-size: clamp(27px, 2.6vw, 40px); line-height: 1.48; font-weight: 440; letter-spacing: -.04em; margin: 23px 0 16px; }
-#owner { font-weight: 670; }
+#owner { font-weight: 670; overflow-wrap: anywhere; }
 .intro-copy { color: var(--muted); line-height: 1.9; font-size: 12px; margin: 0 0 22px; }
 .source-tag { display: inline-block; font-size: 9px; padding: 6px 9px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); margin: 0; max-width: 240px; }
 .village-stats { display: flex; gap: 23px; margin-top: 21px; }
@@ -93,7 +93,7 @@ body[data-light="night"] .transport button[aria-pressed="true"] { background: #3
   .topbar { inset: max(20px, env(safe-area-inset-top)) 20px auto; gap: 12px; }
   .wordmark { gap: 8px; font-size: 16px; }.wordmark svg { width: 24px; }.wordmark-sub { font-size: 6px; }
   .top-actions { gap: 8px; }.lighting button { width: 40px; height: 44px; font-size: 21px; }.round-button { width: 44px; height: 44px; }
-  .introduction { top: 110px; left: 24px; }.introduction .eyebrow { display: none; }
+  .introduction { top: 110px; left: 24px; max-width: calc(100% - 96px); }.introduction .eyebrow { display: none; }
   h1 { font-size: 25px; line-height: 1.42; margin: 0 0 12px; }.source-tag { font-size: 8px; padding: 4px 6px; }
   .village-stats { margin-top: 13px; gap: 20px; }.village-stats strong { font-size: 16px; }.village-stats span { font-size: 8px; }
   .vignette { background: linear-gradient(180deg,rgba(236,238,218,.65),transparent 42%),linear-gradient(0deg,rgba(230,235,213,.9),transparent 30%); }
