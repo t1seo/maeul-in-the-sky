@@ -23,6 +23,16 @@
       "materials": 1,
       "meshes": 1,
       "rigged": false,
+      "textures": [
+        {
+          "dimensions": [
+            32,
+            32
+          ],
+          "bytes": 115,
+          "mimeType": "image/png"
+        }
+      ],
       "clips": [],
       "coordinates": {
         "upAxis": "+Y",
@@ -75,6 +85,7 @@
       "materials": 1,
       "meshes": 1,
       "rigged": true,
+      "textures": [],
       "clips": [
         {
           "name": "Eating",
@@ -203,9 +214,10 @@
         ]
       },
       "modifications": [
-        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
         "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
-        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
         "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
         "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
       ]
@@ -232,6 +244,7 @@
       "materials": 1,
       "meshes": 1,
       "rigged": true,
+      "textures": [],
       "clips": [
         {
           "name": "Eating",
@@ -360,9 +373,10 @@
         ]
       },
       "modifications": [
-        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
         "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
-        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
         "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
         "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
       ]
@@ -389,6 +403,7 @@
       "materials": 1,
       "meshes": 1,
       "rigged": true,
+      "textures": [],
       "clips": [
         {
           "name": "Eating",
@@ -492,9 +507,10 @@
         ]
       },
       "modifications": [
-        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
         "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
-        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
         "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
         "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
       ]
@@ -521,6 +537,7 @@
       "materials": 1,
       "meshes": 1,
       "rigged": true,
+      "textures": [],
       "clips": [
         {
           "name": "Eating",
@@ -624,9 +641,10 @@
         ]
       },
       "modifications": [
-        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
         "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
-        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
         "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
         "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
       ]
@@ -653,6 +671,7 @@
       "materials": 1,
       "meshes": 1,
       "rigged": true,
+      "textures": [],
       "clips": [
         {
           "name": "Eating",
@@ -756,9 +775,10 @@
         ]
       },
       "modifications": [
-        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
         "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
-        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
         "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
         "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
       ]
@@ -785,6 +805,7 @@
       "materials": 1,
       "meshes": 1,
       "rigged": true,
+      "textures": [],
       "clips": [
         {
           "name": "Armature|Idle",
@@ -838,9 +859,10 @@
         ]
       },
       "modifications": [
-        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
         "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
-        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
         "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
         "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
       ]
@@ -867,6 +889,7 @@
       "materials": 1,
       "meshes": 1,
       "rigged": true,
+      "textures": [],
       "clips": [
         {
           "name": "Armature|Idle",
@@ -920,9 +943,1137 @@
         ]
       },
       "modifications": [
-        "Retained only listed authored idle/eating clips; original animation names preserved.",
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
         "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
-        "Combined primitives into one material and mesh, preserving geometry, normals, joints, skin weights and authored transforms.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "rabbit",
+      "file": "rabbit.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "rabbit",
+        "originalTitle": "Cottontail rabbit",
+        "modelUrl": "https://poly.pizza/m/3vvONbRCuEF",
+        "downloadUrl": "https://static.poly.pizza/416343ff-72b0-4dd8-884b-55c6eb019e85.glb",
+        "sha256": "acbfdbbb19c002797926652965d8372f4baae8d7c48de5cf86851b84ed27e651",
+        "rawFile": "3vvONbRCuEF.glb",
+        "bytes": 3820708
+      },
+      "sha256": "fe54a235b3560607ec6706ac12ad6a02a6f83c242c7c6c20ec1fe758a787478a",
+      "bytes": 471768,
+      "triangles": 954,
+      "bones": 0,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [
+        {
+          "dimensions": [
+            512,
+            512
+          ],
+          "bytes": 402904,
+          "mimeType": "image/png"
+        }
+      ],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -1.614645,
+            0,
+            -3.505821
+          ],
+          "max": [
+            1.612099,
+            7.6299,
+            3.628552
+          ],
+          "size": [
+            3.226744,
+            7.6299,
+            7.134373
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "goat",
+      "file": "goat.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "goat",
+        "originalTitle": "Goat",
+        "modelUrl": "https://poly.pizza/m/d7dImmjtF8E",
+        "downloadUrl": "https://static.poly.pizza/6f11087b-2aae-4bea-8a18-c1e8428d31b0.glb",
+        "sha256": "168736a532e53356f948c8d110cc897ea0ed3699c788515752ac0322ec2a72e4",
+        "rawFile": "d7dImmjtF8E.glb",
+        "bytes": 283068
+      },
+      "sha256": "c08f33542ba8544a72ecd94be1ff09d0b19486f6de23ca30ed0f4ca670537647",
+      "bytes": 172780,
+      "triangles": 958,
+      "bones": 0,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [
+        {
+          "dimensions": [
+            512,
+            512
+          ],
+          "bytes": 103828,
+          "mimeType": "image/png"
+        }
+      ],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -1.12827,
+            0,
+            -3.653798
+          ],
+          "max": [
+            1.12827,
+            6.602531,
+            3.653798
+          ],
+          "size": [
+            2.25654,
+            6.602531,
+            7.307596
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "bird",
+      "file": "bird.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "bird",
+        "originalTitle": "Sparrow",
+        "modelUrl": "https://poly.pizza/m/3rTjKefT184",
+        "downloadUrl": "https://static.poly.pizza/8eab0575-29bc-4c34-a372-d0f12083db66.glb",
+        "sha256": "c37ab6840d187d67bd14c7529ce5bb39a10139a47388049cdc086de971608a47",
+        "rawFile": "3rTjKefT184.glb",
+        "bytes": 42848
+      },
+      "sha256": "fb61201a5e140402a6e989c997ad17ca83830569fe1a40e7672cd512d7445227",
+      "bytes": 42236,
+      "triangles": 608,
+      "bones": 0,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [
+        {
+          "dimensions": [
+            32,
+            32
+          ],
+          "bytes": 115,
+          "mimeType": "image/png"
+        }
+      ],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -12.435066,
+            -25.135542,
+            -43.468742
+          ],
+          "max": [
+            12.435066,
+            27.195854,
+            38.863552
+          ],
+          "size": [
+            24.870132,
+            52.331396,
+            82.332294
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "chicken",
+      "file": "chicken.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "chicken",
+        "originalTitle": "Rooster",
+        "modelUrl": "https://poly.pizza/m/6NTegstc5Jy",
+        "downloadUrl": "https://static.poly.pizza/f7a2debe-4c82-4f39-a5b2-3b3a3d521f2d.glb",
+        "sha256": "4efb5945bc112a19c89fca169c0d1d48afbb6bf5aceb813c375f1fd376edb55a",
+        "rawFile": "6NTegstc5Jy.glb",
+        "bytes": 1242880
+      },
+      "sha256": "65d0fc9f0d867c1c85a75c3d5db1cebae4bddd16c4efaa31848526925ad076fb",
+      "bytes": 257748,
+      "triangles": 1200,
+      "bones": 0,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [
+        {
+          "dimensions": [
+            512,
+            512
+          ],
+          "bytes": 169965,
+          "mimeType": "image/png"
+        }
+      ],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -0.643652,
+            0,
+            -1.620732
+          ],
+          "max": [
+            0.643652,
+            3.467721,
+            1.620732
+          ],
+          "size": [
+            1.287304,
+            3.467721,
+            3.241464
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "owl",
+      "file": "owl.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "owl",
+        "originalTitle": "Long eared owl",
+        "modelUrl": "https://poly.pizza/m/dVPHzmMmXlg",
+        "downloadUrl": "https://static.poly.pizza/9e08c33a-7dad-4173-b03a-0de2adf138a2.glb",
+        "sha256": "fbcc0b3aea2543659f74a10edfd605bdbb81593bed54e7d9e431373a395f4d23",
+        "rawFile": "dVPHzmMmXlg.glb",
+        "bytes": 3498848
+      },
+      "sha256": "669ff6cfb70f190f87fb243cb7593c11229e3aaa24b0ff63da6edf4c60f0af0c",
+      "bytes": 459932,
+      "triangles": 1594,
+      "bones": 0,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [
+        {
+          "dimensions": [
+            512,
+            512
+          ],
+          "bytes": 344691,
+          "mimeType": "image/png"
+        }
+      ],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -2.374157,
+            -2.070851,
+            -4.720886
+          ],
+          "max": [
+            2.371538,
+            10.659519,
+            3.422112
+          ],
+          "size": [
+            4.745695,
+            12.73037,
+            8.142998
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "seagull",
+      "file": "seagull.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "seagull",
+        "originalTitle": "Gull",
+        "modelUrl": "https://poly.pizza/m/7sQHkW0ylJy",
+        "downloadUrl": "https://static.poly.pizza/b556e543-d7ac-4740-84fd-b0a8221c68a5.glb",
+        "sha256": "437386e8b0382ada8ccaedeeaef74daf0dc8eda72082aeaf3be690302a184d6a",
+        "rawFile": "7sQHkW0ylJy.glb",
+        "bytes": 94144
+      },
+      "sha256": "eecadb7f739249cdc56009cbc2d5dd080a3b303dc71e917de0e006b9c14b58c8",
+      "bytes": 88452,
+      "triangles": 478,
+      "bones": 0,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [
+        {
+          "dimensions": [
+            512,
+            512
+          ],
+          "bytes": 38255,
+          "mimeType": "image/png"
+        }
+      ],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -49.007435,
+            -0.881164,
+            -12.379417
+          ],
+          "max": [
+            16.370342,
+            55.092468,
+            12.123568
+          ],
+          "size": [
+            65.377777,
+            55.973632,
+            24.502985
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "heron",
+      "file": "heron.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "heron",
+        "originalTitle": "Heron",
+        "modelUrl": "https://poly.pizza/m/74guNhJR5Ij",
+        "downloadUrl": "https://static.poly.pizza/ca5572e1-c229-4ad0-a00b-797c4c6e713e.glb",
+        "sha256": "f16c50d0462302f9be8732760db3f6c5481da596d44264639a21aa7ad8cc1e81",
+        "rawFile": "74guNhJR5Ij.glb",
+        "bytes": 42600
+      },
+      "sha256": "358eb42c0e6365c755759a3000ceee025f60be6a843740ed9f337dc6f39808a0",
+      "bytes": 42004,
+      "triangles": 668,
+      "bones": 0,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [
+        {
+          "dimensions": [
+            32,
+            32
+          ],
+          "bytes": 115,
+          "mimeType": "image/png"
+        }
+      ],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -20.135605,
+            -89.569565,
+            -57.438171
+          ],
+          "max": [
+            20.135605,
+            87.407829,
+            59.34922
+          ],
+          "size": [
+            40.27121,
+            176.977394,
+            116.787392
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "whale",
+      "file": "whale.glb",
+      "source": {
+        "creator": "Quaternius",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "id": "whale",
+        "originalTitle": "Whale",
+        "modelUrl": "https://poly.pizza/m/JGFwp6xWgk",
+        "downloadUrl": "https://static.poly.pizza/7300e697-2543-4a9a-a77d-dedf29251fd7.glb",
+        "sha256": "153d6814c67039378fce22d4c347ed35d7febf2bedac866de91cf9b5dd7945f2",
+        "rawFile": "JGFwp6xWgk.glb",
+        "bytes": 68764
+      },
+      "sha256": "bd20360e1e564856a8cfacc79234faf373f25c78ef2240d05e9ee683e198607f",
+      "bytes": 79208,
+      "triangles": 447,
+      "bones": 13,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": true,
+      "textures": [],
+      "clips": [
+        {
+          "name": "Armature|Swim",
+          "duration": 2.7916667461395264
+        }
+      ],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -1.9451,
+            -2.33651,
+            -6.510578
+          ],
+          "max": [
+            1.945726,
+            0.998651,
+            3.534818
+          ],
+          "size": [
+            3.890826,
+            3.335162,
+            10.045395
+          ]
+        },
+        "animatedBounds": [
+          {
+            "clip": "Armature|Swim",
+            "samples": 17,
+            "min": [
+              -2.031287,
+              -2.474688,
+              -6.663218
+            ],
+            "max": [
+              2.031287,
+              1.510951,
+              3.536096
+            ],
+            "size": [
+              4.062573,
+              3.98564,
+              10.199315
+            ],
+            "minFootY": -2.474688,
+            "maxFootY": -2.249864
+          }
+        ]
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "frog",
+      "file": "frog.glb",
+      "source": {
+        "creator": "Quaternius",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "id": "frog",
+        "originalTitle": "Frog",
+        "modelUrl": "https://poly.pizza/m/9Z2V8fpazF",
+        "downloadUrl": "https://static.poly.pizza/08416495-b056-4ed7-b23b-5a10e82277a0.glb",
+        "sha256": "92dc96c90e7228676f8c43dc7711ba5ed5505029ebb2f6d4ad198d9e35bdbfe0",
+        "rawFile": "9Z2V8fpazF.glb",
+        "bytes": 587360
+      },
+      "sha256": "7a153dd8d4df882c45e28849c34e4328c6868891218b04ccc6baf829e3477e7b",
+      "bytes": 692088,
+      "triangles": 4920,
+      "bones": 28,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": true,
+      "textures": [],
+      "clips": [
+        {
+          "name": "FrogArmature|Frog_Idle",
+          "duration": 2.5
+        }
+      ],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -1.764928,
+            -0.033186,
+            -1.535162
+          ],
+          "max": [
+            1.742072,
+            1.399717,
+            1.650111
+          ],
+          "size": [
+            3.507,
+            1.432903,
+            3.185272
+          ]
+        },
+        "animatedBounds": [
+          {
+            "clip": "FrogArmature|Frog_Idle",
+            "samples": 17,
+            "min": [
+              -1.766419,
+              -0.054123,
+              -1.543367
+            ],
+            "max": [
+              1.743616,
+              1.458265,
+              1.720019
+            ],
+            "size": [
+              3.510035,
+              1.512388,
+              3.263385
+            ],
+            "minFootY": -0.054123,
+            "maxFootY": -0.01917
+          }
+        ]
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "shellfish",
+      "file": "shellfish.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "shellfish",
+        "originalTitle": "Clam",
+        "modelUrl": "https://poly.pizza/m/65ObbG0O7Ze",
+        "downloadUrl": "https://static.poly.pizza/bc603c49-00b1-40e3-89d5-aa7fb26582dc.glb",
+        "sha256": "bd222fa3f13f39f6516f8c93d83c6a09f9b1795512567466d9b477c7a13f368f",
+        "rawFile": "65ObbG0O7Ze.glb",
+        "bytes": 3546660
+      },
+      "sha256": "e26ea2e4e0abf9bb4ce349b44cf09f9a86e5d5727b8e26e020c3206c6e6fe86e",
+      "bytes": 337248,
+      "triangles": 644,
+      "bones": 0,
+      "materials": 2,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [
+        {
+          "dimensions": [
+            512,
+            512
+          ],
+          "bytes": 322300,
+          "mimeType": "image/png"
+        }
+      ],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -0.554897,
+            -0.224555,
+            -0.469583
+          ],
+          "max": [
+            0.554897,
+            0.378304,
+            0.493351
+          ],
+          "size": [
+            1.109794,
+            0.602859,
+            0.962934
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "fish",
+      "file": "fish.glb",
+      "source": {
+        "creator": "Quaternius",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "id": "fish",
+        "originalTitle": "Fish",
+        "modelUrl": "https://poly.pizza/m/BEcU9rjiAq",
+        "downloadUrl": "https://static.poly.pizza/6805b99c-5fd7-4aab-bf57-3bb645e1108a.glb",
+        "sha256": "9607de8de8a0ac2d857f271272e70e6d8d3fd19852d979c2cfbe9eafe1e4fcc5",
+        "rawFile": "BEcU9rjiAq.glb",
+        "bytes": 81508
+      },
+      "sha256": "e32818e7824417f548c32a034e843733a20af346ec611c5b8ca53a20eec920fb",
+      "bytes": 99296,
+      "triangles": 686,
+      "bones": 6,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": true,
+      "textures": [],
+      "clips": [
+        {
+          "name": "Armature|Swim",
+          "duration": 1.2916666269302368
+        }
+      ],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -0.526997,
+            -1.718186,
+            -4.51344
+          ],
+          "max": [
+            1.217501,
+            2.370336,
+            3.098694
+          ],
+          "size": [
+            1.744498,
+            4.088522,
+            7.612134
+          ]
+        },
+        "animatedBounds": [
+          {
+            "clip": "Armature|Swim",
+            "samples": 17,
+            "min": [
+              -1.074441,
+              -1.718186,
+              -4.750752
+            ],
+            "max": [
+              1.202806,
+              2.370343,
+              3.100599
+            ],
+            "size": [
+              2.277246,
+              4.08853,
+              7.851351
+            ],
+            "minFootY": -1.718186,
+            "maxFootY": -1.718186
+          }
+        ]
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "turtle",
+      "file": "turtle.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "turtle",
+        "originalTitle": "Turtle",
+        "modelUrl": "https://poly.pizza/m/2LCcq8vhqJ3",
+        "downloadUrl": "https://static.poly.pizza/4a6957fa-543c-4e64-b6cf-7e9d5523026a.glb",
+        "sha256": "484cce3383e0cdbfb710ccd0318fa13d23a9609ab1a7a600437657a47b1cdae7",
+        "rawFile": "2LCcq8vhqJ3.glb",
+        "bytes": 115884
+      },
+      "sha256": "8409ca17fc6e1051727eaeb03759610b3cb78abbd7f76f6d7ae5876741189eb3",
+      "bytes": 146188,
+      "triangles": 4026,
+      "bones": 0,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -7.010076,
+            -1.760847,
+            -10.610929
+          ],
+          "max": [
+            7.010076,
+            7.775253,
+            11.010647
+          ],
+          "size": [
+            14.020152,
+            9.5361,
+            21.621575
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "crab",
+      "file": "crab.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "crab",
+        "originalTitle": "Crab",
+        "modelUrl": "https://poly.pizza/m/2DgM36qZW2u",
+        "downloadUrl": "https://static.poly.pizza/1acf95b5-2e6b-4c9d-bd37-8384b88bdbea.glb",
+        "sha256": "db4f63d5337c468da09eb2236d45ec77e950af9919eec7cc7ba144cc59bfeb06",
+        "rawFile": "2DgM36qZW2u.glb",
+        "bytes": 45092
+      },
+      "sha256": "85b4657732bed2c12789b4917db037742f3c10f6b1ddbe326e8bbdef927f042a",
+      "bytes": 44612,
+      "triangles": 624,
+      "bones": 0,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [
+        {
+          "dimensions": [
+            32,
+            32
+          ],
+          "bytes": 115,
+          "mimeType": "image/png"
+        }
+      ],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -50.125057,
+            -8.643624,
+            -47.332939
+          ],
+          "max": [
+            50.125057,
+            10.775216,
+            31.433426
+          ],
+          "size": [
+            100.250114,
+            19.41884,
+            78.766365
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "jellyfish",
+      "file": "jellyfish.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "jellyfish",
+        "originalTitle": "Jellyfish",
+        "modelUrl": "https://poly.pizza/m/dA5osnS0Rzj",
+        "downloadUrl": "https://static.poly.pizza/5025e994-da02-45bc-9b98-fde96366b0ca.glb",
+        "sha256": "c8c8bb4c67aa0b1cdd6a2cca44608a28ea2cf62ad329d619069579ea2c66a5ea",
+        "rawFile": "dA5osnS0Rzj.glb",
+        "bytes": 219312
+      },
+      "sha256": "b82731b0b5a8e70d656c11525a4592b5703e1659164728dae88c3c030fc3803f",
+      "bytes": 264620,
+      "triangles": 3704,
+      "bones": 0,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -141.716003,
+            -312.786987,
+            -113.713997
+          ],
+          "max": [
+            141.716003,
+            98.165398,
+            109.767998
+          ],
+          "size": [
+            283.432007,
+            410.952385,
+            223.481995
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Adapted the three original solid material colors to muted blue-gray, pale pearl-blue, and ivory; preserved geometry, normals, texture coordinates, original alpha values, and opaque alpha mode.",
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "butterfly",
+      "file": "butterfly.glb",
+      "source": {
+        "creator": "Poly by Google",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "id": "butterfly",
+        "originalTitle": "Butterfly",
+        "modelUrl": "https://poly.pizza/m/e9NAQQrCbLu",
+        "downloadUrl": "https://static.poly.pizza/f4173d1a-1694-4f86-b1f9-429cbb3542f6.glb",
+        "sha256": "1647611dbca8cbdc41549281bc07c3ea72973de904e827b1c6c663c989a023a9",
+        "rawFile": "e9NAQQrCbLu.glb",
+        "bytes": 3109216
+      },
+      "sha256": "4fca7d3e8ee19bdb13ee880d19f7f7a38a85c894df489532b2790cdc6629f4ac",
+      "bytes": 299904,
+      "triangles": 1856,
+      "bones": 0,
+      "materials": 2,
+      "meshes": 1,
+      "rigged": false,
+      "textures": [
+        {
+          "dimensions": [
+            512,
+            512
+          ],
+          "bytes": 252856,
+          "mimeType": "image/png"
+        }
+      ],
+      "clips": [],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -8.126297,
+            -1.636049,
+            -9.231609
+          ],
+          "max": [
+            8.126297,
+            10.735229,
+            9.236621
+          ],
+          "size": [
+            16.252594,
+            12.371278,
+            18.46823
+          ]
+        },
+        "animatedBounds": []
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
+        "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
+        "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
+      ]
+    },
+    {
+      "id": "spider",
+      "file": "spider.glb",
+      "source": {
+        "creator": "Quaternius",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "id": "spider",
+        "originalTitle": "Spider",
+        "modelUrl": "https://poly.pizza/m/yRYJiAJyiM",
+        "downloadUrl": "https://static.poly.pizza/4259fbdb-afb5-4d40-9108-363625dd6b6e.glb",
+        "sha256": "d759e35f6cf5adc7eb7e3f70135cd2a808787fc36337a523015592ba840ccd6d",
+        "rawFile": "yRYJiAJyiM.glb",
+        "bytes": 449008
+      },
+      "sha256": "1ba9d76cefb6fecfa47de80077f8196dce83552d48d77a3f0a24dac227f0f981",
+      "bytes": 438660,
+      "triangles": 2712,
+      "bones": 39,
+      "materials": 1,
+      "meshes": 1,
+      "rigged": true,
+      "textures": [],
+      "clips": [
+        {
+          "name": "SpiderArmature|Spider_Idle",
+          "duration": 4.166666507720947
+        }
+      ],
+      "coordinates": {
+        "upAxis": "+Y",
+        "forwardAxis": "Authored orientation retained",
+        "normalized": false,
+        "units": "Original authored units; apply scene-wrapper centering, grounding and scale at runtime.",
+        "bindBounds": {
+          "min": [
+            -2.959337,
+            -0.000112,
+            -2.35359
+          ],
+          "max": [
+            2.951842,
+            2.002142,
+            2.725186
+          ],
+          "size": [
+            5.911179,
+            2.002253,
+            5.078776
+          ]
+        },
+        "animatedBounds": [
+          {
+            "clip": "SpiderArmature|Spider_Idle",
+            "samples": 17,
+            "min": [
+              -2.968393,
+              -0.001238,
+              -2.350615
+            ],
+            "max": [
+              2.968393,
+              2.03457,
+              2.724187
+            ],
+            "size": [
+              5.936785,
+              2.035808,
+              5.074803
+            ],
+            "minFootY": -0.001238,
+            "maxFootY": 0.000114
+          }
+        ]
+      },
+      "modifications": [
+        "Retained only listed authored idle/eating/swimming clips; original animation names preserved. Unrigged models remain unrigged.",
+        "Multiplied original solid material base colors by authored vertex colors into linear COLOR_0.",
+        "Combined compatible solid primitives, preserving geometry, normals, joints, skin weights and authored transforms. Textured surfaces retain their UVs and separate materials.",
+        "Embedded textures over 512 pixels were resized to fit 512 pixels with PNG encoding; original texture coordinates and colors preserved.",
         "Removed unused data and duplicate resources; losslessly removed redundant animation keyframes.",
         "Verified bind and 17 sampled poses per retained clip against source bounds before writing."
       ]

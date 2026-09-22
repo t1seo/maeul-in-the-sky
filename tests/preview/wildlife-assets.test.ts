@@ -12,6 +12,21 @@ afterEach(async () => {
 
 it.each([
   {
+    file: 'nature/nature-collection.glb',
+    contentType: 'model/gltf-binary',
+    bytes: Buffer.from([0x67, 0x6c, 0x54, 0x46, 2, 0, 0, 0, 16, 0, 0, 0, 0, 1, 2, 3]),
+  },
+  {
+    file: 'village/manifest.json',
+    contentType: 'application/json; charset=utf-8',
+    bytes: Buffer.from('{"version":1,"models":[]}'),
+  },
+  {
+    file: 'village/licenses/source.txt',
+    contentType: 'text/plain; charset=utf-8',
+    bytes: Buffer.from('Creative Commons Zero\n'),
+  },
+  {
     file: 'squirrel.glb',
     contentType: 'model/gltf-binary',
     bytes: Buffer.from([0x67, 0x6c, 0x54, 0x46, 2, 0, 0, 0, 16, 0, 0, 0, 0xff, 0x80, 0, 1]),
@@ -27,7 +42,7 @@ it.each([
     const root = await assetFixture();
     cleanup.push(root.close);
     const models = join(root.directory, 'tour/models');
-    await mkdir(models, { recursive: true });
+    await mkdir(join(models, file, '..'), { recursive: true });
     await writeFile(join(models, file), bytes);
     const server = await startPreviewServer({
       port: 0,

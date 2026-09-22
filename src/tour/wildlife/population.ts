@@ -3,6 +3,7 @@ import type { TourModel } from '../types.js';
 import { wildlifeSpecies } from './catalog.js';
 import { createWildlifeActor, type WildlifeActor } from './actor.js';
 import type { WildlifeLibrary } from './library.js';
+import { wildlifeMembers } from './placement.js';
 
 export function createWildlifePopulation(model: TourModel, library?: WildlifeLibrary) {
   const root = new Group();
@@ -14,11 +15,13 @@ export function createWildlifePopulation(model: TourModel, library?: WildlifeLib
       const species = wildlifeSpecies(placement.source.catalogId);
       const source = species ? library?.models.get(species) : undefined;
       if (!species || !source) continue;
-      const actor = createWildlifeActor(source, species, placement);
-      actors.push(actor);
-      root.add(actor.root);
       placements.add(placement.source.id);
-      for (const mesh of actor.meshes) identities.set(mesh.uuid, [placement.source.id]);
+      for (const member of wildlifeMembers(placement)) {
+        const actor = createWildlifeActor(source, species, placement, member);
+        actors.push(actor);
+        root.add(actor.root);
+        for (const mesh of actor.meshes) identities.set(mesh.uuid, [placement.source.id]);
+      }
     }
   } catch (error) {
     for (const actor of actors) actor.dispose();
@@ -45,8 +48,8 @@ export function createWildlifePopulation(model: TourModel, library?: WildlifeLib
       );
       visible = 0;
       for (const actor of actors) {
-        sphere.center.copy(actor.root.position).y += actor.height / 2;
-        sphere.radius = actor.height * 2;
+        sphere.copy(actor.cullingSphere);
+        sphere.center.add(actor.root.position);
         actor.root.visible = frustum.intersectsSphere(sphere);
         if (!actor.root.visible) continue;
         visible++;

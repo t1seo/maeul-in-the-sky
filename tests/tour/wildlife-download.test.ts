@@ -70,7 +70,7 @@ describe('self-contained wildlife assets', () => {
   it('maps genuine species aliases and only bends explicitly known vegetation', () => {
     expect(wildlifeSpecies('pigpen')).toBe('pig');
     expect(wildlifeSpecies('lamb')).toBe('sheep');
-    expect(wildlifeSpecies('goat')).toBeNull();
+    expect(wildlifeSpecies('goat')).toBe('goat');
     for (const id of [
       'deciduous',
       'bambooThicket',

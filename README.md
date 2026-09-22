@@ -55,7 +55,9 @@ The README previews and six preset images use seeded **synthetic data**, with 36
 
 ## Walk inside your Calendar village
 
-The [3D tour](https://t1seo.github.io/maeul-in-the-sky/tour/) opens the same dated Calendar as a real Three.js miniature, with English menus and detailed animals. Explore seasonal viewpoints, take a guided flight, or walk with WASD. Turn in place with Q/E or the left/right arrows, and drag to look around. Click the map to jump to nearby safe ground; while walking, you can also click the visible terrain. Touch movement and turning, day-to-night lighting, reduced motion and a Calendar fallback are included. The default tour is clearly labeled sample data.
+The [3D tour](https://t1seo.github.io/maeul-in-the-sky/tour/) opens the same dated Calendar as a real Three.js miniature, with English menus and locally hosted wildlife, trees, buildings, props and selected Wonder models. Explore seasonal viewpoints, take a guided flight, or walk with WASD. Turn in place with Q/E or the left/right arrows, and drag to look around. Click the map to jump to nearby safe ground; while walking, you can also click the visible terrain. Touch movement and turning, day-to-night lighting, reduced motion and a Calendar fallback are included. The default tour is clearly labeled sample data.
+
+The [3D asset credits](https://t1seo.github.io/maeul-in-the-sky/tour/credits.html) identify each model's creator, license and adaptations. The [complete coverage ledger](docs/demo/tour/models/coverage.md) lists all 240 catalog IDs as external models, combinations with existing details, or retained designs. Generated terrain, water, paths and ambient effects keep their Calendar behavior. Asset files and attribution are included in both the Pages demo and the packaged preview; the tour does not download models from a runtime CDN.
 
 For your own village, publish the snapshot generated alongside your SVG and link to:
 

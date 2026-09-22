@@ -52,6 +52,7 @@ export function createWater(model: TourModel, resources: GeometryResources) {
   geometry.setAttribute('fall', new Float32BufferAttribute(falls, 1));
   const uniforms = {
     time: { value: 0 },
+    surfaceAlpha: { value: 0.64 },
     shade: { value: new Color('#529fa5') },
     gleam: { value: new Color('#d8e5c2') },
   };
@@ -63,7 +64,7 @@ export function createWater(model: TourModel, resources: GeometryResources) {
       depthWrite: false,
       vertexShader: `attribute float fall; varying vec3 p; varying vec2 st; varying float waterfall;
       void main(){ p=position; st=uv; waterfall=fall; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
-      fragmentShader: `uniform float time; uniform vec3 shade; uniform vec3 gleam;
+      fragmentShader: `uniform float time; uniform float surfaceAlpha; uniform vec3 shade; uniform vec3 gleam;
       varying vec3 p; varying vec2 st; varying float waterfall;
       void main(){
         float ripple=sin(p.z*6.+sin(p.x*.8+time*.4)*2.4-time*.8);
@@ -72,7 +73,7 @@ export function createWater(model: TourModel, resources: GeometryResources) {
         float streak=smoothstep(.65,.98,flow)*(.65+.35*sin(st.y*9.-time*5.));
         float foam=waterfall*(streak*.5+pow(1.-st.y,12.)*.3);
         vec3 color=mix(shade,gleam,light*.25*(1.-waterfall)+foam);
-        float alpha=mix(.92,.66+foam*.25,waterfall);
+        float alpha=mix(surfaceAlpha,.66+foam*.25,waterfall);
         gl_FragColor=vec4(color,alpha);
         #include <tonemapping_fragment>
         #include <colorspace_fragment>

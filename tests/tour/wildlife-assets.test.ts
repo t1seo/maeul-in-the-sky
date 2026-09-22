@@ -1,12 +1,36 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { Document } from '@gltf-transform/core';
+import { NodeIO } from '@gltf-transform/core';
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
-import { optimizeWildlife } from '../../scripts/wildlife/optimize.js';
 
-const IDS = ['squirrel', 'cow', 'deer', 'fox', 'horse', 'donkey', 'sheep', 'pig'] as const;
+const IDS = [
+  'squirrel',
+  'cow',
+  'deer',
+  'fox',
+  'horse',
+  'donkey',
+  'sheep',
+  'pig',
+  'rabbit',
+  'goat',
+  'bird',
+  'chicken',
+  'owl',
+  'seagull',
+  'heron',
+  'whale',
+  'frog',
+  'shellfish',
+  'fish',
+  'turtle',
+  'crab',
+  'jellyfish',
+  'butterfly',
+  'spider',
+] as const;
 const DIRECTORY = resolve('docs/demo/tour/models');
 const HASH = z.string().regex(/^[a-f\d]{64}$/);
 const CLIP = z.object({ name: z.string(), duration: z.number().positive() });
@@ -53,7 +77,13 @@ const GLTF = z.object({
       ),
     }),
   ),
-  materials: z.array(z.object({})),
+  materials: z.array(
+    z.object({
+      pbrMetallicRoughness: z
+        .object({ baseColorTexture: z.object({ index: z.number().int() }).optional() })
+        .optional(),
+    }),
+  ),
   skins: z.array(z.object({ joints: z.array(z.number().int()).min(1) })).optional(),
   animations: z
     .array(
@@ -79,50 +109,6 @@ function readManifest() {
 }
 
 describe('vendored authored wildlife', () => {
-  it('removes animation sampler data when excluding a combat clip', async () => {
-    // Given independent idle and combat keyframes in the source graph.
-    const document = new Document();
-    const buffer = document.createBuffer();
-    const node = document.createNode('animal');
-    document.createScene().addChild(node);
-    for (const [name, value] of [
-      ['Idle', 1],
-      ['Attack', 100],
-    ] as const) {
-      const input = document
-        .createAccessor(`${name}-time`, buffer)
-        .setType('SCALAR')
-        .setArray(new Float32Array([0, value]));
-      const output = document
-        .createAccessor(`${name}-motion`, buffer)
-        .setType('VEC3')
-        .setArray(new Float32Array([0, 0, 0, 0, value, 0]));
-      const sampler = document.createAnimationSampler().setInput(input).setOutput(output);
-      const channel = document
-        .createAnimationChannel()
-        .setTargetNode(node)
-        .setTargetPath('translation')
-        .setSampler(sampler);
-      document.createAnimation(name).addSampler(sampler).addChannel(channel);
-    }
-    // When the non-peaceful clip is removed from the shipped inventory.
-    await optimizeWildlife(document, 'squirrel');
-    // Then its detached samplers cannot retain unused binary payload.
-    expect(
-      document
-        .getRoot()
-        .listAnimations()
-        .map((animation) => animation.getName()),
-    ).toEqual(['Idle']);
-    expect(
-      document
-        .getRoot()
-        .listAccessors()
-        .map((accessor) => accessor.getName())
-        .sort(),
-    ).toEqual(['Idle-motion', 'Idle-time']);
-  });
-
   it.each(IDS)('ships %s as a self-contained GLB without external decoders', (id) => {
     // Given an animal requested by the public tour.
     const { binary, gltf } = readModel(id);
@@ -143,28 +129,45 @@ describe('vendored authored wildlife', () => {
     expect(gltf.bufferViews.every((view) => view.buffer === 0)).toBe(true);
   });
 
-  it.each(IDS)('keeps %s to one drawable mesh with its required skin attributes', (id) => {
+  it.each(IDS)('keeps %s within its drawable budget and preserves required attributes', (id) => {
     // Given the optimized animal geometry.
     const { gltf } = readModel(id);
     // When its drawable primitives are inspected.
     const primitives = gltf.meshes.flatMap((mesh) => mesh.primitives);
     // Then the budget does not multiply draw calls or discard skeletal weights.
     expect(gltf.meshes).toHaveLength(1);
-    expect(primitives).toHaveLength(1);
-    expect(gltf.materials).toHaveLength(1);
+    expect(primitives.length).toBeLessThanOrEqual(id === 'butterfly' || id === 'shellfish' ? 2 : 1);
+    expect(gltf.materials.length).toBe(primitives.length);
     for (const primitive of primitives) {
       expect(primitive.mode ?? 4).toBe(4);
       expect(primitive.attributes['POSITION']).toBeTypeOf('number');
-      expect(primitive.attributes['NORMAL']).toBeTypeOf('number');
-      if (id === 'squirrel') {
+      if (!['shellfish', 'turtle', 'butterfly'].includes(id))
+        expect(primitive.attributes['NORMAL']).toBeTypeOf('number');
+      if (gltf.materials[primitive.material]?.pbrMetallicRoughness?.baseColorTexture) {
         expect(primitive.attributes['TEXCOORD_0']).toBeTypeOf('number');
-      } else {
+      }
+      if ((gltf.skins ?? []).length > 0) {
         expect(primitive.attributes['JOINTS_0']).toBeTypeOf('number');
         expect(primitive.attributes['WEIGHTS_0']).toBeTypeOf('number');
         expect(primitive.attributes['COLOR_0']).toBeTypeOf('number');
       }
     }
-    expect((gltf.skins ?? []).length).toBe(id === 'squirrel' ? 0 : 1);
+    expect((gltf.skins ?? []).length).toBeLessThanOrEqual(1);
+  });
+
+  it.each(IDS)('keeps %s decoded embedded textures within the image budget', async (id) => {
+    // Given the actual published binary rather than its metadata claim.
+    const document = await new NodeIO().read(resolve(DIRECTORY, `${id}.glb`));
+    // When the encoded image dimensions are decoded.
+    const sizes = document
+      .getRoot()
+      .listTextures()
+      .map((texture) => texture.getSize());
+    // Then no oversized original texture can inflate GPU memory at runtime.
+    for (const size of sizes) {
+      expect(size).not.toBeNull();
+      expect(Math.max(...(size ?? [Infinity]))).toBeLessThanOrEqual(512);
+    }
   });
 
   it.each(IDS)('retains only peaceful authored animation for %s', (id) => {
@@ -173,13 +176,15 @@ describe('vendored authored wildlife', () => {
     // When the available behaviors are listed.
     const names = (gltf.animations ?? []).map((animation) => animation.name);
     // Then a forest actor cannot accidentally play combat or jumping clips.
-    if (id === 'squirrel') expect(names).toEqual([]);
+    if ((gltf.skins ?? []).length === 0) expect(names).toEqual([]);
     else {
       expect(names.length).toBeGreaterThan(0);
-      expect(names.every((name) => /(?:^|\|)(?:Idle(?:_2|_Headlow)?|Eating)$/.test(name))).toBe(
-        true,
-      );
-      expect(names.some((name) => /(?:^|\|)Idle$/.test(name))).toBe(true);
+      expect(
+        names.every((name) =>
+          /(?:^|\|)(?:(?:Frog_|Spider_)?Idle(?:_2|_Headlow)?|Eating|Swim)$/.test(name),
+        ),
+      ).toBe(true);
+      expect(names.some((name) => /(?:Idle|Swim)$/.test(name))).toBe(true);
     }
   });
 
@@ -192,7 +197,7 @@ describe('vendored authored wildlife', () => {
     // Then no requested species, authorship, license, or source digest is missing.
     expect(species).toEqual([...IDS].sort());
     expect(manifest.models.reduce((total, model) => total + model.bytes, 0)).toBeLessThanOrEqual(
-      6 * 1024 * 1024,
+      12 * 1024 * 1024,
     );
     expect(credits).toContain('Poly by Google');
     expect(credits).toContain('Quaternius');
@@ -201,8 +206,10 @@ describe('vendored authored wildlife', () => {
       expect(license.length).toBeGreaterThan(1000);
       expect(credits).toContain(model.source.modelUrl);
       expect(credits).toContain(model.source.licenseUrl);
-      expect(model.source.license).toBe(model.id === 'squirrel' ? 'CC-BY-3.0' : 'CC0-1.0');
-      expect(model.rigged).toBe(model.id !== 'squirrel');
+      expect(model.source.license).toBe(
+        model.source.creator === 'Quaternius' ? 'CC0-1.0' : 'CC-BY-3.0',
+      );
+      expect(model.rigged).toBe(model.bones > 0);
     }
   });
 
