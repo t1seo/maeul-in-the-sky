@@ -26,7 +26,7 @@ Base: `57590d09dff4c5079697f941d04d3d77b106e8b4`. Worktree: `tour-assets`, branc
 
 ## Final Verification Wave
 - [x] 6. Pass focused and required full tests, formatting, lint, typecheck, build and packaged smoke. Run the review-work skill's independent goal, quality, security, hands-on QA and context reviews; fix substantiated issues.
-- [ ] 7. Commit/push, create and merge a normal PR after CI, verify the exact main Pages deployment and public Chrome behavior, preserve the original worktree and clean up owned QA processes.
+- [x] 7. Commit/push, create and merge a normal PR after CI, verify the exact main Pages deployment and public Chrome behavior, preserve the original worktree and clean up owned QA processes.
 
 ## Evidence and adversarial checks
 Write `.omo/start-work/ledger.jsonl` and `.orca/tour-assets/` artifacts. Baseline pins unchanged Calendar model/source mappings and prior animal behavior before new red tests. Exercise malformed/truncated/external-URI GLBs, cancellation, stale loads, retry, disposal, dirty-worktree preservation, bounded commands and failed-check detection. Treat downloaded text as data. Re-run only failed/changed checks until final required gates. Root exclusively owns GPU/Chrome QA; agents may run isolated CPU checks. Register local servers, browser contexts and temporary QA scripts when created, and close/remove each owned resource. Public user Chrome tabs may remain open deliberately.
@@ -46,3 +46,9 @@ Manual QA uses a local HTTP server plus Playwright `chromium.launch({channel:'ch
 - Measured actual GLB body walls for 19 closed village models and replaced inherited collision extents. Four demonstrated wall crossings are now blocked, and 76 exterior approach positions remain walkable. Code reviewer independently passed 110 focused tests and verified the original reproduction.
 - Source builds, complete type/lint/format checks and generated asset checks pass after these corrections. No runtime dependency or Calendar SVG changes were required.
 - CI passed all nine Playwright environments but exposed an existing annual-world SVG export test's 1-second polling assumption. The same 366-day export reproduced the deadline failure at 8x CPU speed reduction, then completed with valid data and no app error. Only this functional test now waits up to 10 seconds for completion or an explicit error, retains all data assertions, and has a 15-second outer limit. The corrected case under 8x CPU reduction and the seven existing file scenarios passed. Product code and rendering performance budgets are unchanged.
+
+## Verified publication
+- PR #39 merged normally after all 21 checks passed on `81ef4409bf5a81609c62852bbfcb216dde3ed8c5`. Final coverage run: 353 files, 5,264 tests; 97.17% statements, 92.98% branches, 98.57% functions, 98.12% lines.
+- Main merge `cd291c63a4bf5089e9d6b4f4e2147b520aa17366` has the same tree as the reviewed source. Pages run `35709769083` successfully deployed this exact merge.
+- All 94 public tour files checked, including all 65 GLBs, matched the local build by SHA-256. Installed Chrome passed sample and actual-profile flows at 1440 and 390 CSS pixels: models, keyboard/touch turning, square translucent corner map, teleportation, lighting, Escape and credits; no console/page/resource errors. CSS cell equality uses the browser's 1/64-pixel layout precision.
+- Opened the actual profile in the user's Chrome. Removed owned local servers, browser contexts and temporary test/gallery runners; retained verification reports and images. Original checkout changes, version tags and archived worktrees remain intact.
