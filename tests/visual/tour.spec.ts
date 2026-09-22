@@ -67,7 +67,7 @@ test('walking and turning controls stay usable across viewport and motion settin
   expect(errors).toEqual([]);
 });
 
-test('map travel stays usable across viewport and motion settings', async ({
+test('map visibility stays usable across viewport and motion settings', async ({
   page,
   browserName,
 }) => {
@@ -79,6 +79,22 @@ test('map travel stays usable across viewport and motion settings', async ({
   if (await page.locator('#map-panel').isVisible())
     await page.getByRole('button', { name: 'Close map', exact: true }).click();
   await page.getByRole('button', { name: 'Map', exact: true }).click();
+  await expect(page.locator('#mini-map')).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect(errors).toEqual([]);
+});
+
+test('map travel stays usable across viewport and motion settings', async ({
+  page,
+  browserName,
+}) => {
+  test.skip(
+    browserName !== 'chromium',
+    'Real WebGL rendering is exercised on Chromium; old Calendar keeps its full cross-browser suite.',
+  );
+  const errors = await openSample(page);
+  if (!(await page.locator('#map-panel').isVisible()))
+    await page.getByRole('button', { name: 'Map', exact: true }).click();
   await expect(page.locator('#mini-map')).toBeVisible();
   await expectSeparate(page, '#map-panel', '.journey');
   await page.locator('#mini-map').focus();

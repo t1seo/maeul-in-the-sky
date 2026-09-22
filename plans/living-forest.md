@@ -54,13 +54,13 @@ Wave 1: asset preparation and vegetation work are independent after baseline evi
   - QA: real cow/squirrel assets load, two cows have independent bones/shared geometry, pose changes without foot drift, child mesh clicks return original dates; 404/corrupt/abort/retry/context loss dispose correctly. Raw-browser tests pass explicit asset base URLs.
   - Owner: root. Requires 1; can run alongside 2.
 
-- [ ] 4. Serve, attribute and package the new assets.
+- [x] 4. Serve, attribute and package the new assets.
   - References: `src/preview/assets.ts`, `scripts/package-runtime-assets.ts`, `scripts/smoke-package.ts`, `docs/demo/tour/index.html`, corresponding tests.
   - Deliver GLB MIME support, packed asset smoke coverage, English credits link with creator/source/license/modification notice and changelog. Rebuild docs/dist consistently.
   - QA: packed preview serves and parses a genuine model; invalid/traversal paths retain existing protections; all licensed model files and notices are present.
   - Owner: root. Requires 1 and 3.
 
-- [ ] 5. Verify art, motion, controls and performance in Chrome.
+- [x] 5. Verify art, motion, controls and performance in Chrome.
   - References: existing `tests/tour/browser/`, `tests/visual/tour.spec.ts`, this plan's budgets.
   - Execute actual profile and sample, cow/squirrel multi-angle close-ups and motion clips, day/night, desktop/mobile/reduced motion, 800-day bound, square map/compass/turning/teleport regressions and lifecycle failures. Compare same-device baseline measurements; fix actual defects before review.
   - QA evidence includes screenshot/video, frame/draw-call/triangle/actor data and cleanup receipt; no GPU test concurrency. Requires 2–4.
