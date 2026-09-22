@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Walk inside the Calendar village** — a separate `/tour/` entrance preserves the profile snapshot's dates, assets and seasons in a detailed Three.js village, with English menus, recognizable animal models, seasonal viewpoints, guided travel, safe walking, turn-in-place controls, map teleportation, touch controls and day-to-night lighting. The original Calendar artwork and archived explorers remain available.
 
+### Changed
+
+- **Tour navigation overlay** — a subtly translucent map docks at either bottom corner, uses square tiles at every viewport size, and keeps walking and contextual controls clear. The compass now follows the actual viewing direction with a cardinal bearing; map travel retains the camera direction and ignores empty map margins.
+
 ## [2.0.0] - 2026-09-21
 
 ### Migration

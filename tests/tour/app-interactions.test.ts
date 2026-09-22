@@ -6,6 +6,22 @@ const bounds = { minX: -2, maxX: 210, minZ: -2, maxZ: 26 };
 const size = { width: 424, height: 100 };
 
 describe('tour map coordinates', () => {
+  it('keeps square world tiles square in wide and tall minimaps', () => {
+    for (const viewport of [size, { width: 288, height: 120 }]) {
+      for (const extent of [bounds, { minX: -2, maxX: 2, minZ: -2, maxZ: 26 }]) {
+        const start = projectMapPoint(extent, viewport, { x: 0, z: 0 });
+        const end = projectMapPoint(extent, viewport, { x: 4, z: 4 });
+        expect(end.x - start.x).toBeCloseTo(end.y - start.y, 8);
+      }
+    }
+  });
+
+  it('does not teleport when a click lands in the empty letterbox area', () => {
+    expect(unprojectMapPoint(bounds, size, { x: 212, y: 11 })).toBeNull();
+    const narrow = { minX: -2, maxX: 2, minZ: -2, maxZ: 26 };
+    expect(unprojectMapPoint(narrow, size, { x: 11, y: 50 })).toBeNull();
+  });
+
   it('round-trips canonical positions without replacing the calendar axes', () => {
     for (const point of [
       { x: 0, z: 0 },

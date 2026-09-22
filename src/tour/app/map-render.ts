@@ -32,7 +32,7 @@ export function drawMinimap(
     const corner = projectMapPoint(model.bounds, canvas, { x: cell.x - 1.8, z: cell.z - 1.8 });
     const end = projectMapPoint(model.bounds, canvas, { x: cell.x + 1.8, z: cell.z + 1.8 });
     context.fillStyle = cell.surface === 'water' ? '#659ea8' : COLORS[cell.season];
-    context.fillRect(corner.x, corner.y, Math.max(1, end.x - corner.x), end.y - corner.y);
+    context.fillRect(corner.x, corner.y, end.x - corner.x, end.y - corner.y);
   }
   const target = projectMapPoint(model.bounds, canvas, marker);
   context.strokeStyle = '#b36536';
@@ -41,16 +41,12 @@ export function drawMinimap(
   context.arc(target.x, target.y, 6, 0, Math.PI * 2);
   context.stroke();
   const current = projectMapPoint(model.bounds, canvas, state.position);
-  const ahead = projectMapPoint(model.bounds, canvas, {
-    x: state.position.x - Math.sin(state.heading),
-    z: state.position.z - Math.cos(state.heading),
-  });
   context.save();
   context.translate(
     Math.max(6, Math.min(canvas.width - 6, current.x)),
     Math.max(6, Math.min(canvas.height - 6, current.y)),
   );
-  context.rotate(Math.atan2(ahead.x - current.x, current.y - ahead.y));
+  context.rotate(-state.heading);
   context.beginPath();
   context.moveTo(0, -8);
   context.lineTo(6, 6);

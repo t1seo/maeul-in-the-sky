@@ -5,7 +5,12 @@ import { unprojectMapPoint, type MapPosition } from './map-coordinates.js';
 import { drawMinimap } from './map-render.js';
 import { createTapGesture, pointerPoint } from './tap-gesture.js';
 
-export function bindMap(renderer: TourRenderer, model: TourModel, signal: AbortSignal) {
+export function bindMap(
+  renderer: TourRenderer,
+  model: TourModel,
+  signal: AbortSignal,
+  releaseWalking: () => void,
+) {
   const canvas = canvasElement('mini-map');
   const panel = element('map-panel');
   const toggle = buttonElement('map-toggle');
@@ -17,11 +22,29 @@ export function bindMap(renderer: TourRenderer, model: TourModel, signal: AbortS
     toggle.setAttribute('aria-expanded', String(open));
     document.body.dataset.mapOpen = String(open);
     if (open) {
+      releaseWalking();
+      element('detail-panel').hidden = true;
       element('help-panel').hidden = true;
       buttonElement('help-toggle').setAttribute('aria-expanded', 'false');
       refresh();
     }
   };
+  const dock = buttonElement('map-dock');
+  document.body.dataset.mapSide = 'right';
+  dock.setAttribute('aria-label', 'Move map to bottom left');
+  dock.title = 'Move map to bottom left';
+  dock.addEventListener(
+    'click',
+    () => {
+      const side = document.body.dataset.mapSide === 'right' ? 'left' : 'right';
+      document.body.dataset.mapSide = side;
+      const label = `Move map to bottom ${side === 'right' ? 'left' : 'right'}`;
+      dock.setAttribute('aria-label', label);
+      dock.title = label;
+      announce(`Map moved to the bottom ${side}.`);
+    },
+    { signal },
+  );
   const teleport = (): void => {
     if (renderer.navigation.teleport(marker)) {
       marker = renderer.inspect().position;
@@ -111,6 +134,13 @@ export function bindMap(renderer: TourRenderer, model: TourModel, signal: AbortS
     { signal },
   );
   window.addEventListener('blur', gesture.cancel, { signal });
+  window.addEventListener(
+    'resize',
+    () => {
+      if (!panel.hidden) releaseWalking();
+    },
+    { signal },
+  );
   setOpen(!matchMedia('(max-width: 800px)').matches);
   return { refresh, close: (): void => setOpen(false) };
 }

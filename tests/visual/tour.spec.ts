@@ -9,6 +9,15 @@ async function openSample(page: Page): Promise<string[]> {
   return errors;
 }
 
+async function expectSeparate(page: Page, first: string, second: string): Promise<void> {
+  const a = await page.locator(first).boundingBox();
+  const b = await page.locator(second).boundingBox();
+  if (!a || !b) throw new Error(`Expected visible controls: ${first}, ${second}`);
+  expect(
+    a.x + a.width <= b.x || b.x + b.width <= a.x || a.y + a.height <= b.y || b.y + b.height <= a.y,
+  ).toBe(true);
+}
+
 test('the Calendar tour opens with seasonal, lighting and overview controls', async ({
   page,
   browserName,
@@ -41,12 +50,14 @@ test('walking, turning controls and map travel stay usable across viewport and m
   await expect(page.locator('#walk-pad')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Turn left', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Turn right', exact: true })).toBeVisible();
+  await expectSeparate(page, '#compass', '#walk-pad');
   await page.keyboard.press('Escape');
   await expect(page.locator('#walk-pad')).toBeHidden();
   if (await page.locator('#map-panel').isVisible())
     await page.getByRole('button', { name: 'Close map', exact: true }).click();
   await page.getByRole('button', { name: 'Map', exact: true }).click();
   await expect(page.locator('#mini-map')).toBeVisible();
+  await expectSeparate(page, '#map-panel', '.journey');
   await page.locator('#mini-map').focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('body')).toHaveAttribute('data-mode', 'walk');

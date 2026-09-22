@@ -5,13 +5,18 @@ import { presentPlace } from './presentation.js';
 import { bindMap } from './map-controls.js';
 import { bindSceneControls } from './scene-controls.js';
 import { bindWalkingPad } from './walk-controls.js';
+import { refreshCompass } from './compass.js';
 
 export function bindControls(renderer: TourRenderer, model: TourModel) {
   const lifetime = new AbortController();
   const signal = lifetime.signal;
-  const map = bindMap(renderer, model, signal);
   const walking = bindWalkingPad(renderer, signal);
-  bindSceneControls(renderer, model, signal);
+  const map = bindMap(renderer, model, signal, walking.reset);
+  bindSceneControls(renderer, model, signal, map.close);
+  const refreshNavigation = (): void => {
+    refreshCompass(renderer.inspect().heading);
+    map.refresh();
+  };
   const refresh = (): void => {
     const state = renderer.inspect();
     document.body.dataset.mode = state.mode;
@@ -31,7 +36,7 @@ export function bindControls(renderer: TourRenderer, model: TourModel) {
     for (const button of document.querySelectorAll<HTMLButtonElement>('[data-stop]'))
       button.setAttribute('aria-current', String(Number(button.dataset.stop) === state.stopIndex));
     presentPlace(model, state.stopIndex);
-    map.refresh();
+    refreshNavigation();
   };
   const click = (id: string, action: () => void): void => {
     buttonElement(id).addEventListener('click', action, { signal });
@@ -59,7 +64,10 @@ export function bindControls(renderer: TourRenderer, model: TourModel) {
   click('help-toggle', () => {
     const panel = element('help-panel');
     panel.hidden = !panel.hidden;
-    if (!panel.hidden) map.close();
+    if (!panel.hidden) {
+      map.close();
+      element('detail-panel').hidden = true;
+    }
     buttonElement('help-toggle').setAttribute('aria-expanded', String(!panel.hidden));
   });
   for (const button of document.querySelectorAll<HTMLButtonElement>('[data-light]')) {
@@ -86,7 +94,7 @@ export function bindControls(renderer: TourRenderer, model: TourModel) {
   refresh();
   return {
     refresh,
-    refreshNavigation: map.refresh,
+    refreshNavigation,
     dispose: (): void => lifetime.abort(),
   };
 }
