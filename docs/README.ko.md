@@ -18,7 +18,7 @@
   <img alt="GitHub Contribution Calendar로 만든 아이소메트릭 마을" src="../.github/assets/preview-dark.svg" width="840">
 </picture>
 
-[**SVG 마을 스튜디오**](https://t1seo.github.io/maeul-in-the-sky/) · [낮](https://t1seo.github.io/maeul-in-the-sky/?mode=light) · [밤](https://t1seo.github.io/maeul-in-the-sky/?mode=dark) · [빠른 시작](#빠른-시작) · [쇼케이스](../SHOWCASE.md)
+[**SVG 마을 스튜디오**](https://t1seo.github.io/maeul-in-the-sky/) · [3D 투어](https://t1seo.github.io/maeul-in-the-sky/tour/) · [낮](https://t1seo.github.io/maeul-in-the-sky/?mode=light) · [밤](https://t1seo.github.io/maeul-in-the-sky/?mode=dark) · [빠른 시작](#빠른-시작) · [쇼케이스](../SHOWCASE.md)
 
 </div>
 
@@ -28,21 +28,42 @@ GitHub Contribution Calendar의 하루가 하늘에 떠 있는 Terrain의 일부
 
 원래 그림체를 계속 사용하시려면 [SVG 스튜디오의 클래식 버전](https://t1seo.github.io/maeul-in-the-sky/?renderer=classic)을 선택해 주세요. 업데이트 직전의 렌더러를 그대로 사용하며, 설정 화면에서 받는 워크플로도 `05a10eff07575acf2c81adcd66a66bc501507217`에 고정됩니다.
 
-**2.0.0 릴리스**에는 아래의 에셋·사계절·일별 성장·그림체 개선이 포함됩니다. 기본 화면은 기존 달력형 마을이며, 새 지형 실험은 [별도 아카이브](https://github.com/t1seo/maeul-in-the-sky/tree/archive/civilization-terrain-2026-09-21)에 보관되어 있습니다.
+**2.1.0 릴리스**에는 직접 걸을 수 있는 3D 달력형 마을, 정교한 외부 동물·경관 에셋, 개선된 지도 이동과 읽기 쉬운 날짜별 상세 화면이 포함됩니다. 기본 화면은 기존 달력형 SVG이며, 지형 실험은 [별도 아카이브](https://github.com/t1seo/maeul-in-the-sky/tree/archive/civilization-terrain-2026-09-21)에 보관되어 있습니다. 자세한 내용은 [변경 기록](../CHANGELOG.md#210---2026-09-22)을 참고해 주세요.
 
 **1.x에서 이전하기:** `ContributionData`를 직접 만들 때는 새 필수 통계 필드 네 개가 포함되도록 `stats: computeStats(weeks)`를 사용하세요. 새 장면은 배치 버전 3과 개선된 에셋으로 생성되며, 저장된 버전 1·2 장면도 계속 지원합니다.
 
 ## 그림 속 마을 산책
 
-[3D 마을 투어](https://t1seo.github.io/maeul-in-the-sky/tour/)에서 사계절 풍경을 둘러보거나 직접 걸을 수 있습니다. 메뉴는 기본 영어이며 동물은 종별 체형과 얼굴을 갖춘 입체 모델로 보입니다. **Walk**에서는 WASD로 이동하고 Q/E 또는 좌우 방향키로 제자리에서 방향을 돌립니다. 드래그로 시점을 돌리고, 지도를 클릭하면 가까운 안전한 땅으로 순간 이동합니다. 걷는 중 화면의 지면을 클릭해도 이동할 수 있습니다. 터치 이동·회전 버튼, 낮·노을·밤, 자동 투어, 전체 조망과 모션 축소 설정을 지원합니다.
+[3D 마을 투어](https://t1seo.github.io/maeul-in-the-sky/tour/)에서 같은 날짜의 마을을 Three.js로 둘러보거나 직접 걸을 수 있습니다. 메뉴는 기본 영어이며, 외부에서 제작한 동물·나무·건물·소품과 일부 원더 모델을 함께 제공합니다. 기본 투어에는 샘플 데이터임을 표시합니다.
 
-프로필의 기존 `<picture>`를 다음 주소의 링크로 감싸면 그림을 클릭해 **같은 기록의 마을**로 들어갑니다. SVG의 밝은·어두운 이미지 주소는 유지해 주세요.
+[![정교한 동물과 경관을 갖춘 3D 달력형 마을](../.github/screenshots/tour-assets/after.png)](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json)
+
+- **WASD**로 이동하고 **Q/E** 또는 좌우 방향키로 제자리 회전합니다. 드래그로 시점을 바꾸며 터치 이동·회전 버튼도 지원합니다.
+- 지도나 걷는 중 보이는 지면을 클릭하면 가까운 안전한 땅으로 순간 이동합니다. 정사각형 타일의 반투명 지도를 좌우 하단에 둘 수 있고, 나침반은 실제 시선 방향을 표시합니다.
+- 계절별 조망, 자동 투어와 낮·노을·밤을 선택할 수 있습니다. 동물·바람·물의 움직임은 모션 축소 설정을 따릅니다. 날짜별 상세 패널은 불투명 배경을 사용하고, 열린 동안 소개와 통계를 가립니다.
+
+로컬 모델 라이브러리에는 **동물 24종과 GLB 파일 65개**가 포함됩니다. [에셋 크레딧](https://t1seo.github.io/maeul-in-the-sky/tour/credits.html)에서 제작자·라이선스·수정 내역을 확인하실 수 있습니다. [전체 적용 목록](demo/tour/models/coverage.md)은 240개 ID 중 외부 모델 95개, 기존 디테일과 혼합한 31개, 유지한 114개를 구분합니다. 지형·물·길·주변 효과는 기존 달력 동작을 유지합니다. 모델과 출처는 Pages와 npm 미리보기에 함께 포함되며, 실행 중 외부 모델 CDN에 의존하지 않습니다.
+
+내 마을을 연결하려면 Action 단계에서 스냅샷 생성을 켜고, 생성된 `maeul-in-the-sky.snapshot.json`을 SVG와 함께 커밋해 주세요.
+
+```yaml
+- uses: t1seo/maeul-in-the-sky@v2.1.0
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    write_snapshot: 'true'
+```
+
+다음 주소의 `USERNAME`을 GitHub 사용자명으로 바꾸세요.
 
 ```text
 https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2FUSERNAME%2FUSERNAME%2Fmain%2Fmaeul-in-the-sky.snapshot.json
 ```
 
-[실제 프로필 마을 방문하기](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json). 날짜·기여 수·배치·획득 원더를 보존하며, 기존 그림을 입체 메시로 재해석합니다. 기록에 없는 집이나 원더를 추가하지 않습니다. 물로 나뉜 구역은 지도나 계절 버튼으로 이동할 수 있습니다. 공개된 GitHub raw/Pages의 2MiB 이하, 800일 이내 snapshot을 사용해 주세요. snapshot을 지정하지 않으면 명시된 샘플 마을이 열립니다.
+예제는 빠른 시작의 `main` 브랜치 기준입니다. 스튜디오에서 생성하는 워크플로는 `output` 브랜치에 게시하므로, 실제 게시 브랜치와 파일 경로에 맞춰 주소를 변경해 주세요.
+
+프로필의 기존 `<picture>…</picture>`를 `<a href="TOUR_URL">…</a>`로 감싸면 그림을 클릭해 **같은 기록의 마을**로 들어갑니다. SVG의 밝은·어두운 이미지 주소는 유지해 주세요. [실제 프로필 마을 방문하기](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json).
+
+투어는 날짜·기여 수·배치 ID·계절별 물과 획득 원더를 보존하며, 기존 그림을 입체 메시로 재해석합니다. 기록에 없는 집이나 원더를 추가하지 않습니다. 물로 나뉜 구역은 지도나 계절 버튼으로 이동할 수 있습니다. 공개된 GitHub raw/Pages HTTPS 주소의 2MiB 이하, 800일 이내 스냅샷을 사용해 주세요. 잘못된 주소는 샘플로 대체하지 않고 오류를 표시합니다.
 
 ## 마을에 포함되는 것
 
@@ -86,7 +107,7 @@ README 미리보기와 프리셋 이미지 6개는 고정 시드의 **합성 데
 
 GitHub 프로필에 사용하려면 사용자명과 같은 이름의 저장소에 `.github/workflows/maeul-sky.yml`을 추가합니다.
 
-예제는 `@v2.0.0`을 고정합니다. 호환되는 업데이트를 받으려면 `@v2`를 사용하세요. `@v1`은 이전 메이저 버전을 유지합니다. 변경되지 않는 참조가 필요하면 검증한 전체 커밋 SHA를 고정해 주세요.
+예제는 `@v2.1.0`을 고정합니다. 호환되는 업데이트를 받으려면 `@v2`를 사용하세요. `@v1`은 이전 메이저 버전을 유지합니다. 변경되지 않는 참조가 필요하면 검증한 전체 커밋 SHA를 고정해 주세요.
 
 ```yaml
 name: Update Maeul in the Sky
@@ -105,7 +126,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: t1seo/maeul-in-the-sky@v2.0.0
+      - uses: t1seo/maeul-in-the-sky@v2.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           preset: balanced
@@ -166,7 +187,7 @@ jobs:
 기본 출력값은 `dark_svg_path`와 `light_svg_path`입니다. 해당 기능을 사용할 때 `dark_png_path`, `light_png_path`, `snapshot_path`, `archive_path`, `comparison_dark_svg_path`, `comparison_light_svg_path`도 제공됩니다.
 
 ```yaml
-- uses: t1seo/maeul-in-the-sky@v2.0.0
+- uses: t1seo/maeul-in-the-sky@v2.1.0
   with:
     github_token: ${{ secrets.GITHUB_TOKEN }}
     username: octocat
@@ -214,17 +235,17 @@ Wonder는 해당 셀의 활동량, 주변 셀의 풍부함, 전체 기여 통계
 
 날짜를 선택하면 수치, 보상 단계, Biome, 배치 항목을 확인할 수 있습니다. 탐색기는 출처, 정확한 날짜 범위, 총합, 활동일, 연속 기여와 높이/계절 범례를 표시합니다. 확대/축소/초기화, 키보드 이동, Escape, 포커스 복귀를 지원합니다. [Wonder 도감](https://t1seo.github.io/maeul-in-the-sky/#wonders)은 발견/잠김 상태와 실제 조건을 보여 줍니다. 조건 충족만으로 선택이 보장되지는 않으며, 간격, 주변 Terrain, 확률, 최대 3개 제한도 적용됩니다.
 
-설정 영역에서는 설정 JSON, 워크플로, README 조각을 내려받을 수 있습니다. 생성한 워크플로는 `t1seo/maeul-in-the-sky@v2.0.0`을 사용해 `output` 브랜치에 게시하며, README 조각도 그 브랜치를 가리킵니다. 버전을 고정하려면 검증한 전체 커밋 SHA로 바꿔 주세요. `${{`가 들어간 제목이나 배치 시드는 GitHub Actions 표현식으로 해석될 수 있어 워크플로로 내보낼 수 없지만 이미지와 JSON에서는 사용할 수 있습니다.
+설정 영역에서는 설정 JSON, 워크플로, README 조각을 내려받을 수 있습니다. 생성한 워크플로는 `t1seo/maeul-in-the-sky@v2.1.0`을 사용해 `output` 브랜치에 게시하며, README 조각도 그 브랜치를 가리킵니다. 버전을 고정하려면 검증한 전체 커밋 SHA로 바꿔 주세요. `${{`가 들어간 제목이나 배치 시드는 GitHub Actions 표현식으로 해석될 수 있어 워크플로로 내보낼 수 없지만 이미지와 JSON에서는 사용할 수 있습니다.
 
 ## CLI
 
-Node.js 20 이상이 필요합니다. 아래 명령은 npm에 배포된 2.0.0 CLI를 `npx`로 실행합니다.
+Node.js 20 이상이 필요합니다. 아래 명령은 npm에 배포된 2.1.0 CLI를 `npx`로 실행합니다.
 
 <details>
 <summary>소스에서 빌드하기 (선택 사항)</summary>
 
 ```bash
-git clone --branch v2.0.0 https://github.com/t1seo/maeul-in-the-sky.git
+git clone --branch v2.1.0 https://github.com/t1seo/maeul-in-the-sky.git
 cd maeul-in-the-sky
 npm ci
 npx tsx scripts/pixel/generate.ts --check
@@ -234,14 +255,14 @@ npm run build
 </details>
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky \
   --user octocat --preset civilization --output ./terrain
 
-npx --package=maeul-in-the-sky@2.0.0 maeul-sky --input village.snapshot.json \
+npx --package=maeul-in-the-sky@2.1.0 maeul-sky --input village.snapshot.json \
   --layout card --village-style korean --art-style pixel --motion off --format both --scale 2 \
   --write-snapshot --output ./terrain
 
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky \
   --user octocat --years 2024,2025 --normalization shared --output ./archive
 ```
 
@@ -271,14 +292,14 @@ GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky \
 | `--scale`                         | PNG 배율 정수 1부터 4. 기본 2                             |
 | `--help`, `-h`; `--version`, `-V` | 도움말과 버전 출력                                        |
 
-이 체크아웃의 플래그는 `npx --package=maeul-in-the-sky@2.0.0 maeul-sky --help`, 로컬 서비스는 `npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --help`에서 확인하세요. 기본값은 `terrain`, `balanced`, 밀도 `5`, `north`, `classic`, `full`, `banner`, 상대 P90, 최근 52주이며 그림체는 `miniature`입니다. 우선순위는 명시한 CLI/Action/UI 값 → 불러온 설정 → 선택한 프리셋 기본값 → 라이브러리 기본값입니다. 단일 렌더에서 `--config`는 스냅샷 설정보다 우선하며 두 설정을 필드별로 합치지 않습니다. 명시한 프리셋만으로 저장된 밀도를 바꾸지는 않습니다. 형식과 PNG 배율은 저장되는 렌더 설정이 아닙니다.
+이 체크아웃의 플래그는 `npx --package=maeul-in-the-sky@2.1.0 maeul-sky --help`, 로컬 서비스는 `npx --package=maeul-in-the-sky@2.1.0 maeul-sky preview --help`에서 확인하세요. 기본값은 `terrain`, `balanced`, 밀도 `5`, `north`, `classic`, `full`, `banner`, 상대 P90, 최근 52주이며 그림체는 `miniature`입니다. 우선순위는 명시한 CLI/Action/UI 값 → 불러온 설정 → 선택한 프리셋 기본값 → 라이브러리 기본값입니다. 단일 렌더에서 `--config`는 스냅샷 설정보다 우선하며 두 설정을 필드별로 합치지 않습니다. 명시한 프리셋만으로 저장된 밀도를 바꾸지는 않습니다. 형식과 PNG 배율은 저장되는 렌더 설정이 아닙니다.
 
 기본 실행은 여전히 `maeul-in-the-sky-{dark,light}.svg` 두 개만 씁니다. PNG와 스냅샷은 요청했을 때만 추가됩니다. `--format png`에서는 SVG 경로 결과가 빈 문자열입니다.
 
 ### 내 계정 로컬 미리보기
 
 ```bash
-GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky preview --port 4318
+GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.1.0 maeul-sky preview --port 4318
 ```
 
 `http://127.0.0.1:4318/`을 열고 **Fetch contributions**를 선택하세요. 서비스는 루프백에만 바인딩하고 서버 환경의 토큰만 읽습니다. 브라우저 토큰 입력란은 없으며 링크, JSON, 폼에 토큰을 넣으면 안 됩니다. 공개 정적 데모는 JSON만 불러오며 localhost에 접속하지 않습니다. 로컬 프로세스는 계정/연도 응답을 5분 동안 최대 32개 캐시합니다.
@@ -312,7 +333,7 @@ GITHUB_TOKEN="$(gh auth token)" npx --package=maeul-in-the-sky@2.0.0 maeul-sky p
 Node와 브라우저 API가 포함된 정식 패키지를 설치하세요.
 
 ```bash
-npm install maeul-in-the-sky@2.0.0
+npm install maeul-in-the-sky@2.1.0
 ```
 
 패키지를 설치한 프로젝트에 `.mjs` 파일을 만들어 아래 예제를 실행해 주세요.
@@ -392,3 +413,5 @@ npx tsx scripts/generate-catalog.ts docs/demo/catalog
 ## 라이선스
 
 [MIT](../LICENSE) © [t1seo](https://github.com/t1seo)
+
+외부 3D 모델에는 각 제작자의 라이선스가 적용됩니다. [모델 출처와 라이선스 파일](https://t1seo.github.io/maeul-in-the-sky/tour/credits.html)을 확인해 주세요.

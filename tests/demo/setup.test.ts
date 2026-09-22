@@ -23,7 +23,7 @@ describe('C06 secure setup exports', () => {
     if (!result.ok) return;
     expect(result.content).toContain(`village_style: "${style}"`);
     expect(result.content).toContain(`art_style: "${artStyle}"`);
-    expect(result.content).toContain('uses: t1seo/maeul-in-the-sky@v2.0.0');
+    expect(result.content).toContain('uses: t1seo/maeul-in-the-sky@v2.1.0');
   });
 
   it('quotes exact scalar content when a title contains YAML and HTML syntax', () => {

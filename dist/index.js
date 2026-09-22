@@ -27260,7 +27260,7 @@ init_esm_shims();
 // package.json
 var package_default = {
   name: "maeul-in-the-sky",
-  version: "2.0.0",
+  version: "2.1.0",
   description: "Build an animated isometric village from your GitHub contributions",
   type: "module",
   bin: {
