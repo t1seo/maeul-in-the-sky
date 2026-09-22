@@ -8,6 +8,7 @@
   --ink: #273c35;
   --muted: #5a7167;
   --glass: rgba(249, 250, 240, 0.88);
+  --detail-surface: #f9faf0;
   --line: rgba(62, 84, 70, 0.15);
   --map-glass: rgba(249, 250, 240, 0.7);
   --nav-bottom: max(24px, env(safe-area-inset-bottom));
@@ -147,6 +148,9 @@ a {
   left: 4%;
   max-width: min(420px, calc(100% - 80px));
   pointer-events: none;
+}
+#tour-app:has(#detail-panel:not([hidden])) .introduction {
+  visibility: hidden;
 }
 .eyebrow {
   font-size: 9px;
@@ -515,6 +519,7 @@ body[data-map-side='left'] #map-dock svg {
   width: 270px;
   padding: 21px;
   border-radius: 16px;
+  background: var(--detail-surface);
   z-index: 4;
 }
 .detail-panel .round-button {
@@ -652,6 +657,7 @@ body[data-light='night'] {
   --ink: #e2e8d8;
   --muted: #b5c7c0;
   --glass: rgba(30, 53, 62, 0.86);
+  --detail-surface: #1e353e;
   --line: rgba(207, 224, 217, 0.2);
   --map-glass: rgba(25, 46, 54, 0.74);
 }
