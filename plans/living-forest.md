@@ -65,7 +65,7 @@ Wave 1: asset preparation and vegetation work are independent after baseline evi
   - Execute actual profile and sample, cow/squirrel multi-angle close-ups and motion clips, day/night, desktop/mobile/reduced motion, 800-day bound, square map/compass/turning/teleport regressions and lifecycle failures. Compare same-device baseline measurements; fix actual defects before review.
   - QA evidence includes screenshot/video, frame/draw-call/triangle/actor data and cleanup receipt; no GPU test concurrency. Requires 2–4.
 
-- [ ] 6. Complete independent verification and publish.
+- [x] 6. Complete independent verification and publish.
   - Run goal, code quality, security/license, context and hands-on QA reviews (`review-work`), address findings, run appropriate full checks and normal protected-branch CI.
   - Merge focused PR, retain old branches/worktrees, watch Pages success, verify public assets and animal motion in installed Chrome and open the public tour for the user.
   - QA: exact merged/deployed source, successful live model requests, public functionality and no errors; finish evidence ledger and cleanup. Requires 5 and all reviews.
@@ -73,3 +73,12 @@ Wave 1: asset preparation and vegetation work are independent after baseline evi
 ## Commit strategy
 
 Use gitmoji conventional commits and update CHANGELOG for the feature. Keep production modifications bounded to tour rendering, static model delivery and necessary preview/package support. No release tag or version change for this Pages-focused update.
+
+## Publication receipt
+
+- Source: `0320c6bb934dc853f4345006004ec987b3f2bec2`; merged as `57590d09dff4c5079697f941d04d3d77b106e8b4` in [PR 38](https://github.com/t1seo/maeul-in-the-sky/pull/38).
+- [CI 35692865904](https://github.com/t1seo/maeul-in-the-sky/actions/runs/35692865904): all 21 checks passed, including 4,834 tests in 324 files and all nine browser projects. The original 45-second limit remains; map visibility and travel run as independent scenarios.
+- [Pages 35693806959](https://github.com/t1seo/maeul-in-the-sky/actions/runs/35693806959): successful deployment of the merged commit.
+- Public installed-Chrome verification: actual profile at 1440px/390px and sample at 1440px; model hashes, teleportation, stationary turning/compass, night mode and credits passed without runtime errors. Public bundle, manifest, credits and all eight GLB hashes match the local approved files. Time-separated public captures confirm motion.
+- Public [tour](https://t1seo.github.io/maeul-in-the-sky/tour/) and [credits](https://t1seo.github.io/maeul-in-the-sky/tour/credits.html). Evidence: `.orca/living-forest/public-qa.json`, `public-hashes.json`, `public-motion.json`, and `after/public-*.png`.
+- Original dirty checkout, archive branches and release tags preserved. Temporary QA runners and owned servers are removed; public Chrome tabs remain available to the user.
