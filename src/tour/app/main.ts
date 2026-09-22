@@ -19,12 +19,12 @@ export function mountTour(pageUrl = location.href) {
   const motionChanged = (): void => {
     renderer?.setReducedMotion(media.matches);
     element('motion-note').textContent = media.matches
-      ? '기기의 동작 줄이기 설정에 따라 풍경은 정지하고 시점은 즉시 이동합니다.'
-      : '마을 투어를 누르면 계절을 따라 천천히 이동합니다.';
+      ? 'Reduced motion is on. The scenery stays still and viewpoint changes are instant.'
+      : 'Start the guided tour to travel slowly through the seasons.';
   };
   const fail = (message: string): void => {
     element('loading-screen').hidden = false;
-    element('loading-title').textContent = '잠시, 마을 입구에서';
+    element('loading-title').textContent = 'The village could not open';
     element('loading-message').textContent = message;
     element('loading-screen').querySelector('progress')?.setAttribute('hidden', '');
     element('retry').hidden = false;
@@ -44,8 +44,8 @@ export function mountTour(pageUrl = location.href) {
     request = new AbortController();
     const current = request;
     element('loading-screen').hidden = false;
-    element('loading-title').textContent = '마을로 가는 길';
-    element('loading-message').textContent = '기록 속 풍경을 펼치고 있습니다.';
+    element('loading-title').textContent = 'On the way to your village';
+    element('loading-message').textContent = 'Bringing your contribution history to life.';
     element('loading-screen').querySelector('progress')?.removeAttribute('hidden');
     element('retry').hidden = true;
     element('fallback-link').hidden = true;
@@ -60,13 +60,16 @@ export function mountTour(pageUrl = location.href) {
       renderer = createTourRenderer(canvasElement('village'), model, {
         reducedMotion: media.matches,
         onChange: () => controls?.refresh(),
+        onNavigationFrame: () => controls?.refreshNavigation(),
         onError: fail,
       });
       controls = bindControls(renderer, model);
       motionChanged();
       element('loading-screen').hidden = true;
-      document.title = `@${model.scene.username}의 마을 산책 · Maeul`;
-      announce('마을에 도착했습니다. 계절을 선택하거나 직접 걸어보세요.');
+      document.title = `@${model.scene.username}'s village tour · Maeul`;
+      announce(
+        'Welcome to your village. Choose a season, start walking, or pick a place on the map.',
+      );
     } catch (error) {
       if (current.signal.aborted || disposed) return;
       if (loaded) {
@@ -82,18 +85,16 @@ export function mountTour(pageUrl = location.href) {
       if (error instanceof WorldDataError) {
         fail(
           error.code === 'not_found'
-            ? '마을 기록을 찾지 못했습니다. 공개된 snapshot 링크인지 확인해 주세요.'
+            ? 'Village history was not found. Check that the snapshot link is public.'
             : error.code === 'too_large'
-              ? '이 마을 기록은 불러오기 용량을 초과했습니다.'
-              : '마을 기록을 불러오지 못했습니다. 공개된 GitHub snapshot 주소와 연결을 확인해 주세요.',
+              ? 'This village history exceeds the download size limit.'
+              : 'Village history could not load. Check the public GitHub snapshot link and your connection.',
         );
       } else if (error instanceof InputValidationError) {
-        fail(
-          '마을 기록의 형식이 올바르지 않습니다. Maeul에서 내보낸 snapshot JSON을 사용해 주세요.',
-        );
+        fail('This village history has an invalid format. Use a snapshot JSON exported by Maeul.');
       } else {
         fail(
-          '3D 마을을 열지 못했습니다. WebGL을 지원하는 최신 Chrome에서 다시 열어 주세요. Calendar 마을은 계속 볼 수 있습니다.',
+          'The 3D village could not open. Try a current version of Chrome with WebGL enabled. You can still view the original Calendar village.',
         );
       }
     }

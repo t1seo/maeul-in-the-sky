@@ -89,6 +89,50 @@ describe('tour camera and interruption behavior', () => {
   it('does not enter walking when every observed date is water', async () => {
     const { director } = await setup(true);
     expect(director.walk()).toBe(false);
+    expect(director.teleport({ x: 0, z: 0 })).toBe(false);
+  });
+
+  it('turns the walking body in place with keys and touch without drifting', async () => {
+    const { director, camera } = await setup();
+    expect(director.walk()).toBe(true);
+    const standing = camera.position.clone();
+    const initialHeading = director.inspect().heading;
+    window.dispatchEvent(new KeyboardEvent('keydown', { code: 'KeyE' }));
+    for (let frame = 0; frame < 10; frame++) director.update(0.05);
+    window.dispatchEvent(new KeyboardEvent('keyup', { code: 'KeyE' }));
+    expect(director.inspect().heading).toBeLessThan(initialHeading - 0.5);
+    expect(camera.position.equals(standing)).toBe(true);
+    director.turn(-1);
+    for (let frame = 0; frame < 10; frame++) director.update(0.05);
+    director.turn(0);
+    expect(director.inspect().heading).toBeCloseTo(initialHeading);
+    const stopped = camera.rotation.y;
+    director.update(0.05);
+    expect(camera.rotation.y).toBe(stopped);
+    window.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowLeft' }));
+    director.update(0.05);
+    window.dispatchEvent(new KeyboardEvent('keyup', { code: 'ArrowLeft' }));
+    expect(camera.rotation.y).toBeGreaterThan(stopped);
+    expect(camera.position.equals(standing)).toBe(true);
+  });
+
+  it('teleports to a selected actual date while retaining walking direction', async () => {
+    const { director, camera, model } = await setup();
+    expect(director.walk()).toBe(true);
+    director.turn(1);
+    director.update(0.05);
+    director.turn(0);
+    const heading = director.inspect().heading;
+    const destination = model.cells.at(-1)!;
+    expect(director.teleport({ x: destination.x, z: destination.z })).toBe(true);
+    expect(director.inspect().mode).toBe('walk');
+    expect(director.inspect().heading).toBeCloseTo(heading);
+    expect(camera.position).toEqual(new Vector3(destination.x, 1.55, destination.z));
+    const standing = camera.position.clone();
+    expect(director.teleport({ x: 100000, z: 0 })).toBe(false);
+    expect(camera.position.equals(standing)).toBe(true);
+    director.update(0.05);
+    expect(camera.position.equals(standing)).toBe(true);
   });
 
   it('fits both ends of the annual village in a portrait overview', async () => {

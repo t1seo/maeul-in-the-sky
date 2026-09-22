@@ -55,7 +55,7 @@ The README previews and six preset images use seeded **synthetic data**, with 36
 
 ## Walk inside your Calendar village
 
-The [3D tour](https://t1seo.github.io/maeul-in-the-sky/tour/) opens the same dated Calendar as a real Three.js miniature. Explore seasonal viewpoints, take a guided flight, or walk with WASD / arrow keys and drag to look around. Touch controls, day-to-night lighting, reduced motion and a Calendar fallback are included. The default tour is clearly labeled sample data.
+The [3D tour](https://t1seo.github.io/maeul-in-the-sky/tour/) opens the same dated Calendar as a real Three.js miniature, with English menus and detailed animals. Explore seasonal viewpoints, take a guided flight, or walk with WASD. Turn in place with Q/E or the left/right arrows, and drag to look around. Click the map to jump to nearby safe ground; while walking, you can also click the visible terrain. Touch movement and turning, day-to-night lighting, reduced motion and a Calendar fallback are included. The default tour is clearly labeled sample data.
 
 For your own village, publish the snapshot generated alongside your SVG and link to:
 
@@ -65,7 +65,7 @@ https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.github
 
 Wrap your existing README `<picture>…</picture>` in an `<a href="TOUR_URL">…</a>`. GitHub displays the original SVG; clicking opens the interactive tour on Pages. Both theme-specific image sources stay the same. [Visit a real profile village](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json).
 
-The tour preserves the snapshot's dates, contribution counts, placement IDs, seasonal water and earned Wonders. Meshes reinterpret the original artwork in three dimensions; it does not add unearned homes or Wonders. Some land is separated by water, so seasonal viewpoints provide access where walking cannot. Public HTTPS snapshots on GitHub Pages or raw GitHub are supported, up to 2 MiB and an 800-day span. Invalid sources show an error instead of substituting a sample.
+The tour preserves the snapshot's dates, contribution counts, placement IDs, seasonal water and earned Wonders. Meshes reinterpret the original artwork in three dimensions; it does not add unearned homes or Wonders. Some land is separated by water, so the map and seasonal viewpoints provide access where walking cannot. Public HTTPS snapshots on GitHub Pages or raw GitHub are supported, up to 2 MiB and an 800-day span. Invalid sources show an error instead of substituting a sample.
 
 ## Choose a village preset
 

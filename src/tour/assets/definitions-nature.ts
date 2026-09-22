@@ -21,7 +21,19 @@ import {
   willowPool,
 } from './nature.js';
 import { boat, buoy, crab, fish, jellyfish, sailboat, turtle, waves } from './aquatic.js';
-import { bird, butterfly, heron, quadruped, spider } from './fauna.js';
+import {
+  bird,
+  butterfly,
+  chicken,
+  heron,
+  lamb,
+  owl,
+  quadruped,
+  robin,
+  seagull,
+  spider,
+  winterBird,
+} from './fauna.js';
 import { coralReef } from './wonder-gardens.js';
 import type { AssetDefinition, TourRecipeBuilder } from './recipe-types.js';
 import { frog, shellfish, whale } from './coastal.js';
@@ -81,6 +93,11 @@ export const NATURE_DEFINITIONS = {
   crab: creature(crab),
   jellyfish: creature(jellyfish),
   bird: creature(bird),
+  chicken: creature(chicken),
+  owl: creature(owl),
+  seagull: creature(seagull),
+  robin: creature(robin),
+  winterBird: creature(winterBird),
   heron: creature(heron),
   butterfly: creature(butterfly),
   spider: creature(spider),
@@ -88,8 +105,10 @@ export const NATURE_DEFINITIONS = {
   rabbit: creature((v) => quadruped('rabbit', v), 1.8),
   fox: creature((v) => quadruped('fox', v), 2.1),
   sheep: creature((v) => quadruped('sheep', v)),
+  lamb: creature(lamb),
   cow: creature((v) => quadruped('cow', v), 3),
   horse: creature((v) => quadruped('horse', v), 3.2),
+  donkey: creature((v) => quadruped('donkey', v), 3.2),
   pig: creature((v) => quadruped('pig', v)),
   goat: creature((v) => quadruped('goat', v)),
   squirrel: creature((v) => quadruped('squirrel', v), 1.4),

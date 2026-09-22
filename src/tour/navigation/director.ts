@@ -1,7 +1,7 @@
 import { Vector3, type PerspectiveCamera } from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import type { TourModel } from '../types.js';
-import type { TourGround } from './ground.js';
+import type { GroundPoint, TourGround } from './ground.js';
 import { bindTourInput } from './input.js';
 
 export type TourMode = 'orbit' | 'walk';
@@ -28,6 +28,11 @@ export function createDirector(
     model.stops.findIndex((stop) => stop.id === 'summer'),
   );
   const homeIndex = index;
+  const facing = new Vector3();
+  const heading = (): number => {
+    camera.getWorldDirection(facing);
+    return Math.atan2(-facing.x, -facing.z);
+  };
   let touring = false;
   let held = 0;
   let yaw = 0;
@@ -102,6 +107,7 @@ export function createDirector(
       const dt = Math.min(seconds, 0.05);
       if (mode === 'walk') {
         const direction = input.movement();
+        yaw -= Math.max(-1, Math.min(1, direction.turn)) * dt * 1.8;
         const length = Math.max(1, Math.hypot(direction.forward, direction.right));
         const speed = (dt * 3.2) / length;
         const next = ground.move(camera.position, {
@@ -172,6 +178,29 @@ export function createDirector(
       return true;
     },
     move: input.touch,
+    turn: input.turn,
+    teleport: (point: GroundPoint): boolean => {
+      const standing = ground.landing(point);
+      if (!standing) return false;
+      const direction = heading();
+      const tilt = mode === 'walk' ? pitch : 0;
+      stop();
+      mode = 'walk';
+      controls.enabled = false;
+      yaw = direction;
+      pitch = tilt;
+      camera.position.set(standing.x, 1.55, standing.z);
+      camera.rotation.set(pitch, yaw, 0, 'YXZ');
+      let nearest = Infinity;
+      for (const [next, stop] of model.stops.entries()) {
+        const distance = Math.hypot(stop.position.x - standing.x, stop.position.z - standing.z);
+        if (distance >= nearest) continue;
+        nearest = distance;
+        index = next;
+      }
+      changed();
+      return true;
+    },
     setReduced: (value: boolean): void => {
       reduced = value;
       controls.enableDamping = !value;
@@ -179,7 +208,7 @@ export function createDirector(
         stop();
       }
     },
-    inspect: () => ({ mode, stopIndex: index, touring }),
+    inspect: () => ({ mode, stopIndex: index, touring, heading: heading() }),
     dispose: (): void => {
       input.dispose();
       controls.dispose();

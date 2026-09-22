@@ -34,7 +34,7 @@ GitHub Contribution Calendar의 하루가 하늘에 떠 있는 Terrain의 일부
 
 ## 그림 속 마을 산책
 
-[3D 마을 투어](https://t1seo.github.io/maeul-in-the-sky/tour/)에서 사계절 풍경을 둘러보거나 직접 걸을 수 있습니다. 드래그로 시점을 돌리고, **직접 걷기**에서는 WASD·방향키 또는 화면의 화살표를 사용하세요. 낮·노을·밤, 자동 투어, 전체 조망과 모션 축소 설정을 지원합니다.
+[3D 마을 투어](https://t1seo.github.io/maeul-in-the-sky/tour/)에서 사계절 풍경을 둘러보거나 직접 걸을 수 있습니다. 메뉴는 기본 영어이며 동물은 종별 체형과 얼굴을 갖춘 입체 모델로 보입니다. **Walk**에서는 WASD로 이동하고 Q/E 또는 좌우 방향키로 제자리에서 방향을 돌립니다. 드래그로 시점을 돌리고, 지도를 클릭하면 가까운 안전한 땅으로 순간 이동합니다. 걷는 중 화면의 지면을 클릭해도 이동할 수 있습니다. 터치 이동·회전 버튼, 낮·노을·밤, 자동 투어, 전체 조망과 모션 축소 설정을 지원합니다.
 
 프로필의 기존 `<picture>`를 다음 주소의 링크로 감싸면 그림을 클릭해 **같은 기록의 마을**로 들어갑니다. SVG의 밝은·어두운 이미지 주소는 유지해 주세요.
 
@@ -42,7 +42,7 @@ GitHub Contribution Calendar의 하루가 하늘에 떠 있는 Terrain의 일부
 https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2FUSERNAME%2FUSERNAME%2Fmain%2Fmaeul-in-the-sky.snapshot.json
 ```
 
-[실제 프로필 마을 방문하기](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json). 날짜·기여 수·배치·획득 원더를 보존하며, 기존 그림을 입체 메시로 재해석합니다. 기록에 없는 집이나 원더를 추가하지 않습니다. 물로 나뉜 구역은 계절 버튼으로 이동할 수 있습니다. 공개된 GitHub raw/Pages의 2MiB 이하, 800일 이내 snapshot을 사용해 주세요. snapshot을 지정하지 않으면 명시된 샘플 마을이 열립니다.
+[실제 프로필 마을 방문하기](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json). 날짜·기여 수·배치·획득 원더를 보존하며, 기존 그림을 입체 메시로 재해석합니다. 기록에 없는 집이나 원더를 추가하지 않습니다. 물로 나뉜 구역은 지도나 계절 버튼으로 이동할 수 있습니다. 공개된 GitHub raw/Pages의 2MiB 이하, 800일 이내 snapshot을 사용해 주세요. snapshot을 지정하지 않으면 명시된 샘플 마을이 열립니다.
 
 ## 마을에 포함되는 것
 

@@ -47,5 +47,24 @@ describe('safe walking in the actual Calendar village', () => {
   it('disables walking when every observed cell is liquid', () => {
     const ground = createGround([{ x: 0, z: 0, surface: 'water' }], [], []);
     expect(ground.nearest({ x: 0, z: 0 })).toBeNull();
+    expect(ground.landing({ x: 0, z: 0 })).toBeNull();
+  });
+
+  it('lands on safe ground near a selected river or building and rejects empty space', () => {
+    const ground = createGround(cells, [], [{ x: 0, z: 0, halfX: 0.6, halfZ: 0.6 }]);
+    for (const point of [
+      { x: 4, z: 0 },
+      { x: 0, z: 0 },
+    ]) {
+      const landing = ground.landing(point);
+      expect(landing).not.toBeNull();
+      expect(ground.canStand(landing!)).toBe(true);
+    }
+    for (const point of [
+      { x: 4, z: 4 },
+      { x: 9999, z: 0 },
+      { x: NaN, z: 0 },
+    ])
+      expect(ground.landing(point)).toBeNull();
   });
 });

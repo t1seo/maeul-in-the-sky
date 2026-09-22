@@ -2,9 +2,7 @@ import {
   ACESFilmicToneMapping,
   PCFShadowMap,
   PerspectiveCamera,
-  Raycaster,
   Scene,
-  Vector2,
   WebGLRenderer,
 } from 'three';
 import { GeometryResources } from '../../world/three/geometry/resources.js';
@@ -16,10 +14,12 @@ import { createWater } from './water.js';
 import { createAtmosphere, type TourLighting } from './atmosphere.js';
 import { populateVillage } from './populate.js';
 import { createParticles } from './particles.js';
+import { createTourPicker } from './picking.js';
 
 type RendererOptions = {
   readonly reducedMotion?: boolean;
   readonly onChange?: () => void;
+  readonly onNavigationFrame?: () => void;
   readonly onError?: (message: string) => void;
 };
 
@@ -80,6 +80,7 @@ function buildTourRenderer(
   let lighting: TourLighting = 'golden';
   let elapsed = 0;
   let previous = 0;
+  let navigationFrame = 0;
   let frame = 0;
   let disposed = false;
   let contextLost = false;
@@ -110,6 +111,10 @@ function buildTourRenderer(
     previous = timestamp;
     if (!document.hidden && !contextLost) {
       navigation.update(dt);
+      if (timestamp - navigationFrame >= 100) {
+        navigationFrame = timestamp;
+        options.onNavigationFrame?.();
+      }
       if (!reduced) elapsed += dt;
       water.update(elapsed);
       particles.update(elapsed);
@@ -124,7 +129,9 @@ function buildTourRenderer(
       event.preventDefault();
       contextLost = true;
       navigation.stop();
-      options.onError?.('3D 연결이 중단되었습니다. 다시 열기를 눌러 마을로 돌아와 주세요.');
+      options.onError?.(
+        'The 3D connection was interrupted. Choose Try again to return to your village.',
+      );
     },
     { signal: lifetime.signal },
   );
@@ -138,7 +145,7 @@ function buildTourRenderer(
   atmosphere.update(camera.position);
   renderer.render(scene, camera);
   frame = requestAnimationFrame(animate);
-  const ray = new Raycaster();
+  const picker = createTourPicker(camera, canvas, model, village, [land, water.mesh]);
   return {
     navigation,
     setLighting,
@@ -146,30 +153,10 @@ function buildTourRenderer(
       reduced = value;
       navigation.setReduced(value);
     },
-    pick: (clientX: number, clientY: number) => {
-      const rect = canvas.getBoundingClientRect();
-      ray.setFromCamera(
-        new Vector2(
-          ((clientX - rect.left) / rect.width) * 2 - 1,
-          (-(clientY - rect.top) / rect.height) * 2 + 1,
-        ),
-        camera,
-      );
-      const hit = ray.intersectObjects([village.root, land], true)[0];
-      if (!hit) return null;
-      const id =
-        hit.instanceId === undefined
-          ? undefined
-          : village.identities.get(hit.object.uuid)?.[hit.instanceId];
-      const placement = model.placements.find((candidate) => candidate.source.id === id);
-      const cell = placement
-        ? model.cells.find((candidate) => candidate.source.date === placement.source.anchorDate)
-        : model.cells.find(
-            (candidate) =>
-              candidate.source.week === Math.floor((hit.point.x + 2) / 4) &&
-              candidate.source.day === Math.floor((hit.point.z + 2) / 4),
-          );
-      return cell?.source ?? null;
+    pick: picker.cell,
+    teleportAt: (clientX: number, clientY: number): boolean => {
+      const point = picker.groundPoint(clientX, clientY);
+      return point ? navigation.teleport(point) : false;
     },
     inspect: () => ({
       ...navigation.inspect(),

@@ -13,10 +13,12 @@ export function bindTourInput(
   const signal = lifetime.signal;
   const keys = new Set<string>();
   let touch: Movement = { forward: 0, right: 0 };
+  let turn = 0;
   let pointer: { readonly id: number; readonly x: number; readonly y: number } | null = null;
   const clear = (): void => {
     keys.clear();
     touch = { forward: 0, right: 0 };
+    turn = 0;
     pointer = null;
   };
   const movement = new Set([
@@ -24,6 +26,8 @@ export function bindTourInput(
     'KeyA',
     'KeyS',
     'KeyD',
+    'KeyQ',
+    'KeyE',
     'ArrowUp',
     'ArrowLeft',
     'ArrowDown',
@@ -104,18 +108,22 @@ export function bindTourInput(
     );
   canvas.addEventListener('wheel', () => handlers.gesture(), { signal, passive: true });
   return {
-    movement: (): Movement => ({
+    movement: (): Movement & { readonly turn: number } => ({
       forward:
         Number(keys.has('KeyW') || keys.has('ArrowUp')) -
         Number(keys.has('KeyS') || keys.has('ArrowDown')) +
         touch.forward,
-      right:
-        Number(keys.has('KeyD') || keys.has('ArrowRight')) -
-        Number(keys.has('KeyA') || keys.has('ArrowLeft')) +
-        touch.right,
+      right: Number(keys.has('KeyD')) - Number(keys.has('KeyA')) + touch.right,
+      turn:
+        Number(keys.has('KeyE') || keys.has('ArrowRight')) -
+        Number(keys.has('KeyQ') || keys.has('ArrowLeft')) +
+        turn,
     }),
     touch: (value: Movement): void => {
       touch = value;
+    },
+    turn: (value: number): void => {
+      turn = Number.isFinite(value) ? Math.max(-1, Math.min(1, value)) : 0;
     },
     clear,
     dispose: (): void => {

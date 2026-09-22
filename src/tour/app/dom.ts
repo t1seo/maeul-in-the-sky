@@ -28,7 +28,7 @@ export function announce(message: string): void {
 }
 
 export function formatDate(date: string): string {
-  return new Intl.DateTimeFormat('ko-KR', {
+  return new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

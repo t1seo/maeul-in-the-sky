@@ -11,7 +11,7 @@ Click the existing GitHub profile Calendar image to enter a polished, public Thr
 - Calendar cell tops are level; `SceneCell.height` is downward island depth. Invert placement coordinates with half tile width 8 and half tile height 3.5. Use world cell size 4.
 - Reuse the archived world's actual mesh recipes, curved roofs and geometry resources without changing its renderer. Add tour-specific model mapping and close-view detail.
 - Start near a populated spring or summer district. Offer scenic orbit, guided flight between actual seasonal stops, ground walking with safe terrain and model bounds, and overview/home controls. Do not promise walk-connected roads when the source has none.
-- Use warm light, soft distance fog, detailed Korean architecture, seasonal trees, grass, water ripples, falls and night window glow. Keep the control UI small, keyboard-accessible, Korean and responsive. Respect reduced motion and provide a usable WebGL failure screen.
+- Use warm light, soft distance fog, detailed Korean architecture, seasonal trees, grass, water ripples, falls and night window glow. Keep the control UI small, keyboard-accessible, English and responsive. Respect reduced motion and provide a usable WebGL failure screen.
 - Requested snapshot loading errors stay visible; never silently replace a requested personal village with sample data. Without a snapshot query, show an explicitly named sample.
 - Bound both observed days and the full date span to 800 before scene preparation. Preserve actual paths/decks, rewards and consistency metadata; SVG projected footprints are not collision bounds. Walking stops on focus loss/Escape, and camera gestures cancel guided travel.
 - Include generated tour bundles in CI/publish artifact checks. Record the feature in CHANGELOG without changing npm 2.0.0.
@@ -43,11 +43,11 @@ Root owns render/navigation/app/build/docs/deployment. Model worker owns `src/to
   References: `src/world/model/recipes/`, `src/world/three/geometry/primitives.ts`, `src/world/three/geometry/roof.ts`, `src/themes/terrain/assets/catalog.ts`, `src/themes/terrain/epics/catalog.ts`.
   Acceptance: all catalog IDs resolve explicitly; preserve original variant as metadata; significant buildings/nature/wonders have recognizable mesh silhouettes; model ground bounds supply colliders; no SVG billboard buildings. No changes to archived world recipes required.
   QA: catalog completeness and valid finite recipe geometry; known Korean building/nature/wonder examples visibly inspected in the actual renderer; bounded instances and repeated shared geometry.
-- [x] 3. Scene rendering and movement.
+- [ ] 3. Scene rendering and movement.
   References: `src/world/three/geometry/resources.ts`, `src/world/three/geometry/placements.ts`, `tests/world/browser/three-performance.browser.test.ts`.
   Acceptance: Perspective view, instanced detailed assets, downward island cliffs, merged water/foam/falls, seasonal colors, day/golden/night lighting. Orbit, guided route, safe walking, touch movement, stop/home/overview, hidden-tab and reduced-motion behavior. Model-ground colliders, never SVG projected bounds.
   QA: actual Chrome screenshots near/overview/night; keyboard and touch movement change camera; water/edge/building collision and resume/cancel checks; WebGL disposal/context loss; report measured draw calls/triangles/frame timing.
-- [x] 4. Tour UI and build integration.
+- [ ] 4. Tour UI and build integration.
   References: `scripts/build-world.ts`, `scripts/build-demo.ts`, `docs/demo/index.html`, `.github/workflows/pages.yml`, `tests/visual/server.ts`, `vitest.config.ts`.
   Acceptance: named live source/sample, loading/error/retry, compact responsive controls, visit-stop details with actual date/count, minimap/season progress, shareable snapshot source. Build static `/tour/` and include in Pages validation and package asset flow.
   QA: desktop 1440x900 and mobile 390x844, touch-sized controls, no overlap/overflow, reduced motion, bad URL/404/oversize/invalid JSON, script-like labels remain text, no-WebGL fallback. Relevant browser coverage included without weakening repository thresholds.
@@ -57,13 +57,15 @@ Root owns render/navigation/app/build/docs/deployment. Model worker owns `src/to
 
 ## Final verification
 
-- [x] Goal and source fidelity review.
-- [x] Code quality and security review.
-- [x] Real Chrome desktop/mobile QA and visual review.
+- [ ] Goal and source fidelity review.
+- [ ] Code quality and security review.
+- [ ] Real Chrome desktop/mobile QA and visual review.
 - [ ] Public Pages + profile click-through checked; QA processes cleaned and original dirty checkout preserved.
 
 ## Evidence and completion
 
+User review of the Chrome preview on September 22 adds three publication requirements: default English menus and guidance; clearly distinguishable higher-detail animal geometry; and turn-in-place controls plus instant travel by clicking the map. Keep the original source identities and Calendar unchanged. Root owns navigation, surface picking and renderer integration; the art worker owns animal recipes and geometry validation; the app worker owns English UI, interactive minimap/touch controls and UI tests. Re-review these changes before publication. Use Q/E or left/right arrows and touch turn buttons to rotate in place, WASD to walk/strafe, and drag to look. Minimap clicks choose a valid observed date and enter walking on nearby safe ground; sky/missing dates never create ground. Also support terrain clicks in walking mode and an explicit Walk here action from date details. An optional user clarification about third-person avatar visibility is pending; first-person turning can proceed independently.
+
 Store commands, red/green tests, screenshots, performance observations, reviews and deployment links under ignored `.orca/tour/`, and workflow ledger under `.omo/start-work/`. Keep the feature worktree for review. User has requested implementation; execute the plan without another planning-approval step. Publication is part of making the requested GitHub picture entrance usable.
 
-Implementation evidence: 1,295 focused unit/HTTP tests, 11 real-browser regressions, typecheck/lint/format/full build, and eight byte-identical Calendar baseline comparisons pass. Independent goal, code, security, context and actual Chrome QA reviews pass. The actual 6,025-contribution profile retains 366 dates, 297 placements and zero Wonders. Chrome on Apple M1 at DPR 1 measured 120 frames averaging 16.67 ms (p95 18.30 ms) near the village. Desktop, portrait/landscape touch, actual back/forward, graphics-context recovery and the 800-day limit were exercised. OS-level backgrounding could not be reliably induced through the automated Chrome window; the explicit hidden-document regression passes. Publication remains pending until the exact final commit passes CI and the public entrance is verified.
+Initial implementation evidence, before the user's preview refinements: 1,295 focused unit/HTTP tests, 11 real-browser regressions, typecheck/lint/format/full build, and eight byte-identical Calendar baseline comparisons pass. Independent goal, code, security, context and actual Chrome QA reviews passed that initial revision. The actual 6,025-contribution profile retains 366 dates, 297 placements and zero Wonders. Chrome on Apple M1 at DPR 1 measured 120 frames averaging 16.67 ms (p95 18.30 ms) near the village. Desktop, portrait/landscape touch, actual back/forward, graphics-context recovery and the 800-day limit were exercised. OS-level backgrounding could not be reliably induced through the automated Chrome window; the explicit hidden-document regression passes. The preview refinements require renewed checks, and publication remains pending until the exact final commit passes CI and the public entrance is verified.

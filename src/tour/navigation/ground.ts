@@ -74,7 +74,12 @@ export function createGround(
     }
     return point;
   };
-  return { canStand, nearest, move };
+  const landing = (point: GroundPoint): GroundPoint | null => {
+    if (!Number.isFinite(point.x) || !Number.isFinite(point.z)) return null;
+    const key = `${Math.floor((point.x + 2) / 4)},${Math.floor((point.z + 2) / 4)}`;
+    return tiles.has(key) ? nearest(point) : null;
+  };
+  return { canStand, nearest, move, landing };
 }
 
 export type TourGround = ReturnType<typeof createGround>;
