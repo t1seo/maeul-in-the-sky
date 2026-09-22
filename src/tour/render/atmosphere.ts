@@ -61,6 +61,7 @@ export function createAtmosphere(scene: Scene, model: TourModel, resources: Geom
     new ShaderMaterial({
       side: BackSide,
       depthWrite: false,
+      depthTest: false,
       uniforms,
       vertexShader:
         'varying vec3 direction; void main(){direction=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
@@ -72,6 +73,7 @@ export function createAtmosphere(scene: Scene, model: TourModel, resources: Geom
   );
   const sky = new Mesh(resources.geometry(new SphereGeometry(700, 24, 16)), skyMaterial);
   sky.frustumCulled = false;
+  sky.renderOrder = -100;
   scene.add(sky);
   const ambient = new HemisphereLight('#ffffff', '#666666', 2);
   const sun = new DirectionalLight('#fff0cc', 3);

@@ -2,3 +2,4 @@ name: Source security analysis
 
 paths-ignore:
   - docs/demo/world/app
+  - docs/demo/tour/app

@@ -16,6 +16,13 @@ export function buttonElement(id: string): HTMLButtonElement {
   return node;
 }
 
+export function replaceCanvas(id: string): void {
+  const previous = canvasElement(id);
+  const next = document.createElement('canvas');
+  for (const attribute of previous.attributes) next.setAttribute(attribute.name, attribute.value);
+  previous.replaceWith(next);
+}
+
 export function announce(message: string): void {
   element('announcement').textContent = message;
 }

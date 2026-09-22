@@ -4,7 +4,7 @@ import { WorldDataError } from '../../world/data/errors.js';
 import { InputValidationError } from '../../core/settings/errors.js';
 import { renderTerrainScene } from '../../themes/terrain/scene/render.js';
 import type { TourModel } from '../types.js';
-import { announce, buttonElement, canvasElement, element } from './dom.js';
+import { announce, buttonElement, canvasElement, element, replaceCanvas } from './dom.js';
 import { bindControls } from './controls.js';
 import { presentVillage } from './presentation.js';
 
@@ -37,6 +37,7 @@ export function mountTour(pageUrl = location.href) {
     renderer?.dispose();
     controls = null;
     renderer = null;
+    replaceCanvas('village');
     if (fallbackUrl) URL.revokeObjectURL(fallbackUrl);
     fallbackUrl = null;
     element('fallback-image').hidden = true;

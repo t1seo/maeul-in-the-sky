@@ -105,6 +105,24 @@ describe('tour entrance and controls', () => {
     expect(element('retry').hidden).toBe(false);
   });
 
+  it('reopens the same village on a fresh canvas after genuine context loss', async () => {
+    app = mountTour('https://example.github.io/tour/');
+    await expect.poll(() => app?.inspect(), { timeout: 15000 }).not.toBeNull();
+    const original = canvasElement('village');
+    const context = original.getContext('webgl2');
+    if (!context) throw new Error('Expected the real WebGL2 context');
+    const extension: WEBGL_lose_context | null = context.getExtension('WEBGL_lose_context');
+    if (!extension) throw new Error('Expected context loss extension');
+    extension.loseContext();
+    await expect.poll(() => element('loading-message').textContent).toContain('연결이 중단');
+    buttonElement('retry').click();
+    await expect.poll(() => element('loading-screen').hidden, { timeout: 15000 }).toBe(true);
+    expect(canvasElement('village')).not.toBe(original);
+    expect(app.inspect()?.triangles).toBeGreaterThan(1000);
+    buttonElement('walk-toggle').click();
+    expect(app.inspect()?.mode).toBe('walk');
+  }, 30000);
+
   it('discards an interrupted load and preserves hostile source labels as plain text', async () => {
     const snapshot = sampleSnapshot();
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify(snapshot)));
