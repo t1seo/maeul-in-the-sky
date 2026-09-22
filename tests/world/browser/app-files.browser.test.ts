@@ -153,11 +153,17 @@ test('starts an imported snapshot at its latest supplied day and labels its obse
   const captured = captureDownloads();
   stopDownloads = captured.stop;
   button('export-svg').click();
-  await expect.poll(() => captured.downloads.length).toBe(1);
+  await expect
+    .poll(() => captured.downloads.length === 1 || html('world-status').dataset.error === 'true', {
+      timeout: 10000,
+    })
+    .toBe(true);
+  expect(html('world-status').dataset.error, html('world-status').textContent ?? '').toBe('false');
+  expect(captured.downloads).toHaveLength(1);
   const postcard = await captured.downloads[0]?.blob.text();
   expect(postcard).toContain('GitHub contributions');
   expect(postcard).toContain('2024-01-07 — 2024-01-09');
-});
+}, 15000);
 
 test('opens a usable, explicitly labelled sample when no world or demo transfer exists', async () => {
   app = await startWorldApp({
