@@ -9,6 +9,7 @@ export function bindSceneControls(
   renderer: TourRenderer,
   model: TourModel,
   signal: AbortSignal,
+  closeMap: () => void,
 ): void {
   const canvas = canvasElement('village');
   const gesture = createTapGesture();
@@ -55,6 +56,9 @@ export function bindSceneControls(
       }
       const cell = renderer.pick(event.clientX, event.clientY);
       if (!cell) return;
+      closeMap();
+      element('help-panel').hidden = true;
+      buttonElement('help-toggle').setAttribute('aria-expanded', 'false');
       destination = { x: cell.week * model.cellSize, z: cell.day * model.cellSize };
       element('detail-date').textContent = formatDate(cell.date);
       element('detail-count').textContent =

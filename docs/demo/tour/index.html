@@ -102,13 +102,6 @@
         <p><b>Esc</b> stops walking or the guided tour.</p>
         <p id="motion-note"></p>
       </aside>
-      <div class="compass" aria-hidden="true">
-        <span>N</span
-        ><svg viewBox="0 0 44 44">
-          <path d="M22 5 28 28 22 24 16 28Z" />
-          <circle cx="22" cy="22" r="20" fill="none" />
-        </svg>
-      </div>
       <aside id="detail-panel" class="glass detail-panel" hidden>
         <button type="button" id="detail-close" class="round-button" aria-label="Close day details">
           ×
@@ -194,33 +187,61 @@
           →
         </button>
       </div>
-      <aside id="map-panel" class="glass map-corner" aria-label="Village map" hidden>
-        <div class="map-header">
-          <p>YOUR YEAR, A LANDSCAPE</p>
-          <button type="button" id="map-close" class="round-button" aria-label="Close map">
-            ×
-          </button>
+      <div class="navigation-corner">
+        <div id="compass" class="glass compass" role="img" aria-label="Your viewing direction">
+          <svg viewBox="0 0 44 44" aria-hidden="true">
+            <circle cx="22" cy="22" r="19" />
+            <path class="compass-ticks" d="M3 22h3m32 0h3M22 38v3" />
+            <text x="22" y="10">N</text>
+            <path id="compass-needle" d="M22 12 28 31 22 27 16 31Z" />
+          </svg>
+          <span><small>Facing</small><span id="compass-bearing">N · 0°</span></span>
         </div>
-        <canvas
-          id="mini-map"
-          width="424"
-          height="120"
-          role="button"
-          tabindex="0"
-          aria-label="Choose a place in the village map"
-          aria-describedby="map-help map-marker-label"
-          >Use the arrow keys to choose a place, then press Enter to walk there.</canvas
-        >
-        <p class="map-position" id="map-position">Your viewpoint</p>
-        <p class="map-help" id="map-help">
-          Click to walk there. Arrow keys choose a place; Enter moves.
-        </p>
-        <div class="map-footer">
-          <span id="map-marker-label">Choose a place</span
-          ><button type="button" id="map-walk" class="map-action">Walk to marker</button>
-        </div>
-        <span id="date-range"></span>
-      </aside>
+        <aside id="map-panel" class="glass map-corner" aria-label="Village map" hidden>
+          <div class="map-header">
+            <div>
+              <h2>Village map</h2>
+              <p>North up · Click to move</p>
+            </div>
+            <div class="map-tools">
+              <button
+                type="button"
+                id="map-dock"
+                class="round-button"
+                aria-label="Move map to bottom left"
+                title="Move map to bottom left"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="16" rx="3" />
+                  <path d="M9 8 5 12l4 4m-4-4h10" />
+                </svg>
+              </button>
+              <button type="button" id="map-close" class="round-button" aria-label="Close map">
+                ×
+              </button>
+            </div>
+          </div>
+          <canvas
+            id="mini-map"
+            width="424"
+            height="88"
+            role="button"
+            tabindex="0"
+            aria-label="Choose a place in the village map"
+            aria-describedby="map-help map-marker-label"
+            >Use the arrow keys to choose a place, then press Enter to walk there.</canvas
+          >
+          <p class="map-position" id="map-position">Your viewpoint</p>
+          <p class="sr-only" id="map-help">
+            Click to walk there. Arrow keys choose a place; Enter moves.
+          </p>
+          <div class="map-footer">
+            <span id="map-marker-label">Choose a place</span
+            ><button type="button" id="map-walk" class="map-action">Walk to marker</button>
+          </div>
+          <span id="date-range"></span>
+        </aside>
+      </div>
       <div class="loading-screen" id="loading-screen" role="status">
         <div class="loading-mark" aria-hidden="true">◇</div>
         <h2 id="loading-title">On the way to your village</h2>
