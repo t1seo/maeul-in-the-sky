@@ -1,6 +1,15 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
-test('the Calendar tour opens, stays usable on touch screens, and respects reduced motion', async ({
+async function openSample(page: Page): Promise<string[]> {
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.goto('/docs/demo/tour/');
+  await expect(page.locator('#loading-screen')).toBeHidden({ timeout: 25000 });
+  await expect(page.locator('#source-tag')).toContainText('SAMPLE');
+  return errors;
+}
+
+test('the Calendar tour opens with seasonal, lighting and overview controls', async ({
   page,
   browserName,
 }) => {
@@ -8,23 +17,32 @@ test('the Calendar tour opens, stays usable on touch screens, and respects reduc
     browserName !== 'chromium',
     'Real WebGL rendering is exercised on Chromium; old Calendar keeps its full cross-browser suite.',
   );
-  const errors: string[] = [];
-  page.on('pageerror', (error) => errors.push(error.message));
-  await page.goto('/docs/demo/tour/');
-  await expect(page.locator('#loading-screen')).toBeHidden({ timeout: 25000 });
-  await expect(page.locator('#source-tag')).toContainText('SAMPLE');
+  const errors = await openSample(page);
   await page.getByRole('button', { name: 'Visit Summer' }).click();
   await expect(page.locator('#place-label')).toHaveText('Summer riverside');
   await page.getByRole('button', { name: 'Night', exact: true }).click();
   await expect(page.locator('body')).toHaveAttribute('data-light', 'night');
+  await page.getByRole('button', { name: 'Overview', exact: true }).click();
+  await page.getByRole('button', { name: 'Home view', exact: true }).click();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect(errors).toEqual([]);
+});
+
+test('walking, turning controls and map travel stay usable across viewport and motion settings', async ({
+  page,
+  browserName,
+}) => {
+  test.skip(
+    browserName !== 'chromium',
+    'Real WebGL rendering is exercised on Chromium; old Calendar keeps its full cross-browser suite.',
+  );
+  const errors = await openSample(page);
   await page.getByRole('button', { name: 'Walk', exact: true }).click();
   await expect(page.locator('#walk-pad')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Turn left', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Turn right', exact: true })).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.locator('#walk-pad')).toBeHidden();
-  await page.getByRole('button', { name: 'Overview', exact: true }).click();
-  await page.getByRole('button', { name: 'Home view', exact: true }).click();
   if (await page.locator('#map-panel').isVisible())
     await page.getByRole('button', { name: 'Close map', exact: true }).click();
   await page.getByRole('button', { name: 'Map', exact: true }).click();
