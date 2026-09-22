@@ -7,7 +7,7 @@ import { applyForestWindShader, type WindUniforms } from './wind-shader.js';
 export function createForestWind(resources: GeometryResources) {
   const time = { value: 0 };
   const materials = new Map<string, MeshStandardMaterial>();
-  const depths = new Map<WindProfile, MeshDepthMaterial>();
+  const depths = new Map<string, MeshDepthMaterial>();
   const uniforms = new Map<WindProfile, WindUniforms>();
   resources.instance({
     dispose: (): void => {
@@ -45,15 +45,23 @@ export function createForestWind(resources: GeometryResources) {
       materials.set(key, material);
       return material;
     },
-    depth: (profile: WindProfile): MeshDepthMaterial => {
-      const cached = depths.get(profile);
+    depth: (profile: WindProfile, base?: MeshStandardMaterial): MeshDepthMaterial => {
+      const key = `${profile}:${base?.uuid ?? 'opaque'}`;
+      const cached = depths.get(key);
       if (cached) return cached;
       const material = resources.material(
-        new MeshDepthMaterial({ depthPacking: RGBADepthPacking, side: DoubleSide }),
+        new MeshDepthMaterial({
+          depthPacking: RGBADepthPacking,
+          side: base?.side ?? DoubleSide,
+          map: base?.map ?? null,
+          alphaMap: base?.alphaMap ?? null,
+          alphaTest: base?.alphaTest ?? 0,
+          opacity: base?.opacity ?? 1,
+        }),
       );
       material.onBeforeCompile = (shader) => applyForestWindShader(shader, forProfile(profile));
       material.customProgramCacheKey = () => 'forest-wind-depth-v1';
-      depths.set(profile, material);
+      depths.set(key, material);
       return material;
     },
     update: (elapsed: number): void => {

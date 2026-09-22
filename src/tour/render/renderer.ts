@@ -17,6 +17,7 @@ import { createParticles } from './particles.js';
 import { createTourPicker } from './picking.js';
 import { createForestWind } from './wind.js';
 import type { WildlifeLibrary } from '../wildlife/library.js';
+import type { AuthoredLibrary } from '../authored/library.js';
 
 type RendererOptions = {
   readonly reducedMotion?: boolean;
@@ -24,6 +25,7 @@ type RendererOptions = {
   readonly onNavigationFrame?: () => void;
   readonly onError?: (message: string) => void;
   readonly wildlife?: WildlifeLibrary;
+  readonly authored?: AuthoredLibrary;
 };
 
 export function createTourRenderer(
@@ -63,7 +65,7 @@ function buildTourRenderer(
   const camera = new PerspectiveCamera(46, 1, 0.12, 1400);
   const land = createLand(model, resources);
   const wind = createForestWind(resources);
-  const village = populateVillage(model, resources, wind, options.wildlife);
+  const village = populateVillage(model, resources, wind, options.wildlife, options.authored);
   const water = createWater(model, resources);
   const particles = createParticles(model, resources);
   scene.add(land, village.root, water.mesh, particles.points);
@@ -181,6 +183,7 @@ function buildTourRenderer(
       position: { x: camera.position.x, y: camera.position.y, z: camera.position.z },
       geometries: renderer.info.memory.geometries,
       wildlife: village.animals.inspect(),
+      authored: village.scenery.inspect(),
       windTime: wind.elapsed,
       visible,
     }),

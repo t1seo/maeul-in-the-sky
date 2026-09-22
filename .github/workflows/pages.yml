@@ -12,6 +12,8 @@ on:
       - 'scripts/build-tour.ts'
       - 'scripts/generate-catalog.ts'
       - 'scripts/catalog/**'
+      - 'scripts/authored/**'
+      - 'scripts/wildlife/**'
       - 'src/**'
       - 'package-lock.json'
       - 'package.json'
@@ -42,6 +44,7 @@ jobs:
       - run: npm run generate:demo
       - run: npm run generate:catalog
       - run: npm run check:catalog
+      - run: npm run check:authored
       - name: Verify enhanced demo and static fallback assets
         run: |
           test -s docs/demo/app/main.js
@@ -53,12 +56,10 @@ jobs:
           test -s docs/demo/tour/credits.css
           test -s docs/demo/tour/models/manifest.json
           test -s docs/demo/tour/models/CREDITS.md
-          test -s docs/demo/tour/models/licenses/CC0-1.0.txt
-          test -s docs/demo/tour/models/licenses/CC-BY-3.0.txt
-          test -s docs/demo/tour/models/licenses/Quaternius-ultimate-pack.txt
-          for animal in squirrel cow deer fox horse donkey sheep pig; do
-            test -s "docs/demo/tour/models/$animal.glb"
-          done
+          test -s docs/demo/tour/models/nature/manifest.json
+          test -s docs/demo/tour/models/village/manifest.json
+          test -s docs/demo/tour/models/coverage.json
+          test -s docs/demo/tour/models/coverage.md
           test -s docs/demo/catalog/index.html
           test -s docs/demo/catalog/catalog.json
           for preset in nature balanced civilization; do

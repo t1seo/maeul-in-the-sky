@@ -1,0 +1,2746 @@
+{
+  "version": 1,
+  "testedSeasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "testedVariants": [
+    0,
+    1,
+    2
+  ],
+  "catalog": [
+    {
+      "id": "whale",
+      "label": "Whale",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "whale.glb"
+        }
+      ]
+    },
+    {
+      "id": "fish",
+      "label": "Fish",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "fish.glb"
+        }
+      ]
+    },
+    {
+      "id": "fishSchool",
+      "label": "Fish School",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "fish.glb"
+        }
+      ]
+    },
+    {
+      "id": "boat",
+      "label": "Boat",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Boat was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "seagull",
+      "label": "Seagull",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "seagull.glb"
+        }
+      ]
+    },
+    {
+      "id": "dock",
+      "label": "Dock",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The reviewed Kenney kit has no suitable finished equivalent; assembling generic planks would not establish a better complete model.",
+      "models": []
+    },
+    {
+      "id": "waves",
+      "label": "Waves",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Water ripples follow the generated shoreline and shared animation clock.",
+      "models": []
+    },
+    {
+      "id": "kelp",
+      "label": "Kelp",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Kelp was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "coral",
+      "label": "Coral",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Coral was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "jellyfish",
+      "label": "Jellyfish",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "jellyfish.glb"
+        }
+      ]
+    },
+    {
+      "id": "turtle",
+      "label": "Turtle",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "turtle.glb"
+        }
+      ]
+    },
+    {
+      "id": "buoy",
+      "label": "Buoy",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Buoy was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "sailboat",
+      "label": "Sailboat",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Sailboat was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "lighthouse",
+      "label": "Lighthouse",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Lighthouse was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "crab",
+      "label": "Crab",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "crab.glb"
+        }
+      ]
+    },
+    {
+      "id": "rock",
+      "label": "Rock",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_2"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_3"
+        }
+      ]
+    },
+    {
+      "id": "boulder",
+      "label": "Boulder",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_2"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_3"
+        }
+      ]
+    },
+    {
+      "id": "flower",
+      "label": "Flower",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Flower_3_Single"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Flower_4_Single"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Grass_Common_Short"
+        }
+      ]
+    },
+    {
+      "id": "bush",
+      "label": "Bush",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Bush_Common"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Bush_Common_Flowers"
+        }
+      ]
+    },
+    {
+      "id": "driftwood",
+      "label": "Driftwood",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The reviewed Kenney kit has no suitable finished equivalent; assembling generic planks would not establish a better complete model.",
+      "models": []
+    },
+    {
+      "id": "sandcastle",
+      "label": "Sandcastle",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Sandcastle was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "tidePools",
+      "label": "Tide Pools",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External rocks replace selected banks while the original water or ice, flowers and remaining pond vegetation stay in place.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_2"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_3"
+        },
+        {
+          "file": "nature/lilypad.glb"
+        },
+        {
+          "file": "nature/cattail.glb"
+        }
+      ]
+    },
+    {
+      "id": "heron",
+      "label": "Heron",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "heron.glb"
+        }
+      ]
+    },
+    {
+      "id": "shellfish",
+      "label": "Shellfish",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "shellfish.glb"
+        }
+      ]
+    },
+    {
+      "id": "cattail",
+      "label": "Cattail",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/cattail.glb"
+        }
+      ]
+    },
+    {
+      "id": "frog",
+      "label": "Frog",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "frog.glb"
+        }
+      ]
+    },
+    {
+      "id": "lily",
+      "label": "Lily",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/lilypad.glb"
+        }
+      ]
+    },
+    {
+      "id": "pine",
+      "label": "Pine",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Pine_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Pine_5"
+        }
+      ]
+    },
+    {
+      "id": "deciduous",
+      "label": "Deciduous",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_3"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "mushroom",
+      "label": "Mushroom",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Mushroom_Common"
+        }
+      ]
+    },
+    {
+      "id": "stump",
+      "label": "Stump",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The reviewed Kenney kit has no suitable finished equivalent; assembling generic planks would not establish a better complete model.",
+      "models": []
+    },
+    {
+      "id": "deer",
+      "label": "Deer",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "deer.glb"
+        }
+      ]
+    },
+    {
+      "id": "rabbit",
+      "label": "Rabbit",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "rabbit.glb"
+        }
+      ]
+    },
+    {
+      "id": "fox",
+      "label": "Fox",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "fox.glb"
+        }
+      ]
+    },
+    {
+      "id": "butterfly",
+      "label": "Butterfly",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "butterfly.glb"
+        }
+      ]
+    },
+    {
+      "id": "beehive",
+      "label": "Beehive",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Beehive was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "wildflowerPatch",
+      "label": "Wildflower Patch",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External flowers and grass replace the planting while the original fitted meadow ground remains.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Flower_3_Single"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Flower_4_Single"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Grass_Common_Short"
+        }
+      ]
+    },
+    {
+      "id": "tallGrass",
+      "label": "Tall Grass",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Grass_Common_Tall"
+        }
+      ]
+    },
+    {
+      "id": "birch",
+      "label": "Birch",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Birch was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "haybale",
+      "label": "Haybale",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/hay.glb"
+        }
+      ]
+    },
+    {
+      "id": "willow",
+      "label": "Willow",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/willow.glb"
+        }
+      ]
+    },
+    {
+      "id": "palm",
+      "label": "Palm",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/palm.glb"
+        }
+      ]
+    },
+    {
+      "id": "bird",
+      "label": "Bird",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "bird.glb"
+        }
+      ]
+    },
+    {
+      "id": "owl",
+      "label": "Owl",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "owl.glb"
+        }
+      ]
+    },
+    {
+      "id": "squirrel",
+      "label": "Squirrel",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "squirrel.glb"
+        }
+      ]
+    },
+    {
+      "id": "moss",
+      "label": "Moss",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Moss was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "fern",
+      "label": "Fern",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Fern_1"
+        }
+      ]
+    },
+    {
+      "id": "deadTree",
+      "label": "Dead Tree",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "DeadTree_3"
+        }
+      ]
+    },
+    {
+      "id": "log",
+      "label": "Log",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The reviewed Kenney kit has no suitable finished equivalent; assembling generic planks would not establish a better complete model.",
+      "models": []
+    },
+    {
+      "id": "berryBush",
+      "label": "Berry Bush",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External trees or bushes replace the vegetation while original fruit and field details retain the productive-garden identity.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Bush_Common"
+        }
+      ]
+    },
+    {
+      "id": "spider",
+      "label": "Spider",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "spider.glb"
+        }
+      ]
+    },
+    {
+      "id": "wheat",
+      "label": "Wheat",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Wheat was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "fence",
+      "label": "Fence",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/fence.glb"
+        }
+      ]
+    },
+    {
+      "id": "scarecrow",
+      "label": "Scarecrow",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Scarecrow was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "barn",
+      "label": "Barn",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/barn.glb"
+        }
+      ]
+    },
+    {
+      "id": "sheep",
+      "label": "Sheep",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "sheep.glb"
+        }
+      ]
+    },
+    {
+      "id": "cow",
+      "label": "Cow",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "cow.glb"
+        }
+      ]
+    },
+    {
+      "id": "chicken",
+      "label": "Chicken",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "chicken.glb"
+        }
+      ]
+    },
+    {
+      "id": "horse",
+      "label": "Horse",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "horse.glb"
+        }
+      ]
+    },
+    {
+      "id": "donkey",
+      "label": "Donkey",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "donkey.glb"
+        }
+      ]
+    },
+    {
+      "id": "goat",
+      "label": "Goat",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "goat.glb"
+        }
+      ]
+    },
+    {
+      "id": "ricePaddy",
+      "label": "Rice Paddy",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Terraced rice beds retain their irrigation water, shoots and field borders.",
+      "models": []
+    },
+    {
+      "id": "silo",
+      "label": "Silo",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/silo.glb"
+        }
+      ]
+    },
+    {
+      "id": "pigpen",
+      "label": "Pigpen",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "pig.glb"
+        }
+      ]
+    },
+    {
+      "id": "trough",
+      "label": "Trough",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Trough was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "haystack",
+      "label": "Haystack",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/hay.glb"
+        }
+      ]
+    },
+    {
+      "id": "orchard",
+      "label": "Orchard",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External trees or bushes replace the vegetation while original fruit and field details retain the productive-garden identity.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "appleTree",
+      "label": "Apple Tree",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External trees or bushes replace the vegetation while original fruit and field details retain the productive-garden identity.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "oliveTree",
+      "label": "Olive Tree",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External trees or bushes replace the vegetation while original fruit and field details retain the productive-garden identity.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "lemonTree",
+      "label": "Lemon Tree",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External trees or bushes replace the vegetation while original fruit and field details retain the productive-garden identity.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "orangeTree",
+      "label": "Orange Tree",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External trees or bushes replace the vegetation while original fruit and field details retain the productive-garden identity.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "pearTree",
+      "label": "Pear Tree",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External trees or bushes replace the vegetation while original fruit and field details retain the productive-garden identity.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "peachTree",
+      "label": "Peach Tree",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External trees or bushes replace the vegetation while original fruit and field details retain the productive-garden identity.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "beeFarm",
+      "label": "Bee Farm",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Bee Farm was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "pumpkin",
+      "label": "Pumpkin",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Pumpkin was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "tent",
+      "label": "Tent",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/tent.glb"
+        }
+      ]
+    },
+    {
+      "id": "hut",
+      "label": "Hut",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The researched Korean thatched model is an open shed, not a choga dwelling; the existing house silhouette is retained.",
+      "models": []
+    },
+    {
+      "id": "house",
+      "label": "House",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/house.glb"
+        }
+      ]
+    },
+    {
+      "id": "houseB",
+      "label": "Gabled house",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/house-b.glb"
+        }
+      ]
+    },
+    {
+      "id": "church",
+      "label": "Church",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/church.glb"
+        }
+      ]
+    },
+    {
+      "id": "windmill",
+      "label": "Windmill",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/windmill.glb"
+        }
+      ]
+    },
+    {
+      "id": "well",
+      "label": "Well",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/well.glb"
+        }
+      ]
+    },
+    {
+      "id": "tavern",
+      "label": "Tavern",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/inn.glb"
+        }
+      ]
+    },
+    {
+      "id": "bakery",
+      "label": "Bakery",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Selected finished buildings lack the defining library, clock, cathedral or bakery features; an unrelated house is not substituted.",
+      "models": []
+    },
+    {
+      "id": "stable",
+      "label": "Stable",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/stable.glb"
+        }
+      ]
+    },
+    {
+      "id": "garden",
+      "label": "Garden",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Garden was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "laundry",
+      "label": "Laundry",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Laundry was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "doghouse",
+      "label": "Doghouse",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Doghouse was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "shrine",
+      "label": "Shrine",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The selected licensed collections have no suitable Korean pavilion or watermill equivalent; the existing architectural identity is retained.",
+      "models": []
+    },
+    {
+      "id": "wagon",
+      "label": "Wagon",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/cargo-cart.glb"
+        }
+      ]
+    },
+    {
+      "id": "market",
+      "label": "Market",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/market.glb"
+        }
+      ]
+    },
+    {
+      "id": "inn",
+      "label": "Inn",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/inn.glb"
+        }
+      ]
+    },
+    {
+      "id": "blacksmith",
+      "label": "Blacksmith",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/blacksmith.glb"
+        }
+      ]
+    },
+    {
+      "id": "castle",
+      "label": "Castle",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/castle.glb"
+        }
+      ]
+    },
+    {
+      "id": "tower",
+      "label": "Tower",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/bell-tower.glb"
+        }
+      ]
+    },
+    {
+      "id": "bridge",
+      "label": "Bridge",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The reviewed Kenney kit has no suitable finished equivalent; assembling generic planks would not establish a better complete model.",
+      "models": []
+    },
+    {
+      "id": "cathedral",
+      "label": "Cathedral",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Selected finished buildings lack the defining library, clock, cathedral or bakery features; an unrelated house is not substituted.",
+      "models": []
+    },
+    {
+      "id": "library",
+      "label": "Library",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Selected finished buildings lack the defining library, clock, cathedral or bakery features; an unrelated house is not substituted.",
+      "models": []
+    },
+    {
+      "id": "clocktower",
+      "label": "Clocktower",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Selected finished buildings lack the defining library, clock, cathedral or bakery features; an unrelated house is not substituted.",
+      "models": []
+    },
+    {
+      "id": "statue",
+      "label": "Statue",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Statue was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "park",
+      "label": "Park",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External flowers and grass replace the planting while the original fitted meadow ground remains.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Flower_3_Single"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Flower_4_Single"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Grass_Common_Short"
+        }
+      ]
+    },
+    {
+      "id": "warehouse",
+      "label": "Warehouse",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/warehouse.glb"
+        }
+      ]
+    },
+    {
+      "id": "gatehouse",
+      "label": "Gatehouse",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/hanok-gate.glb"
+        }
+      ]
+    },
+    {
+      "id": "manor",
+      "label": "Manor",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The researched side-wing roof has visible defects, and a single main house cannot preserve the estate courtyard composition.",
+      "models": []
+    },
+    {
+      "id": "reeds",
+      "label": "Reeds",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/cattail.glb"
+        }
+      ]
+    },
+    {
+      "id": "fountain",
+      "label": "Fountain",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "An external fountain is combined with fitted water or ice surfaces and the appropriate seasonal flow details.",
+      "models": [
+        {
+          "file": "village/fountain.glb"
+        }
+      ]
+    },
+    {
+      "id": "canal",
+      "label": "Canal",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The canal retains its water surface and architectural banks.",
+      "models": []
+    },
+    {
+      "id": "watermill",
+      "label": "Watermill",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The selected licensed collections have no suitable Korean pavilion or watermill equivalent; the existing architectural identity is retained.",
+      "models": []
+    },
+    {
+      "id": "gardenTree",
+      "label": "Garden Tree",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_3"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "pondLily",
+      "label": "Pond Lily",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/lilypad.glb"
+        }
+      ]
+    },
+    {
+      "id": "cart",
+      "label": "Cart",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/cargo-cart.glb"
+        }
+      ]
+    },
+    {
+      "id": "barrel",
+      "label": "Barrel",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/barrel.glb"
+        }
+      ]
+    },
+    {
+      "id": "torch",
+      "label": "Torch",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "An external holder or fire pit is combined with the original luminous flame details.",
+      "models": [
+        {
+          "file": "village/torch.glb"
+        }
+      ]
+    },
+    {
+      "id": "flag",
+      "label": "Flag",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Flag was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "cobblePath",
+      "label": "Cobble Path",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Pebble_Round_1"
+        }
+      ]
+    },
+    {
+      "id": "smoke",
+      "label": "Smoke",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Smoke remains an ambient effect tied to the generated village.",
+      "models": []
+    },
+    {
+      "id": "signpost",
+      "label": "Signpost",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The reviewed Kenney kit has no suitable finished equivalent; assembling generic planks would not establish a better complete model.",
+      "models": []
+    },
+    {
+      "id": "lantern",
+      "label": "Lantern",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/lantern.glb"
+        }
+      ]
+    },
+    {
+      "id": "woodpile",
+      "label": "Woodpile",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The reviewed Kenney kit has no suitable finished equivalent; assembling generic planks would not establish a better complete model.",
+      "models": []
+    },
+    {
+      "id": "puddle",
+      "label": "Puddle",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The wet surface retains its local ground placement and material.",
+      "models": []
+    },
+    {
+      "id": "campfire",
+      "label": "Campfire",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "An external holder or fire pit is combined with the original luminous flame details.",
+      "models": [
+        {
+          "file": "village/campfire.glb"
+        }
+      ]
+    },
+    {
+      "id": "snowPine",
+      "label": "Snow Pine",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Pine_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Pine_5"
+        }
+      ]
+    },
+    {
+      "id": "snowDeciduous",
+      "label": "Snow Deciduous",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_3"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "snowman",
+      "label": "Snowman",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Snowman was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "snowdrift",
+      "label": "Snowdrift",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Snow banks remain fitted to the generated ground.",
+      "models": []
+    },
+    {
+      "id": "igloo",
+      "label": "Igloo",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Igloo was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "frozenPond",
+      "label": "Frozen Pond",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External rocks replace selected banks while the original water or ice, flowers and remaining pond vegetation stay in place.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_2"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_3"
+        }
+      ]
+    },
+    {
+      "id": "icicle",
+      "label": "Icicle",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Icicles retain their winter placement and ice material.",
+      "models": []
+    },
+    {
+      "id": "sled",
+      "label": "Sled",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Sled was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "snowCoveredRock",
+      "label": "Snow Covered Rock",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_2"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_3"
+        }
+      ]
+    },
+    {
+      "id": "bareBush",
+      "label": "Bare Bush",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "DeadTree_3"
+        }
+      ]
+    },
+    {
+      "id": "winterBird",
+      "label": "Winter Bird",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "bird.glb"
+        }
+      ]
+    },
+    {
+      "id": "firewood",
+      "label": "Firewood",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The reviewed Kenney kit has no suitable finished equivalent; assembling generic planks would not establish a better complete model.",
+      "models": []
+    },
+    {
+      "id": "houseWinter",
+      "label": "Snowy house",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "An external building supplies the structure while original winter details preserve the snowy variant.",
+      "models": [
+        {
+          "file": "village/house-snow.glb"
+        }
+      ]
+    },
+    {
+      "id": "houseBWinter",
+      "label": "Snowy gabled house",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "An external building supplies the structure while original winter details preserve the snowy variant.",
+      "models": [
+        {
+          "file": "village/house-b-snow.glb"
+        }
+      ]
+    },
+    {
+      "id": "barnWinter",
+      "label": "Snowy barn",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "An external building supplies the structure while original winter details preserve the snowy variant.",
+      "models": [
+        {
+          "file": "village/barn-snow.glb"
+        }
+      ]
+    },
+    {
+      "id": "churchWinter",
+      "label": "Snowy church",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The selected church has a shared texture atlas without a separate roof material; the original correctly fitted snow treatment is retained.",
+      "models": []
+    },
+    {
+      "id": "christmasTree",
+      "label": "Christmas Tree",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Pine_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Pine_5"
+        }
+      ]
+    },
+    {
+      "id": "winterLantern",
+      "label": "Winter Lantern",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/lantern.glb"
+        }
+      ]
+    },
+    {
+      "id": "frozenFountain",
+      "label": "Frozen Fountain",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "An external fountain is combined with fitted water or ice surfaces and the appropriate seasonal flow details.",
+      "models": [
+        {
+          "file": "village/fountain.glb"
+        }
+      ]
+    },
+    {
+      "id": "cherryBlossom",
+      "label": "Cherry Blossom",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_3"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "cherryBlossomSmall",
+      "label": "Cherry Blossom Small",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_3"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "cherryPetals",
+      "label": "Cherry Petals",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Petals preserve the seasonal decorative effect.",
+      "models": []
+    },
+    {
+      "id": "tulip",
+      "label": "Tulip",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Tulip was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "tulipField",
+      "label": "Tulip Field",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Tulip Field was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "sprout",
+      "label": "Sprout",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Fern_1"
+        }
+      ]
+    },
+    {
+      "id": "nest",
+      "label": "Nest",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Nest was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "lamb",
+      "label": "Lamb",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "sheep.glb"
+        }
+      ]
+    },
+    {
+      "id": "crocus",
+      "label": "Crocus",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Crocus was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "rainPuddle",
+      "label": "Rain Puddle",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The wet surface retains its local ground placement and material.",
+      "models": []
+    },
+    {
+      "id": "birdhouse",
+      "label": "Birdhouse",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Birdhouse was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "gardenBed",
+      "label": "Garden Bed",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Garden Bed was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "cherryBlossomFull",
+      "label": "Cherry Blossom Full",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_3"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "cherryBlossomBranch",
+      "label": "Cherry Blossom Branch",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_3"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "peachBlossom",
+      "label": "Peach Blossom",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_3"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "flowerBed",
+      "label": "Flower Bed",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External flowers and grass replace the planting while the original fitted meadow ground remains.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Flower_3_Single"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Flower_4_Single"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Grass_Common_Short"
+        }
+      ]
+    },
+    {
+      "id": "wateringCan",
+      "label": "Watering Can",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Watering Can was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "seedling",
+      "label": "Seedling",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "robinBird",
+      "label": "Robin Bird",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The reviewed external robin models did not provide a clear visual improvement over the existing recognizable bird; the original model is retained.",
+      "models": []
+    },
+    {
+      "id": "butterflyGarden",
+      "label": "Butterfly Garden",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "Uses a licensed external animal model; species scale, dated identity and any flock or school composition are applied by the tour.",
+      "models": [
+        {
+          "file": "butterfly.glb"
+        }
+      ]
+    },
+    {
+      "id": "umbrella",
+      "label": "Umbrella",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Umbrella was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "parasol",
+      "label": "Parasol",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Parasol was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "beachTowel",
+      "label": "Beach Towel",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Beach Towel was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "sandcastleSummer",
+      "label": "Summer sandcastle",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Summer sandcastle was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "surfboard",
+      "label": "Surfboard",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Surfboard was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "iceCreamCart",
+      "label": "Ice Cream Cart",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "An external vendor cart is combined with the original ice-cream display so the catalog identity remains visible.",
+      "models": [
+        {
+          "file": "village/vendor-cart.glb"
+        }
+      ]
+    },
+    {
+      "id": "hammock",
+      "label": "Hammock",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Hammock was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "sunflower",
+      "label": "Sunflower",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Sunflower was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "watermelon",
+      "label": "Watermelon",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Watermelon was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "sprinkler",
+      "label": "Sprinkler",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Sprinkler was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "lemonade",
+      "label": "Lemonade",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Lemonade was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "fireflies",
+      "label": "Fireflies",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Fireflies remain luminous seasonal particles rather than opaque static models.",
+      "models": []
+    },
+    {
+      "id": "swimmingPool",
+      "label": "Swimming Pool",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The pool retains its water surface and rim.",
+      "models": []
+    },
+    {
+      "id": "autumnMaple",
+      "label": "Autumn Maple",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "TwistedTree_1"
+        }
+      ]
+    },
+    {
+      "id": "autumnOak",
+      "label": "Autumn Oak",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_3"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "CommonTree_5"
+        }
+      ]
+    },
+    {
+      "id": "autumnBirch",
+      "label": "Autumn Birch",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Autumn Birch was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "autumnGinkgo",
+      "label": "Autumn Ginkgo",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Autumn Ginkgo was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "fallenLeaves",
+      "label": "Fallen Leaves",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Ground leaves retain their seasonal scatter and color.",
+      "models": []
+    },
+    {
+      "id": "leafSwirl",
+      "label": "Leaf Swirl",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Swirling leaves preserve the seasonal decorative effect.",
+      "models": []
+    },
+    {
+      "id": "acorn",
+      "label": "Acorn",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Acorn was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "cornStalk",
+      "label": "Corn stalks",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Corn stalks was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "scarecrowAutumn",
+      "label": "Scarecrow Autumn",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Scarecrow Autumn was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "harvestBasket",
+      "label": "Harvest Basket",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Harvest Basket was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "hotDrink",
+      "label": "Hot Drink",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Hot Drink was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "autumnWreath",
+      "label": "Autumn Wreath",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Autumn Wreath was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "pumpkinPatch",
+      "label": "Pumpkin Patch",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Pumpkin Patch was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "hayMaze",
+      "label": "Hay Maze",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "A single external hay bale would not preserve the maze composition.",
+      "models": []
+    },
+    {
+      "id": "appleBasket",
+      "label": "Apple Basket",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Apple Basket was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "rake",
+      "label": "Rake",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Rake was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "hanok",
+      "label": "Hanok house",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/hanok.glb"
+        }
+      ]
+    },
+    {
+      "id": "pavilion",
+      "label": "Korean pavilion",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The selected licensed collections have no suitable Korean pavilion or watermill equivalent; the existing architectural identity is retained.",
+      "models": []
+    },
+    {
+      "id": "stoneWall",
+      "label": "Korean stone wall",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Korean stone wall was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "onggi",
+      "label": "Onggi jars",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/onggi-terrace.glb"
+        },
+        {
+          "file": "village/onggi-large.glb"
+        },
+        {
+          "file": "village/onggi-medium.glb"
+        },
+        {
+          "file": "village/onggi-small.glb"
+        }
+      ]
+    },
+    {
+      "id": "choga",
+      "label": "Choga cottage",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The researched Korean thatched model is an open shed, not a choga dwelling; the existing house silhouette is retained.",
+      "models": []
+    },
+    {
+      "id": "jangseung",
+      "label": "Jangseung guardians",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The carved Korean village guardians retain their distinctive faces and paired composition.",
+      "models": []
+    },
+    {
+      "id": "sotdae",
+      "label": "Sotdae bird poles",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The Korean bird-topped village poles retain their distinctive form and symbolism.",
+      "models": []
+    },
+    {
+      "id": "riceTerrace",
+      "label": "Terraced rice paddies",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Korean rice terraces retain their irrigation water, shoots and field borders.",
+      "models": []
+    },
+    {
+      "id": "koreanWatermill",
+      "label": "Korean watermill",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The selected licensed collections have no suitable Korean pavilion or watermill equivalent; the existing architectural identity is retained.",
+      "models": []
+    },
+    {
+      "id": "hanokGate",
+      "label": "Hanok courtyard gate",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/hanok-gate.glb"
+        }
+      ]
+    },
+    {
+      "id": "kimchiGarden",
+      "label": "Cabbage and radish garden",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "Cabbage and radish beds retain their Korean household-garden identity.",
+      "models": []
+    },
+    {
+      "id": "stoneBridge",
+      "label": "Korean stone bridge",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "No suitable semantic match for Korean stone bridge was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "hanokEstate",
+      "label": "Hanok courtyard estate",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The researched side-wing roof has visible defects, and a single main house cannot preserve the estate courtyard composition.",
+      "models": []
+    },
+    {
+      "id": "cedarGrove",
+      "label": "Cedar Grove",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Pine_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Pine_5"
+        }
+      ]
+    },
+    {
+      "id": "ancientOak",
+      "label": "Ancient Oak",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "TwistedTree_1"
+        }
+      ]
+    },
+    {
+      "id": "wildflowerMeadow",
+      "label": "Wildflower Meadow",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External flowers and grass replace the planting while the original fitted meadow ground remains.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Flower_3_Single"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Flower_4_Single"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Grass_Common_Short"
+        }
+      ]
+    },
+    {
+      "id": "bambooThicket",
+      "label": "Bamboo Thicket",
+      "kind": "ordinary",
+      "status": "retained",
+      "reason": "The reviewed external bamboo has cut stems without branches or leaves; the existing leafy thicket preserves the recognizable plant form.",
+      "models": []
+    },
+    {
+      "id": "lotusPond",
+      "label": "Lotus Pond",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External rocks replace selected banks while the original water or ice, flowers and remaining pond vegetation stay in place.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_2"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_3"
+        },
+        {
+          "file": "nature/lilypad.glb"
+        },
+        {
+          "file": "nature/cattail.glb"
+        }
+      ]
+    },
+    {
+      "id": "reedMarsh",
+      "label": "Reed Marsh",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "Licensed external models replace selected forms; original components preserve the specific composite identity and its seasonal details.",
+      "models": [
+        {
+          "file": "nature/cattail.glb"
+        }
+      ]
+    },
+    {
+      "id": "alpineRocks",
+      "label": "Alpine Rocks",
+      "kind": "ordinary",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_2"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_3"
+        }
+      ]
+    },
+    {
+      "id": "willowPond",
+      "label": "Willow Pond",
+      "kind": "ordinary",
+      "status": "hybrid",
+      "reason": "External rocks replace selected banks while the original water or ice, flowers and remaining pond vegetation stay in place.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_2"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_3"
+        },
+        {
+          "file": "nature/lilypad.glb"
+        },
+        {
+          "file": "nature/cattail.glb"
+        },
+        {
+          "file": "nature/willow.glb"
+        }
+      ]
+    },
+    {
+      "id": "mountFuji",
+      "label": "Mount Fuji",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Mount Fuji was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "colosseum",
+      "label": "Colosseum",
+      "kind": "wonder",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/colosseum.glb"
+        }
+      ]
+    },
+    {
+      "id": "giantSequoia",
+      "label": "Giant sequoia",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Giant sequoia was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "coralReef",
+      "label": "Coral reef",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Coral reef was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "pagoda",
+      "label": "Pagoda",
+      "kind": "wonder",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/pagoda.glb"
+        }
+      ]
+    },
+    {
+      "id": "torii",
+      "label": "Torii gate",
+      "kind": "wonder",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/torii.glb"
+        }
+      ]
+    },
+    {
+      "id": "geyser",
+      "label": "Geyser",
+      "kind": "wonder",
+      "status": "hybrid",
+      "reason": "Licensed external models replace selected forms; original components preserve the specific composite identity and its seasonal details.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_2"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_3"
+        }
+      ]
+    },
+    {
+      "id": "hotSpring",
+      "label": "Hot spring",
+      "kind": "wonder",
+      "status": "hybrid",
+      "reason": "Licensed external models replace selected forms; original components preserve the specific composite identity and its seasonal details.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_2"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_3"
+        }
+      ]
+    },
+    {
+      "id": "eiffelTower",
+      "label": "Eiffel Tower",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "The verified candidate remains about 2.4 MiB and 48,000 triangles after safe simplification; the existing landmark is retained within the selected model budget.",
+      "models": []
+    },
+    {
+      "id": "grandCanyon",
+      "label": "Grand Canyon",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Grand Canyon was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "windmillGrand",
+      "label": "Grand windmill",
+      "kind": "wonder",
+      "status": "authored",
+      "reason": "The procedural model is replaced by licensed external geometry with dated placement and seasonal variants preserved.",
+      "models": [
+        {
+          "file": "village/windmill.glb"
+        }
+      ]
+    },
+    {
+      "id": "oasis",
+      "label": "Oasis",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Oasis was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "volcano",
+      "label": "Volcano",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Volcano was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "giantMushroom",
+      "label": "Giant mushroom",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Giant mushroom was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "aurora",
+      "label": "Aurora",
+      "kind": "wonder",
+      "status": "hybrid",
+      "reason": "Licensed external models replace selected forms; original components preserve the specific composite identity and its seasonal details.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Pine_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Pine_5"
+        }
+      ]
+    },
+    {
+      "id": "tajMahal",
+      "label": "Taj Mahal",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Taj Mahal was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "giantWaterfall",
+      "label": "Giant waterfall",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Giant waterfall was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "stBasils",
+      "label": "Saint Basil’s Cathedral",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Saint Basil’s Cathedral was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "bambooGrove",
+      "label": "Bamboo grove",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Bamboo grove was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "operaHouse",
+      "label": "Sydney Opera House",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Sydney Opera House was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "glacierPeak",
+      "label": "Glacier peak",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Glacier peak was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "bioluminescentPool",
+      "label": "Bioluminescent pool",
+      "kind": "wonder",
+      "status": "hybrid",
+      "reason": "Licensed external models replace selected forms; original components preserve the specific composite identity and its seasonal details.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_1"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_2"
+        },
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "Rock_Medium_3"
+        }
+      ]
+    },
+    {
+      "id": "meteorCrater",
+      "label": "Meteor crater",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Meteor crater was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "bonsaiGiant",
+      "label": "Giant bonsai",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Giant bonsai was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "floatingIsland",
+      "label": "Floating island",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Floating island was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "crystalSpire",
+      "label": "Crystal spire",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Crystal spire was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "dragonNest",
+      "label": "Dragon nest",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Dragon nest was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    },
+    {
+      "id": "worldTree",
+      "label": "World tree",
+      "kind": "wonder",
+      "status": "hybrid",
+      "reason": "Licensed external models replace selected forms; original components preserve the specific composite identity and its seasonal details.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "TwistedTree_1"
+        }
+      ]
+    },
+    {
+      "id": "sakuraEternal",
+      "label": "Eternal sakura",
+      "kind": "wonder",
+      "status": "hybrid",
+      "reason": "Licensed external models replace selected forms; original components preserve the specific composite identity and its seasonal details.",
+      "models": [
+        {
+          "file": "nature/nature-collection.glb",
+          "node": "TwistedTree_1"
+        }
+      ]
+    },
+    {
+      "id": "ancientPortal",
+      "label": "Ancient portal",
+      "kind": "wonder",
+      "status": "retained",
+      "reason": "No suitable semantic match for Ancient portal was selected from the audited licensed collections; the existing design is retained.",
+      "models": []
+    }
+  ],
+  "generated": [
+    {
+      "id": "terrain",
+      "status": "retained",
+      "reason": "Contribution dates, land edges, elevation and snow are generated from the Calendar data."
+    },
+    {
+      "id": "water",
+      "status": "retained",
+      "reason": "Water surfaces, waterfalls and ripples retain the generated shoreline and animated flow."
+    },
+    {
+      "id": "grass",
+      "status": "retained",
+      "reason": "Instanced tapered grass follows ground cells, animal clearings and the coherent wind field."
+    },
+    {
+      "id": "particles",
+      "status": "retained",
+      "reason": "Petals, fireflies and seasonal particles remain animated effects."
+    },
+    {
+      "id": "paths",
+      "status": "retained",
+      "reason": "Path pieces follow the dated neighborhood routes and preserve safe walking over water."
+    },
+    {
+      "id": "shore-pebbles",
+      "status": "retained",
+      "reason": "Small instanced stones follow each generated shoreline; they are separate from authored catalog rocks."
+    },
+    {
+      "id": "meadow-flowers",
+      "status": "retained",
+      "reason": "Small generated flower accents share the grass distribution and wind; catalog flower assets are audited separately."
+    }
+  ]
+}

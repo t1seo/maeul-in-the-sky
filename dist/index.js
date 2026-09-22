@@ -27309,7 +27309,9 @@ var package_default = {
     format: 'prettier --write "src/**/*.ts" "tests/**/*.ts" "scripts/**/*.ts"',
     "format:check": 'prettier --check "src/**/*.ts" "tests/**/*.ts" "scripts/**/*.ts"',
     typecheck: "tsc -p tsconfig.check.json",
-    prepare: "husky"
+    prepare: "husky",
+    "prepare:authored": "tsx scripts/authored/check.ts --write",
+    "check:authored": "tsx scripts/authored/check.ts"
   },
   engines: {
     node: ">=20"
@@ -27359,6 +27361,7 @@ var package_default = {
   devDependencies: {
     "@eslint/js": "^10.0.1",
     "@gltf-transform/core": "4.5.0",
+    "@gltf-transform/extensions": "4.5.0",
     "@gltf-transform/functions": "4.5.0",
     "@playwright/test": "^1.63.0",
     "@resvg/resvg-js": "^2.6.2",
@@ -27374,6 +27377,7 @@ var package_default = {
     ky: "2.1.0",
     "lint-staged": "^16.4.0",
     prettier: "^3.9.6",
+    sharp: "0.35.4",
     svgo: "^4.1.0",
     three: "0.186.0",
     tsup: "^8.5.1",

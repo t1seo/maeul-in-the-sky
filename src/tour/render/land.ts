@@ -18,6 +18,13 @@ export function cellColor(cell: TourCell): Color {
   return base.offsetHSL(variation * 0.2, variation, variation);
 }
 
+function cellHeights(cell: TourCell): { top: number; bottom: number } {
+  return {
+    top: cell.surface === 'water' ? -0.72 : 0,
+    bottom: -Math.max(cell.surface === 'water' ? 0.9 : 0.16, cell.depth),
+  };
+}
+
 export function createLand(model: TourModel, resources: GeometryResources): Mesh {
   const positions: number[] = [];
   const colors: number[] = [];
@@ -27,11 +34,10 @@ export function createLand(model: TourModel, resources: GeometryResources): Mesh
       colors.push(color.r, color.g, color.b);
     }
   };
-  const cells = new Map(model.cells.map((cell) => [`${cell.x},${cell.z}`, cell]));
+  const cells = new Map(model.cells.map((cell) => [`${cell.x},${cell.z}`, cellHeights(cell)]));
   for (const cell of model.cells) {
     const { x, z } = cell;
-    const depth = Math.max(0.16, cell.depth);
-    const top = cell.surface === 'water' ? -0.15 : 0;
+    const { top, bottom } = cellHeights(cell);
     quad(
       [
         [x - 2, top, z + 2],
@@ -51,31 +57,38 @@ export function createLand(model: TourModel, resources: GeometryResources): Mesh
       const [ax, az] = corners[side];
       const [bx, bz] = corners[(side + 1) % 4];
       const neighbor = cells.get(`${x + ax + bx},${z + az + bz}`);
-      if (neighbor && neighbor.depth >= depth) continue;
-      const from = neighbor ? -Math.max(0.16, neighbor.depth) : top;
+      const exposed = neighbor
+        ? [
+            [top, Math.max(bottom, neighbor.top)],
+            [Math.min(top, neighbor.bottom), bottom],
+          ]
+        : [[top, bottom]];
       const soil = new Color(cell.season === 'winter' ? '#7d9391' : '#867967');
       const bands = 3;
-      for (let band = 0; band < bands; band++) {
-        const y1 = from + ((-depth - from) * band) / bands;
-        const y2 = from + ((-depth - from) * (band + 1)) / bands;
-        const tint = soil.clone().multiplyScalar(1 - band * 0.1 + Math.sin(x + z + side) * 0.06);
-        quad(
-          [
-            [x + ax, y1, z + az],
-            [x + bx, y1, z + bz],
-            [x + bx, y2, z + bz],
-            [x + ax, y2, z + az],
-          ],
-          tint,
-        );
+      for (const [from, to] of exposed) {
+        if (from <= to) continue;
+        for (let band = 0; band < bands; band++) {
+          const y1 = from + ((to - from) * band) / bands;
+          const y2 = from + ((to - from) * (band + 1)) / bands;
+          const tint = soil.clone().multiplyScalar(1 - band * 0.1 + Math.sin(x + z + side) * 0.06);
+          quad(
+            [
+              [x + ax, y1, z + az],
+              [x + bx, y1, z + bz],
+              [x + bx, y2, z + bz],
+              [x + ax, y2, z + az],
+            ],
+            tint,
+          );
+        }
       }
     }
     quad(
       [
-        [x - 2, -depth, z - 2],
-        [x + 2, -depth, z - 2],
-        [x + 2, -depth, z + 2],
-        [x - 2, -depth, z + 2],
+        [x - 2, bottom, z - 2],
+        [x + 2, bottom, z - 2],
+        [x + 2, bottom, z + 2],
+        [x - 2, bottom, z + 2],
       ],
       new Color('#645e54'),
     );

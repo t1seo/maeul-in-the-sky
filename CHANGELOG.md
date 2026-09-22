@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Authored scenery throughout the tour** — extend the local model library to more wildlife, detailed trees and plants, village buildings and props, and selected Wonders. Preserve cultural and seasonal details where a suitable licensed replacement is unavailable; publish a complete 240-ID coverage ledger and model-specific credits, source hashes, licenses and adaptations. Instanced scenery preserves dated identities, walking controls and forest wind. Deeper river beds and translucent water keep aquatic animals visible.
 - **Living wildlife in the tour** — replace eight animal models, including the squirrel and cow, with locally hosted artwork by Poly by Google and Quaternius. Original model credits, licenses and modification records travel with both GitHub Pages and the npm package; the preview server serves the same verified GLB files.
 - **Tour navigation overlay** — a subtly translucent map docks at either bottom corner, uses square tiles at every viewport size, and keeps walking and contextual controls clear. The compass now follows the actual viewing direction with a cardinal bearing; map travel retains the camera direction and ignores empty map margins.
 

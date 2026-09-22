@@ -1,0 +1,1516 @@
+{
+  "version": 1,
+  "models": [
+    {
+      "id": "house",
+      "file": "house.glb",
+      "bytes": 354220,
+      "sha256": "b855466d14fa76f98608c4bb2df9d1a1f32c7cc05c87269264a050f8c00834e6",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy House",
+        "modelUrl": "https://poly.pizza/m/BH2XHWUNmF",
+        "downloadUrl": "https://static.poly.pizza/341c9305-c6dd-4427-ad00-620ad57eb14e.glb",
+        "sha256": "74d4c91022414875ec61ab80835705a9c0e9415aa0dd413fc8e83cbfd861a5c9",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 5758,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -1.0719615034759045,
+          -0.00010448402937432957,
+          -1.3424764567743337
+        ],
+        "max": [
+          1.0719615034759045,
+          3.3898991921044397,
+          1.3163491001018668
+        ]
+      },
+      "size": [
+        2.143923006951809,
+        3.390003676133814,
+        2.6588255568762005
+      ]
+    },
+    {
+      "id": "house-b",
+      "file": "house-b.glb",
+      "bytes": 442444,
+      "sha256": "e893d8bb7e071473bd033dd9f1dd864ddcca8e103c87ed42bbd8557eb9b6c00c",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy House",
+        "modelUrl": "https://poly.pizza/m/dcPho4SUA3",
+        "downloadUrl": "https://static.poly.pizza/b8a2c719-5a70-4d6c-8049-90af7e3f89ee.glb",
+        "sha256": "39b9d7d4c85e170f64d066a3f762ab88689a614c270e95c52927908fb52fa36a",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 7162,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -1.1188866570591927,
+          -0.0017009661935390393,
+          -2.071084633985999
+        ],
+        "max": [
+          1.101273950189352,
+          3.2486509362375346,
+          1.3489397080684644
+        ]
+      },
+      "size": [
+        2.2201606072485447,
+        3.2503519024310736,
+        3.4200243420544636
+      ]
+    },
+    {
+      "id": "inn",
+      "file": "inn.glb",
+      "bytes": 408920,
+      "sha256": "ad745f1012d8a401d5e75c22923bc6aa9a2be52ba07bf3f6266314492403c833",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy Inn",
+        "modelUrl": "https://poly.pizza/m/x3ZcGn3jr4",
+        "downloadUrl": "https://static.poly.pizza/270a08b6-87e1-47eb-ad1c-5fd7be321bcd.glb",
+        "sha256": "106ac5aef624710d5a8e14ce076d73b4fd85312688cc80cebb6bd45cf61daefe",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 7756,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -2.018236741423607,
+          -0.005676469506260131,
+          -2.01068117611272
+        ],
+        "max": [
+          2.010875567793846,
+          3.485525286520214,
+          2.010680901522421
+        ]
+      },
+      "size": [
+        4.029112309217453,
+        3.4912017560264745,
+        4.021362077635141
+      ]
+    },
+    {
+      "id": "blacksmith",
+      "file": "blacksmith.glb",
+      "bytes": 404728,
+      "sha256": "9f39ae8be85b0f8246e1676dd4023bea08c24a209704e86d951e83c6bd958167",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Blacksmith",
+        "modelUrl": "https://poly.pizza/m/bV52eTG1Aj",
+        "downloadUrl": "https://static.poly.pizza/c664d338-cf21-4cda-b0f8-efe0f0826a10.glb",
+        "sha256": "264fc6abe5be8c091a1c6f293dce9e8ae79b96b50ccec45f0a7fb12201db1d7c",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 7659,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -2.56621353328228,
+          -0.003947177185632523,
+          -1.6578811655544101
+        ],
+        "max": [
+          1.3238108716905117,
+          2.999466587456466,
+          1.6256156691381605
+        ]
+      },
+      "size": [
+        3.8900244049727917,
+        3.0034137646420986,
+        3.2834968346925706
+      ]
+    },
+    {
+      "id": "stable",
+      "file": "stable.glb",
+      "bytes": 385704,
+      "sha256": "3f741bd09e37f0f1bf2a0f49cb5b2e85f373dc73947b0e0073b7ef1f86751116",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy Stable",
+        "modelUrl": "https://poly.pizza/m/qhNQSOGGbi",
+        "downloadUrl": "https://static.poly.pizza/210b9cdc-9b11-4ef5-a61b-5c31d0689090.glb",
+        "sha256": "c5ed9626d931c52b5a2b48d805bccd4232239da5ba677ca169730c036eb5b8c8",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 6246,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -3.657391667366028,
+          -0.022921924303532886,
+          -1.2797474602603671
+        ],
+        "max": [
+          1.043267361819744,
+          2.466969415131444,
+          2.0476622550152057
+        ]
+      },
+      "size": [
+        4.700659029185772,
+        2.489891339434977,
+        3.327409715275573
+      ]
+    },
+    {
+      "id": "barn",
+      "file": "barn.glb",
+      "bytes": 135572,
+      "sha256": "a1ff60359771741afc827b0db81fec5804b4c8802d6e7bdd343422252a594206",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Barn",
+        "modelUrl": "https://poly.pizza/m/vSqQNA7ez6",
+        "downloadUrl": "https://static.poly.pizza/e0ecaf1c-bff4-4f30-9a53-0cf0c1c90deb.glb",
+        "sha256": "c7e19b37ecc74f24e121c822116b125f7a7eea6473943650ca05faca3ebdebc3",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 2910,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -3.862377882003784,
+          0.001976999919861555,
+          -3.9892640113830566
+        ],
+        "max": [
+          3.864516019821167,
+          6.01061487197876,
+          4.233182907104492
+        ]
+      },
+      "size": [
+        7.726893901824951,
+        6.008637872058898,
+        8.222446918487549
+      ]
+    },
+    {
+      "id": "warehouse",
+      "file": "warehouse.glb",
+      "bytes": 101220,
+      "sha256": "922bd85a8ab4e6e173d4220ed3cddb16274551e4444c281bf75600ac5a8d76d8",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Small Barn",
+        "modelUrl": "https://poly.pizza/m/aTcDP7UERC",
+        "downloadUrl": "https://static.poly.pizza/f8d23d79-6dfd-4667-a961-5b4dad5a32d6.glb",
+        "sha256": "6a3a2a3e8d735e240ec73bdaa365f46826e63a73745a113f02774aa012b386eb",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 2176,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -3.0909900665283203,
+          0.00016199999663513154,
+          -3.112062931060791
+        ],
+        "max": [
+          2.987729072570801,
+          4.961273193359375,
+          3.161823034286499
+        ]
+      },
+      "size": [
+        6.078719139099121,
+        4.96111119336274,
+        6.27388596534729
+      ]
+    },
+    {
+      "id": "silo",
+      "file": "silo.glb",
+      "bytes": 74452,
+      "sha256": "3e136405227e3b924b94b7e93bb54439c95426c53924222cee463a2934300d01",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Silo",
+        "modelUrl": "https://poly.pizza/m/5GhLrv5Ce3",
+        "downloadUrl": "https://static.poly.pizza/3944662c-ccdd-440d-94bf-a1e37624a536.glb",
+        "sha256": "5894991c0371129fa12b858181b60dfb2c732494c07fa2a5b3afbba0f25d4e1d",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 1592,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -1.7502249479293823,
+          -0.04944600164890289,
+          -1.6645629405975342
+        ],
+        "max": [
+          1.9172899723052979,
+          9.019186019897461,
+          1.8454300165176392
+        ]
+      },
+      "size": [
+        3.66751492023468,
+        9.068632021546364,
+        3.5099929571151733
+      ]
+    },
+    {
+      "id": "windmill",
+      "file": "windmill.glb",
+      "bytes": 496028,
+      "sha256": "c7884d34053ed83f38cf5fd510698d01e51a1e55c2442f3008bd4e90040bcfed",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Mill",
+        "modelUrl": "https://poly.pizza/m/89dsFYAoX1",
+        "downloadUrl": "https://static.poly.pizza/a347d313-8be5-4585-9fc4-2f7e745c0648.glb",
+        "sha256": "bf61fae3dc7c54422bb49424d602dc31cb2121d86d556d5d3e00f175baa707c1",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 8126,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -1.6925319731235504,
+          0.00009811041504413733,
+          -1.3424765598767303
+        ],
+        "max": [
+          1.7042488157749176,
+          4.803775264278045,
+          1.388316049590633
+        ]
+      },
+      "size": [
+        3.396780788898468,
+        4.803677153863001,
+        2.7307926094673634
+      ]
+    },
+    {
+      "id": "bell-tower",
+      "file": "bell-tower.glb",
+      "bytes": 636068,
+      "sha256": "c8be7393a7457d70231d7dcf34ef2caf2b0e5323499a23b640e13f348f89f973",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Bell Tower",
+        "modelUrl": "https://poly.pizza/m/ux44tbeQvj",
+        "downloadUrl": "https://static.poly.pizza/fe8e639d-f07d-4512-a38d-3519b44a5fdc.glb",
+        "sha256": "44a78a23ea0a70d3fdcc216fe6d95189214fe7077a106c7571daa324c2cbf6b0",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 11799,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.9684677235782146,
+          -0.00010448402937432957,
+          -1.1251925913883631
+        ],
+        "max": [
+          0.9684677235782146,
+          4.76050419985429,
+          1.1033260015637036
+        ]
+      },
+      "size": [
+        1.9369354471564293,
+        4.760608683883664,
+        2.228518592952067
+      ]
+    },
+    {
+      "id": "market",
+      "file": "market.glb",
+      "bytes": 93204,
+      "sha256": "c0abb88b8e151131814047b6d7b089a7e4c4f33626174b815de42ca53c25a00b",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Market Stand",
+        "modelUrl": "https://poly.pizza/m/DGIM5HGISb",
+        "downloadUrl": "https://static.poly.pizza/e2633001-4cf5-46fa-ac68-575c9954f4ba.glb",
+        "sha256": "19b9b99c84d41c0b1124fe286ac3b99668d2f2d489d44affa559188881448d75",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 1548,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.4754706285893917,
+          -0.004749554025970143,
+          -0.5965244163825922
+        ],
+        "max": [
+          0.4754706285893917,
+          1.0444238231675544,
+          0.593307748663521
+        ]
+      },
+      "size": [
+        0.9509412571787834,
+        1.0491733771935245,
+        1.1898321650461132
+      ]
+    },
+    {
+      "id": "well",
+      "file": "well.glb",
+      "bytes": 93212,
+      "sha256": "05b908b1be1a2a7878f8d68a1219071d4bb4ce2b8730846aa98b82e0f421494b",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Well",
+        "modelUrl": "https://poly.pizza/m/QlqncKYxXb",
+        "downloadUrl": "https://static.poly.pizza/0e044203-f62e-4dad-ad3e-c3cb6cb393ac.glb",
+        "sha256": "8e5158984421cfd8ec5040a318a2627911a6dcd7e4b43172bdd7d36f367ad3db",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 1870,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.33744522370398045,
+          -0.2523086160969745,
+          -0.3650500953661085
+        ],
+        "max": [
+          0.32892199233174324,
+          0.9981391320382728,
+          0.6385060799017477
+        ]
+      },
+      "size": [
+        0.6663672160357237,
+        1.2504477481352474,
+        1.0035561752678561
+      ]
+    },
+    {
+      "id": "barrel",
+      "file": "barrel.glb",
+      "bytes": 56608,
+      "sha256": "7f6860795747ba534553844030502e701445cc2e88d60387d5605282ad378a62",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Barrel",
+        "modelUrl": "https://poly.pizza/m/zjCQP1TAci",
+        "downloadUrl": "https://static.poly.pizza/df9e4b83-758a-4fc7-b311-70fc949ed7ff.glb",
+        "sha256": "acf56e7eb64e37ea4ab2a6b072dbbcfd315ba45a511bee141e5541421e2f2238",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 1312,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.07910202839411795,
+          0.0008713023378750278,
+          -0.07868620996191195
+        ],
+        "max": [
+          0.07910202839411795,
+          0.20520112120516285,
+          0.07814241773985596
+        ]
+      },
+      "size": [
+        0.1582040567882359,
+        0.20432981886728782,
+        0.15682862770176792
+      ]
+    },
+    {
+      "id": "fence",
+      "file": "fence.glb",
+      "bytes": 13464,
+      "sha256": "9943d98866710a139acbde253527de6f4f1ff8a80418b62962ff9ab55531a481",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fence",
+        "modelUrl": "https://poly.pizza/m/UXmKfG81fG",
+        "downloadUrl": "https://static.poly.pizza/713fa0e6-a648-4896-817d-64b68ed0dac8.glb",
+        "sha256": "39f1306790e50996916e77797c6a444df98bb5a6215f5af201819ed37eac835c",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 208,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.40094894357025623,
+          -0.002825819671609512,
+          -0.012815942375703812
+        ],
+        "max": [
+          0.3900597570464015,
+          0.32319500111741256,
+          0.013071326180143252
+        ]
+      },
+      "size": [
+        0.7910087006166577,
+        0.32602082078902206,
+        0.025887268555847064
+      ]
+    },
+    {
+      "id": "hay",
+      "file": "hay.glb",
+      "bytes": 30820,
+      "sha256": "d38f22a47aef34dd29b7a0345d2f707a8894946eed94ac4bcd43daf6c94999e5",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Hay",
+        "modelUrl": "https://poly.pizza/m/Yu8TOERkpw",
+        "downloadUrl": "https://static.poly.pizza/8ab0043c-9a54-47b1-9b46-31b98d2f6ed8.glb",
+        "sha256": "a7b39cae2cbd0839647c23c597a4ff64cb3a1086529e78c0169614f4a42655ed",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 488,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.061758398078382015,
+          0.0003571134799075775,
+          -0.06362438175265708
+        ],
+        "max": [
+          0.05922950804233551,
+          0.17885913712785328,
+          0.06124372916403964
+        ]
+      },
+      "size": [
+        0.12098790612071753,
+        0.1785020236479457,
+        0.12486811091669672
+      ]
+    },
+    {
+      "id": "campfire",
+      "file": "campfire.glb",
+      "bytes": 30680,
+      "sha256": "d9b96983adb0853377fd725c1aaee8ac29ce1ef4224ece8f498214da0cd5d4dc",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Bonfire",
+        "modelUrl": "https://poly.pizza/m/Azj9hJwwwG",
+        "downloadUrl": "https://static.poly.pizza/e96d5573-fa3a-47ad-bae0-0ef9640026fa.glb",
+        "sha256": "b574b0e83c6b49bd54330ab5cd648a6cc826d90c886ce4b6a791b6af3c2e951b",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 602,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.20237413700670004,
+          -0.03336616046668425,
+          -0.17951539737280123
+        ],
+        "max": [
+          0.20419631619006395,
+          0.0788060795795799,
+          0.18286775701708277
+        ]
+      },
+      "size": [
+        0.406570453196764,
+        0.11217224004626415,
+        0.362383154389884
+      ]
+    },
+    {
+      "id": "tent",
+      "file": "tent.glb",
+      "bytes": 47336,
+      "sha256": "399b4516788b70837eb3a8a7de44f870f2180c168ab2fd4483f17929bf16fc2f",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Tent",
+        "modelUrl": "https://poly.pizza/m/5Q7qIrfDxA",
+        "downloadUrl": "https://static.poly.pizza/fc8d560d-91b5-439c-88bf-4cbddb7eadbb.glb",
+        "sha256": "2f3519156ebbd28ab47a3d8600cecfcbbea63cc25eba044effa154b280d87d48",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 784,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -7.2902448817349175,
+          -0.17586734881947988,
+          -12.434094836803725
+        ],
+        "max": [
+          7.2902448817349175,
+          10.148575256165351,
+          12.434097310055362
+        ]
+      },
+      "size": [
+        14.580489763469835,
+        10.324442604984831,
+        24.868192146859087
+      ]
+    },
+    {
+      "id": "torch",
+      "file": "torch.glb",
+      "bytes": 28928,
+      "sha256": "ae2ec60322dc3041e1e70c36aa88a6c2a8b45a46067f82315a4131308acea79b",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Wooden Torch",
+        "modelUrl": "https://poly.pizza/m/pNsfJzhXiD",
+        "downloadUrl": "https://static.poly.pizza/e5d33174-f51a-4981-9cfc-67e70486cba2.glb",
+        "sha256": "70e30cc0576c263a2107ab7f2528dea98ed06e45761fb1a0e931efdd745ad281",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 448,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.22332969497465027,
+          -0.5834049024428526,
+          -0.2094133605647923
+        ],
+        "max": [
+          0.2339028544106284,
+          2.1071882415058574,
+          0.20941268792628248
+        ]
+      },
+      "size": [
+        0.4572325493852787,
+        2.69059314394871,
+        0.41882604849107474
+      ]
+    },
+    {
+      "id": "vendor-cart",
+      "file": "vendor-cart.glb",
+      "bytes": 118488,
+      "sha256": "af227197234eda9b5b899d3293419004a1d0bc9ca076d69d38ff8087f90acf4b",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Cart",
+        "modelUrl": "https://poly.pizza/m/l7bDe7ak6j",
+        "downloadUrl": "https://static.poly.pizza/94b32c91-4d46-4172-aadd-10176a4eb543.glb",
+        "sha256": "c98eee1d2a91a1a894bbbe5b54f0b262bfcfc268d4eab17fbbde5b0a40885f53",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 2659,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.23099873214960098,
+          -0.0005230924683420472,
+          -0.3224281929919415
+        ],
+        "max": [
+          0.23099873214960098,
+          0.7955328639960858,
+          0.6049605858346441
+        ]
+      },
+      "size": [
+        0.46199746429920197,
+        0.7960559564644278,
+        0.9273887788265855
+      ]
+    },
+    {
+      "id": "castle",
+      "file": "castle.glb",
+      "bytes": 420240,
+      "sha256": "a273a5392f6f2360a8c35e22ee5d0b0785cf854725ace7f51e2625c3b5915cf8",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Castle",
+        "modelUrl": "https://poly.pizza/m/opTOmcN3o9",
+        "downloadUrl": "https://static.poly.pizza/22b576c3-24c2-45c4-a89c-b088901c3695.glb",
+        "sha256": "fa15f21d4f13cddba97bcd94d05cf0055ff14de5d4b1a86a5c00dccc1b2f2ca6",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 7050,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -1.0517163202166557,
+          -0.00004726243672211086,
+          -0.9939678604363207
+        ],
+        "max": [
+          1.0517163202166557,
+          0.9368464052107367,
+          0.9629008962005965
+        ]
+      },
+      "size": [
+        2.1034326404333115,
+        0.9368936676474588,
+        1.9568687566369172
+      ]
+    },
+    {
+      "id": "colosseum",
+      "file": "colosseum.glb",
+      "bytes": 728992,
+      "sha256": "e9f502dd411845bca28b1a4503d08dcdf5aeda58d09874cdc34a67c353a9af81",
+      "source": {
+        "creator": "CreativeTrio",
+        "originalTitle": "Colosseum",
+        "modelUrl": "https://poly.pizza/m/83ftBPyiSf",
+        "downloadUrl": "https://static.poly.pizza/1e7ca762-a0f2-4a13-8049-71a99e9aa33b.glb",
+        "sha256": "bf68007985c912e309bad7dcfc9dcc1e15f27cc248ef57e6d212b3897a74f3b5",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Embedded source textures and baked texture transforms; opaque color images over 1024 pixels resized to 1024 JPEG at quality 90."
+      ],
+      "triangles": 6835,
+      "primitives": 1,
+      "decodedTextures": 262144,
+      "bounds": {
+        "min": [
+          -1.7477817833423615,
+          -0.30974057664787374,
+          -1.9064476848929848
+        ],
+        "max": [
+          1.7229532822966576,
+          0.3826491580398578,
+          1.886076477820768
+        ]
+      },
+      "size": [
+        3.470735065639019,
+        0.6923897346877315,
+        3.792524162713753
+      ]
+    },
+    {
+      "id": "pagoda",
+      "file": "pagoda.glb",
+      "bytes": 275984,
+      "sha256": "d75d76ff9a6d08fe78d18c29fe23f54e89612d0e74efe3a3bc0dc0f3286be4b8",
+      "source": {
+        "creator": "Google",
+        "originalTitle": "Pagoda",
+        "modelUrl": "https://poly.pizza/m/1zS7ucaAd4J",
+        "downloadUrl": "https://static.poly.pizza/5ed9ad9d-ebd6-4eb8-9ea5-5232f8f55a61.glb",
+        "sha256": "a03f3c12541d479e8d3d5593fe5aaa6426f098f72ec7178eda230575d125d917",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Embedded source textures and baked texture transforms; opaque color images over 1024 pixels resized to 1024 JPEG at quality 90."
+      ],
+      "triangles": 2362,
+      "primitives": 1,
+      "decodedTextures": 4194304,
+      "bounds": {
+        "min": [
+          -13.205769538879395,
+          0,
+          -13.205769538879395
+        ],
+        "max": [
+          13.205769538879395,
+          55.50045394897461,
+          13.205769538879395
+        ]
+      },
+      "size": [
+        26.41153907775879,
+        55.50045394897461,
+        26.41153907775879
+      ]
+    },
+    {
+      "id": "torii",
+      "file": "torii.glb",
+      "bytes": 34308,
+      "sha256": "72f1dd08942cd85ae19301c5b6bf9e0bfd677987170785311469090e06c1f028",
+      "source": {
+        "creator": "Hattie Stroud",
+        "originalTitle": "Torii Gate",
+        "modelUrl": "https://poly.pizza/m/07__lYTDdEH",
+        "downloadUrl": "https://static.poly.pizza/1562ffbb-6b16-4d86-8c5a-5b28c400bc11.glb",
+        "sha256": "863fe1e8ce124a2cff395f4ded3d6e7f156a70a4a65848f1aac1e9a37bfe652b",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 864,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.18432700634002686,
+          -0.22392520308494568,
+          -0.16436760127544403
+        ],
+        "max": [
+          0.15848380327224731,
+          0.1679231971502304,
+          0.19933989644050598
+        ]
+      },
+      "size": [
+        0.34281080961227417,
+        0.3918484002351761,
+        0.36370749771595
+      ]
+    },
+    {
+      "id": "cargo-cart",
+      "file": "cargo-cart.glb",
+      "bytes": 64920,
+      "sha256": "78a5f8c7ef57dbed17b2ef96b578e5aee7f90e7ccdca62a202570073f64cc5b4",
+      "source": {
+        "creator": "Kenney",
+        "originalTitle": "cart-high",
+        "modelUrl": "https://kenney.nl/assets/fantasy-town-kit",
+        "downloadUrl": "https://kenney.nl/media/pages/assets/fantasy-town-kit/efe948d309-1754222374/kenney_fantasy-town-kit_2.0.zip",
+        "sha256": "4b0bce37e8645f3719a9032bf4d49048b7779ac891758ae6e2693238911c5eec",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/Kenney-fantasy-town.txt",
+        "archiveSha256": "1a7530c09f4d2fa2cdee259876f089334f8b1f27fa86a0c4f54ef86cdd8676ef"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Embedded source textures and baked texture transforms; opaque color images over 1024 pixels resized to 1024 JPEG at quality 90."
+      ],
+      "triangles": 1028,
+      "primitives": 1,
+      "decodedTextures": 1048576,
+      "bounds": {
+        "min": [
+          -0.44651198387145996,
+          -1.1279865793872226e-17,
+          -0.6449999809265137
+        ],
+        "max": [
+          0.44651225209236145,
+          0.8605014085769653,
+          0.7450000047683716
+        ]
+      },
+      "size": [
+        0.8930242359638214,
+        0.8605014085769653,
+        1.3899999856948853
+      ]
+    },
+    {
+      "id": "lantern",
+      "file": "lantern.glb",
+      "bytes": 20888,
+      "sha256": "c4025b392d0c95cc406e4d917a9ef018f131253786e62e83bd632e0180d07b4a",
+      "source": {
+        "creator": "Kenney",
+        "originalTitle": "lantern",
+        "modelUrl": "https://kenney.nl/assets/fantasy-town-kit",
+        "downloadUrl": "https://kenney.nl/media/pages/assets/fantasy-town-kit/efe948d309-1754222374/kenney_fantasy-town-kit_2.0.zip",
+        "sha256": "f270637e3083d6e84a30626ee05df2b09597a642985a7f5c3e4ab5bb1c7a8d55",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/Kenney-fantasy-town.txt",
+        "archiveSha256": "1a7530c09f4d2fa2cdee259876f089334f8b1f27fa86a0c4f54ef86cdd8676ef"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Embedded source textures and baked texture transforms; opaque color images over 1024 pixels resized to 1024 JPEG at quality 90."
+      ],
+      "triangles": 158,
+      "primitives": 1,
+      "decodedTextures": 1048576,
+      "bounds": {
+        "min": [
+          -0.10822424292564392,
+          0,
+          -0.11215999722480774
+        ],
+        "max": [
+          0.10822424292564392,
+          1.555999994277954,
+          0.11215999722480774
+        ]
+      },
+      "size": [
+        0.21644848585128784,
+        1.555999994277954,
+        0.22431999444961548
+      ]
+    },
+    {
+      "id": "fountain",
+      "file": "fountain.glb",
+      "bytes": 92632,
+      "sha256": "f7db1348a2415d738d177e46440e0d4a55000fbce89d5195fd82cb6dcdcd180b",
+      "source": {
+        "creator": "Kenney",
+        "originalTitle": "fountain-round-detail",
+        "modelUrl": "https://kenney.nl/assets/fantasy-town-kit",
+        "downloadUrl": "https://kenney.nl/media/pages/assets/fantasy-town-kit/efe948d309-1754222374/kenney_fantasy-town-kit_2.0.zip",
+        "sha256": "05cdd740e3175c2d3208d4cb6630a279a9b4cbc48393b28c92e3e40cca2a5d6b",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/Kenney-fantasy-town.txt",
+        "archiveSha256": "1a7530c09f4d2fa2cdee259876f089334f8b1f27fa86a0c4f54ef86cdd8676ef"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Removed static source water; the tour supplies season-aware water or ice and fountain streams.",
+        "Embedded source textures and baked texture transforms; opaque color images over 1024 pixels resized to 1024 JPEG at quality 90."
+      ],
+      "triangles": 1486,
+      "primitives": 1,
+      "decodedTextures": 1048576,
+      "bounds": {
+        "min": [
+          -1,
+          -4.591168408512693e-20,
+          -1
+        ],
+        "max": [
+          1,
+          0.48000001907348633,
+          1
+        ]
+      },
+      "size": [
+        2,
+        0.48000001907348633,
+        2
+      ]
+    },
+    {
+      "id": "hanok",
+      "file": "hanok.glb",
+      "bytes": 575532,
+      "sha256": "123f74807b07f841ba42ca86583cc1274d7685773227fde5319aed2224d45405",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Hanok Main House (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-hanok-main-house-58d31dd2",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38035/v1/model.glb",
+        "sha256": "84117fc43ce7b59cc68469424dba69651a81343a21662d25506f0d21d244e8ea",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Decoded KHR_mesh_quantization offline into core glTF; removed unused open/close animation data.",
+        "Darkened only roof tile material to charcoal slate; original door, timber, floor and plaster colors preserved.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 19268,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -5.600000031789136,
+          0.0001468486147331305,
+          -3.899679675959817
+        ],
+        "max": [
+          5.600000031789136,
+          5.718152136977437,
+          4.063743987951341
+        ]
+      },
+      "size": [
+        11.200000063578273,
+        5.718005288362704,
+        7.963423663911158
+      ]
+    },
+    {
+      "id": "hanok-gate",
+      "file": "hanok-gate.glb",
+      "bytes": 185980,
+      "sha256": "79d314a988c5fbaf299bca04a8b16661f8606cb7e4d198ad8358143254cf0798",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Village Gate House (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-village-gate-house-94dd896b",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38032/v1/model.glb",
+        "sha256": "5b5395d0eafd9a0cf6c86622e54d19549892b55d567c216589dc734abe92e376",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Baked final authored open pose (gate leaves ±84 degrees) to keep the entrance passable.",
+        "Decoded KHR_mesh_quantization offline into core glTF; removed unused open/close animation data.",
+        "Darkened only roof tile material to charcoal slate; original door, timber, floor and plaster colors preserved.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 6400,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -3.650000170165413,
+          -0.0001657095783464957,
+          -1.914838206724312
+        ],
+        "max": [
+          3.650000170165413,
+          5.670094778430792,
+          1.914838206724312
+        ]
+      },
+      "size": [
+        7.300000340330826,
+        5.670260488009138,
+        3.829676413448624
+      ]
+    },
+    {
+      "id": "onggi-terrace",
+      "file": "onggi-terrace.glb",
+      "bytes": 28740,
+      "sha256": "ed5dd26f763345402f49375417942b17887db3d71c003df79e315313117f401c",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Jangdokdae Terrace (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-jangdokdae-terrace-fd10afaf",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38059/v1/model.glb",
+        "sha256": "a23550a70379948b187e7062097c7ddb04c98d682a18d365b6b78e2742e701e4",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Decoded KHR_mesh_quantization offline into core glTF; removed unused open/close animation data.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 732,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -1.7399999877810473,
+          -0.00008057177186859832,
+          -1.3799670425052497
+        ],
+        "max": [
+          1.7399999877810473,
+          0.3399270603049853,
+          1.3799670425052497
+        ]
+      },
+      "size": [
+        3.4799999755620945,
+        0.3400076320768539,
+        2.7599340850104994
+      ]
+    },
+    {
+      "id": "onggi-large",
+      "file": "onggi-large.glb",
+      "bytes": 10488,
+      "sha256": "93612f635b2bd45d53ddd13f9d0079aec19ac01422173a3b343e0f5cb931d534",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Onggi Jar, Large (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-onggi-jar-large-57747607",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38060/v1/model.glb",
+        "sha256": "45f9c81f224bc4bafcaf8395fac7ff41963c9b51f8b8c9fe46ec3774a60b4eb8",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Decoded KHR_mesh_quantization offline into core glTF; removed unused open/close animation data.",
+        "Replaced pale clay color with dark brown earthenware glaze and roughness 0.38.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 448,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.4200265548954434,
+          0,
+          -0.4200265548954434
+        ],
+        "max": [
+          0.4200265548954434,
+          1.0363898616567297,
+          0.4200265548954434
+        ]
+      },
+      "size": [
+        0.8400531097908868,
+        1.0363898616567297,
+        0.8400531097908868
+      ]
+    },
+    {
+      "id": "onggi-medium",
+      "file": "onggi-medium.glb",
+      "bytes": 10428,
+      "sha256": "53565e5cd123b551e07c43507c636a791a02961630a7d7e46a699b3bce4df29d",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Onggi Jar, Medium (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-onggi-jar-medium-106bc5df",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38061/v1/model.glb",
+        "sha256": "307a97fbc96b1fe25ef15df5f104955ccd91b29d5d01d3ac9ba61de4e81bf631",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Decoded KHR_mesh_quantization offline into core glTF; removed unused open/close animation data.",
+        "Replaced pale clay color with dark brown earthenware glaze and roughness 0.38.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 448,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.28999999165534973,
+          0,
+          -0.28999999165534973
+        ],
+        "max": [
+          0.28999999165534973,
+          0.7017929840805159,
+          0.28999999165534973
+        ]
+      },
+      "size": [
+        0.5799999833106995,
+        0.7017929840805159,
+        0.5799999833106995
+      ]
+    },
+    {
+      "id": "onggi-small",
+      "file": "onggi-small.glb",
+      "bytes": 10436,
+      "sha256": "ccc19356cab69d90d5b2c15a377378141d3badafe970f0113df8212f2c9ee9c0",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Onggi Jar, Small (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-onggi-jar-small-ed06606f",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38062/v1/model.glb",
+        "sha256": "1bb9f9b4c3a81deb2b754d9a199312ecfb65d194ea9462b56e4e0f41eb990f82",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Decoded KHR_mesh_quantization offline into core glTF; removed unused open/close animation data.",
+        "Replaced pale clay color with dark brown earthenware glaze and roughness 0.38.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 448,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -0.1899999976158142,
+          -0.0000067087536521626134,
+          -0.1899999976158142
+        ],
+        "max": [
+          0.1899999976158142,
+          0.41979542359182176,
+          0.1899999976158142
+        ]
+      },
+      "size": [
+        0.3799999952316284,
+        0.4198021323454739,
+        0.3799999952316284
+      ]
+    },
+    {
+      "id": "church",
+      "file": "church.glb",
+      "bytes": 106916,
+      "sha256": "caadfaf7c28038814edf71d384b45a8e38a3b240143bd949ef5537f06a98c617",
+      "source": {
+        "creator": "Kay Lousberg",
+        "originalTitle": "Medieval Hexagon Pack — church (green)",
+        "modelUrl": "https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/tree/84fa4e91af6a88989be7c99e0891cede11f2ca38",
+        "downloadUrl": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/84fa4e91af6a88989be7c99e0891cede11f2ca38/addons/kaykit_medieval_hexagon_pack/Assets/gltf/buildings/green/building_church_green.gltf",
+        "sha256": "e5e21972f5d24198e2cac2cf76f985954e9348c7e89ffe500f7aea2bbe265e8c",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/KayKit-medieval-hexagon.txt"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Embedded source textures and baked texture transforms; opaque color images over 1024 pixels resized to 1024 JPEG at quality 90."
+      ],
+      "triangles": 1601,
+      "primitives": 1,
+      "decodedTextures": 4194304,
+      "bounds": {
+        "min": [
+          -0.5144963264465332,
+          -0.000005382299150369363,
+          -0.5599977970123291
+        ],
+        "max": [
+          0.5144962668418884,
+          1.6450307369232178,
+          0.5950042605400085
+        ]
+      },
+      "size": [
+        1.0289925932884216,
+        1.6450361192223681,
+        1.1550020575523376
+      ]
+    },
+    {
+      "id": "house-snow",
+      "file": "house-snow.glb",
+      "bytes": 354228,
+      "sha256": "6ab804a84245edcc3d88d90e4730433990e00feee91225c0899491fdf3412d93",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy House",
+        "modelUrl": "https://poly.pizza/m/BH2XHWUNmF",
+        "downloadUrl": "https://static.poly.pizza/341c9305-c6dd-4427-ad00-620ad57eb14e.glb",
+        "sha256": "74d4c91022414875ec61ab80835705a9c0e9415aa0dd413fc8e83cbfd861a5c9",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Applied snow color to authored roof surfaces for the winter catalog variant.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 5758,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -1.0719615034759045,
+          -0.00010448402937432957,
+          -1.3424764567743337
+        ],
+        "max": [
+          1.0719615034759045,
+          3.3898991921044397,
+          1.3163491001018668
+        ]
+      },
+      "size": [
+        2.143923006951809,
+        3.390003676133814,
+        2.6588255568762005
+      ]
+    },
+    {
+      "id": "house-b-snow",
+      "file": "house-b-snow.glb",
+      "bytes": 442452,
+      "sha256": "73efc51f1b115fbac999228ac7c2d873d5b3e3fe5d8049ec57ffe9cba7522a52",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy House",
+        "modelUrl": "https://poly.pizza/m/dcPho4SUA3",
+        "downloadUrl": "https://static.poly.pizza/b8a2c719-5a70-4d6c-8049-90af7e3f89ee.glb",
+        "sha256": "39b9d7d4c85e170f64d066a3f762ab88689a614c270e95c52927908fb52fa36a",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Applied snow color to authored roof surfaces for the winter catalog variant.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 7162,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -1.1188866570591927,
+          -0.0017009661935390393,
+          -2.071084633985999
+        ],
+        "max": [
+          1.101273950189352,
+          3.2486509362375346,
+          1.3489397080684644
+        ]
+      },
+      "size": [
+        2.2201606072485447,
+        3.2503519024310736,
+        3.4200243420544636
+      ]
+    },
+    {
+      "id": "barn-snow",
+      "file": "barn-snow.glb",
+      "bytes": 135584,
+      "sha256": "8991f9270a52b284fd9096d2913739c12c6322eba1a3d6c8fcaa0b4459f1457d",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Barn",
+        "modelUrl": "https://poly.pizza/m/vSqQNA7ez6",
+        "downloadUrl": "https://static.poly.pizza/e0ecaf1c-bff4-4f30-9a53-0cf0c1c90deb.glb",
+        "sha256": "c7e19b37ecc74f24e121c822116b125f7a7eea6473943650ca05faca3ebdebc3",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "modifications": [
+        "Source positions and authored normals retained; static transforms baked, resources deduplicated and primitives joined.",
+        "Applied snow color to authored roof surfaces for the winter catalog variant.",
+        "Baked linear base colors into normalized vertex colors; unified opaque nonmetallic roughness 0.86, except glazed jars, for a single static drawable."
+      ],
+      "triangles": 2910,
+      "primitives": 1,
+      "decodedTextures": 0,
+      "bounds": {
+        "min": [
+          -3.862377882003784,
+          0.001976999919861555,
+          -3.9892640113830566
+        ],
+        "max": [
+          3.864516019821167,
+          6.01061487197876,
+          4.233182907104492
+        ]
+      },
+      "size": [
+        7.726893901824951,
+        6.008637872058898,
+        8.222446918487549
+      ]
+    }
+  ]
+}

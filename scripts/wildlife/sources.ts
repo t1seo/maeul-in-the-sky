@@ -1,3 +1,5 @@
+import { ADDITIONAL_WILDLIFE_SOURCES } from './additional-sources.js';
+
 const ULTIMATE = 'https://quaternius.com/packs/ultimateanimatedanimals.html';
 const CC0 = {
   creator: 'Quaternius',
@@ -74,6 +76,7 @@ export const WILDLIFE_SOURCES = [
     downloadUrl: 'https://static.poly.pizza/665ee586-6494-4fbd-be46-fcbe600f653e.glb',
     sha256: '4bb5fc230a35db446fa2ea043f77dfc077f0b21d6e59d0235b15f01d01b05525',
   },
+  ...ADDITIONAL_WILDLIFE_SOURCES,
 ] as const;
 
 export class WildlifeAssetError extends Error {

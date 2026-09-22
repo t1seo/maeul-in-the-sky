@@ -7,14 +7,15 @@ import type { TourModel } from '../types.js';
 import { announce, buttonElement, canvasElement, element, replaceCanvas } from './dom.js';
 import { bindControls } from './controls.js';
 import { presentVillage } from './presentation.js';
-import type { WildlifeLibrary } from '../wildlife/library.js';
 import { WildlifeLoadError } from '../wildlife/download.js';
+import { AuthoredLoadError } from '../authored/download.js';
+import type { TourAssets } from './assets.js';
 
 export function mountTour(pageUrl = location.href, options: { readonly assetBaseUrl?: URL } = {}) {
   const lifetime = new AbortController();
   let request: AbortController | null = null;
   let renderer: TourRenderer | null = null;
-  let wildlife: WildlifeLibrary | null = null;
+  let assets: TourAssets | null = null;
   let controls: ReturnType<typeof bindControls> | null = null;
   let fallbackUrl: string | null = null;
   const media = matchMedia('(prefers-reduced-motion: reduce)');
@@ -38,10 +39,10 @@ export function mountTour(pageUrl = location.href, options: { readonly assetBase
     request?.abort();
     controls?.dispose();
     renderer?.dispose();
-    wildlife?.dispose();
+    assets?.dispose();
     controls = null;
     renderer = null;
-    wildlife = null;
+    assets = null;
     replaceCanvas('village');
     if (fallbackUrl) URL.revokeObjectURL(fallbackUrl);
     fallbackUrl = null;
@@ -58,26 +59,29 @@ export function mountTour(pageUrl = location.href, options: { readonly assetBase
     try {
       const { model, source } = await loadTourModel({ pageUrl, signal: current.signal });
       loaded = model;
-      const [{ createTourRenderer }, { loadWildlifeLibrary, requestedWildlife }] =
-        await Promise.all([import('../render/renderer.js'), import('../wildlife/library.js')]);
-      const animals = await loadWildlifeLibrary(
-        requestedWildlife(model),
+      const [{ createTourRenderer }, { loadTourAssets }] = await Promise.all([
+        import('../render/renderer.js'),
+        import('./assets.js'),
+      ]);
+      const loadedAssets = await loadTourAssets(
+        model,
         options.assetBaseUrl ?? new URL('../models/', import.meta.url),
         current.signal,
       );
       await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
       if (current.signal.aborted || disposed) {
-        animals.dispose();
+        loadedAssets.dispose();
         return;
       }
-      wildlife = animals;
+      assets = loadedAssets;
       presentVillage(model, source);
       renderer = createTourRenderer(canvasElement('village'), model, {
         reducedMotion: media.matches,
         onChange: () => controls?.refresh(),
         onNavigationFrame: () => controls?.refreshNavigation(),
         onError: fail,
-        wildlife,
+        wildlife: assets.wildlife,
+        authored: assets.authored,
       });
       controls = bindControls(renderer, model);
       motionChanged();
@@ -89,9 +93,9 @@ export function mountTour(pageUrl = location.href, options: { readonly assetBase
     } catch (error) {
       if (current.signal.aborted || disposed) return;
       renderer?.dispose();
-      wildlife?.dispose();
+      assets?.dispose();
       renderer = null;
-      wildlife = null;
+      assets = null;
       if (loaded) {
         fallbackUrl = URL.createObjectURL(
           new Blob([renderTerrainScene(loaded.scene, 'light', { motion: 'off' })], {
@@ -110,7 +114,7 @@ export function mountTour(pageUrl = location.href, options: { readonly assetBase
               ? 'This village history exceeds the download size limit.'
               : 'Village history could not load. Check the public GitHub snapshot link and your connection.',
         );
-      } else if (error instanceof WildlifeLoadError) {
+      } else if (error instanceof WildlifeLoadError || error instanceof AuthoredLoadError) {
         fail(error.message);
       } else if (error instanceof InputValidationError) {
         fail('This village history has an invalid format. Use a snapshot JSON exported by Maeul.');
@@ -136,7 +140,7 @@ export function mountTour(pageUrl = location.href, options: { readonly assetBase
     request?.abort();
     controls?.dispose();
     renderer?.dispose();
-    wildlife?.dispose();
+    assets?.dispose();
     if (fallbackUrl) URL.revokeObjectURL(fallbackUrl);
   };
   window.addEventListener(

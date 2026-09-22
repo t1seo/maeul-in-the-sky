@@ -6,96 +6,3418 @@
     <meta name="theme-color" content="#e8eddf" />
     <meta
       name="description"
-      content="The artists and open licenses behind the wildlife in Maeul's village tour."
+      content="Original creators, source models and open licenses used in Maeul's 3D village tour."
     />
-    <title>Wildlife credits · Maeul</title>
+    <title>3D asset credits · Maeul</title>
     <link rel="stylesheet" href="./credits.css" />
   </head>
   <body>
     <main>
-      <a class="back-link" href="./"><span aria-hidden="true">←</span> Back to the village</a>
+      <a class="back-link" href="./"
+        ><span aria-hidden="true">←</span> Back to the village</a
+      >
       <header>
-        <p class="eyebrow">MAEUL · MADE WITH CARE</p>
-        <h1>Wildlife credits</h1>
-        <p class="intro">A little more life in the village, thanks to these generous artists.</p>
+        <p class="eyebrow">MAEUL · MODELS AND SOURCES</p>
+        <h1>3D asset credits</h1>
+        <p class="intro">
+          The models used by the village tour, with their original creators and
+          open licenses.
+        </p>
+        <p>
+          <a href="./models/coverage.md">View the complete asset coverage</a> to
+          see which models are external, combined with existing details, or
+          retained.
+        </p>
       </header>
-
-      <section aria-labelledby="squirrel-title">
-        <div class="section-heading">
-          <h2 id="squirrel-title">Squirrel</h2>
-          <span class="license-label">CC BY 3.0</span>
-        </div>
-        <p>
-          <strong>Chipmunk</strong> by
-          <a href="https://poly.pizza/m/fQ5KzXoR2uA" rel="noreferrer">Poly by Google</a>, used under
-          <a href="https://creativecommons.org/licenses/by/3.0/" rel="noreferrer"
-            >Creative Commons Attribution 3.0</a
-          >.
-        </p>
-        <p>
-          Repacked as a self-contained GLB with unused resources removed. The original texture,
-          geometry and silhouette are preserved. This model has no rig or authored animation; the
-          tour adds subtle ambient motion.
-        </p>
-      </section>
-
-      <section aria-labelledby="farm-title">
-        <div class="section-heading">
-          <h2 id="farm-title">Farm &amp; forest animals</h2>
-          <span class="license-label">CC0 1.0</span>
-        </div>
-        <p>
-          Cow, deer, fox, horse, donkey, sheep and pig by
-          <a href="https://quaternius.com/" rel="noreferrer">Quaternius</a>, dedicated to the public
-          domain under
-          <a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="noreferrer"
-            >Creative Commons CC0 1.0</a
-          >.
-        </p>
+      <section aria-labelledby="collection-0">
+        <div class="section-heading"><h2 id="collection-0">Wildlife</h2></div>
         <ul class="sources">
-          <li>
-            <strong>Cow, deer, fox, horse &amp; donkey</strong>
-            <a href="https://quaternius.com/packs/ultimateanimatedanimals.html" rel="noreferrer"
-              >Ultimate Animated Animals</a
+          <li id="model-wildlife-squirrel">
+            <strong>Chipmunk</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/fQ5KzXoR2uA" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
             >
             <span
-              >The original glTF downloads and their
-              <a href="./models/licenses/Quaternius-ultimate-pack.txt">CC0 notice</a>.</span
+              >Tour model: squirrel.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
             >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Repacked as one self-contained GLB; original texture,
+                  geometry, node transform and silhouette preserved.
+                </li>
+                <li>
+                  Unused data removed and duplicate resources deduplicated. No
+                  bones or animation invented.
+                </li>
+              </ul>
+            </details>
           </li>
-          <li>
-            <strong>Sheep &amp; pig</strong>
-            <span>
-              Lowpoly Animated Farm Animal Pack ·
-              <a href="https://poly.pizza/m/C39AUXUUes" rel="noreferrer">Sheep source</a> ·
-              <a href="https://poly.pizza/m/TNvG3QUFlp" rel="noreferrer">Pig source</a>
-            </span>
-            <a
-              href="https://opengameart.org/content/lowpoly-animated-farm-animal-pack"
-              rel="noreferrer"
-              >Creator's original CC0 publication</a
+          <li id="model-wildlife-cow">
+            <strong>Cow</strong>
+            <span
+              >By
+              <a
+                href="https://quaternius.com/packs/ultimateanimatedanimals.html"
+                rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              · <a href="./models/licenses/CC0-1.0.txt">License text</a></span
             >
+            <span
+              >Tour model: cow.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-deer">
+            <strong>Deer</strong>
+            <span
+              >By
+              <a
+                href="https://quaternius.com/packs/ultimateanimatedanimals.html"
+                rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              · <a href="./models/licenses/CC0-1.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: deer.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-fox">
+            <strong>Fox</strong>
+            <span
+              >By
+              <a
+                href="https://quaternius.com/packs/ultimateanimatedanimals.html"
+                rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              · <a href="./models/licenses/CC0-1.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: fox.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-horse">
+            <strong>Horse</strong>
+            <span
+              >By
+              <a
+                href="https://quaternius.com/packs/ultimateanimatedanimals.html"
+                rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              · <a href="./models/licenses/CC0-1.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: horse.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-donkey">
+            <strong>Donkey</strong>
+            <span
+              >By
+              <a
+                href="https://quaternius.com/packs/ultimateanimatedanimals.html"
+                rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              · <a href="./models/licenses/CC0-1.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: donkey.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-sheep">
+            <strong>Sheep</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/C39AUXUUes" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              · <a href="./models/licenses/CC0-1.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: sheep.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-pig">
+            <strong>Pig</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/TNvG3QUFlp" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              · <a href="./models/licenses/CC0-1.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: pig.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-rabbit">
+            <strong>Cottontail rabbit</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/3vvONbRCuEF" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: rabbit.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-goat">
+            <strong>Goat</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/d7dImmjtF8E" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: goat.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-bird">
+            <strong>Sparrow</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/3rTjKefT184" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: bird.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-chicken">
+            <strong>Rooster</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/6NTegstc5Jy" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: chicken.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-owl">
+            <strong>Long eared owl</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/dVPHzmMmXlg" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: owl.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-seagull">
+            <strong>Gull</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/7sQHkW0ylJy" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: seagull.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-heron">
+            <strong>Heron</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/74guNhJR5Ij" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: heron.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-whale">
+            <strong>Whale</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/JGFwp6xWgk" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              · <a href="./models/licenses/CC0-1.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: whale.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-frog">
+            <strong>Frog</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/9Z2V8fpazF" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              · <a href="./models/licenses/CC0-1.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: frog.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-shellfish">
+            <strong>Clam</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/65ObbG0O7Ze" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: shellfish.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-fish">
+            <strong>Fish</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/BEcU9rjiAq" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              · <a href="./models/licenses/CC0-1.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: fish.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-turtle">
+            <strong>Turtle</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/2LCcq8vhqJ3" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: turtle.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-crab">
+            <strong>Crab</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/2DgM36qZW2u" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: crab.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-jellyfish">
+            <strong>Jellyfish</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/dA5osnS0Rzj" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: jellyfish.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Adapted the three original solid material colors to muted
+                  blue-gray, pale pearl-blue, and ivory; preserved geometry,
+                  normals, texture coordinates, original alpha values, and
+                  opaque alpha mode.
+                </li>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-butterfly">
+            <strong>Butterfly</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/e9NAQQrCbLu" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              · <a href="./models/licenses/CC-BY-3.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: butterfly.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-wildlife-spider">
+            <strong>Spider</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/yRYJiAJyiM" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              · <a href="./models/licenses/CC0-1.0.txt">License text</a></span
+            >
+            <span
+              >Tour model: spider.glb ·
+              <a href="./models/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Retained only listed authored idle/eating/swimming clips;
+                  original animation names preserved. Unrigged models remain
+                  unrigged.
+                </li>
+                <li>
+                  Multiplied original solid material base colors by authored
+                  vertex colors into linear COLOR_0.
+                </li>
+                <li>
+                  Combined compatible solid primitives, preserving geometry,
+                  normals, joints, skin weights and authored transforms.
+                  Textured surfaces retain their UVs and separate materials.
+                </li>
+                <li>
+                  Embedded textures over 512 pixels were resized to fit 512
+                  pixels with PNG encoding; original texture coordinates and
+                  colors preserved.
+                </li>
+                <li>
+                  Removed unused data and duplicate resources; losslessly
+                  removed redundant animation keyframes.
+                </li>
+                <li>
+                  Verified bind and 17 sampled poses per retained clip against
+                  source bounds before writing.
+                </li>
+              </ul>
+            </details>
           </li>
         </ul>
-        <p>
-          Repacked as self-contained GLBs with unused resources removed. Peaceful idle and eating
-          clips are retained. Solid materials were consolidated into vertex colors and one drawable
-          primitive, preserving the original colors, silhouettes, rigs, joint weights and
-          transforms. Redundant animation keys were removed without approximation.
-        </p>
       </section>
+      <section aria-labelledby="collection-1">
+        <div class="section-heading">
+          <h2 id="collection-1">Trees, plants and rocks</h2>
+        </div>
+        <ul class="sources">
+          <li id="model-nature-nature-collection">
+            <strong>Stylized Nature MegaKit — Standard</strong>
+            <span
+              >By
+              <a
+                href="https://quaternius.com/packs/stylizednaturemegakit.html"
+                rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/nature/licenses/Quaternius-nature-standard.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: nature/nature-collection.glb ·
+              <a href="./models/nature/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+            <span
+              >Included models: CommonTree_3, CommonTree_5, Pine_1, Pine_5,
+              TwistedTree_1, DeadTree_3, Bush_Common, Bush_Common_Flowers,
+              Fern_1, Flower_3_Single, Flower_4_Single, Mushroom_Common,
+              Rock_Medium_1, Rock_Medium_2, Rock_Medium_3, Pebble_Round_1,
+              Grass_Common_Short, Grass_Common_Tall</span
+            >
 
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Selected 18 Standard models, retaining original geometry,
+                  normals, UVs, named materials and alpha policies.
+                </li>
+                <li>
+                  Merged into one self-contained GLB and deduplicated shared
+                  textures and materials.
+                </li>
+                <li>
+                  Resized texture longest edges to 512px with sharp. Opaque
+                  colors use JPEG quality 85; normal maps use JPEG quality 95;
+                  both use 4:4:4 chroma. Images with alpha remain PNG.
+                </li>
+                <li>
+                  Recomputed accessor bounds from original vertex buffers,
+                  correcting stale Fern_1 source bounds without changing
+                  vertices.
+                </li>
+                <li>
+                  No Draco, Meshopt, KTX2, WebP or external decoder
+                  dependencies. Seasonal and blossom tinting applies only to
+                  explicitly named foliage at runtime.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-nature-willow">
+            <strong>Willow</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/mBrUbIp9Zd" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/nature/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: nature/willow.glb ·
+              <a href="./models/nature/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+            <span>Included models: RootNode, Willow_2</span>
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Repacked as self-contained core GLB; retained original
+                  vertices, normals, colors and authored transforms.
+                </li>
+                <li>
+                  Removed unlit extension where present and set roughness 0.85,
+                  metallic 0 for shared physical scene lighting.
+                </li>
+                <li>
+                  Removed unused empty nodes and deduplicated resources.
+                  Seasonal tints affect named plant materials at runtime.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-nature-cattail">
+            <strong>Cattail</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/9uT74BMpRrl" rel="noreferrer"
+                >Poly by Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              ·
+              <a href="./models/nature/licenses/CC-BY-3.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: nature/cattail.glb ·
+              <a href="./models/nature/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+            <span>Included models: Node</span>
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Repacked as self-contained core GLB; retained original
+                  vertices, normals, colors and authored transforms.
+                </li>
+                <li>
+                  Removed unlit extension where present and set roughness 0.85,
+                  metallic 0 for shared physical scene lighting.
+                </li>
+                <li>
+                  Removed unused empty nodes and deduplicated resources.
+                  Seasonal tints affect named plant materials at runtime.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-nature-lilypad">
+            <strong>Lilypad</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/TI6ukUlsLh" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/nature/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: nature/lilypad.glb ·
+              <a href="./models/nature/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+            <span>Included models: RootNode, Lilypad</span>
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Repacked as self-contained core GLB; retained original
+                  vertices, normals, colors and authored transforms.
+                </li>
+                <li>
+                  Removed unlit extension where present and set roughness 0.85,
+                  metallic 0 for shared physical scene lighting.
+                </li>
+                <li>
+                  Removed unused empty nodes and deduplicated resources.
+                  Seasonal tints affect named plant materials at runtime.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-nature-palm">
+            <strong>Nature Kit — tree_palmDetailedTall</strong>
+            <span
+              >By
+              <a href="https://kenney.nl/assets/nature-kit" rel="noreferrer"
+                >Kenney</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/nature/licenses/Kenney-nature.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: nature/palm.glb ·
+              <a href="./models/nature/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+            <span>Included models: tree_palmDetailedTall, leafs, leafs</span>
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Repacked as self-contained core GLB; retained original
+                  vertices, normals, colors and authored transforms.
+                </li>
+                <li>
+                  Removed unlit extension where present and set roughness 0.85,
+                  metallic 0 for shared physical scene lighting.
+                </li>
+                <li>
+                  Removed unused empty nodes and deduplicated resources.
+                  Seasonal tints affect named plant materials at runtime.
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </section>
+      <section aria-labelledby="collection-2">
+        <div class="section-heading">
+          <h2 id="collection-2">Village buildings, props and landmarks</h2>
+        </div>
+        <ul class="sources">
+          <li id="model-village-house">
+            <strong>Fantasy House</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/BH2XHWUNmF" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/house.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-house-b">
+            <strong>Fantasy House</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/dcPho4SUA3" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/house-b.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-inn">
+            <strong>Fantasy Inn</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/x3ZcGn3jr4" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/inn.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-blacksmith">
+            <strong>Blacksmith</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/bV52eTG1Aj" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/blacksmith.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-stable">
+            <strong>Fantasy Stable</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/qhNQSOGGbi" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/stable.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-barn">
+            <strong>Barn</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/vSqQNA7ez6" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/barn.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-warehouse">
+            <strong>Small Barn</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/aTcDP7UERC" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/warehouse.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-silo">
+            <strong>Silo</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/5GhLrv5Ce3" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/silo.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-windmill">
+            <strong>Mill</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/89dsFYAoX1" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/windmill.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-bell-tower">
+            <strong>Bell Tower</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/ux44tbeQvj" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/bell-tower.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-market">
+            <strong>Market Stand</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/DGIM5HGISb" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/market.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-well">
+            <strong>Well</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/QlqncKYxXb" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/well.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-barrel">
+            <strong>Barrel</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/zjCQP1TAci" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/barrel.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-fence">
+            <strong>Fence</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/UXmKfG81fG" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/fence.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-hay">
+            <strong>Hay</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/Yu8TOERkpw" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/hay.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-campfire">
+            <strong>Bonfire</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/Azj9hJwwwG" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/campfire.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-tent">
+            <strong>Tent</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/5Q7qIrfDxA" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/tent.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-torch">
+            <strong>Wooden Torch</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/pNsfJzhXiD" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/torch.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-vendor-cart">
+            <strong>Cart</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/l7bDe7ak6j" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/vendor-cart.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-castle">
+            <strong>Castle</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/opTOmcN3o9" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/castle.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-colosseum">
+            <strong>Colosseum</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/83ftBPyiSf" rel="noreferrer"
+                >CreativeTrio</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/colosseum.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Embedded source textures and baked texture transforms; opaque
+                  color images over 1024 pixels resized to 1024 JPEG at quality
+                  90.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-pagoda">
+            <strong>Pagoda</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/1zS7ucaAd4J" rel="noreferrer"
+                >Google</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC-BY-3.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/pagoda.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Embedded source textures and baked texture transforms; opaque
+                  color images over 1024 pixels resized to 1024 JPEG at quality
+                  90.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-torii">
+            <strong>Torii Gate</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/07__lYTDdEH" rel="noreferrer"
+                >Hattie Stroud</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                rel="noreferrer"
+                >CC-BY-3.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC-BY-3.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/torii.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-cargo-cart">
+            <strong>cart-high</strong>
+            <span
+              >By
+              <a
+                href="https://kenney.nl/assets/fantasy-town-kit"
+                rel="noreferrer"
+                >Kenney</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/Kenney-fantasy-town.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/cargo-cart.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Embedded source textures and baked texture transforms; opaque
+                  color images over 1024 pixels resized to 1024 JPEG at quality
+                  90.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-lantern">
+            <strong>lantern</strong>
+            <span
+              >By
+              <a
+                href="https://kenney.nl/assets/fantasy-town-kit"
+                rel="noreferrer"
+                >Kenney</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/Kenney-fantasy-town.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/lantern.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Embedded source textures and baked texture transforms; opaque
+                  color images over 1024 pixels resized to 1024 JPEG at quality
+                  90.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-fountain">
+            <strong>fountain-round-detail</strong>
+            <span
+              >By
+              <a
+                href="https://kenney.nl/assets/fantasy-town-kit"
+                rel="noreferrer"
+                >Kenney</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/Kenney-fantasy-town.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/fountain.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Removed static source water; the tour supplies season-aware
+                  water or ice and fountain streams.
+                </li>
+                <li>
+                  Embedded source textures and baked texture transforms; opaque
+                  color images over 1024 pixels resized to 1024 JPEG at quality
+                  90.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-hanok">
+            <strong>Hanok Main House (Korean Hanok Village and Street)</strong>
+            <span
+              >By
+              <a
+                href="https://3dassets.dev/assets/korean-hanok-village-and-street-hanok-main-house-58d31dd2"
+                rel="noreferrer"
+                >3D Assets</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/hanok.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              3DAssets describes this pack as AI generated with Claude Opus 5;
+              it is not represented as human-authored professional artwork.
+            </p>
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Decoded KHR_mesh_quantization offline into core glTF; removed
+                  unused open/close animation data.
+                </li>
+                <li>
+                  Darkened only roof tile material to charcoal slate; original
+                  door, timber, floor and plaster colors preserved.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-hanok-gate">
+            <strong
+              >Village Gate House (Korean Hanok Village and Street)</strong
+            >
+            <span
+              >By
+              <a
+                href="https://3dassets.dev/assets/korean-hanok-village-and-street-village-gate-house-94dd896b"
+                rel="noreferrer"
+                >3D Assets</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/hanok-gate.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              3DAssets describes this pack as AI generated with Claude Opus 5;
+              it is not represented as human-authored professional artwork.
+            </p>
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Baked final authored open pose (gate leaves ±84 degrees) to
+                  keep the entrance passable.
+                </li>
+                <li>
+                  Decoded KHR_mesh_quantization offline into core glTF; removed
+                  unused open/close animation data.
+                </li>
+                <li>
+                  Darkened only roof tile material to charcoal slate; original
+                  door, timber, floor and plaster colors preserved.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-onggi-terrace">
+            <strong
+              >Jangdokdae Terrace (Korean Hanok Village and Street)</strong
+            >
+            <span
+              >By
+              <a
+                href="https://3dassets.dev/assets/korean-hanok-village-and-street-jangdokdae-terrace-fd10afaf"
+                rel="noreferrer"
+                >3D Assets</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/onggi-terrace.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              3DAssets describes this pack as AI generated with Claude Opus 5;
+              it is not represented as human-authored professional artwork.
+            </p>
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Decoded KHR_mesh_quantization offline into core glTF; removed
+                  unused open/close animation data.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-onggi-large">
+            <strong>Onggi Jar, Large (Korean Hanok Village and Street)</strong>
+            <span
+              >By
+              <a
+                href="https://3dassets.dev/assets/korean-hanok-village-and-street-onggi-jar-large-57747607"
+                rel="noreferrer"
+                >3D Assets</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/onggi-large.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              3DAssets describes this pack as AI generated with Claude Opus 5;
+              it is not represented as human-authored professional artwork.
+            </p>
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Decoded KHR_mesh_quantization offline into core glTF; removed
+                  unused open/close animation data.
+                </li>
+                <li>
+                  Replaced pale clay color with dark brown earthenware glaze and
+                  roughness 0.38.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-onggi-medium">
+            <strong>Onggi Jar, Medium (Korean Hanok Village and Street)</strong>
+            <span
+              >By
+              <a
+                href="https://3dassets.dev/assets/korean-hanok-village-and-street-onggi-jar-medium-106bc5df"
+                rel="noreferrer"
+                >3D Assets</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/onggi-medium.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              3DAssets describes this pack as AI generated with Claude Opus 5;
+              it is not represented as human-authored professional artwork.
+            </p>
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Decoded KHR_mesh_quantization offline into core glTF; removed
+                  unused open/close animation data.
+                </li>
+                <li>
+                  Replaced pale clay color with dark brown earthenware glaze and
+                  roughness 0.38.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-onggi-small">
+            <strong>Onggi Jar, Small (Korean Hanok Village and Street)</strong>
+            <span
+              >By
+              <a
+                href="https://3dassets.dev/assets/korean-hanok-village-and-street-onggi-jar-small-ed06606f"
+                rel="noreferrer"
+                >3D Assets</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/onggi-small.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              3DAssets describes this pack as AI generated with Claude Opus 5;
+              it is not represented as human-authored professional artwork.
+            </p>
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Decoded KHR_mesh_quantization offline into core glTF; removed
+                  unused open/close animation data.
+                </li>
+                <li>
+                  Replaced pale clay color with dark brown earthenware glaze and
+                  roughness 0.38.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-church">
+            <strong>Medieval Hexagon Pack — church (green)</strong>
+            <span
+              >By
+              <a
+                href="https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/tree/84fa4e91af6a88989be7c99e0891cede11f2ca38"
+                rel="noreferrer"
+                >Kay Lousberg</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/KayKit-medieval-hexagon.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/church.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Embedded source textures and baked texture transforms; opaque
+                  color images over 1024 pixels resized to 1024 JPEG at quality
+                  90.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-house-snow">
+            <strong>Fantasy House</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/BH2XHWUNmF" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/house-snow.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Applied snow color to authored roof surfaces for the winter
+                  catalog variant.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-house-b-snow">
+            <strong>Fantasy House</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/dcPho4SUA3" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/house-b-snow.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Applied snow color to authored roof surfaces for the winter
+                  catalog variant.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+          <li id="model-village-barn-snow">
+            <strong>Barn</strong>
+            <span
+              >By
+              <a href="https://poly.pizza/m/vSqQNA7ez6" rel="noreferrer"
+                >Quaternius</a
+              >
+              ·
+              <a
+                href="https://creativecommons.org/publicdomain/zero/1.0/"
+                rel="noreferrer"
+                >CC0-1.0</a
+              >
+              ·
+              <a href="./models/village/licenses/CC0-1.0.txt"
+                >License text</a
+              ></span
+            >
+            <span
+              >Tour model: village/barn-snow.glb ·
+              <a href="./models/village/manifest.json"
+                >Source and file checksums</a
+              ></span
+            >
+
+            <p>
+              Historical per-model CC0 record on Poly Pizza; the selected
+              2021–2022 files predate Quaternius QAL.
+              <a
+                href="https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+                rel="noreferrer"
+                >License evidence</a
+              >
+            </p>
+            <details>
+              <summary>Adaptations for the tour</summary>
+              <ul>
+                <li>
+                  Source positions and authored normals retained; static
+                  transforms baked, resources deduplicated and primitives
+                  joined.
+                </li>
+                <li>
+                  Applied snow color to authored roof surfaces for the winter
+                  catalog variant.
+                </li>
+                <li>
+                  Baked linear base colors into normalized vertex colors;
+                  unified opaque nonmetallic roughness 0.86, except glazed jars,
+                  for a single static drawable.
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </section>
       <footer>
         <p>
-          The models retain their own licenses, separate from Maeul's software license. The original
-          creators do not endorse this project. Model adaptations are by the Maeul in the Sky
-          contributors.
+          The models retain their own licenses, separate from Maeul's software
+          license. The original creators do not endorse this project. Model
+          adaptations are by the Maeul in the Sky contributors.
         </p>
         <nav aria-label="Full attribution and license files">
-          <a href="./models/CREDITS.md">Full attribution</a>
-          <a href="./models/manifest.json">Source &amp; modification manifest</a>
-          <a href="./models/licenses/CC-BY-3.0.txt">CC BY 3.0 text</a>
-          <a href="./models/licenses/CC0-1.0.txt">CC0 1.0 text</a>
+          <a href="./models/CREDITS.md">Full attribution</a
+          ><a href="./models/coverage.json">Catalog coverage data</a
+          ><a href="./models/licenses/Quaternius-ultimate-pack.txt"
+            >Historical Quaternius CC0 notice</a
+          ><a href="./models/licenses/CC-BY-3.0.txt">CC BY 3.0 text</a
+          ><a href="./models/licenses/CC0-1.0.txt">CC0 1.0 text</a>
         </nav>
       </footer>
     </main>

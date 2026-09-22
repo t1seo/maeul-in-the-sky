@@ -1,0 +1,878 @@
+{
+  "version": 1,
+  "models": [
+    {
+      "id": "nature-collection",
+      "file": "nature-collection.glb",
+      "bytes": 3400452,
+      "sha256": "e9a0e5745d4aab9c11a72b307afbe76d9c01a26d1f0eb2816d7f0754fc56182c",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Stylized Nature MegaKit — Standard",
+        "modelUrl": "https://quaternius.com/packs/stylizednaturemegakit.html",
+        "downloadUrl": "https://quaternius.itch.io/stylized-nature-megakit/file/11055123",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/Quaternius-nature-standard.txt",
+        "sha256": "298f6732b872e4cf7b30e6e7abf9641c7f6dc6b326df37ac089533ed7e3d58c9",
+        "bytes": 104088529
+      },
+      "nodes": [
+        {
+          "name": "CommonTree_3",
+          "bounds": {
+            "min": [
+              -1.9864652156829834,
+              -0.24277201294898987,
+              -2.0609655380249023
+            ],
+            "max": [
+              2.076380968093872,
+              9.182417869567871,
+              2.1801114082336426
+            ]
+          },
+          "triangles": 3505,
+          "vertices": 5749,
+          "primitives": 2,
+          "materials": [
+            "Bark_NormalTree",
+            "Leaves_NormalTree"
+          ]
+        },
+        {
+          "name": "CommonTree_5",
+          "bounds": {
+            "min": [
+              -1.912354588508606,
+              -0.24277201294898987,
+              -2.162447929382324
+            ],
+            "max": [
+              1.7588107585906982,
+              6.763467788696289,
+              2.057202100753784
+            ]
+          },
+          "triangles": 3182,
+          "vertices": 4873,
+          "primitives": 2,
+          "materials": [
+            "Bark_NormalTree",
+            "Leaves_NormalTree"
+          ]
+        },
+        {
+          "name": "Pine_1",
+          "bounds": {
+            "min": [
+              -2.448819160461426,
+              -0.23508860170841217,
+              -2.4769327640533447
+            ],
+            "max": [
+              2.4958789348602295,
+              7.081829071044922,
+              2.0614705085754395
+            ]
+          },
+          "triangles": 3947,
+          "vertices": 5246,
+          "primitives": 2,
+          "materials": [
+            "Bark_NormalTree",
+            "Leaves_Pine"
+          ]
+        },
+        {
+          "name": "Pine_5",
+          "bounds": {
+            "min": [
+              -2.987706422805786,
+              -0.23508861660957336,
+              -3.7784042358398438
+            ],
+            "max": [
+              3.432434320449829,
+              8.48871898651123,
+              2.4435970783233643
+            ]
+          },
+          "triangles": 1646,
+          "vertices": 2315,
+          "primitives": 2,
+          "materials": [
+            "Bark_NormalTree",
+            "Leaves_Pine"
+          ]
+        },
+        {
+          "name": "TwistedTree_1",
+          "bounds": {
+            "min": [
+              -2.174241065979004,
+              -0.20147469639778137,
+              -6.726779460906982
+            ],
+            "max": [
+              11.341513633728027,
+              16.52402114868164,
+              4.822585105895996
+            ]
+          },
+          "triangles": 9564,
+          "vertices": 14064,
+          "primitives": 2,
+          "materials": [
+            "Bark_TwistedTree",
+            "Leaves_TwistedTree"
+          ]
+        },
+        {
+          "name": "DeadTree_3",
+          "bounds": {
+            "min": [
+              -3.847569704055786,
+              -0.3355545997619629,
+              -3.3867006301879883
+            ],
+            "max": [
+              2.540004014968872,
+              12.944830894470215,
+              3.043358564376831
+            ]
+          },
+          "triangles": 5802,
+          "vertices": 7936,
+          "primitives": 1,
+          "materials": [
+            "Bark_DeadTree"
+          ]
+        },
+        {
+          "name": "Bush_Common",
+          "bounds": {
+            "min": [
+              -0.9234761595726013,
+              -0.234694704413414,
+              -0.9743891954421997
+            ],
+            "max": [
+              0.9913685917854309,
+              1.3470909595489502,
+              0.9907516837120056
+            ]
+          },
+          "triangles": 900,
+          "vertices": 1800,
+          "primitives": 1,
+          "materials": [
+            "Leaves_TwistedTree"
+          ]
+        },
+        {
+          "name": "Bush_Common_Flowers",
+          "bounds": {
+            "min": [
+              -0.9234761595726013,
+              -0.234694704413414,
+              -0.9743891954421997
+            ],
+            "max": [
+              0.9913685917854309,
+              1.3470909595489502,
+              0.9907516837120056
+            ]
+          },
+          "triangles": 1368,
+          "vertices": 2515,
+          "primitives": 2,
+          "materials": [
+            "Leaves_NormalTree",
+            "Flowers"
+          ]
+        },
+        {
+          "name": "Fern_1",
+          "bounds": {
+            "min": [
+              -1.381242275238037,
+              -0.0773344337940216,
+              -1.278536081314087
+            ],
+            "max": [
+              1.4456915855407715,
+              0.7629088163375854,
+              1.373783826828003
+            ]
+          },
+          "triangles": 288,
+          "vertices": 243,
+          "primitives": 1,
+          "materials": [
+            "Leaves"
+          ]
+        },
+        {
+          "name": "Flower_3_Single",
+          "bounds": {
+            "min": [
+              -0.48073863983154297,
+              -0.018326954916119576,
+              -0.520720362663269
+            ],
+            "max": [
+              0.42587125301361084,
+              2.0498666763305664,
+              0.3568156957626343
+            ]
+          },
+          "triangles": 285,
+          "vertices": 227,
+          "primitives": 2,
+          "materials": [
+            "Leaves",
+            "Flowers"
+          ]
+        },
+        {
+          "name": "Flower_4_Single",
+          "bounds": {
+            "min": [
+              -0.5050064325332642,
+              -0.03043048270046711,
+              -0.40180256962776184
+            ],
+            "max": [
+              0.56728196144104,
+              2.388728618621826,
+              0.37106218934059143
+            ]
+          },
+          "triangles": 642,
+          "vertices": 499,
+          "primitives": 2,
+          "materials": [
+            "Leaves",
+            "Flowers"
+          ]
+        },
+        {
+          "name": "Mushroom_Common",
+          "bounds": {
+            "min": [
+              -0.33337587118148804,
+              -0.017470968887209892,
+              -0.44521069526672363
+            ],
+            "max": [
+              0.23032501339912415,
+              0.4460097551345825,
+              0.3339020013809204
+            ]
+          },
+          "triangles": 880,
+          "vertices": 555,
+          "primitives": 1,
+          "materials": [
+            "Mushrooms"
+          ]
+        },
+        {
+          "name": "Rock_Medium_1",
+          "bounds": {
+            "min": [
+              -1.7272872924804688,
+              -0.27113133668899536,
+              -1.1498832702636719
+            ],
+            "max": [
+              1.4978611469268799,
+              1.988665223121643,
+              1.8392531871795654
+            ]
+          },
+          "triangles": 342,
+          "vertices": 351,
+          "primitives": 1,
+          "materials": [
+            "Rocks"
+          ]
+        },
+        {
+          "name": "Rock_Medium_2",
+          "bounds": {
+            "min": [
+              -1.713641881942749,
+              -0.05084158852696419,
+              -1.1591253280639648
+            ],
+            "max": [
+              1.3351185321807861,
+              1.8481333255767822,
+              1.3199462890625
+            ]
+          },
+          "triangles": 244,
+          "vertices": 249,
+          "primitives": 1,
+          "materials": [
+            "Rocks"
+          ]
+        },
+        {
+          "name": "Rock_Medium_3",
+          "bounds": {
+            "min": [
+              -1.8242793083190918,
+              -0.31564441323280334,
+              -0.8904620409011841
+            ],
+            "max": [
+              1.5958054065704346,
+              2.000638246536255,
+              2.5856480598449707
+            ]
+          },
+          "triangles": 522,
+          "vertices": 531,
+          "primitives": 1,
+          "materials": [
+            "Rocks"
+          ]
+        },
+        {
+          "name": "Pebble_Round_1",
+          "bounds": {
+            "min": [
+              -0.21980905532836914,
+              -0.0077979713678359985,
+              -0.15961268544197083
+            ],
+            "max": [
+              0.28022968769073486,
+              0.08767858147621155,
+              0.20741015672683716
+            ]
+          },
+          "triangles": 136,
+          "vertices": 292,
+          "primitives": 1,
+          "materials": [
+            "PathRocks"
+          ]
+        },
+        {
+          "name": "Grass_Common_Short",
+          "bounds": {
+            "min": [
+              -0.3556424081325531,
+              -0.022385215386748314,
+              -0.47937828302383423
+            ],
+            "max": [
+              0.2832280695438385,
+              1.311718225479126,
+              0.25788721442222595
+            ]
+          },
+          "triangles": 155,
+          "vertices": 153,
+          "primitives": 1,
+          "materials": [
+            "Grass"
+          ]
+        },
+        {
+          "name": "Grass_Common_Tall",
+          "bounds": {
+            "min": [
+              -0.40356767177581787,
+              -0.031362250447273254,
+              -0.47903335094451904
+            ],
+            "max": [
+              0.49152159690856934,
+              1.841333031654358,
+              0.5140784978866577
+            ]
+          },
+          "triangles": 326,
+          "vertices": 303,
+          "primitives": 1,
+          "materials": [
+            "Grass"
+          ]
+        }
+      ],
+      "triangles": 33734,
+      "vertices": 47901,
+      "primitives": 26,
+      "materials": 12,
+      "textures": [
+        {
+          "name": "Bark_NormalTree_Normal",
+          "format": "jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 86872,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "b53edf26f7257dca4d4968109d9defb5756b4e92e946f2510839a076237502db"
+        },
+        {
+          "name": "Bark_NormalTree",
+          "format": "jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 28653,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "fc325b54ffd7a5cd7165b21247a038890ce9a1e040197ea486c6ea788970ae33"
+        },
+        {
+          "name": "Leaves_NormalTree_C",
+          "format": "png",
+          "width": 512,
+          "height": 512,
+          "bytes": 70067,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "140557ecf518488d47c83496fff2314762cc05dc54737266295d8f1b9930174c"
+        },
+        {
+          "name": "Leaf_Pine_C",
+          "format": "png",
+          "width": 512,
+          "height": 512,
+          "bytes": 23960,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "78373da3b2ba8290d5108342eabb6695c4a13cdeaeacfc3a6a35acc1f158daee"
+        },
+        {
+          "name": "Bark_TwistedTree_Normal",
+          "format": "jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 117695,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "216ec4381bc1790da13351493264f59fe8296ff6a2a564296a959298c4100dba"
+        },
+        {
+          "name": "Bark_TwistedTree",
+          "format": "jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 31326,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "67e6bca919bca46219e767fa8879c5c6d32dd730165a315f1b1ffffc394c647a"
+        },
+        {
+          "name": "Leaves_TwistedTree_C",
+          "format": "png",
+          "width": 512,
+          "height": 512,
+          "bytes": 60842,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "aab1a69bcbf5c2912accba86fbc8dd747f3558f63248a45f450f094005fba9fe"
+        },
+        {
+          "name": "Bark_DeadTree",
+          "format": "jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 26557,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "ed3c6c7fb793ec77621a48327d9102d36653a033b8d5efa097438078de293dc3"
+        },
+        {
+          "name": "Flowers",
+          "format": "png",
+          "width": 512,
+          "height": 498,
+          "bytes": 181078,
+          "decodedRgbaBytes": 1019904,
+          "sha256": "5c5d1a5630bf37e7f57d16177ecb7bd4bc0d47afd93586c8ffce2a174fb67de3"
+        },
+        {
+          "name": "Leaves",
+          "format": "png",
+          "width": 512,
+          "height": 512,
+          "bytes": 218115,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "488d099add766dd170b572407be8a8cdef815cd1a344c869db05ec1c59a171b4"
+        },
+        {
+          "name": "Mushrooms",
+          "format": "jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 56537,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "24d58f8f4d2d526140be49cac63619241a30f394b8c880ef030f55f20003cb2a"
+        },
+        {
+          "name": "Rocks_Diffuse",
+          "format": "jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 52243,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "ae275ac49458b08fbf20766488f81013c73724c55ef48b24738e5ee7fdbde11c"
+        },
+        {
+          "name": "PathRocks_Diffuse",
+          "format": "jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 49393,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "0d8b44e76511574155888515bb9d78451fdcdc68125eb307bdadbc5bb2d762ab"
+        },
+        {
+          "name": "Grass",
+          "format": "jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 6529,
+          "decodedRgbaBytes": 1048576,
+          "sha256": "53f2aef9ff0133c786153c5eff5ebe1f50f1f0e4b861267131e8ff881c771c0e"
+        }
+      ],
+      "imageBytes": 1009867,
+      "decodedRgbaBytes": 14651392,
+      "coordinates": {
+        "upAxis": "+Y",
+        "normalized": false,
+        "units": "Original authored units. Runtime centers and grounds each named root from actual vertices, then uniformly fits height and maxSpan."
+      },
+      "modifications": [
+        "Selected 18 Standard models, retaining original geometry, normals, UVs, named materials and alpha policies.",
+        "Merged into one self-contained GLB and deduplicated shared textures and materials.",
+        "Resized texture longest edges to 512px with sharp. Opaque colors use JPEG quality 85; normal maps use JPEG quality 95; both use 4:4:4 chroma. Images with alpha remain PNG.",
+        "Recomputed accessor bounds from original vertex buffers, correcting stale Fern_1 source bounds without changing vertices.",
+        "No Draco, Meshopt, KTX2, WebP or external decoder dependencies. Seasonal and blossom tinting applies only to explicitly named foliage at runtime."
+      ],
+      "preparation": {
+        "gltfTransform": "4.5.0",
+        "sharp": "0.35.4",
+        "vips": "8.18.6"
+      }
+    },
+    {
+      "id": "willow",
+      "file": "willow.glb",
+      "bytes": 150548,
+      "sha256": "2900e6b37d6996054610dce469dfd9946aaaf18e2599cf1d0cbf179c5f1f2d04",
+      "source": {
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "creator": "Quaternius",
+        "originalTitle": "Willow",
+        "modelUrl": "https://poly.pizza/m/mBrUbIp9Zd",
+        "downloadUrl": "https://static.poly.pizza/fb9965b3-0b81-4bec-9798-9a55d57e6daa.glb",
+        "sha256": "bd640b0e9b7a291b7a393abdea78b1f50eccfa32306839195cef36c4f3816285",
+        "bytes": 151272,
+        "rawFile": "extra/mBrUbIp9Zd.glb"
+      },
+      "nodes": [
+        {
+          "name": "RootNode",
+          "bounds": {
+            "min": [
+              -0.8708816953003407,
+              -0.05495911375892804,
+              -2.8018333463047824
+            ],
+            "max": [
+              1.0841033421456814,
+              3.2697927903079536,
+              0.3070719603352544
+            ]
+          },
+          "triangles": 0,
+          "vertices": 0,
+          "primitives": 0,
+          "materials": []
+        },
+        {
+          "name": "Willow_2",
+          "bounds": {
+            "min": [
+              -0.8708816953003407,
+              -0.05495911375892804,
+              -2.8018333463047824
+            ],
+            "max": [
+              1.0841033421456814,
+              3.2697927903079536,
+              0.3070719603352544
+            ]
+          },
+          "triangles": 2752,
+          "vertices": 5500,
+          "primitives": 2,
+          "materials": [
+            "Wood",
+            "DarkGreen"
+          ]
+        }
+      ],
+      "triangles": 2752,
+      "vertices": 5500,
+      "primitives": 2,
+      "materials": 2,
+      "textures": [],
+      "imageBytes": 0,
+      "decodedRgbaBytes": 0,
+      "coordinates": {
+        "upAxis": "+Y",
+        "normalized": false,
+        "units": "Original authored geometry and transforms; runtime centers and grounds from actual world-space vertices."
+      },
+      "modifications": [
+        "Repacked as self-contained core GLB; retained original vertices, normals, colors and authored transforms.",
+        "Removed unlit extension where present and set roughness 0.85, metallic 0 for shared physical scene lighting.",
+        "Removed unused empty nodes and deduplicated resources. Seasonal tints affect named plant materials at runtime."
+      ]
+    },
+    {
+      "id": "cattail",
+      "file": "cattail.glb",
+      "bytes": 29036,
+      "sha256": "892d34cda919d5d87a87d1a2eddfab4c2f3064bf146329a2e9bf8af3fbf493c8",
+      "source": {
+        "creator": "Poly by Google",
+        "originalTitle": "Cattail",
+        "modelUrl": "https://poly.pizza/m/9uT74BMpRrl",
+        "downloadUrl": "https://static.poly.pizza/d3a27812-c2ff-4d69-922e-7f2fde8cd236.glb",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt",
+        "attribution": "Cattail by Poly by Google, via Poly Pizza, licensed CC BY 3.0. Repacked and relit for Maeul in the Sky.",
+        "sha256": "3ec5aa72ea7fef986e70bbfbb3fbb776d5bf51ebc0b2d7eb0951c2db22fad861",
+        "bytes": 29320,
+        "rawFile": "extra/9uT74BMpRrl.glb"
+      },
+      "nodes": [
+        {
+          "name": "Node",
+          "bounds": {
+            "min": [
+              -2.7811179161071777,
+              -3.1224660873413086,
+              -1.6562399864196777
+            ],
+            "max": [
+              1.6853870153427124,
+              10.128822326660156,
+              2.712178945541382
+            ]
+          },
+          "triangles": 1146,
+          "vertices": 1015,
+          "primitives": 2,
+          "materials": [
+            "lambert2SG",
+            "lambert3SG"
+          ]
+        }
+      ],
+      "triangles": 1146,
+      "vertices": 1015,
+      "primitives": 2,
+      "materials": 2,
+      "textures": [],
+      "imageBytes": 0,
+      "decodedRgbaBytes": 0,
+      "coordinates": {
+        "upAxis": "+Y",
+        "normalized": false,
+        "units": "Original authored geometry and transforms; runtime centers and grounds from actual world-space vertices."
+      },
+      "modifications": [
+        "Repacked as self-contained core GLB; retained original vertices, normals, colors and authored transforms.",
+        "Removed unlit extension where present and set roughness 0.85, metallic 0 for shared physical scene lighting.",
+        "Removed unused empty nodes and deduplicated resources. Seasonal tints affect named plant materials at runtime."
+      ]
+    },
+    {
+      "id": "lilypad",
+      "file": "lilypad.glb",
+      "bytes": 23068,
+      "sha256": "1b662a669b27186fb6dfebd4f85d9ed0873798347ed8e583c3a01d60331ff599",
+      "source": {
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "creator": "Quaternius",
+        "originalTitle": "Lilypad",
+        "modelUrl": "https://poly.pizza/m/TI6ukUlsLh",
+        "downloadUrl": "https://static.poly.pizza/ae432cca-6422-42ef-a982-b74bd0fc99b2.glb",
+        "sha256": "6982fa8504bb22b62cfafe8e03d749ffb79b5e905620844665cc37946c1bd62e",
+        "bytes": 23784,
+        "rawFile": "extra/TI6ukUlsLh.glb"
+      },
+      "nodes": [
+        {
+          "name": "RootNode",
+          "bounds": {
+            "min": [
+              -0.5985977128148079,
+              -0.026891427498377217,
+              -0.5945611991758308
+            ],
+            "max": [
+              0.5985977128148079,
+              0.19397311355425037,
+              0.5945612043401614
+            ]
+          },
+          "triangles": 0,
+          "vertices": 0,
+          "primitives": 0,
+          "materials": []
+        },
+        {
+          "name": "Lilypad",
+          "bounds": {
+            "min": [
+              -0.5985977128148079,
+              -0.026891427498377217,
+              -0.5945611991758308
+            ],
+            "max": [
+              0.5985977128148079,
+              0.19397311355425037,
+              0.5945612043401614
+            ]
+          },
+          "triangles": 372,
+          "vertices": 784,
+          "primitives": 2,
+          "materials": [
+            "Green",
+            "Pink"
+          ]
+        }
+      ],
+      "triangles": 372,
+      "vertices": 784,
+      "primitives": 2,
+      "materials": 2,
+      "textures": [],
+      "imageBytes": 0,
+      "decodedRgbaBytes": 0,
+      "coordinates": {
+        "upAxis": "+Y",
+        "normalized": false,
+        "units": "Original authored geometry and transforms; runtime centers and grounds from actual world-space vertices."
+      },
+      "modifications": [
+        "Repacked as self-contained core GLB; retained original vertices, normals, colors and authored transforms.",
+        "Removed unlit extension where present and set roughness 0.85, metallic 0 for shared physical scene lighting.",
+        "Removed unused empty nodes and deduplicated resources. Seasonal tints affect named plant materials at runtime."
+      ]
+    },
+    {
+      "id": "palm",
+      "file": "palm.glb",
+      "bytes": 21996,
+      "sha256": "59d9946cebc0124c66e4137342d7d41b0a3e2a18872839f15b2dea540a144193",
+      "source": {
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/Kenney-nature.txt",
+        "creator": "Kenney",
+        "modelUrl": "https://kenney.nl/assets/nature-kit",
+        "downloadUrl": "https://kenney.nl/media/pages/assets/nature-kit/37ac38a37b-1677698939/kenney_nature-kit.zip",
+        "archiveSha256": "fa7974a0d342bfe63c38664ba9f8ec1a4aab8ea25f099bdc56870e33588c4d9d",
+        "originalTitle": "Nature Kit — tree_palmDetailedTall",
+        "sha256": "2cbea0f9621cde884c63a7b4ad787bda1d051fa27ef3c66b9f2b65328dc53683",
+        "bytes": 28204,
+        "rawFile": "kenney/Models/GLTF format/tree_palmDetailedTall.glb"
+      },
+      "nodes": [
+        {
+          "name": "tree_palmDetailedTall",
+          "bounds": {
+            "min": [
+              -0.5171645106041536,
+              -0.05,
+              -0.5145974433699035
+            ],
+            "max": [
+              0.5171645461356535,
+              1.373466974036579,
+              0.5197316133699036
+            ]
+          },
+          "triangles": 36,
+          "vertices": 72,
+          "primitives": 1,
+          "materials": [
+            "woodBark"
+          ]
+        },
+        {
+          "name": "leafs",
+          "bounds": {
+            "min": [
+              -0.40699322353489475,
+              1.1119213799999998,
+              -0.4044261563006347
+            ],
+            "max": [
+              0.4069932379929528,
+              1.373466974036579,
+              0.4095603052272128
+            ]
+          },
+          "triangles": 150,
+          "vertices": 284,
+          "primitives": 1,
+          "materials": [
+            "leafsGreen"
+          ]
+        },
+        {
+          "name": "leafs",
+          "bounds": {
+            "min": [
+              -0.5171645106041536,
+              1.1119213799999998,
+              -0.5145974433699035
+            ],
+            "max": [
+              0.5171645461356535,
+              1.3056588570641325,
+              0.5197316133699036
+            ]
+          },
+          "triangles": 150,
+          "vertices": 284,
+          "primitives": 1,
+          "materials": [
+            "leafsGreen"
+          ]
+        }
+      ],
+      "triangles": 336,
+      "vertices": 640,
+      "primitives": 3,
+      "materials": 2,
+      "textures": [],
+      "imageBytes": 0,
+      "decodedRgbaBytes": 0,
+      "coordinates": {
+        "upAxis": "+Y",
+        "normalized": false,
+        "units": "Original authored geometry and transforms; runtime centers and grounds from actual world-space vertices."
+      },
+      "modifications": [
+        "Repacked as self-contained core GLB; retained original vertices, normals, colors and authored transforms.",
+        "Removed unlit extension where present and set roughness 0.85, metallic 0 for shared physical scene lighting.",
+        "Removed unused empty nodes and deduplicated resources. Seasonal tints affect named plant materials at runtime."
+      ]
+    }
+  ]
+}

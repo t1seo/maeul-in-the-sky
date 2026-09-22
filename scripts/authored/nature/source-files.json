@@ -1,0 +1,262 @@
+[
+  {
+    "file": "glTF/Bark_DeadTree_Normal.png",
+    "bytes": 5728199,
+    "sha256": "692da2f58909263f074cb17b36defd09f56bf89ab7efda567a9a3e59261747b3"
+  },
+  {
+    "file": "glTF/Bark_DeadTree.png",
+    "bytes": 4228870,
+    "sha256": "8f055724c35f8e8c5685a505775b3b9ebfc6b4745308ef35ce1cfe6fd976153f"
+  },
+  {
+    "file": "glTF/Bark_NormalTree_Normal.png",
+    "bytes": 4384496,
+    "sha256": "852f6155404b8c39e100e41e26970e02a6a5c81b482d3726618dab28e3ad03a2"
+  },
+  {
+    "file": "glTF/Bark_NormalTree.png",
+    "bytes": 3894788,
+    "sha256": "f36e94fdd73255347325b998e02a0b2575fdf714b0315bfe5e8ff34bc8e13603"
+  },
+  {
+    "file": "glTF/Bark_TwistedTree_Normal.png",
+    "bytes": 5728199,
+    "sha256": "692da2f58909263f074cb17b36defd09f56bf89ab7efda567a9a3e59261747b3"
+  },
+  {
+    "file": "glTF/Bark_TwistedTree.png",
+    "bytes": 4630805,
+    "sha256": "01608a96c42954eb725b32824530b51e67a2f3d85432d21a8d8adff958d2084a"
+  },
+  {
+    "file": "glTF/Bush_Common_Flowers.bin",
+    "bytes": 128928,
+    "sha256": "15f56a013afe0eecaded0eb97fd8f323305af11e1f0f7bb9b68472ec4cdc20d5"
+  },
+  {
+    "file": "glTF/Bush_Common_Flowers.gltf",
+    "bytes": 3654,
+    "sha256": "08768c680e3abeafd25858c9d3f369bcb7eed014661d3b6825a397f2a6a3deea"
+  },
+  {
+    "file": "glTF/Bush_Common.bin",
+    "bytes": 91800,
+    "sha256": "a5e1a773c8ba78fd9c05a8b342131eba4879302a8fddd2c5186cab9ee1ef4966"
+  },
+  {
+    "file": "glTF/Bush_Common.gltf",
+    "bytes": 2101,
+    "sha256": "77811fca92610cb254713d3d49d5029ab6cf13050c3afb61aa942786a7b2ca90"
+  },
+  {
+    "file": "glTF/CommonTree_3.bin",
+    "bytes": 296984,
+    "sha256": "24541f46fd9553e2389aba15575f2697009226e82118ed76868284114fd12b49"
+  },
+  {
+    "file": "glTF/CommonTree_3.gltf",
+    "bytes": 3864,
+    "sha256": "17c6537aa8042bb7255fbb501bf7aeb2b6db87c16766f794f9c37be3ce70c976"
+  },
+  {
+    "file": "glTF/CommonTree_5.bin",
+    "bytes": 252996,
+    "sha256": "0e617612d50e6bb2ca3c64338383f8938ce9e04d55b548ff11cec7a7b7d8f072"
+  },
+  {
+    "file": "glTF/CommonTree_5.gltf",
+    "bytes": 3860,
+    "sha256": "fb7061f2bf9fe850870b056431f8f66cd8fdeb443c90695c5efbcf1fe6876d53"
+  },
+  {
+    "file": "glTF/DeadTree_3.bin",
+    "bytes": 415740,
+    "sha256": "5c3b29bf37c700f5ca545b315f6423d966562d7af01116fdd2d8f94a6173959e"
+  },
+  {
+    "file": "glTF/DeadTree_3.gltf",
+    "bytes": 2211,
+    "sha256": "aa74a47c69259f217388d7b3e2871d76c0385449fc1efd92299c2e55417fdffc"
+  },
+  {
+    "file": "glTF/Fern_1.bin",
+    "bytes": 11448,
+    "sha256": "5e92b87a27f81a69fe15347a533df3c77d567b48298dceeef43168ccb7c22853"
+  },
+  {
+    "file": "glTF/Fern_1.gltf",
+    "bytes": 2058,
+    "sha256": "d41915cffe9dbbde1ae88be381eb9c60f7caa2274511436cc78fe4de627468ab"
+  },
+  {
+    "file": "glTF/Flower_3_Single.bin",
+    "bytes": 10792,
+    "sha256": "88416b839c0d208040a1bd5b52984f7e927232356dfe9e8faec48838defac654"
+  },
+  {
+    "file": "glTF/Flower_3_Single.gltf",
+    "bytes": 3632,
+    "sha256": "26c33edf26f0913947977109fefa2367095a854541a731dfecfd64263b7db2bc"
+  },
+  {
+    "file": "glTF/Flower_4_Single.bin",
+    "bytes": 23812,
+    "sha256": "d23048fb7cd3b9554036e7bb5e33f29212db70d5de34f87bc4551dec9495ba27"
+  },
+  {
+    "file": "glTF/Flower_4_Single.gltf",
+    "bytes": 3631,
+    "sha256": "271189ec424eea2821d758c5c605d9e7737c259d64f4eec4555de7cd9de5a517"
+  },
+  {
+    "file": "glTF/Flowers.png",
+    "bytes": 444609,
+    "sha256": "5c531f2329c241c625aafd6cb769de29f33b480ef2a16491c2489f3c68e62a6a"
+  },
+  {
+    "file": "glTF/Grass_Common_Short.bin",
+    "bytes": 7052,
+    "sha256": "7a0f0f7a9ac39cfa4b303bac03a6594f43e48d873b73553fa06a79e4df1271e9"
+  },
+  {
+    "file": "glTF/Grass_Common_Short.gltf",
+    "bytes": 2023,
+    "sha256": "6957b50622c9e26e7296c1b47ea8653bc0d957e0a547de444e2ed96f0075a21a"
+  },
+  {
+    "file": "glTF/Grass_Common_Tall.bin",
+    "bytes": 14076,
+    "sha256": "d7422b9360dd644f4095ac77a00dfa5d1f1078af71ebf18865a28ef031651379"
+  },
+  {
+    "file": "glTF/Grass_Common_Tall.gltf",
+    "bytes": 2025,
+    "sha256": "783466c838163bf7da44e10675ace3851b8c9fb83322387125df7a080b05cd70"
+  },
+  {
+    "file": "glTF/Grass.png",
+    "bytes": 33605,
+    "sha256": "5d69048193b246a73c996b892607fb36c75d0c60afcb2dab8aa12de3c0b2d9bd"
+  },
+  {
+    "file": "glTF/Leaf_Pine_C.png",
+    "bytes": 70055,
+    "sha256": "86f7ff7a214f5424de48d269568f36a15485e61c80677e426c7be9f45181eef9"
+  },
+  {
+    "file": "glTF/Leaves_NormalTree_C.png",
+    "bytes": 158796,
+    "sha256": "998612bdf0b76a22f5f54d65cd7a457815d2842d89653fa4348a4ebb42933ad3"
+  },
+  {
+    "file": "glTF/Leaves_TwistedTree_C.png",
+    "bytes": 70353,
+    "sha256": "0e459b56b14c0e81b1b7cf3d1e8c6f0bb71790eb6c46bb02a76a922d8df646ea"
+  },
+  {
+    "file": "glTF/Leaves.png",
+    "bytes": 2586432,
+    "sha256": "23248cebe28a24e78add32db3c2ee2f4d7b9219e9d2467279722f0197a7b6bd5"
+  },
+  {
+    "file": "glTF/Mushroom_Common.bin",
+    "bytes": 23040,
+    "sha256": "e4cee9f2570505a172990a2754d52ed5775a4d75857a832fffa1b573e38a4051"
+  },
+  {
+    "file": "glTF/Mushroom_Common.gltf",
+    "bytes": 1822,
+    "sha256": "2088b39d92f2f6331f45e59a048d02814dcd8b22767b024f4d220143bc8339f4"
+  },
+  {
+    "file": "glTF/Mushrooms.png",
+    "bytes": 1208660,
+    "sha256": "e29eed2db831e44a29634fe25c62e9e31edf201e978a52912b9e5221ffd4a1f3"
+  },
+  {
+    "file": "glTF/PathRocks_Diffuse.png",
+    "bytes": 811732,
+    "sha256": "85a04abb2c136fee53b376daf3b7d7f96fdf3966de0258dff6fe2b24da792b23"
+  },
+  {
+    "file": "glTF/Pebble_Round_1.bin",
+    "bytes": 10160,
+    "sha256": "f3dacef3243ccaaad7df2beb5c72574a38fb3eae45357e1b5e2b40200d51c375"
+  },
+  {
+    "file": "glTF/Pebble_Round_1.gltf",
+    "bytes": 1850,
+    "sha256": "9f6261c81134915e73cf35eb4e37076238fd1e79434515ac686d15cbd1f779ab"
+  },
+  {
+    "file": "glTF/Pine_1.bin",
+    "bytes": 275492,
+    "sha256": "0cc0900d156359cab7028d87cd5d8897fbcb0479ddf1ddf524d5462c11e17af2"
+  },
+  {
+    "file": "glTF/Pine_1.gltf",
+    "bytes": 3832,
+    "sha256": "adc85a72e6f46f71317ca5f7630876bfb207f687427bc9e37cd97ec4af5f2cbc"
+  },
+  {
+    "file": "glTF/Pine_5.bin",
+    "bytes": 120996,
+    "sha256": "18982d7f6c430d1a42568d4ef62017398dedb1ddc60dfbab047f8cddea9cf797"
+  },
+  {
+    "file": "glTF/Pine_5.gltf",
+    "bytes": 3815,
+    "sha256": "bb060ce1420af32dc996241078d36e4c991577397474aa64f4c691362c482cfa"
+  },
+  {
+    "file": "glTF/Rock_Medium_1.bin",
+    "bytes": 13284,
+    "sha256": "ea79527d4c2b3bdb7a28bf589bf0c1fd96d192a4d0738636753911dd58681e99"
+  },
+  {
+    "file": "glTF/Rock_Medium_1.gltf",
+    "bytes": 1831,
+    "sha256": "5d1ab1fa03218f4a908728ed0eabe6486344a7e4f510b0d3d6f837fd1d011bd8"
+  },
+  {
+    "file": "glTF/Rock_Medium_2.bin",
+    "bytes": 9432,
+    "sha256": "76b60bf8349f71abdb0ed462b3223d93c2dcabdfb5754bc132e18b021cc6c805"
+  },
+  {
+    "file": "glTF/Rock_Medium_2.gltf",
+    "bytes": 1825,
+    "sha256": "fac2d05a05f2d0d2098de59c09b58f42cc875c9caca4fd4c4bd57f3d36e7b12e"
+  },
+  {
+    "file": "glTF/Rock_Medium_3.bin",
+    "bytes": 20124,
+    "sha256": "63f94bce2d3fb3fe25b2d6c843a828b1bec76855dbaac93fcf5d43582309caad"
+  },
+  {
+    "file": "glTF/Rock_Medium_3.gltf",
+    "bytes": 1832,
+    "sha256": "9a575b911372cf91693aa3a56aea8137ec2251c2b99fb34a31272ee64503047f"
+  },
+  {
+    "file": "glTF/Rocks_Diffuse.png",
+    "bytes": 2517398,
+    "sha256": "b813696df6081f469a127092eb0ce45cc39d56f3ccc0699152bfcd3804810b48"
+  },
+  {
+    "file": "glTF/TwistedTree_1.bin",
+    "bytes": 732456,
+    "sha256": "58e4c16c16e0a71051af76a37be0641ea8f7089652687f957383d3c4bd24723b"
+  },
+  {
+    "file": "glTF/TwistedTree_1.gltf",
+    "bytes": 3819,
+    "sha256": "8544b084e1fadfbec981e964ce27463f50c39c460513e0d3442160880c5908a7"
+  },
+  {
+    "file": "License_Standard.txt",
+    "bytes": 852,
+    "sha256": "120710e542c3ebaf83856c4eb55b4a1e680593b39302eba7fdc5d942dfe78c58"
+  }
+]

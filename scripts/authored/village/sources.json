@@ -1,0 +1,665 @@
+{
+  "version": 1,
+  "models": [
+    {
+      "id": "house",
+      "input": "BH2XHWUNmF.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy House",
+        "modelUrl": "https://poly.pizza/m/BH2XHWUNmF",
+        "downloadUrl": "https://static.poly.pizza/341c9305-c6dd-4427-ad00-620ad57eb14e.glb",
+        "sha256": "74d4c91022414875ec61ab80835705a9c0e9415aa0dd413fc8e83cbfd861a5c9",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "house-b",
+      "input": "dcPho4SUA3.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy House",
+        "modelUrl": "https://poly.pizza/m/dcPho4SUA3",
+        "downloadUrl": "https://static.poly.pizza/b8a2c719-5a70-4d6c-8049-90af7e3f89ee.glb",
+        "sha256": "39b9d7d4c85e170f64d066a3f762ab88689a614c270e95c52927908fb52fa36a",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "inn",
+      "input": "x3ZcGn3jr4.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy Inn",
+        "modelUrl": "https://poly.pizza/m/x3ZcGn3jr4",
+        "downloadUrl": "https://static.poly.pizza/270a08b6-87e1-47eb-ad1c-5fd7be321bcd.glb",
+        "sha256": "106ac5aef624710d5a8e14ce076d73b4fd85312688cc80cebb6bd45cf61daefe",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "blacksmith",
+      "input": "bV52eTG1Aj.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Blacksmith",
+        "modelUrl": "https://poly.pizza/m/bV52eTG1Aj",
+        "downloadUrl": "https://static.poly.pizza/c664d338-cf21-4cda-b0f8-efe0f0826a10.glb",
+        "sha256": "264fc6abe5be8c091a1c6f293dce9e8ae79b96b50ccec45f0a7fb12201db1d7c",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "stable",
+      "input": "qhNQSOGGbi.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy Stable",
+        "modelUrl": "https://poly.pizza/m/qhNQSOGGbi",
+        "downloadUrl": "https://static.poly.pizza/210b9cdc-9b11-4ef5-a61b-5c31d0689090.glb",
+        "sha256": "c5ed9626d931c52b5a2b48d805bccd4232239da5ba677ca169730c036eb5b8c8",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "barn",
+      "input": "vSqQNA7ez6.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Barn",
+        "modelUrl": "https://poly.pizza/m/vSqQNA7ez6",
+        "downloadUrl": "https://static.poly.pizza/e0ecaf1c-bff4-4f30-9a53-0cf0c1c90deb.glb",
+        "sha256": "c7e19b37ecc74f24e121c822116b125f7a7eea6473943650ca05faca3ebdebc3",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "warehouse",
+      "input": "aTcDP7UERC.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Small Barn",
+        "modelUrl": "https://poly.pizza/m/aTcDP7UERC",
+        "downloadUrl": "https://static.poly.pizza/f8d23d79-6dfd-4667-a961-5b4dad5a32d6.glb",
+        "sha256": "6a3a2a3e8d735e240ec73bdaa365f46826e63a73745a113f02774aa012b386eb",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "silo",
+      "input": "5GhLrv5Ce3.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Silo",
+        "modelUrl": "https://poly.pizza/m/5GhLrv5Ce3",
+        "downloadUrl": "https://static.poly.pizza/3944662c-ccdd-440d-94bf-a1e37624a536.glb",
+        "sha256": "5894991c0371129fa12b858181b60dfb2c732494c07fa2a5b3afbba0f25d4e1d",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "windmill",
+      "input": "89dsFYAoX1.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Mill",
+        "modelUrl": "https://poly.pizza/m/89dsFYAoX1",
+        "downloadUrl": "https://static.poly.pizza/a347d313-8be5-4585-9fc4-2f7e745c0648.glb",
+        "sha256": "bf61fae3dc7c54422bb49424d602dc31cb2121d86d556d5d3e00f175baa707c1",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "bell-tower",
+      "input": "ux44tbeQvj.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Bell Tower",
+        "modelUrl": "https://poly.pizza/m/ux44tbeQvj",
+        "downloadUrl": "https://static.poly.pizza/fe8e639d-f07d-4512-a38d-3519b44a5fdc.glb",
+        "sha256": "44a78a23ea0a70d3fdcc216fe6d95189214fe7077a106c7571daa324c2cbf6b0",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "market",
+      "input": "DGIM5HGISb.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Market Stand",
+        "modelUrl": "https://poly.pizza/m/DGIM5HGISb",
+        "downloadUrl": "https://static.poly.pizza/e2633001-4cf5-46fa-ac68-575c9954f4ba.glb",
+        "sha256": "19b9b99c84d41c0b1124fe286ac3b99668d2f2d489d44affa559188881448d75",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "well",
+      "input": "QlqncKYxXb.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Well",
+        "modelUrl": "https://poly.pizza/m/QlqncKYxXb",
+        "downloadUrl": "https://static.poly.pizza/0e044203-f62e-4dad-ad3e-c3cb6cb393ac.glb",
+        "sha256": "8e5158984421cfd8ec5040a318a2627911a6dcd7e4b43172bdd7d36f367ad3db",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "barrel",
+      "input": "zjCQP1TAci.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Barrel",
+        "modelUrl": "https://poly.pizza/m/zjCQP1TAci",
+        "downloadUrl": "https://static.poly.pizza/df9e4b83-758a-4fc7-b311-70fc949ed7ff.glb",
+        "sha256": "acf56e7eb64e37ea4ab2a6b072dbbcfd315ba45a511bee141e5541421e2f2238",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "fence",
+      "input": "UXmKfG81fG.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fence",
+        "modelUrl": "https://poly.pizza/m/UXmKfG81fG",
+        "downloadUrl": "https://static.poly.pizza/713fa0e6-a648-4896-817d-64b68ed0dac8.glb",
+        "sha256": "39f1306790e50996916e77797c6a444df98bb5a6215f5af201819ed37eac835c",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "hay",
+      "input": "Yu8TOERkpw.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Hay",
+        "modelUrl": "https://poly.pizza/m/Yu8TOERkpw",
+        "downloadUrl": "https://static.poly.pizza/8ab0043c-9a54-47b1-9b46-31b98d2f6ed8.glb",
+        "sha256": "a7b39cae2cbd0839647c23c597a4ff64cb3a1086529e78c0169614f4a42655ed",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "campfire",
+      "input": "Azj9hJwwwG.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Bonfire",
+        "modelUrl": "https://poly.pizza/m/Azj9hJwwwG",
+        "downloadUrl": "https://static.poly.pizza/e96d5573-fa3a-47ad-bae0-0ef9640026fa.glb",
+        "sha256": "b574b0e83c6b49bd54330ab5cd648a6cc826d90c886ce4b6a791b6af3c2e951b",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "tent",
+      "input": "5Q7qIrfDxA.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Tent",
+        "modelUrl": "https://poly.pizza/m/5Q7qIrfDxA",
+        "downloadUrl": "https://static.poly.pizza/fc8d560d-91b5-439c-88bf-4cbddb7eadbb.glb",
+        "sha256": "2f3519156ebbd28ab47a3d8600cecfcbbea63cc25eba044effa154b280d87d48",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "torch",
+      "input": "pNsfJzhXiD.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Wooden Torch",
+        "modelUrl": "https://poly.pizza/m/pNsfJzhXiD",
+        "downloadUrl": "https://static.poly.pizza/e5d33174-f51a-4981-9cfc-67e70486cba2.glb",
+        "sha256": "70e30cc0576c263a2107ab7f2528dea98ed06e45761fb1a0e931efdd745ad281",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "vendor-cart",
+      "input": "l7bDe7ak6j.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Cart",
+        "modelUrl": "https://poly.pizza/m/l7bDe7ak6j",
+        "downloadUrl": "https://static.poly.pizza/94b32c91-4d46-4172-aadd-10176a4eb543.glb",
+        "sha256": "c98eee1d2a91a1a894bbbe5b54f0b262bfcfc268d4eab17fbbde5b0a40885f53",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "castle",
+      "input": "opTOmcN3o9.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Castle",
+        "modelUrl": "https://poly.pizza/m/opTOmcN3o9",
+        "downloadUrl": "https://static.poly.pizza/22b576c3-24c2-45c4-a89c-b088901c3695.glb",
+        "sha256": "fa15f21d4f13cddba97bcd94d05cf0055ff14de5d4b1a86a5c00dccc1b2f2ca6",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "colosseum",
+      "input": "83ftBPyiSf.glb",
+      "treatment": "textured",
+      "source": {
+        "creator": "CreativeTrio",
+        "originalTitle": "Colosseum",
+        "modelUrl": "https://poly.pizza/m/83ftBPyiSf",
+        "downloadUrl": "https://static.poly.pizza/1e7ca762-a0f2-4a13-8049-71a99e9aa33b.glb",
+        "sha256": "bf68007985c912e309bad7dcfc9dcc1e15f27cc248ef57e6d212b3897a74f3b5",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt"
+      },
+      "resources": []
+    },
+    {
+      "id": "pagoda",
+      "input": "1zS7ucaAd4J.glb",
+      "treatment": "textured",
+      "source": {
+        "creator": "Google",
+        "originalTitle": "Pagoda",
+        "modelUrl": "https://poly.pizza/m/1zS7ucaAd4J",
+        "downloadUrl": "https://static.poly.pizza/5ed9ad9d-ebd6-4eb8-9ea5-5232f8f55a61.glb",
+        "sha256": "a03f3c12541d479e8d3d5593fe5aaa6426f098f72ec7178eda230575d125d917",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt"
+      },
+      "resources": []
+    },
+    {
+      "id": "torii",
+      "input": "07__lYTDdEH.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "Hattie Stroud",
+        "originalTitle": "Torii Gate",
+        "modelUrl": "https://poly.pizza/m/07__lYTDdEH",
+        "downloadUrl": "https://static.poly.pizza/1562ffbb-6b16-4d86-8c5a-5b28c400bc11.glb",
+        "sha256": "863fe1e8ce124a2cff395f4ded3d6e7f156a70a4a65848f1aac1e9a37bfe652b",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "licenseFile": "licenses/CC-BY-3.0.txt"
+      },
+      "resources": []
+    },
+    {
+      "id": "cargo-cart",
+      "input": "kenney-town/Models/GLB format/cart-high.glb",
+      "treatment": "textured",
+      "source": {
+        "creator": "Kenney",
+        "originalTitle": "cart-high",
+        "modelUrl": "https://kenney.nl/assets/fantasy-town-kit",
+        "downloadUrl": "https://kenney.nl/media/pages/assets/fantasy-town-kit/efe948d309-1754222374/kenney_fantasy-town-kit_2.0.zip",
+        "sha256": "4b0bce37e8645f3719a9032bf4d49048b7779ac891758ae6e2693238911c5eec",
+        "archiveSha256": "1a7530c09f4d2fa2cdee259876f089334f8b1f27fa86a0c4f54ef86cdd8676ef",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/Kenney-fantasy-town.txt"
+      },
+      "resources": [
+        {
+          "file": "kenney-town/Models/GLB format/Textures/colormap.png",
+          "bytes": 11143,
+          "sha256": "4aac939dc33195e35caf8c382ee3cb170054da763577f22d3c22692ec6afccdf"
+        }
+      ]
+    },
+    {
+      "id": "lantern",
+      "input": "kenney-town/Models/GLB format/lantern.glb",
+      "treatment": "textured",
+      "source": {
+        "creator": "Kenney",
+        "originalTitle": "lantern",
+        "modelUrl": "https://kenney.nl/assets/fantasy-town-kit",
+        "downloadUrl": "https://kenney.nl/media/pages/assets/fantasy-town-kit/efe948d309-1754222374/kenney_fantasy-town-kit_2.0.zip",
+        "sha256": "f270637e3083d6e84a30626ee05df2b09597a642985a7f5c3e4ab5bb1c7a8d55",
+        "archiveSha256": "1a7530c09f4d2fa2cdee259876f089334f8b1f27fa86a0c4f54ef86cdd8676ef",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/Kenney-fantasy-town.txt"
+      },
+      "resources": [
+        {
+          "file": "kenney-town/Models/GLB format/Textures/colormap.png",
+          "bytes": 11143,
+          "sha256": "4aac939dc33195e35caf8c382ee3cb170054da763577f22d3c22692ec6afccdf"
+        }
+      ]
+    },
+    {
+      "id": "fountain",
+      "input": "kenney-town/Models/GLB format/fountain-round-detail.glb",
+      "treatment": "fountain",
+      "source": {
+        "creator": "Kenney",
+        "originalTitle": "fountain-round-detail",
+        "modelUrl": "https://kenney.nl/assets/fantasy-town-kit",
+        "downloadUrl": "https://kenney.nl/media/pages/assets/fantasy-town-kit/efe948d309-1754222374/kenney_fantasy-town-kit_2.0.zip",
+        "sha256": "05cdd740e3175c2d3208d4cb6630a279a9b4cbc48393b28c92e3e40cca2a5d6b",
+        "archiveSha256": "1a7530c09f4d2fa2cdee259876f089334f8b1f27fa86a0c4f54ef86cdd8676ef",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/Kenney-fantasy-town.txt"
+      },
+      "resources": [
+        {
+          "file": "kenney-town/Models/GLB format/Textures/colormap.png",
+          "bytes": 11143,
+          "sha256": "4aac939dc33195e35caf8c382ee3cb170054da763577f22d3c22692ec6afccdf"
+        }
+      ]
+    },
+    {
+      "id": "hanok",
+      "input": "korean-hanok/38035.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Hanok Main House (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-hanok-main-house-58d31dd2",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38035/v1/model.glb",
+        "sha256": "84117fc43ce7b59cc68469424dba69651a81343a21662d25506f0d21d244e8ea",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "resources": []
+    },
+    {
+      "id": "hanok-gate",
+      "input": "korean-hanok/38032.glb",
+      "treatment": "gate",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Village Gate House (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-village-gate-house-94dd896b",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38032/v1/model.glb",
+        "sha256": "5b5395d0eafd9a0cf6c86622e54d19549892b55d567c216589dc734abe92e376",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "resources": []
+    },
+    {
+      "id": "onggi-terrace",
+      "input": "korean-hanok/38059.glb",
+      "treatment": "solid",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Jangdokdae Terrace (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-jangdokdae-terrace-fd10afaf",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38059/v1/model.glb",
+        "sha256": "a23550a70379948b187e7062097c7ddb04c98d682a18d365b6b78e2742e701e4",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "resources": []
+    },
+    {
+      "id": "onggi-large",
+      "input": "korean-hanok/38060.glb",
+      "treatment": "onggi",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Onggi Jar, Large (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-onggi-jar-large-57747607",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38060/v1/model.glb",
+        "sha256": "45f9c81f224bc4bafcaf8395fac7ff41963c9b51f8b8c9fe46ec3774a60b4eb8",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "resources": []
+    },
+    {
+      "id": "onggi-medium",
+      "input": "korean-hanok/38061.glb",
+      "treatment": "onggi",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Onggi Jar, Medium (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-onggi-jar-medium-106bc5df",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38061/v1/model.glb",
+        "sha256": "307a97fbc96b1fe25ef15df5f104955ccd91b29d5d01d3ac9ba61de4e81bf631",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "resources": []
+    },
+    {
+      "id": "onggi-small",
+      "input": "korean-hanok/38062.glb",
+      "treatment": "onggi",
+      "source": {
+        "creator": "3D Assets",
+        "originalTitle": "Onggi Jar, Small (Korean Hanok Village and Street)",
+        "modelUrl": "https://3dassets.dev/assets/korean-hanok-village-and-street-onggi-jar-small-ed06606f",
+        "downloadUrl": "https://cdn.3dassets.dev/assets/38062/v1/model.glb",
+        "sha256": "1bb9f9b4c3a81deb2b754d9a199312ecfb65d194ea9462b56e4e0f41eb990f82",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "disclosure": "3DAssets describes this pack as AI generated with Claude Opus 5; it is not represented as human-authored professional artwork."
+      },
+      "resources": []
+    },
+    {
+      "id": "church",
+      "input": "kaykit/addons/kaykit_medieval_hexagon_pack/Assets/gltf/buildings/green/building_church_green.gltf",
+      "treatment": "textured",
+      "source": {
+        "creator": "Kay Lousberg",
+        "originalTitle": "Medieval Hexagon Pack — church (green)",
+        "modelUrl": "https://github.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/tree/84fa4e91af6a88989be7c99e0891cede11f2ca38",
+        "downloadUrl": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/84fa4e91af6a88989be7c99e0891cede11f2ca38/addons/kaykit_medieval_hexagon_pack/Assets/gltf/buildings/green/building_church_green.gltf",
+        "sha256": "e5e21972f5d24198e2cac2cf76f985954e9348c7e89ffe500f7aea2bbe265e8c",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/KayKit-medieval-hexagon.txt"
+      },
+      "resources": [
+        {
+          "file": "kaykit/addons/kaykit_medieval_hexagon_pack/Assets/gltf/buildings/green/building_church_green.bin",
+          "bytes": 89736,
+          "sha256": "ec1b00b7b6e8644c0b6885fa2f5b39bbc4be701090d40051969f2651f37223ae"
+        },
+        {
+          "file": "kaykit/addons/kaykit_medieval_hexagon_pack/Assets/gltf/buildings/green/hexagons_medieval.png",
+          "bytes": 15783,
+          "sha256": "5301a06866ba3be68dcc14cc429bd6d0f69004b72884283715d7e233f2e9782e"
+        }
+      ]
+    },
+    {
+      "id": "house-snow",
+      "input": "BH2XHWUNmF.glb",
+      "treatment": "snow",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy House",
+        "modelUrl": "https://poly.pizza/m/BH2XHWUNmF",
+        "downloadUrl": "https://static.poly.pizza/341c9305-c6dd-4427-ad00-620ad57eb14e.glb",
+        "sha256": "74d4c91022414875ec61ab80835705a9c0e9415aa0dd413fc8e83cbfd861a5c9",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "house-b-snow",
+      "input": "dcPho4SUA3.glb",
+      "treatment": "snow",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Fantasy House",
+        "modelUrl": "https://poly.pizza/m/dcPho4SUA3",
+        "downloadUrl": "https://static.poly.pizza/b8a2c719-5a70-4d6c-8049-90af7e3f89ee.glb",
+        "sha256": "39b9d7d4c85e170f64d066a3f762ab88689a614c270e95c52927908fb52fa36a",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    },
+    {
+      "id": "barn-snow",
+      "input": "vSqQNA7ez6.glb",
+      "treatment": "snow",
+      "source": {
+        "creator": "Quaternius",
+        "originalTitle": "Barn",
+        "modelUrl": "https://poly.pizza/m/vSqQNA7ez6",
+        "downloadUrl": "https://static.poly.pizza/e0ecaf1c-bff4-4f30-9a53-0cf0c1c90deb.glb",
+        "sha256": "c7e19b37ecc74f24e121c822116b125f7a7eea6473943650ca05faca3ebdebc3",
+        "license": "CC0-1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "licenseFile": "licenses/CC0-1.0.txt",
+        "licenseEvidence": "Historical per-model CC0 record on Poly Pizza; the selected 2021–2022 files predate Quaternius QAL.",
+        "licenseEvidenceUrl": "https://github.com/Quaternius/quaternius.github.io/blob/50e6dd86bbe6849b5d569a75c4ee1bf2bc562cec/packs/medievalvillage.html"
+      },
+      "resources": []
+    }
+  ]
+}
