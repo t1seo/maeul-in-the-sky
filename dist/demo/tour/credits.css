@@ -1,0 +1,139 @@
+:root {
+  color-scheme: light;
+  font-family: 'Avenir Next', 'Trebuchet MS', sans-serif;
+  color: #273c35;
+  background: #e8eddf;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+main {
+  width: min(100% - 40px, 760px);
+  margin: 0 auto;
+  padding: 28px 0 48px;
+}
+a {
+  color: #315b48;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  overflow-wrap: anywhere;
+}
+a:hover {
+  color: #183e2c;
+}
+a:focus-visible {
+  outline: 2px solid #a26732;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+header {
+  margin: 48px 0 32px;
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.15em;
+  color: #506558;
+}
+h1 {
+  margin: 12px 0;
+  font-size: clamp(32px, 7vw, 48px);
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+.intro {
+  max-width: 34em;
+  font-size: 17px;
+  color: #506558;
+}
+section {
+  margin: 20px 0;
+  padding: 28px;
+  background: #f7f8ef;
+  border: 1px solid #cbd5c6;
+  border-radius: 20px;
+}
+.section-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+.license-label {
+  padding: 6px 10px;
+  background: #e4eddd;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+p,
+li {
+  font-size: 15px;
+  line-height: 1.7;
+}
+section p:last-child {
+  margin-bottom: 0;
+}
+.sources {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+}
+.sources li {
+  display: grid;
+  gap: 4px;
+  padding: 16px 0;
+  border-top: 1px solid #d8ded1;
+}
+.sources li:last-child {
+  border-bottom: 1px solid #d8ded1;
+}
+footer {
+  margin-top: 32px;
+  color: #506558;
+}
+footer p {
+  font-size: 13px;
+}
+footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 20px;
+}
+footer nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+}
+@media (max-width: 480px) {
+  header {
+    margin-top: 32px;
+  }
+  section {
+    padding: 22px 18px;
+  }
+}

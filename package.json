@@ -40,6 +40,8 @@
     "generate:demo": "npm run check:pixel && tsx scripts/generate-demo.ts && npm run build:demo",
     "generate:pixel": "tsx scripts/pixel/generate.ts",
     "check:pixel": "tsx scripts/pixel/generate.ts --check",
+    "prepare:wildlife": "tsx scripts/wildlife/prepare.ts",
+    "check:wildlife": "vitest run --project=unit tests/tour/wildlife-assets.test.ts",
     "generate:catalog": "tsx scripts/generate-catalog.ts docs/demo/catalog",
     "check:catalog": "tsx scripts/catalog/check-generated.ts docs/demo/catalog",
     "benchmark": "tsx scripts/benchmark/render.ts",
@@ -96,6 +98,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@gltf-transform/core": "4.5.0",
+    "@gltf-transform/functions": "4.5.0",
     "@playwright/test": "^1.63.0",
     "@resvg/resvg-js": "^2.6.2",
     "@types/css-tree": "2.3.11",

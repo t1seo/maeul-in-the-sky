@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Living wildlife in the tour** — replace eight animal models, including the squirrel and cow, with locally hosted artwork by Poly by Google and Quaternius. Original model credits, licenses and modification records travel with both GitHub Pages and the npm package; the preview server serves the same verified GLB files.
 - **Tour navigation overlay** — a subtly translucent map docks at either bottom corner, uses square tiles at every viewport size, and keeps walking and contextual controls clear. The compass now follows the actual viewing direction with a cardinal bearing; map travel retains the camera direction and ignores empty map margins.
 
 ## [2.0.0] - 2026-09-21

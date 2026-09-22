@@ -27300,6 +27300,8 @@ var package_default = {
     "generate:demo": "npm run check:pixel && tsx scripts/generate-demo.ts && npm run build:demo",
     "generate:pixel": "tsx scripts/pixel/generate.ts",
     "check:pixel": "tsx scripts/pixel/generate.ts --check",
+    "prepare:wildlife": "tsx scripts/wildlife/prepare.ts",
+    "check:wildlife": "vitest run --project=unit tests/tour/wildlife-assets.test.ts",
     "generate:catalog": "tsx scripts/generate-catalog.ts docs/demo/catalog",
     "check:catalog": "tsx scripts/catalog/check-generated.ts docs/demo/catalog",
     benchmark: "tsx scripts/benchmark/render.ts",
@@ -27356,6 +27358,8 @@ var package_default = {
   },
   devDependencies: {
     "@eslint/js": "^10.0.1",
+    "@gltf-transform/core": "4.5.0",
+    "@gltf-transform/functions": "4.5.0",
     "@playwright/test": "^1.63.0",
     "@resvg/resvg-js": "^2.6.2",
     "@types/css-tree": "2.3.11",
@@ -29649,7 +29653,9 @@ var MIME = {
   ".ico": "image/x-icon",
   ".woff2": "font/woff2",
   ".webp": "image/webp",
-  ".txt": "text/plain; charset=utf-8"
+  ".txt": "text/plain; charset=utf-8",
+  ".md": "text/markdown; charset=utf-8",
+  ".glb": "model/gltf-binary"
 };
 function defaultAssetRoot() {
   const directory = dirname2(fileURLToPath2(import.meta.url));

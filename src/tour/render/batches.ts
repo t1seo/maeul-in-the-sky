@@ -10,15 +10,18 @@ import type { ModelPart, Vec3 } from '../../world/model/geometry-types.js';
 import { createPrimitiveLibrary } from '../../world/three/geometry/primitives.js';
 import { transform } from '../../world/three/geometry/placements.js';
 import type { GeometryResources } from '../../world/three/geometry/resources.js';
+import type { ForestWind } from './wind.js';
+import { WIND_PROFILES, windMargin, type WindProfile } from './wind-profiles.js';
 
 type Instance = { readonly matrix: Matrix4; readonly color: string; readonly id: string };
 type Batch = {
   readonly geometry: BufferGeometry;
   readonly material: Material;
+  readonly windProfile: WindProfile | 'none';
   readonly items: Instance[];
 };
 
-export function createBatches(resources: GeometryResources) {
+export function createBatches(resources: GeometryResources, wind?: ForestWind) {
   const library = createPrimitiveLibrary(resources);
   const drafts = new Map<string, Batch>();
   const identities = new Map<string, readonly string[]>();
@@ -31,13 +34,17 @@ export function createBatches(resources: GeometryResources) {
       scale: number,
       id: string,
       glow = false,
+      profile: WindProfile | 'none' = 'none',
     ): void => {
-      const material = resources.standard(glow ? 0.4 : 0.9, part.opacity, glow);
+      const base = resources.standard(glow ? 0.4 : 0.9, part.opacity, glow);
+      const windProfile = wind ? profile : 'none';
+      const material = wind && windProfile !== 'none' ? wind.material(base, windProfile) : base;
       if (glow) glows.add(material);
-      const key = `${Math.floor(anchor.x / 40)}:${library.key(part, recipeKey)}:${part.opacity}:${glow}`;
+      const key = `${Math.floor(anchor.x / 40)}:${library.key(part, recipeKey)}:${part.opacity}:${glow}:${windProfile}`;
       const batch = drafts.get(key) ?? {
         geometry: library.geometry(part, recipeKey, false),
         material,
+        windProfile,
         items: [],
       };
       const parent = transform(anchor, { x: 0, y: 0, z: 0 }, { x: scale, y: scale, z: scale });
@@ -60,6 +67,14 @@ export function createBatches(resources: GeometryResources) {
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         mesh.computeBoundingSphere();
+        if (wind && batch.windProfile !== 'none') {
+          mesh.name = `Wind ${batch.windProfile}`;
+          mesh.customDepthMaterial = wind.depth(batch.windProfile);
+          const margin = windMargin(WIND_PROFILES[batch.windProfile]);
+          if (mesh.boundingSphere) mesh.boundingSphere.radius += margin;
+          mesh.computeBoundingBox();
+          mesh.boundingBox?.expandByScalar(margin);
+        }
         identities.set(
           mesh.uuid,
           batch.items.map((item) => item.id),
