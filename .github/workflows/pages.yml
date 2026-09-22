@@ -9,6 +9,7 @@ on:
       - 'scripts/generate-demo.ts'
       - 'scripts/build-demo.ts'
       - 'scripts/build-world.ts'
+      - 'scripts/build-tour.ts'
       - 'scripts/generate-catalog.ts'
       - 'scripts/catalog/**'
       - 'src/**'
@@ -46,6 +47,8 @@ jobs:
           test -s docs/demo/app/main.js
           test -s docs/demo/world/index.html
           test -s docs/demo/world/app/main.js
+          test -s docs/demo/tour/index.html
+          test -s docs/demo/tour/app/main.js
           test -s docs/demo/catalog/index.html
           test -s docs/demo/catalog/catalog.json
           for preset in nature balanced civilization; do

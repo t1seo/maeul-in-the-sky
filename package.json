@@ -27,7 +27,8 @@
   "scripts": {
     "prebuild": "npm run check:pixel",
     "build": "tsup && npm run build:demo && tsx scripts/package-runtime-assets.ts",
-    "build:demo": "tsx scripts/build-demo.ts && npm run build:world",
+    "build:demo": "tsx scripts/build-demo.ts && npm run build:world && npm run build:tour",
+    "build:tour": "tsx scripts/build-tour.ts",
     "build:world": "tsx scripts/build-world.ts",
     "render:profile": "tsx scripts/render-profile.ts",
     "dev": "tsup --watch",

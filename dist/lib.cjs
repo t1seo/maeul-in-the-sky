@@ -29563,7 +29563,7 @@ async function serveAsset(root, rawPath, response) {
     if (!type || !(await (0, import_promises6.stat)(realFile)).isFile())
       throw new PreviewError(404, "not_found", "Asset not found.");
     const content = await (0, import_promises6.readFile)(realFile);
-    const connections = path3.startsWith("/world/") ? "'self' https://api.github.com https://raw.githubusercontent.com https://*.github.io" : "'self'";
+    const connections = path3.startsWith("/world/") ? "'self' https://api.github.com https://raw.githubusercontent.com https://*.github.io" : path3.startsWith("/tour/") ? "'self' https://raw.githubusercontent.com https://*.github.io" : "'self'";
     response.writeHead(200, {
       "Content-Type": type,
       "Cache-Control": "no-cache",

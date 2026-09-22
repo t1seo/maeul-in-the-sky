@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#e8eddf" />
+    <meta
+      name="description"
+      content="Your contributions, a living landscape. Step inside your GitHub village and explore its four seasons."
+    />
+    <title>Village tour · Maeul in the Sky</title>
+    <link rel="stylesheet" href="./tour.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23354f43' d='m4 16 12-7 12 7-4 9-8 4-8-4Z'/%3E%3C/svg%3E"
+    />
+    <script type="module" src="./app/main.js"></script>
+  </head>
+  <body>
+    <main id="tour-app">
+      <canvas
+        id="village"
+        aria-label="Interactive 3D village. Drag to look around. Choose a season or start walking with the controls below."
+        tabindex="0"
+      ></canvas>
+      <div class="vignette" aria-hidden="true"></div>
+      <header class="topbar">
+        <a class="wordmark" href="../" aria-label="Return to the Maeul SVG studio">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="m4 17 12-7 12 7-12 7Z" />
+            <path d="m4 17 12 7 12-7-4 9-8 4-8-4Z" opacity=".5" />
+            <path d="M12 13V7l4-3 4 3v6" fill="none" stroke="currentColor" stroke-width="2" />
+          </svg>
+          <span>MAEUL<span class="wordmark-sub">IN THE SKY</span></span>
+        </a>
+        <div class="top-actions">
+          <div class="lighting" role="group" aria-label="Time of day">
+            <button
+              type="button"
+              data-light="day"
+              title="Day"
+              aria-label="Day"
+              aria-pressed="false"
+            >
+              ☀
+            </button>
+            <button
+              type="button"
+              data-light="golden"
+              title="Golden hour"
+              aria-label="Golden hour"
+              aria-pressed="true"
+            >
+              ◒
+            </button>
+            <button
+              type="button"
+              data-light="night"
+              title="Night"
+              aria-label="Night"
+              aria-pressed="false"
+            >
+              ☾
+            </button>
+          </div>
+          <button
+            class="round-button"
+            type="button"
+            id="help-toggle"
+            aria-expanded="false"
+            aria-controls="help-panel"
+            aria-label="Controls and help"
+          >
+            ?
+          </button>
+          <a class="back-link" href="../">SVG studio <span aria-hidden="true">↗</span></a>
+        </div>
+      </header>
+      <section class="introduction" aria-label="The village you are visiting">
+        <p class="eyebrow">A LITTLE WORLD, MADE BY YOU</p>
+        <h1><span id="owner">Your</span><br />village in the sky</h1>
+        <p class="intro-copy">
+          A year of small moments. Four seasons of life.<br />Come a little closer, and step inside.
+        </p>
+        <p class="source-tag" id="source-tag">Preparing your village</p>
+        <div class="village-stats" id="village-stats"></div>
+      </section>
+      <aside id="help-panel" class="glass help-panel" hidden>
+        <strong>Take the scenic route.</strong>
+        <p>
+          <b>Explore</b> · Drag to orbit, scroll to zoom, or use two fingers to pan and pinch. Click
+          a day for details and <b>Walk here</b>.
+        </p>
+        <p>
+          <b>Walk</b> · W / S move forward and back. A / D step sideways. Q / E or ← / → turn in
+          place. Drag to look around.
+        </p>
+        <p>
+          Click the ground or a place on the <b>Map</b> to move there while keeping your direction.
+          Touch buttons let you walk and turn.
+        </p>
+        <p><b>Esc</b> stops walking or the guided tour.</p>
+        <p id="motion-note"></p>
+      </aside>
+      <div class="compass" aria-hidden="true">
+        <span>N</span
+        ><svg viewBox="0 0 44 44">
+          <path d="M22 5 28 28 22 24 16 28Z" />
+          <circle cx="22" cy="22" r="20" fill="none" />
+        </svg>
+      </div>
+      <aside id="detail-panel" class="glass detail-panel" hidden>
+        <button type="button" id="detail-close" class="round-button" aria-label="Close day details">
+          ×
+        </button>
+        <p class="eyebrow">A DAY IN THIS VILLAGE</p>
+        <h2 id="detail-date"></h2>
+        <p id="detail-count"></p>
+        <p id="detail-assets"></p>
+        <button type="button" id="detail-walk" class="map-action">
+          Walk here <span aria-hidden="true">↗</span>
+        </button>
+      </aside>
+      <section class="journey" aria-label="Village exploration controls">
+        <div class="current-place">
+          <span class="live-dot"></span><span id="place-label">Village entrance</span
+          ><span class="place-divider">/</span><span id="place-date"></span>
+        </div>
+        <nav id="season-stops" class="season-stops" aria-label="Seasonal destinations"></nav>
+        <div class="glass transport">
+          <button type="button" id="tour-play" class="primary-control" aria-pressed="false">
+            <span aria-hidden="true">▷</span><span id="play-label">Tour</span>
+          </button>
+          <span class="control-divider" aria-hidden="true"></span>
+          <button type="button" id="walk-toggle" aria-pressed="false">
+            <span aria-hidden="true">♧</span><span>Walk</span>
+          </button>
+          <button type="button" id="overview">
+            <span aria-hidden="true">⌘</span><span>Overview</span>
+          </button>
+          <button type="button" id="map-toggle" aria-expanded="false" aria-controls="map-panel">
+            <span aria-hidden="true">▧</span><span>Map</span>
+          </button>
+          <button
+            type="button"
+            id="home-view"
+            class="home-control"
+            aria-label="Home view"
+            title="Home view"
+          >
+            ⌂
+          </button>
+        </div>
+        <p class="gesture-hint" id="gesture-hint">
+          Drag to explore · Scroll to zoom · Click a day to walk there
+        </p>
+      </section>
+      <div
+        id="walk-pad"
+        class="walk-pad"
+        role="group"
+        aria-label="Walking and turning controls"
+        hidden
+      >
+        <span class="pad-caption">WALK &amp; TURN</span>
+        <button
+          type="button"
+          id="turn-left"
+          data-turn="left"
+          aria-label="Turn left"
+          aria-pressed="false"
+        >
+          <span aria-hidden="true">↶</span><small>Turn</small>
+        </button>
+        <button type="button" data-move="forward" aria-label="Move forward" aria-pressed="false">
+          ↑
+        </button>
+        <button
+          type="button"
+          id="turn-right"
+          data-turn="right"
+          aria-label="Turn right"
+          aria-pressed="false"
+        >
+          <span aria-hidden="true">↷</span><small>Turn</small>
+        </button>
+        <button type="button" data-move="left" aria-label="Step left" aria-pressed="false">
+          ←
+        </button>
+        <button type="button" data-move="back" aria-label="Move back" aria-pressed="false">
+          ↓
+        </button>
+        <button type="button" data-move="right" aria-label="Step right" aria-pressed="false">
+          →
+        </button>
+      </div>
+      <aside id="map-panel" class="glass map-corner" aria-label="Village map" hidden>
+        <div class="map-header">
+          <p>YOUR YEAR, A LANDSCAPE</p>
+          <button type="button" id="map-close" class="round-button" aria-label="Close map">
+            ×
+          </button>
+        </div>
+        <canvas
+          id="mini-map"
+          width="424"
+          height="120"
+          role="button"
+          tabindex="0"
+          aria-label="Choose a place in the village map"
+          aria-describedby="map-help map-marker-label"
+          >Use the arrow keys to choose a place, then press Enter to walk there.</canvas
+        >
+        <p class="map-position" id="map-position">Your viewpoint</p>
+        <p class="map-help" id="map-help">
+          Click to walk there. Arrow keys choose a place; Enter moves.
+        </p>
+        <div class="map-footer">
+          <span id="map-marker-label">Choose a place</span
+          ><button type="button" id="map-walk" class="map-action">Walk to marker</button>
+        </div>
+        <span id="date-range"></span>
+      </aside>
+      <div class="loading-screen" id="loading-screen" role="status">
+        <div class="loading-mark" aria-hidden="true">◇</div>
+        <h2 id="loading-title">On the way to your village</h2>
+        <p id="loading-message">Bringing your contribution history to life.</p>
+        <img id="fallback-image" alt="The original Calendar village from the same history" hidden />
+        <progress aria-label="Loading your village"></progress>
+        <button type="button" id="retry" hidden>Try again</button>
+        <a id="fallback-link" href="../" hidden>Open the Calendar village ↗</a>
+      </div>
+      <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+      <noscript
+        ><div class="loading-screen">
+          <h2>The village tour needs JavaScript.</h2>
+          <a href="../">View the Calendar village</a>
+        </div></noscript
+      >
+    </main>
+  </body>
+</html>

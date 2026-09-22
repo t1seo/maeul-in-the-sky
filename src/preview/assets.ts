@@ -60,7 +60,9 @@ export async function serveAsset(
     const content = await readFile(realFile);
     const connections = path.startsWith('/world/')
       ? "'self' https://api.github.com https://raw.githubusercontent.com https://*.github.io"
-      : "'self'";
+      : path.startsWith('/tour/')
+        ? "'self' https://raw.githubusercontent.com https://*.github.io"
+        : "'self'";
     response.writeHead(200, {
       'Content-Type': type,
       'Cache-Control': 'no-cache',

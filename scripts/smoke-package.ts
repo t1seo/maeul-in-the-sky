@@ -34,6 +34,9 @@ try {
     'dist/demo/world/app/main.js',
     'dist/demo/world/licenses/three-MIT.txt',
     'dist/demo/world/licenses/ky-MIT.txt',
+    'dist/demo/tour/index.html',
+    'dist/demo/tour/tour.css',
+    'dist/demo/tour/app/main.js',
   ]) {
     assert.ok(statSync(join(packageRoot, path)).size > 0, `Missing runtime asset: ${path}`);
   }

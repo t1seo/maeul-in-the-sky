@@ -16,6 +16,8 @@ it('allows public world sources only in the explorer document policy', async () 
   cleanup.push(root.close);
   await mkdir(join(root.directory, 'world'));
   await writeFile(join(root.directory, 'world/index.html'), '<title>World explorer</title>');
+  await mkdir(join(root.directory, 'tour'));
+  await writeFile(join(root.directory, 'tour/index.html'), '<title>Calendar tour</title>');
   const server = await startPreviewServer({
     port: 0,
     token: '',
@@ -23,9 +25,10 @@ it('allows public world sources only in the explorer document policy', async () 
   });
   cleanup.push(server.close);
   // When both documents are served through the real preview HTTP server.
-  const [world, original] = await Promise.all([
+  const [world, original, tour] = await Promise.all([
     httpRequest(server.url, { path: '/world/' }),
     httpRequest(server.url, { path: '/' }),
+    httpRequest(server.url, { path: '/tour/' }),
   ]);
   // Then public visits work without broadening the original demo's network policy.
   expect(world.status).toBe(200);
@@ -34,4 +37,9 @@ it('allows public world sources only in the explorer document policy', async () 
   );
   expect(original.headers['content-security-policy']).toContain("connect-src 'self';");
   expect(original.headers['content-security-policy']).not.toContain('https://api.github.com');
+  expect(tour.status).toBe(200);
+  expect(tour.headers['content-security-policy']).toContain(
+    "connect-src 'self' https://raw.githubusercontent.com https://*.github.io;",
+  );
+  expect(tour.headers['content-security-policy']).not.toContain('https://api.github.com');
 });
