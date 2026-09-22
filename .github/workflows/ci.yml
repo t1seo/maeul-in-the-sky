@@ -74,8 +74,8 @@ jobs:
       - run: npm run test:artifact
       - name: Verify committed runtime bundles
         run: |
-          git diff --exit-code -- dist docs/demo/app docs/demo/world/app docs/demo/versions
-          test -z "$(git ls-files --others --exclude-standard dist docs/demo/app docs/demo/world/app docs/demo/versions)"
+          git diff --exit-code -- dist docs/demo/app docs/demo/world/app docs/demo/tour/app docs/demo/versions
+          test -z "$(git ls-files --others --exclude-standard dist docs/demo/app docs/demo/world/app docs/demo/tour/app docs/demo/versions)"
 
   profile:
     name: 3D Profile Capture

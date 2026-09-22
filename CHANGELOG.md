@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Walk inside the Calendar village** — a separate `/tour/` entrance preserves the profile snapshot's dates, assets and seasons in a detailed Three.js village, with seasonal viewpoints, guided travel, safe walking, touch controls and day-to-night lighting. The original Calendar artwork and archived explorers remain available.
+
 ## [2.0.0] - 2026-09-21
 
 ### Migration

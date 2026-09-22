@@ -53,6 +53,20 @@ Prefer the original artwork? Choose **Classic** in the [SVG studio](https://t1se
 
 The README previews and six preset images use seeded **synthetic data**, with 364 supplied days from **2025-01-05 to 2026-01-03**. They are examples, not a fetched account or a complete 2025 calendar. Sparse and maximum previews use separate seeded patterns; the original benchmark fixtures remain frozen for reproducible comparisons.
 
+## Walk inside your Calendar village
+
+The [3D tour](https://t1seo.github.io/maeul-in-the-sky/tour/) opens the same dated Calendar as a real Three.js miniature. Explore seasonal viewpoints, take a guided flight, or walk with WASD / arrow keys and drag to look around. Touch controls, day-to-night lighting, reduced motion and a Calendar fallback are included. The default tour is clearly labeled sample data.
+
+For your own village, publish the snapshot generated alongside your SVG and link to:
+
+```text
+https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2FUSERNAME%2FUSERNAME%2Fmain%2Fmaeul-in-the-sky.snapshot.json
+```
+
+Wrap your existing README `<picture>…</picture>` in an `<a href="TOUR_URL">…</a>`. GitHub displays the original SVG; clicking opens the interactive tour on Pages. Both theme-specific image sources stay the same. [Visit a real profile village](https://t1seo.github.io/maeul-in-the-sky/tour/?snapshot=https%3A%2F%2Fraw.githubusercontent.com%2Ft1seo%2Ft1seo%2Fmain%2Fmaeul-in-the-sky.snapshot.json).
+
+The tour preserves the snapshot's dates, contribution counts, placement IDs, seasonal water and earned Wonders. Meshes reinterpret the original artwork in three dimensions; it does not add unearned homes or Wonders. Some land is separated by water, so seasonal viewpoints provide access where walking cannot. Public HTTPS snapshots on GitHub Pages or raw GitHub are supported, up to 2 MiB and an 800-day span. Invalid sources show an error instead of substituting a sample.
+
 ## Choose a village preset
 
 Try each preset in the [SVG studio](https://t1seo.github.io/maeul-in-the-sky/), with day and night previews of the same landscape.

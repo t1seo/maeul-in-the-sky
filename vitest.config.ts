@@ -11,7 +11,7 @@ export default defineConfig({
           name: 'unit',
           sequence: { groupOrder: 1 },
           include: ['tests/**/*.test.ts'],
-          exclude: ['tests/demo/browser/**', 'tests/world/browser/**'],
+          exclude: ['tests/demo/browser/**', 'tests/world/browser/**', 'tests/tour/browser/**'],
         },
       },
       {
@@ -34,6 +34,21 @@ export default defineConfig({
           name: 'demo-browser',
           sequence: { groupOrder: 3 },
           include: ['tests/demo/browser/*.browser.test.ts'],
+          browser: {
+            enabled: true,
+            headless: true,
+            fileParallelism: false,
+            provider: playwright(),
+            instances: [{ browser: 'chromium' }],
+            viewport: { width: 1280, height: 900 },
+          },
+        },
+      },
+      {
+        test: {
+          name: 'tour-browser',
+          sequence: { groupOrder: 4 },
+          include: ['tests/tour/browser/*.browser.test.ts'],
           browser: {
             enabled: true,
             headless: true,

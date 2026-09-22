@@ -27287,7 +27287,8 @@ var package_default = {
   scripts: {
     prebuild: "npm run check:pixel",
     build: "tsup && npm run build:demo && tsx scripts/package-runtime-assets.ts",
-    "build:demo": "tsx scripts/build-demo.ts && npm run build:world",
+    "build:demo": "tsx scripts/build-demo.ts && npm run build:world && npm run build:tour",
+    "build:tour": "tsx scripts/build-tour.ts",
     "build:world": "tsx scripts/build-world.ts",
     "render:profile": "tsx scripts/render-profile.ts",
     dev: "tsup --watch",
@@ -29680,7 +29681,7 @@ async function serveAsset(root, rawPath, response) {
     if (!type || !(await stat(realFile)).isFile())
       throw new PreviewError(404, "not_found", "Asset not found.");
     const content = await readFile6(realFile);
-    const connections = path4.startsWith("/world/") ? "'self' https://api.github.com https://raw.githubusercontent.com https://*.github.io" : "'self'";
+    const connections = path4.startsWith("/world/") ? "'self' https://api.github.com https://raw.githubusercontent.com https://*.github.io" : path4.startsWith("/tour/") ? "'self' https://raw.githubusercontent.com https://*.github.io" : "'self'";
     response.writeHead(200, {
       "Content-Type": type,
       "Cache-Control": "no-cache",

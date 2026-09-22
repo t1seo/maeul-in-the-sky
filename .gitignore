@@ -25,6 +25,7 @@ playwright-report/
 .vitest-attachments/
 tests/demo/browser/__screenshots__/
 tests/world/browser/__screenshots__/
+tests/tour/browser/__screenshots__/
 test-results/
 
 # Local Orca runs, authenticated snapshots, and QA evidence

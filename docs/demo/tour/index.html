@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#e8eddf">
+    <meta name="description" content="기록이 풍경이 되는 곳. GitHub의 작은 마을 속으로 들어가 사계절을 산책해 보세요.">
+    <title>마을 산책 · Maeul in the Sky</title>
+    <link rel="stylesheet" href="./tour.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23354f43' d='m4 16 12-7 12 7-4 9-8 4-8-4Z'/%3E%3C/svg%3E">
+    <script type="module" src="./app/main.js"></script>
+  </head>
+  <body>
+    <main id="tour-app">
+      <canvas id="village" aria-label="드래그로 둘러보는 입체 마을. 아래 버튼으로 계절을 이동하거나 산책할 수 있습니다." tabindex="0"></canvas>
+      <div class="vignette" aria-hidden="true"></div>
+      <header class="topbar">
+        <a class="wordmark" href="../" aria-label="Maeul SVG 스튜디오로 돌아가기">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="m4 17 12-7 12 7-12 7Z"/><path d="m4 17 12 7 12-7-4 9-8 4-8-4Z" opacity=".5"/><path d="M12 13V7l4-3 4 3v6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <span>MAEUL<span class="wordmark-sub">IN THE SKY</span></span>
+        </a>
+        <div class="top-actions">
+          <div class="lighting" role="group" aria-label="시간대">
+            <button type="button" data-light="day" title="낮" aria-label="낮" aria-pressed="false">☀</button>
+            <button type="button" data-light="golden" title="노을" aria-label="노을" aria-pressed="true">◒</button>
+            <button type="button" data-light="night" title="밤" aria-label="밤" aria-pressed="false">☾</button>
+          </div>
+          <button class="round-button" type="button" id="help-toggle" aria-expanded="false" aria-controls="help-panel" aria-label="조작 안내">?</button>
+          <a class="back-link" href="../">SVG 스튜디오 <span aria-hidden="true">↗</span></a>
+        </div>
+      </header>
+      <section class="introduction" aria-label="방문 중인 마을">
+        <p class="eyebrow">A LITTLE WORLD, MADE BY YOU</p>
+        <h1><span id="owner">기록으로 자란</span><br>하늘 위의 마을</h1>
+        <p class="intro-copy">하루하루의 기록, 사계절의 풍경.<br>이제 그 안을 걸어보세요.</p>
+        <p class="source-tag" id="source-tag">마을을 준비하고 있습니다</p>
+        <div class="village-stats" id="village-stats"></div>
+      </section>
+      <aside id="help-panel" class="glass help-panel" hidden>
+        <strong>천천히, 둘러보세요.</strong>
+        <p>드래그로 회전 · 스크롤로 가까이 보기<br>두 손가락으로 이동하거나 확대할 수 있어요.</p>
+        <p><b>직접 걷기</b>에서는 W A S D / 방향키로 이동하고, 화면을 드래그해 고개를 돌립니다.</p>
+        <p>화면 아래 화살표로도 걸을 수 있어요.<br>Esc는 산책과 자동 투어를 멈춥니다.</p>
+        <p id="motion-note"></p>
+      </aside>
+      <div class="compass" aria-hidden="true"><span>N</span><svg viewBox="0 0 44 44"><path d="M22 5 28 28 22 24 16 28Z"/><circle cx="22" cy="22" r="20" fill="none"/></svg></div>
+      <aside id="detail-panel" class="glass detail-panel" hidden>
+        <button type="button" id="detail-close" class="round-button" aria-label="날짜 정보 닫기">×</button>
+        <p class="eyebrow">A DAY IN THIS VILLAGE</p>
+        <h2 id="detail-date"></h2><p id="detail-count"></p><p id="detail-assets"></p>
+      </aside>
+      <section class="journey" aria-label="마을 탐방 조작">
+        <div class="current-place"><span class="live-dot"></span><span id="place-label">마을 입구</span><span class="place-divider">/</span><span id="place-date"></span></div>
+        <nav id="season-stops" class="season-stops" aria-label="계절별 방문 지점"></nav>
+        <div class="glass transport">
+          <button type="button" id="tour-play" class="primary-control"><span aria-hidden="true">▷</span><span id="play-label">마을 투어</span></button>
+          <span class="control-divider" aria-hidden="true"></span>
+          <button type="button" id="walk-toggle" aria-pressed="false"><span aria-hidden="true">♧</span><span>직접 걷기</span></button>
+          <button type="button" id="overview"><span aria-hidden="true">⌘</span><span>전체 풍경</span></button>
+          <button type="button" id="home-view" class="home-control" aria-label="처음 시점" title="처음 시점">⌂</button>
+        </div>
+        <p class="gesture-hint" id="gesture-hint">드래그해서 둘러보기 · 스크롤로 가까이</p>
+      </section>
+      <div id="walk-pad" class="walk-pad" aria-label="터치로 걷기" hidden>
+        <button type="button" data-move="forward" aria-label="앞으로">↑</button>
+        <button type="button" data-move="left" aria-label="왼쪽으로">←</button>
+        <button type="button" data-move="back" aria-label="뒤로">↓</button>
+        <button type="button" data-move="right" aria-label="오른쪽으로">→</button>
+      </div>
+      <aside class="map-corner" aria-label="마을 지도">
+        <p>YOUR YEAR, A LANDSCAPE</p>
+        <canvas id="mini-map" width="424" height="88" aria-label="사계절 마을의 전체 지도"></canvas>
+        <span id="date-range"></span>
+      </aside>
+      <div class="loading-screen" id="loading-screen" role="status">
+        <div class="loading-mark" aria-hidden="true">◇</div><h2 id="loading-title">마을로 가는 길</h2>
+        <p id="loading-message">기록 속 풍경을 펼치고 있습니다.</p>
+        <img id="fallback-image" alt="같은 기록으로 만든 원본 Calendar 마을" hidden>
+        <progress aria-label="마을 불러오는 중"></progress>
+        <button type="button" id="retry" hidden>다시 열기</button>
+        <a id="fallback-link" href="../" hidden>Calendar 마을 열기 ↗</a>
+      </div>
+      <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+      <noscript><div class="loading-screen"><h2>마을 투어에는 JavaScript가 필요합니다.</h2><a href="../">Calendar 마을 보기</a></div></noscript>
+    </main>
+  </body>
+</html>
